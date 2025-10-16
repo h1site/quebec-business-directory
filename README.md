@@ -75,6 +75,37 @@ for each row execute procedure businesses_search_vector_trigger();
 - `npm run preview` : prévisualise la build
 - `npm run lint` : exécute ESLint sur `src/`
 
+## Publier le projet sur GitHub
+
+1. [Créez un dépôt vide sur GitHub](https://github.com/new) (sans README/LICENCE auto-générés).
+2. Initialisez Git en local si ce n'est pas déjà fait :
+
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   ```
+
+3. Ajoutez GitHub comme dépôt distant (remplacez `<votre-utilisateur>` et `<nom-du-depot>`).
+
+   ```bash
+   git remote add origin https://github.com/<votre-utilisateur>/<nom-du-depot>.git
+   ```
+
+4. Envoyez vos fichiers :
+
+   ```bash
+   git push -u origin main
+   ```
+
+   Si votre branche locale se nomme différemment (par exemple `master` ou `work`), adaptez la commande :
+
+   ```bash
+   git push -u origin <nom-de-la-branche>
+   ```
+
+5. (Optionnel) Activez GitHub Pages pour un hébergement statique en construisant d'abord l'application, puis en publiant le dossier `dist` avec un workflow CI/CD ou un outil comme [GitHub Pages Deploy Action](https://github.com/JamesIves/github-pages-deploy-action).
+
 ## Licence
 
 MIT
