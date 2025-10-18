@@ -27,11 +27,12 @@ const SearchResults = () => {
   const query = useQuery();
   const [filters, setFilters] = useState(initialFilters);
   const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [allRegions] = useState(getAllRegions());
   const [mainCategories, setMainCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+  const [categoriesLoaded, setCategoriesLoaded] = useState(false);
 
   // Load categories on mount
   useEffect(() => {
@@ -43,8 +44,10 @@ const SearchResults = () => {
         ]);
         setMainCategories(mainCatsResult.data || []);
         setSubCategories(subCatsResult.data || []);
+        setCategoriesLoaded(true);
       } catch (error) {
         console.error('Error loading categories:', error);
+        setCategoriesLoaded(true); // Mark as loaded even on error
       }
     };
     loadCategories();
@@ -129,6 +132,17 @@ const SearchResults = () => {
     setFilters(initialFilters);
     // useEffect will automatically trigger search when filters change
   };
+
+  // Show loading state while categories are being loaded
+  if (!categoriesLoaded) {
+    return (
+      <section className="container" style={{ padding: '3rem 0' }}>
+        <div className="loading-spinner">
+          <p>Chargement...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="container" style={{ padding: '3rem 0' }}>

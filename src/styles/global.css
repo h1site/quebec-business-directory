@@ -1033,9 +1033,28 @@ nav .donate-button:hover {
   .search-layout {
     grid-template-columns: 1fr;
   }
+
+  .filter-panel {
+    padding: 1rem;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .filter-panel .form-group input,
+  .filter-panel .form-group select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
 }
 
 @media (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   .form {
     padding: 0 1rem;
   }
@@ -1048,6 +1067,34 @@ nav .donate-button:hover {
     margin-top: 1rem;
     padding: 1rem;
     font-size: 1rem;
+  }
+
+  .filter-panel {
+    padding: 1rem;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .filter-panel .form {
+    padding: 0;
+  }
+
+  .filter-panel .form-group {
+    width: 100%;
+  }
+
+  .filter-panel .form-group input,
+  .filter-panel .form-group select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  .search-layout {
+    padding: 0;
+    gap: 1.5rem;
   }
 
   header {
