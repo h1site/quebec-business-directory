@@ -134,12 +134,25 @@ nav .nav-links {
   align-items: center;
 }
 
+nav .user-email {
+  color: #718096;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 .nav-brand {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
   font-weight: 700;
   font-size: 1.2rem;
   color: #0f4c81;
+}
+
+.nav-brand-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
 }
 
 .language-toggle {
@@ -190,6 +203,17 @@ nav .nav-links {
   font-size: 0.9rem;
 }
 
+.business-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.business-card-link:hover {
+  transform: translateY(-2px);
+}
+
 .business-card {
   background: #fff;
   border-radius: 16px;
@@ -197,6 +221,7 @@ nav .nav-links {
   display: grid;
   gap: 0.75rem;
   border: 1px solid #e2e8f0;
+  height: 100%;
 }
 
 .business-card h3 {

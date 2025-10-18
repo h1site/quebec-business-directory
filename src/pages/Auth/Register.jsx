@@ -35,15 +35,23 @@ const Register = () => {
 
     try {
       setSubmitting(true);
-      const { error: signUpError } = await supabase.auth.signUp({
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email: form.email,
-        password: form.password
+        password: form.password,
+        options: {
+          emailRedirectTo: undefined,
+          data: {
+            email_confirmed: true
+          }
+        }
       });
       if (signUpError) {
         throw signUpError;
       }
-      setMessage('Compte créé! Vérifiez votre courriel pour confirmer votre inscription.');
-      navigate('/connexion');
+      setMessage('Compte créé avec succès! Vous pouvez maintenant vous connecter.');
+      setTimeout(() => {
+        navigate('/connexion');
+      }, 1500);
     } catch (err) {
       setError(err.message);
     } finally {

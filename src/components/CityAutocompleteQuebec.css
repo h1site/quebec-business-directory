@@ -1,0 +1,156 @@
+.city-autocomplete-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.city-input-container {
+  position: relative;
+}
+
+.city-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+.city-input:focus {
+  outline: none;
+  border-color: #0f4c81;
+  box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.1);
+}
+
+.city-input.error {
+  border-color: #ef4444;
+}
+
+.city-input.error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.city-context {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.context-mrc {
+  color: #0369a1;
+  font-weight: 500;
+}
+
+.context-separator {
+  color: #94a3b8;
+}
+
+.context-region {
+  color: #64748b;
+}
+
+.city-suggestions {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  z-index: 1000;
+}
+
+.suggestion-item {
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 0.25rem;
+}
+
+.suggestion-item:hover,
+.suggestion-item.selected {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
+.suggestion-city {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.suggestion-details {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.suggestion-mrc {
+  color: #0369a1;
+}
+
+.suggestion-separator {
+  color: #cbd5e1;
+}
+
+.suggestion-region {
+  color: #64748b;
+}
+
+.city-error {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Scrollbar styling */
+.city-suggestions::-webkit-scrollbar {
+  width: 8px;
+}
+
+.city-suggestions::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.city-suggestions::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.city-suggestions::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .city-suggestions {
+    max-height: 200px;
+  }
+
+  .suggestion-item {
+    padding: 0.625rem;
+  }
+
+  .suggestion-city {
+    font-size: 0.9rem;
+  }
+
+  .suggestion-details {
+    font-size: 0.75rem;
+  }
+}

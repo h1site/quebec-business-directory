@@ -1,9 +1,10 @@
 import { supabase, isSupabaseConfigured } from './supabaseClient.js';
 import { sampleBusinesses } from '../data/sampleBusinesses.js';
+import { quebecMunicipalities } from '../data/quebecMunicipalities.js';
 
 const tableName = 'businesses';
 
-const buildFilters = ({ query, city, category, phone, distance, coordinates }) => {
+const buildFilters = ({ query, city, region, category, phone, distance, coordinates }) => {
   const filters = [];
 
   if (query) {
@@ -12,6 +13,20 @@ const buildFilters = ({ query, city, category, phone, distance, coordinates }) =
 
   if (city) {
     filters.push({ column: 'city', operator: 'ilike', value: `%${city}%` });
+  }
+
+  if (region) {
+    // Convert region slug to region name
+    console.log('[buildFilters] Region slug from URL:', region);
+    const regionData = quebecMunicipalities[region];
+    console.log('[buildFilters] Region data found:', regionData);
+    if (regionData) {
+      console.log('[buildFilters] Filtering by region name:', regionData.name);
+      // Search for region name in the region field (which contains "MRC, Region")
+      filters.push({ column: 'region', operator: 'ilike', value: `%${regionData.name}%` });
+    } else {
+      console.warn('[buildFilters] No region data found for slug:', region);
+    }
   }
 
   if (category) {
@@ -36,6 +51,7 @@ const buildFilters = ({ query, city, category, phone, distance, coordinates }) =
 export const searchBusinesses = async ({
   query,
   city,
+  region,
   category,
   phone,
   distance,
@@ -52,13 +68,16 @@ export const searchBusinesses = async ({
       const matchesCity = city
         ? business.city.toLowerCase().includes(city.toLowerCase())
         : true;
+      const matchesRegion = region
+        ? business.region?.toLowerCase().includes(region.toLowerCase())
+        : true;
       const matchesCategory = category
         ? business.categories?.some((cat) => cat.toLowerCase().includes(category.toLowerCase()))
         : true;
       const matchesPhone = phone
         ? business.phone?.replace(/\D/g, '').includes(phone.replace(/\D/g, ''))
         : true;
-      return matchesQuery && matchesCity && matchesCategory && matchesPhone;
+      return matchesQuery && matchesCity && matchesRegion && matchesCategory && matchesPhone;
     });
     return { data, error: null };
   }
@@ -66,11 +85,12 @@ export const searchBusinesses = async ({
   let request = supabase
     .from(tableName)
     .select(
-      `id, name, description, phone, email, address, city, categories, products_services`
+      `id, slug, name, description, phone, email, address, city, categories, products_services,
+       main_category:main_categories(slug, label_fr, label_en)`
     )
     .limit(limit);
 
-  const filters = buildFilters({ query, city, category, phone, distance, coordinates });
+  const filters = buildFilters({ query, city, region, category, phone, distance, coordinates });
 
   filters.forEach((filter) => {
     if (filter.operator === 'fts') {
@@ -89,6 +109,16 @@ export const searchBusinesses = async ({
 
   const { data, error } = await request.order('created_at', { ascending: false });
 
+  // Flatten main_category data for easier access
+  if (data && Array.isArray(data)) {
+    data.forEach(business => {
+      if (business.main_category) {
+        business.main_category_slug = business.main_category.slug;
+        business.main_category_name = business.main_category.label_fr;
+      }
+    });
+  }
+
   return { data, error };
 };
 
@@ -100,6 +130,153 @@ export const createBusiness = async (payload) => {
   }
 
   const { data, error } = await supabase.from(tableName).insert(payload).select().single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const getBusinessById = async (id) => {
+  if (!isSupabaseConfigured) {
+    const business = sampleBusinesses.find((b) => b.id === id);
+    return { data: business || null, error: business ? null : { message: 'Business not found' } };
+  }
+
+  const { data, error } = await supabase
+    .from(tableName)
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  return { data, error };
+};
+
+export const getBusinessBySlug = async (slug) => {
+  if (!isSupabaseConfigured) {
+    const business = sampleBusinesses.find((b) => b.slug === slug);
+    return { data: business || null, error: business ? null : { message: 'Business not found' } };
+  }
+
+  const { data, error } = await supabase
+    .from(tableName)
+    .select(`
+      *,
+      main_category:main_categories(slug, label_fr, label_en)
+    `)
+    .eq('slug', slug)
+    .single();
+
+  // Flatten main_category data for easier access
+  if (data && data.main_category) {
+    data.main_category_slug = data.main_category.slug;
+    data.main_category_name = data.main_category.label_fr;
+  }
+
+  return { data, error };
+};
+
+export const updateBusiness = async (id, payload) => {
+  if (!isSupabaseConfigured) {
+    throw new Error(
+      'Supabase n\'est pas configuré. Définissez VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY.'
+    );
+  }
+
+  const { data, error } = await supabase
+    .from(tableName)
+    .update(payload)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const getBusinessesByOwner = async (ownerId) => {
+  if (!isSupabaseConfigured) {
+    return { data: [], error: null };
+  }
+
+  const { data, error } = await supabase
+    .from(tableName)
+    .select(`
+      *,
+      main_category:main_categories(slug, label_fr, label_en)
+    `)
+    .eq('owner_id', ownerId)
+    .order('created_at', { ascending: false });
+
+  // Flatten main_category data for each business
+  if (data) {
+    data.forEach(business => {
+      if (business.main_category) {
+        business.main_category_slug = business.main_category.slug;
+        business.main_category_name = business.main_category.label_fr;
+      }
+    });
+  }
+
+  return { data, error };
+};
+
+/**
+ * Check if a slug is available (not already used by another business)
+ * @param {string} slug - The slug to check
+ * @param {string} currentBusinessId - ID of current business (to exclude from check)
+ * @returns {Promise<{available: boolean, error: any}>}
+ */
+export const checkSlugAvailability = async (slug, currentBusinessId = null) => {
+  if (!isSupabaseConfigured) {
+    return { available: true, error: null };
+  }
+
+  try {
+    let query = supabase
+      .from(tableName)
+      .select('id')
+      .eq('slug', slug);
+
+    // Exclude current business from check
+    if (currentBusinessId) {
+      query = query.neq('id', currentBusinessId);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      return { available: false, error };
+    }
+
+    // Slug is available if no results found
+    return { available: data.length === 0, error: null };
+  } catch (error) {
+    return { available: false, error };
+  }
+};
+
+/**
+ * Delete a business by ID
+ * Only the owner can delete their business
+ */
+export const deleteBusiness = async (id) => {
+  if (!isSupabaseConfigured) {
+    throw new Error(
+      'Supabase n\'est pas configuré. Définissez VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY.'
+    );
+  }
+
+  const { data, error } = await supabase
+    .from(tableName)
+    .delete()
+    .eq('id', id)
+    .select()
+    .single();
 
   if (error) {
     throw error;

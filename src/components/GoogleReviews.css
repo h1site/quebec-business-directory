@@ -1,0 +1,175 @@
+.google-reviews-section {
+  /* Pas de style de container ici car il est déjà dans business-section */
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.reviews-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.google-logo {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.reviews-rating {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 0.2rem;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.star {
+  display: inline-block;
+}
+
+.star-full {
+  color: #fbbf24;
+}
+
+.star-half {
+  color: #fbbf24;
+  position: relative;
+}
+
+.star-half::after {
+  content: '☆';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  color: #d1d5db;
+}
+
+.star-empty {
+  color: #d1d5db;
+}
+
+.rating-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.rating-value {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #1f2937;
+}
+
+.reviews-count {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.review-card {
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid #e5e7eb;
+}
+
+.review-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.reviewer-photo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reviewer-info {
+  flex: 1;
+}
+
+.reviewer-name {
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.35rem;
+  font-size: 1rem;
+}
+
+.review-rating {
+  display: flex;
+  gap: 0.15rem;
+  font-size: 1.1rem;
+  margin-bottom: 0.35rem;
+}
+
+.review-time {
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.review-text {
+  color: #4a5568;
+  line-height: 1.7;
+  margin: 0;
+  font-size: 0.98rem;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .google-logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .rating-stars {
+    font-size: 1.2rem;
+  }
+
+  .rating-value {
+    font-size: 1rem;
+  }
+
+  .rating-info {
+    font-size: 0.875rem;
+  }
+
+  .review-card {
+    padding: 1rem;
+  }
+
+  .reviewer-photo {
+    width: 42px;
+    height: 42px;
+  }
+
+  .reviewer-name {
+    font-size: 0.95rem;
+  }
+
+  .review-rating {
+    font-size: 1rem;
+  }
+
+  .review-text {
+    font-size: 0.9rem;
+  }
+}

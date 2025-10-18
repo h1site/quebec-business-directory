@@ -18,12 +18,17 @@ const resources = {
         addListing: 'Ajouter une entreprise',
         login: 'Connexion',
         register: 'Créer un compte',
-        dashboard: 'Tableau de bord'
+        dashboard: 'Tableau de bord',
+        logout: 'Déconnexion',
+        donate: 'Faire un don'
       },
       footer: {
         localSearches: 'Recherches locales populaires',
         popularLocations: 'Endroits populaires au Canada',
-        languageToggle: 'English'
+        languageToggle: 'English',
+        copyrightYear: '© {{year}} Registre d\'entreprise du Québec.',
+        copyrightRights: 'Tous droits réservés.',
+        createdBy: 'Création de l\'agence web'
       },
       home: {
         popularCategoriesTitle: 'Explorez les catégories populaires',
@@ -82,12 +87,17 @@ const resources = {
         addListing: 'Add a business',
         login: 'Sign in',
         register: 'Create account',
-        dashboard: 'Dashboard'
+        dashboard: 'Dashboard',
+        logout: 'Sign out',
+        donate: 'Donate'
       },
       footer: {
         localSearches: 'Popular local searches',
         popularLocations: 'Popular locations in Canada',
-        languageToggle: 'Français'
+        languageToggle: 'Français',
+        copyrightYear: '© {{year}} Quebec Business Directory.',
+        copyrightRights: 'All rights reserved.',
+        createdBy: 'Created by web agency'
       },
       home: {
         popularCategoriesTitle: 'Explore popular categories',

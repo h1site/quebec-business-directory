@@ -1,12 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import BusinessCard from '../components/BusinessCard.jsx';
+import CityAutocompleteQuebec from '../components/CityAutocompleteQuebec.jsx';
 import { searchBusinesses } from '../services/businessService.js';
+import { getAllRegions, getCitiesByRegion } from '../data/quebecMunicipalities.js';
+import { getMainCategories, getSubCategories } from '../services/lookupService.js';
 
 const initialFilters = {
   q: '',
   city: '',
+  region: '',
   category: '',
   phone: '',
   distance: ''
@@ -18,20 +22,54 @@ const useQuery = () => {
 };
 
 const SearchResults = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const query = useQuery();
   const [filters, setFilters] = useState(initialFilters);
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [allRegions] = useState(getAllRegions());
+  const [mainCategories, setMainCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
 
+  // Load categories on mount
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const [mainCatsResult, subCatsResult] = await Promise.all([
+          getMainCategories(),
+          getSubCategories()
+        ]);
+        setMainCategories(mainCatsResult.data || []);
+        setSubCategories(subCatsResult.data || []);
+      } catch (error) {
+        console.error('Error loading categories:', error);
+      }
+    };
+    loadCategories();
+  }, []);
+
+  // Sync URL params to filters and perform search
   useEffect(() => {
     const q = query.get('q') ?? '';
     const city = query.get('city') ?? '';
+    const region = query.get('region') ?? '';
     const category = query.get('category') ?? '';
+    const subcategory = query.get('subcategory') ?? '';
     const phone = query.get('phone') ?? '';
 
-    setFilters((prev) => ({ ...prev, q, city, category, phone }));
+    // Use subcategory if available, otherwise use category
+    const categoryFilter = subcategory || category;
+
+    setFilters((prev) => ({
+      ...prev,
+      q,
+      city,
+      region,
+      category: categoryFilter,
+      phone
+    }));
 
     const fetchData = async () => {
       setLoading(true);
@@ -39,7 +77,8 @@ const SearchResults = () => {
       const { data, error: serviceError } = await searchBusinesses({
         query: q,
         city,
-        category,
+        region,
+        category: categoryFilter,
         phone
       });
       if (serviceError) {
@@ -57,6 +96,26 @@ const SearchResults = () => {
     fetchData();
   }, [query]);
 
+  // Update URL when filters change manually
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (filters.q) params.set('q', filters.q);
+    if (filters.city) params.set('city', filters.city);
+    if (filters.region) params.set('region', filters.region);
+    if (filters.category) params.set('category', filters.category);
+    if (filters.phone) params.set('phone', filters.phone);
+    if (filters.distance) params.set('distance', filters.distance);
+
+    const newSearch = params.toString();
+    const currentSearch = window.location.search.substring(1);
+
+    // Only update if URL actually changed
+    if (newSearch !== currentSearch) {
+      const newPath = newSearch ? `/recherche?${newSearch}` : '/recherche';
+      navigate(newPath, { replace: true });
+    }
+  }, [filters, navigate]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
@@ -64,36 +123,11 @@ const SearchResults = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true);
-    setError(null);
-    const { data, error: serviceError } = await searchBusinesses({
-      query: filters.q,
-      city: filters.city,
-      category: filters.category,
-      phone: filters.phone,
-      distance: filters.distance
-    });
-    if (serviceError) {
-      setError(serviceError.message);
-    } else {
-      const formatted = data?.map((item) => ({
-        ...item,
-        categories: Array.isArray(item.categories) ? item.categories : []
-      }));
-      setResults(formatted ?? []);
-    }
-    setLoading(false);
   };
 
   const handleReset = () => {
     setFilters(initialFilters);
-    searchBusinesses({}).then(({ data }) => {
-      const formatted = data?.map((item) => ({
-        ...item,
-        categories: Array.isArray(item.categories) ? item.categories : []
-      }));
-      setResults(formatted ?? []);
-    });
+    // useEffect will automatically trigger search when filters change
   };
 
   return (
@@ -108,17 +142,54 @@ const SearchResults = () => {
               <input name="q" value={filters.q} onChange={handleChange} id="q" />
             </div>
             <div className="form-group">
+              <label htmlFor="region">Région</label>
+              <select
+                name="region"
+                value={filters.region}
+                onChange={handleChange}
+                id="region"
+              >
+                <option value="">Toutes les régions</option>
+                {allRegions.map((region) => (
+                  <option key={region.slug} value={region.slug}>
+                    {region.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group">
               <label htmlFor="city">{t('search.city')}</label>
-              <input name="city" value={filters.city} onChange={handleChange} id="city" />
+              <CityAutocompleteQuebec
+                value={filters.city}
+                onChange={(city) => setFilters((prev) => ({ ...prev, city }))}
+                placeholder="Rechercher une ville..."
+              />
             </div>
             <div className="form-group">
               <label htmlFor="category">{t('search.category')}</label>
-              <input
+              <select
                 name="category"
                 value={filters.category}
                 onChange={handleChange}
                 id="category"
-              />
+              >
+                <option value="">Toutes les catégories</option>
+                {mainCategories.map((mainCat) => {
+                  const subs = subCategories.filter(sub => sub.main_category_id === mainCat.id);
+                  return (
+                    <optgroup key={mainCat.id} label={i18n.language === 'en' ? mainCat.label_en : mainCat.label_fr}>
+                      <option value={mainCat.slug}>
+                        {i18n.language === 'en' ? mainCat.label_en : mainCat.label_fr} (tous)
+                      </option>
+                      {subs.map((sub) => (
+                        <option key={sub.id} value={sub.slug}>
+                          → {i18n.language === 'en' ? sub.label_en : sub.label_fr}
+                        </option>
+                      ))}
+                    </optgroup>
+                  );
+                })}
+              </select>
             </div>
             <div className="form-group">
               <label htmlFor="phone">{t('search.telephone')}</label>
@@ -136,11 +207,13 @@ const SearchResults = () => {
                 step="1"
               />
             </div>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <button type="submit" className="primary-button" disabled={loading}>
-                {t('search.applyFilters')}
-              </button>
-              <button type="button" className="language-toggle" onClick={handleReset}>
+            <div style={{ marginTop: '1rem' }}>
+              <button
+                type="button"
+                className="language-toggle"
+                onClick={handleReset}
+                style={{ width: '100%' }}
+              >
                 {t('search.clearFilters')}
               </button>
             </div>

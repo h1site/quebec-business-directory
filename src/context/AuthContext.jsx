@@ -35,7 +35,13 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  const value = useMemo(() => ({ user, loading }), [user, loading]);
+  const logout = async () => {
+    if (!isSupabaseConfigured) return;
+    await supabase.auth.signOut();
+    setUser(null);
+  };
+
+  const value = useMemo(() => ({ user, loading, logout }), [user, loading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

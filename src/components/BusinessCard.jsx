@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { getBusinessUrl } from '../utils/urlHelpers.js';
 
 const BusinessCard = ({ business }) => (
-  <article className="business-card">
-    <div>
-      <h3>{business.name}</h3>
-      <p>{business.description}</p>
-    </div>
+  <Link to={getBusinessUrl(business)} className="business-card-link">
+    <article className="business-card">
+      <div>
+        <h3>{business.name}</h3>
+        <p>{business.description}</p>
+      </div>
     <div className="meta">
       {business.phone && <span>📞 {business.phone}</span>}
       {business.email && <span>✉️ {business.email}</span>}
@@ -24,11 +27,13 @@ const BusinessCard = ({ business }) => (
         ))}
       </div>
     )}
-  </article>
+    </article>
+  </Link>
 );
 
 BusinessCard.propTypes = {
   business: PropTypes.shape({
+    slug: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
     phone: PropTypes.string,
