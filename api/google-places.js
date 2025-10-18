@@ -50,8 +50,10 @@ export default async function handler(req, res) {
     return res.status(500).json(apiKeyError);
   }
 
-  const { query } = req;
-  const path = query.path ? query.path.join('/') : '';
+  // Extract path from URL instead of query params (Vercel rewrites don't preserve query.path)
+  const { query, url } = req;
+  const urlPath = url?.replace('/api/google-places', '') || '';
+  const path = urlPath.startsWith('/') ? urlPath.substring(1) : urlPath;
 
   try {
     // Route: /api/google-places/search

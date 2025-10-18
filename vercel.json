@@ -20,7 +20,7 @@
   ],
   "rewrites": [
     {
-      "source": "/api/google-places/(.*)",
+      "source": "/api/google-places/:path*",
       "destination": "/api/google-places"
     },
     {
