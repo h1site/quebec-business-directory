@@ -155,12 +155,40 @@ export default async function handler(req, res) {
     // Route: /api/google-places/import
     if (req.method === 'POST' && path === 'import') {
       const body = await parseBody(req);
-      const { placeId } = body;
+      const { input, address } = body;
 
-      if (!placeId) {
-        return res.status(400).json({ error: 'Place ID is required' });
+      if (!input) {
+        return res.status(400).json({
+          error: 'Input is required (URL, Place ID, or business name)'
+        });
       }
 
+      let placeId = input;
+
+      // If input looks like a URL or is not a Place ID, try to extract or search
+      if (input.includes('google.com') || input.includes('goo.gl') || !/^[A-Za-z0-9_-]{20,}$/.test(input)) {
+        // Try to extract Place ID from URL (basic extraction)
+        const placeIdMatch = input.match(/!1s([A-Za-z0-9_-]+)/);
+        if (placeIdMatch) {
+          placeId = placeIdMatch[1];
+        } else {
+          // Search by name
+          const searchUrl = `${GOOGLE_PLACES_API_URL}/findplacefromtext/json?input=${encodeURIComponent(input + ' ' + (address || ''))}&inputtype=textquery&fields=place_id,name&key=${GOOGLE_PLACES_API_KEY}`;
+          const searchResponse = await fetch(searchUrl);
+          const searchData = await searchResponse.json();
+
+          if (searchData.status !== 'OK' || !searchData.candidates || searchData.candidates.length === 0) {
+            return res.status(404).json({
+              error: 'Business not found',
+              message: 'Could not find business on Google Maps'
+            });
+          }
+
+          placeId = searchData.candidates[0].place_id;
+        }
+      }
+
+      // Get place details
       const fields = [
         'place_id',
         'name',
@@ -181,50 +209,20 @@ export default async function handler(req, res) {
         'photos'
       ].join(',');
 
-      const url = `${GOOGLE_PLACES_API_URL}/details/json?place_id=${placeId}&fields=${fields}&key=${GOOGLE_PLACES_API_KEY}`;
+      const detailsUrl = `${GOOGLE_PLACES_API_URL}/details/json?place_id=${placeId}&fields=${fields}&key=${GOOGLE_PLACES_API_KEY}`;
+      const detailsResponse = await fetch(detailsUrl);
+      const detailsData = await detailsResponse.json();
 
-      const response = await fetch(url);
-      const data = await response.json();
-
-      if (data.status !== 'OK' || !data.result) {
+      if (detailsData.status !== 'OK' || !detailsData.result) {
         return res.status(404).json({
           error: 'Place not found',
-          googleStatus: data.status
+          message: `Google API error: ${detailsData.status}`,
+          googleStatus: detailsData.status
         });
       }
 
-      const place = data.result;
-      const addressComponents = place.address_components || [];
-
-      // Extract address components
-      const getComponent = (types) => {
-        const component = addressComponents.find(c =>
-          types.some(type => c.types.includes(type))
-        );
-        return component?.long_name || '';
-      };
-
-      const streetNumber = getComponent(['street_number']);
-      const route = getComponent(['route']);
-      const city = getComponent(['locality', 'sublocality']);
-      const postalCode = getComponent(['postal_code']);
-
-      const importedData = {
-        name: place.name || '',
-        description: place.editorial_summary?.overview || '',
-        phone: place.formatted_phone_number || place.international_phone_number || '',
-        website: place.website || '',
-        address: [streetNumber, route].filter(Boolean).join(' '),
-        city: city,
-        postal_code: postalCode,
-        google_rating: place.rating || null,
-        google_reviews_count: place.user_ratings_total || 0,
-        google_reviews: place.reviews || [],
-        opening_hours: place.opening_hours?.periods || [],
-        photos: place.photos || []
-      };
-
-      return res.json(importedData);
+      // Return the raw Google Place data - the frontend will map it
+      return res.json(detailsData.result);
     }
 
     // Health check
