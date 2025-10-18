@@ -9,7 +9,9 @@
  */
 
 // Use backend proxy endpoint instead of direct API calls
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+// In production (Vercel), use /api. In development, use VITE_API_URL if defined (e.g., http://localhost:3001/api)
+const API_BASE_URL = import.meta.env.VITE_API_URL ||
+  (import.meta.env.MODE === 'production' ? '/api' : 'http://localhost:3001/api');
 const PROXY_ENDPOINT = `${API_BASE_URL}/google-places`;
 
 /**
@@ -369,12 +371,18 @@ export const importFromGoogle = async (input, address = '', returnMultiple = fal
   } catch (error) {
     // Améliorer le message d'erreur pour les problèmes de connexion
     if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
-      throw new Error(
-        '❌ Impossible de se connecter au serveur backend.\n\n' +
-        '💡 Solution: Démarrez le serveur avec la commande:\n' +
-        '   npm run dev:server\n\n' +
-        'Ou utilisez: npm run dev:all (pour tout démarrer)'
-      );
+      const isDev = import.meta.env.MODE === 'development';
+      const errorMsg = isDev
+        ? '❌ Impossible de se connecter au serveur backend.\n\n' +
+          '💡 Solution: Démarrez le serveur avec la commande:\n' +
+          '   npm run dev:server\n\n' +
+          'Ou utilisez: npm run dev:all (pour tout démarrer)'
+        : '❌ Impossible de se connecter au serveur API.\n\n' +
+          '💡 Vérifiez que:\n' +
+          '   • La clé API Google Places est configurée dans Vercel\n' +
+          '   • Les variables d\'environnement sont correctement définies\n' +
+          '   • Votre connexion Internet fonctionne';
+      throw new Error(errorMsg);
     }
     throw error;
   }
