@@ -1,0 +1,161 @@
+.business-hours-container {
+  /* No background or border needed - it's inside a card */
+}
+
+.business-hours-loading {
+  padding: 1rem;
+  text-align: center;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.hours-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  margin-bottom: 0.75rem;
+}
+
+.hours-status.open {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.hours-status.closed {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.status-indicator {
+  font-size: 0.6rem;
+  line-height: 1;
+}
+
+.hours-status.open .status-indicator {
+  color: #38a169;
+}
+
+.hours-status.closed .status-indicator {
+  color: #e53e3e;
+}
+
+.status-text {
+  white-space: nowrap;
+}
+
+.hours-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  cursor: pointer;
+  user-select: none;
+  color: #3182ce;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.hours-toggle:hover {
+  color: #2c5aa0;
+}
+
+.toggle-icon {
+  transition: transform 0.2s ease;
+}
+
+.toggle-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.hours-list {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid #f7fafc;
+}
+
+.hours-row:last-child {
+  border-bottom: none;
+}
+
+.hours-row.current-day {
+  background: #ebf8ff;
+  padding: 0.625rem 0.75rem;
+  margin: 0 -0.75rem;
+  border-radius: 6px;
+  border-bottom: 1px solid #bee3f8;
+}
+
+.hours-row.current-day:last-child {
+  border-bottom: none;
+}
+
+.day-name {
+  font-weight: 500;
+  color: #2d3748;
+  font-size: 0.95rem;
+}
+
+.hours-row.current-day .day-name {
+  color: #2c5aa0;
+  font-weight: 600;
+}
+
+.hours-text {
+  color: #4a5568;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.hours-text.closed {
+  color: #a0aec0;
+  font-style: italic;
+}
+
+.hours-text.open-24h {
+  color: #38a169;
+  font-weight: 500;
+}
+
+.hours-row.current-day .hours-text {
+  color: #2c5aa0;
+  font-weight: 500;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .hours-status {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .hours-toggle {
+    font-size: 0.9rem;
+  }
+
+  .day-name,
+  .hours-text {
+    font-size: 0.9rem;
+  }
+
+  .hours-row {
+    padding: 0.5rem 0;
+  }
+
+  .hours-row.current-day {
+    padding: 0.5rem 0.6rem;
+    margin: 0 -0.6rem;
+  }
+}
