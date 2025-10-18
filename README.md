@@ -28,7 +28,28 @@ Copiez `.env.example` vers `.env` et indiquez vos clés Supabase :
 ```bash
 VITE_SUPABASE_URL=VotreURLSupabase
 VITE_SUPABASE_ANON_KEY=VotreClefAnonyme
+GOOGLE_PLACES_API_KEY=VotreClefGooglePlacesAPI
 ```
+
+## Configuration pour Vercel (Production)
+
+Pour déployer sur Vercel avec la fonctionnalité d'importation Google My Business :
+
+1. **Variables d'environnement à configurer dans Vercel** :
+   - Allez dans Project Settings → Environment Variables
+   - Ajoutez les variables suivantes :
+     - `VITE_SUPABASE_URL` : URL de votre projet Supabase
+     - `VITE_SUPABASE_ANON_KEY` : Clé anonyme Supabase
+     - `GOOGLE_PLACES_API_KEY` : Votre clé API Google Places
+
+2. **API Serverless** :
+   - L'API Google Places est déjà configurée dans `/api/google-places.js`
+   - Vercel détecte automatiquement les fonctions serverless dans le dossier `/api`
+   - Aucune configuration supplémentaire n'est nécessaire
+
+3. **Important** :
+   - Ne jamais commiter le fichier `.env` dans Git
+   - Toutes les variables d'environnement doivent être configurées dans l'interface Vercel
 
 ### Provisionner le schéma complet
 
