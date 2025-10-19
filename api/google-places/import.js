@@ -62,7 +62,9 @@ export default async function handler(req, res) {
       }
     }
 
-    // Get place details with extended fields including attributes
+    // Get place details
+    // Note: Advanced attributes (dine_in, parking_options, etc.) require the new Places API (New)
+    // For now using the legacy API which has fewer fields available
     const fields = [
       'place_id',
       'name',
@@ -81,32 +83,7 @@ export default async function handler(req, res) {
       'reviews',
       'editorial_summary',
       'photos',
-      // Restaurant/Commerce attributes
-      'dine_in',
-      'takeout',
-      'delivery',
-      'serves_breakfast',
-      'serves_lunch',
-      'serves_dinner',
-      'serves_brunch',
-      'serves_vegetarian_food',
-      'serves_beer',
-      'serves_wine',
-      'outdoor_seating',
-      'live_music',
-      'reservable',
-      'good_for_children',
-      'good_for_groups',
-      'wheelchair_accessible_entrance',
-      // Parking
-      'parking',
-      // Payment
-      'payment_options',
-      // Accessibility
-      'accessibility',
-      // EV/Fuel
-      'ev_charge_options',
-      'fuel_options'
+      'wheelchair_accessible_entrance'
     ].join(',');
 
     const detailsUrl = `${GOOGLE_PLACES_API_URL}/details/json?place_id=${placeId}&fields=${fields}&key=${GOOGLE_PLACES_API_KEY}`;

@@ -320,8 +320,9 @@ export const mapGooglePlaceToBusinessForm = (placeData) => {
     icon: placeData.icon,
     icon_background_color: placeData.icon_background_color,
 
-    // Restaurant/Commerce attributes
-    restaurantAttributes: {
+    // Restaurant/Commerce attributes (only from new Places API)
+    // Note: These fields are not available in legacy Places API Details
+    restaurantAttributes: placeData.dine_in !== undefined ? {
       dineIn: placeData.dine_in,
       takeout: placeData.takeout,
       delivery: placeData.delivery,
@@ -337,24 +338,24 @@ export const mapGooglePlaceToBusinessForm = (placeData) => {
       reservable: placeData.reservable,
       goodForChildren: placeData.good_for_children,
       goodForGroups: placeData.good_for_groups
-    },
+    } : null,
 
-    // Parking options
+    // Parking options (only from new Places API)
     parkingOptions: placeData.parking || null,
 
-    // Payment options
+    // Payment options (only from new Places API)
     paymentOptions: placeData.payment_options || null,
 
     // Accessibility options
     accessibilityOptions: {
       wheelchairAccessibleEntrance: placeData.wheelchair_accessible_entrance,
-      ...placeData.accessibility
+      ...(placeData.accessibility || {})
     },
 
-    // EV Charging options (only if available)
+    // EV Charging options (only from new Places API)
     evChargeOptions: placeData.ev_charge_options || null,
 
-    // Fuel options (only if available)
+    // Fuel options (only from new Places API)
     fuelOptions: placeData.fuel_options || null
   };
 };
