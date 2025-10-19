@@ -213,18 +213,6 @@ const BusinessDetails = () => {
 
           {/* Right Sidebar */}
           <aside className="business-sidebar">
-            {/* Google Reviews - Top of Sidebar */}
-            {business.google_reviews && business.google_reviews.length > 0 && (
-              <div className="sidebar-card">
-                <h3 className="sidebar-title">Avis Google</h3>
-                <GoogleReviews
-                  rating={business.google_rating}
-                  reviewsCount={business.google_reviews_count}
-                  reviews={business.google_reviews}
-                />
-              </div>
-            )}
-
             {/* Combined Contact Card */}
             <div className="sidebar-card">
               {/* Address Section */}
@@ -330,6 +318,18 @@ const BusinessDetails = () => {
                 </div>
               )}
             </div>
+
+            {/* Google Reviews */}
+            {business.google_reviews && business.google_reviews.length > 0 && (
+              <div className="sidebar-card">
+                <h3 className="sidebar-title">Avis Google</h3>
+                <GoogleReviews
+                  rating={business.google_rating}
+                  reviewsCount={business.google_reviews_count}
+                  reviews={business.google_reviews}
+                />
+              </div>
+            )}
 
             {/* Service Area */}
             {business.service_area && (
