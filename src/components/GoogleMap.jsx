@@ -24,11 +24,16 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
           return;
         }
 
-        // Small delay to ensure DOM element is ready
-        setTimeout(() => {
+        // Wait for DOM element to be ready with retry logic
+        const tryCreateMap = (retries = 0) => {
           if (!mapRef.current) {
-            setError('Élément de carte non disponible');
-            setLoading(false);
+            if (retries < 10) {
+              // Retry up to 10 times with 50ms intervals (500ms total max wait)
+              setTimeout(() => tryCreateMap(retries + 1), 50);
+            } else {
+              setError('Élément de carte non disponible');
+              setLoading(false);
+            }
             return;
           }
 
@@ -98,7 +103,10 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
               }
             });
           }
-        }, 50); // Small 50ms delay to ensure DOM is ready
+        };
+
+        // Start trying to create the map
+        tryCreateMap();
       } catch (err) {
         console.error('Erreur dans loadMap:', err);
         setError('Erreur lors du chargement de la carte');
