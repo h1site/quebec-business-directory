@@ -155,13 +155,13 @@ const BusinessDetails = () => {
 
             {/* Tags cliquables */}
             <div className="business-tags">
-              {business.primary_main_category_fr && (
-                <Link to={`/categorie/${business.primary_main_category_slug || ''}`} className="business-tag">
+              {business.primary_main_category_fr && business.primary_main_category_slug && (
+                <Link to={`/categorie/${business.primary_main_category_slug}`} className="business-tag">
                   {business.primary_main_category_fr}
                 </Link>
               )}
-              {business.primary_sub_category_fr && (
-                <Link to={`/categorie/${business.primary_main_category_slug || ''}/${business.primary_sub_category_slug || ''}`} className="business-tag">
+              {business.primary_sub_category_fr && business.primary_sub_category_slug && (
+                <Link to={`/categorie/${business.primary_main_category_slug}/${business.primary_sub_category_slug}`} className="business-tag">
                   {business.primary_sub_category_fr}
                 </Link>
               )}
