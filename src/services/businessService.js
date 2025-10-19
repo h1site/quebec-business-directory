@@ -183,22 +183,41 @@ export const getBusinessBySlug = async (slug) => {
     return { data: business || null, error: business ? null : { message: 'Business not found' } };
   }
 
+  // First, get business data with enriched view
   const { data, error } = await supabase
-    .from(tableName)
-    .select(`
-      *,
-      main_category:main_categories(slug, label_fr, label_en)
-    `)
+    .from('businesses_enriched')
+    .select('*')
     .eq('slug', slug)
     .single();
 
-  // Flatten main_category data for easier access
-  if (data && data.main_category) {
-    data.main_category_slug = data.main_category.slug;
-    data.main_category_name = data.main_category.label_fr;
+  if (error || !data) {
+    return { data, error };
   }
 
-  return { data, error };
+  // Get category slugs by finding the primary category
+  const { data: categoryData } = await supabase
+    .from('business_categories')
+    .select(`
+      sub_categories:sub_category_id (
+        slug,
+        main_categories:main_category_id (
+          slug
+        )
+      )
+    `)
+    .eq('business_id', data.id)
+    .eq('is_primary', true)
+    .single();
+
+  // Add slugs to the business data
+  if (categoryData?.sub_categories) {
+    data.primary_sub_category_slug = categoryData.sub_categories.slug;
+    if (categoryData.sub_categories.main_categories) {
+      data.primary_main_category_slug = categoryData.sub_categories.main_categories.slug;
+    }
+  }
+
+  return { data, error: null };
 };
 
 export const updateBusiness = async (id, payload) => {
