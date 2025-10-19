@@ -255,16 +255,14 @@ export const mapGooglePlaceToBusinessForm = (placeData) => {
   } else if (placeData.business_description) {
     // Some Google Business Profiles have a business_description field
     description = placeData.business_description;
-  } else if (placeData.reviews && placeData.reviews.length > 0) {
-    // Fallback: Use first review as description
-    description = placeData.reviews[0].text.substring(0, 200) + '...';
   }
+  // Note: Don't use reviews as fallback description - reviews will be displayed separately in a carousel
 
   // Determine suggested category
   const suggestedCategorySlug = mapGoogleTypeToCategory(placeData.types || []);
 
-  // Process reviews - limit to 5 most recent
-  const processedReviews = placeData.reviews?.slice(0, 5).map(review => ({
+  // Process ALL reviews (Google Places API returns up to 5 by default, but we'll take all that are available)
+  const processedReviews = placeData.reviews?.map(review => ({
     author_name: review.author_name,
     rating: review.rating,
     text: review.text,

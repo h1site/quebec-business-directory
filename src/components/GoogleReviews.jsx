@@ -1,17 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import './GoogleReviews.css';
 
 const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
-  const [displayedReview, setDisplayedReview] = useState(null);
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 
-  // Select a random review to display
-  useEffect(() => {
+  const goToNextReview = () => {
     if (reviews && reviews.length > 0) {
-      const randomIndex = Math.floor(Math.random() * reviews.length);
-      setDisplayedReview(reviews[randomIndex]);
+      setCurrentReviewIndex((prev) => (prev + 1) % reviews.length);
     }
-  }, [reviews]);
+  };
+
+  const goToPreviousReview = () => {
+    if (reviews && reviews.length > 0) {
+      setCurrentReviewIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+    }
+  };
+
+  const goToReview = (index) => {
+    setCurrentReviewIndex(index);
+  };
 
   // Render star rating
   const renderStars = (rating) => {
@@ -42,6 +50,8 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
     return null;
   }
 
+  const currentReview = reviews && reviews.length > 0 ? reviews[currentReviewIndex] : null;
+
   return (
     <div className="google-reviews-section">
       <div className="reviews-header">
@@ -55,26 +65,63 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
         </div>
       </div>
 
-      {displayedReview && (
-        <div className="review-card">
-          <div className="review-header">
-            {displayedReview.profile_photo_url && (
-              <img
-                src={displayedReview.profile_photo_url}
-                alt={displayedReview.author_name}
-                className="reviewer-photo"
-              />
-            )}
-            <div className="reviewer-info">
-              <div className="reviewer-name">{displayedReview.author_name}</div>
-              <div className="review-rating">{renderStars(displayedReview.rating)}</div>
-              {displayedReview.relative_time_description && (
-                <div className="review-time">{displayedReview.relative_time_description}</div>
+      {currentReview && (
+        <div className="reviews-carousel">
+          <div className="review-card">
+            <div className="review-header">
+              {currentReview.profile_photo_url && (
+                <img
+                  src={currentReview.profile_photo_url}
+                  alt={currentReview.author_name}
+                  className="reviewer-photo"
+                />
               )}
+              <div className="reviewer-info">
+                <div className="reviewer-name">{currentReview.author_name}</div>
+                <div className="review-rating">{renderStars(currentReview.rating)}</div>
+                {currentReview.relative_time_description && (
+                  <div className="review-time">{currentReview.relative_time_description}</div>
+                )}
+              </div>
             </div>
+            {currentReview.text && (
+              <p className="review-text">{currentReview.text}</p>
+            )}
           </div>
-          {displayedReview.text && (
-            <p className="review-text">{displayedReview.text}</p>
+
+          {/* Carousel Controls */}
+          {reviews && reviews.length > 1 && (
+            <>
+              <div className="carousel-navigation">
+                <button
+                  className="carousel-button carousel-prev"
+                  onClick={goToPreviousReview}
+                  aria-label="Avis précédent"
+                >
+                  ‹
+                </button>
+                <div className="carousel-indicators">
+                  {reviews.map((_, index) => (
+                    <button
+                      key={index}
+                      className={`carousel-indicator ${index === currentReviewIndex ? 'active' : ''}`}
+                      onClick={() => goToReview(index)}
+                      aria-label={`Aller à l'avis ${index + 1}`}
+                    />
+                  ))}
+                </div>
+                <button
+                  className="carousel-button carousel-next"
+                  onClick={goToNextReview}
+                  aria-label="Avis suivant"
+                >
+                  ›
+                </button>
+              </div>
+              <div className="carousel-counter">
+                {currentReviewIndex + 1} / {reviews.length}
+              </div>
+            </>
           )}
         </div>
       )}

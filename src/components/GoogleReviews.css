@@ -133,6 +133,85 @@
   font-size: 0.98rem;
 }
 
+/* Carousel Container */
+.reviews-carousel {
+  position: relative;
+}
+
+/* Carousel Navigation */
+.carousel-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.carousel-button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+}
+
+.carousel-button:hover {
+  background: #1d4ed8;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.carousel-button:active {
+  transform: scale(0.95);
+}
+
+/* Carousel Indicators (Dots) */
+.carousel-indicators {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.carousel-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.carousel-indicator:hover {
+  border-color: #2563eb;
+  transform: scale(1.2);
+}
+
+.carousel-indicator.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  width: 12px;
+  height: 12px;
+}
+
+/* Carousel Counter */
+.carousel-counter {
+  text-align: center;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
   .google-logo {
@@ -171,5 +250,26 @@
 
   .review-text {
     font-size: 0.9rem;
+  }
+
+  .carousel-button {
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+  }
+
+  .carousel-navigation {
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .carousel-indicator {
+    width: 8px;
+    height: 8px;
+  }
+
+  .carousel-indicator.active {
+    width: 10px;
+    height: 10px;
   }
 }
