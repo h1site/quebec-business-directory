@@ -33,6 +33,7 @@ const SearchResults = () => {
   const [mainCategories, setMainCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
+  const [isSyncingFromUrl, setIsSyncingFromUrl] = useState(false);
 
   // Load categories on mount
   useEffect(() => {
@@ -65,6 +66,7 @@ const SearchResults = () => {
     // Use subcategory if available, otherwise use category
     const categoryFilter = subcategory || category;
 
+    setIsSyncingFromUrl(true);
     setFilters((prev) => ({
       ...prev,
       q,
@@ -94,13 +96,18 @@ const SearchResults = () => {
         setResults(formatted ?? []);
       }
       setLoading(false);
+      // Reset sync flag after a short delay to allow state to settle
+      setTimeout(() => setIsSyncingFromUrl(false), 100);
     };
 
     fetchData();
   }, [query]);
 
-  // Update URL when filters change manually
+  // Update URL when filters change manually (not from URL sync)
   useEffect(() => {
+    // Skip if we're syncing from URL to prevent infinite loop
+    if (isSyncingFromUrl) return;
+
     const params = new URLSearchParams();
     if (filters.q) params.set('q', filters.q);
     if (filters.city) params.set('city', filters.city);
@@ -117,7 +124,7 @@ const SearchResults = () => {
       const newPath = newSearch ? `/recherche?${newSearch}` : '/recherche';
       navigate(newPath, { replace: true });
     }
-  }, [filters, navigate]);
+  }, [filters, navigate, isSyncingFromUrl]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
