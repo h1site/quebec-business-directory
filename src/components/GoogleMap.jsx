@@ -134,25 +134,15 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
     };
   }, [address, city, province, postalCode, businessName, latitude, longitude]);
 
-  if (loading) {
-    return (
-      <div className="google-map-container">
-        <div className="map-loading">Chargement de la carte...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="google-map-container">
-        <div className="map-error">{error}</div>
-      </div>
-    );
-  }
-
   return (
     <div className="google-map-container">
-      <div ref={mapRef} className="google-map" />
+      {loading && <div className="map-loading">Chargement de la carte...</div>}
+      {error && <div className="map-error">{error}</div>}
+      <div
+        ref={mapRef}
+        className="google-map"
+        style={{ display: loading || error ? 'none' : 'block' }}
+      />
     </div>
   );
 };
