@@ -16,8 +16,12 @@ const buildFilters = ({ query, city, region, mrc, category, phone, distance, coo
   }
 
   if (mrc) {
-    // Filter by MRC name in the region field (which contains "MRC, Region")
-    filters.push({ column: 'region', operator: 'ilike', value: `%${mrc}%` });
+    // Convert MRC slug to MRC name for exact matching
+    const regionData = quebecMunicipalities[region];
+    if (regionData && regionData.mrcs[mrc]) {
+      const mrcName = regionData.mrcs[mrc].name;
+      filters.push({ column: 'mrc', operator: 'eq', value: mrcName });
+    }
   } else if (region) {
     // Convert region slug to region name
     const regionData = quebecMunicipalities[region];
