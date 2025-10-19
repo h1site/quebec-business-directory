@@ -1348,10 +1348,10 @@ const EditBusiness = () => {
       </div>
 
       {/* Google Import Modal */}
-      {showGoogleImport && (
-        <GoogleImportModal
-          onClose={() => setShowGoogleImport(false)}
-          onImport={(importedData) => {
+      <GoogleImportModal
+        isOpen={showGoogleImport}
+        onClose={() => setShowGoogleImport(false)}
+        onImport={(importedData) => {
             // Update form with imported data, preserving existing values for non-imported fields
             setForm(prev => ({
               ...prev,
@@ -1380,7 +1380,6 @@ const EditBusiness = () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         />
-      )}
     </div>
   );
 };
