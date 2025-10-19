@@ -669,6 +669,7 @@ const CreateBusiness = () => {
                   type="logo"
                   onImageSelect={(file) => setLogoFile(file)}
                   multiple={false}
+                  initialFiles={logoFile}
                 />
               </div>
 
@@ -681,6 +682,7 @@ const CreateBusiness = () => {
                   onImageSelect={(files) => setGalleryFiles(files)}
                   multiple={true}
                   maxFiles={10}
+                  initialFiles={galleryFiles}
                 />
               </div>
             </div>

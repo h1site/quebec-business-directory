@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './ImageUploader.css';
 
@@ -44,13 +44,41 @@ const ImageUploader = ({
   currentImage = null,
   onImageSelect,
   multiple = false,
-  maxFiles = 10
+  maxFiles = 10,
+  initialFiles = null
 }) => {
   const [preview, setPreview] = useState(currentImage);
   const [previews, setPreviews] = useState([]);
   const [dragActive, setDragActive] = useState(false);
   const [converting, setConverting] = useState(false);
   const fileInputRef = useRef(null);
+
+  // Handle initial files from Google import
+  useEffect(() => {
+    if (initialFiles) {
+      const processInitialFiles = async () => {
+        setConverting(true);
+        try {
+          if (multiple && Array.isArray(initialFiles)) {
+            // Multiple files (gallery)
+            const convertedResults = await Promise.all(
+              initialFiles.map(file => convertToWebP(file, 0.85))
+            );
+            setPreviews(convertedResults);
+          } else if (!multiple && initialFiles) {
+            // Single file (logo)
+            const file = Array.isArray(initialFiles) ? initialFiles[0] : initialFiles;
+            const result = await convertToWebP(file, 0.8);
+            setPreview(result.preview);
+          }
+        } catch (error) {
+          console.error('Error processing initial files:', error);
+        }
+        setConverting(false);
+      };
+      processInitialFiles();
+    }
+  }, [initialFiles, multiple]);
 
   const handleFiles = async (files) => {
     if (!files || files.length === 0) return;
@@ -225,7 +253,11 @@ ImageUploader.propTypes = {
   currentImage: PropTypes.string,
   onImageSelect: PropTypes.func.isRequired,
   multiple: PropTypes.bool,
-  maxFiles: PropTypes.number
+  maxFiles: PropTypes.number,
+  initialFiles: PropTypes.oneOfType([
+    PropTypes.object, // Single File object
+    PropTypes.arrayOf(PropTypes.object) // Array of File objects
+  ])
 };
 
 export default ImageUploader;
