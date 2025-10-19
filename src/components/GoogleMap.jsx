@@ -13,10 +13,13 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
 
     // Check if coordinates are provided
     if (!latitude || !longitude) {
+      console.log('GoogleMap: Coordonnées manquantes', { latitude, longitude });
       setError('Coordonnées GPS manquantes. Veuillez ajouter la latitude et longitude pour afficher la carte.');
       setLoading(false);
       return;
     }
+
+    console.log('GoogleMap: Chargement avec coordonnées', { latitude, longitude });
 
     const initMap = () => {
       // Make sure component is still mounted and ref exists
@@ -79,7 +82,7 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
       // Load the script
       const script = document.createElement('script');
       const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyBY1wKHk0p0bf_Cw2lNZDW2zypePUrylxM';
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&loading=async`;
       script.async = true;
       script.onload = () => {
         setTimeout(initMap, 100);
