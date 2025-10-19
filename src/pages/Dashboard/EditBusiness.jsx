@@ -1000,10 +1000,23 @@ const EditBusiness = () => {
                 </div>
 
                 {(!form.latitude || !form.longitude) && (
-                  <div className="alert alert-info" style={{ marginTop: '1rem', padding: '1rem', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px' }}>
-                    <strong>💡 Info:</strong> La carte Google Maps ne sera pas affichée sans coordonnées GPS.
-                    Vous pouvez les obtenir facilement en cherchant votre adresse sur{' '}
-                    <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">Google Maps</a>.
+                  <div className="alert alert-info" style={{ marginTop: '1rem', padding: '1.25rem', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px', lineHeight: '1.6' }}>
+                    <strong style={{ display: 'block', marginBottom: '0.75rem', fontSize: '1.05rem' }}>🗺️ Comment obtenir les coordonnées GPS?</strong>
+
+                    <div style={{ marginBottom: '1rem' }}>
+                      <strong>Méthode: Google Maps</strong>
+                      <ol style={{ marginTop: '0.5rem', marginBottom: '0', paddingLeft: '1.5rem' }}>
+                        <li>Allez sur <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'underline' }}>Google Maps</a></li>
+                        <li>Tapez votre adresse dans la barre de recherche</li>
+                        <li><strong>Clic droit</strong> sur le marqueur rouge (ou sur l'emplacement exact)</li>
+                        <li>Cliquez sur les coordonnées qui apparaissent en premier dans le menu</li>
+                        <li>Les coordonnées sont copiées! Collez-les ici (format: 45.5017, -73.5673)</li>
+                      </ol>
+                    </div>
+
+                    <div style={{ marginTop: '1rem', padding: '0.75rem', background: '#fef3c7', border: '1px solid #fbbf24', borderRadius: '6px' }}>
+                      <strong>⚠️ Important:</strong> Sans coordonnées GPS, la carte Google Maps ne s'affichera pas sur la page de votre entreprise.
+                    </div>
                   </div>
                 )}
 
