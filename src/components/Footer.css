@@ -1,0 +1,162 @@
+/* Footer Component Styles */
+
+.footer {
+  padding: 3rem 0 1.5rem;
+}
+
+/* Facebook Banner */
+.facebook-banner {
+  background: #1e3a5f;
+  padding: 1.75rem 2rem;
+  margin-bottom: 2.5rem;
+  border-top: 3px solid #1877f2;
+}
+
+.facebook-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.facebook-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex: 1;
+}
+
+.facebook-icon {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.facebook-banner-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: white;
+}
+
+.facebook-banner-message strong {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: white;
+}
+
+.facebook-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+}
+
+.btn-join-facebook {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  background: white;
+  color: #1877f2;
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.btn-join-facebook:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  background: #f8f9fa;
+}
+
+.facebook-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: #1877f2;
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 1.1rem;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Copyright Section */
+.footer-copyright {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  fontSize: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-link {
+  color: #ffbd3d;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.footer-link:hover {
+  color: #ffd700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .facebook-banner {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .facebook-banner-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .facebook-banner-text {
+    gap: 1rem;
+  }
+
+  .facebook-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .facebook-banner-message strong {
+    font-size: 1rem;
+  }
+
+  .facebook-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .btn-join-facebook {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .facebook-banner {
+    padding: 1.25rem 1rem;
+  }
+
+  .facebook-banner-text {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .facebook-banner-message strong {
+    font-size: 0.95rem;
+  }
+}
