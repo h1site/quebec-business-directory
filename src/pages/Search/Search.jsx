@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { searchBusinesses } from '../../services/businessService.js';
 import { getMainCategories, getSubCategories } from '../../services/lookupService.js';
-import { getAllRegions } from '../../data/quebecMunicipalities.js';
+import { getAllRegions, getMRCsByRegion, getCitiesByMRC } from '../../data/quebecMunicipalities.js';
 import BusinessCard from '../../components/BusinessCard.jsx';
 import SearchBar from './SearchBar.jsx';
 import SearchFilters from './SearchFilters.jsx';
@@ -12,10 +12,12 @@ import './Search.css';
 const Search = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const isInitialMount = useRef(true);
 
   const [query, setQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedRegion, setSelectedRegion] = useState('');
+  const [selectedMRC, setSelectedMRC] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
 
@@ -24,11 +26,11 @@ const Search = () => {
   const [totalResults, setTotalResults] = useState(0);
 
   const [regions] = useState(getAllRegions());
+  const [mrcs, setMrcs] = useState([]);
+  const [cities, setCities] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [filteredSubCategories, setFilteredSubCategories] = useState([]);
-
-  const [showFilters, setShowFilters] = useState(false);
 
   // Load categories
   useEffect(() => {
@@ -42,6 +44,28 @@ const Search = () => {
     };
     loadCategories();
   }, []);
+
+  // Update MRCs when region changes
+  useEffect(() => {
+    if (selectedRegion) {
+      const regionMRCs = getMRCsByRegion(selectedRegion);
+      setMrcs(regionMRCs);
+    } else {
+      setMrcs([]);
+      setSelectedMRC('');
+      setCities([]);
+    }
+  }, [selectedRegion]);
+
+  // Update cities when MRC changes
+  useEffect(() => {
+    if (selectedMRC && selectedRegion) {
+      const mrcCities = getCitiesByMRC(selectedRegion, selectedMRC);
+      setCities(mrcCities);
+    } else if (!selectedMRC) {
+      setCities([]);
+    }
+  }, [selectedMRC, selectedRegion]);
 
   // Filter subcategories when category changes
   useEffect(() => {
@@ -58,23 +82,79 @@ const Search = () => {
 
   // Sync with URL parameters on mount
   useEffect(() => {
+    if (categories.length === 0 || subCategories.length === 0) return;
+
     const q = searchParams.get('q') || '';
     const city = searchParams.get('city') || '';
     const region = searchParams.get('region') || '';
-    const category = searchParams.get('category') || '';
-    const subcategory = searchParams.get('subcategory') || '';
+    const mrc = searchParams.get('mrc') || '';
+    const categorySlug = searchParams.get('category') || '';
+    const subcategorySlug = searchParams.get('subcategory') || '';
 
     setQuery(q);
     setSelectedCity(city);
     setSelectedRegion(region);
-    setSelectedCategory(category);
-    setSelectedSubCategory(subcategory);
+    setSelectedMRC(mrc);
+
+    // Convert slugs to IDs for state management
+    if (categorySlug) {
+      const cat = categories.find(c => c.slug === categorySlug);
+      if (cat) setSelectedCategory(cat.id);
+    }
+
+    if (subcategorySlug) {
+      const subCat = subCategories.find(s => s.slug === subcategorySlug);
+      if (subCat) {
+        setSelectedCategory(subCat.main_category_id);
+        setSelectedSubCategory(subCat.id);
+      }
+    }
 
     // Auto-search if params present
-    if (q || city || region || category || subcategory) {
-      performSearch({ q, city, region, category, subcategory });
+    if (q || city || region || mrc || categorySlug || subcategorySlug) {
+      performSearch({ q, city, region, mrc, categorySlug, subcategorySlug });
     }
-  }, []);
+
+    isInitialMount.current = false;
+  }, [categories, subCategories]);
+
+  // INSTANT SEARCH: Trigger search whenever filters change
+  useEffect(() => {
+    // Skip if still loading initial data or on first mount
+    if (categories.length === 0 || subCategories.length === 0 || isInitialMount.current) return;
+
+    // Update URL and trigger search
+    updateURLAndSearch();
+  }, [selectedRegion, selectedMRC, selectedCity, selectedCategory, selectedSubCategory]);
+
+  const updateURLAndSearch = () => {
+    const params = new URLSearchParams();
+    if (query) params.set('q', query);
+    if (selectedCity) params.set('city', selectedCity);
+    if (selectedMRC) params.set('mrc', selectedMRC);
+    if (selectedRegion) params.set('region', selectedRegion);
+
+    // Convert IDs to slugs for URL
+    if (selectedSubCategory) {
+      const subCat = subCategories.find(s => s.id === selectedSubCategory);
+      if (subCat?.slug) {
+        const mainCat = categories.find(c => c.id === subCat.main_category_id);
+        if (mainCat?.slug) {
+          params.set('category', mainCat.slug);
+          params.set('subcategory', subCat.slug);
+        }
+      }
+    } else if (selectedCategory) {
+      const mainCat = categories.find(c => c.id === selectedCategory);
+      if (mainCat?.slug) {
+        params.set('category', mainCat.slug);
+      }
+    }
+
+    const newURL = params.toString() ? `/recherche?${params.toString()}` : '/recherche';
+    navigate(newURL, { replace: true });
+    performSearch();
+  };
 
   const performSearch = async (params = {}) => {
     setLoading(true);
@@ -83,17 +163,22 @@ const Search = () => {
         query: params.q || query,
         city: params.city || selectedCity,
         region: params.region || selectedRegion,
-        limit: 50
+        mrc: params.mrc || selectedMRC,
+        limit: 100
       };
 
-      // Add category filter - use slug for precise matching
-      if (params.subcategory || selectedSubCategory) {
-        const subCat = subCategories.find(s => s.id === (params.subcategory || selectedSubCategory));
+      // Add category filter - handle both slugs (from URL) and IDs (from state)
+      if (params.subcategorySlug) {
+        searchParams.subCategorySlug = params.subcategorySlug;
+      } else if (selectedSubCategory) {
+        const subCat = subCategories.find(s => s.id === selectedSubCategory);
         if (subCat?.slug) {
           searchParams.subCategorySlug = subCat.slug;
         }
-      } else if (params.category || selectedCategory) {
-        const mainCat = categories.find(c => c.id === (params.category || selectedCategory));
+      } else if (params.categorySlug) {
+        searchParams.mainCategorySlug = params.categorySlug;
+      } else if (selectedCategory) {
+        const mainCat = categories.find(c => c.id === selectedCategory);
         if (mainCat?.slug) {
           searchParams.mainCategorySlug = mainCat.slug;
         }
@@ -121,23 +206,14 @@ const Search = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-
-    // Update URL with search params
-    const params = new URLSearchParams();
-    if (query) params.set('q', query);
-    if (selectedCity) params.set('city', selectedCity);
-    if (selectedRegion) params.set('region', selectedRegion);
-    if (selectedCategory) params.set('category', selectedCategory);
-    if (selectedSubCategory) params.set('subcategory', selectedSubCategory);
-
-    navigate(`/recherche?${params.toString()}`);
-    performSearch();
+    updateURLAndSearch();
   };
 
   const handleClearFilters = () => {
     setQuery('');
     setSelectedCity('');
     setSelectedRegion('');
+    setSelectedMRC('');
     setSelectedCategory('');
     setSelectedSubCategory('');
     setBusinesses([]);
@@ -145,7 +221,7 @@ const Search = () => {
     navigate('/recherche');
   };
 
-  const hasActiveFilters = query || selectedCity || selectedRegion || selectedCategory || selectedSubCategory;
+  const hasActiveFilters = query || selectedCity || selectedRegion || selectedMRC || selectedCategory || selectedSubCategory;
 
   return (
     <>
@@ -169,7 +245,7 @@ const Search = () => {
           </div>
         </div>
 
-        {/* 3 Column Layout */}
+        {/* 2 Column Layout */}
         <div className="search-layout">
           {/* Left: Filters */}
           <aside className="search-filters-sidebar">
@@ -185,11 +261,17 @@ const Search = () => {
             <SearchFilters
               selectedRegion={selectedRegion}
               setSelectedRegion={setSelectedRegion}
+              selectedMRC={selectedMRC}
+              setSelectedMRC={setSelectedMRC}
+              selectedCity={selectedCity}
+              setSelectedCity={setSelectedCity}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
               selectedSubCategory={selectedSubCategory}
               setSelectedSubCategory={setSelectedSubCategory}
               regions={regions}
+              mrcs={mrcs}
+              cities={cities}
               categories={categories}
               filteredSubCategories={filteredSubCategories}
               onClear={handleClearFilters}
@@ -223,7 +305,7 @@ const Search = () => {
               <div className="welcome-state">
                 <div className="welcome-icon">🏢</div>
                 <h3>Commencez votre recherche</h3>
-                <p>Utilisez la barre de recherche pour trouver des entreprises.</p>
+                <p>Utilisez les filtres pour trouver des entreprises.</p>
               </div>
             ) : (
               <div className="results-list">
