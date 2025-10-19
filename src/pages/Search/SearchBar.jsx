@@ -31,7 +31,7 @@ const SearchBar = ({ query, setQuery, selectedCity, setSelectedCity, onSearch, l
           <CityAutocomplete
             value={selectedCity}
             onChange={setSelectedCity}
-            placeholder="Ville (tapez v, va, vau...)"
+            placeholder="Ville"
             className="search-input"
           />
         </div>

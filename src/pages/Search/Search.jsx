@@ -234,13 +234,6 @@ const Search = () => {
             )}
           </main>
 
-          {/* Right: Map */}
-          <aside className="search-map-sidebar">
-            <div className="map-placeholder">
-              <p>🗺️ Carte interactive</p>
-              <small>Affichage des {businesses.length} entreprises</small>
-            </div>
-          </aside>
         </div>
       </div>
     </>
