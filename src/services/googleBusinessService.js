@@ -307,16 +307,55 @@ export const mapGooglePlaceToBusinessForm = (placeData) => {
     // Opening hours (would need additional processing)
     opening_hours: placeData.opening_hours?.weekday_text || [],
 
-    // Photos URLs - include icon/logo if available
+    // Photos with complete metadata (name, dimensions, attributions)
     photos: placeData.photos?.slice(0, 10).map(photo => ({
+      name: photo.photo_reference, // Use photo_reference as name identifier
       reference: photo.photo_reference,
-      width: photo.width,
-      height: photo.height
+      widthPx: photo.width,
+      heightPx: photo.height,
+      authorAttributions: photo.html_attributions || []
     })) || [],
 
     // Logo from icon (if available and square-ish)
     icon: placeData.icon,
-    icon_background_color: placeData.icon_background_color
+    icon_background_color: placeData.icon_background_color,
+
+    // Restaurant/Commerce attributes
+    restaurantAttributes: {
+      dineIn: placeData.dine_in,
+      takeout: placeData.takeout,
+      delivery: placeData.delivery,
+      servesBreakfast: placeData.serves_breakfast,
+      servesLunch: placeData.serves_lunch,
+      servesDinner: placeData.serves_dinner,
+      servesBrunch: placeData.serves_brunch,
+      servesVegetarianFood: placeData.serves_vegetarian_food,
+      servesBeer: placeData.serves_beer,
+      servesWine: placeData.serves_wine,
+      outdoorSeating: placeData.outdoor_seating,
+      liveMusic: placeData.live_music,
+      reservable: placeData.reservable,
+      goodForChildren: placeData.good_for_children,
+      goodForGroups: placeData.good_for_groups
+    },
+
+    // Parking options
+    parkingOptions: placeData.parking || null,
+
+    // Payment options
+    paymentOptions: placeData.payment_options || null,
+
+    // Accessibility options
+    accessibilityOptions: {
+      wheelchairAccessibleEntrance: placeData.wheelchair_accessible_entrance,
+      ...placeData.accessibility
+    },
+
+    // EV Charging options (only if available)
+    evChargeOptions: placeData.ev_charge_options || null,
+
+    // Fuel options (only if available)
+    fuelOptions: placeData.fuel_options || null
   };
 };
 
