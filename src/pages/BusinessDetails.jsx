@@ -355,6 +355,8 @@ const BusinessDetails = () => {
             province={business.province || 'QC'}
             postalCode={business.postal_code}
             businessName={business.name}
+            latitude={business.latitude}
+            longitude={business.longitude}
           />
         </div>
       </div>

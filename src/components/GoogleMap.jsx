@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './GoogleMap.css';
 
-const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName }) => {
+const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, latitude, longitude }) => {
   const mapRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName })
         setError('La carte met trop de temps à charger');
         setLoading(false);
       }
-    }, 10000); // 10 seconds timeout
+    }, 8000); // 8 seconds timeout
 
     const loadMap = () => {
       try {
@@ -24,14 +24,39 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName })
           return;
         }
 
-        // Wait a bit for the DOM element to be ready
-        setTimeout(() => {
-          if (!mapRef.current) {
-            setError('Élément de carte non disponible');
-            setLoading(false);
-            return;
-          }
+        if (!mapRef.current) {
+          setError('Élément de carte non disponible');
+          setLoading(false);
+          return;
+        }
 
+        // Use coordinates if available (MUCH FASTER - no Geocoding API call needed)
+        if (latitude && longitude) {
+          try {
+            const position = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
+
+            const map = new window.google.maps.Map(mapRef.current, {
+              center: position,
+              zoom: 15,
+              mapTypeControl: false,
+              streetViewControl: false,
+              fullscreenControl: true
+            });
+
+            new window.google.maps.Marker({
+              map: map,
+              position: position,
+              title: businessName || 'Emplacement de l\'entreprise'
+            });
+
+            setLoading(false);
+          } catch (err) {
+            console.error('Erreur lors de la création de la carte avec coordonnées:', err);
+            setError('Erreur lors de l\'affichage de la carte');
+            setLoading(false);
+          }
+        } else {
+          // Fallback: Use Geocoding API if no coordinates (slower)
           const fullAddress = `${address}, ${city}, ${province} ${postalCode}, Canada`;
           const geocoder = new window.google.maps.Geocoder();
 
@@ -70,7 +95,7 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName })
               setLoading(false);
             }
           });
-        }, 100); // Small delay to ensure DOM is ready
+        }
       } catch (err) {
         console.error('Erreur dans loadMap:', err);
         setError('Erreur lors du chargement de la carte');
@@ -107,7 +132,7 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName })
     return () => {
       clearTimeout(timeout);
     };
-  }, [address, city, province, postalCode, businessName]);
+  }, [address, city, province, postalCode, businessName, latitude, longitude]);
 
   if (loading) {
     return (
@@ -137,7 +162,9 @@ GoogleMap.propTypes = {
   city: PropTypes.string.isRequired,
   province: PropTypes.string,
   postalCode: PropTypes.string.isRequired,
-  businessName: PropTypes.string
+  businessName: PropTypes.string,
+  latitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  longitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default GoogleMap;
