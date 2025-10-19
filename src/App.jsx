@@ -3,7 +3,10 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { HelmetProvider } from 'react-helmet-async';
 import Home from './pages/Home.jsx';
-import SearchResults from './pages/SearchResults.jsx';
+import Search from './pages/Search/Search.jsx';
+import CityBrowse from './pages/Browse/CityBrowse.jsx';
+import RegionBrowse from './pages/Browse/RegionBrowse.jsx';
+import CategoryBrowse from './pages/Browse/CategoryBrowse.jsx';
 import Login from './pages/Auth/Login.jsx';
 import Register from './pages/Auth/Register.jsx';
 import CreateBusiness from './pages/Dashboard/CreateBusiness.jsx';
@@ -39,9 +42,21 @@ function App() {
             <main>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/recherche" element={<SearchResults />} />
+
+              {/* New Search Engine */}
+              <Route path="/recherche" element={<Search />} />
+
+              {/* Browse Pages */}
+              <Route path="/ville/:citySlug" element={<CityBrowse />} />
+              <Route path="/region/:regionSlug" element={<RegionBrowse />} />
+              <Route path="/categorie/:categorySlug" element={<CategoryBrowse />} />
+              <Route path="/categorie/:categorySlug/:subCategorySlug" element={<CategoryBrowse />} />
+
+              {/* Auth */}
               <Route path="/connexion" element={<Login />} />
               <Route path="/inscription" element={<Register />} />
+
+              {/* Dashboard */}
               <Route
                 path="/entreprise/nouvelle"
                 element={
@@ -58,7 +73,16 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              {/* New SEO-friendly URL structure: /category/city/slug */}
+              <Route
+                path="/admin/migration"
+                element={
+                  <ProtectedRoute>
+                    <MigrationTools />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Business Details - New SEO-friendly URL structure: /category/city/slug */}
               <Route path="/:categorySlug/:citySlug/:slug" element={<BusinessDetails />} />
               <Route
                 path="/:categorySlug/:citySlug/:slug/modifier"
@@ -76,14 +100,6 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <EditBusiness />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/migration"
-                element={
-                  <ProtectedRoute>
-                    <MigrationTools />
                   </ProtectedRoute>
                 }
               />
