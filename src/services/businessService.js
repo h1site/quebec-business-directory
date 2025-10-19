@@ -183,7 +183,7 @@ export const getBusinessBySlug = async (slug) => {
     return { data: business || null, error: business ? null : { message: 'Business not found' } };
   }
 
-  // First, get business data with enriched view
+  // Get business data with enriched view (includes category slugs after migration)
   const { data, error } = await supabase
     .from('businesses_enriched')
     .select('*')
@@ -194,47 +194,14 @@ export const getBusinessBySlug = async (slug) => {
     return { data, error };
   }
 
-  // Get category slugs by finding the primary category
-  // First get the sub_category_id from business_categories
-  const { data: bcData } = await supabase
-    .from('business_categories')
-    .select('sub_category_id')
-    .eq('business_id', data.id)
-    .eq('is_primary', true)
-    .single();
-
-  if (bcData?.sub_category_id) {
-    // Get sub-category slug
-    const { data: scData } = await supabase
-      .from('sub_categories')
-      .select('slug, main_category_id')
-      .eq('id', bcData.sub_category_id)
-      .single();
-
-    if (scData) {
-      data.primary_sub_category_slug = scData.slug;
-
-      // Get main category slug
-      if (scData.main_category_id) {
-        const { data: mcData } = await supabase
-          .from('main_categories')
-          .select('slug')
-          .eq('id', scData.main_category_id)
-          .single();
-
-        if (mcData) {
-          data.primary_main_category_slug = mcData.slug;
-        }
-      }
-    }
-  }
-
-  console.log('✅ Business data with category slugs:', {
+  console.log('✅ Business data loaded:', {
     name: data.name,
     primary_main_category_fr: data.primary_main_category_fr,
     primary_main_category_slug: data.primary_main_category_slug,
     primary_sub_category_fr: data.primary_sub_category_fr,
-    primary_sub_category_slug: data.primary_sub_category_slug
+    primary_sub_category_slug: data.primary_sub_category_slug,
+    region: data.region,
+    city: data.city
   });
 
   return { data, error: null };
