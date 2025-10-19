@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Lottie from 'lottie-react';
-import CityAutocompleteQuebec from './CityAutocompleteQuebec.jsx';
+import CityAutocomplete from './CityAutocomplete.jsx';
 import { getMainCategories, getSubCategories } from '../services/lookupService.js';
 import { quebecMunicipalities, getAllRegions, getCitiesByRegion, getMRCsByRegion } from '../data/quebecMunicipalities.js';
 import listAnimation from '../../public/images/logos/list.json';
@@ -98,10 +98,11 @@ const SearchHero = () => {
             onChange={(event) => setWhat(event.target.value)}
             aria-label={t('hero.whatPlaceholder')}
           />
-          <CityAutocompleteQuebec
+          <CityAutocomplete
             value={where}
             onChange={setWhere}
             placeholder={t('hero.wherePlaceholder')}
+            className="hero-city-input"
           />
           <button type="submit" className="primary-button">
             {t('hero.searchButton')}
