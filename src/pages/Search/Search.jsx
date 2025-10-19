@@ -155,11 +155,9 @@ const Search = () => {
       </Helmet>
 
       <div className="search-page">
-        <div className="search-hero">
-          <div className="container">
-            <h1>Recherche d'entreprises</h1>
-            <p className="search-subtitle">Trouvez l'entreprise qu'il vous faut parmi des milliers d'établissements au Québec</p>
-
+        {/* Top Search Bar */}
+        <div className="search-header">
+          <div className="search-header-content">
             <SearchBar
               query={query}
               setQuery={setQuery}
@@ -168,73 +166,81 @@ const Search = () => {
               onSearch={handleSearch}
               loading={loading}
             />
-
-            <button
-              type="button"
-              className="filters-toggle"
-              onClick={() => setShowFilters(!showFilters)}
-            >
-              {showFilters ? '▲ Masquer les filtres' : '▼ Afficher les filtres'}
-            </button>
-
-            {showFilters && (
-              <SearchFilters
-                selectedRegion={selectedRegion}
-                setSelectedRegion={setSelectedRegion}
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-                selectedSubCategory={selectedSubCategory}
-                setSelectedSubCategory={setSelectedSubCategory}
-                regions={regions}
-                categories={categories}
-                filteredSubCategories={filteredSubCategories}
-                onClear={handleClearFilters}
-                hasActiveFilters={hasActiveFilters}
-              />
-            )}
           </div>
         </div>
 
-        <div className="container search-results-container">
-          {totalResults > 0 && (
-            <div className="results-header">
-              <h2>{totalResults} résultat{totalResults > 1 ? 's' : ''} trouvé{totalResults > 1 ? 's' : ''}</h2>
+        {/* 3 Column Layout */}
+        <div className="search-layout">
+          {/* Left: Filters */}
+          <aside className="search-filters-sidebar">
+            <div className="filters-header">
+              <h3>Filtres</h3>
               {hasActiveFilters && (
-                <button className="btn-clear-filters" onClick={handleClearFilters}>
-                  Réinitialiser les filtres
+                <button className="btn-clear-all-filters" onClick={handleClearFilters}>
+                  Effacer tout
                 </button>
               )}
             </div>
-          )}
 
-          {loading ? (
-            <div className="loading-state">
-              <div className="spinner"></div>
-              <p>Recherche en cours...</p>
+            <SearchFilters
+              selectedRegion={selectedRegion}
+              setSelectedRegion={setSelectedRegion}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+              selectedSubCategory={selectedSubCategory}
+              setSelectedSubCategory={setSelectedSubCategory}
+              regions={regions}
+              categories={categories}
+              filteredSubCategories={filteredSubCategories}
+              onClear={handleClearFilters}
+              hasActiveFilters={hasActiveFilters}
+            />
+          </aside>
+
+          {/* Center: Results */}
+          <main className="search-results-main">
+            {totalResults > 0 && (
+              <div className="results-count">
+                <strong>{totalResults}</strong> résultat{totalResults > 1 ? 's' : ''} trouvé{totalResults > 1 ? 's' : ''}
+              </div>
+            )}
+
+            {loading ? (
+              <div className="loading-state">
+                <div className="spinner"></div>
+                <p>Recherche en cours...</p>
+              </div>
+            ) : businesses.length === 0 && hasActiveFilters ? (
+              <div className="no-results">
+                <div className="no-results-icon">🔍</div>
+                <h3>Aucun résultat trouvé</h3>
+                <p>Essayez de modifier vos critères de recherche.</p>
+                <button className="btn btn-primary" onClick={handleClearFilters}>
+                  Effacer les filtres
+                </button>
+              </div>
+            ) : businesses.length === 0 ? (
+              <div className="welcome-state">
+                <div className="welcome-icon">🏢</div>
+                <h3>Commencez votre recherche</h3>
+                <p>Utilisez la barre de recherche pour trouver des entreprises.</p>
+              </div>
+            ) : (
+              <div className="results-list">
+                {businesses.map((business) => (
+                  <BusinessCard key={business.id} business={business} />
+                ))}
+              </div>
+            )}
+          </main>
+
+          {/* Right: Map */}
+          <aside className="search-map-sidebar">
+            <div className="map-placeholder">
+              <p>🗺️ Carte interactive</p>
+              <small>Affichage des {businesses.length} entreprises</small>
             </div>
-          ) : businesses.length === 0 && hasActiveFilters ? (
-            <div className="no-results">
-              <div className="no-results-icon">🔍</div>
-              <h3>Aucun résultat trouvé</h3>
-              <p>Essayez de modifier vos critères de recherche ou de supprimer certains filtres.</p>
-              <button className="btn btn-primary" onClick={handleClearFilters}>
-                Réinitialiser la recherche
-              </button>
-            </div>
-          ) : businesses.length === 0 ? (
-            <div className="welcome-state">
-              <div className="welcome-icon">🏢</div>
-              <h3>Commencez votre recherche</h3>
-              <p>Utilisez la barre de recherche ci-dessus pour trouver des entreprises par nom, ville ou région.</p>
-              <p>Vous pouvez également parcourir par catégorie ou affiner votre recherche avec les filtres.</p>
-            </div>
-          ) : (
-            <div className="business-grid">
-              {businesses.map((business) => (
-                <BusinessCard key={business.id} business={business} />
-              ))}
-            </div>
-          )}
+          </aside>
         </div>
       </div>
     </>
