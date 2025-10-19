@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import Lottie from 'lottie-react';
-import communityAnimation from '../../public/images/icons/community.json';
+import communityAnimation from '/images/icons/community.json';
 import './Footer.css';
 
 const Footer = () => {
