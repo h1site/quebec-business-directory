@@ -1,32 +1,31 @@
 .search-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+  background: #f7fafc;
 }
 
 .search-hero {
-  background: linear-gradient(135deg, #0f4c81 0%, #1e88e5 100%);
-  padding: 4rem 0 3rem;
-  color: white;
-  margin-bottom: 3rem;
+  background: white;
+  padding: 2rem 0;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
 }
 
 .search-hero h1 {
-  font-size: 3rem;
+  font-size: 1.75rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  text-align: center;
+  color: #0f4c81;
 }
 
 .search-subtitle {
-  text-align: center;
-  font-size: 1.2rem;
-  opacity: 0.95;
-  margin-bottom: 2.5rem;
+  font-size: 0.95rem;
+  color: #718096;
+  margin-bottom: 1.5rem;
 }
 
 /* Search Bar */
 .search-bar {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto 1.5rem;
 }
 
@@ -35,9 +34,10 @@
   grid-template-columns: 2fr 2fr 1fr;
   gap: 1rem;
   background: white;
-  padding: 1rem;
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  padding: 0.75rem;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .search-input-group {
@@ -94,32 +94,31 @@
 .filters-toggle {
   display: block;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
-  padding: 0.75rem 2rem;
-  font-size: 0.95rem;
+  background: white;
+  color: #0f4c81;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
 }
 
 .filters-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: #f7fafc;
+  border-color: #cbd5e0;
 }
 
 /* Search Filters */
 .search-filters {
-  max-width: 900px;
-  margin: 2rem auto 0;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
+  max-width: 1000px;
+  margin: 1.5rem auto 0;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .filters-grid {

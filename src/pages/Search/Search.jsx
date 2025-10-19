@@ -86,18 +86,16 @@ const Search = () => {
         limit: 50
       };
 
-      // Add category filter if present
+      // Add category filter - use slug for precise matching
       if (params.subcategory || selectedSubCategory) {
-        // Search by subcategory slug
         const subCat = subCategories.find(s => s.id === (params.subcategory || selectedSubCategory));
-        if (subCat) {
-          searchParams.category = subCat.label_fr;
+        if (subCat?.slug) {
+          searchParams.subCategorySlug = subCat.slug;
         }
       } else if (params.category || selectedCategory) {
-        // Search by main category
         const mainCat = categories.find(c => c.id === (params.category || selectedCategory));
-        if (mainCat) {
-          searchParams.category = mainCat.label_fr;
+        if (mainCat?.slug) {
+          searchParams.mainCategorySlug = mainCat.slug;
         }
       }
 

@@ -1,4 +1,4 @@
-import CityAutocompleteQuebec from '../../components/CityAutocompleteQuebec.jsx';
+import CityAutocomplete from '../../components/CityAutocomplete.jsx';
 
 const SearchBar = ({ query, setQuery, selectedCity, setSelectedCity, onSearch, loading }) => {
   return (
@@ -28,11 +28,10 @@ const SearchBar = ({ query, setQuery, selectedCity, setSelectedCity, onSearch, l
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
           </label>
-          <CityAutocompleteQuebec
+          <CityAutocomplete
             value={selectedCity}
             onChange={setSelectedCity}
-            placeholder="Ville"
-            inputId="search-city"
+            placeholder="Ville (tapez v, va, vau...)"
             className="search-input"
           />
         </div>
