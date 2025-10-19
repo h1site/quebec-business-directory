@@ -1,0 +1,13 @@
+# robots.txt pour Registre du Québec
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://registreduquebec.com/sitemap.xml
+
+# Disallow admin/dashboard pages
+Disallow: /dashboard
+Disallow: /dashboard/*
+Disallow: /login
+Disallow: /register
