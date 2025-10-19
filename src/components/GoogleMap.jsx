@@ -4,144 +4,101 @@ import './GoogleMap.css';
 
 const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, latitude, longitude }) => {
   const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Set timeout to prevent infinite loading
-    const timeout = setTimeout(() => {
-      if (loading) {
-        setError('La carte met trop de temps à charger');
-        setLoading(false);
-      }
-    }, 8000); // 8 seconds timeout
+    let isMounted = true;
 
-    const loadMap = () => {
+    // Check if coordinates are provided
+    if (!latitude || !longitude) {
+      setError('Coordonnées GPS manquantes. Veuillez ajouter la latitude et longitude pour afficher la carte.');
+      setLoading(false);
+      return;
+    }
+
+    const initMap = () => {
+      // Make sure component is still mounted and ref exists
+      if (!isMounted || !mapRef.current) {
+        return;
+      }
+
       try {
-        if (!window.google || !window.google.maps) {
-          setError('Google Maps n\'est pas disponible');
+        const lat = parseFloat(latitude);
+        const lng = parseFloat(longitude);
+
+        if (isNaN(lat) || isNaN(lng)) {
+          setError('Coordonnées GPS invalides. Veuillez vérifier la latitude et longitude.');
           setLoading(false);
           return;
         }
 
-        // Wait for DOM element to be ready with retry logic
-        const tryCreateMap = (retries = 0) => {
-          if (!mapRef.current) {
-            if (retries < 10) {
-              // Retry up to 10 times with 50ms intervals (500ms total max wait)
-              setTimeout(() => tryCreateMap(retries + 1), 50);
-            } else {
-              setError('Élément de carte non disponible');
-              setLoading(false);
-            }
-            return;
-          }
+        const position = { lat, lng };
 
-          // Use coordinates if available (MUCH FASTER - no Geocoding API call needed)
-          if (latitude && longitude) {
-            try {
-              const position = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
+        const map = new window.google.maps.Map(mapRef.current, {
+          center: position,
+          zoom: 15,
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: true
+        });
 
-              const map = new window.google.maps.Map(mapRef.current, {
-                center: position,
-                zoom: 15,
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: true
-              });
+        new window.google.maps.Marker({
+          map: map,
+          position: position,
+          title: businessName || 'Emplacement de l\'entreprise'
+        });
 
-              new window.google.maps.Marker({
-                map: map,
-                position: position,
-                title: businessName || 'Emplacement de l\'entreprise'
-              });
-
-              setLoading(false);
-            } catch (err) {
-              console.error('Erreur lors de la création de la carte avec coordonnées:', err);
-              setError('Erreur lors de l\'affichage de la carte');
-              setLoading(false);
-            }
-          } else {
-            // Fallback: Use Geocoding API if no coordinates (slower)
-            const fullAddress = `${address}, ${city}, ${province} ${postalCode}, Canada`;
-            const geocoder = new window.google.maps.Geocoder();
-
-            geocoder.geocode({ address: fullAddress }, (results, status) => {
-              if (status === 'OK' && results[0]) {
-                try {
-                  if (!mapRef.current) {
-                    setError('Élément de carte perdu');
-                    setLoading(false);
-                    return;
-                  }
-
-                  const map = new window.google.maps.Map(mapRef.current, {
-                    center: results[0].geometry.location,
-                    zoom: 15,
-                    mapTypeControl: false,
-                    streetViewControl: false,
-                    fullscreenControl: true
-                  });
-
-                  new window.google.maps.Marker({
-                    map: map,
-                    position: results[0].geometry.location,
-                    title: businessName || 'Emplacement de l\'entreprise'
-                  });
-
-                  setLoading(false);
-                } catch (err) {
-                  console.error('Erreur lors de la création de la carte:', err);
-                  setError('Erreur lors de l\'affichage de la carte');
-                  setLoading(false);
-                }
-              } else {
-                console.error('Geocoding failed:', status);
-                setError(`Impossible de localiser l'adresse (${status})`);
-                setLoading(false);
-              }
-            });
-          }
-        };
-
-        // Start trying to create the map
-        tryCreateMap();
+        mapInstanceRef.current = map;
+        setLoading(false);
       } catch (err) {
-        console.error('Erreur dans loadMap:', err);
-        setError('Erreur lors du chargement de la carte');
+        console.error('Erreur lors de la création de la carte:', err);
+        setError('Erreur lors de l\'affichage de la carte');
         setLoading(false);
       }
     };
 
-    // Check if Google Maps script is already loaded
-    if (window.google && window.google.maps) {
-      loadMap();
-    } else {
-      // Load Google Maps script
-      const existingScript = document.querySelector('script[src*="maps.googleapis.com"]');
+    const loadGoogleMapsScript = () => {
+      // Check if Google Maps is already loaded
+      if (window.google && window.google.maps) {
+        // Wait a tick for the DOM to be ready
+        setTimeout(initMap, 100);
+        return;
+      }
 
+      // Check if script is already being loaded
+      const existingScript = document.querySelector('script[src*="maps.googleapis.com"]');
       if (existingScript) {
-        // Script is already loading or loaded, wait for it
-        existingScript.addEventListener('load', loadMap);
-      } else {
-        const script = document.createElement('script');
-        const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyBY1wKHk0p0bf_Cw2lNZDW2zypePUrylxM';
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
-        script.async = true;
-        script.defer = true;
-        script.onload = loadMap;
-        script.onerror = () => {
-          console.error('Failed to load Google Maps script');
+        existingScript.addEventListener('load', () => {
+          setTimeout(initMap, 100);
+        });
+        return;
+      }
+
+      // Load the script
+      const script = document.createElement('script');
+      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyBY1wKHk0p0bf_Cw2lNZDW2zypePUrylxM';
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+      script.async = true;
+      script.onload = () => {
+        setTimeout(initMap, 100);
+      };
+      script.onerror = () => {
+        if (isMounted) {
           setError('Erreur lors du chargement de Google Maps');
           setLoading(false);
-        };
-        document.head.appendChild(script);
-      }
-    }
+        }
+      };
+      document.head.appendChild(script);
+    };
 
+    loadGoogleMapsScript();
+
+    // Cleanup
     return () => {
-      clearTimeout(timeout);
+      isMounted = false;
+      mapInstanceRef.current = null;
     };
   }, [address, city, province, postalCode, businessName, latitude, longitude]);
 
@@ -169,10 +126,10 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
 };
 
 GoogleMap.propTypes = {
-  address: PropTypes.string.isRequired,
-  city: PropTypes.string.isRequired,
+  address: PropTypes.string,
+  city: PropTypes.string,
   province: PropTypes.string,
-  postalCode: PropTypes.string.isRequired,
+  postalCode: PropTypes.string,
   businessName: PropTypes.string,
   latitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   longitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string])

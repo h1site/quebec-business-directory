@@ -91,6 +91,8 @@ const CreateBusiness = () => {
     city: '',
     region: '',
     postal_code: '',
+    latitude: '',
+    longitude: '',
 
     // Step 3: Categories & Services
     main_category_id: '',
@@ -297,6 +299,8 @@ const CreateBusiness = () => {
         region: form.region || null,
         province: 'QC',
         postal_code: form.postal_code,
+        latitude: form.latitude ? parseFloat(form.latitude) : null,
+        longitude: form.longitude ? parseFloat(form.longitude) : null,
         products_services: form.products_services,
         service_area: form.service_area || null,
         service_radius_km: form.service_radius_km ? parseFloat(form.service_radius_km) : null
@@ -408,6 +412,8 @@ const CreateBusiness = () => {
         address: importedData.address || prev.address,
         city: importedData.city || prev.city,
         postal_code: importedData.postal_code || prev.postal_code,
+        latitude: importedData.latitude || prev.latitude,
+        longitude: importedData.longitude || prev.longitude,
         facebook_url: importedData.facebook_url || prev.facebook_url,
         instagram_url: importedData.instagram_url || prev.instagram_url,
         twitter_url: importedData.twitter_url || prev.twitter_url,
@@ -822,6 +828,49 @@ const CreateBusiness = () => {
                     disabled
                     style={{ backgroundColor: '#f8fafc', cursor: 'not-allowed' }}
                   />
+                </div>
+              )}
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="latitude">
+                    Latitude
+                  </label>
+                  <input
+                    type="text"
+                    id="latitude"
+                    name="latitude"
+                    value={form.latitude}
+                    onChange={handleChange}
+                    placeholder="45.5017"
+                  />
+                  <small className="help-text">
+                    📍 Coordonnée GPS Nord-Sud (ex: 45.5017)
+                  </small>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="longitude">
+                    Longitude
+                  </label>
+                  <input
+                    type="text"
+                    id="longitude"
+                    name="longitude"
+                    value={form.longitude}
+                    onChange={handleChange}
+                    placeholder="-73.5673"
+                  />
+                  <small className="help-text">
+                    📍 Coordonnée GPS Est-Ouest (ex: -73.5673)
+                  </small>
+                </div>
+              </div>
+
+              {(!form.latitude || !form.longitude) && (
+                <div className="alert alert-info" style={{ marginTop: '1rem', padding: '1rem', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px' }}>
+                  <strong>💡 Info:</strong> La carte Google Maps ne sera pas affichée sans coordonnées GPS.
+                  Vous pouvez les obtenir facilement en important depuis Google My Business, ou en cherchant votre adresse sur{' '}
+                  <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">Google Maps</a>.
                 </div>
               )}
             </div>
