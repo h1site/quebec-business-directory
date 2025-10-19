@@ -24,78 +24,81 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
           return;
         }
 
-        if (!mapRef.current) {
-          setError('Élément de carte non disponible');
-          setLoading(false);
-          return;
-        }
-
-        // Use coordinates if available (MUCH FASTER - no Geocoding API call needed)
-        if (latitude && longitude) {
-          try {
-            const position = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
-
-            const map = new window.google.maps.Map(mapRef.current, {
-              center: position,
-              zoom: 15,
-              mapTypeControl: false,
-              streetViewControl: false,
-              fullscreenControl: true
-            });
-
-            new window.google.maps.Marker({
-              map: map,
-              position: position,
-              title: businessName || 'Emplacement de l\'entreprise'
-            });
-
+        // Small delay to ensure DOM element is ready
+        setTimeout(() => {
+          if (!mapRef.current) {
+            setError('Élément de carte non disponible');
             setLoading(false);
-          } catch (err) {
-            console.error('Erreur lors de la création de la carte avec coordonnées:', err);
-            setError('Erreur lors de l\'affichage de la carte');
-            setLoading(false);
+            return;
           }
-        } else {
-          // Fallback: Use Geocoding API if no coordinates (slower)
-          const fullAddress = `${address}, ${city}, ${province} ${postalCode}, Canada`;
-          const geocoder = new window.google.maps.Geocoder();
 
-          geocoder.geocode({ address: fullAddress }, (results, status) => {
-            if (status === 'OK' && results[0]) {
-              try {
-                if (!mapRef.current) {
-                  setError('Élément de carte perdu');
-                  setLoading(false);
-                  return;
-                }
+          // Use coordinates if available (MUCH FASTER - no Geocoding API call needed)
+          if (latitude && longitude) {
+            try {
+              const position = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
 
-                const map = new window.google.maps.Map(mapRef.current, {
-                  center: results[0].geometry.location,
-                  zoom: 15,
-                  mapTypeControl: false,
-                  streetViewControl: false,
-                  fullscreenControl: true
-                });
+              const map = new window.google.maps.Map(mapRef.current, {
+                center: position,
+                zoom: 15,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: true
+              });
 
-                new window.google.maps.Marker({
-                  map: map,
-                  position: results[0].geometry.location,
-                  title: businessName || 'Emplacement de l\'entreprise'
-                });
+              new window.google.maps.Marker({
+                map: map,
+                position: position,
+                title: businessName || 'Emplacement de l\'entreprise'
+              });
 
-                setLoading(false);
-              } catch (err) {
-                console.error('Erreur lors de la création de la carte:', err);
-                setError('Erreur lors de l\'affichage de la carte');
-                setLoading(false);
-              }
-            } else {
-              console.error('Geocoding failed:', status);
-              setError(`Impossible de localiser l'adresse (${status})`);
+              setLoading(false);
+            } catch (err) {
+              console.error('Erreur lors de la création de la carte avec coordonnées:', err);
+              setError('Erreur lors de l\'affichage de la carte');
               setLoading(false);
             }
-          });
-        }
+          } else {
+            // Fallback: Use Geocoding API if no coordinates (slower)
+            const fullAddress = `${address}, ${city}, ${province} ${postalCode}, Canada`;
+            const geocoder = new window.google.maps.Geocoder();
+
+            geocoder.geocode({ address: fullAddress }, (results, status) => {
+              if (status === 'OK' && results[0]) {
+                try {
+                  if (!mapRef.current) {
+                    setError('Élément de carte perdu');
+                    setLoading(false);
+                    return;
+                  }
+
+                  const map = new window.google.maps.Map(mapRef.current, {
+                    center: results[0].geometry.location,
+                    zoom: 15,
+                    mapTypeControl: false,
+                    streetViewControl: false,
+                    fullscreenControl: true
+                  });
+
+                  new window.google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location,
+                    title: businessName || 'Emplacement de l\'entreprise'
+                  });
+
+                  setLoading(false);
+                } catch (err) {
+                  console.error('Erreur lors de la création de la carte:', err);
+                  setError('Erreur lors de l\'affichage de la carte');
+                  setLoading(false);
+                }
+              } else {
+                console.error('Geocoding failed:', status);
+                setError(`Impossible de localiser l'adresse (${status})`);
+                setLoading(false);
+              }
+            });
+          }
+        }, 50); // Small 50ms delay to ensure DOM is ready
       } catch (err) {
         console.error('Erreur dans loadMap:', err);
         setError('Erreur lors du chargement de la carte');
