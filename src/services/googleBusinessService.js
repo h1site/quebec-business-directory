@@ -467,16 +467,18 @@ export const downloadGooglePhoto = async (photoReference, maxWidth = 400, fileNa
   if (!photoReference) return null;
 
   try {
-    // Get the photo URL
-    const photoUrl = await getPhotoUrl(photoReference, maxWidth);
-    if (!photoUrl) return null;
+    // Download the photo via backend proxy to avoid CORS issues
+    const response = await fetch(`${PROXY_ENDPOINT}/download-photo?photoReference=${photoReference}&maxwidth=${maxWidth}`);
 
-    // Fetch the image
-    const response = await fetch(photoUrl);
+    if (!response.ok) {
+      console.error('Failed to download photo:', response.status);
+      return null;
+    }
+
     const blob = await response.blob();
 
     // Convert to File object
-    const file = new File([blob], fileName, { type: blob.type });
+    const file = new File([blob], fileName, { type: blob.type || 'image/jpeg' });
     return file;
   } catch (error) {
     console.error('Failed to download Google photo:', error);
