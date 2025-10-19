@@ -161,10 +161,21 @@ const BusinessDetails = () => {
         <div className="business-content">
           {/* Left Column */}
           <div className="business-main">
-            {/* Description */}
+            {/* About & Products/Services Combined */}
             <section className="business-section">
               <h2 className="section-title">À propos</h2>
               <p className="business-description">{business.description}</p>
+
+              {business.products_services && (
+                <div style={{ marginTop: '2rem' }}>
+                  <h3 className="section-subtitle">Produits et services</h3>
+                  <ul className="services-list">
+                    {business.products_services.split('\n').filter(line => line.trim()).map((service, index) => (
+                      <li key={index}>{service.trim()}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </section>
 
             {/* Gallery */}
@@ -198,33 +209,22 @@ const BusinessDetails = () => {
                 <p>{business.core_values}</p>
               </section>
             )}
+          </div>
 
-            {business.products_services && (
-              <section className="business-section">
-                <h2 className="section-title">Produits et services</h2>
-                <ul className="services-list">
-                  {business.products_services.split('\n').filter(line => line.trim()).map((service, index) => (
-                    <li key={index}>{service.trim()}</li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            {/* Google Reviews */}
+          {/* Right Sidebar */}
+          <aside className="business-sidebar">
+            {/* Google Reviews - Top of Sidebar */}
             {business.google_reviews && business.google_reviews.length > 0 && (
-              <section className="business-section">
-                <h2 className="section-title">Avis Google</h2>
+              <div className="sidebar-card">
+                <h3 className="sidebar-title">Avis Google</h3>
                 <GoogleReviews
                   rating={business.google_rating}
                   reviewsCount={business.google_reviews_count}
                   reviews={business.google_reviews}
                 />
-              </section>
+              </div>
             )}
-          </div>
 
-          {/* Right Sidebar */}
-          <aside className="business-sidebar">
             {/* Combined Contact Card */}
             <div className="sidebar-card">
               {/* Address Section */}
