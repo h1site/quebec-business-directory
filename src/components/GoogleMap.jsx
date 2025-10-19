@@ -22,8 +22,11 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
     console.log('GoogleMap: Chargement avec coordonnées', { latitude, longitude });
 
     const initMap = () => {
+      console.log('GoogleMap: initMap appelé', { isMounted, hasRef: !!mapRef.current });
+
       // Make sure component is still mounted and ref exists
       if (!isMounted || !mapRef.current) {
+        console.log('GoogleMap: Component non monté ou ref manquante');
         return;
       }
 
@@ -32,12 +35,14 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
         const lng = parseFloat(longitude);
 
         if (isNaN(lat) || isNaN(lng)) {
+          console.error('GoogleMap: Coordonnées invalides', { lat, lng });
           setError('Coordonnées GPS invalides. Veuillez vérifier la latitude et longitude.');
           setLoading(false);
           return;
         }
 
         const position = { lat, lng };
+        console.log('GoogleMap: Création de la carte', position);
 
         const map = new window.google.maps.Map(mapRef.current, {
           center: position,
@@ -47,6 +52,8 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
           fullscreenControl: true
         });
 
+        console.log('GoogleMap: Carte créée, ajout du marker');
+
         new window.google.maps.Marker({
           map: map,
           position: position,
@@ -54,40 +61,62 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
         });
 
         mapInstanceRef.current = map;
+        console.log('GoogleMap: Carte complète!');
         setLoading(false);
       } catch (err) {
-        console.error('Erreur lors de la création de la carte:', err);
+        console.error('GoogleMap: Erreur lors de la création de la carte:', err);
         setError('Erreur lors de l\'affichage de la carte');
         setLoading(false);
       }
     };
 
+    const tryInitMap = (attempt = 0) => {
+      if (!mapRef.current) {
+        if (attempt < 20) {
+          // Retry up to 20 times with 50ms delay (1 second total)
+          console.log(`GoogleMap: Ref pas prête, retry ${attempt + 1}/20`);
+          setTimeout(() => tryInitMap(attempt + 1), 50);
+        } else {
+          console.error('GoogleMap: Timeout - ref jamais prête');
+          setError('Élément de carte non disponible');
+          setLoading(false);
+        }
+        return;
+      }
+      initMap();
+    };
+
     const loadGoogleMapsScript = () => {
       // Check if Google Maps is already loaded
       if (window.google && window.google.maps) {
-        // Wait a tick for the DOM to be ready
-        setTimeout(initMap, 100);
+        console.log('GoogleMap: Script déjà chargé, init map');
+        tryInitMap();
         return;
       }
 
       // Check if script is already being loaded
       const existingScript = document.querySelector('script[src*="maps.googleapis.com"]');
       if (existingScript) {
+        console.log('GoogleMap: Script en cours de chargement, attente...');
         existingScript.addEventListener('load', () => {
-          setTimeout(initMap, 100);
+          console.log('GoogleMap: Script chargé via listener, init map');
+          tryInitMap();
         });
         return;
       }
 
       // Load the script
+      console.log('GoogleMap: Chargement du script Google Maps...');
       const script = document.createElement('script');
       const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyBY1wKHk0p0bf_Cw2lNZDW2zypePUrylxM';
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&loading=async`;
       script.async = true;
       script.onload = () => {
-        setTimeout(initMap, 100);
+        console.log('GoogleMap: Script chargé avec succès, init map');
+        tryInitMap();
       };
       script.onerror = () => {
+        console.error('GoogleMap: Erreur chargement script');
         if (isMounted) {
           setError('Erreur lors du chargement de Google Maps');
           setLoading(false);
