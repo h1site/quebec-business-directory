@@ -105,12 +105,13 @@ const GoogleMap = ({ address, city, province = 'QC', postalCode, businessName, l
         return;
       }
 
-      // Load the script
+      // Load the script (without loading=async to get synchronous loading)
       console.log('GoogleMap: Chargement du script Google Maps...');
       const script = document.createElement('script');
       const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyBY1wKHk0p0bf_Cw2lNZDW2zypePUrylxM';
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&loading=async`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
       script.async = true;
+      script.defer = true;
       script.onload = () => {
         console.log('GoogleMap: Script chargé avec succès, init map');
         tryInitMap();
