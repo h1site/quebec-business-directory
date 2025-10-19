@@ -4,7 +4,7 @@ import { quebecMunicipalities } from '../data/quebecMunicipalities.js';
 
 const tableName = 'businesses';
 
-const buildFilters = ({ query, city, region, category, phone, distance, coordinates }) => {
+const buildFilters = ({ query, city, region, mrc, category, phone, distance, coordinates, language, serviceMode, businessSize }) => {
   const filters = [];
 
   if (query) {
@@ -15,7 +15,10 @@ const buildFilters = ({ query, city, region, category, phone, distance, coordina
     filters.push({ column: 'city', operator: 'ilike', value: `%${city}%` });
   }
 
-  if (region) {
+  if (mrc) {
+    // Filter by MRC name in the region field (which contains "MRC, Region")
+    filters.push({ column: 'region', operator: 'ilike', value: `%${mrc}%` });
+  } else if (region) {
     // Convert region slug to region name
     console.log('[buildFilters] Region slug from URL:', region);
     const regionData = quebecMunicipalities[region];
@@ -45,6 +48,19 @@ const buildFilters = ({ query, city, region, category, phone, distance, coordina
     });
   }
 
+  // New filters for enriched view
+  if (language) {
+    filters.push({ column: 'languages', operator: 'cs', value: `{${language}}` });
+  }
+
+  if (serviceMode) {
+    filters.push({ column: 'service_modes', operator: 'cs', value: `{${serviceMode}}` });
+  }
+
+  if (businessSize) {
+    filters.push({ column: 'business_size_id', operator: 'eq', value: businessSize });
+  }
+
   return filters;
 };
 
@@ -52,10 +68,14 @@ export const searchBusinesses = async ({
   query,
   city,
   region,
+  mrc,
   category,
   phone,
   distance,
   coordinates,
+  language,
+  serviceMode,
+  businessSize,
   limit = 20
 }) => {
   if (!isSupabaseConfigured) {
@@ -82,15 +102,17 @@ export const searchBusinesses = async ({
     return { data, error: null };
   }
 
+  // Use businesses_enriched view to access languages, service_modes, etc.
   let request = supabase
-    .from(tableName)
+    .from('businesses_enriched')
     .select(
-      `id, slug, name, description, phone, email, address, city, categories, products_services,
-       main_category:main_categories(slug, label_fr, label_en)`
+      `id, slug, name, description, phone, email, address, city, categories, products_services, business_size_id,
+       languages, service_modes, certifications, accessibility_features, payment_methods,
+       primary_main_category_fr, primary_main_category_en, primary_sub_category_fr, primary_sub_category_en`
     )
     .limit(limit);
 
-  const filters = buildFilters({ query, city, region, category, phone, distance, coordinates });
+  const filters = buildFilters({ query, city, region, mrc, category, phone, distance, coordinates, language, serviceMode, businessSize });
 
   filters.forEach((filter) => {
     if (filter.operator === 'fts') {
@@ -102,6 +124,8 @@ export const searchBusinesses = async ({
       request = request.contains(filter.column, filter.value);
     } else if (filter.operator === 'lte' && filter.column === 'location') {
       request = request.filter(filter.column, 'lt', filter.value);
+    } else if (filter.operator === 'eq') {
+      request = request.eq(filter.column, filter.value);
     } else {
       request = request.ilike(filter.column, filter.value);
     }
