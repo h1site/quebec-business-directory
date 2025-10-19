@@ -195,27 +195,47 @@ export const getBusinessBySlug = async (slug) => {
   }
 
   // Get category slugs by finding the primary category
-  const { data: categoryData } = await supabase
+  // First get the sub_category_id from business_categories
+  const { data: bcData } = await supabase
     .from('business_categories')
-    .select(`
-      sub_categories:sub_category_id (
-        slug,
-        main_categories:main_category_id (
-          slug
-        )
-      )
-    `)
+    .select('sub_category_id')
     .eq('business_id', data.id)
     .eq('is_primary', true)
     .single();
 
-  // Add slugs to the business data
-  if (categoryData?.sub_categories) {
-    data.primary_sub_category_slug = categoryData.sub_categories.slug;
-    if (categoryData.sub_categories.main_categories) {
-      data.primary_main_category_slug = categoryData.sub_categories.main_categories.slug;
+  if (bcData?.sub_category_id) {
+    // Get sub-category slug
+    const { data: scData } = await supabase
+      .from('sub_categories')
+      .select('slug, main_category_id')
+      .eq('id', bcData.sub_category_id)
+      .single();
+
+    if (scData) {
+      data.primary_sub_category_slug = scData.slug;
+
+      // Get main category slug
+      if (scData.main_category_id) {
+        const { data: mcData } = await supabase
+          .from('main_categories')
+          .select('slug')
+          .eq('id', scData.main_category_id)
+          .single();
+
+        if (mcData) {
+          data.primary_main_category_slug = mcData.slug;
+        }
+      }
     }
   }
+
+  console.log('✅ Business data with category slugs:', {
+    name: data.name,
+    primary_main_category_fr: data.primary_main_category_fr,
+    primary_main_category_slug: data.primary_main_category_slug,
+    primary_sub_category_fr: data.primary_sub_category_fr,
+    primary_sub_category_slug: data.primary_sub_category_slug
+  });
 
   return { data, error: null };
 };

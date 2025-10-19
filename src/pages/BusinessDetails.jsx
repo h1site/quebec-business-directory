@@ -40,6 +40,16 @@ const BusinessDetails = () => {
 
         setBusiness(data);
 
+        // Debug: Log business data to check categories
+        console.log('🔍 Business data loaded:', {
+          primary_main_category_fr: data.primary_main_category_fr,
+          primary_main_category_slug: data.primary_main_category_slug,
+          primary_sub_category_fr: data.primary_sub_category_fr,
+          primary_sub_category_slug: data.primary_sub_category_slug,
+          region: data.region,
+          city: data.city
+        });
+
         // Load business hours for schema markup
         if (data && data.id) {
           try {
