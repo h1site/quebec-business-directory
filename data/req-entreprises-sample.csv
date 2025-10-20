@@ -1,0 +1,31 @@
+NEQ,NOM_ENTREPRISE,ADRESSE_DOMICILE,VILLE,CODE_POSTAL,CODE_SCIAN_1,DESCRIPTION_ACTIVITE,STATUT
+1234567890,Restaurant Chez Mario,123 Rue Saint-Denis,Montréal,H2X 1K9,722511,Services de restauration à service complet,Actif
+1234567891,Plomberie Expert Plus,456 Boulevard Laval,Laval,H7N 2M5,238220,Travaux de plomberie et chauffage,Actif
+1234567892,Clinique Dentaire Sourire,789 Avenue des Érables,Québec,G1R 4S1,621210,Cabinets de dentistes,Actif
+1234567893,Garage Auto-Prestige,321 Rue Principale,Vaudreuil-Dorion,J7V 8P2,811111,Réparation mécanique véhicules,Actif
+1234567894,Boutique Mode Chic,654 Rue Sainte-Catherine,Montréal,H3B 1B7,448110,Magasins de vêtements pour femmes,Actif
+1234567895,Cabinet Comptable Fortin & Associés,987 Boulevard René-Lévesque,Montréal,H3B 4W8,541212,Services de comptabilité et tenue de livres,Actif
+1234567896,Électricien Pro Services,159 Rue du Commerce,Laval,H7L 3T9,238210,Travaux d'installation électrique,Actif
+1234567897,Café Bistro Le Matin,753 Avenue Mont-Royal,Montréal,H2J 1W8,722515,Cafés et salons de thé,Actif
+1234567898,Agence Marketing Créatif 360,852 Rue McGill,Montréal,H2Y 2E7,541810,Agences de publicité,Actif
+1234567899,Courtier Immobilier Excel,951 Boulevard Saint-Martin,Laval,H7S 1M9,531210,Bureaux d'agents et courtiers immobiliers,Actif
+2234567890,Construction JM Entreprises,147 Rue des Pins,Saint-Jérôme,J7Z 4V2,236220,Construction de bâtiments non résidentiels,Actif
+2234567891,Massothérapie Zen Wellness,258 Avenue Laurier,Québec,G1R 2L3,621399,Bureaux de massothérapeutes,Actif
+2234567892,Paysagiste Vert Nature,369 Chemin Sainte-Foy,Québec,G1S 2J5,561730,Services d'aménagement paysager,Actif
+2234567893,Boulangerie Artisanale Pain Doré,741 Rue Wellington,Sherbrooke,J1H 5C5,311811,Boulangeries de détail,Actif
+2234567894,Cabinet Avocat Leblanc,852 Rue Saint-Jacques,Montréal,H3C 1G1,541110,Services juridiques,Actif
+2234567895,Centre Fitness Énergie Plus,963 Boulevard Wilfrid-Hamel,Québec,G1M 2S6,713940,Centres de conditionnement physique,Actif
+2234567896,Traiteur Gourmet Délices,159 Rue Ontario,Montréal,H2X 1H7,722320,Traiteurs,Actif
+2234567897,Peintre Déco Pro,357 Rue Principale,Granby,J2G 2V6,238320,Travaux de peinture et décoration,Actif
+2234567898,Psychologue Services Santé Mentale,486 Avenue Cartier,Québec,G1R 2S5,621330,Cabinets de psychologues,Actif
+2234567899,Concessionnaire Auto Prestige,579 Boulevard Taschereau,Brossard,J4W 1N1,441110,Concessionnaires automobiles neuves,Actif
+3234567890,Bar Le Vieux Port,681 Rue de la Commune,Montréal,H2Y 1J1,722410,Débits de boissons alcoolisées,Actif
+3234567891,Architecte Designs Modernes,792 Rue Sherbrooke,Montréal,H3A 1E3,541310,Services d'architecture,Actif
+3234567892,Librairie Du Quartier,893 Avenue Maguire,Québec,G1T 1Z3,451210,Librairies,Actif
+3234567893,Couvreur Toiture Excellence,941 Rue Frontenac,Lévis,G6V 6L9,238160,Travaux de couverture,Actif
+3234567894,Clinique Médicale Familiale,162 Boulevard Gouin,Laval,H7G 1B2,621110,Cabinets de médecins,Actif
+3234567895,Bijouterie Or et Diamants,273 Rue Saint-Jean,Québec,G1R 1N8,448310,Bijouteries,Actif
+3234567896,Consultant Stratégie Affaires,384 Place Ville-Marie,Montréal,H3B 2E5,541611,Services de conseils en gestion,Actif
+3234567897,Location Auto Budget Plus,495 Rue Notre-Dame,Repentigny,J6A 2T8,532111,Location de voitures particulières,Actif
+3234567898,Magasin Électronique TechZone,516 Boulevard Curé-Labelle,Blainville,J7C 2H4,443142,Magasins d'électronique grand public,Actif
+3234567899,Hôtel Auberge Du Lac,627 Chemin du Lac,Mont-Tremblant,J8E 1K4,721111,Hôtels avec services complets,Inactif

@@ -1,0 +1,224 @@
+.admin-tools {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.admin-header {
+  margin-bottom: 2rem;
+}
+
+.admin-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-header p {
+  color: #666;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.tool-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s;
+}
+
+.tool-card:hover {
+  border-color: #1976d2;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.tool-card.danger {
+  border-color: #ff5252;
+}
+
+.tool-card.danger:hover {
+  border-color: #d32f2f;
+}
+
+.tool-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.tool-card h3 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.tool-card p {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.tool-commands {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.tool-commands h4 {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.command-block {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.command-block:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.command-block strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.command-block code {
+  display: block;
+  background: #2d2d2d;
+  color: #00ff00;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
+  cursor: text;
+  user-select: all;
+}
+
+.tool-info {
+  background: #e3f2fd;
+  border-left: 4px solid #1976d2;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.tool-info.danger {
+  background: #ffebee;
+  border-left-color: #d32f2f;
+}
+
+.tool-info strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #1976d2;
+}
+
+.tool-info.danger strong {
+  color: #d32f2f;
+}
+
+.tool-info ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.tool-info li {
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+/* Workflow */
+.quick-workflow {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.quick-workflow h2 {
+  margin-bottom: 1.5rem;
+}
+
+.quick-workflow ol {
+  counter-reset: workflow;
+  list-style: none;
+  padding: 0;
+}
+
+.quick-workflow li {
+  counter-increment: workflow;
+  margin-bottom: 1.5rem;
+  padding-left: 3rem;
+  position: relative;
+}
+
+.quick-workflow li:before {
+  content: counter(workflow);
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(255,255,255,0.3);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.quick-workflow strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.quick-workflow code {
+  display: block;
+  background: rgba(0,0,0,0.3);
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-tools {
+    padding: 1rem;
+  }
+
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-card {
+    padding: 1.5rem;
+  }
+
+  .command-block code {
+    font-size: 0.8rem;
+  }
+}

@@ -13,10 +13,13 @@ import CreateBusiness from './pages/Dashboard/CreateBusiness.jsx';
 import EditBusiness from './pages/Dashboard/EditBusiness.jsx';
 import MyBusinesses from './pages/Dashboard/MyBusinesses.jsx';
 import MigrationTools from './pages/Dashboard/MigrationTools.jsx';
+import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
+import AdminTools from './pages/Admin/AdminTools.jsx';
 import BusinessDetails from './pages/BusinessDetails.jsx';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import AdminRoute from './components/AdminRoute.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 
 function ScrollToTop() {
@@ -76,9 +79,25 @@ function App() {
               <Route
                 path="/admin/migration"
                 element={
-                  <ProtectedRoute>
+                  <AdminRoute>
                     <MigrationTools />
-                  </ProtectedRoute>
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/tools"
+                element={
+                  <AdminRoute>
+                    <AdminTools />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
                 }
               />
 

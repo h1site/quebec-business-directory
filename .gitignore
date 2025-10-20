@@ -4,3 +4,8 @@ node_modules
 .vscode
 coverage
 /dist
+
+# REQ Import Data (large CSV files)
+data/req-entreprises.csv
+data/*.csv
+!data/req-entreprises-sample.csv
