@@ -123,7 +123,7 @@ const generateAreaServed = (business) => {
 
   if (business.city) areas.push(business.city);
   if (business.region) areas.push(business.region);
-  if (business.service_area) {
+  if (business.service_area && typeof business.service_area === 'string') {
     // Parse service_area string (e.g., "Montréal, Laval, Longueuil")
     const serviceAreas = business.service_area.split(',').map(s => s.trim());
     serviceAreas.forEach(area => {
@@ -224,15 +224,18 @@ export const generateBusinessSchema = (business, canonicalUrl, businessHours = n
   }
 
   // Add potential actions
-  schema.potentialAction = [
-    {
+  schema.potentialAction = [];
+
+  // Only add phone action if phone exists
+  if (business.phone) {
+    schema.potentialAction.push({
       '@type': 'CallAction',
       target: {
         '@type': 'EntryPoint',
         urlTemplate: `tel:${business.phone.replace(/\D/g, '')}`
       }
-    }
-  ];
+    });
+  }
 
   if (business.website) {
     schema.potentialAction.push({
