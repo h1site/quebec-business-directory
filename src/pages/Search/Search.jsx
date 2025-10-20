@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import { searchBusinesses } from '../../services/businessService.js';
 import { getMainCategories, getSubCategories } from '../../services/lookupService.js';
 import { getAllRegions, getMRCsByRegion, getCitiesByMRC } from '../../data/quebecMunicipalities.js';
@@ -12,6 +13,7 @@ import LocationPrompt from './LocationPrompt.jsx';
 import './Search.css';
 
 const Search = () => {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const isInitialMount = useRef(true);
@@ -304,10 +306,10 @@ const Search = () => {
           {/* Left: Filters */}
           <aside className="search-filters-sidebar">
             <div className="filters-header">
-              <h3>Filtres</h3>
+              <h3>{t('search.filters')}</h3>
               {hasActiveFilters && (
                 <button className="btn-clear-all-filters" onClick={handleClearFilters}>
-                  Effacer tout
+                  {t('search.clearAllFilters')}
                 </button>
               )}
             </div>
@@ -336,23 +338,27 @@ const Search = () => {
           {/* Center: Results */}
           <main className="search-results-main">
             {totalResults > 0 && (
-              <div className="results-count">
-                <strong>{displayedCount}</strong> sur <strong>{totalResults}</strong> résultat{totalResults > 1 ? 's' : ''} affiché{displayedCount > 1 ? 's' : ''}
-              </div>
+              <div className="results-count" dangerouslySetInnerHTML={{
+                __html: t('search.resultsCount', {
+                  displayed: displayedCount,
+                  total: totalResults,
+                  plural: totalResults > 1 ? 's' : ''
+                })
+              }} />
             )}
 
             {loading ? (
               <div className="loading-state">
                 <div className="spinner"></div>
-                <p>Recherche en cours...</p>
+                <p>{t('search.searching')}</p>
               </div>
             ) : businesses.length === 0 && hasActiveFilters ? (
               <div className="no-results">
                 <div className="no-results-icon">🔍</div>
-                <h3>Aucun résultat trouvé</h3>
-                <p>Essayez de modifier vos critères de recherche.</p>
+                <h3>{t('search.noResultsFound')}</h3>
+                <p>{t('search.noResultsMessage')}</p>
                 <button className="btn btn-primary" onClick={handleClearFilters}>
-                  Effacer les filtres
+                  {t('search.clearFilters')}
                 </button>
               </div>
             ) : businesses.length === 0 && showLocationPrompt ? (
@@ -363,8 +369,8 @@ const Search = () => {
             ) : businesses.length === 0 ? (
               <div className="welcome-state">
                 <div className="welcome-icon">🏢</div>
-                <h3>Commencez votre recherche</h3>
-                <p>Utilisez les filtres pour trouver des entreprises.</p>
+                <h3>{t('search.welcomeTitle')}</h3>
+                <p>{t('search.welcomeMessage')}</p>
               </div>
             ) : (
               <>
@@ -384,10 +390,10 @@ const Search = () => {
                       {loadingMore ? (
                         <>
                           <div className="spinner-small"></div>
-                          Chargement...
+                          {t('search.loading')}
                         </>
                       ) : (
-                        'Voir plus'
+                        t('search.loadMore')
                       )}
                     </button>
                   </div>

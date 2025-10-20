@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import CityAutocomplete from '../../components/CityAutocomplete.jsx';
 
 const SearchBar = ({ query, setQuery, selectedCity, setSelectedCity, onSearch, loading }) => {
+  const { t } = useTranslation();
+
   return (
     <form onSubmit={onSearch} className="search-bar">
       <div className="search-inputs">
@@ -14,7 +17,7 @@ const SearchBar = ({ query, setQuery, selectedCity, setSelectedCity, onSearch, l
           <input
             id="search-query"
             type="text"
-            placeholder="Nom d'entreprise, service..."
+            placeholder={t('search.searchPlaceholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="search-input"
@@ -31,13 +34,13 @@ const SearchBar = ({ query, setQuery, selectedCity, setSelectedCity, onSearch, l
           <CityAutocomplete
             value={selectedCity}
             onChange={setSelectedCity}
-            placeholder="Ville"
+            placeholder={t('search.cityPlaceholder')}
             className="search-input"
           />
         </div>
 
         <button type="submit" className="search-submit" disabled={loading}>
-          {loading ? 'Recherche...' : 'Rechercher'}
+          {loading ? t('search.searching') : t('search.searchButton')}
         </button>
       </div>
     </form>

@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './LocationPrompt.css';
 
 const LocationPrompt = ({ onDetectLocation, onSkip }) => {
+  const { t } = useTranslation();
   const [detecting, setDetecting] = useState(false);
   const [error, setError] = useState(null);
 
@@ -13,13 +15,13 @@ const LocationPrompt = ({ onDetectLocation, onSkip }) => {
       await onDetectLocation();
     } catch (err) {
       if (err.code === 1) {
-        setError('Vous avez refusé l\'accès à votre position. Vous pouvez toujours sélectionner votre région manuellement.');
+        setError(t('search.locationErrorDenied'));
       } else if (err.code === 2) {
-        setError('Impossible de déterminer votre position. Veuillez sélectionner votre région manuellement.');
+        setError(t('search.locationErrorUnavailable'));
       } else if (err.code === 3) {
-        setError('La demande de localisation a expiré. Veuillez réessayer.');
+        setError(t('search.locationErrorTimeout'));
       } else {
-        setError('Erreur lors de la détection de votre position. Veuillez sélectionner votre région manuellement.');
+        setError(t('search.locationErrorGeneric'));
       }
     } finally {
       setDetecting(false);
@@ -29,9 +31,9 @@ const LocationPrompt = ({ onDetectLocation, onSkip }) => {
   return (
     <div className="location-prompt">
       <div className="location-prompt-icon">📍</div>
-      <h2 className="location-prompt-title">Découvrez les entreprises près de vous</h2>
+      <h2 className="location-prompt-title">{t('search.locationPromptTitle')}</h2>
       <p className="location-prompt-subtitle">
-        Permettez-nous de détecter votre position pour afficher les entreprises de votre région automatiquement.
+        {t('search.locationPromptSubtitle')}
       </p>
 
       {error && (
@@ -50,23 +52,23 @@ const LocationPrompt = ({ onDetectLocation, onSkip }) => {
           {detecting ? (
             <>
               <span className="spinner-small"></span>
-              Détection en cours...
+              {t('search.detectingLocation')}
             </>
           ) : (
             <>
               <span className="location-icon">📍</span>
-              Détecter ma position
+              {t('search.detectLocation')}
             </>
           )}
         </button>
 
         <button className="btn-skip-location" onClick={onSkip}>
-          Utiliser les filtres manuellement
+          {t('search.useFiltersManually')}
         </button>
       </div>
 
       <p className="location-prompt-note">
-        💡 Vous pouvez aussi utiliser les filtres à gauche pour rechercher par région, ville ou catégorie.
+        💡 {t('search.locationNote')}
       </p>
     </div>
   );
