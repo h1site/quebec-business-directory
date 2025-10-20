@@ -147,11 +147,14 @@ const SearchHero = () => {
         {/* Découvertes du jour avec total d'entreprises */}
         <div className="hero-discoveries">
           <div className="discoveries-header">
-            <h2 className="discoveries-title">Découvertes du jour</h2>
+            <h2 className="discoveries-title">{t('home.randomBusinessesTitle')}</h2>
             <p className="discoveries-subtitle">
-              Chaque jour, de nouvelles pépites à découvrir parmi{' '}
-              <strong>{totalBusinesses.toLocaleString()}</strong> entreprises.{' '}
-              <Link to="/ajouter" className="discoveries-cta">Ajoutez la vôtre, c'est gratuit!</Link>
+              {t('home.randomBusinessesSubtitle')}{' '}
+              {i18n.language === 'fr' ? 'parmi' : 'among'}{' '}
+              <strong>{totalBusinesses.toLocaleString()}</strong> {i18n.language === 'fr' ? 'entreprises' : 'businesses'}.{' '}
+              <Link to="/ajouter" className="discoveries-cta">
+                {i18n.language === 'fr' ? 'Ajoutez la vôtre, c\'est gratuit!' : 'Add yours for free!'}
+              </Link>
             </p>
           </div>
 
