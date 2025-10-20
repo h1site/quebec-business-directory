@@ -8,6 +8,9 @@
 -- 1. SUPPORT IMPORT REQ + COORDONNÉES
 -- ============================================================================
 
+-- Drop businesses_enriched view temporarily to modify coordinates
+DROP VIEW IF EXISTS businesses_enriched CASCADE;
+
 -- Fix coordinates precision (latitude/longitude)
 ALTER TABLE businesses
   ALTER COLUMN latitude TYPE DECIMAL(10, 8),
@@ -227,8 +230,7 @@ WHERE google_place_id IS NOT NULL;
 -- ============================================================================
 
 -- Recreate businesses_enriched view with category slugs
-DROP VIEW IF EXISTS businesses_enriched CASCADE;
-
+-- (Already dropped at the beginning to fix coordinates precision)
 CREATE VIEW businesses_enriched AS
 SELECT
   b.*,
