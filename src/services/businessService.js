@@ -300,6 +300,169 @@ export const checkSlugAvailability = async (slug, currentBusinessId = null) => {
 };
 
 /**
+ * Find potential duplicate businesses based on multiple criteria
+ * Returns array of matches with confidence scores
+ *
+ * @param {Object} businessData - The business data to check
+ * @param {string} businessData.name - Business name
+ * @param {string} businessData.phone - Phone number
+ * @param {string} businessData.address - Street address
+ * @param {string} businessData.city - City name
+ * @param {string} businessData.postal_code - Postal code
+ * @param {string} businessData.google_place_id - Google Place ID (if available)
+ * @returns {Promise<{matches: Array, error: any}>}
+ */
+export const findDuplicateBusinesses = async (businessData) => {
+  if (!isSupabaseConfigured) {
+    return { matches: [], error: null };
+  }
+
+  try {
+    const matches = [];
+
+    // Strategy 1: Exact Google Place ID match (100% confidence)
+    if (businessData.google_place_id) {
+      const { data: placeIdMatches, error: placeIdError } = await supabase
+        .from(tableName)
+        .select('id, name, address, city, phone, slug, data_source, is_claimed')
+        .eq('google_place_id', businessData.google_place_id)
+        .limit(1);
+
+      if (placeIdMatches && placeIdMatches.length > 0) {
+        matches.push({
+          ...placeIdMatches[0],
+          confidence: 100,
+          matchReason: 'Google Place ID identique'
+        });
+        // If we have a 100% match, return immediately
+        return { matches, error: null };
+      }
+    }
+
+    // Strategy 2: Phone number match (90% confidence if in same city)
+    if (businessData.phone) {
+      const cleanPhone = businessData.phone.replace(/\D/g, ''); // Remove non-digits
+      if (cleanPhone.length >= 10) {
+        const { data: phoneMatches, error: phoneError } = await supabase
+          .from(tableName)
+          .select('id, name, address, city, phone, slug, data_source, is_claimed')
+          .ilike('phone', `%${cleanPhone.slice(-10)}%`) // Match last 10 digits
+          .limit(5);
+
+        if (phoneMatches && phoneMatches.length > 0) {
+          phoneMatches.forEach(match => {
+            const sameCity = match.city?.toLowerCase() === businessData.city?.toLowerCase();
+            matches.push({
+              ...match,
+              confidence: sameCity ? 90 : 70,
+              matchReason: sameCity ? 'Même téléphone et ville' : 'Même téléphone'
+            });
+          });
+        }
+      }
+    }
+
+    // Strategy 3: Name + City fuzzy match (70-85% confidence)
+    if (businessData.name && businessData.city) {
+      const { data: nameMatches, error: nameError } = await supabase
+        .from(tableName)
+        .select('id, name, address, city, phone, slug, data_source, is_claimed')
+        .ilike('city', businessData.city)
+        .ilike('name', `%${businessData.name}%`)
+        .limit(5);
+
+      if (nameMatches && nameMatches.length > 0) {
+        nameMatches.forEach(match => {
+          // Calculate name similarity (simple approach)
+          const similarity = calculateNameSimilarity(businessData.name, match.name);
+          if (similarity > 0.6) {
+            // Only add if not already in matches (avoid duplicates from phone match)
+            const alreadyExists = matches.some(m => m.id === match.id);
+            if (!alreadyExists) {
+              matches.push({
+                ...match,
+                confidence: Math.round(similarity * 85),
+                matchReason: `Nom similaire (${Math.round(similarity * 100)}%)`
+              });
+            }
+          }
+        });
+      }
+    }
+
+    // Strategy 4: Address + City match (85% confidence)
+    if (businessData.address && businessData.city) {
+      const addressKeywords = businessData.address
+        .toLowerCase()
+        .replace(/\d+/g, '') // Remove numbers
+        .split(/\s+/)
+        .filter(word => word.length > 3); // Keep words > 3 chars
+
+      if (addressKeywords.length > 0) {
+        const addressPattern = `%${addressKeywords[0]}%`;
+        const { data: addressMatches, error: addressError } = await supabase
+          .from(tableName)
+          .select('id, name, address, city, phone, slug, data_source, is_claimed')
+          .ilike('city', businessData.city)
+          .ilike('address', addressPattern)
+          .limit(5);
+
+        if (addressMatches && addressMatches.length > 0) {
+          addressMatches.forEach(match => {
+            const alreadyExists = matches.some(m => m.id === match.id);
+            if (!alreadyExists) {
+              matches.push({
+                ...match,
+                confidence: 85,
+                matchReason: 'Même adresse et ville'
+              });
+            }
+          });
+        }
+      }
+    }
+
+    // Sort by confidence (highest first) and remove duplicates
+    const uniqueMatches = Array.from(
+      new Map(matches.map(m => [m.id, m])).values()
+    ).sort((a, b) => b.confidence - a.confidence);
+
+    return { matches: uniqueMatches, error: null };
+  } catch (error) {
+    console.error('Error finding duplicate businesses:', error);
+    return { matches: [], error };
+  }
+};
+
+/**
+ * Calculate similarity between two business names (0-1 scale)
+ * Simple Levenshtein-like approach
+ */
+function calculateNameSimilarity(name1, name2) {
+  if (!name1 || !name2) return 0;
+
+  const clean1 = name1.toLowerCase().trim();
+  const clean2 = name2.toLowerCase().trim();
+
+  // Exact match
+  if (clean1 === clean2) return 1;
+
+  // One contains the other
+  if (clean1.includes(clean2) || clean2.includes(clean1)) {
+    return 0.85;
+  }
+
+  // Calculate Jaccard similarity (word-based)
+  const words1 = new Set(clean1.split(/\s+/));
+  const words2 = new Set(clean2.split(/\s+/));
+
+  const intersection = new Set([...words1].filter(x => words2.has(x)));
+  const union = new Set([...words1, ...words2]);
+
+  return intersection.size / union.size;
+};
+
+/**
  * Delete a business by ID
  * Only the owner can delete their business
  */

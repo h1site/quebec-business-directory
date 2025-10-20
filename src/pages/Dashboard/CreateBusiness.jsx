@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { createBusiness, updateBusiness } from '../../services/businessService.js';
+import { supabase } from '../../services/supabaseClient.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import {
   getMainCategories,
@@ -16,10 +17,12 @@ import {
 import { importFromGoogle, downloadGooglePhoto } from '../../services/googleBusinessService.js';
 import { parseGoogleHours, saveBusinessHours } from '../../services/businessHoursService.js';
 import GoogleImportModal from '../../components/GoogleImportModal.jsx';
+import DuplicateBusinessModal from '../../components/DuplicateBusinessModal.jsx';
 import CityAutocompleteQuebec from '../../components/CityAutocompleteQuebec.jsx';
 import ImageUploader from '../../components/ImageUploader.jsx';
 import { uploadLogo, uploadMultipleGalleryImages } from '../../services/imageService.js';
 import { getCityInfo } from '../../data/quebecMunicipalities.js';
+import { findDuplicateBusinesses } from '../../services/businessService.js';
 import './CreateBusiness.css';
 
 // Helper function to generate a slug from a string
@@ -42,6 +45,9 @@ const CreateBusiness = () => {
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showGoogleImportModal, setShowGoogleImportModal] = useState(false);
+  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
+  const [duplicateMatches, setDuplicateMatches] = useState([]);
+  const [checkingDuplicates, setCheckingDuplicates] = useState(false);
 
   // Image upload state
   const [logoFile, setLogoFile] = useState(null);
@@ -275,6 +281,53 @@ const CreateBusiness = () => {
       return;
     }
 
+    // Check for duplicates before creating
+    await checkForDuplicates();
+  };
+
+  const checkForDuplicates = async () => {
+    try {
+      setCheckingDuplicates(true);
+      setStatus({ type: 'info', message: 'Vérification des doublons...' });
+
+      const { matches, error } = await findDuplicateBusinesses({
+        name: form.name,
+        phone: form.phone,
+        address: form.address,
+        city: form.city,
+        postal_code: form.postal_code,
+        google_place_id: form.google_place_id // Will be set if imported from Google
+      });
+
+      if (error) {
+        console.error('Error checking duplicates:', error);
+        // Continue with creation even if duplicate check fails
+        await proceedWithCreation();
+        return;
+      }
+
+      // Filter out matches with confidence < 60% (too low to be meaningful)
+      const significantMatches = matches.filter(m => m.confidence >= 60);
+
+      if (significantMatches.length > 0) {
+        // Show duplicate modal
+        setDuplicateMatches(significantMatches);
+        setShowDuplicateModal(true);
+        setStatus({ type: null, message: null });
+      } else {
+        // No duplicates found, proceed with creation
+        await proceedWithCreation();
+      }
+    } catch (error) {
+      console.error('Error in duplicate check:', error);
+      // Continue with creation if duplicate check fails
+      await proceedWithCreation();
+    } finally {
+      setCheckingDuplicates(false);
+    }
+  };
+
+  const proceedWithCreation = async () => {
     try {
       setSubmitting(true);
 
@@ -398,6 +451,86 @@ const CreateBusiness = () => {
     return i18n.language === 'en' ? item.label_en : item.label_fr;
   };
 
+  // Handler for when user chooses to claim an existing business from duplicate modal
+  const handleClaimExisting = async (match) => {
+    try {
+      setShowDuplicateModal(false);
+
+      // Navigate to the business claim page or auto-claim
+      const { data: session } = await supabase.auth.getSession();
+      const userId = session?.session?.user?.id;
+
+      if (!userId) {
+        navigate('/login');
+        return;
+      }
+
+      // Check if email domain matches business website for auto-approval
+      const userEmail = session.session.user.email;
+      const emailDomain = userEmail.split('@')[1]?.toLowerCase();
+
+      let websiteDomain = null;
+      if (match.website) {
+        websiteDomain = match.website.toLowerCase()
+          .replace(/^https?:\/\//, '')
+          .replace(/^www\./, '')
+          .replace(/\/.*$/, '');
+      }
+
+      const canAutoApprove = emailDomain && websiteDomain && emailDomain === websiteDomain;
+
+      // Create claim
+      const { data: claim, error: claimError } = await supabase
+        .from('business_claims')
+        .insert({
+          business_id: match.id,
+          user_id: userId,
+          user_email: userEmail,
+          user_name: user.user_metadata?.full_name || null,
+          verification_method: 'email_domain',
+          status: canAutoApprove ? 'approved' : 'pending'
+        })
+        .select()
+        .single();
+
+      if (claimError) {
+        if (claimError.code === '23505') { // Unique constraint violation
+          alert('Vous avez déjà réclamé cette entreprise.');
+          navigate(`/entreprise/${match.slug}`);
+          return;
+        }
+        throw claimError;
+      }
+
+      // If auto-approved, update business immediately
+      if (canAutoApprove) {
+        await supabase
+          .from('businesses')
+          .update({
+            claimed_by: userId,
+            claimed_at: new Date().toISOString(),
+            is_claimed: true
+          })
+          .eq('id', match.id);
+
+        alert(`✅ Entreprise réclamée automatiquement! Redirection vers votre fiche...`);
+        navigate(`/entreprise/${match.slug}`);
+      } else {
+        alert(`⏳ Demande de réclamation envoyée. Un administrateur va la réviser sous peu.`);
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Error claiming business:', error);
+      alert('Erreur lors de la réclamation: ' + error.message);
+    }
+  };
+
+  // Handler for when user chooses to create new business anyway
+  const handleCreateNew = () => {
+    setShowDuplicateModal(false);
+    proceedWithCreation();
+  };
+
   const handleGoogleImport = async (importedData) => {
     try {
       // importedData is now the selected business object from confirmation screen
@@ -519,6 +652,21 @@ const CreateBusiness = () => {
           onClose={() => setShowGoogleImportModal(false)}
           onImport={handleGoogleImport}
         />
+
+        {showDuplicateModal && (
+          <DuplicateBusinessModal
+            matches={duplicateMatches}
+            onClose={() => setShowDuplicateModal(false)}
+            onClaimExisting={handleClaimExisting}
+            onCreateNew={handleCreateNew}
+            businessData={{
+              name: form.name,
+              address: form.address,
+              city: form.city,
+              phone: form.phone
+            }}
+          />
+        )}
 
         {/* Progress Indicator */}
         <div className="progress-steps">
@@ -1112,8 +1260,8 @@ const CreateBusiness = () => {
                 Suivant
               </button>
             ) : (
-              <button type="submit" className="btn btn-primary" disabled={submitting}>
-                {submitting ? 'Envoi en cours...' : 'Soumettre'}
+              <button type="submit" className="btn btn-primary" disabled={submitting || checkingDuplicates}>
+                {checkingDuplicates ? 'Vérification des doublons...' : submitting ? 'Envoi en cours...' : 'Soumettre'}
               </button>
             )}
           </div>
