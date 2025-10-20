@@ -349,13 +349,13 @@ const BusinessDetails = () => {
             </div>
 
             {/* Google Reviews */}
-            {business.google_reviews && business.google_reviews.length > 0 && (
+            {(business.google_rating || (business.google_reviews && business.google_reviews.length > 0)) && (
               <div className="sidebar-card">
                 <h3 className="sidebar-title">Avis Google</h3>
                 <GoogleReviews
                   rating={business.google_rating}
                   reviewsCount={business.google_reviews_count}
-                  reviews={business.google_reviews}
+                  reviews={business.google_reviews || []}
                 />
               </div>
             )}
