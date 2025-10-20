@@ -31,13 +31,14 @@ const buildFilters = ({ query, city, region, mrc, category, phone, distance, coo
     }
   }
 
-  // NEW: Filter by category slug (more precise than text search)
-  if (subCategorySlug) {
-    filters.push({ column: 'primary_sub_category_slug', operator: 'eq', value: subCategorySlug });
-  } else if (mainCategorySlug) {
-    filters.push({ column: 'primary_main_category_slug', operator: 'eq', value: mainCategorySlug });
-  } else if (category) {
-    // Fallback to old text-based category search
+  // TEMPORARY FIX: Disable category slug filtering until businesses_enriched view is created
+  // The primary_*_category_slug columns only exist in the view, not in businesses table
+  // TODO: Re-enable once businesses_enriched view is created
+
+  // For now, we skip category filtering entirely to get the search working
+  // Users can still search by region, city, MRC, and business name
+  if (category) {
+    // Fallback to old text-based category search if categories column exists
     filters.push({ column: 'categories', operator: 'cs', value: `{${category}}` });
   }
 
@@ -110,13 +111,13 @@ export const searchBusinesses = async ({
     return { data, error: null };
   }
 
-  // Use businesses_enriched view to access languages, service_modes, etc.
+  // TEMPORARY FIX: Use businesses table directly until businesses_enriched view is recreated
+  // TODO: Switch back to businesses_enriched once the view is created in Supabase
   let request = supabase
-    .from('businesses_enriched')
+    .from('businesses')
     .select(
-      `id, slug, name, description, phone, email, address, city, categories, products_services, business_size_id,
-       languages, service_modes, certifications, accessibility_features, payment_methods,
-       primary_main_category_fr, primary_main_category_en, primary_sub_category_fr, primary_sub_category_en`,
+      `id, slug, name, description, phone, email, address, city, region, categories, products_services, business_size_id,
+       languages, service_modes, certifications, accessibility_features, payment_methods, website, postal_code, google_rating, google_reviews_count`,
       { count: 'exact' }
     )
     .range(offset, offset + limit - 1);
