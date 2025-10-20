@@ -59,9 +59,14 @@ BEGIN
   -- Drop old constraint if exists
   ALTER TABLE businesses DROP CONSTRAINT IF EXISTS businesses_neq_key;
 
-  -- Add new composite unique constraint
-  ALTER TABLE businesses ADD CONSTRAINT businesses_neq_etablissement_unique
-    UNIQUE (neq, etablissement_number);
+  -- Add new composite unique constraint only if it doesn't exist
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'businesses_neq_etablissement_unique'
+  ) THEN
+    ALTER TABLE businesses ADD CONSTRAINT businesses_neq_etablissement_unique
+      UNIQUE (neq, etablissement_number);
+  END IF;
 END $$;
 
 COMMENT ON COLUMN businesses.data_source IS 'Source of data: manual, req, google, etc.';
@@ -108,6 +113,12 @@ END $$;
 
 -- RLS policies for business_claims
 ALTER TABLE business_claims ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view own claims" ON business_claims;
+DROP POLICY IF EXISTS "Users can create claims" ON business_claims;
+DROP POLICY IF EXISTS "Admins can view all claims" ON business_claims;
+DROP POLICY IF EXISTS "Admins can update claims" ON business_claims;
 
 -- Users can view their own claims
 CREATE POLICY "Users can view own claims" ON business_claims
@@ -181,6 +192,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Drop trigger if exists
+DROP TRIGGER IF EXISTS auto_approve_business_claim ON business_claims;
+
+-- Create trigger
 CREATE TRIGGER auto_approve_business_claim
   BEFORE INSERT ON business_claims
   FOR EACH ROW
