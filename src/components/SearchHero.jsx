@@ -5,6 +5,7 @@ import Lottie from 'lottie-react';
 import CityAutocomplete from './CityAutocomplete.jsx';
 import { getMainCategories, getSubCategories } from '../services/lookupService.js';
 import { quebecMunicipalities, getAllRegions, getCitiesByRegion, getMRCsByRegion } from '../data/quebecMunicipalities.js';
+import { supabase } from '../services/supabaseClient.js';
 import listAnimation from '../../public/images/logos/list.json';
 import cityAnimation from '../../public/images/logos/city.json';
 
@@ -15,6 +16,8 @@ const SearchHero = () => {
   const [where, setWhere] = useState('');
   const [mainCategories, setMainCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+  const [totalBusinesses, setTotalBusinesses] = useState(0);
+  const [randomBusinesses, setRandomBusinesses] = useState([]);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -31,6 +34,38 @@ const SearchHero = () => {
     };
 
     loadCategories();
+  }, []);
+
+  // Load total businesses count and random businesses
+  useEffect(() => {
+    const loadBusinessesData = async () => {
+      try {
+        // Get total count
+        const { count } = await supabase
+          .from('businesses')
+          .select('*', { count: 'exact', head: true });
+
+        setTotalBusinesses(count || 0);
+
+        // Get 3 random businesses with good ratings
+        const { data } = await supabase
+          .from('businesses')
+          .select('id, slug, name, city, region, description, logo_url, google_rating, google_reviews_count')
+          .not('google_rating', 'is', null)
+          .gte('google_rating', 4.0)
+          .limit(100);
+
+        if (data && data.length > 0) {
+          // Shuffle and pick 3
+          const shuffled = data.sort(() => 0.5 - Math.random());
+          setRandomBusinesses(shuffled.slice(0, 3));
+        }
+      } catch (error) {
+        console.error('Error loading businesses data:', error);
+      }
+    };
+
+    loadBusinessesData();
   }, []);
 
   const onSubmit = (event) => {
@@ -108,6 +143,54 @@ const SearchHero = () => {
             {t('hero.searchButton')}
           </button>
         </form>
+
+        {/* Découvertes du jour avec total d'entreprises */}
+        <div className="hero-discoveries">
+          <div className="discoveries-header">
+            <h2 className="discoveries-title">Découvertes du jour</h2>
+            <p className="discoveries-subtitle">
+              Chaque jour, de nouvelles pépites à découvrir parmi{' '}
+              <strong>{totalBusinesses.toLocaleString()}</strong> entreprises.{' '}
+              <Link to="/ajouter" className="discoveries-cta">Ajoutez la vôtre, c'est gratuit!</Link>
+            </p>
+          </div>
+
+          <div className="discoveries-grid">
+            {randomBusinesses.map((business) => (
+              <Link
+                key={business.id}
+                to={`/entreprise/${business.slug}`}
+                className="discovery-card"
+              >
+                {business.logo_url && (
+                  <div className="discovery-logo">
+                    <img src={business.logo_url} alt={business.name} />
+                  </div>
+                )}
+                <div className="discovery-content">
+                  <h3 className="discovery-name">{business.name}</h3>
+                  <p className="discovery-location">
+                    {business.city}{business.region && `, ${business.region}`}
+                  </p>
+                  {business.google_rating && (
+                    <div className="discovery-rating">
+                      <span className="rating-stars">{'★'.repeat(Math.round(business.google_rating))}</span>
+                      <span className="rating-value">{business.google_rating.toFixed(1)}</span>
+                      {business.google_reviews_count && (
+                        <span className="rating-count">({business.google_reviews_count})</span>
+                      )}
+                    </div>
+                  )}
+                  {business.description && (
+                    <p className="discovery-description">
+                      {business.description.substring(0, 100)}...
+                    </p>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
 
         {/* Categories Grid */}
         <div className="hero-browse-section">
