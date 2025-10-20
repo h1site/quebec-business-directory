@@ -67,7 +67,34 @@ const resources = {
         city: 'Ville',
         distance: 'Distance',
         applyFilters: 'Appliquer les filtres',
-        clearFilters: 'Réinitialiser'
+        clearFilters: 'Réinitialiser',
+        // Search page specific translations
+        searchPlaceholder: 'Nom d\'entreprise, service...',
+        cityPlaceholder: 'Ville, région...',
+        searchButton: 'Rechercher',
+        searching: 'Recherche en cours...',
+        clearAllFilters: 'Effacer tous les filtres',
+        region: 'Région',
+        mrc: 'MRC',
+        subCategory: 'Sous-catégorie',
+        resultsCount: '<strong>{{displayed}}</strong> sur <strong>{{total}}</strong> résultat{{plural}} affiché{{plural}}',
+        loadMore: 'Voir plus',
+        loading: 'Chargement...',
+        noResultsFound: 'Aucun résultat trouvé',
+        noResultsMessage: 'Essayez de modifier vos critères de recherche.',
+        welcomeTitle: 'Commencez votre recherche',
+        welcomeMessage: 'Utilisez les filtres pour trouver des entreprises.',
+        // Location prompt
+        locationPromptTitle: 'Découvrez les entreprises près de vous',
+        locationPromptSubtitle: 'Permettez-nous de détecter votre position pour afficher les entreprises de votre région automatiquement.',
+        detectLocation: 'Détecter ma position',
+        detectingLocation: 'Détection en cours...',
+        useFiltersManually: 'Utiliser les filtres manuellement',
+        locationNote: 'Vous pouvez aussi utiliser les filtres à gauche pour rechercher par région, ville ou catégorie.',
+        locationErrorDenied: 'Vous avez refusé l\'accès à votre position. Vous pouvez toujours sélectionner votre région manuellement.',
+        locationErrorUnavailable: 'Impossible de déterminer votre position. Veuillez sélectionner votre région manuellement.',
+        locationErrorTimeout: 'La demande de localisation a expiré. Veuillez réessayer.',
+        locationErrorGeneric: 'Erreur lors de la détection de votre position. Veuillez sélectionner votre région manuellement.'
       }
     }
   },
@@ -136,7 +163,34 @@ const resources = {
         city: 'City',
         distance: 'Distance',
         applyFilters: 'Apply filters',
-        clearFilters: 'Reset filters'
+        clearFilters: 'Reset filters',
+        // Search page specific translations
+        searchPlaceholder: 'Business name, service...',
+        cityPlaceholder: 'City, region...',
+        searchButton: 'Search',
+        searching: 'Searching...',
+        clearAllFilters: 'Clear all filters',
+        region: 'Region',
+        mrc: 'RCM',
+        subCategory: 'Subcategory',
+        resultsCount: '<strong>{{displayed}}</strong> of <strong>{{total}}</strong> result{{plural}} shown',
+        loadMore: 'Load more',
+        loading: 'Loading...',
+        noResultsFound: 'No results found',
+        noResultsMessage: 'Try modifying your search criteria.',
+        welcomeTitle: 'Start your search',
+        welcomeMessage: 'Use the filters to find businesses.',
+        // Location prompt
+        locationPromptTitle: 'Discover businesses near you',
+        locationPromptSubtitle: 'Allow us to detect your location to automatically display businesses in your region.',
+        detectLocation: 'Detect my location',
+        detectingLocation: 'Detecting location...',
+        useFiltersManually: 'Use filters manually',
+        locationNote: 'You can also use the filters on the left to search by region, city or category.',
+        locationErrorDenied: 'You denied access to your location. You can still manually select your region.',
+        locationErrorUnavailable: 'Unable to determine your location. Please manually select your region.',
+        locationErrorTimeout: 'Location request timed out. Please try again.',
+        locationErrorGeneric: 'Error detecting your location. Please manually select your region.'
       }
     }
   }
