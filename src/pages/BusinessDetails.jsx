@@ -152,30 +152,6 @@ const BusinessDetails = () => {
             {business.is_franchise && (
               <span className="franchise-badge">Franchise</span>
             )}
-
-            {/* Tags cliquables */}
-            <div className="business-tags">
-              {business.primary_main_category_fr && business.primary_main_category_slug && (
-                <Link to={`/categorie/${business.primary_main_category_slug}`} className="business-tag">
-                  {business.primary_main_category_fr}
-                </Link>
-              )}
-              {business.primary_sub_category_fr && business.primary_sub_category_slug && (
-                <Link to={`/categorie/${business.primary_main_category_slug}/${business.primary_sub_category_slug}`} className="business-tag">
-                  {business.primary_sub_category_fr}
-                </Link>
-              )}
-              {business.region && (
-                <Link to={`/region/${business.region.toLowerCase().replace(/\s+/g, '-')}`} className="business-tag">
-                  {business.region}
-                </Link>
-              )}
-              {business.city && (
-                <Link to={`/ville/${business.city.toLowerCase().replace(/\s+/g, '-')}`} className="business-tag">
-                  {business.city}
-                </Link>
-              )}
-            </div>
           </div>
           {business.established_year && (
             <p className="established-year">Fondée en {business.established_year}</p>
