@@ -34,7 +34,12 @@ const resources = {
         popularCategoriesTitle: 'Explorez les catégories populaires',
         popularCitiesTitle: 'Villes les plus consultées',
         categoryDescription: 'Recherchez les meilleurs professionnels et entreprises en {{category}} partout au Québec.',
-        cityDescription: 'Découvrez des entreprises locales, des services et des professionnels de confiance à {{city}}.'
+        cityDescription: 'Découvrez des entreprises locales, des services et des professionnels de confiance à {{city}}.',
+        randomBusinessesTitle: 'Découvertes du jour',
+        randomBusinessesSubtitle: 'Chaque jour, de nouvelles pépites à découvrir',
+        reviews: 'avis',
+        seeDetails: 'Voir les détails',
+        discoverOthers: 'Découvrir d\'autres entreprises'
       },
       auth: {
         email: 'Courriel',
@@ -135,6 +140,11 @@ const resources = {
         popularCategoriesTitle: 'Explore popular categories',
         popularCitiesTitle: 'Most viewed cities',
         categoryDescription: 'Find trusted professionals and businesses in {{category}} across Quebec.',
+        randomBusinessesTitle: 'Today\'s Discoveries',
+        randomBusinessesSubtitle: 'Every day, new gems to discover',
+        reviews: 'reviews',
+        seeDetails: 'See details',
+        discoverOthers: 'Discover other businesses',
         cityDescription: 'Discover local businesses, services and trusted professionals in {{city}}.'
       },
       auth: {

@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import SearchHero from '../components/SearchHero.jsx';
+import RandomBusinesses from '../components/RandomBusinesses.jsx';
 import { generateOrganizationSchema, generateWebSiteSchema } from '../utils/schemaMarkup.js';
 
 const Home = () => {
@@ -22,6 +23,7 @@ const Home = () => {
 
       <div>
         <SearchHero />
+        <RandomBusinesses />
       </div>
     </>
   );
