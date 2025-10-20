@@ -26,7 +26,10 @@ const Search = () => {
 
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [totalResults, setTotalResults] = useState(0);
+  const [displayedCount, setDisplayedCount] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
   const [showLocationPrompt, setShowLocationPrompt] = useState(false);
 
   const [regions] = useState(getAllRegions());
@@ -165,15 +168,22 @@ const Search = () => {
     performSearch();
   };
 
-  const performSearch = async (params = {}) => {
-    setLoading(true);
+  const performSearch = async (params = {}, loadMore = false) => {
+    if (loadMore) {
+      setLoadingMore(true);
+    } else {
+      setLoading(true);
+    }
+
     try {
+      const offset = loadMore ? businesses.length : 0;
       const searchParams = {
         query: params.q || query,
         city: params.city || selectedCity,
         region: params.region || selectedRegion,
         mrc: params.mrc || selectedMRC,
-        limit: 100
+        limit: 100,
+        offset: offset
       };
 
       // Add category filter - handle both slugs (from URL) and IDs (from state)
@@ -193,24 +203,43 @@ const Search = () => {
         }
       }
 
-      const { data, error } = await searchBusinesses(searchParams);
+      const { data, error, count } = await searchBusinesses(searchParams);
 
       if (error) {
         console.error('Search error:', error);
-        setBusinesses([]);
-        setTotalResults(0);
+        if (!loadMore) {
+          setBusinesses([]);
+          setTotalResults(0);
+          setDisplayedCount(0);
+        }
         return;
       }
 
-      setBusinesses(data || []);
-      setTotalResults(data?.length || 0);
+      if (loadMore) {
+        setBusinesses(prev => [...prev, ...(data || [])]);
+        setDisplayedCount(prev => prev + (data?.length || 0));
+      } else {
+        setBusinesses(data || []);
+        setDisplayedCount(data?.length || 0);
+        setTotalResults(count || data?.length || 0);
+      }
+
+      setHasMore((data?.length || 0) === 100);
     } catch (error) {
       console.error('Search error:', error);
-      setBusinesses([]);
-      setTotalResults(0);
+      if (!loadMore) {
+        setBusinesses([]);
+        setTotalResults(0);
+        setDisplayedCount(0);
+      }
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
+  };
+
+  const handleLoadMore = () => {
+    performSearch({}, true);
   };
 
   const handleSearch = (e) => {
@@ -308,7 +337,7 @@ const Search = () => {
           <main className="search-results-main">
             {totalResults > 0 && (
               <div className="results-count">
-                <strong>{totalResults}</strong> résultat{totalResults > 1 ? 's' : ''} trouvé{totalResults > 1 ? 's' : ''}
+                <strong>{displayedCount}</strong> sur <strong>{totalResults}</strong> résultat{totalResults > 1 ? 's' : ''} affiché{displayedCount > 1 ? 's' : ''}
               </div>
             )}
 
@@ -338,11 +367,32 @@ const Search = () => {
                 <p>Utilisez les filtres pour trouver des entreprises.</p>
               </div>
             ) : (
-              <div className="results-list">
-                {businesses.map((business) => (
-                  <BusinessCard key={business.id} business={business} />
-                ))}
-              </div>
+              <>
+                <div className="results-list">
+                  {businesses.map((business) => (
+                    <BusinessCard key={business.id} business={business} />
+                  ))}
+                </div>
+
+                {hasMore && (
+                  <div className="load-more-container">
+                    <button
+                      className="btn btn-load-more"
+                      onClick={handleLoadMore}
+                      disabled={loadingMore}
+                    >
+                      {loadingMore ? (
+                        <>
+                          <div className="spinner-small"></div>
+                          Chargement...
+                        </>
+                      ) : (
+                        'Voir plus'
+                      )}
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </main>
 

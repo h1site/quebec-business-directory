@@ -83,7 +83,8 @@ export const searchBusinesses = async ({
   businessSize,
   mainCategorySlug,
   subCategorySlug,
-  limit = 20
+  limit = 20,
+  offset = 0
 }) => {
   if (!isSupabaseConfigured) {
     const data = sampleBusinesses.filter((business) => {
@@ -115,9 +116,10 @@ export const searchBusinesses = async ({
     .select(
       `id, slug, name, description, phone, email, address, city, categories, products_services, business_size_id,
        languages, service_modes, certifications, accessibility_features, payment_methods,
-       primary_main_category_fr, primary_main_category_en, primary_sub_category_fr, primary_sub_category_en`
+       primary_main_category_fr, primary_main_category_en, primary_sub_category_fr, primary_sub_category_en`,
+      { count: 'exact' }
     )
-    .limit(limit);
+    .range(offset, offset + limit - 1);
 
   const filters = buildFilters({ query, city, region, mrc, category, phone, distance, coordinates, language, serviceMode, businessSize, mainCategorySlug, subCategorySlug });
 
@@ -138,7 +140,7 @@ export const searchBusinesses = async ({
     }
   });
 
-  const { data, error } = await request.order('created_at', { ascending: false });
+  const { data, error, count } = await request.order('created_at', { ascending: false });
 
   // Flatten main_category data for easier access
   if (data && Array.isArray(data)) {
@@ -150,7 +152,7 @@ export const searchBusinesses = async ({
     });
   }
 
-  return { data, error };
+  return { data, error, count };
 };
 
 export const createBusiness = async (payload) => {
