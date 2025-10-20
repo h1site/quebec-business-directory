@@ -45,6 +45,28 @@
   font-size: 0.9rem;
 }
 
+.stat-card-clickable {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: block;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #f59e0b;
+}
+
+.stat-card-clickable:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.stat-card-clickable .stat-value {
+  color: #92400e;
+}
+
+.stat-card-clickable .stat-label {
+  color: #78350f;
+}
+
 /* Filtres */
 .admin-filters {
   display: flex;

@@ -8,6 +8,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import GoogleMap from '../components/GoogleMap.jsx';
 import BusinessHours from '../components/BusinessHours.jsx';
 import GoogleReviews from '../components/GoogleReviews.jsx';
+import ClaimBusinessModal from '../components/ClaimBusinessModal.jsx';
 import { getBusinessUrl, isLegacyUrl } from '../utils/urlHelpers.js';
 import { generateBusinessSchema, generateBreadcrumbSchema } from '../utils/schemaMarkup.js';
 import './BusinessDetails.css';
@@ -26,6 +27,7 @@ const BusinessDetails = () => {
   const [businessHours, setBusinessHours] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showClaimModal, setShowClaimModal] = useState(false);
 
   useEffect(() => {
     const loadBusiness = async () => {
@@ -156,15 +158,32 @@ const BusinessDetails = () => {
           {business.established_year && (
             <p className="established-year">Fondée en {business.established_year}</p>
           )}
-          {isOwner && (
-            <Link
-              to={getBusinessUrl(business) + '/modifier'}
-              className="btn btn-edit"
-              style={{ marginTop: '1rem' }}
-            >
-              Modifier la fiche
-            </Link>
-          )}
+          <div className="business-actions">
+            {isOwner && (
+              <Link
+                to={getBusinessUrl(business) + '/modifier'}
+                className="btn btn-edit"
+              >
+                Modifier la fiche
+              </Link>
+            )}
+            {!business.is_claimed && user && !isOwner && (
+              <button
+                className="btn btn-claim"
+                onClick={() => setShowClaimModal(true)}
+              >
+                📋 Réclamer votre fiche
+              </button>
+            )}
+            {!business.is_claimed && !user && (
+              <button
+                className="btn btn-claim"
+                onClick={() => navigate('/login', { state: { from: location.pathname } })}
+              >
+                📋 Réclamer votre fiche
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Main Content */}
@@ -371,6 +390,19 @@ const BusinessDetails = () => {
         </div>
       </div>
     </div>
+
+    {/* Claim Business Modal */}
+    {showClaimModal && user && (
+      <ClaimBusinessModal
+        business={business}
+        user={user}
+        onClose={() => setShowClaimModal(false)}
+        onSuccess={() => {
+          // Reload page to update claimed status
+          window.location.reload();
+        }}
+      />
+    )}
     </>
   );
 };

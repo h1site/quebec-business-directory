@@ -135,6 +135,32 @@
   box-shadow: 0 4px 15px rgba(49, 130, 206, 0.4);
 }
 
+.business-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-claim {
+  padding: 0.65rem 1.5rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+  font-size: 0.95rem;
+}
+
+.btn-claim:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
 .established-year {
   color: #718096;
   font-size: 0.95rem;

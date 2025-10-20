@@ -15,6 +15,7 @@ import MyBusinesses from './pages/Dashboard/MyBusinesses.jsx';
 import MigrationTools from './pages/Dashboard/MigrationTools.jsx';
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
 import AdminTools from './pages/Admin/AdminTools.jsx';
+import AdminClaims from './pages/Admin/AdminClaims.jsx';
 import BusinessDetails from './pages/BusinessDetails.jsx';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
@@ -89,6 +90,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <AdminTools />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/claims"
+                element={
+                  <AdminRoute>
+                    <AdminClaims />
                   </AdminRoute>
                 }
               />

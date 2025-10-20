@@ -14,6 +14,7 @@ export default function AdminDashboard() {
     manual: 0,
     claimed: 0,
     unclaimed: 0,
+    pendingClaims: 0,
     withCategories: 0,
     withoutCategories: 0
   });
@@ -43,12 +44,18 @@ export default function AdminDashboard() {
       .select('*', { count: 'exact', head: true })
       .eq('is_claimed', true);
 
+    const { count: pendingClaims } = await supabase
+      .from('business_claims')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'pending');
+
     setStats({
       total: total || 0,
       req: req || 0,
       manual: manual || 0,
       claimed: claimed || 0,
-      unclaimed: (total || 0) - (claimed || 0)
+      unclaimed: (total || 0) - (claimed || 0),
+      pendingClaims: pendingClaims || 0
     });
   }
 
@@ -127,6 +134,10 @@ export default function AdminDashboard() {
           <div className="stat-value">{stats.unclaimed}</div>
           <div className="stat-label">Non réclamées</div>
         </div>
+        <Link to="/admin/claims" className="stat-card stat-card-clickable">
+          <div className="stat-value">{stats.pendingClaims}</div>
+          <div className="stat-label">Réclamations en attente</div>
+        </Link>
       </div>
 
       {/* Filtres */}
