@@ -534,6 +534,12 @@ async function importREQData() {
           return;
         }
 
+        // Filtrer: ignorer les entreprises commençant par "3XXX-XXXX QUÉBEC INC." ou "3XXXXXXX CANADA INC."
+        // Ce sont aussi des numéros de corporation génériques
+        if (name && /^3\d{3,7}[-\s]?\d{0,4}\s+(QU[ÉE]BEC|CANADA)\s+INC/i.test(name)) {
+          return;
+        }
+
         // Trouver MRC et région
         const location = cityToLocation[city] || { mrc: null, region: null };
         if (location.mrc) stats.withLocation++;
