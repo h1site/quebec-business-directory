@@ -116,8 +116,8 @@ export const searchBusinesses = async ({
   let request = supabase
     .from('businesses')
     .select(
-      `id, slug, name, description, phone, email, address, city, region, categories, products_services, business_size_id,
-       languages, service_modes, certifications, accessibility_features, payment_methods, website, postal_code, google_rating, google_reviews_count`,
+      `id, slug, name, description, phone, email, address, city, region, categories, products_services,
+       website, postal_code, google_rating, google_reviews_count, logo_url, latitude, longitude`,
       { count: 'exact' }
     )
     .range(offset, offset + limit - 1);
