@@ -43,6 +43,31 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
 
       if (claimError) throw claimError;
 
+      // Send email notification to admin
+      try {
+        await supabase.functions.invoke('send-claim-notification', {
+          body: {
+            type: 'new_claim',
+            claim: {
+              id: claim.id,
+              user_email: user.email,
+              user_name: formData.name || user.user_metadata?.name,
+              user_phone: formData.phone,
+              verification_method: verificationMethod,
+              status: claim.status
+            },
+            business: {
+              name: business.name,
+              city: business.city,
+              slug: business.slug
+            }
+          }
+        });
+      } catch (emailError) {
+        console.error('Failed to send email notification:', emailError);
+        // Continue anyway - don't block the claim process
+      }
+
       // Check if auto-approved
       if (claim.status === 'approved') {
         setStep('success');

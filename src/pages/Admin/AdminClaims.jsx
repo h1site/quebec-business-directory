@@ -81,6 +81,28 @@ const AdminClaims = () => {
 
       if (businessError) throw businessError;
 
+      // Send approval email to user
+      try {
+        await supabase.functions.invoke('send-claim-notification', {
+          body: {
+            type: 'claim_approved',
+            claim: {
+              id: claim.id,
+              user_email: claim.user_email,
+              user_name: claim.user_name,
+              status: 'approved'
+            },
+            business: {
+              name: claim.businesses.name,
+              city: claim.businesses.city,
+              slug: claim.businesses.slug
+            }
+          }
+        });
+      } catch (emailError) {
+        console.error('Failed to send approval email:', emailError);
+      }
+
       alert('Réclamation approuvée avec succès!');
       loadClaims();
     } catch (error) {
@@ -111,6 +133,29 @@ const AdminClaims = () => {
         .eq('id', claim.id);
 
       if (error) throw error;
+
+      // Send rejection email to user
+      try {
+        await supabase.functions.invoke('send-claim-notification', {
+          body: {
+            type: 'claim_rejected',
+            claim: {
+              id: claim.id,
+              user_email: claim.user_email,
+              user_name: claim.user_name,
+              status: 'rejected',
+              notes: reason
+            },
+            business: {
+              name: claim.businesses.name,
+              city: claim.businesses.city,
+              slug: claim.businesses.slug
+            }
+          }
+        });
+      } catch (emailError) {
+        console.error('Failed to send rejection email:', emailError);
+      }
 
       alert('Réclamation rejetée.');
       loadClaims();
