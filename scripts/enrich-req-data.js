@@ -138,10 +138,7 @@ async function enrichBusiness(business) {
   }
 
   // Préparer les données d'enrichissement
-  const enrichmentData = {
-    google_place_id: placeId,
-    google_maps_url: details.url || null
-  };
+  const enrichmentData = {};
 
   // Téléphone
   if (details.formatted_phone_number || details.international_phone_number) {
