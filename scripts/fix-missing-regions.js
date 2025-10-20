@@ -336,7 +336,104 @@ const cityToRegion = {
 
   // Côte-Nord (ajouts)
   'Schefferville': 'Côte-Nord',
+  'Forestville': 'Côte-Nord',
+
+  // Mauricie (ajouts manquants)
+  'Trois-Rivières': 'Mauricie',
+  'Shawinigan': 'Mauricie',
+
+  // Estrie (ajouts manquants)
+  'Danville': 'Estrie',
+
+  // Abitibi-Témiscamingue
+  'Val-d\'Or': 'Abitibi-Témiscamingue',
+
+  // Laurentides (ajouts)
+  'Rivière-Rouge': 'Laurentides',
+  'Piedmont': 'Laurentides',
+  'Saint-Sauveur-des-Monts': 'Laurentides',
+  'Lachute': 'Laurentides',
+  'Clermont': 'Laurentides',
+  'Rosemere': 'Laurentides',
+  'Prévost': 'Laurentides',
+
+  // Montréal (ajouts)
+  'Outremont': 'Montréal',
+  'Verdun': 'Montréal',
+  'Montréal-Est': 'Montréal',
+  'Dorval': 'Montréal',
+
+  // Montérégie (ajouts)
+  'Saint-Jean-de-Dieu': 'Montérégie',
+  'Mont-Saint-Grégoire': 'Montérégie',
+  'Otterburn Park': 'Montérégie',
+  'Saint-Césaire': 'Montérégie',
+  'McMasterville': 'Montérégie',
+  'Sainte-Angèle-de-Monnoir': 'Montérégie',
+
+  // Lanaudière (ajouts)
+  'Mascouche': 'Lanaudière',
+  'Lanoraie': 'Lanaudière',
+  'Saint-Gabriel-de-Brandon': 'Lanaudière',
+
+  // Chaudière-Appalaches (ajouts)
+  'La Durantaye': 'Chaudière-Appalaches',
+  'Saint-Édouard-de-Lotbinière': 'Chaudière-Appalaches',
+
+  // Gaspésie-Îles-de-la-Madeleine (ajouts)
+  'Grande-Rivière': 'Gaspésie-Îles-de-la-Madeleine',
+  'Grande-Vallée': 'Gaspésie-Îles-de-la-Madeleine',
+  'Pointe-à-la-Croix': 'Gaspésie-Îles-de-la-Madeleine',
+  'Port-Daniel--Gascons': 'Gaspésie-Îles-de-la-Madeleine',
+  'Sainte-Anne-des-Monts': 'Gaspésie-Îles-de-la-Madeleine',
+  'Saint-Maxime-du-Mont-Louis': 'Gaspésie-Îles-de-la-Madeleine',
+
+  // Bas-Saint-Laurent (ajouts)
+  'Saint-Jean-de-la-Lande': 'Bas-Saint-Laurent',
+  'Saint-Philippe-de-Néri': 'Bas-Saint-Laurent',
+
+  // Centre-du-Québec (ajouts)
+  'Ham-Nord': 'Centre-du-Québec',
+  'Saint-Paulin': 'Centre-du-Québec',
+  'Notre-Dame-du-Bon-Conseil': 'Centre-du-Québec',
+
+  // Outaouais (ajouts)
+  'Montpellier': 'Outaouais',
+
+  // Autres villes spécifiques
+  'Price': 'Bas-Saint-Laurent', // Ancienne ville fusionnée avec Amqui
+  'Uashat': 'Côte-Nord',
+  'La Patrie': 'Estrie',
+  'Saint-Valère': 'Centre-du-Québec',
+  'Saint-Thomas': 'Lanaudière',
+  'Saint-Elzéar': 'Chaudière-Appalaches',
+  'Saint-Isidore': 'Chaudière-Appalaches',
+  'Saint-Damien-de-Brandon': 'Lanaudière',
+  'Saint-Côme--Linière': 'Chaudière-Appalaches',
+  'Saint-Nazaire': 'Saguenay-Lac-Saint-Jean',
+  'Saint-Ferréol-les-Neiges': 'Capitale-Nationale',
+  'Blainville': 'Laurentides',
 };
+
+// Normalize city name for matching (case-insensitive, trim spaces)
+function normalizeCity(cityName) {
+  if (!cityName) return '';
+
+  return cityName
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ') // Multiple spaces to single space
+    .replace(/'/g, '\'') // Normalize apostrophes
+    .replace(/'/g, '\'') // Another apostrophe variant
+    .replace(/\s*-\s*/g, '-'); // Normalize hyphens
+}
+
+// Create a normalized mapping for case-insensitive lookups
+const normalizedCityToRegion = {};
+for (const [city, region] of Object.entries(cityToRegion)) {
+  const normalized = normalizeCity(city);
+  normalizedCityToRegion[normalized] = region;
+}
 
 async function fixMissingRegions() {
   console.log('🔧 Correction des régions manquantes...\n');
@@ -359,7 +456,14 @@ async function fixMissingRegions() {
   let notFound = 0;
 
   for (const business of businesses) {
-    const region = cityToRegion[business.city];
+    // Try exact match first, then normalized match
+    let region = cityToRegion[business.city];
+
+    if (!region) {
+      // Try normalized (case-insensitive) match
+      const normalizedCity = normalizeCity(business.city);
+      region = normalizedCityToRegion[normalizedCity];
+    }
 
     if (region) {
       // Update the business with the correct region
