@@ -41,10 +41,12 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const args = process.argv.slice(2);
 const limitArg = args.find(arg => arg.startsWith('--limit='));
 const limit = limitArg ? parseInt(limitArg.split('=')[1]) : Infinity;
+const offsetArg = args.find(arg => arg.startsWith('--offset='));
+const offset = offsetArg ? parseInt(offsetArg.split('=')[1]) : 0;
 const dryRun = args.includes('--dry-run');
 
 console.log('🚀 Import des entreprises depuis le REQ');
-console.log('📊 Configuration:', { limit, dryRun });
+console.log('📊 Configuration:', { limit, offset, dryRun });
 
 /**
  * Mapping Ville → MRC → Région
@@ -456,9 +458,17 @@ async function importREQData() {
   };
 
   return new Promise((resolve, reject) => {
+    let rowIndex = 0;
+
     fs.createReadStream(csvPath)
       .pipe(csv())
       .on('data', async (row) => {
+        rowIndex++;
+
+        // Skip rows before offset
+        if (rowIndex <= offset) return;
+
+        // Stop after limit
         if (totalRead >= limit) return;
 
         totalRead++;
