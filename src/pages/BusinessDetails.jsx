@@ -100,6 +100,10 @@ const BusinessDetails = () => {
 
   const isOwner = user && user.id === business.owner_id;
 
+  // A business is considered claimed if EITHER is_claimed is true OR it has an owner_id
+  // This prevents display bugs if is_claimed flag is out of sync with owner_id
+  const isClaimed = business.is_claimed || !!business.owner_id;
+
   // Generate canonical URL
   const canonicalUrl = `${window.location.origin}${getBusinessUrl(business)}`;
 
@@ -167,7 +171,7 @@ const BusinessDetails = () => {
                 Modifier la fiche
               </Link>
             )}
-            {!business.is_claimed && user && !isOwner && (
+            {!isClaimed && user && !isOwner && (
               <button
                 className="btn btn-claim"
                 onClick={() => setShowClaimModal(true)}
@@ -175,7 +179,7 @@ const BusinessDetails = () => {
                 📋 Réclamer votre fiche
               </button>
             )}
-            {!business.is_claimed && !user && (
+            {!isClaimed && !user && (
               <button
                 className="btn btn-claim"
                 onClick={() => navigate('/login', { state: { from: location.pathname } })}
@@ -185,8 +189,8 @@ const BusinessDetails = () => {
             )}
           </div>
 
-          {/* Unclaimed business notice */}
-          {!business.is_claimed && (
+          {/* Unclaimed business notice - only show for REQ imports */}
+          {!isClaimed && business.data_source === 'req' && (
             <div className="unclaimed-notice">
               ℹ️ {t('business.unclaimedNotice')}
             </div>
