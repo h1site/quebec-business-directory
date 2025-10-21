@@ -1247,6 +1247,24 @@ nav .donate-button:hover {
   .checkbox-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Hero sections - Mobile responsive */
+  .search-boxes {
+    grid-template-columns: 1fr;
+  }
+
+  .browse-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem 1rem;
+  }
+
+  .browse-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .region-info {
+    font-size: 0.85rem;
+  }
 }
 
 @media (max-width: 480px) {
