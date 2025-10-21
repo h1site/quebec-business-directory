@@ -219,7 +219,30 @@ const cityToLocation = {
   'Buckingham': { mrc: 'Gatineau', region: 'Outaouais' },
   'Masson-Angers': { mrc: 'Gatineau', region: 'Outaouais' },
   'Val-des-Monts': { mrc: 'Les Collines-de-l\'Outaouais', region: 'Outaouais' },
-  'Chelsea': { mrc: 'Les Collines-de-l\'Outaouais', region: 'Outaouais' }
+  'Chelsea': { mrc: 'Les Collines-de-l\'Outaouais', region: 'Outaouais' },
+
+  // Variantes de noms de villes (avec St, St-, etc.)
+  'St-Jean sur Richelieu': { mrc: 'Le Haut-Richelieu', region: 'Montérégie' },
+  'St-Jérôme': { mrc: 'La Rivière-du-Nord', region: 'Laurentides' },
+  'St-Césaire': { mrc: 'Rouville', region: 'Montérégie' },
+  'St-Isidore': { mrc: 'Roussillon', region: 'Montérégie' },
+  'St-Nazaire': { mrc: 'Lac-Saint-Jean-Est', region: 'Saguenay-Lac-Saint-Jean' },
+  'MONT-ST-GRÉGOIRE': { mrc: 'Le Haut-Richelieu', region: 'Montérégie' },
+
+  // Variantes avec apostrophes et espaces
+  'Val d\'Or': { mrc: 'La Vallée-de-l\'Or', region: 'Abitibi-Témiscamingue' },
+  'Sainte-Marthe-sur-le-Lac': { mrc: 'Deux-Montagnes', region: 'Laurentides' },
+  'Sainte-Mélanie': { mrc: 'Joliette', region: 'Lanaudière' },
+  'Saint-Nérée-de-Bellechasse': { mrc: 'Bellechasse', region: 'Chaudière-Appalaches' },
+  'SAINT-ÉLIE': { mrc: 'Les Maskoutains', region: 'Montérégie' },
+
+  // Estrie
+  'Valcourt': { mrc: 'Le Val-Saint-François', region: 'Estrie' },
+  'Cascapédia--Saint-Jules': { mrc: 'Avignon', region: 'Gaspésie-Îles-de-la-Madeleine' },
+
+  // Bas-Saint-Laurent / Gaspésie
+  'CAUSAPSCAL': { mrc: 'La Matapédia', region: 'Bas-Saint-Laurent' },
+  'RIVIÈRE-AU-RENARD': { mrc: 'La Côte-de-Gaspé', region: 'Gaspésie-Îles-de-la-Madeleine' }
 };
 
 /**
