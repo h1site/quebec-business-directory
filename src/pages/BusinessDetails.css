@@ -582,3 +582,31 @@
     height: 280px !important;
   }
 }
+
+/* ========================================
+   UNCLAIMED BUSINESS NOTICE
+   ======================================== */
+.unclaimed-notice {
+  background: linear-gradient(135deg, #fff3cd 0%, #fff8dc 100%);
+  border-left: 4px solid #ffc107;
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #856404;
+  line-height: 1.6;
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.1);
+}
+
+.unclaimed-notice::before {
+  content: '';
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .unclaimed-notice {
+    font-size: 0.85rem;
+    padding: 0.875rem 1rem;
+  }
+}

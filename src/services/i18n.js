@@ -41,6 +41,9 @@ const resources = {
         seeDetails: 'Voir les détails',
         discoverOthers: 'Découvrir d\'autres entreprises'
       },
+      business: {
+        unclaimedNotice: 'Les données affichées sont les dernières informations publiques que nous avons pu obtenir. Veuillez toujours vérifier avec le site web de l\'entreprise ou par téléphone pour des informations à jour.'
+      },
       auth: {
         email: 'Courriel',
         password: 'Mot de passe',
@@ -146,6 +149,9 @@ const resources = {
         seeDetails: 'See details',
         discoverOthers: 'Discover other businesses',
         cityDescription: 'Discover local businesses, services and trusted professionals in {{city}}.'
+      },
+      business: {
+        unclaimedNotice: 'The information displayed is the latest public data we were able to obtain. Always verify with the business website or phone number for up-to-date information.'
       },
       auth: {
         email: 'Email',

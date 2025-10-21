@@ -184,6 +184,13 @@ const BusinessDetails = () => {
               </button>
             )}
           </div>
+
+          {/* Unclaimed business notice */}
+          {!business.is_claimed && (
+            <div className="unclaimed-notice">
+              ℹ️ {t('business.unclaimedNotice')}
+            </div>
+          )}
         </div>
 
         {/* Main Content */}
