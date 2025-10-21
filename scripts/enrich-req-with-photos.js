@@ -151,7 +151,7 @@ async function downloadGooglePhoto(photoReference, maxWidth = 1200) {
 /**
  * Upload une image vers Supabase Storage
  */
-async function uploadToSupabase(buffer, fileName, bucket = 'business-photos') {
+async function uploadToSupabase(buffer, fileName, bucket = 'business-images') {
   try {
     const { data, error } = await supabase.storage
       .from(bucket)
@@ -265,7 +265,7 @@ async function enrichBusinessWithPhotos(business) {
       if (iconResponse.ok) {
         const iconBuffer = Buffer.from(await iconResponse.arrayBuffer());
         const logoFileName = generateFileName(business.id, 'logo');
-        const logoUrl = await uploadToSupabase(iconBuffer, logoFileName, 'business-logos');
+        const logoUrl = await uploadToSupabase(iconBuffer, logoFileName, 'business-images');
 
         if (logoUrl) {
           enrichmentData.logo_url = logoUrl;
@@ -292,7 +292,7 @@ async function enrichBusinessWithPhotos(business) {
 
         if (photoBuffer) {
           const photoFileName = generateFileName(business.id, 'photo', i);
-          const photoUrl = await uploadToSupabase(photoBuffer, photoFileName, 'business-photos');
+          const photoUrl = await uploadToSupabase(photoBuffer, photoFileName, 'business-images');
 
           if (photoUrl) {
             galleryUrls.push(photoUrl);
