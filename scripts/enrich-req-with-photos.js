@@ -315,7 +315,64 @@ async function enrichBusinessWithPhotos(business) {
   console.log('');
   stats.enriched++;
 
-  return enrichmentData;
+  return { enrichmentData, openingHours: details.opening_hours };
+}
+
+/**
+ * Parser et sauvegarder les heures d'ouverture
+ */
+async function saveBusinessHours(businessId, openingHours) {
+  if (!openingHours || !openingHours.periods) {
+    return false;
+  }
+
+  try {
+    // Supprimer les anciennes heures
+    await supabase
+      .from('business_hours')
+      .delete()
+      .eq('business_id', businessId);
+
+    // Google uses: 0=Sunday, 1=Monday, etc.
+    const hoursToInsert = [];
+
+    for (const period of openingHours.periods) {
+      const dayOfWeek = period.open.day;
+      const opensAt = period.open.time ? `${period.open.time.substring(0, 2)}:${period.open.time.substring(2, 4)}:00` : null;
+      const closesAt = period.close ? (period.close.time ? `${period.close.time.substring(0, 2)}:${period.close.time.substring(2, 4)}:00` : null) : null;
+
+      // Check if it's 24h (no close time)
+      const is24h = !period.close;
+
+      hoursToInsert.push({
+        business_id: businessId,
+        day_of_week: dayOfWeek,
+        opens_at: opensAt,
+        closes_at: closesAt,
+        is_closed: false,
+        is_24h: is24h
+      });
+    }
+
+    if (hoursToInsert.length > 0) {
+      const { error } = await supabase
+        .from('business_hours')
+        .insert(hoursToInsert);
+
+      if (error) {
+        console.log(`   ⚠️  Erreur sauvegarde heures: ${error.message}`);
+        return false;
+      }
+
+      console.log(`   ✅ ${hoursToInsert.length} période(s) d'heures sauvegardée(s)`);
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    console.log(`   ⚠️  Erreur parsing heures: ${error.message}`);
+    return false;
+  }
 }
 
 /**
@@ -366,10 +423,15 @@ async function enrichAll() {
     const biz = businesses[i];
 
     try {
-      const enrichmentData = await enrichBusinessWithPhotos(biz);
+      const result = await enrichBusinessWithPhotos(biz);
 
-      if (enrichmentData) {
-        await saveEnrichment(biz.id, enrichmentData);
+      if (result && result.enrichmentData) {
+        await saveEnrichment(biz.id, result.enrichmentData);
+
+        // Sauvegarder les heures d'ouverture si disponibles
+        if (result.openingHours) {
+          await saveBusinessHours(biz.id, result.openingHours);
+        }
       }
 
       // Pause pour respecter les limites API (max 50 req/s)
