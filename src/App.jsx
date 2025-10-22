@@ -17,6 +17,7 @@ import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
 import AdminTools from './pages/Admin/AdminTools.jsx';
 import AdminClaims from './pages/Admin/AdminClaims.jsx';
 import BusinessDetails from './pages/BusinessDetails.jsx';
+import LegalNotice from './pages/LegalNotice.jsx';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -59,6 +60,10 @@ function App() {
               {/* Auth */}
               <Route path="/connexion" element={<Login />} />
               <Route path="/inscription" element={<Register />} />
+
+              {/* Legal */}
+              <Route path="/mentions-legales" element={<LegalNotice />} />
+              <Route path="/legal-notice" element={<LegalNotice />} />
 
               {/* Dashboard */}
               <Route

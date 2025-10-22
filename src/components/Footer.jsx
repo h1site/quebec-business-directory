@@ -1,10 +1,11 @@
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Lottie from 'lottie-react';
 import communityAnimation from '../assets/community.json';
 import './Footer.css';
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -44,6 +45,13 @@ const Footer = () => {
             {t('footer.copyrightRights')}
           </p>
           <p style={{ margin: 0 }}>
+            <Link
+              to={i18n.language === 'fr' ? '/mentions-legales' : '/legal-notice'}
+              className="footer-link"
+            >
+              {i18n.language === 'fr' ? 'Mentions légales' : 'Legal Notice'}
+            </Link>
+            {' · '}
             {t('footer.createdBy')}{' '}
             <a
               href="https://h1site.com"
