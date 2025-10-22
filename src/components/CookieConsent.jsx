@@ -20,11 +20,6 @@ const CookieConsent = () => {
     setVisible(false);
   };
 
-  const handleDecline = () => {
-    localStorage.setItem('cookieConsent', 'declined');
-    setVisible(false);
-  };
-
   if (!visible) return null;
 
   return (
@@ -35,26 +30,26 @@ const CookieConsent = () => {
           <div className="cookie-text">
             {i18n.language === 'fr' ? (
               <>
-                <h3>Utilisation des cookies</h3>
+                <h3>🍪 Cookies essentiels</h3>
                 <p>
-                  Nous utilisons des cookies essentiels pour assurer le bon fonctionnement du site
-                  et améliorer votre expérience. Nous n'utilisons pas de cookies publicitaires ou de tracking.
+                  Ce site utilise uniquement des <strong>cookies strictement nécessaires</strong> à son fonctionnement
+                  (authentification, préférences de langue, session).
                 </p>
                 <p className="cookie-details">
-                  En continuant, vous acceptez notre utilisation des cookies.
-                  Consultez notre <Link to="/politique-confidentialite" className="cookie-link">politique de confidentialité</Link> pour plus d'informations.
+                  Aucun cookie publicitaire ou de tracking.{' '}
+                  <Link to="/politique-confidentialite" className="cookie-link">En savoir plus</Link>
                 </p>
               </>
             ) : (
               <>
-                <h3>Cookie Usage</h3>
+                <h3>🍪 Essential Cookies</h3>
                 <p>
-                  We use essential cookies to ensure the proper functioning of the site
-                  and improve your experience. We do not use advertising or tracking cookies.
+                  This site only uses <strong>strictly necessary cookies</strong> for its operation
+                  (authentication, language preferences, session).
                 </p>
                 <p className="cookie-details">
-                  By continuing, you accept our use of cookies.
-                  View our <Link to="/privacy-policy" className="cookie-link">privacy policy</Link> for more information.
+                  No advertising or tracking cookies.{' '}
+                  <Link to="/privacy-policy" className="cookie-link">Learn more</Link>
                 </p>
               </>
             )}
@@ -62,10 +57,7 @@ const CookieConsent = () => {
         </div>
         <div className="cookie-actions">
           <button onClick={handleAccept} className="btn-accept">
-            {i18n.language === 'fr' ? 'Accepter' : 'Accept'}
-          </button>
-          <button onClick={handleDecline} className="btn-decline">
-            {i18n.language === 'fr' ? 'Refuser' : 'Decline'}
+            {i18n.language === 'fr' ? 'J\'ai compris' : 'I Understand'}
           </button>
         </div>
       </div>
