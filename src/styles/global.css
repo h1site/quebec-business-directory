@@ -1246,7 +1246,9 @@ nav .donate-button:hover {
   }
 
   .hero-section {
-    padding-top: 15vh;
+    padding-top: 10vh;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .form-row {
@@ -1487,7 +1489,7 @@ nav .donate-button:hover {
 /* Responsive */
 @media (max-width: 768px) {
   .hero-discoveries {
-    padding: 1.5rem;
+    padding: 1rem;
     margin: 2rem 0 1.5rem;
   }
 
@@ -1497,6 +1499,9 @@ nav .donate-button:hover {
 
   .discoveries-subtitle {
     font-size: 0.95rem;
+    padding: 0 0.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .discoveries-grid {
