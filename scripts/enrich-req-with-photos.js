@@ -256,27 +256,9 @@ async function enrichBusinessWithPhotos(business) {
     console.log(`   🏷️  Types: ${details.types.slice(0, 3).join(', ')}`);
   }
 
-  // LOGO (icon)
-  if (details.icon) {
-    console.log(`   🎨 Téléchargement du logo...`);
-    try {
-      // Download icon
-      const iconResponse = await fetch(details.icon);
-      if (iconResponse.ok) {
-        const iconBuffer = Buffer.from(await iconResponse.arrayBuffer());
-        const logoFileName = generateFileName(business.id, 'logo');
-        const logoUrl = await uploadToSupabase(iconBuffer, logoFileName, 'business-images');
-
-        if (logoUrl) {
-          enrichmentData.logo_url = logoUrl;
-          console.log(`   ✅ Logo uploadé: ${logoUrl}`);
-          stats.logoAdded++;
-        }
-      }
-    } catch (error) {
-      console.log(`   ⚠️  Erreur logo: ${error.message}`);
-    }
-  }
+  // LOGO - DÉSACTIVÉ - Les propriétaires uploadent leur logo quand ils réclament leur fiche
+  // Les logos Google Places ne sont pas de bonne qualité
+  console.log(`   ⏭️  Logo ignoré (sera uploadé par le propriétaire lors de la réclamation)`);
 
   // PHOTOS
   if (details.photos && Array.isArray(details.photos) && details.photos.length > 0) {
@@ -434,8 +416,8 @@ async function enrichAll() {
         }
       }
 
-      // Pause pour respecter les limites API (max 50 req/s)
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Pause pour respecter les limites API (réduite pour accélérer)
+      await new Promise(resolve => setTimeout(resolve, 100));
 
     } catch (error) {
       console.error(`❌ Erreur pour ${biz.name}:`, error.message);
