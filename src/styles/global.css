@@ -711,7 +711,7 @@ nav .donate-button:hover {
 .search-boxes {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .search-boxes input {
@@ -1250,7 +1250,15 @@ nav .donate-button:hover {
 
   /* Hero sections - Mobile responsive */
   .search-boxes {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem;
+  }
+
+  .search-boxes input,
+  .search-boxes button,
+  .primary-button {
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .browse-grid {
