@@ -1,0 +1,151 @@
+/* ========================================
+   HOME PAGE MOBILE - OPTIMIZED FOR 360px+
+   CRITICAL FIX: Prevent ALL horizontal overflow
+   ======================================== */
+
+/* Mobile-First: 360px to 767px screens */
+@media (max-width: 767px) {
+  
+  /* HERO SECTION - Force full width containment */
+  .hero-section {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+  /* SEARCH BOXES - Stack vertically, full width */
+  .search-boxes {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .search-boxes input,
+  .search-boxes .city-autocomplete-wrapper,
+  .search-boxes button,
+  .primary-button {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+
+  /* DISCOVERIES SECTION - Single column, no overflow */
+  .hero-discoveries {
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    box-sizing: border-box;
+  }
+
+  .discoveries-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .discovery-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    flex-direction: column;
+  }
+
+  .discovery-logo {
+    width: 100%;
+    max-width: 120px;
+    height: 120px;
+    margin: 0 auto 1rem;
+  }
+
+  /* BROWSE SECTIONS - Categories & Regions */
+  .hero-browse-section {
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    box-sizing: border-box;
+  }
+
+  .browse-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .browse-column {
+    width: 100%;
+    display: block;
+  }
+
+  .browse-group {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .browse-main-link,
+  .browse-sub-link {
+    display: block;
+    width: 100%;
+    word-wrap: break-word;
+  }
+
+  /* CONTAINER - Ensure proper mobile containment */
+  .container {
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 0 1rem !important;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  /* TITLE & TEXT - Responsive sizing */
+  .hero-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    line-height: 1.2;
+    word-wrap: break-word;
+  }
+
+  .discoveries-title {
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+  }
+
+  .browse-title {
+    font-size: clamp(1.1rem, 4.5vw, 1.5rem);
+  }
+
+  /* Ensure all children respect container */
+  .hero-section * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* Extra small devices (< 375px) */
+@media (max-width: 374px) {
+  .hero-content {
+    padding: 0 0.75rem;
+  }
+
+  .hero-discoveries,
+  .hero-browse-section {
+    padding: 0.75rem;
+  }
+
+  .discoveries-grid {
+    gap: 0.75rem;
+  }
+}
