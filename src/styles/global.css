@@ -1374,7 +1374,7 @@ nav .donate-button:hover {
 
 .discoveries-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
@@ -1491,7 +1491,7 @@ nav .donate-button:hover {
   }
 
   .discoveries-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 
   .discovery-card {
