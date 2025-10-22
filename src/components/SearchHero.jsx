@@ -165,11 +165,6 @@ const SearchHero = () => {
                 to={`/entreprise/${business.slug}`}
                 className="discovery-card"
               >
-                {business.logo_url && (
-                  <div className="discovery-logo">
-                    <img src={business.logo_url} alt={business.name} />
-                  </div>
-                )}
                 <div className="discovery-content">
                   <h3 className="discovery-name">{business.name}</h3>
                   <p className="discovery-location">
