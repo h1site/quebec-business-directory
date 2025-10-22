@@ -22,6 +22,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import CookieConsent from './components/CookieConsent.jsx';
+import GoogleAnalytics from './components/GoogleAnalytics.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AdminRoute from './components/AdminRoute.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
@@ -43,6 +44,7 @@ function App() {
     <HelmetProvider>
       <Suspense fallback={<div>Chargement...</div>}>
         <AuthProvider>
+          <GoogleAnalytics />
           <ScrollToTop />
           <div className={`app theme-${i18n.language}`}>
             <Header />
