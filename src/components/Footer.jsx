@@ -46,6 +46,13 @@ const Footer = () => {
           </p>
           <p style={{ margin: 0 }}>
             <Link
+              to={i18n.language === 'fr' ? '/politique-confidentialite' : '/privacy-policy'}
+              className="footer-link"
+            >
+              {i18n.language === 'fr' ? 'Politique de confidentialité' : 'Privacy Policy'}
+            </Link>
+            {' · '}
+            <Link
               to={i18n.language === 'fr' ? '/mentions-legales' : '/legal-notice'}
               className="footer-link"
             >

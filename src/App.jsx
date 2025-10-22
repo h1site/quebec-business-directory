@@ -18,6 +18,7 @@ import AdminTools from './pages/Admin/AdminTools.jsx';
 import AdminClaims from './pages/Admin/AdminClaims.jsx';
 import BusinessDetails from './pages/BusinessDetails.jsx';
 import LegalNotice from './pages/LegalNotice.jsx';
+import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import CookieConsent from './components/CookieConsent.jsx';
@@ -66,6 +67,8 @@ function App() {
               {/* Legal */}
               <Route path="/mentions-legales" element={<LegalNotice />} />
               <Route path="/legal-notice" element={<LegalNotice />} />
+              <Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
               {/* Dashboard */}
               <Route

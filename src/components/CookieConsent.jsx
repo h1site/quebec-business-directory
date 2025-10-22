@@ -42,7 +42,7 @@ const CookieConsent = () => {
                 </p>
                 <p className="cookie-details">
                   En continuant, vous acceptez notre utilisation des cookies.
-                  Consultez notre <Link to="/mentions-legales" className="cookie-link">politique de confidentialité</Link> pour plus d'informations.
+                  Consultez notre <Link to="/politique-confidentialite" className="cookie-link">politique de confidentialité</Link> pour plus d'informations.
                 </p>
               </>
             ) : (
@@ -54,7 +54,7 @@ const CookieConsent = () => {
                 </p>
                 <p className="cookie-details">
                   By continuing, you accept our use of cookies.
-                  View our <Link to="/legal-notice" className="cookie-link">privacy policy</Link> for more information.
+                  View our <Link to="/privacy-policy" className="cookie-link">privacy policy</Link> for more information.
                 </p>
               </>
             )}
