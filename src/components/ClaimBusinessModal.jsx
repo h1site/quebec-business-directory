@@ -305,12 +305,11 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
               </div>
 
               <div className="verification-instructions">
-                <p><strong>L'administrateur vous contactera par:</strong></p>
+                <p><strong>L'administrateur vous contactera par courriel:</strong></p>
                 <ul>
-                  <li>Email: {user.email}</li>
-                  <li>Téléphone: {formData.phone || '(À fournir)'}</li>
+                  <li>📧 <strong>info@h1site.com</strong></li>
                 </ul>
-                <p>Préparez un document prouvant votre lien avec l'entreprise (facture, permis, NEQ, etc.)</p>
+                <p>Si nécessaire, nous pourrons vous contacter par téléphone au numéro fourni.</p>
               </div>
 
               <div className="modal-actions">
