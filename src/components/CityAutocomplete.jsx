@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { quebecCities, searchCities } from '../data/quebecCities.js';
 import './CityAutocomplete.css';
 
-const CityAutocomplete = ({ value, onChange, placeholder, className }) => {
+const CityAutocomplete = ({
+  value = '',
+  onChange,
+  placeholder = 'Entrez une ville',
+  className = ''
+}) => {
   const [inputValue, setInputValue] = useState(value || '');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -118,12 +123,6 @@ CityAutocomplete.propTypes = {
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   className: PropTypes.string
-};
-
-CityAutocomplete.defaultProps = {
-  value: '',
-  placeholder: 'Entrez une ville',
-  className: ''
 };
 
 export default CityAutocomplete;
