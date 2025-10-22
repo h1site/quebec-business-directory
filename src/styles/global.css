@@ -1506,18 +1506,38 @@ nav .donate-button:hover {
 
   .discoveries-grid {
     grid-template-columns: 1fr !important;
+    width: 100%;
+    max-width: 100%;
   }
 
   .discovery-card {
     padding: 1.25rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .discovery-logo {
     width: 60px;
     height: 60px;
+    flex-shrink: 0;
+  }
+
+  .discovery-content {
+    min-width: 0;
+    max-width: 100%;
+    flex: 1;
   }
 
   .discovery-name {
     font-size: 1rem;
+    max-width: 100%;
+  }
+
+  .discovery-location,
+  .discovery-description {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
