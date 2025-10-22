@@ -385,12 +385,12 @@ async function saveEnrichment(businessId, enrichmentData) {
 async function enrichAll() {
   console.log('📥 Récupération des entreprises REQ à enrichir...\n');
 
-  // Récupérer entreprises sans logo
+  // Récupérer entreprises sans Google rating (pas encore enrichies)
   const { data: businesses, error } = await supabase
     .from('businesses')
     .select('id, name, address, city, postal_code')
     .eq('data_source', 'req')
-    .is('logo_url', null) // Seulement celles sans logo
+    .is('google_rating', null) // Seulement celles sans données Google
     .limit(limit);
 
   if (error) {
