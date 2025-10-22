@@ -54,7 +54,7 @@ const LegalNotice = () => {
               <h2>Contact</h2>
               <p>Pour toute question juridique ou demande liée à une fiche d'entreprise :</p>
               <p>
-                📧 <a href="mailto:support@registreduquebec.com">support@registreduquebec.com</a>
+                📧 <a href="mailto:info@h1site.com">info@h1site.com</a>
               </p>
               <p>
                 📍 Vaudreuil-Dorion, Québec, Canada
@@ -108,7 +108,7 @@ const LegalNotice = () => {
               <h2>Contact</h2>
               <p>For any legal question or business listing request:</p>
               <p>
-                📧 <a href="mailto:support@registreduquebec.com">support@registreduquebec.com</a>
+                📧 <a href="mailto:info@h1site.com">info@h1site.com</a>
               </p>
               <p>
                 📍 Vaudreuil-Dorion, Quebec, Canada
