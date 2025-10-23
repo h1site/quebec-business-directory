@@ -187,6 +187,15 @@ const BusinessDetails = () => {
                 📋 Réclamer votre fiche
               </button>
             )}
+            {!isClaimed && (
+              <a
+                href={`mailto:info@h1site.com?subject=${encodeURIComponent(window.location.href)}`}
+                className="btn btn-delete"
+                style={{ marginTop: '0.5rem' }}
+              >
+                🗑️ Supprimer cette fiche
+              </a>
+            )}
           </div>
 
           {/* Unclaimed business notice - only show for REQ imports */}
