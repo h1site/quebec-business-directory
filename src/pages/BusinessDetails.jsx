@@ -162,6 +162,14 @@ const BusinessDetails = () => {
           {business.established_year && (
             <p className="established-year">Fondée en {business.established_year}</p>
           )}
+
+          {/* Unclaimed business notice - only show for REQ imports */}
+          {!isClaimed && business.data_source === 'req' && (
+            <div className="unclaimed-notice">
+              ℹ️ {t('business.unclaimedNotice')}
+            </div>
+          )}
+
           <div className="business-actions">
             {isOwner && (
               <Link
@@ -197,13 +205,6 @@ const BusinessDetails = () => {
               </a>
             )}
           </div>
-
-          {/* Unclaimed business notice - only show for REQ imports */}
-          {!isClaimed && business.data_source === 'req' && (
-            <div className="unclaimed-notice">
-              ℹ️ {t('business.unclaimedNotice')}
-            </div>
-          )}
         </div>
 
         {/* Main Content */}
