@@ -5,11 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { searchBusinesses } from '../../services/businessService.js';
 import { getMainCategories, getSubCategories } from '../../services/lookupService.js';
 import { getAllRegions, getMRCsByRegion, getCitiesByMRC } from '../../data/quebecMunicipalities.js';
-import { detectUserRegion } from '../../utils/geolocation.js';
 import BusinessCard from '../../components/BusinessCard.jsx';
 import SearchBar from './SearchBar.jsx';
 import SearchFilters from './SearchFilters.jsx';
-import LocationPrompt from './LocationPrompt.jsx';
 import './Search.css';
 
 const Search = () => {
@@ -17,7 +15,6 @@ const Search = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const isInitialMount = useRef(true);
-  const hasPromptedLocation = useRef(false);
 
   const [query, setQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
@@ -32,7 +29,6 @@ const Search = () => {
   const [totalResults, setTotalResults] = useState(0);
   const [displayedCount, setDisplayedCount] = useState(0);
   const [hasMore, setHasMore] = useState(false);
-  const [showLocationPrompt, setShowLocationPrompt] = useState(false);
 
   const [regions] = useState(getAllRegions());
   const [mrcs, setMrcs] = useState([]);
@@ -122,11 +118,6 @@ const Search = () => {
     // Auto-search if params present
     if (q || city || region || mrc || categorySlug || subcategorySlug) {
       performSearch({ q, city, region, mrc, categorySlug, subcategorySlug });
-      hasPromptedLocation.current = true; // Skip location prompt if URL has params
-    } else if (!hasPromptedLocation.current) {
-      // Show location prompt on first visit with no params
-      setShowLocationPrompt(true);
-      hasPromptedLocation.current = true;
     }
 
     isInitialMount.current = false;
@@ -261,21 +252,6 @@ const Search = () => {
     navigate('/recherche');
   };
 
-  const handleDetectLocation = async () => {
-    try {
-      const { regionSlug, regionName } = await detectUserRegion();
-      setShowLocationPrompt(false);
-      setSelectedRegion(regionSlug);
-      // Search will be triggered automatically by useEffect
-    } catch (error) {
-      // Error is handled in LocationPrompt component
-      throw error;
-    }
-  };
-
-  const handleSkipLocation = () => {
-    setShowLocationPrompt(false);
-  };
 
   const hasActiveFilters = query || selectedCity || selectedRegion || selectedMRC || selectedCategory || selectedSubCategory;
 
@@ -361,11 +337,6 @@ const Search = () => {
                   {t('search.clearFilters')}
                 </button>
               </div>
-            ) : businesses.length === 0 && showLocationPrompt ? (
-              <LocationPrompt
-                onDetectLocation={handleDetectLocation}
-                onSkip={handleSkipLocation}
-              />
             ) : businesses.length === 0 ? (
               <div className="welcome-state">
                 <div className="welcome-icon">🏢</div>
