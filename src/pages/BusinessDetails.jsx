@@ -153,56 +153,57 @@ const BusinessDetails = () => {
               <img src={business.logo_url} alt={`Logo ${business.name}`} />
             </div>
           )}
-          <div className="business-header-content">
-            <h1 className="business-name">{business.name}</h1>
-            {business.is_franchise && (
-              <span className="franchise-badge">Franchise</span>
-            )}
-          </div>
-          {business.established_year && (
-            <p className="established-year">Fondée en {business.established_year}</p>
-          )}
-
-          {/* Unclaimed business notice - only show for REQ imports */}
-          {!isClaimed && business.data_source === 'req' && (
-            <div className="unclaimed-notice">
-              ℹ️ {t('business.unclaimedNotice')}
+          <div className="business-header-main">
+            <div className="business-header-top">
+              <div className="business-header-content">
+                <h1 className="business-name">{business.name}</h1>
+                {business.is_franchise && (
+                  <span className="franchise-badge">Franchise</span>
+                )}
+              </div>
+              <div className="business-actions">
+                {isOwner && (
+                  <Link
+                    to={getBusinessUrl(business) + '/modifier'}
+                    className="btn btn-edit"
+                  >
+                    Modifier la fiche
+                  </Link>
+                )}
+                {!isClaimed && user && !isOwner && (
+                  <button
+                    className="btn btn-claim"
+                    onClick={() => setShowClaimModal(true)}
+                  >
+                    📋 Réclamer votre fiche
+                  </button>
+                )}
+                {!isClaimed && !user && (
+                  <button
+                    className="btn btn-claim"
+                    onClick={() => navigate('/login', { state: { from: location.pathname } })}
+                  >
+                    📋 Réclamer votre fiche
+                  </button>
+                )}
+                {!isClaimed && (
+                  <a
+                    href={`mailto:info@h1site.com?subject=${encodeURIComponent(window.location.href)}`}
+                    className="btn btn-delete"
+                  >
+                    🗑️ Supprimer cette fiche
+                  </a>
+                )}
+              </div>
             </div>
-          )}
-
-          <div className="business-actions">
-            {isOwner && (
-              <Link
-                to={getBusinessUrl(business) + '/modifier'}
-                className="btn btn-edit"
-              >
-                Modifier la fiche
-              </Link>
+            {business.established_year && (
+              <p className="established-year">Fondée en {business.established_year}</p>
             )}
-            {!isClaimed && user && !isOwner && (
-              <button
-                className="btn btn-claim"
-                onClick={() => setShowClaimModal(true)}
-              >
-                📋 Réclamer votre fiche
-              </button>
-            )}
-            {!isClaimed && !user && (
-              <button
-                className="btn btn-claim"
-                onClick={() => navigate('/login', { state: { from: location.pathname } })}
-              >
-                📋 Réclamer votre fiche
-              </button>
-            )}
-            {!isClaimed && (
-              <a
-                href={`mailto:info@h1site.com?subject=${encodeURIComponent(window.location.href)}`}
-                className="btn btn-delete"
-                style={{ marginTop: '0.5rem' }}
-              >
-                🗑️ Supprimer cette fiche
-              </a>
+            {/* Unclaimed business notice - only show for REQ imports */}
+            {!isClaimed && business.data_source === 'req' && (
+              <div className="unclaimed-notice">
+                ℹ️ {t('business.unclaimedNotice')}
+              </div>
             )}
           </div>
         </div>
