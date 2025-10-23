@@ -78,11 +78,24 @@ const RegionBrowse = () => {
     );
   }
 
+  const canonicalUrl = `https://registreduquebec.com/region/${regionSlug}`;
+
   return (
     <>
       <Helmet>
         <title>Entreprises en {regionName} | Registre du Québec</title>
-        <meta name="description" content={`Découvrez ${businesses.length} entreprises en ${regionName}, Québec`} />
+        <meta name="description" content={`Découvrez ${businesses.length} entreprise${businesses.length > 1 ? 's' : ''} en ${regionName}, Québec. Coordonnées, avis et informations détaillées.`} />
+        <link rel="canonical" href={canonicalUrl} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={`Entreprises en ${regionName}`} />
+        <meta property="og:description" content={`${businesses.length} entreprise${businesses.length > 1 ? 's' : ''} en ${regionName}, Québec`} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:title" content={`Entreprises en ${regionName}`} />
+        <meta name="twitter:description" content={`${businesses.length} entreprise${businesses.length > 1 ? 's' : ''} en ${regionName}`} />
       </Helmet>
 
       <div className="container browse-page">

@@ -90,12 +90,26 @@ const CategoryBrowse = () => {
 
   const displayName = subCategoryName || categoryName;
   const titlePrefix = subCategorySlug ? 'Entreprises en' : 'Entreprises de';
+  const canonicalUrl = subCategorySlug
+    ? `https://registreduquebec.com/categorie/${categorySlug}/${subCategorySlug}`
+    : `https://registreduquebec.com/categorie/${categorySlug}`;
 
   return (
     <>
       <Helmet>
         <title>{titlePrefix} {displayName} | Registre du Québec</title>
-        <meta name="description" content={`Découvrez ${businesses.length} entreprises ${subCategorySlug ? 'en' : 'de'} ${displayName} au Québec`} />
+        <meta name="description" content={`Découvrez ${businesses.length} entreprise${businesses.length > 1 ? 's' : ''} ${subCategorySlug ? 'en' : 'de'} ${displayName} au Québec. Coordonnées, avis et informations détaillées.`} />
+        <link rel="canonical" href={canonicalUrl} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={`${titlePrefix} ${displayName}`} />
+        <meta property="og:description" content={`${businesses.length} entreprise${businesses.length > 1 ? 's' : ''} ${subCategorySlug ? 'en' : 'de'} ${displayName} au Québec`} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:title" content={`${titlePrefix} ${displayName}`} />
+        <meta name="twitter:description" content={`${businesses.length} entreprise${businesses.length > 1 ? 's' : ''} ${subCategorySlug ? 'en' : 'de'} ${displayName}`} />
       </Helmet>
 
       <div className="container browse-page">

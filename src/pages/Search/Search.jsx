@@ -255,11 +255,46 @@ const Search = () => {
 
   const hasActiveFilters = query || selectedCity || selectedRegion || selectedMRC || selectedCategory || selectedSubCategory;
 
+  // Generate dynamic SEO meta tags
+  const generateTitle = () => {
+    const parts = [];
+    if (query) parts.push(query);
+    if (selectedCity) parts.push(selectedCity);
+    if (selectedRegion && !selectedCity) parts.push(selectedRegion);
+
+    if (parts.length > 0) {
+      return `${parts.join(' - ')} | Recherche d'entreprises au Québec`;
+    }
+    return 'Recherche d\'entreprises au Québec | Registre du Québec';
+  };
+
+  const generateDescription = () => {
+    if (totalResults > 0) {
+      const location = selectedCity || selectedRegion || 'au Québec';
+      const queryText = query ? `pour "${query}" ` : '';
+      return `Trouvez ${totalResults} entreprise${totalResults > 1 ? 's' : ''} ${queryText}${location}. Coordonnées, avis et informations détaillées.`;
+    }
+    return 'Recherchez parmi plus de 600 000 entreprises québécoises par nom, ville, région ou catégorie. Annuaire complet et gratuit.';
+  };
+
+  const canonicalUrl = `https://registreduquebec.com/recherche${window.location.search}`;
+
   return (
     <>
       <Helmet>
-        <title>Recherche d'entreprises au Québec | Registre du Québec</title>
-        <meta name="description" content="Recherchez parmi des milliers d'entreprises québécoises par nom, ville, région ou catégorie" />
+        <title>{generateTitle()}</title>
+        <meta name="description" content={generateDescription()} />
+        <link rel="canonical" href={canonicalUrl} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={generateTitle()} />
+        <meta property="og:description" content={generateDescription()} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:title" content={generateTitle()} />
+        <meta name="twitter:description" content={generateDescription()} />
       </Helmet>
 
       <div className="search-page">
