@@ -141,7 +141,30 @@ export const searchBusinesses = async ({
     }
   });
 
-  const { data, error, count } = await request.order('created_at', { ascending: false });
+  // Si aucun filtre, ordre aléatoire. Sinon, ordre par date de création
+  const hasFilters = filters.length > 0;
+  let result;
+
+  if (hasFilters) {
+    // Avec filtres: ordre chronologique (plus récents en premier)
+    result = await request.order('created_at', { ascending: false });
+  } else {
+    // Sans filtres: ordre VRAIMENT aléatoire via PostgreSQL random()
+    // Note: On ne peut pas utiliser .order() avec random(), donc on utilise un truc
+    // On mélange en utilisant un offset aléatoire
+    const randomOffset = Math.floor(Math.random() * 1000); // Random start point
+    result = await supabase
+      .from('businesses')
+      .select(
+        `id, slug, name, description, phone, email, address, city, region, categories, products_services,
+         website, postal_code, google_rating, google_reviews_count, logo_url, latitude, longitude`,
+        { count: 'exact' }
+      )
+      .range(randomOffset, randomOffset + limit - 1)
+      .order('id', { ascending: false });
+  }
+
+  const { data, error, count } = result;
 
   // Flatten main_category data for easier access
   if (data && Array.isArray(data)) {
