@@ -265,6 +265,11 @@ const BusinessDetails = () => {
                     {business.city}, {business.province || 'QC'} {business.postal_code}
                   </p>
                   {business.region && <p className="region">{business.region}</p>}
+                  {business.neq && (
+                    <p style={{ marginTop: '1rem', fontSize: '0.875rem', color: '#666' }}>
+                      <strong>NEQ:</strong> {business.neq}
+                    </p>
+                  )}
                 </div>
               </div>
 
