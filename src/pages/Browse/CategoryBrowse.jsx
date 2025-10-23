@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase } from '../../services/supabaseClient.js';
+import { getBusinessUrl } from '../../utils/urlHelpers.js';
 import BusinessCard from '../../components/BusinessCard.jsx';
 import './Browse.css';
 
@@ -94,6 +95,33 @@ const CategoryBrowse = () => {
     ? `https://registreduquebec.com/categorie/${categorySlug}/${subCategorySlug}`
     : `https://registreduquebec.com/categorie/${categorySlug}`;
 
+  // Generate ItemList Schema
+  const itemListSchema = businesses.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": `${titlePrefix} ${displayName}`,
+    "description": `Liste des entreprises ${subCategorySlug ? 'en' : 'de'} ${displayName} au Québec`,
+    "numberOfItems": businesses.length,
+    "itemListElement": businesses.slice(0, 50).map((business, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "LocalBusiness",
+        "name": business.name,
+        "url": `https://registreduquebec.com${getBusinessUrl(business)}`,
+        ...(business.address && { "address": {
+          "@type": "PostalAddress",
+          "streetAddress": business.address,
+          "addressLocality": business.city,
+          "addressRegion": "QC",
+          "postalCode": business.postal_code,
+          "addressCountry": "CA"
+        }}),
+        ...(business.phone && { "telephone": business.phone })
+      }
+    }))
+  } : null;
+
   return (
     <>
       <Helmet>
@@ -110,6 +138,13 @@ const CategoryBrowse = () => {
         {/* Twitter Card */}
         <meta name="twitter:title" content={`${titlePrefix} ${displayName}`} />
         <meta name="twitter:description" content={`${businesses.length} entreprise${businesses.length > 1 ? 's' : ''} ${subCategorySlug ? 'en' : 'de'} ${displayName}`} />
+
+        {/* ItemList Schema.org */}
+        {itemListSchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(itemListSchema)}
+          </script>
+        )}
       </Helmet>
 
       <div className="container browse-page">

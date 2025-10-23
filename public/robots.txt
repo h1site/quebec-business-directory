@@ -1,13 +1,33 @@
 # robots.txt pour Registre du Québec
 
+# Allow all good bots
 User-agent: *
 Allow: /
+Crawl-delay: 1
+
+# Disallow admin/dashboard pages
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /dashboard
+Disallow: /dashboard/*
+Disallow: /connexion
+Disallow: /inscription
+Disallow: /mes-entreprises
+Disallow: /entreprise/nouvelle
+Disallow: /*/modifier
+
+# Block aggressive crawlers
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
 
 # Sitemap
 Sitemap: https://registreduquebec.com/sitemap.xml
-
-# Disallow admin/dashboard pages
-Disallow: /dashboard
-Disallow: /dashboard/*
-Disallow: /login
-Disallow: /register
