@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { supabase } from '../services/supabaseClient';
+import GoogleImportModal from './GoogleImportModal.jsx';
 import './ClaimBusinessModal.css';
 
 const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
-  const [step, setStep] = useState('select'); // select, google, manual, success, error
+  const [step, setStep] = useState('select'); // select, google, manual, googleImport, success, error
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showGoogleImportModal, setShowGoogleImportModal] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -145,6 +147,111 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
     return emailDomain === websiteDomain;
   };
 
+  const handleGoogleImport = async (importedData) => {
+    try {
+      setLoading(true);
+      setShowGoogleImportModal(false);
+
+      // SECURITY: Check if business is already claimed by someone else
+      const { data: existingBusiness, error: checkError } = await supabase
+        .from('businesses')
+        .select('is_claimed, claimed_by')
+        .eq('id', business.id)
+        .single();
+
+      if (checkError) throw checkError;
+
+      if (existingBusiness?.is_claimed && existingBusiness?.claimed_by !== user.id) {
+        throw new Error('Cette entreprise a déjà été réclamée par un autre utilisateur.');
+      }
+
+      // SECURITY: Check if user already has a pending claim for this business
+      const { data: existingClaim, error: claimCheckError } = await supabase
+        .from('business_claims')
+        .select('id, status')
+        .eq('business_id', business.id)
+        .eq('user_id', user.id)
+        .single();
+
+      if (existingClaim && existingClaim.status === 'pending') {
+        throw new Error('Vous avez déjà une demande en attente pour cette entreprise.');
+      }
+
+      // Insert claim with auto-approval since they have Google My Business access
+      const { data: claim, error: claimError } = await supabase
+        .from('business_claims')
+        .insert({
+          business_id: business.id,
+          user_id: user.id,
+          user_email: user.email,
+          user_name: importedData.name || user.user_metadata?.name,
+          user_phone: importedData.phone,
+          verification_method: 'google_import',
+          verification_data: {
+            imported_from_google: true,
+            google_place_id: importedData.google_place_id,
+            name: importedData.name,
+            phone: importedData.phone,
+            address: importedData.address
+          },
+          status: 'approved' // Auto-approve for Google Business imports
+        })
+        .select()
+        .single();
+
+      if (claimError) throw claimError;
+
+      // Update the business with is_claimed and claimed_by
+      const { error: updateError } = await supabase
+        .from('businesses')
+        .update({
+          is_claimed: true,
+          claimed_by: user.id,
+          owner_id: user.id
+        })
+        .eq('id', business.id);
+
+      if (updateError) throw updateError;
+
+      // Send email notification to admin
+      try {
+        await supabase.functions.invoke('send-claim-notification', {
+          body: {
+            type: 'new_claim',
+            claim: {
+              id: claim.id,
+              user_email: user.email,
+              user_name: importedData.name || user.user_metadata?.name,
+              user_phone: importedData.phone,
+              verification_method: 'google_import',
+              status: 'approved'
+            },
+            business: {
+              name: business.name,
+              city: business.city,
+              slug: business.slug
+            }
+          }
+        });
+      } catch (emailError) {
+        console.error('Failed to send email notification:', emailError);
+        // Continue anyway - don't block the claim process
+      }
+
+      setStep('googleSuccess');
+      setTimeout(() => {
+        onSuccess?.();
+        onClose();
+      }, 3000);
+    } catch (err) {
+      console.error('Google import claim error:', err);
+      setError(err.message || 'Une erreur est survenue lors de l\'import Google');
+      setStep('error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -184,6 +291,19 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
             )}
 
             <div className="verification-methods">
+              <div className="method-card featured">
+                <div className="method-icon">⚡</div>
+                <div className="badge-instant">Approbation instantanée</div>
+                <h3>Importer depuis Google</h3>
+                <p>Si vous gérez cette entreprise sur Google My Business, importez vos données et réclamez instantanément</p>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => setShowGoogleImportModal(true)}
+                >
+                  Importer depuis Google
+                </button>
+              </div>
+
               <div className="method-card">
                 <div className="method-icon">🔗</div>
                 <h3>Vérification Google My Business</h3>
@@ -399,6 +519,16 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
           </div>
         )}
 
+        {step === 'googleSuccess' && (
+          <div className="status-message success">
+            <div className="status-icon">🎉</div>
+            <h2>Fiche réclamée avec succès!</h2>
+            <p>Vous avez prouvé que vous gérez cette entreprise sur Google My Business.</p>
+            <p><strong>Approbation automatique accordée!</strong></p>
+            <p className="status-subtitle">Vous pouvez maintenant gérer cette fiche.</p>
+          </div>
+        )}
+
         {step === 'error' && (
           <div className="status-message error">
             <div className="status-icon">❌</div>
@@ -412,6 +542,12 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
             </button>
           </div>
         )}
+
+        <GoogleImportModal
+          isOpen={showGoogleImportModal}
+          onClose={() => setShowGoogleImportModal(false)}
+          onImport={handleGoogleImport}
+        />
       </div>
     </div>
   );

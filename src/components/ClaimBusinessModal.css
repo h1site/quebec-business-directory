@@ -104,6 +104,33 @@
   padding: 1.5rem;
   text-align: center;
   transition: all 0.3s ease;
+  position: relative;
+}
+
+.method-card.featured {
+  border: 2px solid #48bb78;
+  background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+}
+
+.method-card.featured:hover {
+  border-color: #38a169;
+  box-shadow: 0 8px 20px rgba(72, 187, 120, 0.3);
+  transform: translateY(-4px);
+}
+
+.badge-instant {
+  position: absolute;
+  top: -12px;
+  right: 12px;
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 8px rgba(72, 187, 120, 0.3);
 }
 
 .method-card:hover {
