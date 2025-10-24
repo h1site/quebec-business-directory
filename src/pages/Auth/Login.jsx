@@ -80,7 +80,7 @@ const Login = () => {
     <section
       style={{
         minHeight: '100vh',
-        backgroundImage: 'url(https://source.unsplash.com/1920x1080/?office,workspace,desk)',
+        backgroundImage: 'url(https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2070&auto=format&fit=crop)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
