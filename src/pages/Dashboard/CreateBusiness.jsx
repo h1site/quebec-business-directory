@@ -631,7 +631,7 @@ const CreateBusiness = () => {
       <div className="container">
         <div className="create-business-header">
           <div className="header-logo">
-            <img src="/images/logos/logo.webp" alt="Logo" className="logo-image" />
+            <img src="/images/logos/logoblue.webp" alt="Logo" className="logo-image" />
           </div>
           <h1>{t('dashboard.createTitle') || 'Ajouter votre entreprise'}</h1>
           <p className="subtitle">
