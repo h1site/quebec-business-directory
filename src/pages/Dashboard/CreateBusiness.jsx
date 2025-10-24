@@ -531,9 +531,68 @@ const CreateBusiness = () => {
     proceedWithCreation();
   };
 
+  const verifyGoogleBusinessOwnership = (importedData) => {
+    // Method 1: Email domain matching
+    if (!importedData.website || !user?.email) {
+      return { verified: false, method: null, message: 'Email ou site web manquant' };
+    }
+
+    // Extract domain from user email
+    const emailDomain = user.email.split('@')[1]?.toLowerCase();
+
+    // Skip verification for common email providers (Gmail, Yahoo, Outlook, etc.)
+    const commonProviders = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'live.com', 'icloud.com', 'protonmail.com'];
+    if (commonProviders.includes(emailDomain)) {
+      return {
+        verified: false,
+        method: null,
+        message: `Impossible de vérifier avec un email ${emailDomain}. Utilisez un email professionnel du domaine de l'entreprise.`
+      };
+    }
+
+    // Extract domain from business website
+    let websiteDomain = importedData.website.toLowerCase();
+    websiteDomain = websiteDomain.replace(/^https?:\/\//, '');
+    websiteDomain = websiteDomain.replace(/^www\./, '');
+    websiteDomain = websiteDomain.replace(/\/.*$/, '');
+
+    // Check if domains match
+    if (emailDomain === websiteDomain) {
+      return {
+        verified: true,
+        method: 'email_domain',
+        message: `Vérifié: Votre email (${user.email}) correspond au domaine de l'entreprise (${importedData.website})`
+      };
+    }
+
+    return {
+      verified: false,
+      method: null,
+      message: `Votre email (${emailDomain}) ne correspond pas au domaine de l'entreprise (${websiteDomain}). Utilisez un email professionnel ou contactez un administrateur.`
+    };
+  };
+
   const handleGoogleImport = async (importedData) => {
     try {
       // importedData is now the selected business object from confirmation screen
+
+      // SECURITY: Verify ownership before allowing import
+      const ownershipCheck = verifyGoogleBusinessOwnership(importedData);
+
+      if (!ownershipCheck.verified) {
+        setStatus({
+          type: 'error',
+          message: `❌ Vérification échouée: ${ownershipCheck.message}\n\nPour ajouter cette entreprise, vous devez utiliser un email professionnel qui correspond au domaine du site web de l'entreprise.`
+        });
+        setShowGoogleImportModal(false);
+        return;
+      }
+
+      // Show success verification message
+      setStatus({
+        type: 'success',
+        message: `✅ ${ownershipCheck.message}\n\nVous pouvez maintenant créer cette fiche.`
+      });
 
       // Update form with imported data including social media URLs
       setForm((prev) => ({
@@ -552,7 +611,8 @@ const CreateBusiness = () => {
         twitter_url: importedData.twitter_url || prev.twitter_url,
         linkedin_url: importedData.linkedin_url || prev.linkedin_url,
         threads_url: importedData.threads_url || prev.threads_url,
-        tiktok_url: importedData.tiktok_url || prev.tiktok_url
+        tiktok_url: importedData.tiktok_url || prev.tiktok_url,
+        google_place_id: importedData.google_place_id || prev.google_place_id
       }));
 
       // Find matching main category if available
@@ -604,15 +664,11 @@ const CreateBusiness = () => {
         });
       }
 
-      setStatus({
-        type: 'success',
-        message: 'Données importées avec succès depuis Google (incluant heures d\'ouverture et avis)! Veuillez vérifier et compléter les informations.'
-      });
-
+      // Success message already set above with verification info
       // Clear success message after a few seconds
       setTimeout(() => {
         setStatus({ type: null, message: null });
-      }, 5000);
+      }, 8000);
     } catch (error) {
       throw error; // Let the modal handle the error
     }
