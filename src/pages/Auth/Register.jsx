@@ -94,6 +94,18 @@ const Register = () => {
 
   return (
     <section className="container" style={{ padding: '3rem 0' }}>
+      {/* Logo */}
+      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <img
+          src="/logoblue.webp"
+          alt="Logo"
+          style={{
+            maxWidth: '200px',
+            height: 'auto'
+          }}
+        />
+      </div>
+
       <h1>{t('auth.registerTitle')}</h1>
       {message && <div className="alert">{message}</div>}
       {error && (
@@ -101,60 +113,6 @@ const Register = () => {
           {error}
         </div>
       )}
-      {/* Google Sign Up Button */}
-      <div style={{ marginBottom: '2rem' }}>
-        <button
-          onClick={handleGoogleSignUp}
-          disabled={submitting}
-          type="button"
-          style={{
-            width: '100%',
-            padding: '1rem',
-            background: 'linear-gradient(135deg, #1e88e5 0%, #1565c0 100%)',
-            border: 'none',
-            borderRadius: '12px',
-            fontSize: '1rem',
-            fontWeight: '600',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.75rem',
-            transition: 'all 0.3s ease',
-            color: 'white',
-            boxShadow: '0 4px 12px rgba(30, 136, 229, 0.3)',
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = '0 6px 20px rgba(30, 136, 229, 0.4)';
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(30, 136, 229, 0.3)';
-          }}
-        >
-          <svg width="20" height="20" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#FFFFFF"/>
-            <path d="M9.003 18c2.43 0 4.467-.806 5.956-2.18L12.05 13.56c-.806.54-1.836.86-3.047.86-2.344 0-4.328-1.584-5.036-3.711H.96v2.332C2.44 15.983 5.485 18 9.003 18z" fill="#FFFFFF" opacity="0.9"/>
-            <path d="M3.964 10.712c-.18-.54-.282-1.117-.282-1.71 0-.593.102-1.17.282-1.71V4.96H.957C.347 6.175 0 7.55 0 9.002c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FFFFFF" opacity="0.85"/>
-            <path d="M9.003 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.464.891 11.426 0 9.003 0 5.485 0 2.44 2.017.96 4.958L3.967 7.29c.708-2.127 2.692-3.71 5.036-3.71z" fill="#FFFFFF" opacity="0.95"/>
-          </svg>
-          {submitting ? 'Inscription...' : "S'inscrire avec Google"}
-        </button>
-      </div>
-
-      {/* Divider */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        margin: '2rem 0',
-        color: '#a0aec0',
-        fontSize: '0.875rem'
-      }}>
-        <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
-        <span style={{ padding: '0 1rem' }}>OU</span>
-        <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
-      </div>
 
       <form className="form" onSubmit={handleSubmit}>
         <label>
@@ -191,6 +149,58 @@ const Register = () => {
           {submitting ? '...' : t('auth.submit')}
         </button>
       </form>
+
+      {/* Divider */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        margin: '1.5rem 0',
+        color: '#a0aec0',
+        fontSize: '0.875rem'
+      }}>
+        <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
+        <span style={{ padding: '0 1rem' }}>OU</span>
+        <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
+      </div>
+
+      {/* Google Sign Up Button */}
+      <button
+        onClick={handleGoogleSignUp}
+        disabled={submitting}
+        type="button"
+        style={{
+          width: '100%',
+          padding: '0.65rem',
+          background: 'white',
+          border: '1px solid #dadce0',
+          borderRadius: '4px',
+          fontSize: '0.875rem',
+          fontWeight: '500',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '0.75rem',
+          transition: 'all 0.2s ease',
+          color: '#3c4043'
+        }}
+        onMouseOver={(e) => {
+          e.currentTarget.style.backgroundColor = '#f8f9fa';
+          e.currentTarget.style.boxShadow = '0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)';
+        }}
+        onMouseOut={(e) => {
+          e.currentTarget.style.backgroundColor = 'white';
+          e.currentTarget.style.boxShadow = 'none';
+        }}
+      >
+        <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
+          <path d="M9.003 18c2.43 0 4.467-.806 5.956-2.18L12.05 13.56c-.806.54-1.836.86-3.047.86-2.344 0-4.328-1.584-5.036-3.711H.96v2.332C2.44 15.983 5.485 18 9.003 18z" fill="#34A853"/>
+          <path d="M3.964 10.712c-.18-.54-.282-1.117-.282-1.71 0-.593.102-1.17.282-1.71V4.96H.957C.347 6.175 0 7.55 0 9.002c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+          <path d="M9.003 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.464.891 11.426 0 9.003 0 5.485 0 2.44 2.017.96 4.958L3.967 7.29c.708-2.127 2.692-3.71 5.036-3.71z" fill="#EA4335"/>
+        </svg>
+        {submitting ? 'Inscription...' : "S'inscrire avec Google"}
+      </button>
     </section>
   );
 };
