@@ -25,6 +25,31 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
     setError(null);
 
     try {
+      // SECURITY: Check if business is already claimed by someone else
+      const { data: existingBusiness, error: checkError } = await supabase
+        .from('businesses')
+        .select('is_claimed, claimed_by')
+        .eq('id', business.id)
+        .single();
+
+      if (checkError) throw checkError;
+
+      if (existingBusiness?.is_claimed && existingBusiness?.claimed_by !== user.id) {
+        throw new Error('Cette entreprise a déjà été réclamée par un autre utilisateur.');
+      }
+
+      // SECURITY: Check if user already has a pending claim for this business
+      const { data: existingClaim, error: claimCheckError } = await supabase
+        .from('business_claims')
+        .select('id, status')
+        .eq('business_id', business.id)
+        .eq('user_id', user.id)
+        .single();
+
+      if (existingClaim && existingClaim.status === 'pending') {
+        throw new Error('Vous avez déjà une demande en attente pour cette entreprise.');
+      }
+
       // Insert claim
       const { data: claim, error: claimError } = await supabase
         .from('business_claims')
@@ -138,6 +163,22 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
                 <div>
                   <strong>Approbation automatique disponible!</strong>
                   <p>Votre email ({user.email}) correspond au domaine du site web ({business.website})</p>
+                  <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                    Votre réclamation sera approuvée instantanément.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {!canAutoApprove() && business.website && user.email && (
+              <div className="auto-approve-notice" style={{ background: 'linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%)', borderLeft: '4px solid #ffc107' }}>
+                <div className="notice-icon">ℹ️</div>
+                <div>
+                  <strong>Vérification manuelle requise</strong>
+                  <p>Votre email ({user.email.split('@')[1]}) ne correspond pas au domaine du site web ({business.website})</p>
+                  <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                    Un administrateur vérifiera votre demande dans les 24-48h.
+                  </p>
                 </div>
               </div>
             )}
@@ -198,8 +239,11 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   placeholder="514-555-1234"
+                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                  title="Format: 514-555-1234"
                   required
                 />
+                <small>Format requis: 514-555-1234</small>
               </div>
 
               <div className="form-group">
@@ -287,8 +331,11 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   placeholder="514-555-1234"
+                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                  title="Format: 514-555-1234"
                   required
                 />
+                <small>Format requis: 514-555-1234</small>
               </div>
 
               <div className="form-group">
