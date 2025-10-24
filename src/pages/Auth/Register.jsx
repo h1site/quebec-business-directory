@@ -224,6 +224,43 @@ const Register = () => {
               {submitting ? 'Inscription...' : "S'inscrire avec Google"}
             </button>
           </div>
+
+          {/* Login Link */}
+          <div style={{
+            textAlign: 'center',
+            marginTop: '1.5rem',
+            paddingTop: '1.5rem',
+            borderTop: '1px solid #e2e8f0'
+          }}>
+            <p style={{ margin: '0 0 0.75rem 0', color: '#718096', fontSize: '0.875rem' }}>
+              Vous avez déjà un compte?
+            </p>
+            <button
+              onClick={() => navigate('/connexion')}
+              type="button"
+              style={{
+                background: 'transparent',
+                border: '2px solid #1e88e5',
+                color: '#1e88e5',
+                padding: '0.65rem 1.5rem',
+                borderRadius: '4px',
+                fontSize: '0.875rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = '#1e88e5';
+                e.currentTarget.style.color = 'white';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'transparent';
+                e.currentTarget.style.color = '#1e88e5';
+              }}
+            >
+              Se connecter
+            </button>
+          </div>
         </div>
       </div>
     </section>
