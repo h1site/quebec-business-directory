@@ -97,7 +97,7 @@ const Register = () => {
       {/* Logo */}
       <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
         <img
-          src="/logoblue.webp"
+          src="/images/logos/logoblue.webp"
           alt="Logo"
           style={{
             maxWidth: '200px',
