@@ -19,8 +19,9 @@ import AdminClaims from './pages/Admin/AdminClaims.jsx';
 import BusinessDetails from './pages/BusinessDetails.jsx';
 import LegalNotice from './pages/LegalNotice.jsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
+import About from './pages/About.jsx';
 import Header from './components/Header.jsx';
-import Footer from './components/Footer.jsx';
+import FooterYelp from './components/FooterYelp.jsx';
 import CookieConsent from './components/CookieConsent.jsx';
 import GoogleAnalytics from './components/GoogleAnalytics.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -66,7 +67,9 @@ function App() {
               <Route path="/connexion" element={<Login />} />
               <Route path="/inscription" element={<Register />} />
 
-              {/* Legal */}
+              {/* Legal & Info */}
+              <Route path="/a-propos" element={<About />} />
+              <Route path="/about" element={<About />} />
               <Route path="/mentions-legales" element={<LegalNotice />} />
               <Route path="/legal-notice" element={<LegalNotice />} />
               <Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
@@ -145,7 +148,7 @@ function App() {
               />
             </Routes>
           </main>
-          <Footer />
+          <FooterYelp />
         </div>
       </AuthProvider>
     </Suspense>

@@ -273,6 +273,10 @@ export const generateBusinessSchema = (business, canonicalUrl, businessHours = n
 export const generateBreadcrumbSchema = (business) => {
   const baseUrl = window.location.origin;
 
+  // Protection contre les valeurs null/undefined
+  const citySlug = business.city ? business.city.toLowerCase().replace(/\s+/g, '-') : 'quebec';
+  const mainCategorySlug = business.main_category_slug || 'entreprises';
+
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -287,19 +291,19 @@ export const generateBreadcrumbSchema = (business) => {
         '@type': 'ListItem',
         position: 2,
         name: business.main_category_name || 'Catégorie',
-        item: `${baseUrl}/categorie/${business.main_category_slug}`
+        item: `${baseUrl}/categorie/${mainCategorySlug}`
       },
       {
         '@type': 'ListItem',
         position: 3,
-        name: business.city,
-        item: `${baseUrl}/${business.main_category_slug}/${business.city.toLowerCase().replace(/\s+/g, '-')}`
+        name: business.city || 'Québec',
+        item: `${baseUrl}/${mainCategorySlug}/${citySlug}`
       },
       {
         '@type': 'ListItem',
         position: 4,
         name: business.name,
-        item: `${baseUrl}/${business.main_category_slug}/${business.city.toLowerCase().replace(/\s+/g, '-')}/${business.slug}`
+        item: `${baseUrl}/${mainCategorySlug}/${citySlug}/${business.slug}`
       }
     ]
   };

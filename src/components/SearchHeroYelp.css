@@ -1,0 +1,236 @@
+/* Yelp-style Hero */
+.hero-yelp {
+  width: 100%;
+}
+
+.hero-yelp-main {
+  position: relative;
+  height: 450px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-yelp-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(15, 76, 129, 0.85) 0%, rgba(30, 136, 229, 0.75) 100%);
+}
+
+.hero-yelp-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  width: 90%;
+  text-align: center;
+}
+
+.hero-yelp-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: white;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.5px;
+}
+
+.hero-yelp-subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 2rem 0;
+  font-weight: 500;
+}
+
+/* Search Form */
+.hero-yelp-search {
+  display: flex;
+  gap: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.hero-yelp-search-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px 16px;
+  border-right: 1px solid #e2e8f0;
+}
+
+.hero-yelp-search-group:last-of-type {
+  border-right: none;
+}
+
+.hero-yelp-search-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hero-yelp-input {
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+  color: #1a202c;
+  background: transparent;
+  outline: none;
+  padding: 0;
+}
+
+.hero-yelp-input::placeholder {
+  color: #94a3b8;
+}
+
+.hero-yelp-button {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  border: none;
+  color: white;
+  padding: 0 2.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-yelp-button:hover {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+  transform: scale(1.02);
+}
+
+.hero-yelp-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Quick Search Buttons */
+.hero-yelp-quick {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-yelp-quick-btn {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.65rem 1.25rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-yelp-quick-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero-yelp-quick-icon {
+  font-size: 1.1rem;
+}
+
+/* Categories Section */
+.hero-yelp-categories {
+  padding: 100px 0;
+  background: #f8f9fa;
+}
+
+.hero-yelp-categories-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 2rem 0;
+  text-align: center;
+}
+
+.hero-yelp-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2.5rem;
+}
+
+.hero-yelp-category-card {
+  background: white;
+  padding: 1.75rem;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #1a202c;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 2px solid transparent;
+}
+
+.hero-yelp-category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: #0f4c81;
+}
+
+.hero-yelp-category-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0f4c81;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-yelp-main {
+    height: 500px;
+  }
+
+  .hero-yelp-title {
+    font-size: 2rem;
+  }
+
+  .hero-yelp-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-yelp-search {
+    flex-direction: column;
+  }
+
+  .hero-yelp-search-group {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .hero-yelp-button {
+    padding: 1rem;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .hero-yelp-quick {
+    gap: 0.75rem;
+  }
+
+  .hero-yelp-quick-btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .hero-yelp-categories-grid {
+    grid-template-columns: 1fr;
+  }
+}

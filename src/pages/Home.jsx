@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import SearchHero from '../components/SearchHero.jsx';
+import SearchHeroYelp from '../components/SearchHeroYelp.jsx';
 import { generateOrganizationSchema, generateWebSiteSchema } from '../utils/schemaMarkup.js';
 
 const Home = () => {
@@ -74,7 +74,7 @@ const Home = () => {
       </Helmet>
 
       <div>
-        <SearchHero />
+        <SearchHeroYelp />
       </div>
     </>
   );

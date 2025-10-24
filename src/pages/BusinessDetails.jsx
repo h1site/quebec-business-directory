@@ -108,28 +108,29 @@ const BusinessDetails = () => {
   const canonicalUrl = `${window.location.origin}${getBusinessUrl(business)}`;
 
   // Generate description for meta tags
+  const cityName = business.city || 'Québec';
   const metaDescription = business.description
     ? business.description.substring(0, 160)
-    : `${business.name} - ${business.city}, QC`;
+    : `${business.name} - ${cityName}, QC`;
 
   return (
     <>
       <Helmet>
-        <title>{business.name} - {business.city} | Registre d'entreprise du Québec</title>
+        <title>{business.name} - {cityName} | Registre d'entreprise du Québec</title>
         <meta name="description" content={metaDescription} />
         <link rel="canonical" href={canonicalUrl} />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="business.business" />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:title" content={`${business.name} - ${business.city}`} />
+        <meta property="og:title" content={`${business.name} - ${cityName}`} />
         <meta property="og:description" content={metaDescription} />
         {business.logo_url && <meta property="og:image" content={business.logo_url} />}
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={canonicalUrl} />
-        <meta name="twitter:title" content={`${business.name} - ${business.city}`} />
+        <meta name="twitter:title" content={`${business.name} - ${cityName}`} />
         <meta name="twitter:description" content={metaDescription} />
         {business.logo_url && <meta name="twitter:image" content={business.logo_url} />}
 
