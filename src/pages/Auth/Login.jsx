@@ -153,7 +153,7 @@ const Login = () => {
             fontSize: '0.875rem'
           }}>
             <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
-            <span style={{ padding: '0 1rem' }}>OU</span>
+            <span style={{ padding: '0 1rem' }}>{t('auth.or')}</span>
             <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
           </div>
 
@@ -195,7 +195,7 @@ const Login = () => {
                 <path d="M3.964 10.712c-.18-.54-.282-1.117-.282-1.71 0-.593.102-1.17.282-1.71V4.96H.957C.347 6.175 0 7.55 0 9.002c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
                 <path d="M9.003 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.464.891 11.426 0 9.003 0 5.485 0 2.44 2.017.96 4.958L3.967 7.29c.708-2.127 2.692-3.71 5.036-3.71z" fill="#EA4335"/>
               </svg>
-              {submitting ? 'Connexion...' : 'Continuer avec Google'}
+              {submitting ? t('auth.connecting') : t('auth.continueWithGoogle')}
             </button>
           </div>
 
@@ -207,7 +207,7 @@ const Login = () => {
             borderTop: '1px solid #e2e8f0'
           }}>
             <p style={{ margin: '0 0 0.75rem 0', color: '#718096', fontSize: '0.875rem' }}>
-              Vous n'avez pas de compte?
+              {t('auth.noAccount')}
             </p>
             <button
               onClick={() => navigate('/inscription')}
@@ -232,7 +232,7 @@ const Login = () => {
                 e.currentTarget.style.color = '#1e88e5';
               }}
             >
-              Créer un compte
+              {t('auth.createAccount')}
             </button>
           </div>
         </div>

@@ -50,7 +50,15 @@ const resources = {
         confirmPassword: 'Confirmez le mot de passe',
         loginTitle: 'Connexion',
         registerTitle: 'Créer un compte',
-        submit: 'Soumettre'
+        submit: 'Soumettre',
+        continueWithGoogle: 'Continuer avec Google',
+        or: 'OU',
+        noAccount: 'Vous n\'avez pas de compte?',
+        createAccount: 'Créer un compte',
+        haveAccount: 'Vous avez déjà un compte?',
+        signIn: 'Se connecter',
+        connecting: 'Connexion...',
+        registering: 'Inscription...'
       },
       dashboard: {
         createTitle: 'Créer une fiche d\'entreprise',
@@ -159,7 +167,15 @@ const resources = {
         confirmPassword: 'Confirm password',
         loginTitle: 'Sign in',
         registerTitle: 'Create an account',
-        submit: 'Submit'
+        submit: 'Submit',
+        continueWithGoogle: 'Continue with Google',
+        or: 'OR',
+        noAccount: 'Don\'t have an account?',
+        createAccount: 'Create an account',
+        haveAccount: 'Already have an account?',
+        signIn: 'Sign in',
+        connecting: 'Connecting...',
+        registering: 'Registering...'
       },
       dashboard: {
         createTitle: 'Create a business listing',
