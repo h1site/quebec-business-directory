@@ -3,9 +3,9 @@ export default async function handler(req, res) {
     const baseUrl = 'https://registreduquebec.com';
     const currentDate = new Date().toISOString().split('T')[0];
 
-    // Calculate number of business sitemaps needed (480,168 businesses / 45,000 per file = ~11 files)
+    // Calculate number of business sitemaps needed (480,168 businesses / 10,000 per file = ~48 files)
     const totalBusinesses = 480168;
-    const urlsPerSitemap = 45000;
+    const urlsPerSitemap = 10000;
     const numBusinessSitemaps = Math.ceil(totalBusinesses / urlsPerSitemap);
 
     let sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>

@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
 const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
 
-const URLS_PER_SITEMAP = 45000;
+const URLS_PER_SITEMAP = 10000;
 const BATCH_SIZE = 1000; // Supabase max limit
 
 export default async function handler(req, res) {
