@@ -54,11 +54,31 @@ const UserTestimonials = () => {
   };
 
   if (loading) {
-    return null; // Ne rien afficher pendant le chargement
+    return (
+      <section className="user-testimonials-section">
+        <div className="container">
+          <div className="testimonials-header">
+            <h2>Avis des Utilisateurs sur les Entreprises</h2>
+            <p className="testimonials-subtitle">Chargement...</p>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   if (testimonials.length === 0) {
-    return null; // Ne rien afficher s'il n'y a pas de témoignages
+    return (
+      <section className="user-testimonials-section">
+        <div className="container">
+          <div className="testimonials-header">
+            <h2>Avis des Utilisateurs sur les Entreprises</h2>
+            <p className="testimonials-subtitle">
+              Soyez le premier à laisser un avis sur une entreprise québécoise!
+            </p>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (
