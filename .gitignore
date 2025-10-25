@@ -9,3 +9,4 @@ coverage
 data/req-entreprises.csv
 data/*.csv
 !data/req-entreprises-sample.csv
+logs/

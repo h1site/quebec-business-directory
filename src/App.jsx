@@ -20,6 +20,7 @@ import BusinessDetails from './pages/BusinessDetails.jsx';
 import LegalNotice from './pages/LegalNotice.jsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 import About from './pages/About.jsx';
+import UserProfile from './pages/UserProfile.jsx';
 import Header from './components/Header.jsx';
 import FooterYelp from './components/FooterYelp.jsx';
 import CookieConsent from './components/CookieConsent.jsx';
@@ -89,6 +90,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <MyBusinesses />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profil"
+                element={
+                  <ProtectedRoute>
+                    <UserProfile />
                   </ProtectedRoute>
                 }
               />

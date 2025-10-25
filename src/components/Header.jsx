@@ -3,12 +3,14 @@ import { Link, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageToggle from './LanguageToggle.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
+import { supabase } from '../supabaseClient.js';
 
 const Header = () => {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +24,26 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      loadUserAvatar();
+    }
+  }, [user]);
+
+  const loadUserAvatar = async () => {
+    if (!user) return;
+
+    const { data } = await supabase
+      .from('user_profiles')
+      .select('avatar_url')
+      .eq('user_id', user.id)
+      .single();
+
+    if (data && data.avatar_url) {
+      setAvatarUrl(data.avatar_url);
+    }
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -74,9 +96,13 @@ const Header = () => {
                 <>
                   <NavLink to="/entreprise/nouvelle" onClick={closeMenu}>{t('navigation.addListing')}</NavLink>
                   <NavLink to="/mes-entreprises" onClick={closeMenu}>Mes entreprises</NavLink>
-                  <button className="logout-button" onClick={() => { logout(); closeMenu(); }}>
-                    {t('navigation.logout')}
-                  </button>
+                  <NavLink to="/profil" onClick={closeMenu} className="profile-avatar-link">
+                    <img
+                      src={avatarUrl || '/default-avatar.svg'}
+                      alt="Profil"
+                      className="header-avatar"
+                    />
+                  </NavLink>
                 </>
               ) : (
                 <>

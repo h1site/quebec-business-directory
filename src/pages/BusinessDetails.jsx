@@ -9,6 +9,8 @@ import GoogleMap from '../components/GoogleMap.jsx';
 import BusinessHours from '../components/BusinessHours.jsx';
 import GoogleReviews from '../components/GoogleReviews.jsx';
 import ClaimBusinessModal from '../components/ClaimBusinessModal.jsx';
+import BusinessReviews from '../components/BusinessReviews.jsx';
+import WriteReviewModal from '../components/WriteReviewModal.jsx';
 import { getBusinessUrl, isLegacyUrl } from '../utils/urlHelpers.js';
 import { generateBusinessSchema, generateBreadcrumbSchema } from '../utils/schemaMarkup.js';
 import './BusinessDetails.css';
@@ -28,6 +30,8 @@ const BusinessDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showClaimModal, setShowClaimModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewsKey, setReviewsKey] = useState(0);
 
   useEffect(() => {
     const loadBusiness = async () => {
@@ -388,6 +392,23 @@ const BusinessDetails = () => {
               </div>
             )}
 
+            {/* Write Review Button */}
+            <div className="sidebar-card">
+              <button
+                className="btn btn-primary btn-write-review"
+                onClick={() => {
+                  if (!user) {
+                    navigate('/connexion', { state: { from: location.pathname } });
+                  } else {
+                    setShowReviewModal(true);
+                  }
+                }}
+                style={{ width: '100%', padding: '1rem', fontSize: '1rem', fontWeight: '600' }}
+              >
+                ✍️ Écrire une critique
+              </button>
+            </div>
+
             {/* Service Area */}
             {business.service_area && (
               <div className="sidebar-card">
@@ -400,6 +421,11 @@ const BusinessDetails = () => {
             )}
           </aside>
         </div>
+      </div>
+
+      {/* Reviews Section - Full Width */}
+      <div className="container">
+        <BusinessReviews key={reviewsKey} businessId={business.id} />
       </div>
 
       {/* Full Width Map Section */}
@@ -428,6 +454,19 @@ const BusinessDetails = () => {
         onSuccess={() => {
           // Reload page to update claimed status
           window.location.reload();
+        }}
+      />
+    )}
+
+    {/* Write Review Modal */}
+    {showReviewModal && (
+      <WriteReviewModal
+        business={business}
+        isOpen={showReviewModal}
+        onClose={() => setShowReviewModal(false)}
+        onReviewSubmitted={() => {
+          setReviewsKey(prev => prev + 1); // Force refresh reviews
+          setShowReviewModal(false);
         }}
       />
     )}

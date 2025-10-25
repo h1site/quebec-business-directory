@@ -1546,3 +1546,37 @@ nav .donate-button:hover {
     overflow-wrap: break-word;
   }
 }
+
+/* ========================================
+   PROFILE AVATAR IN HEADER
+   ======================================== */
+.profile-avatar-link {
+  display: flex;
+  align-items: center;
+  padding: 0 !important;
+}
+
+.header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3b82f6;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.header-avatar:hover {
+  transform: scale(1.1);
+  border-color: #2563eb;
+}
+
+.profile-avatar-link.active .header-avatar {
+  border-color: #1d4ed8;
+}
+
+@media (max-width: 768px) {
+  .header-avatar {
+    width: 36px;
+    height: 36px;
+  }
+}
