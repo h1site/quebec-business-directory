@@ -95,7 +95,7 @@ export default async function handler(req, res) {
     // Déterminer les mots-clés de recherche
     let searchKeywords = keywords || categoryKeywords[category] || categoryKeywords['default'];
 
-    // Paramètres de recherche
+    // Paramètres de recherche PA-API 5.0
     const requestParameters = {
       Keywords: searchKeywords,
       SearchIndex: 'All',
@@ -104,10 +104,9 @@ export default async function handler(req, res) {
         'Images.Primary.Medium',
         'ItemInfo.Title',
         'ItemInfo.ByLineInfo',
-        'ItemInfo.ContentInfo',
         'Offers.Listings.Price',
-        'Offers.Listings.SavingBasis',
-        'CustomerReviews.StarRating'
+        'Offers.Listings.Condition',
+        'Offers.Listings.Availability.Message'
       ]
     };
 
@@ -121,15 +120,16 @@ export default async function handler(req, res) {
 
     // Formatter les produits pour le frontend
     const products = data.SearchResult.Items.map(item => {
-      const price = item.Offers?.Listings?.[0]?.Price;
+      const listing = item.Offers?.Listings?.[0];
+      const price = listing?.Price?.Amount || listing?.Price?.DisplayAmount;
       const image = item.Images?.Primary?.Medium;
 
       return {
         asin: item.ASIN,
         title: item.ItemInfo?.Title?.DisplayValue || 'Produit',
         image: image?.URL || null,
-        price: price?.DisplayAmount || null,
-        rating: item.CustomerReviews?.StarRating?.Value || null,
+        price: price ? `${price} CAD` : null,
+        rating: null, // CustomerReviews nécessite un Resource spécifique
         url: item.DetailPageURL,
         brand: item.ItemInfo?.ByLineInfo?.Brand?.DisplayValue || null
       };
