@@ -4,6 +4,29 @@ import { getMainCategories, getSubCategories } from '../services/lookupService.j
 import { useTranslation } from 'react-i18next';
 import './CategoriesGrid.css';
 
+// Mapping des icônes par slug de catégorie
+const categoryIcons = {
+  'agriculture-et-environnement': 'agriculture.svg',
+  'arts-medias-et-divertissement': 'art.svg',
+  'automobile-et-transport': 'automobile.svg',
+  'commerce-de-detail': 'commerce.svg',
+  'construction-et-renovation': 'construction.svg',
+  'education-et-formation': 'education.svg',
+  'finance-assurance-et-juridique': 'finance.svg',
+  'immobilier': 'immobilier.svg',
+  'industrie-fabrication-et-logistique': 'industrie.svg',
+  'maison-et-services-domestiques': 'maison.svg',
+  'organismes-publics-et-communautaires': 'organismes.svg',
+  'restauration-et-alimentation': 'restauration.svg',
+  'sante-et-bien-etre': 'sante.svg',
+  'services-funeraires': 'funeraire.svg',
+  'services-professionnels': 'services.svg',
+  'soins-a-domicile': 'soins.svg',
+  'sports-et-loisirs': 'sports.svg',
+  'technologie-et-informatique': 'technologie.svg',
+  'tourisme-et-hebergement': 'tourisme.svg'
+};
+
 const CategoriesGrid = () => {
   const { i18n } = useTranslation();
   const [mainCategories, setMainCategories] = useState([]);
@@ -66,7 +89,14 @@ const CategoriesGrid = () => {
                   to={`/recherche?category=${category.slug}`}
                   className="category-main-link"
                 >
-                  {getLabel(category)}
+                  {categoryIcons[category.slug] && (
+                    <img
+                      src={`/images/icons/${categoryIcons[category.slug]}`}
+                      alt={getLabel(category)}
+                      className="category-icon"
+                    />
+                  )}
+                  <span className="category-title">{getLabel(category)}</span>
                 </Link>
                 <ul className="subcategories-list">
                   {getSubCategoriesForMain(category.id).map((subCat) => (
