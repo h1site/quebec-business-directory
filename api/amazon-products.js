@@ -3,22 +3,22 @@
 
 const amazonProducts = [
   {
-    title: 'Produit recommandé pour entrepreneurs',
+    title: 'Souffleuse à neige sans fil',
     url: 'https://amzn.to/47GZ6RZ',
     image: 'https://m.media-amazon.com/images/I/71PToFWuzFL._AC_SY300_SX300_QL70_ML2_.jpg'
   },
   {
-    title: 'Outil professionnel recommandé',
+    title: 'BENFEI Hub USB C 5 en 1',
     url: 'https://amzn.to/4ohXHr1',
     image: 'https://m.media-amazon.com/images/I/615tvY-j9sL._AC_SY300_SX300_QL70_ML2_.jpg'
   },
   {
-    title: 'Ressource essentielle pour votre entreprise',
+    title: 'Étagère de rangement en métal',
     url: 'https://amzn.to/4hszRWP',
     image: 'https://m.media-amazon.com/images/I/71TNnLfi2mL._AC_SY879_.jpg'
   },
   {
-    title: 'Guide pratique pour professionnels',
+    title: 'Dell Moniteur S2725HS 27"',
     url: 'https://amzn.to/3J4Dm9r',
     image: 'https://m.media-amazon.com/images/I/71Cn8N4oo4L._AC_SX679_.jpg'
   }
