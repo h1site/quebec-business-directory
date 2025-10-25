@@ -45,7 +45,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!api/|sitemaps/).*)",
+      "source": "/((?!api/|sitemaps/|sitemap\\.xml).*)",
       "destination": "/index.html"
     }
   ]
