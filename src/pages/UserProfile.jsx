@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../services/supabaseClient';
+import WriteReviewModal from '../components/WriteReviewModal';
 import './UserProfile.css';
 
 const UserProfile = () => {
@@ -16,6 +17,8 @@ const UserProfile = () => {
   const [avatarFile, setAvatarFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
   const [userReviews, setUserReviews] = useState([]);
+  const [editingReview, setEditingReview] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     checkUser();
@@ -179,6 +182,39 @@ const UserProfile = () => {
     });
   };
 
+  const handleEditReview = (review) => {
+    setEditingReview(review);
+    setShowEditModal(true);
+  };
+
+  const handleDeleteReview = async (reviewId) => {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette critique?')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('business_reviews')
+        .delete()
+        .eq('id', reviewId);
+
+      if (error) throw error;
+
+      // Recharger les critiques
+      await loadUserReviews(user.id);
+      alert('Critique supprimée avec succès!');
+    } catch (error) {
+      console.error('Erreur:', error);
+      alert('Erreur lors de la suppression de la critique');
+    }
+  };
+
+  const handleReviewUpdated = async () => {
+    setShowEditModal(false);
+    setEditingReview(null);
+    await loadUserReviews(user.id);
+  };
+
   if (loading) {
     return <div className="loading">Chargement...</div>;
   }
@@ -300,6 +336,20 @@ const UserProfile = () => {
                       <div className="review-meta">
                         {review.businesses.city} • {formatDate(review.created_at)}
                       </div>
+                      <div className="review-actions">
+                        <button
+                          onClick={() => handleEditReview(review)}
+                          className="btn-edit-review"
+                        >
+                          Modifier
+                        </button>
+                        <button
+                          onClick={() => handleDeleteReview(review.id)}
+                          className="btn-delete-review"
+                        >
+                          Supprimer
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -308,6 +358,19 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
+
+      {showEditModal && editingReview && (
+        <WriteReviewModal
+          business={editingReview.businesses}
+          existingReview={editingReview}
+          isOpen={showEditModal}
+          onClose={() => {
+            setShowEditModal(false);
+            setEditingReview(null);
+          }}
+          onReviewSubmitted={handleReviewUpdated}
+        />
+      )}
     </div>
   );
 };

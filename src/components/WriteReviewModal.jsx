@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../services/supabaseClient';
 import './WriteReviewModal.css';
 
-const WriteReviewModal = ({ business, isOpen, onClose, onReviewSubmitted }) => {
+const WriteReviewModal = ({ business, existingReview: existingReviewProp, isOpen, onClose, onReviewSubmitted }) => {
   const [user, setUser] = useState(null);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -16,9 +16,18 @@ const WriteReviewModal = ({ business, isOpen, onClose, onReviewSubmitted }) => {
   useEffect(() => {
     if (isOpen) {
       checkUser();
-      checkExistingReview();
+      if (existingReviewProp) {
+        // Utiliser la critique passée en prop (mode édition depuis le profil)
+        setExistingReview(existingReviewProp);
+        setRating(existingReviewProp.rating);
+        setComment(existingReviewProp.comment);
+        setPhotos(existingReviewProp.photos || []);
+      } else {
+        // Vérifier s'il y a une critique existante (mode normal)
+        checkExistingReview();
+      }
     }
-  }, [isOpen]);
+  }, [isOpen, existingReviewProp]);
 
   const checkUser = async () => {
     const { data: { user } } = await supabase.auth.getUser();
