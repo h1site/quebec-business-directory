@@ -15,29 +15,44 @@ const UserTestimonials = () => {
       // Récupérer quelques critiques récentes avec les infos des entreprises
       const { data, error } = await supabase
         .from('business_reviews')
-        .select(`
-          *,
-          user_profiles:user_id (
-            full_name,
-            avatar_url
-          ),
-          businesses:business_id (
-            id,
-            name,
-            slug,
-            city
-          )
-        `)
+        .select('*')
         .order('created_at', { ascending: false })
         .limit(6);
 
       if (error) {
         console.error('Erreur lors du chargement:', error);
+        setLoading(false);
+        return;
       }
 
-      if (data) {
-        console.log('Témoignages chargés:', data);
-        setTestimonials(data);
+      if (data && data.length > 0) {
+        // Charger les infos des utilisateurs et entreprises séparément
+        const enrichedData = await Promise.all(
+          data.map(async (review) => {
+            // Charger le profil utilisateur
+            const { data: profile } = await supabase
+              .from('user_profiles')
+              .select('full_name, avatar_url')
+              .eq('user_id', review.user_id)
+              .single();
+
+            // Charger l'entreprise
+            const { data: business } = await supabase
+              .from('businesses')
+              .select('id, name, slug, city')
+              .eq('id', review.business_id)
+              .single();
+
+            return {
+              ...review,
+              user_profiles: profile,
+              businesses: business
+            };
+          })
+        );
+
+        console.log('Témoignages chargés:', enrichedData);
+        setTestimonials(enrichedData);
       }
     } catch (error) {
       console.error('Erreur chargement témoignages:', error);
