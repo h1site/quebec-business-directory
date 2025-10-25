@@ -358,24 +358,15 @@ async function findCategoryByScian(scianCode) {
 /**
  * Insérer un batch d'entreprises (en ignorant les doublons NEQ + établissement)
  */
-async function batchInsert(businesses) {
+async function batchInsert(businesses, existingKeysSet) {
   if (dryRun) {
     console.log(`🔍 [DRY-RUN] Affichage de ${businesses.length} entreprises:`);
     console.table(businesses.slice(0, 3)); // Afficher 3 exemples
     return { count: businesses.length, errors: [] };
   }
 
-  // Vérifier quels NEQ + etablissement_number existent déjà
-  const neqs = businesses.map(b => b.neq).filter(Boolean);
-  const { data: existing } = await supabase
-    .from('businesses')
-    .select('neq, etablissement_number')
-    .in('neq', neqs);
-
-  // Créer un Set avec clé composite "neq-etab"
-  const existingKeys = new Set(
-    (existing || []).map(b => `${b.neq}-${b.etablissement_number}`)
-  );
+  // Utiliser le Set précalculé au lieu de faire une requête DB
+  const existingKeys = existingKeysSet;
 
   // Filtrer les entreprises qui n'existent pas déjà
   const newBusinesses = businesses.filter(
@@ -480,8 +471,48 @@ async function importREQData() {
     withScian: 0
   };
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     let rowIndex = 0;
+
+    // 🚀 OPTIMISATION: Charger TOUS les NEQ existants une seule fois en mémoire
+    console.log('📥 Chargement des NEQ existants en mémoire...');
+    let existingKeysSet = new Set();
+
+    try {
+      let from = 0;
+      const pageSize = 1000;
+      let hasMore = true;
+
+      while (hasMore) {
+        const { data, error } = await supabase
+          .from('businesses')
+          .select('neq, etablissement_number')
+          .eq('data_source', 'req')
+          .range(from, from + pageSize - 1);
+
+        if (error) {
+          console.error('❌ Erreur lors du chargement des NEQ existants:', error.message);
+          reject(error);
+          return;
+        }
+
+        if (data && data.length > 0) {
+          data.forEach(b => {
+            existingKeysSet.add(`${b.neq}-${b.etablissement_number}`);
+          });
+          from += pageSize;
+          hasMore = data.length === pageSize;
+        } else {
+          hasMore = false;
+        }
+      }
+
+      console.log(`✅ ${existingKeysSet.size} NEQ existants chargés en mémoire`);
+    } catch (err) {
+      console.error('❌ Erreur fatale lors du chargement des NEQ:', err);
+      reject(err);
+      return;
+    }
 
     fs.createReadStream(csvPath)
       .pipe(csv())
@@ -568,8 +599,10 @@ async function importREQData() {
         if (location.mrc) stats.withLocation++;
         if (scianCode) stats.withScian++;
 
-        // Générer slug unique (async)
-        const slug = await generateUniqueSlug(name, city, neq, etablissement);
+        // Générer slug avec NEQ + établissement pour garantir l'unicité (sans vérification DB pour performance)
+        const { base, citySlug } = generateBaseSlug(name, city);
+        // Toujours ajouter NEQ-établissement pour garantir l'unicité totale
+        const slug = `${base}-${neq}-${etablissement}`;
 
         const business = {
           neq: neq,
@@ -596,10 +629,15 @@ async function importREQData() {
 
         // Insérer par batch
         if (batch.length >= batchSize) {
-          const result = await batchInsert([...batch]);
+          const result = await batchInsert([...batch], existingKeysSet);
           totalInserted += result.count;
           totalErrors += result.errors.length;
           totalSkipped += result.skipped || 0;
+
+          // Ajouter les nouvelles entreprises insérées au Set pour éviter les doublons
+          batch.forEach(b => {
+            existingKeysSet.add(`${b.neq}-${b.etablissement_number}`);
+          });
 
           console.log(`✅ Importé ${totalInserted}/${totalRead} entreprises (${Math.round(totalInserted/totalRead*100)}%) | Ignoré: ${totalSkipped}`);
 
@@ -616,7 +654,7 @@ async function importREQData() {
       .on('end', async () => {
         // Insérer dernier batch
         if (batch.length > 0) {
-          const result = await batchInsert(batch);
+          const result = await batchInsert(batch, existingKeysSet);
           totalInserted += result.count;
           totalSkipped += result.skipped || 0;
         }
