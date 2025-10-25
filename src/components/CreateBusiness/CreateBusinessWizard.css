@@ -1,0 +1,272 @@
+.wizard-container {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.wizard-header {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.wizard-header h1 {
+  font-size: 1.5rem;
+  color: #1a202c;
+  margin: 0;
+}
+
+.wizard-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.wizard-close:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.wizard-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.wizard-form {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wizard-preview {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+/* Form step styles */
+.wizard-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.step-title {
+  font-size: 1.75rem;
+  color: #1a202c;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.step-description {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.form-group label .required {
+  color: #ef4444;
+  margin-left: 0.25rem;
+}
+
+.form-group label .optional {
+  color: #94a3b8;
+  font-weight: 400;
+  font-size: 0.85rem;
+  margin-left: 0.5rem;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-hint {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.form-error {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #ef4444;
+}
+
+.character-count {
+  text-align: right;
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+}
+
+.character-count.warning {
+  color: #f59e0b;
+}
+
+.character-count.error {
+  color: #ef4444;
+}
+
+/* Warning message */
+.warning-box {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.warning-box-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.warning-box-content {
+  flex: 1;
+}
+
+.warning-box-title {
+  font-weight: 600;
+  color: #92400e;
+  margin: 0 0 0.25rem 0;
+  font-size: 0.95rem;
+}
+
+.warning-box-message {
+  color: #92400e;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Info box */
+.info-box {
+  background: #eff6ff;
+  border: 1px solid #93c5fd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.info-box-title {
+  font-weight: 600;
+  color: #1e40af;
+  margin: 0 0 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.info-box p,
+.info-box ol,
+.info-box ul {
+  color: #1e40af;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.info-box ol,
+.info-box ul {
+  padding-left: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .wizard-content {
+    grid-template-columns: 1fr;
+  }
+
+  .wizard-preview {
+    position: relative;
+    top: 0;
+    max-height: none;
+    order: -1; /* Show preview above form on mobile */
+  }
+}
+
+@media (max-width: 768px) {
+  .wizard-header {
+    padding: 1rem;
+  }
+
+  .wizard-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .wizard-content {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .wizard-form {
+    padding: 1.5rem;
+  }
+
+  .step-title {
+    font-size: 1.5rem;
+  }
+}

@@ -248,7 +248,7 @@ const GoogleImportModal = ({ isOpen, onClose, onImport }) => {
                 ) : (
                   <>
                     Rechercher
-                    {!quotaLoading && quotaInfo && (
+                    {!quotaLoading && quotaInfo && !quotaInfo.error && (
                       <span className="quota-badge">{formatQuotaDisplay(quotaInfo)}</span>
                     )}
                   </>

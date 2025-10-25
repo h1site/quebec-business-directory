@@ -1,0 +1,132 @@
+.wizard-progress-container {
+  background: white;
+  padding: 2rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.wizard-progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto 1rem;
+  position: relative;
+}
+
+.progress-step {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.progress-step.clickable {
+  cursor: pointer;
+}
+
+.progress-step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.progress-step.active .progress-step-circle {
+  background: #3b82f6;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.progress-step.completed .progress-step-circle {
+  background: #10b981;
+  color: white;
+}
+
+.progress-step.clickable:hover .progress-step-circle {
+  transform: scale(1.05);
+}
+
+.progress-step-line {
+  flex: 1;
+  height: 3px;
+  background: #e2e8f0;
+  margin: 0 -10px;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.progress-step.completed .progress-step-line {
+  background: #10b981;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.progress-current-step {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.progress-counter {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wizard-progress-container {
+    padding: 1rem;
+  }
+
+  .wizard-progress-bar {
+    margin-bottom: 0.75rem;
+  }
+
+  .progress-step-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .progress-step-line {
+    height: 2px;
+  }
+
+  .progress-current-step {
+    font-size: 0.9rem;
+  }
+
+  .progress-counter {
+    font-size: 0.8rem;
+  }
+}
+
+/* Extra small screens - hide some step circles */
+@media (max-width: 480px) {
+  .progress-step:nth-child(n+6):nth-child(-n+8) .progress-step-circle span {
+    font-size: 0;
+  }
+
+  .progress-step:nth-child(n+6):nth-child(-n+8) .progress-step-circle::after {
+    content: '•';
+    font-size: 1.25rem;
+  }
+}

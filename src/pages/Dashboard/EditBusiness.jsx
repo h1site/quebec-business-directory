@@ -17,7 +17,6 @@ import CityAutocompleteQuebec from '../../components/CityAutocompleteQuebec.jsx'
 import ImageUploader from '../../components/ImageUploader.jsx';
 import BusinessHoursEditor from '../../components/BusinessHoursEditor.jsx';
 import AnimatedCheckbox from '../../components/AnimatedCheckbox.jsx';
-import GoogleImportModal from '../../components/GoogleImportModal.jsx';
 import { uploadLogo, uploadMultipleGalleryImages } from '../../services/imageService.js';
 import { getBusinessUrl } from '../../utils/urlHelpers.js';
 import { getCityInfo } from '../../data/quebecMunicipalities.js';
@@ -45,7 +44,6 @@ const EditBusiness = () => {
   const [loading, setLoading] = useState(true);
   const [businessId, setBusinessId] = useState(null);
   const [business, setBusiness] = useState(null);
-  const [showGoogleImport, setShowGoogleImport] = useState(false);
 
   // Slug validation state
   const [slugChecking, setSlugChecking] = useState(false);
@@ -505,17 +503,6 @@ const EditBusiness = () => {
               }}
             >
               Retour à la fiche
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => setShowGoogleImport(true)}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '0.5rem' }}>
-                <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                <path d="M9 12l2 2 4-4"></path>
-              </svg>
-              Ré-importer Google
             </button>
           </div>
         </div>
@@ -1347,39 +1334,6 @@ const EditBusiness = () => {
         </div>
       </div>
 
-      {/* Google Import Modal */}
-      <GoogleImportModal
-        isOpen={showGoogleImport}
-        onClose={() => setShowGoogleImport(false)}
-        onImport={(importedData) => {
-            // Update form with imported data, preserving existing values for non-imported fields
-            setForm(prev => ({
-              ...prev,
-              name: importedData.name || prev.name,
-              description: importedData.description || prev.description,
-              phone: importedData.phone || prev.phone,
-              website: importedData.website || prev.website,
-              address: importedData.address || prev.address,
-              city: importedData.city || prev.city,
-              postal_code: importedData.postal_code || prev.postal_code,
-              facebook_url: importedData.facebook_url || prev.facebook_url,
-              instagram_url: importedData.instagram_url || prev.instagram_url,
-              twitter_url: importedData.twitter_url || prev.twitter_url,
-              linkedin_url: importedData.linkedin_url || prev.linkedin_url,
-              threads_url: importedData.threads_url || prev.threads_url,
-              tiktok_url: importedData.tiktok_url || prev.tiktok_url
-            }));
-
-            setShowGoogleImport(false);
-            setStatus({
-              type: 'success',
-              message: 'Données importées depuis Google. N\'oubliez pas d\'enregistrer les modifications.'
-            });
-
-            // Scroll to top to see the success message
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        />
     </div>
   );
 };

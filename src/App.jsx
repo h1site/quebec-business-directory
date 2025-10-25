@@ -10,6 +10,7 @@ import CategoryBrowse from './pages/Browse/CategoryBrowse.jsx';
 import Login from './pages/Auth/Login.jsx';
 import Register from './pages/Auth/Register.jsx';
 import CreateBusiness from './pages/Dashboard/CreateBusiness.jsx';
+import CreateBusinessWizard from './components/CreateBusiness/CreateBusinessWizard.jsx';
 import EditBusiness from './pages/Dashboard/EditBusiness.jsx';
 import MyBusinesses from './pages/Dashboard/MyBusinesses.jsx';
 import MigrationTools from './pages/Dashboard/MigrationTools.jsx';
@@ -87,7 +88,7 @@ function App() {
                 path="/entreprise/nouvelle"
                 element={
                   <ProtectedRoute>
-                    <CreateBusiness />
+                    <CreateBusinessWizard />
                   </ProtectedRoute>
                 }
               />

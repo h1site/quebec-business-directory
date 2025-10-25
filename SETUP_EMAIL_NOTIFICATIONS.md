@@ -319,3 +319,5 @@ body: JSON.stringify({
 1. **Email rate limit atteint** → Passer au plan payant
 2. **Taux d'erreur > 5%** → Vérifier les logs
 3. **Domaine non vérifié** → Vérifier DNS
+
+bash scripts/enrich-google-loop.sh 2>&1 | tee logs/enrich-google-midnight.log &

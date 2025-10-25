@@ -48,22 +48,18 @@ const AdminClaims = () => {
   };
 
   const handleApproveClaim = async (claim) => {
-    if (!confirm(`Approuver la réclamation de ${claim.user_email} pour ${claim.businesses.name}?`)) {
+    if (!confirm(`Approuver la réclamation de ${claim.claimant_email} pour ${claim.businesses.name}?`)) {
       return;
     }
 
     setProcessing(claim.id);
     try {
-      const { data: session } = await supabase.auth.getSession();
-      const userId = session?.session?.user?.id;
-
       // Update claim status
       const { error: claimError } = await supabase
         .from('business_claims')
         .update({
           status: 'approved',
-          verified_at: new Date().toISOString(),
-          verified_by: userId
+          verified_at: new Date().toISOString()
         })
         .eq('id', claim.id);
 
@@ -88,8 +84,8 @@ const AdminClaims = () => {
             type: 'claim_approved',
             claim: {
               id: claim.id,
-              user_email: claim.user_email,
-              user_name: claim.user_name,
+              user_email: claim.claimant_email,
+              user_name: claim.claimant_name,
               status: 'approved'
             },
             business: {
@@ -114,7 +110,7 @@ const AdminClaims = () => {
   };
 
   const handleRejectClaim = async (claim) => {
-    const reason = prompt(`Raison du refus pour ${claim.user_email}:`);
+    const reason = prompt(`Raison du refus pour ${claim.claimant_email}:`);
     if (!reason) return;
 
     setProcessing(claim.id);
@@ -141,8 +137,8 @@ const AdminClaims = () => {
             type: 'claim_rejected',
             claim: {
               id: claim.id,
-              user_email: claim.user_email,
-              user_name: claim.user_name,
+              user_email: claim.claimant_email,
+              user_name: claim.claimant_name,
               status: 'rejected',
               notes: reason
             },
@@ -244,14 +240,14 @@ const AdminClaims = () => {
                 <div className="detail-row">
                   <span className="label">Demandeur:</span>
                   <span className="value">
-                    {claim.user_name || 'N/A'} ({claim.user_email})
+                    {claim.claimant_name || 'N/A'} ({claim.claimant_email})
                   </span>
                 </div>
 
-                {claim.user_phone && (
+                {claim.claimant_phone && (
                   <div className="detail-row">
                     <span className="label">Téléphone:</span>
-                    <span className="value">{claim.user_phone}</span>
+                    <span className="value">{claim.claimant_phone}</span>
                   </div>
                 )}
 
