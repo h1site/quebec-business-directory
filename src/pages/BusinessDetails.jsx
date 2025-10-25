@@ -187,7 +187,7 @@ const BusinessDetails = () => {
                 {!isClaimed && !user && (
                   <button
                     className="btn btn-claim"
-                    onClick={() => navigate('/login', { state: { from: location.pathname } })}
+                    onClick={() => window.location.href = 'https://registreduquebec.com/connexion'}
                   >
                     📋 Réclamer votre fiche
                   </button>
