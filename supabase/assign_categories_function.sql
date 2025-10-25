@@ -1,6 +1,9 @@
 -- Fonction SQL pour assigner les catégories en masse
 -- Cette fonction s'exécute côté serveur, donc pas de timeout!
 
+-- Supprimer l'ancienne version si elle existe
+DROP FUNCTION IF EXISTS assign_categories_from_act_econ();
+
 CREATE OR REPLACE FUNCTION assign_categories_from_act_econ()
 RETURNS TABLE(
   total_updated BIGINT,
