@@ -21,6 +21,8 @@ import LegalNotice from './pages/LegalNotice.jsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 import About from './pages/About.jsx';
 import UserProfile from './pages/UserProfile.jsx';
+import Blog from './pages/Blog.jsx';
+import BlogArticle from './pages/BlogArticle.jsx';
 import Header from './components/Header.jsx';
 import FooterYelp from './components/FooterYelp.jsx';
 import CookieConsent from './components/CookieConsent.jsx';
@@ -75,6 +77,10 @@ function App() {
               <Route path="/legal-notice" element={<LegalNotice />} />
               <Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
+              {/* Blog */}
+              <Route path="/blogue" element={<Blog />} />
+              <Route path="/blogue/:articleId" element={<BlogArticle />} />
 
               {/* Dashboard */}
               <Route

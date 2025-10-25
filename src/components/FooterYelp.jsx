@@ -16,6 +16,7 @@ const FooterYelp = () => {
             <h3 className="footer-yelp-title">À propos</h3>
             <ul className="footer-yelp-links">
               <li><Link to="/a-propos">À propos du Registre</Link></li>
+              <li><Link to="/blogue">Blogue</Link></li>
               <li><a href="https://www.facebook.com/groups/registreduquebec" target="_blank" rel="nofollow noopener noreferrer">Groupe Facebook</a></li>
               <li><Link to="/mentions-legales">Mentions légales</Link></li>
               <li><Link to="/politique-confidentialite">Politique de confidentialité</Link></li>
