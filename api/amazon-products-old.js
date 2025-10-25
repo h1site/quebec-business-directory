@@ -1,185 +1,121 @@
-import crypto from 'crypto';
-import https from 'https';
+import paapi from 'amazon-paapi';
 
-// Configuration Amazon Product Advertising API 5.0
-const AWS_REGION = 'ca-central-1';
-const AWS_SERVICE = 'ProductAdvertisingAPI';
-const AWS_TARGET = 'com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems';
-const MARKETPLACE = 'www.amazon.ca';
-const PARTNER_TYPE = 'Associates';
+// Configuration Amazon Product Advertising API
+const commonParameters = {
+  AccessKey: process.env.AMAZON_ACCESS_KEY,
+  SecretKey: process.env.AMAZON_SECRET_KEY,
+  PartnerTag: process.env.AMAZON_ASSOCIATE_TAG || 'h1site0d-20',
+  PartnerType: 'Associates',
+  Marketplace: 'www.amazon.ca'
+};
 
 // Mapping catégories → mots-clés Amazon
 const categoryKeywords = {
+  // Alimentation & Restauration
   'restaurants': 'cookbooks kitchen tools',
   'cafes-et-salons-de-the': 'coffee makers espresso',
   'boulangeries-et-patisseries': 'baking supplies cookbooks',
   'bars-et-pubs': 'bar tools cocktail books',
   'traiteurs': 'catering supplies cookbooks',
+
+  // Commerce de détail
   'alimentation': 'kitchen storage food containers',
   'vetements-et-accessoires': 'fashion accessories',
   'electromenagers-et-electronique': 'electronics gadgets',
   'librairies-et-papeteries': 'books stationery office supplies',
   'pharmacies': 'health wellness',
   'meubles-et-decoration': 'home decor furniture',
+
+  // Services professionnels
   'comptabilite-et-finance': 'accounting books business finance',
   'services-juridiques': 'legal books business law',
   'agences-immobilieres': 'real estate books investing',
   'architectes': 'architecture books design tools',
   'ingenieurs': 'engineering books technical tools',
+
+  // Construction & Rénovation
   'entrepreneurs-generaux': 'power tools construction equipment',
   'plomberie': 'plumbing tools repair guides',
   'electricite': 'electrical tools safety equipment',
   'chauffage-et-climatisation': 'hvac tools thermostats',
   'peinture-et-decoration': 'painting supplies color guides',
   'menuiserie-et-ebenisterie': 'woodworking tools carpentry books',
+
+  // Santé & Bien-être
   'cliniques-medicales': 'medical supplies health books',
   'dentistes': 'dental care oral hygiene',
   'optometristes': 'eye care vision health',
   'chiropraticiens': 'chiropractic books wellness',
   'massotherapie': 'massage tools wellness books',
   'psychologues': 'psychology books mental health',
+
+  // Beauté & Soins personnels
   'salons-de-coiffure': 'hair styling tools professional products',
   'spas-et-esthetique': 'spa products beauty tools',
   'barbiers': 'barber tools grooming',
+
+  // Automobile
   'garages-et-reparation-automobile': 'automotive tools car repair guides',
   'concessionnaires-automobiles': 'car accessories maintenance',
   'lave-autos': 'car cleaning products detailing',
+
+  // Services aux entreprises
   'agences-de-marketing': 'marketing books business growth',
   'agences-de-publicite': 'advertising books creative tools',
   'consultants-en-gestion': 'business management books',
   'services-informatiques': 'technology books it tools',
   'developpement-web': 'web development books programming',
+
+  // Éducation
   'ecoles-primaires-et-secondaires': 'educational books learning tools',
   'garderies-et-services-de-garde': 'childcare books educational toys',
   'formation-professionnelle': 'professional development books',
+
+  // Divertissement
   'salles-de-spectacle': 'entertainment books event planning',
   'cinemas': 'movies blu-ray entertainment',
   'centres-sportifs': 'fitness equipment sports gear',
+
+  // Défaut
   'default': 'business books entrepreneurship'
 };
-
-// AWS Signature Version 4 signing
-function sign(key, msg) {
-  return crypto.createHmac('sha256', key).update(msg).digest();
-}
-
-function getSignatureKey(key, dateStamp, regionName, serviceName) {
-  const kDate = sign('AWS4' + key, dateStamp);
-  const kRegion = sign(kDate, regionName);
-  const kService = sign(kRegion, serviceName);
-  const kSigning = sign(kService, 'aws4_request');
-  return kSigning;
-}
-
-async function makeAmazonRequest(payload) {
-  const accessKey = process.env.AMAZON_ACCESS_KEY;
-  const secretKey = process.env.AMAZON_SECRET_KEY;
-
-  const host = 'webservices.amazon.ca';
-  const uri = '/paapi5/searchitems';
-  const method = 'POST';
-
-  // Create date for headers and credential string
-  const t = new Date();
-  const amzdate = t.toISOString().replace(/[:-]|\.\d{3}/g, '');
-  const datestamp = amzdate.substr(0, 8);
-
-  // Create canonical request
-  const canonicalHeaders = `content-type:application/json; charset=utf-8\nhost:${host}\nx-amz-date:${amzdate}\nx-amz-target:${AWS_TARGET}\n`;
-  const signedHeaders = 'content-type;host;x-amz-date;x-amz-target';
-  const payloadHash = crypto.createHash('sha256').update(payload).digest('hex');
-  const canonicalRequest = `${method}\n${uri}\n\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`;
-
-  // Create string to sign
-  const algorithm = 'AWS4-HMAC-SHA256';
-  const credentialScope = `${datestamp}/${AWS_REGION}/${AWS_SERVICE}/aws4_request`;
-  const stringToSign = `${algorithm}\n${amzdate}\n${credentialScope}\n` +
-    crypto.createHash('sha256').update(canonicalRequest).digest('hex');
-
-  // Calculate signature
-  const signingKey = getSignatureKey(secretKey, datestamp, AWS_REGION, AWS_SERVICE);
-  const signature = crypto.createHmac('sha256', signingKey).update(stringToSign).digest('hex');
-
-  // Create authorization header
-  const authorizationHeader = `${algorithm} Credential=${accessKey}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
-
-  // Make request
-  return new Promise((resolve, reject) => {
-    const options = {
-      hostname: host,
-      port: 443,
-      path: uri,
-      method: method,
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'X-Amz-Date': amzdate,
-        'X-Amz-Target': AWS_TARGET,
-        'Authorization': authorizationHeader,
-        'Content-Length': Buffer.byteLength(payload)
-      }
-    };
-
-    const req = https.request(options, (res) => {
-      let data = '';
-      res.on('data', (chunk) => { data += chunk; });
-      res.on('end', () => {
-        try {
-          resolve(JSON.parse(data));
-        } catch (e) {
-          reject(new Error('Failed to parse response: ' + data));
-        }
-      });
-    });
-
-    req.on('error', (e) => reject(e));
-    req.write(payload);
-    req.end();
-  });
-}
 
 export default async function handler(req, res) {
   try {
     const { category, keywords } = req.query;
 
     // Validation
-    if (!process.env.AMAZON_ACCESS_KEY || !process.env.AMAZON_SECRET_KEY || !process.env.AMAZON_ASSOCIATE_TAG) {
-      console.error('Missing Amazon credentials');
-      return res.status(200).json({
+    if (!process.env.AMAZON_ACCESS_KEY || !process.env.AMAZON_SECRET_KEY) {
+      return res.status(500).json({
         error: 'Amazon API credentials not configured',
         products: []
       });
     }
 
     // Déterminer les mots-clés de recherche
-    const searchKeywords = keywords || categoryKeywords[category] || categoryKeywords['default'];
+    let searchKeywords = keywords || categoryKeywords[category] || categoryKeywords['default'];
 
-    // Créer le payload de requête
-    const requestPayload = {
+    // Paramètres de recherche
+    const requestParameters = {
       Keywords: searchKeywords,
+      SearchIndex: 'All',
+      ItemCount: 4,
       Resources: [
         'Images.Primary.Medium',
         'ItemInfo.Title',
         'ItemInfo.ByLineInfo',
+        'ItemInfo.ContentInfo',
         'Offers.Listings.Price',
+        'Offers.Listings.SavingBasis',
         'CustomerReviews.StarRating'
-      ],
-      PartnerTag: process.env.AMAZON_ASSOCIATE_TAG,
-      PartnerType: PARTNER_TYPE,
-      Marketplace: MARKETPLACE,
-      ItemCount: 4,
-      SearchIndex: 'All'
+      ]
     };
 
-    const payload = JSON.stringify(requestPayload);
-
-    // Faire la requête Amazon
-    const data = await makeAmazonRequest(payload);
-
-    console.log('Amazon API Response:', JSON.stringify(data).substr(0, 500));
+    // Recherche Amazon
+    const data = await paapi.SearchItems(commonParameters, requestParameters);
 
     // Vérifier si des produits ont été trouvés
     if (!data || !data.SearchResult || !data.SearchResult.Items) {
-      console.log('No products found in response');
       return res.status(200).json({ products: [] });
     }
 
@@ -199,14 +135,14 @@ export default async function handler(req, res) {
       };
     });
 
-    // Cache pour 1 heure
+    // Cache pour 1 heure (les produits ne changent pas souvent)
     res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=3600');
     res.status(200).json({ products });
 
   } catch (error) {
-    console.error('Amazon API Error:', error.message);
-    console.error('Error stack:', error.stack);
+    console.error('Amazon API Error:', error);
 
+    // Ne pas exposer les erreurs détaillées au client
     res.status(200).json({
       products: [],
       error: 'Unable to fetch products at this time'
