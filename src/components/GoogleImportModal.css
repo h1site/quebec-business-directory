@@ -288,6 +288,63 @@
   margin-bottom: 0.25rem;
 }
 
+/* Quota Display Styles */
+.quota-info {
+  margin: 1rem 0;
+  padding: 0.875rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.quota-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.quota-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* Quota types */
+.quota-info.quota-info {
+  background: #e6f3ff;
+  border: 1px solid #99ccff;
+  color: #004080;
+}
+
+.quota-info.quota-warning {
+  background: #fff8e6;
+  border: 1px solid #ffd966;
+  color: #8b6914;
+}
+
+.quota-info.quota-danger {
+  background: #ffe6e6;
+  border: 1px solid #ffb3b3;
+  color: #991f1f;
+}
+
+.quota-info.quota-success {
+  background: #e6f7ed;
+  border: 1px solid #7bc891;
+  color: #1f5c35;
+}
+
+/* Quota badge on button */
+.quota-badge {
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .modal-overlay {

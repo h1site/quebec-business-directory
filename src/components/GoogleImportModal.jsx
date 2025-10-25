@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { importFromGoogle } from '../services/googleBusinessService.js';
+import { getQuotaInfo, getQuotaStatusMessage, formatQuotaDisplay, isQuotaExceeded } from '../services/importQuotaService.js';
 import GoogleImportConfirmation from './GoogleImportConfirmation.jsx';
 import './GoogleImportModal.css';
 
@@ -11,12 +12,35 @@ const GoogleImportModal = ({ isOpen, onClose, onImport }) => {
   const [step, setStep] = useState('input'); // 'input' or 'confirm'
   const [foundBusinesses, setFoundBusinesses] = useState([]);
 
+  // Quota state
+  const [quotaInfo, setQuotaInfo] = useState(null);
+  const [quotaLoading, setQuotaLoading] = useState(true);
+
   // For URL/Place ID import
   const [googleUrl, setGoogleUrl] = useState('');
 
   // For search import
   const [businessName, setBusinessName] = useState('');
   const [businessAddress, setBusinessAddress] = useState('');
+
+  // Fetch quota info when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      fetchQuotaInfo();
+    }
+  }, [isOpen]);
+
+  const fetchQuotaInfo = async () => {
+    setQuotaLoading(true);
+    try {
+      const info = await getQuotaInfo(90);
+      setQuotaInfo(info);
+    } catch (error) {
+      console.error('Failed to fetch quota:', error);
+    } finally {
+      setQuotaLoading(false);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -71,6 +95,8 @@ const GoogleImportModal = ({ isOpen, onClose, onImport }) => {
     try {
       setLoading(true);
       await onImport(selectedBusiness);
+      // Refresh quota info after successful import
+      await fetchQuotaInfo();
       handleClose();
     } catch (err) {
       setError(err.message || 'Une erreur est survenue lors de l\'import');
@@ -197,18 +223,35 @@ const GoogleImportModal = ({ isOpen, onClose, onImport }) => {
               </div>
             )}
 
+            {/* Quota Display */}
+            {!quotaLoading && quotaInfo && (
+              <div className={`quota-info quota-${getQuotaStatusMessage(quotaInfo).type}`}>
+                <span className="quota-icon">{getQuotaStatusMessage(quotaInfo).icon}</span>
+                <span className="quota-text">{getQuotaStatusMessage(quotaInfo).message}</span>
+              </div>
+            )}
+
             <div className="modal-actions">
               <button type="button" className="btn btn-secondary" onClick={handleClose}>
                 Annuler
               </button>
-              <button type="submit" className="btn btn-primary" disabled={loading}>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={loading || quotaLoading || isQuotaExceeded(quotaInfo)}
+              >
                 {loading ? (
                   <>
                     <span className="spinner"></span>
                     Recherche en cours...
                   </>
                 ) : (
-                  'Rechercher'
+                  <>
+                    Rechercher
+                    {!quotaLoading && quotaInfo && (
+                      <span className="quota-badge">{formatQuotaDisplay(quotaInfo)}</span>
+                    )}
+                  </>
                 )}
               </button>
             </div>

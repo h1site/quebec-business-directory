@@ -1,6 +1,12 @@
 // Vercel serverless function for /api/google-places/import
+import { createClient } from '@supabase/supabase-js';
+
 const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const GOOGLE_PLACES_API_URL = 'https://maps.googleapis.com/maps/api/place';
+
+// Supabase client for quota tracking
+const supabaseUrl = process.env.VITE_SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 
 export default async function handler(req, res) {
   // CORS headers
@@ -35,6 +41,25 @@ export default async function handler(req, res) {
       return res.status(400).json({
         error: 'Input is required (URL, Place ID, or business name)'
       });
+    }
+
+    // CHECK QUOTA BEFORE CALLING GOOGLE API
+    if (supabaseUrl && supabaseServiceKey) {
+      const supabase = createClient(supabaseUrl, supabaseServiceKey);
+      const { data: quotaInfo, error: quotaError } = await supabase.rpc('get_import_quota_info', {
+        limit_count: 90
+      });
+
+      if (!quotaError && quotaInfo) {
+        // If quota exceeded, return 429 error
+        if (!quotaInfo.can_import) {
+          return res.status(429).json({
+            error: 'Import quota exceeded',
+            message: `Daily import limit reached (${quotaInfo.imports_today}/${quotaInfo.limit}). Please try again tomorrow.`,
+            quota: quotaInfo
+          });
+        }
+      }
     }
 
     let placeId = input;
@@ -96,6 +121,26 @@ export default async function handler(req, res) {
         message: `Google API error: ${detailsData.status}`,
         googleStatus: detailsData.status
       });
+    }
+
+    // INCREMENT QUOTA COUNTER AFTER SUCCESSFUL IMPORT
+    if (supabaseUrl && supabaseServiceKey) {
+      try {
+        const supabase = createClient(supabaseUrl, supabaseServiceKey);
+        const { data: newCount, error: incrementError } = await supabase.rpc('increment_import_count');
+
+        if (!incrementError && newCount) {
+          console.log(`✅ Import successful. Count: ${newCount}/90`);
+
+          // Log warning if approaching limit
+          if (newCount >= 80) {
+            console.warn(`⚠️  WARNING: Approaching daily limit (${newCount}/90)`);
+          }
+        }
+      } catch (incrementError) {
+        console.error('Failed to increment quota counter:', incrementError);
+        // Don't fail the import if counter increment fails
+      }
     }
 
     // Return the raw Google Place data

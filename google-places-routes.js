@@ -1,9 +1,20 @@
 import express from 'express';
 import fetch from 'node-fetch';
+import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const router = express.Router();
 const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const GOOGLE_PLACES_API_URL = 'https://maps.googleapis.com/maps/api/place';
+
+// Supabase client for quota tracking
+const supabaseUrl = process.env.VITE_SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+const supabase = supabaseUrl && supabaseServiceKey
+  ? createClient(supabaseUrl, supabaseServiceKey)
+  : null;
 
 // Middleware to check if API key is configured
 const checkApiKey = (req, res, next) => {
@@ -146,6 +157,46 @@ router.get('/photo/:photoReference', checkApiKey, (req, res) => {
 });
 
 /**
+ * @route   GET /api/google-places/quota
+ * @desc    Get current import quota information
+ * @access  Public
+ */
+router.get('/quota', async (req, res) => {
+  try {
+    if (!supabase) {
+      return res.status(500).json({
+        error: 'Supabase not configured',
+        message: 'Cannot check quota without Supabase connection'
+      });
+    }
+
+    // Get quota limit from query param (default 90)
+    const limit = parseInt(req.query.limit) || 90;
+
+    // Call Supabase function to get quota info
+    const { data, error } = await supabase.rpc('get_import_quota_info', {
+      limit_count: limit
+    });
+
+    if (error) {
+      console.error('Supabase RPC Error:', error);
+      return res.status(500).json({
+        error: 'Failed to get quota information',
+        message: error.message
+      });
+    }
+
+    res.json(data);
+  } catch (error) {
+    console.error('Quota Check Error:', error);
+    res.status(500).json({
+      error: 'Failed to check quota',
+      message: error.message
+    });
+  }
+});
+
+/**
  * @route   POST /api/google-places/import
  * @desc    Import business data from Google (combines search and details)
  * @access  Public (consider adding auth in production)
@@ -158,6 +209,24 @@ router.post('/import', checkApiKey, async (req, res) => {
       return res.status(400).json({
         error: 'Input is required (URL, Place ID, or business name)'
       });
+    }
+
+    // CHECK QUOTA BEFORE CALLING GOOGLE API
+    if (supabase) {
+      const { data: quotaInfo, error: quotaError } = await supabase.rpc('get_import_quota_info', {
+        limit_count: 90
+      });
+
+      if (!quotaError && quotaInfo) {
+        // If quota exceeded, return 429 error
+        if (!quotaInfo.can_import) {
+          return res.status(429).json({
+            error: 'Import quota exceeded',
+            message: `Daily import limit reached (${quotaInfo.imports_today}/${quotaInfo.limit}). Please try again tomorrow.`,
+            quota: quotaInfo
+          });
+        }
+      }
     }
 
     let placeId = input;
@@ -215,6 +284,25 @@ router.post('/import', checkApiKey, async (req, res) => {
         error: 'Failed to fetch place details',
         message: `Google API error: ${detailsData.status}`
       });
+    }
+
+    // INCREMENT QUOTA COUNTER AFTER SUCCESSFUL IMPORT
+    if (supabase) {
+      try {
+        const { data: newCount, error: incrementError } = await supabase.rpc('increment_import_count');
+
+        if (!incrementError && newCount) {
+          console.log(`✅ Import successful. Count: ${newCount}/90`);
+
+          // Log warning if approaching limit
+          if (newCount >= 80) {
+            console.warn(`⚠️  WARNING: Approaching daily limit (${newCount}/90)`);
+          }
+        }
+      } catch (incrementError) {
+        console.error('Failed to increment quota counter:', incrementError);
+        // Don't fail the import if counter increment fails
+      }
     }
 
     res.json(detailsData.result);

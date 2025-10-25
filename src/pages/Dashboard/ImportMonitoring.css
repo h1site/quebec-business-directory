@@ -1,0 +1,384 @@
+.import-monitoring {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.monitoring-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.monitoring-header h1 {
+  font-size: 2rem;
+  color: #1a202c;
+  margin: 0;
+}
+
+/* Status Alert */
+.status-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  border: 2px solid;
+}
+
+.status-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.status-content {
+  flex: 1;
+}
+
+.status-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.status-message {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.cost-warning {
+  margin: 0.75rem 0 0 0;
+  font-size: 0.95rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+}
+
+/* Status types */
+.status-alert.status-success {
+  background: #e6f7ed;
+  border-color: #7bc891;
+  color: #1f5c35;
+}
+
+.status-alert.status-info {
+  background: #e6f3ff;
+  border-color: #99ccff;
+  color: #004080;
+}
+
+.status-alert.status-warning {
+  background: #fff8e6;
+  border-color: #ffd966;
+  color: #8b6914;
+}
+
+.status-alert.status-danger {
+  background: #ffe6e6;
+  border-color: #ffb3b3;
+  color: #991f1f;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  line-height: 1;
+}
+
+/* Progress Section */
+.progress-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.progress-header h3 {
+  font-size: 1.125rem;
+  color: #1a202c;
+  margin: 0;
+}
+
+.progress-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.progress-bar-container {
+  height: 40px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.progress-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.5s ease;
+  position: relative;
+  font-weight: 600;
+  color: white;
+}
+
+.progress-bar-success {
+  background: linear-gradient(90deg, #48bb78, #38a169);
+}
+
+.progress-bar-info {
+  background: linear-gradient(90deg, #4299e1, #3182ce);
+}
+
+.progress-bar-warning {
+  background: linear-gradient(90deg, #f6ad55, #ed8936);
+}
+
+.progress-bar-danger {
+  background: linear-gradient(90deg, #fc8181, #f56565);
+}
+
+.progress-bar-text {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.progress-milestones {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.milestone-warning {
+  color: #ed8936;
+}
+
+.milestone-danger {
+  color: #f56565;
+}
+
+/* Info Cards */
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid;
+}
+
+.info-card h3 {
+  font-size: 1.125rem;
+  margin: 0 0 1rem 0;
+  color: #1a202c;
+}
+
+.info-card p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+.info-card-free {
+  border-left-color: #48bb78;
+}
+
+.info-card-cost {
+  border-left-color: #ed8936;
+}
+
+.info-card-reset {
+  border-left-color: #4299e1;
+}
+
+/* Recommendations */
+.recommendations-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.recommendations-section h3 {
+  font-size: 1.125rem;
+  margin: 0 0 1rem 0;
+  color: #1a202c;
+}
+
+.recommendations-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recommendations-list li {
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid #4299e1;
+  font-size: 0.95rem;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+.recommendations-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Footer */
+.monitoring-footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.last-updated {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0 0 0.5rem 0;
+}
+
+.auto-refresh {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Loading & Error States */
+.monitoring-loading,
+.monitoring-error {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.spinner-large {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e2e8f0;
+  border-radius: 50%;
+  border-top-color: #3182ce;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.monitoring-error p {
+  color: #f56565;
+  font-size: 1.125rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .import-monitoring {
+    padding: 1rem;
+  }
+
+  .monitoring-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .monitoring-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .progress-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .status-alert {
+    flex-direction: column;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+}
