@@ -11,6 +11,7 @@ import GoogleReviews from '../components/GoogleReviews.jsx';
 import ClaimBusinessModal from '../components/ClaimBusinessModal.jsx';
 import BusinessReviews from '../components/BusinessReviews.jsx';
 import WriteReviewModal from '../components/WriteReviewModal.jsx';
+import AmazonProducts from '../components/AmazonProducts.jsx';
 import { getBusinessUrl, isLegacyUrl } from '../utils/urlHelpers.js';
 import { generateBusinessSchema, generateBreadcrumbSchema } from '../utils/schemaMarkup.js';
 import './BusinessDetails.css';
@@ -421,6 +422,11 @@ const BusinessDetails = () => {
             )}
           </aside>
         </div>
+      </div>
+
+      {/* Amazon Products Section */}
+      <div className="container">
+        <AmazonProducts categorySlug={business.primary_sub_category_slug || business.primary_main_category_slug} />
       </div>
 
       {/* Reviews Section - Full Width */}

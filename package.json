@@ -14,6 +14,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.43.1",
     "@vis.gl/react-google-maps": "^1.5.5",
+    "amazon-paapi": "^1.0.7",
     "cors": "^2.8.5",
     "csv-parser": "^3.2.0",
     "dotenv": "^16.6.1",
