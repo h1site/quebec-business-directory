@@ -1,8 +1,7 @@
 /* Section Découvrez des entreprises - Desktop seulement */
 .featured-businesses {
-  padding: 50px 0 100px 0;
+  padding: 4rem 0 100px 0;
   background: #f8f9fa;
-  margin-top: 50px;
 }
 
 .featured-title {
