@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageToggle from './LanguageToggle.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
-import { supabase } from '../supabaseClient.js';
+import { supabase } from '../services/supabaseClient.js';
 
 const Header = () => {
   const { t } = useTranslation();
