@@ -507,7 +507,7 @@ const CreateBusiness = () => {
         await supabase
           .from('businesses')
           .update({
-            claimed_by: userId,
+            owner_id: userId,
             claimed_at: new Date().toISOString(),
             is_claimed: true
           })

@@ -73,7 +73,7 @@ const AdminClaims = () => {
       const { error: businessError } = await supabase
         .from('businesses')
         .update({
-          claimed_by: claim.user_id,
+          owner_id: claim.user_id,
           claimed_at: new Date().toISOString(),
           is_claimed: true
         })

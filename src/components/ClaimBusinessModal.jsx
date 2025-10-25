@@ -30,13 +30,13 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
       // SECURITY: Check if business is already claimed by someone else
       const { data: existingBusiness, error: checkError } = await supabase
         .from('businesses')
-        .select('is_claimed, claimed_by')
+        .select('is_claimed, owner_id')
         .eq('id', business.id)
         .single();
 
       if (checkError) throw checkError;
 
-      if (existingBusiness?.is_claimed && existingBusiness?.claimed_by !== user.id) {
+      if (existingBusiness?.is_claimed && existingBusiness?.owner_id !== user.id) {
         throw new Error('Cette entreprise a déjà été réclamée par un autre utilisateur.');
       }
 
@@ -155,13 +155,13 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
       // SECURITY: Check if business is already claimed by someone else
       const { data: existingBusiness, error: checkError } = await supabase
         .from('businesses')
-        .select('is_claimed, claimed_by')
+        .select('is_claimed, owner_id')
         .eq('id', business.id)
         .single();
 
       if (checkError) throw checkError;
 
-      if (existingBusiness?.is_claimed && existingBusiness?.claimed_by !== user.id) {
+      if (existingBusiness?.is_claimed && existingBusiness?.owner_id !== user.id) {
         throw new Error('Cette entreprise a déjà été réclamée par un autre utilisateur.');
       }
 
@@ -201,13 +201,13 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
 
       if (claimError) throw claimError;
 
-      // Update the business with is_claimed and claimed_by
+      // Update the business with is_claimed and owner_id
       const { error: updateError } = await supabase
         .from('businesses')
         .update({
           is_claimed: true,
-          claimed_by: user.id,
-          owner_id: user.id
+          owner_id: user.id,
+          claimed_at: new Date().toISOString()
         })
         .eq('id', business.id);
 
