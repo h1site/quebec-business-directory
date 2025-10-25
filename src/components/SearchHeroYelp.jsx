@@ -6,6 +6,29 @@ import { getMainCategories } from '../services/lookupService.js';
 import { supabase } from '../services/supabaseClient.js';
 import './SearchHeroYelp.css';
 
+// Mapping des icônes par slug de catégorie
+const categoryIcons = {
+  'agriculture-et-environnement': 'agriculture.svg',
+  'arts-medias-et-divertissement': 'art.svg',
+  'automobile-et-transport': 'automobile.svg',
+  'commerce-de-detail': 'commerce.svg',
+  'construction-et-renovation': 'construction.svg',
+  'education-et-formation': 'education.svg',
+  'finance-assurance-et-juridique': 'finance.svg',
+  'immobilier': 'immobilier.svg',
+  'industrie-fabrication-et-logistique': 'industrie.svg',
+  'maison-et-services-domestiques': 'maison.svg',
+  'organismes-publics-et-communautaires': 'organismes.svg',
+  'restauration-et-alimentation': 'restauration.svg',
+  'sante-et-bien-etre': 'sante.svg',
+  'services-funeraires': 'funeraire.svg',
+  'services-professionnels': 'services.svg',
+  'soins-a-domicile': 'soins.svg',
+  'sports-et-loisirs': 'sports.svg',
+  'technologie-et-informatique': 'technologie.svg',
+  'tourisme-et-hebergement': 'tourisme.svg'
+};
+
 const SearchHeroYelp = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -148,6 +171,13 @@ const SearchHeroYelp = () => {
                 to={`/recherche?category=${category.slug}`}
                 className="hero-yelp-category-card"
               >
+                {categoryIcons[category.slug] && (
+                  <img
+                    src={`/images/icons/${categoryIcons[category.slug]}`}
+                    alt={getLabel(category)}
+                    className="hero-yelp-category-icon"
+                  />
+                )}
                 <div className="hero-yelp-category-name">{getLabel(category)}</div>
               </Link>
             ))}

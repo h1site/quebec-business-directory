@@ -179,12 +179,23 @@
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
 }
 
 .hero-yelp-category-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   border-color: #0f4c81;
+}
+
+.hero-yelp-category-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
 }
 
 .hero-yelp-category-name {
