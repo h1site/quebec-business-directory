@@ -305,18 +305,6 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
               </div>
 
               <div className="method-card">
-                <div className="method-icon">🔗</div>
-                <h3>Vérification Google My Business</h3>
-                <p>Prouvez que vous gérez la fiche Google de cette entreprise</p>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => setStep('google')}
-                >
-                  Continuer avec Google
-                </button>
-              </div>
-
-              <div className="method-card">
                 <div className="method-icon">📝</div>
                 <h3>Demande manuelle</h3>
                 <p>Un administrateur vérifiera votre demande manuellement</p>

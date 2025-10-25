@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { getBusinessBySlug } from '../services/businessService.js';
 import { getBusinessHours } from '../services/businessHoursService.js';
 import { useAuth } from '../context/AuthContext.jsx';
-import GoogleMap from '../components/GoogleMap.jsx';
+import OpenStreetMap from '../components/OpenStreetMap.jsx';
 import BusinessHours from '../components/BusinessHours.jsx';
 import GoogleReviews from '../components/GoogleReviews.jsx';
 import ClaimBusinessModal from '../components/ClaimBusinessModal.jsx';
@@ -431,11 +431,9 @@ const BusinessDetails = () => {
       <div className="full-width-map-section">
         <div className="map-container">
           <h2 className="map-title">Localisation</h2>
-          <GoogleMap
+          <OpenStreetMap
             address={business.address}
             city={business.city}
-            province={business.province || 'QC'}
-            postalCode={business.postal_code}
             businessName={business.name}
             latitude={business.latitude}
             longitude={business.longitude}
