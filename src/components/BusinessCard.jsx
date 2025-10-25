@@ -18,15 +18,6 @@ const BusinessCard = ({ business }) => (
         </span>
       )}
     </div>
-    {business.categories?.length > 0 && (
-      <div className="badge-list">
-        {business.categories.map((category) => (
-          <span key={category} className="badge">
-            {category}
-          </span>
-        ))}
-      </div>
-    )}
     </article>
   </Link>
 );
