@@ -109,17 +109,7 @@ const BusinessReviews = ({ businessId, onWriteReviewClick }) => {
 
   return (
     <div className="business-reviews">
-      <div className="reviews-header-with-button">
-        <h2>Critiques et évaluations</h2>
-        {onWriteReviewClick && (
-          <button
-            className="btn btn-primary btn-write-review-inline"
-            onClick={onWriteReviewClick}
-          >
-            ✍️ Écrire une critique
-          </button>
-        )}
-      </div>
+      <h2>Critiques et évaluations</h2>
 
       {reviews.length === 0 ? (
         <div className="no-reviews">
@@ -186,6 +176,18 @@ const BusinessReviews = ({ businessId, onWriteReviewClick }) => {
             ))}
           </div>
         </>
+      )}
+
+      {/* Bouton Écrire une critique - après la boîte des critiques */}
+      {onWriteReviewClick && (
+        <div className="write-review-section">
+          <button
+            className="btn btn-primary btn-write-review-bottom"
+            onClick={onWriteReviewClick}
+          >
+            ✍️ Écrire une critique
+          </button>
+        </div>
       )}
     </div>
   );
