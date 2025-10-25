@@ -1,0 +1,99 @@
+/* Section Découvrez des entreprises - Desktop seulement */
+.featured-businesses {
+  padding: 4rem 0;
+  background: #f8f9fa;
+}
+
+.featured-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 3rem;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.featured-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 2px solid transparent;
+}
+
+.featured-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-color: #3b82f6;
+}
+
+.featured-logo {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.featured-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.featured-content {
+  flex: 1;
+}
+
+.featured-business-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.featured-city {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.featured-description {
+  color: #4b5563;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.featured-cta {
+  display: inline-flex;
+  align-items: center;
+  color: #3b82f6;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.featured-card:hover .featured-cta {
+  color: #1e3a8a;
+}
+
+/* Cache sur mobile */
+@media (max-width: 1024px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
