@@ -27,7 +27,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const baseUrl = 'https://registreduquebec.com';
 const currentDate = new Date().toISOString().split('T')[0];
 const MAX_URLS_PER_SITEMAP = 45000; // Sous la limite de 50K
-const BATCH_SIZE = 5000; // Charger par lots de 5000 pour éviter les timeouts
+const BATCH_SIZE = 1000; // Supabase limite à 1000 résultats par requête
 
 console.log('🗺️  GÉNÉRATION DU SITEMAP INDEX COMPLET');
 console.log('═'.repeat(60));
@@ -170,25 +170,28 @@ for (let fileIndex = 0; fileIndex < numBusinessSitemaps; fileIndex++) {
   const fileOffset = fileIndex * MAX_URLS_PER_SITEMAP;
   const numBatches = Math.ceil(MAX_URLS_PER_SITEMAP / BATCH_SIZE);
 
-  // Charger par lots
-  for (let batchIndex = 0; batchIndex < numBatches; batchIndex++) {
+  // Charger par lots jusqu'à avoir MAX_URLS_PER_SITEMAP
+  for (let batchIndex = 0; batchIndex < numBatches && businessUrls.length < MAX_URLS_PER_SITEMAP; batchIndex++) {
     const batchOffset = fileOffset + (batchIndex * BATCH_SIZE);
     const businesses = await loadBusinessesBatch(batchOffset, BATCH_SIZE);
 
     if (businesses.length === 0) break;
 
     businesses.forEach(biz => {
-      businessUrls.push({
-        loc: `${baseUrl}/entreprise/${biz.slug}`,
-        lastmod: biz.updated_at ? new Date(biz.updated_at).toISOString().split('T')[0] : currentDate,
-        changefreq: 'monthly',
-        priority: '0.6'
-      });
+      if (businessUrls.length < MAX_URLS_PER_SITEMAP) {
+        businessUrls.push({
+          loc: `${baseUrl}/entreprise/${biz.slug}`,
+          lastmod: biz.updated_at ? new Date(biz.updated_at).toISOString().split('T')[0] : currentDate,
+          changefreq: 'monthly',
+          priority: '0.6'
+        });
+      }
     });
 
     process.stdout.write(`\r      Chargement: ${businessUrls.length.toLocaleString()}/${MAX_URLS_PER_SITEMAP.toLocaleString()}`);
 
-    if (businesses.length < BATCH_SIZE) break; // Derniers résultats
+    // Arrêter seulement si on a moins de résultats que demandé ET qu'on a atteint la fin
+    if (businesses.length < 1000) break; // Supabase retourne max 1000 par défaut
   }
 
   console.log(''); // Nouvelle ligne après le progress
