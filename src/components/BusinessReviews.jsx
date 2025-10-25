@@ -17,25 +17,35 @@ const BusinessReviews = ({ businessId }) => {
 
   const loadReviews = async () => {
     try {
-      // Charger les critiques avec les infos du profil
+      // Charger les critiques
       const { data: reviewsData, error } = await supabase
         .from('business_reviews')
-        .select(`
-          *,
-          user_profiles:user_id (
-            full_name,
-            avatar_url
-          )
-        `)
+        .select('*')
         .eq('business_id', businessId)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
 
-      setReviews(reviewsData || []);
-
-      // Calculer les statistiques
       if (reviewsData && reviewsData.length > 0) {
+        // Charger les profils utilisateurs pour chaque critique
+        const enrichedReviews = await Promise.all(
+          reviewsData.map(async (review) => {
+            const { data: profile } = await supabase
+              .from('user_profiles')
+              .select('full_name, avatar_url')
+              .eq('user_id', review.user_id)
+              .single();
+
+            return {
+              ...review,
+              user_profiles: profile
+            };
+          })
+        );
+
+        setReviews(enrichedReviews);
+
+        // Calculer les statistiques
         const sum = reviewsData.reduce((acc, r) => acc + r.rating, 0);
         const average = sum / reviewsData.length;
 
@@ -49,6 +59,8 @@ const BusinessReviews = ({ businessId }) => {
           count: reviewsData.length,
           distribution
         });
+      } else {
+        setReviews([]);
       }
 
       setLoading(false);
