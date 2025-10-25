@@ -194,10 +194,9 @@ SELECT
   br.updated_at,
   up.full_name,
   up.avatar_url,
-  COALESCE(up.full_name, u.email) as display_name
+  COALESCE(up.full_name, (SELECT email FROM auth.users WHERE id = br.user_id)) as display_name
 FROM business_reviews br
-LEFT JOIN user_profiles up ON br.user_id = up.user_id
-LEFT JOIN auth.users u ON br.user_id = u.id;
+LEFT JOIN user_profiles up ON br.user_id = up.user_id;
 
 -- ============================================================================
 -- FIN DE LA MIGRATION
