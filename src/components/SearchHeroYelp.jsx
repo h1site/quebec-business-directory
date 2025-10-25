@@ -62,7 +62,7 @@ const SearchHeroYelp = () => {
 
         // Get categories
         const { data } = await getMainCategories();
-        setMainCategories((data || []).slice(0, 12)); // Top 12 categories
+        setMainCategories(data || []); // Toutes les catégories
       } catch (error) {
         console.error('Error loading data:', error);
       }
