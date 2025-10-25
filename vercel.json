@@ -45,11 +45,7 @@
   ],
   "rewrites": [
     {
-      "source": "/sitemap.xml",
-      "destination": "/api/sitemap-index"
-    },
-    {
-      "source": "/((?!api/).*)",
+      "source": "/((?!api/|sitemaps/).*)",
       "destination": "/index.html"
     }
   ]

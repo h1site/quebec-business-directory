@@ -26,7 +26,7 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = createClient(supabaseUrl, supabaseKey);
 const baseUrl = 'https://registreduquebec.com';
 const currentDate = new Date().toISOString().split('T')[0];
-const MAX_URLS_PER_SITEMAP = 45000; // Sous la limite de 50K
+const MAX_URLS_PER_SITEMAP = 5000; // Optimal pour déploiement Vercel (fichiers ~1MB)
 const BATCH_SIZE = 1000; // Supabase limite à 1000 résultats par requête
 
 console.log('🗺️  GÉNÉRATION DU SITEMAP INDEX COMPLET');
