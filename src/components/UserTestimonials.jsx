@@ -12,15 +12,19 @@ const UserTestimonials = () => {
 
   const loadTestimonials = async () => {
     try {
-      // Récupérer quelques critiques récentes avec bonnes notes
+      // Récupérer quelques critiques récentes
       const { data, error } = await supabase
         .from('business_reviews_with_profiles')
         .select('*')
-        .gte('rating', 4) // Seulement les 4 et 5 étoiles
         .order('created_at', { ascending: false })
         .limit(6);
 
-      if (!error && data) {
+      if (error) {
+        console.error('Erreur lors du chargement:', error);
+      }
+
+      if (data) {
+        console.log('Témoignages chargés:', data);
         setTestimonials(data);
       }
     } catch (error) {
@@ -75,9 +79,9 @@ const UserTestimonials = () => {
               </div>
 
               <p className="testimonial-comment">
-                {testimonial.comment.length > 150
+                "{testimonial.comment.length > 150
                   ? testimonial.comment.substring(0, 150) + '...'
-                  : testimonial.comment}
+                  : testimonial.comment}"
               </p>
 
               <div className="testimonial-footer">
