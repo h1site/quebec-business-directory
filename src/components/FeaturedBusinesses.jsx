@@ -14,12 +14,10 @@ function FeaturedBusinesses() {
 
   const loadFeaturedBusinesses = async () => {
     try {
-      // Charger 3 entreprises aléatoires avec informations complètes
+      // Charger 3 entreprises aléatoires (ville et description optionnelles)
       const { data, error } = await supabase
         .from('businesses')
         .select('id, name, slug, city, description, logo_url, primary_main_category_slug, primary_sub_category_slug')
-        .not('description', 'is', null)
-        .not('city', 'is', null)
         .limit(100); // Charger 100 pour sélectionner 3 au hasard
 
       if (error) throw error;
