@@ -23,6 +23,11 @@ CREATE INDEX IF NOT EXISTS idx_user_profiles_user_id ON user_profiles(user_id);
 -- RLS Policies pour user_profiles
 ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
 
+-- Supprimer les policies existantes si elles existent
+DROP POLICY IF EXISTS "Public profiles are viewable by everyone" ON user_profiles;
+DROP POLICY IF EXISTS "Users can create their own profile" ON user_profiles;
+DROP POLICY IF EXISTS "Users can update their own profile" ON user_profiles;
+
 -- Tout le monde peut voir les profils
 CREATE POLICY "Public profiles are viewable by everyone"
   ON user_profiles FOR SELECT
@@ -31,12 +36,12 @@ CREATE POLICY "Public profiles are viewable by everyone"
 -- Les utilisateurs peuvent créer leur propre profil
 CREATE POLICY "Users can create their own profile"
   ON user_profiles FOR INSERT
-  WITH CHECK (auth.uid() = user_profiles.user_id);
+  WITH CHECK (auth.uid() = user_id);
 
 -- Les utilisateurs peuvent modifier leur propre profil
 CREATE POLICY "Users can update their own profile"
   ON user_profiles FOR UPDATE
-  USING (auth.uid() = user_profiles.user_id);
+  USING (auth.uid() = user_id);
 
 -- ============================================================================
 -- 2. BUSINESS REVIEWS TABLE
@@ -63,6 +68,12 @@ CREATE INDEX IF NOT EXISTS idx_business_reviews_created_at ON business_reviews(c
 -- RLS Policies pour business_reviews
 ALTER TABLE business_reviews ENABLE ROW LEVEL SECURITY;
 
+-- Supprimer les policies existantes si elles existent
+DROP POLICY IF EXISTS "Reviews are viewable by everyone" ON business_reviews;
+DROP POLICY IF EXISTS "Authenticated users can create reviews" ON business_reviews;
+DROP POLICY IF EXISTS "Users can update their own reviews" ON business_reviews;
+DROP POLICY IF EXISTS "Users can delete their own reviews" ON business_reviews;
+
 -- Tout le monde peut voir les critiques
 CREATE POLICY "Reviews are viewable by everyone"
   ON business_reviews FOR SELECT
@@ -71,17 +82,17 @@ CREATE POLICY "Reviews are viewable by everyone"
 -- Les utilisateurs authentifiés peuvent créer des critiques
 CREATE POLICY "Authenticated users can create reviews"
   ON business_reviews FOR INSERT
-  WITH CHECK (auth.uid() = business_reviews.user_id);
+  WITH CHECK (auth.uid() = user_id);
 
 -- Les utilisateurs peuvent modifier leurs propres critiques
 CREATE POLICY "Users can update their own reviews"
   ON business_reviews FOR UPDATE
-  USING (auth.uid() = business_reviews.user_id);
+  USING (auth.uid() = user_id);
 
 -- Les utilisateurs peuvent supprimer leurs propres critiques
 CREATE POLICY "Users can delete their own reviews"
   ON business_reviews FOR DELETE
-  USING (auth.uid() = business_reviews.user_id);
+  USING (auth.uid() = user_id);
 
 -- ============================================================================
 -- 3. FONCTION POUR CALCULER LA NOTE MOYENNE D'UNE ENTREPRISE
