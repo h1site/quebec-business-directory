@@ -36,12 +36,12 @@ CREATE POLICY "Public profiles are viewable by everyone"
 -- Les utilisateurs peuvent créer leur propre profil
 CREATE POLICY "Users can create their own profile"
   ON user_profiles FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
+  WITH CHECK ((SELECT auth.uid()) = user_id);
 
 -- Les utilisateurs peuvent modifier leur propre profil
 CREATE POLICY "Users can update their own profile"
   ON user_profiles FOR UPDATE
-  USING (auth.uid() = user_id);
+  USING ((SELECT auth.uid()) = user_id);
 
 -- ============================================================================
 -- 2. BUSINESS REVIEWS TABLE
@@ -82,17 +82,17 @@ CREATE POLICY "Reviews are viewable by everyone"
 -- Les utilisateurs authentifiés peuvent créer des critiques
 CREATE POLICY "Authenticated users can create reviews"
   ON business_reviews FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
+  WITH CHECK ((SELECT auth.uid()) = user_id);
 
 -- Les utilisateurs peuvent modifier leurs propres critiques
 CREATE POLICY "Users can update their own reviews"
   ON business_reviews FOR UPDATE
-  USING (auth.uid() = user_id);
+  USING ((SELECT auth.uid()) = user_id);
 
 -- Les utilisateurs peuvent supprimer leurs propres critiques
 CREATE POLICY "Users can delete their own reviews"
   ON business_reviews FOR DELETE
-  USING (auth.uid() = user_id);
+  USING ((SELECT auth.uid()) = user_id);
 
 -- ============================================================================
 -- 3. FONCTION POUR CALCULER LA NOTE MOYENNE D'UNE ENTREPRISE
