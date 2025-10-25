@@ -104,12 +104,30 @@
   align-items: center;
   padding-top: 1rem;
   border-top: 1px solid #e5e7eb;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.testimonial-business-link {
+  font-size: 0.9375rem;
+  color: #3b82f6;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+  flex: 1;
+  min-width: 0;
+}
+
+.testimonial-business-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
 }
 
 .testimonial-date {
   font-size: 0.875rem;
   color: #9ca3af;
   font-style: italic;
+  white-space: nowrap;
 }
 
 /* Responsive */

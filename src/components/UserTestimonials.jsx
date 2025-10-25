@@ -12,10 +12,22 @@ const UserTestimonials = () => {
 
   const loadTestimonials = async () => {
     try {
-      // Récupérer quelques critiques récentes
+      // Récupérer quelques critiques récentes avec les infos des entreprises
       const { data, error } = await supabase
-        .from('business_reviews_with_profiles')
-        .select('*')
+        .from('business_reviews')
+        .select(`
+          *,
+          user_profiles:user_id (
+            full_name,
+            avatar_url
+          ),
+          businesses:business_id (
+            id,
+            name,
+            slug,
+            city
+          )
+        `)
         .order('created_at', { ascending: false })
         .limit(6);
 
@@ -53,9 +65,9 @@ const UserTestimonials = () => {
     <section className="user-testimonials-section">
       <div className="container">
         <div className="testimonials-header">
-          <h2>Nos Avis</h2>
+          <h2>Avis des Utilisateurs sur les Entreprises</h2>
           <p className="testimonials-subtitle">
-            Découvrez ce que nos utilisateurs disent de leur expérience
+            Découvrez ce que nos utilisateurs disent des entreprises québécoises
           </p>
         </div>
 
@@ -65,12 +77,12 @@ const UserTestimonials = () => {
               <div className="testimonial-header">
                 <div className="testimonial-avatar">
                   <img
-                    src={testimonial.avatar_url || '/default-avatar.svg'}
-                    alt={testimonial.full_name || 'Utilisateur'}
+                    src={testimonial.user_profiles?.avatar_url || '/default-avatar.svg'}
+                    alt={testimonial.user_profiles?.full_name || 'Utilisateur'}
                   />
                 </div>
                 <div className="testimonial-author">
-                  <h4>{testimonial.full_name || 'Utilisateur anonyme'}</h4>
+                  <h4>{testimonial.user_profiles?.full_name || 'Utilisateur anonyme'}</h4>
                   <div className="testimonial-rating">
                     {'★'.repeat(testimonial.rating)}
                     {'☆'.repeat(5 - testimonial.rating)}
@@ -85,6 +97,13 @@ const UserTestimonials = () => {
               </p>
 
               <div className="testimonial-footer">
+                <a
+                  href={`/entreprise/${testimonial.businesses?.slug}`}
+                  className="testimonial-business-link"
+                >
+                  {testimonial.businesses?.name}
+                  {testimonial.businesses?.city && ` - ${testimonial.businesses.city}`}
+                </a>
                 <span className="testimonial-date">
                   {formatDate(testimonial.created_at)}
                 </span>
