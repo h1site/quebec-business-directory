@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../services/supabaseClient';
 import './BusinessReviews.css';
 
-const BusinessReviews = ({ businessId }) => {
+const BusinessReviews = ({ businessId, onWriteReviewClick }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -109,7 +109,17 @@ const BusinessReviews = ({ businessId }) => {
 
   return (
     <div className="business-reviews">
-      <h2>Critiques et évaluations</h2>
+      <div className="reviews-header-with-button">
+        <h2>Critiques et évaluations</h2>
+        {onWriteReviewClick && (
+          <button
+            className="btn btn-primary btn-write-review-inline"
+            onClick={onWriteReviewClick}
+          >
+            ✍️ Écrire une critique
+          </button>
+        )}
+      </div>
 
       {reviews.length === 0 ? (
         <div className="no-reviews">

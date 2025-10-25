@@ -1,81 +1,151 @@
-// Amazon Associates - Version simple avec liens directs (sans PA-API)
-// Cette version génère des liens de recherche Amazon avec votre tag d'affiliation
+import paapi from 'amazon-paapi';
 
-const ASSOCIATE_TAG = 'h1site0d-20';
-
-// Mapping catégories → produits recommandés manuellement
-const categoryProducts = {
-  'agences-de-marketing': [
-    { asin: 'B08R6Q6QJC', title: 'Marketing 5.0: Technology for Humanity', keywords: 'marketing digital' },
-    { asin: 'B00DMCV88K', title: 'The Lean Startup', keywords: 'startup entrepreneurship' },
-    { asin: 'B07FK1MPKZ', title: 'Building a StoryBrand', keywords: 'brand marketing' },
-    { asin: 'B08Z788MYZ', title: 'Digital Marketing Strategy', keywords: 'digital strategy' }
-  ],
-  'restaurants': [
-    { asin: 'B07WMLQ26P', title: 'Professional Chef Knife Set', keywords: 'kitchen knives' },
-    { asin: 'B01K0W8LTE', title: 'Restaurant Recipe Notebook', keywords: 'recipe book' },
-    { asin: 'B08L7TQYNC', title: 'Commercial Food Processor', keywords: 'food processor' },
-    { asin: 'B07Y3GSDV1', title: 'Professional Cooking', keywords: 'cooking books' }
-  ],
-  'plomberie': [
-    { asin: 'B07VPBKLRG', title: 'Plumbing Tool Kit', keywords: 'plumbing tools' },
-    { asin: 'B08F56GZNH', title: 'Pipe Wrench Set', keywords: 'pipe wrench' },
-    { asin: 'B089Y7TD7M', title: 'Plumbers Handbook', keywords: 'plumbing guide' },
-    { asin: 'B07K214WCL', title: 'Leak Detection Tools', keywords: 'leak detector' }
-  ],
-  'salons-de-coiffure': [
-    { asin: 'B08RNJX5V7', title: 'Professional Hair Cutting Scissors', keywords: 'hair scissors' },
-    { asin: 'B08PP8Y3R8', title: 'Salon Hair Dryer', keywords: 'professional hair dryer' },
-    { asin: 'B07YQWGVTM', title: 'Hair Styling Products Set', keywords: 'hair styling' },
-    { asin: 'B08C7G9KYN', title: 'Hairdressing Techniques Book', keywords: 'hairstyling book' }
-  ],
-  'default': [
-    { asin: 'B08R6Q6QJC', title: 'Good to Great', keywords: 'business books' },
-    { asin: 'B00DMCV88K', title: 'The Lean Startup', keywords: 'entrepreneurship' },
-    { asin: 'B07FK1MPKZ', title: 'Start with Why', keywords: 'leadership books' },
-    { asin: 'B08Z788MYZ', title: 'The E-Myth Revisited', keywords: 'small business' }
-  ]
+// Configuration Amazon Product Advertising API
+const commonParameters = {
+  AccessKey: process.env.AMAZON_ACCESS_KEY,
+  SecretKey: process.env.AMAZON_SECRET_KEY,
+  PartnerTag: process.env.AMAZON_ASSOCIATE_TAG || 'h1site0d-20',
+  PartnerType: 'Associates',
+  Marketplace: 'www.amazon.ca'
 };
 
-// Générer une URL de recherche Amazon avec tag d'affiliation
-function generateAmazonSearchUrl(keywords) {
-  const baseUrl = 'https://www.amazon.ca/s';
-  const params = new URLSearchParams({
-    k: keywords,
-    tag: ASSOCIATE_TAG
-  });
-  return `${baseUrl}?${params.toString()}`;
-}
+// Mapping catégories → mots-clés Amazon
+const categoryKeywords = {
+  // Alimentation & Restauration
+  'restaurants': 'cookbooks kitchen tools',
+  'cafes-et-salons-de-the': 'coffee makers espresso',
+  'boulangeries-et-patisseries': 'baking supplies cookbooks',
+  'bars-et-pubs': 'bar tools cocktail books',
+  'traiteurs': 'catering supplies cookbooks',
 
-// Générer une URL de produit Amazon avec tag d'affiliation
-function generateAmazonProductUrl(asin) {
-  return `https://www.amazon.ca/dp/${asin}?tag=${ASSOCIATE_TAG}`;
-}
+  // Commerce de détail
+  'alimentation': 'kitchen storage food containers',
+  'vetements-et-accessoires': 'fashion accessories',
+  'electromenagers-et-electronique': 'electronics gadgets',
+  'librairies-et-papeteries': 'books stationery office supplies',
+  'pharmacies': 'health wellness',
+  'meubles-et-decoration': 'home decor furniture',
+
+  // Services professionnels
+  'comptabilite-et-finance': 'accounting books business finance',
+  'services-juridiques': 'legal books business law',
+  'agences-immobilieres': 'real estate books investing',
+  'architectes': 'architecture books design tools',
+  'ingenieurs': 'engineering books technical tools',
+
+  // Construction & Rénovation
+  'entrepreneurs-generaux': 'power tools construction equipment',
+  'plomberie': 'plumbing tools repair guides',
+  'electricite': 'electrical tools safety equipment',
+  'chauffage-et-climatisation': 'hvac tools thermostats',
+  'peinture-et-decoration': 'painting supplies color guides',
+  'menuiserie-et-ebenisterie': 'woodworking tools carpentry books',
+
+  // Santé & Bien-être
+  'cliniques-medicales': 'medical supplies health books',
+  'dentistes': 'dental care oral hygiene',
+  'optometristes': 'eye care vision health',
+  'chiropraticiens': 'chiropractic books wellness',
+  'massotherapie': 'massage tools wellness books',
+  'psychologues': 'psychology books mental health',
+
+  // Beauté & Soins personnels
+  'salons-de-coiffure': 'hair styling tools professional products',
+  'spas-et-esthetique': 'spa products beauty tools',
+  'barbiers': 'barber tools grooming',
+
+  // Automobile
+  'garages-et-reparation-automobile': 'automotive tools car repair guides',
+  'concessionnaires-automobiles': 'car accessories maintenance',
+  'lave-autos': 'car cleaning products detailing',
+
+  // Services aux entreprises
+  'agences-de-marketing': 'marketing books business growth',
+  'agences-de-publicite': 'advertising books creative tools',
+  'consultants-en-gestion': 'business management books',
+  'services-informatiques': 'technology books it tools',
+  'developpement-web': 'web development books programming',
+
+  // Éducation
+  'ecoles-primaires-et-secondaires': 'educational books learning tools',
+  'garderies-et-services-de-garde': 'childcare books educational toys',
+  'formation-professionnelle': 'professional development books',
+
+  // Divertissement
+  'salles-de-spectacle': 'entertainment books event planning',
+  'cinemas': 'movies blu-ray entertainment',
+  'centres-sportifs': 'fitness equipment sports gear',
+
+  // Défaut
+  'default': 'business books entrepreneurship'
+};
 
 export default async function handler(req, res) {
   try {
-    const { category } = req.query;
+    const { category, keywords } = req.query;
 
-    // Sélectionner les produits pour cette catégorie
-    const products = categoryProducts[category] || categoryProducts['default'];
+    // Validation
+    if (!process.env.AMAZON_ACCESS_KEY || !process.env.AMAZON_SECRET_KEY) {
+      return res.status(500).json({
+        error: 'Amazon API credentials not configured',
+        products: []
+      });
+    }
+
+    // Déterminer les mots-clés de recherche
+    let searchKeywords = keywords || categoryKeywords[category] || categoryKeywords['default'];
+
+    // Paramètres de recherche
+    const requestParameters = {
+      Keywords: searchKeywords,
+      SearchIndex: 'All',
+      ItemCount: 4,
+      Resources: [
+        'Images.Primary.Medium',
+        'ItemInfo.Title',
+        'ItemInfo.ByLineInfo',
+        'ItemInfo.ContentInfo',
+        'Offers.Listings.Price',
+        'Offers.Listings.SavingBasis',
+        'CustomerReviews.StarRating'
+      ]
+    };
+
+    // Recherche Amazon
+    const data = await paapi.SearchItems(commonParameters, requestParameters);
+
+    // Vérifier si des produits ont été trouvés
+    if (!data || !data.SearchResult || !data.SearchResult.Items) {
+      return res.status(200).json({ products: [] });
+    }
 
     // Formatter les produits pour le frontend
-    const formattedProducts = products.map(product => ({
-      asin: product.asin,
-      title: product.title,
-      image: null, // Pas d'image sans API
-      price: null,  // Pas de prix sans API
-      rating: null, // Pas de note sans API
-      url: generateAmazonProductUrl(product.asin),
-      brand: null
-    }));
+    const products = data.SearchResult.Items.map(item => {
+      const price = item.Offers?.Listings?.[0]?.Price;
+      const image = item.Images?.Primary?.Medium;
 
-    // Cache pour 24 heures (contenu statique)
-    res.setHeader('Cache-Control', 'public, max-age=86400, s-maxage=86400');
-    res.status(200).json({ products: formattedProducts });
+      return {
+        asin: item.ASIN,
+        title: item.ItemInfo?.Title?.DisplayValue || 'Produit',
+        image: image?.URL || null,
+        price: price?.DisplayAmount || null,
+        rating: item.CustomerReviews?.StarRating?.Value || null,
+        url: item.DetailPageURL,
+        brand: item.ItemInfo?.ByLineInfo?.Brand?.DisplayValue || null
+      };
+    });
+
+    // Cache pour 1 heure (les produits ne changent pas souvent)
+    res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=3600');
+    res.status(200).json({ products });
 
   } catch (error) {
-    console.error('Amazon Simple Links Error:', error);
-    res.status(200).json({ products: [] });
+    console.error('Amazon API Error:', error);
+
+    // Ne pas exposer les erreurs détaillées au client
+    res.status(200).json({
+      products: [],
+      error: 'Unable to fetch products at this time'
+    });
   }
 }

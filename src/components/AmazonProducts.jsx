@@ -53,11 +53,39 @@ function AmazonProducts({ categorySlug }) {
             rel="nofollow noopener noreferrer sponsored"
             className="amazon-product-card"
           >
-            <div className="amazon-product-info-simple">
+            {product.image && (
+              <div className="amazon-product-image">
+                <img src={product.image} alt={product.title} loading="lazy" />
+              </div>
+            )}
+
+            <div className="amazon-product-info">
               <h4 className="amazon-product-title">{product.title}</h4>
 
+              {product.brand && (
+                <p className="amazon-product-brand">{product.brand}</p>
+              )}
+
+              <div className="amazon-product-footer">
+                {product.rating && (
+                  <div className="amazon-product-rating">
+                    <span className="amazon-stars">
+                      {'★'.repeat(Math.floor(product.rating))}
+                      {product.rating % 1 >= 0.5 && '½'}
+                    </span>
+                    <span className="amazon-rating-value">
+                      {product.rating.toFixed(1)}
+                    </span>
+                  </div>
+                )}
+
+                {product.price && (
+                  <div className="amazon-product-price">{product.price}</div>
+                )}
+              </div>
+
               <div className="amazon-cta">
-                Voir sur Amazon.ca
+                Voir sur Amazon
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                   <path
                     d="M1 11L11 1M11 1H1M11 1V11"

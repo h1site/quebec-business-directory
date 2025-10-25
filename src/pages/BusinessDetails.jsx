@@ -393,23 +393,6 @@ const BusinessDetails = () => {
               </div>
             )}
 
-            {/* Write Review Button */}
-            <div className="sidebar-card">
-              <button
-                className="btn btn-primary btn-write-review"
-                onClick={() => {
-                  if (!user) {
-                    navigate('/connexion', { state: { from: location.pathname } });
-                  } else {
-                    setShowReviewModal(true);
-                  }
-                }}
-                style={{ width: '100%', padding: '1rem', fontSize: '1rem', fontWeight: '600' }}
-              >
-                ✍️ Écrire une critique
-              </button>
-            </div>
-
             {/* Service Area */}
             {business.service_area && (
               <div className="sidebar-card">
@@ -431,7 +414,17 @@ const BusinessDetails = () => {
 
       {/* Reviews Section - Full Width */}
       <div className="container">
-        <BusinessReviews key={reviewsKey} businessId={business.id} />
+        <BusinessReviews
+          key={reviewsKey}
+          businessId={business.id}
+          onWriteReviewClick={() => {
+            if (!user) {
+              navigate('/connexion', { state: { from: location.pathname } });
+            } else {
+              setShowReviewModal(true);
+            }
+          }}
+        />
       </div>
 
       {/* Full Width Map Section */}
