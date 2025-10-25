@@ -69,31 +69,11 @@ const UserTestimonials = () => {
   };
 
   if (loading) {
-    return (
-      <section className="user-testimonials-section">
-        <div className="container">
-          <div className="testimonials-header">
-            <h2>Avis des Utilisateurs sur les Entreprises</h2>
-            <p className="testimonials-subtitle">Chargement...</p>
-          </div>
-        </div>
-      </section>
-    );
+    return null; // Ne rien afficher pendant le chargement
   }
 
   if (testimonials.length === 0) {
-    return (
-      <section className="user-testimonials-section">
-        <div className="container">
-          <div className="testimonials-header">
-            <h2>Avis des Utilisateurs sur les Entreprises</h2>
-            <p className="testimonials-subtitle">
-              Soyez le premier à laisser un avis sur une entreprise québécoise!
-            </p>
-          </div>
-        </div>
-      </section>
-    );
+    return null; // Cacher la section s'il n'y a aucune critique
   }
 
   return (
