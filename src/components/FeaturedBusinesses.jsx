@@ -17,10 +17,18 @@ function FeaturedBusinesses() {
       // Charger 3 entreprises aléatoires (ville et description optionnelles)
       const { data, error } = await supabase
         .from('businesses')
-        .select('id, name, slug, city, description, logo_url, primary_main_category_slug, primary_sub_category_slug')
+        .select('id, name, slug, city, description, logo_url')
         .limit(100); // Charger 100 pour sélectionner 3 au hasard
 
-      if (error) throw error;
+      if (error) {
+        console.error('Erreur Supabase détails:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
+        throw error;
+      }
 
       if (data && data.length > 0) {
         // Sélectionner 3 entreprises aléatoires
