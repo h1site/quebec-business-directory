@@ -1,0 +1,244 @@
+.google-my-business-claim {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.gmb-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.gmb-header h3 {
+  font-size: 1.75rem;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.gmb-description {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.error-message {
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #c00;
+}
+
+.error-icon {
+  font-size: 1.5rem;
+}
+
+/* Google Sign In Button */
+.gmb-signin {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn-google-signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: white;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c4043;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 280px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.btn-google-signin:hover:not(:disabled) {
+  background: #f8f9fa;
+  border-color: #d2d3d4;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-google-signin:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-google-signin svg {
+  flex-shrink: 0;
+}
+
+/* GMB Locations List */
+.gmb-locations {
+  margin-top: 1.5rem;
+}
+
+.gmb-locations h4 {
+  font-size: 1.25rem;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.help-text {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.help-text strong {
+  color: #1a73e8;
+  font-weight: 600;
+}
+
+.locations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.location-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+}
+
+.location-card:hover {
+  border-color: #1a73e8;
+  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.1);
+}
+
+.location-card.selected {
+  border-color: #1a73e8;
+  background: #f0f7ff;
+  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.2);
+}
+
+.location-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.location-header input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #1a73e8;
+}
+
+.location-header h5 {
+  font-size: 1.1rem;
+  color: #1a1a1a;
+  margin: 0;
+  font-weight: 600;
+}
+
+.location-details {
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.location-details p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #5f6368;
+  line-height: 1.4;
+}
+
+.location-address {
+  color: #1a1a1a;
+}
+
+.location-phone,
+.location-website {
+  color: #5f6368;
+}
+
+/* Actions */
+.gmb-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.btn-submit {
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background: #1557b0;
+  box-shadow: 0 2px 4px rgba(26, 115, 232, 0.3);
+}
+
+.btn-submit:disabled {
+  background: #dadce0;
+  color: #80868b;
+  cursor: not-allowed;
+}
+
+.btn-cancel {
+  background: white;
+  color: #5f6368;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #f8f9fa;
+  border-color: #d2d3d4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .google-my-business-claim {
+    padding: 1rem;
+  }
+
+  .gmb-header h3 {
+    font-size: 1.5rem;
+  }
+
+  .location-details {
+    margin-left: 1.5rem;
+  }
+
+  .gmb-actions {
+    flex-direction: column;
+  }
+
+  .btn-submit,
+  .btn-cancel {
+    width: 100%;
+  }
+}
