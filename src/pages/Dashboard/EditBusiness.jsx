@@ -64,50 +64,30 @@ const EditBusiness = () => {
     paymentMethods: []
   });
 
-  // Form state
+  // Form state - Correspond aux champs du wizard de création
   const [form, setForm] = useState({
-    // Basic Information
+    // Step 1: Basic Information
     name: '',
     slug: '',
     description: '',
-    established_year: '',
-    business_size_id: '',
-    is_franchise: false,
 
-    // Contact Information
+    // Step 3: Contact Information
     phone: '',
     email: '',
-    show_email: true,
     website: '',
-    facebook_url: '',
-    instagram_url: '',
-    twitter_url: '',
-    linkedin_url: '',
-    threads_url: '',
-    tiktok_url: '',
+
+    // Step 4: Address
     address: '',
-    address_line2: '',
     city: '',
-    region: '',
+    province: 'QC',
     postal_code: '',
-    latitude: '',
-    longitude: '',
 
-    // Categories & Services
+    // Step 5: Categories
     main_category_id: '',
-    sub_category_ids: [],
-    products_services: '',
+    sub_category_id: '',
 
-    // Service Details
-    language_ids: [],
-    service_mode_ids: [],
-    certification_ids: [],
-    service_area: '',
-    service_radius_km: '',
-
-    // Accessibility & Payment
-    accessibility_feature_ids: [],
-    payment_method_ids: []
+    // Step 6: Services
+    products_services: ''
   });
 
   // Image upload state
@@ -203,41 +183,21 @@ const EditBusiness = () => {
             .filter(id => id !== null && id !== undefined);
         }
 
-        // Populate form with existing data
+        // Populate form with existing data - seulement les champs du wizard
         setForm({
           name: business.name || '',
           slug: business.slug || '',
           description: business.description || '',
-          established_year: business.established_year || '',
-          business_size_id: business.business_size_id || '',
-          is_franchise: business.is_franchise || false,
           phone: business.phone || '',
           email: business.email || '',
-          show_email: business.show_email !== false,
           website: business.website || '',
-          facebook_url: business.facebook_url || '',
-          instagram_url: business.instagram_url || '',
-          twitter_url: business.twitter_url || '',
-          linkedin_url: business.linkedin_url || '',
-          threads_url: business.threads_url || '',
-          tiktok_url: business.tiktok_url || '',
           address: business.address || '',
-          address_line2: business.address_line2 || '',
           city: business.city || '',
-          region: business.region || '',
+          province: business.province || 'QC',
           postal_code: business.postal_code || '',
-          latitude: business.latitude || '',
-          longitude: business.longitude || '',
           main_category_id: mainCategoryId,
-          sub_category_ids: subCategoryIds,
-          products_services: business.products_services || '',
-          language_ids: business.language_ids || [],
-          service_mode_ids: business.service_mode_ids || [],
-          certification_ids: business.certification_ids || [],
-          service_area: business.service_area || '',
-          service_radius_km: business.service_radius_km || '',
-          accessibility_feature_ids: business.accessibility_feature_ids || [],
-          payment_method_ids: business.payment_method_ids || []
+          sub_category_id: subCategoryIds.length > 0 ? subCategoryIds[0] : '',
+          products_services: business.products_services || ''
         });
 
         // Store original slug and mark as available
@@ -371,13 +331,8 @@ const EditBusiness = () => {
 
           payload = {
             name: form.name,
-            slug: form.slug, // Use the validated slug from form
-            description: form.description,
-            mission_statement: form.mission_statement || null,
-            core_values: form.core_values || null,
-            established_year: form.established_year ? parseInt(form.established_year) : null,
-            business_size_id: form.business_size_id || null,
-            is_franchise: form.is_franchise
+            slug: form.slug,
+            description: form.description
           };
           break;
 
@@ -385,47 +340,45 @@ const EditBusiness = () => {
           payload = {
             phone: form.phone,
             email: form.email,
-            show_email: form.show_email,
             website: form.website || null,
-            facebook_url: form.facebook_url || null,
-            instagram_url: form.instagram_url || null,
-            twitter_url: form.twitter_url || null,
-            linkedin_url: form.linkedin_url || null,
-            threads_url: form.threads_url || null,
-            tiktok_url: form.tiktok_url || null,
             address: form.address,
-            address_line2: form.address_line2 || null,
             city: form.city,
-            region: form.region || null,
-            province: 'QC',
-            postal_code: form.postal_code,
-            latitude: form.latitude ? parseFloat(form.latitude) : null,
-            longitude: form.longitude ? parseFloat(form.longitude) : null
+            province: form.province || 'QC',
+            postal_code: form.postal_code
           };
           break;
 
         case 'categories':
+          // Les catégories sont gérées séparément via businesses_categories
+          // On sauvegarde juste products_services ici
           payload = {
-            main_category_id: form.main_category_id || null,
-            sub_category_ids: form.sub_category_ids,
             products_services: form.products_services
           };
+
+          // Mettre à jour la table de liaison businesses_categories
+          if (businessId) {
+            // Supprimer les anciennes catégories
+            await supabase
+              .from('businesses_categories')
+              .delete()
+              .eq('business_id', businessId);
+
+            // Insérer les nouvelles catégories
+            if (form.main_category_id) {
+              await supabase
+                .from('businesses_categories')
+                .insert({
+                  business_id: businessId,
+                  main_category_id: form.main_category_id,
+                  sub_category_id: form.sub_category_id || null
+                });
+            }
+          }
           break;
 
         case 'services':
           payload = {
-            language_ids: form.language_ids,
-            service_mode_ids: form.service_mode_ids,
-            certification_ids: form.certification_ids,
-            service_area: form.service_area || null,
-            service_radius_km: form.service_radius_km ? parseFloat(form.service_radius_km) : null
-          };
-          break;
-
-        case 'accessibility':
-          payload = {
-            accessibility_feature_ids: form.accessibility_feature_ids,
-            payment_method_ids: form.payment_method_ids
+            products_services: form.products_services
           };
           break;
 
@@ -529,49 +482,37 @@ const EditBusiness = () => {
         )}
 
         <div className="edit-business-container">
-          {/* Tabs Navigation */}
+          {/* Tabs Navigation - Correspond au wizard de création */}
           <div className="tabs-navigation">
             <button
               className={`tab-button ${activeTab === 'basic' ? 'active' : ''}`}
               onClick={() => setActiveTab('basic')}
             >
-              Informations de base
-            </button>
-            <button
-              className={`tab-button ${activeTab === 'contact' ? 'active' : ''}`}
-              onClick={() => setActiveTab('contact')}
-            >
-              Coordonnées
-            </button>
-            <button
-              className={`tab-button ${activeTab === 'categories' ? 'active' : ''}`}
-              onClick={() => setActiveTab('categories')}
-            >
-              Catégories
-            </button>
-            <button
-              className={`tab-button ${activeTab === 'services' ? 'active' : ''}`}
-              onClick={() => setActiveTab('services')}
-            >
-              Services
-            </button>
-            <button
-              className={`tab-button ${activeTab === 'accessibility' ? 'active' : ''}`}
-              onClick={() => setActiveTab('accessibility')}
-            >
-              Accessibilité
-            </button>
-            <button
-              className={`tab-button ${activeTab === 'hours' ? 'active' : ''}`}
-              onClick={() => setActiveTab('hours')}
-            >
-              Heures d'ouverture
+              📋 Informations de base
             </button>
             <button
               className={`tab-button ${activeTab === 'images' ? 'active' : ''}`}
               onClick={() => setActiveTab('images')}
             >
-              Images
+              📸 Logo et Photos
+            </button>
+            <button
+              className={`tab-button ${activeTab === 'contact' ? 'active' : ''}`}
+              onClick={() => setActiveTab('contact')}
+            >
+              📞 Contact
+            </button>
+            <button
+              className={`tab-button ${activeTab === 'categories' ? 'active' : ''}`}
+              onClick={() => setActiveTab('categories')}
+            >
+              🏷️ Catégories
+            </button>
+            <button
+              className={`tab-button ${activeTab === 'services' ? 'active' : ''}`}
+              onClick={() => setActiveTab('services')}
+            >
+              ⚙️ Services
             </button>
           </div>
 
@@ -1012,7 +953,7 @@ const EditBusiness = () => {
             {/* Categories Tab */}
             {activeTab === 'categories' && (
               <div className="tab-panel">
-                <h2>Catégories et services</h2>
+                <h2>Catégories</h2>
 
                 <div className="form-group">
                   <label htmlFor="main_category_id">
@@ -1021,7 +962,7 @@ const EditBusiness = () => {
                   <select
                     id="main_category_id"
                     name="main_category_id"
-                    value={form.main_category_id}
+                    value={form.main_category_id || ''}
                     onChange={handleChange}
                   >
                     <option value="">Sélectionnez une catégorie...</option>
@@ -1033,39 +974,26 @@ const EditBusiness = () => {
                   </select>
                 </div>
 
-                {form.main_category_id && (
+                {form.main_category_id && filteredSubCategories.length > 0 && (
                   <div className="form-group">
-                    <label>
-                      Sous-catégories <span className="required">*</span>
+                    <label htmlFor="sub_category_id">
+                      Sous-catégorie (optionnel)
                     </label>
-                    <div className="checkbox-grid">
+                    <select
+                      id="sub_category_id"
+                      name="sub_category_id"
+                      value={form.sub_category_id || ''}
+                      onChange={handleChange}
+                    >
+                      <option value="">Aucune sous-catégorie</option>
                       {filteredSubCategories.map((sub) => (
-                        <AnimatedCheckbox
-                          key={sub.id}
-                          id={`sub-cat-${sub.id}`}
-                          checked={form.sub_category_ids.includes(sub.id)}
-                          onChange={() => handleMultiSelect('sub_category_ids', sub.id)}
-                          label={getLabel(sub)}
-                        />
+                        <option key={sub.id} value={sub.id}>
+                          {getLabel(sub)}
+                        </option>
                       ))}
-                    </div>
+                    </select>
                   </div>
                 )}
-
-                <div className="form-group">
-                  <label htmlFor="products_services">
-                    Produits et services <span className="required">*</span>
-                  </label>
-                  <p className="field-hint">Entrez un produit ou service par ligne. Chaque ligne apparaîtra comme un point dans la liste.</p>
-                  <textarea
-                    id="products_services"
-                    name="products_services"
-                    value={form.products_services}
-                    onChange={handleChange}
-                    rows="8"
-                    placeholder="Exemple:&#10;Installation de chauffage&#10;Réparation de climatisation&#10;Entretien de thermopompes&#10;Service d'urgence 24/7"
-                  />
-                </div>
 
                 <button
                   type="button"
@@ -1105,60 +1033,6 @@ const EditBusiness = () => {
                 >
                   {submitting ? 'Enregistrement...' : 'Enregistrer les services'}
                 </button>
-              </div>
-            )}
-
-            {/* Accessibility Tab */}
-            {activeTab === 'accessibility' && (
-              <div className="tab-panel">
-                <h2>Accessibilité et paiement</h2>
-
-                <div className="form-group">
-                  <label>Caractéristiques d'accessibilité</label>
-                  <div className="checkbox-grid">
-                    {lookupData.accessibilityFeatures.map((feature) => (
-                      <AnimatedCheckbox
-                        key={feature.id}
-                        id={`access-${feature.id}`}
-                        checked={form.accessibility_feature_ids.includes(feature.id)}
-                        onChange={() => handleMultiSelect('accessibility_feature_ids', feature.id)}
-                        label={getLabel(feature)}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label>Méthodes de paiement</label>
-                  <div className="checkbox-grid">
-                    {lookupData.paymentMethods.map((method) => (
-                      <AnimatedCheckbox
-                        key={method.id}
-                        id={`payment-${method.id}`}
-                        checked={form.payment_method_ids.includes(method.id)}
-                        onChange={() => handleMultiSelect('payment_method_ids', method.id)}
-                        label={getLabel(method)}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={() => saveTab('accessibility')}
-                  disabled={submitting}
-                >
-                  {submitting ? 'Enregistrement...' : 'Enregistrer l\'accessibilité'}
-                </button>
-              </div>
-            )}
-
-            {/* Hours Tab */}
-            {activeTab === 'hours' && (
-              <div className="tab-panel">
-                <h2>Heures d'ouverture</h2>
-                <BusinessHoursEditor businessId={businessId} />
               </div>
             )}
 
