@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updateBusiness, getBusinessBySlug, checkSlugAvailability } from '../../services/businessService.js';
+import { supabase } from '../../services/supabaseClient.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import {
   getMainCategories,
@@ -69,8 +70,6 @@ const EditBusiness = () => {
     name: '',
     slug: '',
     description: '',
-    mission_statement: '',
-    core_values: '',
     established_year: '',
     business_size_id: '',
     is_franchise: false,
@@ -186,13 +185,29 @@ const EditBusiness = () => {
           setCurrentGalleryImages(business.gallery_images);
         }
 
+        // Charger les catégories depuis la table de liaison businesses_categories
+        const { data: businessCategories } = await supabase
+          .from('businesses_categories')
+          .select('main_category_id, sub_category_id')
+          .eq('business_id', business.id);
+
+        let mainCategoryId = '';
+        let subCategoryIds = [];
+
+        if (businessCategories && businessCategories.length > 0) {
+          // Prendre la première catégorie comme principale
+          mainCategoryId = businessCategories[0].main_category_id || '';
+          // Collecter toutes les sous-catégories
+          subCategoryIds = businessCategories
+            .map(bc => bc.sub_category_id)
+            .filter(id => id !== null && id !== undefined);
+        }
+
         // Populate form with existing data
         setForm({
           name: business.name || '',
           slug: business.slug || '',
           description: business.description || '',
-          mission_statement: business.mission_statement || '',
-          core_values: business.core_values || '',
           established_year: business.established_year || '',
           business_size_id: business.business_size_id || '',
           is_franchise: business.is_franchise || false,
@@ -213,8 +228,8 @@ const EditBusiness = () => {
           postal_code: business.postal_code || '',
           latitude: business.latitude || '',
           longitude: business.longitude || '',
-          main_category_id: business.main_category_id || '',
-          sub_category_ids: business.sub_category_ids || [],
+          main_category_id: mainCategoryId,
+          sub_category_ids: subCategoryIds,
           products_services: business.products_services || '',
           language_ids: business.language_ids || [],
           service_mode_ids: business.service_mode_ids || [],
@@ -695,30 +710,6 @@ const EditBusiness = () => {
                   </div>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="mission_statement">Énoncé de mission</label>
-                  <textarea
-                    id="mission_statement"
-                    name="mission_statement"
-                    value={form.mission_statement}
-                    onChange={handleChange}
-                    rows="3"
-                    placeholder="Quelle est la mission de votre entreprise?"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="core_values">Valeurs fondamentales</label>
-                  <textarea
-                    id="core_values"
-                    name="core_values"
-                    value={form.core_values}
-                    onChange={handleChange}
-                    rows="3"
-                    placeholder="Quelles sont vos valeurs d'entreprise?"
-                  />
-                </div>
-
                 <div className="form-group checkbox-group">
                   <label>
                     <input
@@ -1090,82 +1081,20 @@ const EditBusiness = () => {
             {/* Services Tab */}
             {activeTab === 'services' && (
               <div className="tab-panel">
-                <h2>Détails des services</h2>
+                <h2>Services offerts</h2>
+                <p className="help-text">Listez les services que vous offrez (maximum 20)</p>
 
                 <div className="form-group">
-                  <label>
-                    Langues de service <span className="required">*</span>
-                  </label>
-                  <div className="checkbox-grid">
-                    {lookupData.serviceLanguages.map((lang) => (
-                      <AnimatedCheckbox
-                        key={lang.id}
-                        id={`lang-${lang.id}`}
-                        checked={form.language_ids.includes(lang.id)}
-                        onChange={() => handleMultiSelect('language_ids', lang.id)}
-                        label={getLabel(lang)}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label>
-                    Modes de service <span className="required">*</span>
-                  </label>
-                  <div className="checkbox-grid">
-                    {lookupData.serviceModes.map((mode) => (
-                      <AnimatedCheckbox
-                        key={mode.id}
-                        id={`mode-${mode.id}`}
-                        checked={form.service_mode_ids.includes(mode.id)}
-                        onChange={() => handleMultiSelect('service_mode_ids', mode.id)}
-                        label={getLabel(mode)}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label>Certifications</label>
-                  <div className="checkbox-grid">
-                    {lookupData.certifications.map((cert) => (
-                      <AnimatedCheckbox
-                        key={cert.id}
-                        id={`cert-${cert.id}`}
-                        checked={form.certification_ids.includes(cert.id)}
-                        onChange={() => handleMultiSelect('certification_ids', cert.id)}
-                        label={getLabel(cert)}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                <div className="form-row">
-                  <div className="form-group">
-                    <label htmlFor="service_area">Zone de service</label>
-                    <input
-                      type="text"
-                      id="service_area"
-                      name="service_area"
-                      value={form.service_area}
-                      onChange={handleChange}
-                      placeholder="Ex: Grand Montréal"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="service_radius_km">Rayon de service (km)</label>
-                    <input
-                      type="number"
-                      id="service_radius_km"
-                      name="service_radius_km"
-                      value={form.service_radius_km}
-                      onChange={handleChange}
-                      min="0"
-                      placeholder="Ex: 50"
-                    />
-                  </div>
+                  <label htmlFor="products_services">Services et produits</label>
+                  <textarea
+                    id="products_services"
+                    name="products_services"
+                    value={form.products_services}
+                    onChange={handleChange}
+                    rows="5"
+                    placeholder="Ex: Consultation gratuite, Livraison à domicile, Service 24/7..."
+                  />
+                  <span className="help-text">Séparez les services par des virgules ou des retours à la ligne</span>
                 </div>
 
                 <button

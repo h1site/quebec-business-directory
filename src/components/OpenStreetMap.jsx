@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import PropTypes from 'prop-types';
 import 'leaflet/dist/leaflet.css';
@@ -17,20 +18,62 @@ L.Icon.Default.mergeOptions({
 });
 
 const OpenStreetMap = ({ latitude, longitude, businessName, address, city }) => {
-  // Don't render anything if coordinates are missing
-  if (!latitude || !longitude) {
+  const [position, setPosition] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadCoordinates = async () => {
+      // Si on a déjà les coordonnées, les utiliser directement
+      if (latitude && longitude) {
+        const lat = parseFloat(latitude);
+        const lng = parseFloat(longitude);
+
+        if (!isNaN(lat) && !isNaN(lng)) {
+          setPosition([lat, lng]);
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Sinon, géocoder l'adresse avec Nominatim
+      if (address && city) {
+        try {
+          const fullAddress = `${address}, ${city}, Quebec, Canada`;
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?` +
+            `format=json&` +
+            `q=${encodeURIComponent(fullAddress)}&` +
+            `countrycodes=ca&` +
+            `limit=1`,
+            {
+              headers: {
+                'User-Agent': 'QuebecBusinessDirectory/1.0'
+              }
+            }
+          );
+
+          const data = await response.json();
+
+          if (data && data.length > 0) {
+            const lat = parseFloat(data[0].lat);
+            const lng = parseFloat(data[0].lon);
+            setPosition([lat, lng]);
+          }
+        } catch (error) {
+          console.error('Geocoding error:', error);
+        }
+      }
+
+      setLoading(false);
+    };
+
+    loadCoordinates();
+  }, [latitude, longitude, address, city]);
+
+  // Ne rien afficher si pas de coordonnées disponibles
+  if (loading || !position) {
     return null;
   }
-
-  // Validate coordinates
-  const lat = parseFloat(latitude);
-  const lng = parseFloat(longitude);
-
-  if (isNaN(lat) || isNaN(lng)) {
-    return null;
-  }
-
-  const position = [lat, lng];
 
   return (
     <div className="openstreetmap-container">
