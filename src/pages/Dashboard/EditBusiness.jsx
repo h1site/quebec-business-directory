@@ -166,10 +166,19 @@ const EditBusiness = () => {
         }
 
         // Charger les catégories depuis la table de liaison business_categories
+        // Note: business_categories stocke sub_category_id, on doit récupérer main_category_id depuis sub_categories
         const { data: businessCategories, error: catError } = await supabase
           .from('business_categories')
-          .select('main_category_id, sub_category_id')
-          .eq('business_id', business.id);
+          .select(`
+            sub_category_id,
+            sub_categories (
+              id,
+              main_category_id
+            )
+          `)
+          .eq('business_id', business.id)
+          .eq('is_primary', true)
+          .limit(1);
 
         console.log('📦 Chargement des catégories depuis business_categories:', {
           businessId: business.id,
@@ -181,10 +190,11 @@ const EditBusiness = () => {
         let subCategoryId = '';
 
         if (businessCategories && businessCategories.length > 0) {
-          // Prendre la première catégorie comme principale
-          mainCategoryId = businessCategories[0].main_category_id || '';
-          // Prendre la première sous-catégorie
           subCategoryId = businessCategories[0].sub_category_id || '';
+          // Récupérer main_category_id depuis la relation
+          if (businessCategories[0].sub_categories) {
+            mainCategoryId = businessCategories[0].sub_categories.main_category_id || '';
+          }
 
           console.log('✅ Catégories trouvées:', {
             mainCategoryId,
@@ -381,23 +391,22 @@ const EditBusiness = () => {
           };
 
           // Mettre à jour la table de liaison business_categories
-          if (businessId) {
+          // Note: business_categories stocke seulement sub_category_id
+          if (businessId && form.sub_category_id) {
             // Supprimer les anciennes catégories
             await supabase
               .from('business_categories')
               .delete()
               .eq('business_id', businessId);
 
-            // Insérer les nouvelles catégories
-            if (form.main_category_id) {
-              await supabase
-                .from('business_categories')
-                .insert({
-                  business_id: businessId,
-                  main_category_id: form.main_category_id,
-                  sub_category_id: form.sub_category_id || null
-                });
-            }
+            // Insérer la nouvelle catégorie
+            await supabase
+              .from('business_categories')
+              .insert({
+                business_id: businessId,
+                sub_category_id: form.sub_category_id,
+                is_primary: true
+              });
           }
           break;
 

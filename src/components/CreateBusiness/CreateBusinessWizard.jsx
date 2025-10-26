@@ -212,24 +212,29 @@ const CreateBusinessWizard = () => {
         }
 
         // Insérer les catégories dans la table de liaison business_categories
-        const categoryLinks = [{
-          business_id: business.id,
-          main_category_id: formData.main_category_id,
-          sub_category_id: formData.subcategory_id || null
-        }];
+        // Note: business_categories stocke seulement sub_category_id (qui contient la référence à main_category)
+        if (formData.subcategory_id) {
+          const categoryLinks = [{
+            business_id: business.id,
+            sub_category_id: formData.subcategory_id,
+            is_primary: true
+          }];
 
-        console.log('➡️ Insertion dans business_categories:', categoryLinks);
+          console.log('➡️ Insertion dans business_categories:', categoryLinks);
 
-        const { data: insertedData, error: categoryError } = await supabase
-          .from('business_categories')
-          .insert(categoryLinks)
-          .select();
+          const { data: insertedData, error: categoryError } = await supabase
+            .from('business_categories')
+            .insert(categoryLinks)
+            .select();
 
-        if (categoryError) {
-          console.error('❌ Error linking categories:', categoryError);
-          alert(`Erreur lors de la liaison des catégories: ${categoryError.message}`);
+          if (categoryError) {
+            console.error('❌ Error linking categories:', categoryError);
+            alert(`Erreur lors de la liaison des catégories: ${categoryError.message}`);
+          } else {
+            console.log('✅ Catégories insérées avec succès:', insertedData);
+          }
         } else {
-          console.log('✅ Catégories insérées avec succès:', insertedData);
+          console.warn('⚠️ Aucune sous-catégorie sélectionnée - pas d\'insertion dans business_categories');
         }
       } else {
         console.warn('⚠️ Aucune catégorie principale sélectionnée');
