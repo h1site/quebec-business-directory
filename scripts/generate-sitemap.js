@@ -122,11 +122,24 @@ console.log('🏢 Récupération des entreprises (paginé)...');
 const pageSize = 500;
 let page = 0;
 let totalBusinesses = 0;
+let skippedBusinesses = 0;
+
+// Helper function to generate slug
+const generateSlug = (text) => {
+  if (!text) return '';
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .substring(0, 100);
+};
 
 while (true) {
   const { data: businesses, error } = await supabase
     .from('businesses')
-    .select('slug, updated_at')
+    .select('slug, updated_at, main_category_slug, city')
     .order('id')
     .range(page * pageSize, (page + 1) * pageSize - 1);
 
@@ -135,12 +148,21 @@ while (true) {
   }
 
   businesses.forEach(biz => {
+    // Skip businesses without required data for new URL format
+    if (!biz.main_category_slug || !biz.city || !biz.slug) {
+      skippedBusinesses++;
+      return;
+    }
+
     const lastmod = biz.updated_at ?
       new Date(biz.updated_at).toISOString().split('T')[0] :
       currentDate;
 
+    const citySlug = generateSlug(biz.city);
+    const businessUrl = `${baseUrl}/${biz.main_category_slug}/${citySlug}/${biz.slug}`;
+
     sitemap += `  <url>
-    <loc>${baseUrl}/entreprise/${biz.slug}</loc>
+    <loc>${businessUrl}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -156,6 +178,10 @@ while (true) {
   }
 
   page++;
+}
+
+if (skippedBusinesses > 0) {
+  console.log(`⚠️  ${skippedBusinesses} entreprises ignorées (données manquantes)`);
 }
 
 console.log(`✅ ${totalBusinesses} entreprises ajoutées`);

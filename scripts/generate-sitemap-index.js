@@ -61,18 +61,53 @@ function generateSitemap(urls, filename) {
   return filepath;
 }
 
+// Helper function to generate slug
+function generateSlug(text) {
+  if (!text) return '';
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .substring(0, 100);
+}
+
 // Fonction pour charger des entreprises par lots
 async function loadBusinessesBatch(offset, limit, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
+      // D'abord récupérer les businesses avec leurs catégories via JOIN
       const { data, error } = await supabase
         .from('businesses')
-        .select('slug, updated_at')
+        .select(`
+          id,
+          slug,
+          updated_at,
+          city,
+          business_categories!inner (
+            sub_categories!inner (
+              main_categories!inner (
+                slug
+              )
+            )
+          )
+        `)
+        .eq('business_categories.is_primary', true)
         .order('id')
         .range(offset, offset + limit - 1);
 
       if (error) throw error;
-      return data || [];
+
+      // Transformer les données pour avoir un format plat
+      const businesses = (data || []).map(biz => ({
+        slug: biz.slug,
+        updated_at: biz.updated_at,
+        city: biz.city,
+        main_category_slug: biz.business_categories?.[0]?.sub_categories?.main_categories?.slug
+      }));
+
+      return businesses;
     } catch (error) {
       console.error(`   ⚠️  Tentative ${attempt}/${retries} échouée: ${error.message}`);
       if (attempt === retries) {
@@ -179,8 +214,16 @@ for (let fileIndex = 0; fileIndex < numBusinessSitemaps; fileIndex++) {
 
     businesses.forEach(biz => {
       if (businessUrls.length < MAX_URLS_PER_SITEMAP) {
+        // Skip businesses without required data for new URL format
+        if (!biz.main_category_slug || !biz.city || !biz.slug) {
+          return;
+        }
+
+        const citySlug = generateSlug(biz.city);
+        const businessUrl = `${baseUrl}/${biz.main_category_slug}/${citySlug}/${biz.slug}`;
+
         businessUrls.push({
-          loc: `${baseUrl}/entreprise/${biz.slug}`,
+          loc: businessUrl,
           lastmod: biz.updated_at ? new Date(biz.updated_at).toISOString().split('T')[0] : currentDate,
           changefreq: 'monthly',
           priority: '0.6'

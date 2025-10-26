@@ -25,8 +25,8 @@ ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
 
 -- Supprimer les policies existantes si elles existent
 DROP POLICY IF EXISTS "Public profiles are viewable by everyone" ON user_profiles;
-DROP POLICY IF EXISTS "Users can insert own profile" ON user_profiles;
-DROP POLICY IF EXISTS "Users can update own profile" ON user_profiles;
+DROP POLICY IF EXISTS "Users can create their own profile" ON user_profiles;
+DROP POLICY IF EXISTS "Users can update their own profile" ON user_profiles;
 
 -- Tout le monde peut voir les profils
 CREATE POLICY "Public profiles are viewable by everyone"
@@ -34,17 +34,14 @@ CREATE POLICY "Public profiles are viewable by everyone"
   USING (true);
 
 -- Les utilisateurs peuvent créer leur propre profil
-CREATE POLICY "Users can insert own profile"
+CREATE POLICY "Users can create their own profile"
   ON user_profiles FOR INSERT
-  TO authenticated
-  WITH CHECK (auth.uid() = NEW.user_id);
+  WITH CHECK ((SELECT auth.uid()) = user_id);
 
 -- Les utilisateurs peuvent modifier leur propre profil
-CREATE POLICY "Users can update own profile"
+CREATE POLICY "Users can update their own profile"
   ON user_profiles FOR UPDATE
-  TO authenticated
-  USING (auth.uid() = user_id)
-  WITH CHECK (auth.uid() = user_id);
+  USING ((SELECT auth.uid()) = user_id);
 
 -- ============================================================================
 -- 2. BUSINESS REVIEWS TABLE
@@ -73,9 +70,9 @@ ALTER TABLE business_reviews ENABLE ROW LEVEL SECURITY;
 
 -- Supprimer les policies existantes si elles existent
 DROP POLICY IF EXISTS "Reviews are viewable by everyone" ON business_reviews;
-DROP POLICY IF EXISTS "Users can insert own reviews" ON business_reviews;
-DROP POLICY IF EXISTS "Users can update own reviews" ON business_reviews;
-DROP POLICY IF EXISTS "Users can delete own reviews" ON business_reviews;
+DROP POLICY IF EXISTS "Authenticated users can create reviews" ON business_reviews;
+DROP POLICY IF EXISTS "Users can update their own reviews" ON business_reviews;
+DROP POLICY IF EXISTS "Users can delete their own reviews" ON business_reviews;
 
 -- Tout le monde peut voir les critiques
 CREATE POLICY "Reviews are viewable by everyone"
@@ -83,23 +80,19 @@ CREATE POLICY "Reviews are viewable by everyone"
   USING (true);
 
 -- Les utilisateurs authentifiés peuvent créer des critiques
-CREATE POLICY "Users can insert own reviews"
+CREATE POLICY "Authenticated users can create reviews"
   ON business_reviews FOR INSERT
-  TO authenticated
-  WITH CHECK (auth.uid() = NEW.user_id);
+  WITH CHECK ((SELECT auth.uid()) = user_id);
 
 -- Les utilisateurs peuvent modifier leurs propres critiques
-CREATE POLICY "Users can update own reviews"
+CREATE POLICY "Users can update their own reviews"
   ON business_reviews FOR UPDATE
-  TO authenticated
-  USING (auth.uid() = user_id)
-  WITH CHECK (auth.uid() = user_id);
+  USING ((SELECT auth.uid()) = user_id);
 
 -- Les utilisateurs peuvent supprimer leurs propres critiques
-CREATE POLICY "Users can delete own reviews"
+CREATE POLICY "Users can delete their own reviews"
   ON business_reviews FOR DELETE
-  TO authenticated
-  USING (auth.uid() = user_id);
+  USING ((SELECT auth.uid()) = user_id);
 
 -- ============================================================================
 -- 3. FONCTION POUR CALCULER LA NOTE MOYENNE D'UNE ENTREPRISE
