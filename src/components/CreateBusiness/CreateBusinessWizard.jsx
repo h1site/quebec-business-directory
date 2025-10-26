@@ -211,17 +211,17 @@ const CreateBusinessWizard = () => {
           categorySlug = categoryData.slug;
         }
 
-        // Insérer les catégories dans la table de liaison businesses_categories
+        // Insérer les catégories dans la table de liaison business_categories
         const categoryLinks = [{
           business_id: business.id,
           main_category_id: formData.main_category_id,
           sub_category_id: formData.subcategory_id || null
         }];
 
-        console.log('➡️ Insertion dans businesses_categories:', categoryLinks);
+        console.log('➡️ Insertion dans business_categories:', categoryLinks);
 
         const { data: insertedData, error: categoryError } = await supabase
-          .from('businesses_categories')
+          .from('business_categories')
           .insert(categoryLinks)
           .select();
 

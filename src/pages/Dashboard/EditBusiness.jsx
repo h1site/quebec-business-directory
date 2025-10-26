@@ -165,13 +165,13 @@ const EditBusiness = () => {
           setCurrentGalleryImages(business.gallery_images);
         }
 
-        // Charger les catégories depuis la table de liaison businesses_categories
+        // Charger les catégories depuis la table de liaison business_categories
         const { data: businessCategories, error: catError } = await supabase
-          .from('businesses_categories')
+          .from('business_categories')
           .select('main_category_id, sub_category_id')
           .eq('business_id', business.id);
 
-        console.log('📦 Chargement des catégories depuis businesses_categories:', {
+        console.log('📦 Chargement des catégories depuis business_categories:', {
           businessId: business.id,
           businessCategories,
           error: catError
@@ -374,24 +374,24 @@ const EditBusiness = () => {
           break;
 
         case 'categories':
-          // Les catégories sont gérées séparément via businesses_categories
+          // Les catégories sont gérées séparément via business_categories
           // On sauvegarde juste products_services ici
           payload = {
             products_services: form.products_services
           };
 
-          // Mettre à jour la table de liaison businesses_categories
+          // Mettre à jour la table de liaison business_categories
           if (businessId) {
             // Supprimer les anciennes catégories
             await supabase
-              .from('businesses_categories')
+              .from('business_categories')
               .delete()
               .eq('business_id', businessId);
 
             // Insérer les nouvelles catégories
             if (form.main_category_id) {
               await supabase
-                .from('businesses_categories')
+                .from('business_categories')
                 .insert({
                   business_id: businessId,
                   main_category_id: form.main_category_id,
