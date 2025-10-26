@@ -166,25 +166,36 @@ const EditBusiness = () => {
         }
 
         // Charger les catégories depuis la table de liaison businesses_categories
-        const { data: businessCategories } = await supabase
+        const { data: businessCategories, error: catError } = await supabase
           .from('businesses_categories')
           .select('main_category_id, sub_category_id')
           .eq('business_id', business.id);
 
+        console.log('📦 Chargement des catégories depuis businesses_categories:', {
+          businessId: business.id,
+          businessCategories,
+          error: catError
+        });
+
         let mainCategoryId = '';
-        let subCategoryIds = [];
+        let subCategoryId = '';
 
         if (businessCategories && businessCategories.length > 0) {
           // Prendre la première catégorie comme principale
           mainCategoryId = businessCategories[0].main_category_id || '';
-          // Collecter toutes les sous-catégories
-          subCategoryIds = businessCategories
-            .map(bc => bc.sub_category_id)
-            .filter(id => id !== null && id !== undefined);
+          // Prendre la première sous-catégorie
+          subCategoryId = businessCategories[0].sub_category_id || '';
+
+          console.log('✅ Catégories trouvées:', {
+            mainCategoryId,
+            subCategoryId
+          });
+        } else {
+          console.warn('⚠️ Aucune catégorie trouvée pour cette entreprise');
         }
 
         // Populate form with existing data - seulement les champs du wizard
-        setForm({
+        const formValues = {
           name: business.name || '',
           slug: business.slug || '',
           description: business.description || '',
@@ -196,9 +207,12 @@ const EditBusiness = () => {
           province: business.province || 'QC',
           postal_code: business.postal_code || '',
           main_category_id: mainCategoryId,
-          sub_category_id: subCategoryIds.length > 0 ? subCategoryIds[0] : '',
+          sub_category_id: subCategoryId,
           products_services: business.products_services || ''
-        });
+        };
+
+        console.log('📝 Remplissage du formulaire:', formValues);
+        setForm(formValues);
 
         // Store original slug and mark as available
         setOriginalSlug(business.slug || '');
@@ -217,9 +231,20 @@ const EditBusiness = () => {
   }, [slug, user, navigate]);
 
   // Filter sub-categories based on selected main category
-  const filteredSubCategories = lookupData.subCategories.filter(
-    (sc) => sc.main_category_id === form.main_category_id
-  );
+  const filteredSubCategories = lookupData.subCategories.filter((sc) => {
+    // Convertir les deux IDs en string pour la comparaison
+    const scId = sc.main_category_id?.toString();
+    const formId = form.main_category_id?.toString();
+    return scId === formId;
+  });
+
+  // Debug logs
+  console.log('🔍 EditBusiness - Filtering subcategories:', {
+    mainCategoryId: form.main_category_id,
+    totalSubCategories: lookupData.subCategories.length,
+    filteredCount: filteredSubCategories.length,
+    sample: lookupData.subCategories[0]
+  });
 
   // Validate slug availability with debounce
   const validateSlug = useCallback(async (newSlug) => {

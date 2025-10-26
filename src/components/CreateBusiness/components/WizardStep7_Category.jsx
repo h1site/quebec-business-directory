@@ -81,6 +81,11 @@ const WizardStep7_Category = ({ formData, updateFormData, onValidationChange }) 
   const handleCategoryChange = (e) => {
     const selectedId = e.target.value;
 
+    console.log('🏷️ Wizard - Changement de catégorie:', {
+      selectedId,
+      availableCategories: categories.length
+    });
+
     if (!selectedId) {
       updateFormData({
         main_category_id: null,
@@ -94,6 +99,8 @@ const WizardStep7_Category = ({ formData, updateFormData, onValidationChange }) 
     }
 
     const selectedCategory = categories.find(cat => cat.id.toString() === selectedId);
+
+    console.log('✅ Catégorie trouvée:', selectedCategory);
 
     if (selectedCategory) {
       updateFormData({
