@@ -52,6 +52,9 @@ const EditBusiness = () => {
   const [slugError, setSlugError] = useState(null);
   const [originalSlug, setOriginalSlug] = useState('');
 
+  // Track original category to detect changes for URL regeneration
+  const [originalMainCategoryId, setOriginalMainCategoryId] = useState(null);
+
   // Lookup data
   const [lookupData, setLookupData] = useState({
     mainCategories: [],
@@ -227,6 +230,9 @@ const EditBusiness = () => {
         // Store original slug and mark as available
         setOriginalSlug(business.slug || '');
         setSlugAvailable(true);
+
+        // Store original main category ID for URL regeneration detection
+        setOriginalMainCategoryId(mainCategoryId);
       } catch (error) {
         console.error('Error loading data:', error);
         setStatus({ type: 'error', message: 'Erreur lors du chargement des données.' });
@@ -407,6 +413,50 @@ const EditBusiness = () => {
                 sub_category_id: form.sub_category_id,
                 is_primary: true
               });
+
+            // Détecter si la catégorie principale a changé pour régénérer l'URL
+            const categoryChanged = form.main_category_id !== originalMainCategoryId;
+
+            console.log('🔄 Vérification changement de catégorie:', {
+              originalMainCategoryId,
+              newMainCategoryId: form.main_category_id,
+              categoryChanged
+            });
+
+            if (categoryChanged) {
+              // Récupérer le slug de la nouvelle catégorie
+              const selectedCategory = lookupData.mainCategories.find(
+                cat => cat.id.toString() === form.main_category_id.toString()
+              );
+
+              if (selectedCategory) {
+                console.log('🔄 Mise à jour du slug de catégorie:', {
+                  oldSlug: business.main_category_slug,
+                  newSlug: selectedCategory.slug
+                });
+
+                // Mettre à jour le main_category_slug dans la table businesses
+                const { error: slugUpdateError } = await supabase
+                  .from('businesses')
+                  .update({
+                    main_category_slug: selectedCategory.slug,
+                    updated_at: new Date().toISOString()
+                  })
+                  .eq('id', businessId);
+
+                if (slugUpdateError) {
+                  console.error('❌ Erreur lors de la mise à jour du slug de catégorie:', slugUpdateError);
+                } else {
+                  console.log('✅ Slug de catégorie mis à jour avec succès');
+
+                  // Mettre à jour l'état local pour le bouton "Voir la fiche"
+                  setBusiness(prev => ({
+                    ...prev,
+                    main_category_slug: selectedCategory.slug
+                  }));
+                }
+              }
+            }
           }
           break;
 
