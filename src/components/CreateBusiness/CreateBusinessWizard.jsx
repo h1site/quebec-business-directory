@@ -1,69 +1,69 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { supabase } from '../../services/supabaseClient';
+import { useAuth } from '../../context/AuthContext';
 import WizardProgressBar from './components/WizardProgressBar.jsx';
 import WizardNavigation from './components/WizardNavigation.jsx';
 import BusinessPreview from './components/BusinessPreview.jsx';
 
 // Import wizard steps
 import WizardStep1_Basic from './components/WizardStep1_Basic.jsx';
-import WizardStep2_Details from './components/WizardStep2_Details.jsx';
 import WizardStep3_Media from './components/WizardStep3_Media.jsx';
 import WizardStep4_Contact from './components/WizardStep4_Contact.jsx';
 import WizardStep5_Address from './components/WizardStep5_Address.jsx';
-import WizardStep6_Geolocation from './components/WizardStep6_Geolocation.jsx';
 import WizardStep7_Category from './components/WizardStep7_Category.jsx';
 import WizardStep8_Services from './components/WizardStep8_Services.jsx';
 import WizardStep9_Summary from './components/WizardStep9_Summary.jsx';
 
 import './CreateBusinessWizard.css';
 
-const TOTAL_STEPS = 9;
+const TOTAL_STEPS = 7;
 
 const CreateBusinessWizard = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [visitedSteps, setVisitedSteps] = useState([1]); // Track visited steps for navigation
   const [isCurrentStepValid, setIsCurrentStepValid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Global form data state
   const [formData, setFormData] = useState({
-    // Page 1: Basic info
+    // Step 1: Basic info
     name: '',
     description: '',
 
-    // Page 2: Details
-    company_size: '',
-    founded_year: new Date().getFullYear(),
-
-    // Page 3: Media
+    // Step 2: Media
     logo: null,
     logo_preview: null,
     images: [],
     image_previews: [],
 
-    // Page 4: Contact
+    // Step 3: Contact
     phone: '',
     email: '',
     website: '',
 
-    // Page 5: Address
+    // Step 4: Address
     address: '',
     city: '',
     province: 'QC',
     postal_code: '',
 
-    // Page 6: Geolocation
-    latitude: null,
-    longitude: null,
-
-    // Page 7: Category
+    // Step 5: Category
     main_category_id: null,
     main_category_slug: null,
+    main_category_name: null,
+    subcategory_id: null,
+    subcategory_slug: null,
+    subcategory_name: null,
 
-    // Page 8: Services
+    // Step 6: Services
     services: [],
 
-    // Page 9: Summary
+    // Step 7: Summary
     terms_accepted: false
   });
 
@@ -104,14 +104,190 @@ const CreateBusinessWizard = () => {
 
   // Submit form
   const handleSubmit = async () => {
+    if (!user) {
+      alert('Vous devez être connecté pour créer une entreprise');
+      return;
+    }
+
+    setIsSubmitting(true);
+
     try {
-      console.log('Submitting business:', formData);
-      // TODO: Implement actual submission logic
-      alert('Entreprise soumise avec succès! En attente d\'approbation.');
-      navigate('/dashboard');
+      // Obtenir les coordonnées GPS automatiquement via Nominatim
+      let latitude = null;
+      let longitude = null;
+
+      if (formData.address && formData.city) {
+        const fullAddress = `${formData.address}, ${formData.city}, ${formData.province}, Canada ${formData.postal_code || ''}`;
+
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?` +
+            `format=json&` +
+            `q=${encodeURIComponent(fullAddress)}&` +
+            `countrycodes=ca&` +
+            `limit=1`,
+            {
+              headers: {
+                'User-Agent': 'QuebecBusinessDirectory/1.0'
+              }
+            }
+          );
+
+          const data = await response.json();
+
+          if (data && data.length > 0) {
+            latitude = parseFloat(data[0].lat);
+            longitude = parseFloat(data[0].lon);
+            console.log(`Coordonnées GPS trouvées: ${latitude}, ${longitude}`);
+          }
+        } catch (geocodeError) {
+          console.error('Erreur de géocodage (non bloquant):', geocodeError);
+          // Continue sans coordonnées GPS
+        }
+      }
+
+      // Générer un slug basé uniquement sur le nom
+      // L'URL complète sera: /entreprise/ville/categorie/nom
+      const slugBase = formData.name
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '')
+        .substring(0, 100);
+
+      // Préparer les données pour l'insertion (seulement les champs qui existent dans la table)
+      const businessData = {
+        name: formData.name,
+        description: formData.description,
+        phone: formData.phone,
+        email: formData.email,
+        website: formData.website,
+        address: formData.address,
+        city: formData.city,
+        province: formData.province,
+        postal_code: formData.postal_code,
+        latitude: latitude,
+        longitude: longitude,
+        slug: slugBase,
+        data_source: 'user_created',
+        owner_id: user.id,
+        is_claimed: true,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+
+      console.log('Submitting business:', businessData);
+
+      // Insérer l'entreprise dans Supabase
+      const { data: business, error: businessError } = await supabase
+        .from('businesses')
+        .insert([businessData])
+        .select()
+        .single();
+
+      if (businessError) throw businessError;
+
+      console.log('Business created:', business);
+
+      // Récupérer le slug de la catégorie depuis la base de données
+      let categorySlug = 'autre';
+      if (formData.main_category_id) {
+        const { data: categoryData } = await supabase
+          .from('main_categories')
+          .select('slug')
+          .eq('id', formData.main_category_id)
+          .single();
+
+        if (categoryData && categoryData.slug) {
+          categorySlug = categoryData.slug;
+        }
+
+        // Insérer les catégories dans la table de liaison businesses_categories
+        const categoryLinks = [{
+          business_id: business.id,
+          main_category_id: formData.main_category_id,
+          sub_category_id: formData.subcategory_id || null
+        }];
+
+        const { error: categoryError } = await supabase
+          .from('businesses_categories')
+          .insert(categoryLinks);
+
+        if (categoryError) {
+          console.error('Error linking categories:', categoryError);
+          // Non bloquant - continuer même si l'insertion des catégories échoue
+        }
+      }
+
+      // Upload logo si présent
+      if (formData.logo && business) {
+        const logoFileName = `${business.id}/logo-${Date.now()}.${formData.logo.name.split('.').pop()}`;
+        const { error: logoError } = await supabase.storage
+          .from('business-images')
+          .upload(logoFileName, formData.logo);
+
+        if (logoError) {
+          console.error('Error uploading logo:', logoError);
+        } else {
+          // Mettre à jour l'entreprise avec l'URL du logo
+          const { data: { publicUrl } } = supabase.storage
+            .from('business-images')
+            .getPublicUrl(logoFileName);
+
+          await supabase
+            .from('businesses')
+            .update({ logo_url: publicUrl })
+            .eq('id', business.id);
+        }
+      }
+
+      // Upload images si présentes
+      if (formData.images && formData.images.length > 0 && business) {
+        for (let i = 0; i < formData.images.length; i++) {
+          const image = formData.images[i];
+          const imageFileName = `${business.id}/image-${i}-${Date.now()}.${image.name.split('.').pop()}`;
+
+          const { error: imageError } = await supabase.storage
+            .from('business-images')
+            .upload(imageFileName, image);
+
+          if (imageError) {
+            console.error(`Error uploading image ${i}:`, imageError);
+          } else {
+            const { data: { publicUrl } } = supabase.storage
+              .from('business-images')
+              .getPublicUrl(imageFileName);
+
+            // Ajouter l'URL dans le tableau images (JSON)
+            const currentImages = business.images || [];
+            currentImages.push(publicUrl);
+
+            await supabase
+              .from('businesses')
+              .update({ images: currentImages })
+              .eq('id', business.id);
+          }
+        }
+      }
+
+      // Construire l'URL de l'entreprise: /categorie/ville/nom (correspond aux routes existantes)
+      const citySlug = formData.city
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+
+      const businessUrl = `/${categorySlug}/${citySlug}/${business.slug}`;
+
+      alert('✅ Entreprise créée avec succès!');
+      navigate(businessUrl);
     } catch (error) {
       console.error('Error submitting business:', error);
-      alert('Erreur lors de la soumission. Veuillez réessayer.');
+      alert(`Erreur lors de la création: ${error.message}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -127,20 +303,16 @@ const CreateBusinessWizard = () => {
       case 1:
         return <WizardStep1_Basic {...stepProps} />;
       case 2:
-        return <WizardStep2_Details {...stepProps} />;
-      case 3:
         return <WizardStep3_Media {...stepProps} />;
-      case 4:
+      case 3:
         return <WizardStep4_Contact {...stepProps} />;
-      case 5:
+      case 4:
         return <WizardStep5_Address {...stepProps} />;
-      case 6:
-        return <WizardStep6_Geolocation {...stepProps} />;
-      case 7:
+      case 5:
         return <WizardStep7_Category {...stepProps} />;
-      case 8:
+      case 6:
         return <WizardStep8_Services {...stepProps} />;
-      case 9:
+      case 7:
         return <WizardStep9_Summary {...stepProps} />;
       default:
         return null;
@@ -150,18 +322,11 @@ const CreateBusinessWizard = () => {
   return (
     <div className="wizard-container">
       <div className="wizard-header">
-        <h1>Créer une nouvelle entreprise</h1>
+        <h1>{t('wizard.title')}</h1>
         <button className="wizard-close" onClick={() => navigate('/dashboard')}>
           ×
         </button>
       </div>
-
-      <WizardProgressBar
-        currentStep={currentStep}
-        totalSteps={TOTAL_STEPS}
-        visitedSteps={visitedSteps}
-        onStepClick={goToStep}
-      />
 
       <div className="wizard-content">
         {/* Left side: Form */}
@@ -172,6 +337,7 @@ const CreateBusinessWizard = () => {
             currentStep={currentStep}
             totalSteps={TOTAL_STEPS}
             isValid={isCurrentStepValid}
+            isSubmitting={isSubmitting}
             onPrevious={goToPrevious}
             onNext={goToNext}
             onSubmit={handleSubmit}

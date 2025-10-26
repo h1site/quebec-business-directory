@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../services/supabaseClient';
 import './ClaimBusinessModal.css';
 
 const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
+  const { t } = useTranslation();
   const [step, setStep] = useState('manual'); // manual, success, error
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -35,7 +37,7 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
       if (checkError) throw checkError;
 
       if (existingBusiness?.is_claimed && existingBusiness?.owner_id !== user.id) {
-        throw new Error('Cette entreprise a déjà été réclamée par un autre utilisateur.');
+        throw new Error(t('claim.errorAlreadyClaimed'));
       }
 
       // SECURITY: Check if user already has a pending claim for this business
@@ -47,7 +49,7 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
         .single();
 
       if (existingClaim && existingClaim.status === 'pending') {
-        throw new Error('Vous avez déjà une demande en attente pour cette entreprise.');
+        throw new Error(t('claim.errorPendingClaim'));
       }
 
       // Insert claim
@@ -97,73 +99,73 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
 
         {step === 'manual' && (
           <>
-            <h2>Réclamer votre fiche</h2>
+            <h2>{t('claim.title')}</h2>
             <p className="modal-subtitle">
-              Vous réclamez: <strong>{business.name}</strong>
+              {t('claim.subtitle', { businessName: business.name })}
             </p>
             <p className="modal-subtitle" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
-              Un administrateur vérifiera votre demande dans les 24-48h
+              {t('claim.verificationTime')}
             </p>
 
             <form onSubmit={handleManualVerification}>
               <div className="form-group">
-                <label>Votre nom complet *</label>
+                <label>{t('claim.nameLabel')} *</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder="Jean Tremblay"
+                  placeholder={t('claim.namePlaceholder')}
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label>Votre courriel *</label>
+                <label>{t('claim.emailLabel')} *</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="jean.tremblay@exemple.com"
+                  placeholder={t('claim.emailPlaceholder')}
                   required
                 />
-                <small>Utilisé pour vous contacter et approuver votre demande</small>
+                <small>{t('claim.emailHelp')}</small>
               </div>
 
               <div className="form-group">
-                <label>Numéro de téléphone *</label>
+                <label>{t('claim.phoneLabel')} *</label>
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  placeholder="514-555-1234"
+                  placeholder={t('claim.phonePlaceholder')}
                   required
                 />
-                <small>Format recommandé: 514-555-1234</small>
+                <small>{t('claim.phoneHelp')}</small>
               </div>
 
               <div className="form-group">
-                <label>Pourquoi réclamez-vous cette fiche? *</label>
+                <label>{t('claim.reasonLabel')} *</label>
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  placeholder="Ex: Je suis le propriétaire de cette entreprise depuis 2015..."
+                  placeholder={t('claim.reasonPlaceholder')}
                   rows="4"
                   required
                 />
-                <small>Décrivez votre lien avec l'entreprise</small>
+                <small>{t('claim.reasonHelp')}</small>
               </div>
 
               <div className="verification-instructions">
-                <p><strong>Processus de vérification:</strong></p>
+                <p><strong>{t('claim.processTitle')}</strong></p>
                 <ul>
-                  <li>✅ Votre demande sera envoyée à l'administrateur</li>
-                  <li>📧 Vous recevrez un email de confirmation</li>
-                  <li>👤 L'admin vous contactera pour vérifier votre identité</li>
-                  <li>🎉 Une fois approuvée, la fiche apparaîtra dans "Mes entreprises"</li>
+                  <li>{t('claim.processList.sent')}</li>
+                  <li>{t('claim.processList.email')}</li>
+                  <li>{t('claim.processList.verify')}</li>
+                  <li>{t('claim.processList.approved')}</li>
                 </ul>
               </div>
 
@@ -173,14 +175,14 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
                   className="btn btn-secondary"
                   onClick={onClose}
                 >
-                  Annuler
+                  {t('claim.btnCancel')}
                 </button>
                 <button
                   type="submit"
                   className="btn btn-primary"
                   disabled={loading}
                 >
-                  {loading ? 'Envoi en cours...' : 'Soumettre la demande'}
+                  {loading ? t('claim.btnSubmitting') : t('claim.btnSubmit')}
                 </button>
               </div>
             </form>
@@ -190,23 +192,23 @@ const ClaimBusinessModal = ({ business, user, onClose, onSuccess }) => {
         {step === 'pending' && (
           <div className="status-message pending">
             <div className="status-icon">✅</div>
-            <h2>Demande envoyée!</h2>
-            <p>Votre demande de réclamation a été soumise avec succès.</p>
-            <p><strong>Un administrateur vérifiera votre demande dans les 24-48h.</strong></p>
-            <p className="status-subtitle">Vous recevrez un email dès qu'elle sera approuvée. Une fois approuvée, la fiche apparaîtra dans "Mes entreprises".</p>
+            <h2>{t('claim.successTitle')}</h2>
+            <p>{t('claim.successMessage')}</p>
+            <p><strong>{t('claim.successVerification')}</strong></p>
+            <p className="status-subtitle">{t('claim.successEmail')}</p>
           </div>
         )}
 
         {step === 'error' && (
           <div className="status-message error">
             <div className="status-icon">❌</div>
-            <h2>Erreur</h2>
+            <h2>{t('claim.errorTitle')}</h2>
             <p>{error}</p>
             <button
               className="btn btn-primary"
               onClick={() => setStep('manual')}
             >
-              Réessayer
+              {t('claim.btnRetry')}
             </button>
           </div>
         )}

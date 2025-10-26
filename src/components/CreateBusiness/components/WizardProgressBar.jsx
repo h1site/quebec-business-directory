@@ -1,19 +1,21 @@
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './WizardProgressBar.css';
 
-const stepLabels = [
-  'Informations de base',
-  'Détails',
-  'Médias',
-  'Contact',
-  'Adresse',
-  'Géolocalisation',
-  'Catégorie',
-  'Services',
-  'Résumé'
-];
-
 const WizardProgressBar = ({ currentStep, totalSteps, visitedSteps, onStepClick }) => {
+  const { t } = useTranslation();
+
+  const stepLabels = [
+    t('wizard.stepLabels.basic'),
+    t('wizard.stepLabels.details'),
+    t('wizard.stepLabels.media'),
+    t('wizard.stepLabels.contact'),
+    t('wizard.stepLabels.address'),
+    t('wizard.stepLabels.geolocation'),
+    t('wizard.stepLabels.category'),
+    t('wizard.stepLabels.services'),
+    t('wizard.stepLabels.summary')
+  ];
   return (
     <div className="wizard-progress-container">
       <div className="wizard-progress-bar">

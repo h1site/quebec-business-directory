@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './BusinessPreview.css';
 
 const BusinessPreview = ({ formData }) => {
+  const { t } = useTranslation();
   const {
     name,
     description,
@@ -34,20 +36,20 @@ const BusinessPreview = ({ formData }) => {
     .filter(Boolean)
     .join(', ');
 
-  // Company size labels
+  // Company size labels - use i18n
   const companySizeLabels = {
-    '1-10': '1-10 employés',
-    '11-50': '11-50 employés',
-    '51-200': '51-200 employés',
-    '201-500': '201-500 employés',
-    '500+': '500+ employés'
+    '1-10': t('wizard.step2.sizeOptions.1-10'),
+    '11-50': t('wizard.step2.sizeOptions.11-50'),
+    '51-200': t('wizard.step2.sizeOptions.51-200'),
+    '201-500': t('wizard.step2.sizeOptions.201-500'),
+    '501+': t('wizard.step2.sizeOptions.501+')
   };
 
   return (
     <div className="business-preview">
       <div className="preview-header">
-        <h3>Aperçu du profil</h3>
-        <span className="preview-badge">Mise à jour en temps réel</span>
+        <h3>{t('wizard.preview.title')}</h3>
+        <span className="preview-badge">{t('wizard.preview.badge')}</span>
       </div>
 
       <div className="preview-content">
@@ -57,13 +59,13 @@ const BusinessPreview = ({ formData }) => {
             <img src={logo_preview} alt="Logo" className="preview-logo" />
           ) : (
             <div className="preview-logo-placeholder">
-              <span>Logo</span>
+              <span>{t('wizard.preview.logoPlaceholder')}</span>
             </div>
           )}
 
           <div className="preview-business-info">
             <h1 className="preview-business-name">
-              {name || 'Nom de l\'entreprise'}
+              {name || t('wizard.preview.namePlaceholder')}
             </h1>
 
             {/* Rating placeholder */}
@@ -71,7 +73,7 @@ const BusinessPreview = ({ formData }) => {
               <div className="preview-stars">
                 {'★'.repeat(5)}
               </div>
-              <span className="preview-rating-text">Nouveau</span>
+              <span className="preview-rating-text">{t('wizard.preview.ratingNew')}</span>
             </div>
 
             {/* Company details */}
@@ -79,12 +81,12 @@ const BusinessPreview = ({ formData }) => {
               <div className="preview-company-details">
                 {company_size && (
                   <span className="preview-detail-badge">
-                    👥 {companySizeLabels[company_size] || company_size}
+                    👥 {t('wizard.preview.companySize', { size: companySizeLabels[company_size] || company_size })}
                   </span>
                 )}
                 {founded_year && (
                   <span className="preview-detail-badge">
-                    📅 Fondée en {founded_year}
+                    📅 {t('wizard.preview.founded', { year: founded_year })}
                   </span>
                 )}
               </div>
@@ -134,7 +136,7 @@ const BusinessPreview = ({ formData }) => {
           <div className="preview-section">
             <h3 className="preview-section-title">À propos</h3>
             <p className="preview-description">
-              {description || 'Aucune description fournie.'}
+              {description || t('wizard.preview.noDescription')}
             </p>
           </div>
         )}
@@ -142,7 +144,7 @@ const BusinessPreview = ({ formData }) => {
         {/* Services */}
         {services && services.length > 0 && (
           <div className="preview-section">
-            <h3 className="preview-section-title">Services</h3>
+            <h3 className="preview-section-title">{t('wizard.step8.listTitle')}</h3>
             <div className="preview-services">
               {services.map((service, index) => (
                 <span key={index} className="preview-service-tag">
@@ -156,7 +158,7 @@ const BusinessPreview = ({ formData }) => {
         {/* Images gallery */}
         {image_previews && image_previews.length > 0 && (
           <div className="preview-section">
-            <h3 className="preview-section-title">Photos</h3>
+            <h3 className="preview-section-title">{t('wizard.step9.labelPhotos')}</h3>
             <div className="preview-gallery">
               {image_previews.slice(0, 6).map((imageUrl, index) => (
                 <div key={index} className="preview-gallery-item">
@@ -165,7 +167,7 @@ const BusinessPreview = ({ formData }) => {
               ))}
               {image_previews.length > 6 && (
                 <div className="preview-gallery-more">
-                  +{image_previews.length - 6} photos
+                  {t('wizard.preview.morePhotos', { count: image_previews.length - 6 })}
                 </div>
               )}
             </div>
@@ -177,7 +179,7 @@ const BusinessPreview = ({ formData }) => {
           <div className="preview-empty">
             <div className="preview-empty-icon">👀</div>
             <p className="preview-empty-text">
-              Commencez à remplir le formulaire pour voir un aperçu de votre profil
+              {t('wizard.preview.noContact')}
             </p>
           </div>
         )}

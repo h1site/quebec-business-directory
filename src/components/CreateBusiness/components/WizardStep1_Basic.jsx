@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './WizardStep.css';
 
 const WizardStep1_Basic = ({ formData, updateFormData, onValidationChange }) => {
+  const { t } = useTranslation();
   const [errors, setErrors] = useState({});
 
   // Validate on mount and when data changes
@@ -10,18 +12,18 @@ const WizardStep1_Basic = ({ formData, updateFormData, onValidationChange }) => 
     const newErrors = {};
 
     if (!formData.name || formData.name.trim().length < 3) {
-      newErrors.name = 'Le nom doit contenir au moins 3 caractères';
+      newErrors.name = t('wizard.step1.nameError');
     }
 
     if (!formData.description || formData.description.trim().length < 50) {
-      newErrors.description = 'La description doit contenir au moins 50 caractères';
+      newErrors.description = t('wizard.step1.descriptionError');
     } else if (formData.description.trim().length > 500) {
-      newErrors.description = 'La description ne peut pas dépasser 500 caractères';
+      newErrors.description = t('wizard.step1.descriptionErrorMax');
     }
 
     setErrors(newErrors);
     onValidationChange(Object.keys(newErrors).length === 0);
-  }, [formData.name, formData.description, onValidationChange]);
+  }, [formData.name, formData.description, onValidationChange, t]);
 
   const handleNameChange = (e) => {
     updateFormData({ name: e.target.value });
@@ -40,16 +42,16 @@ const WizardStep1_Basic = ({ formData, updateFormData, onValidationChange }) => 
   return (
     <div className="wizard-step">
       <div className="step-header">
-        <h2>Informations de base</h2>
+        <h2>{t('wizard.step1.title')}</h2>
         <p className="step-description">
-          Commencez par les informations essentielles de votre entreprise
+          {t('wizard.step1.description')}
         </p>
       </div>
 
       <div className="step-content">
         <div className="form-group">
           <label htmlFor="business-name" className="form-label required">
-            Nom de l'entreprise
+            {t('wizard.step1.nameLabel')}
           </label>
           <input
             id="business-name"
@@ -57,25 +59,25 @@ const WizardStep1_Basic = ({ formData, updateFormData, onValidationChange }) => 
             className={`form-input ${errors.name ? 'error' : ''}`}
             value={formData.name || ''}
             onChange={handleNameChange}
-            placeholder="Ex: Restaurant Le Gourmet"
+            placeholder={t('wizard.step1.namePlaceholder')}
             maxLength={100}
           />
           {errors.name && <span className="error-message">{errors.name}</span>}
           <span className="help-text">
-            Le nom complet de votre entreprise tel qu'il apparaîtra sur votre profil
+            {t('wizard.step1.nameHelp')}
           </span>
         </div>
 
         <div className="form-group">
           <label htmlFor="business-description" className="form-label required">
-            Description
+            {t('wizard.step1.descriptionLabel')}
           </label>
           <textarea
             id="business-description"
             className={`form-textarea ${errors.description ? 'error' : ''}`}
             value={formData.description || ''}
             onChange={handleDescriptionChange}
-            placeholder="Décrivez votre entreprise, vos services, ce qui vous rend unique..."
+            placeholder={t('wizard.step1.descriptionPlaceholder')}
             rows={8}
           />
           <div className="textarea-footer">
@@ -83,12 +85,12 @@ const WizardStep1_Basic = ({ formData, updateFormData, onValidationChange }) => 
               <span className="error-message">{errors.description}</span>
             )}
             <span className={`char-counter ${descriptionRemaining < 50 ? 'warning' : ''}`}>
-              {descriptionLength}/500 caractères
-              {descriptionLength < 50 && ` (minimum ${50 - descriptionLength} de plus)`}
+              {t('wizard.step1.charCount', { count: descriptionLength })}
+              {descriptionLength < 50 && ` ${t('wizard.step1.charCountMin', { min: 50 - descriptionLength })}`}
             </span>
           </div>
           <span className="help-text">
-            Une bonne description aide les clients à comprendre votre entreprise et ce que vous offrez
+            {t('wizard.step1.descriptionHelp')}
           </span>
         </div>
       </div>

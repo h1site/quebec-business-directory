@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './WizardStep.css';
 
 const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) => {
+  const { t } = useTranslation();
   const [errors, setErrors] = useState({});
 
   // Validate on mount and when data changes
@@ -15,14 +17,14 @@ const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) =
     const hasWebsite = formData.website && formData.website.trim().length > 0;
 
     if (!hasPhone && !hasEmail && !hasWebsite) {
-      newErrors.contact = 'Au moins un moyen de contact est requis (téléphone, email ou site web)';
+      newErrors.contact = t('wizard.step4.contactError');
     }
 
     // Validate phone format if provided
     if (hasPhone) {
       const phoneRegex = /^(\+?1[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/;
       if (!phoneRegex.test(formData.phone.replace(/\s/g, ''))) {
-        newErrors.phone = 'Format de téléphone invalide (ex: 514-555-1234)';
+        newErrors.phone = t('wizard.step4.phoneError');
       }
     }
 
@@ -30,7 +32,7 @@ const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) =
     if (hasEmail) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
-        newErrors.email = 'Adresse email invalide';
+        newErrors.email = t('wizard.step4.emailError');
       }
     }
 
@@ -38,13 +40,13 @@ const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) =
     if (hasWebsite) {
       const websiteRegex = /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/;
       if (!websiteRegex.test(formData.website)) {
-        newErrors.website = 'URL du site web invalide';
+        newErrors.website = t('wizard.step4.websiteError');
       }
     }
 
     setErrors(newErrors);
     onValidationChange(Object.keys(newErrors).length === 0);
-  }, [formData.phone, formData.email, formData.website, onValidationChange]);
+  }, [formData.phone, formData.email, formData.website, onValidationChange, t]);
 
   const handlePhoneChange = (e) => {
     updateFormData({ phone: e.target.value });
@@ -61,9 +63,9 @@ const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) =
   return (
     <div className="wizard-step">
       <div className="step-header">
-        <h2>Informations de contact</h2>
+        <h2>{t('wizard.step4.title')}</h2>
         <p className="step-description">
-          Comment les clients peuvent-ils vous joindre ? (Au moins un moyen requis)
+          {t('wizard.step4.description')}
         </p>
       </div>
 
@@ -77,7 +79,7 @@ const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) =
 
         <div className="form-group">
           <label htmlFor="phone" className="form-label">
-            📞 Numéro de téléphone
+            {t('wizard.step4.phoneLabel')}
           </label>
           <input
             id="phone"
@@ -85,17 +87,17 @@ const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) =
             className={`form-input ${errors.phone ? 'error' : ''}`}
             value={formData.phone || ''}
             onChange={handlePhoneChange}
-            placeholder="514-555-1234"
+            placeholder={t('wizard.step4.phonePlaceholder')}
           />
           {errors.phone && <span className="error-message">{errors.phone}</span>}
           <span className="help-text">
-            Format recommandé: XXX-XXX-XXXX
+            {t('wizard.step4.phoneHelp')}
           </span>
         </div>
 
         <div className="form-group">
           <label htmlFor="email" className="form-label">
-            ✉️ Adresse email
+            {t('wizard.step4.emailLabel')}
           </label>
           <input
             id="email"
@@ -103,17 +105,17 @@ const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) =
             className={`form-input ${errors.email ? 'error' : ''}`}
             value={formData.email || ''}
             onChange={handleEmailChange}
-            placeholder="contact@entreprise.com"
+            placeholder={t('wizard.step4.emailPlaceholder')}
           />
           {errors.email && <span className="error-message">{errors.email}</span>}
           <span className="help-text">
-            Email de contact pour votre entreprise
+            {t('wizard.step4.emailHelp')}
           </span>
         </div>
 
         <div className="form-group">
           <label htmlFor="website" className="form-label">
-            🌐 Site web
+            {t('wizard.step4.websiteLabel')}
           </label>
           <input
             id="website"
@@ -121,11 +123,11 @@ const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) =
             className={`form-input ${errors.website ? 'error' : ''}`}
             value={formData.website || ''}
             onChange={handleWebsiteChange}
-            placeholder="https://www.votre-entreprise.com"
+            placeholder={t('wizard.step4.websitePlaceholder')}
           />
           {errors.website && <span className="error-message">{errors.website}</span>}
           <span className="help-text">
-            URL complète de votre site web (incluant https://)
+            {t('wizard.step4.websiteHelp')}
           </span>
         </div>
       </div>

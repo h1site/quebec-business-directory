@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './WizardStep.css';
 
-const companySizeOptions = [
-  { value: '1-10', label: '1-10 employés' },
-  { value: '11-50', label: '11-50 employés' },
-  { value: '51-200', label: '51-200 employés' },
-  { value: '201-500', label: '201-500 employés' },
-  { value: '501+', label: '501+ employés' }
-];
-
 const WizardStep2_Details = ({ formData, updateFormData, onValidationChange }) => {
+  const { t } = useTranslation();
   const [errors, setErrors] = useState({});
+
+  const companySizeOptions = [
+    { value: '1-10', label: t('wizard.step2.sizeOptions.1-10') },
+    { value: '11-50', label: t('wizard.step2.sizeOptions.11-50') },
+    { value: '51-200', label: t('wizard.step2.sizeOptions.51-200') },
+    { value: '201-500', label: t('wizard.step2.sizeOptions.201-500') },
+    { value: '501+', label: t('wizard.step2.sizeOptions.501+') }
+  ];
 
   const currentYear = new Date().getFullYear();
   const minYear = 1800;
@@ -21,18 +23,18 @@ const WizardStep2_Details = ({ formData, updateFormData, onValidationChange }) =
     const newErrors = {};
 
     if (!formData.company_size) {
-      newErrors.company_size = 'Veuillez sélectionner la taille de l\'entreprise';
+      newErrors.company_size = t('wizard.step2.sizeError');
     }
 
     if (!formData.founded_year) {
-      newErrors.founded_year = 'Veuillez entrer l\'année de fondation';
+      newErrors.founded_year = t('wizard.step2.foundedError');
     } else if (formData.founded_year < minYear || formData.founded_year > currentYear) {
-      newErrors.founded_year = `L'année doit être entre ${minYear} et ${currentYear}`;
+      newErrors.founded_year = t('wizard.step2.foundedErrorRange', { min: minYear, max: currentYear });
     }
 
     setErrors(newErrors);
     onValidationChange(Object.keys(newErrors).length === 0);
-  }, [formData.company_size, formData.founded_year, onValidationChange, currentYear]);
+  }, [formData.company_size, formData.founded_year, onValidationChange, currentYear, t]);
 
   const handleCompanySizeChange = (e) => {
     updateFormData({ company_size: e.target.value });
@@ -48,16 +50,16 @@ const WizardStep2_Details = ({ formData, updateFormData, onValidationChange }) =
   return (
     <div className="wizard-step">
       <div className="step-header">
-        <h2>Détails de l'entreprise</h2>
+        <h2>{t('wizard.step2.title')}</h2>
         <p className="step-description">
-          Informations complémentaires sur votre entreprise
+          {t('wizard.step2.description')}
         </p>
       </div>
 
       <div className="step-content">
         <div className="form-group">
           <label htmlFor="company-size" className="form-label required">
-            Taille de l'entreprise
+            {t('wizard.step2.sizeLabel')}
           </label>
           <select
             id="company-size"
@@ -65,7 +67,7 @@ const WizardStep2_Details = ({ formData, updateFormData, onValidationChange }) =
             value={formData.company_size || ''}
             onChange={handleCompanySizeChange}
           >
-            <option value="">Sélectionnez la taille</option>
+            <option value="">{t('wizard.step2.sizePlaceholder')}</option>
             {companySizeOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -76,13 +78,13 @@ const WizardStep2_Details = ({ formData, updateFormData, onValidationChange }) =
             <span className="error-message">{errors.company_size}</span>
           )}
           <span className="help-text">
-            Nombre approximatif d'employés dans votre entreprise
+            {t('wizard.step2.sizeHelp')}
           </span>
         </div>
 
         <div className="form-group">
           <label htmlFor="founded-year" className="form-label required">
-            Année de fondation
+            {t('wizard.step2.foundedLabel')}
           </label>
           <input
             id="founded-year"
@@ -98,7 +100,7 @@ const WizardStep2_Details = ({ formData, updateFormData, onValidationChange }) =
             <span className="error-message">{errors.founded_year}</span>
           )}
           <span className="help-text">
-            L'année de création de votre entreprise
+            {t('wizard.step2.foundedHelp')}
           </span>
         </div>
       </div>

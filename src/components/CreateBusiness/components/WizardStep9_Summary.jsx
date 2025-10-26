@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './WizardStep.css';
 
 const WizardStep9_Summary = ({ formData, updateFormData, onValidationChange }) => {
+  const { t } = useTranslation();
   const [errors, setErrors] = useState({});
 
   // Validate on mount and when data changes
@@ -10,120 +12,100 @@ const WizardStep9_Summary = ({ formData, updateFormData, onValidationChange }) =
     const newErrors = {};
 
     if (!formData.terms_accepted) {
-      newErrors.terms = 'Vous devez accepter les conditions pour soumettre';
+      newErrors.terms = t('wizard.step9.termsError');
     }
 
     setErrors(newErrors);
     onValidationChange(Object.keys(newErrors).length === 0);
-  }, [formData.terms_accepted, onValidationChange]);
+  }, [formData.terms_accepted, onValidationChange, t]);
 
   const handleTermsChange = (e) => {
     updateFormData({ terms_accepted: e.target.checked });
   };
 
   // Helper to display data or placeholder
-  const displayValue = (value, placeholder = 'Non spécifié') => {
-    return value || placeholder;
+  const displayValue = (value) => {
+    return value || t('wizard.step9.valueNotSpecified');
   };
 
   return (
     <div className="wizard-step">
       <div className="step-header">
-        <h2>Résumé et soumission</h2>
+        <h2>{t('wizard.step9.title')}</h2>
         <p className="step-description">
-          Vérifiez vos informations avant de soumettre votre entreprise pour approbation
+          {t('wizard.step9.description')}
         </p>
       </div>
 
       <div className="step-content">
         <div className="summary-section">
-          <h3 className="summary-section-title">📋 Informations de base</h3>
+          <h3 className="summary-section-title">{t('wizard.step9.sectionBasic')}</h3>
           <div className="summary-row">
-            <span className="summary-label">Nom :</span>
+            <span className="summary-label">{t('wizard.step9.labelName')}</span>
             <span className="summary-value">{displayValue(formData.name)}</span>
           </div>
           <div className="summary-row">
-            <span className="summary-label">Description :</span>
+            <span className="summary-label">{t('wizard.step9.labelDescription')}</span>
             <span className="summary-value">{displayValue(formData.description)}</span>
           </div>
         </div>
 
         <div className="summary-section">
-          <h3 className="summary-section-title">🏢 Détails</h3>
+          <h3 className="summary-section-title">{t('wizard.step9.sectionMedia')}</h3>
           <div className="summary-row">
-            <span className="summary-label">Taille :</span>
-            <span className="summary-value">{displayValue(formData.company_size)}</span>
-          </div>
-          <div className="summary-row">
-            <span className="summary-label">Fondée en :</span>
-            <span className="summary-value">{displayValue(formData.founded_year?.toString())}</span>
-          </div>
-        </div>
-
-        <div className="summary-section">
-          <h3 className="summary-section-title">📸 Médias</h3>
-          <div className="summary-row">
-            <span className="summary-label">Logo :</span>
+            <span className="summary-label">{t('wizard.step9.labelLogo')}</span>
             <span className="summary-value">
-              {formData.logo_preview ? '✓ Ajouté' : 'Non ajouté'}
+              {formData.logo_preview ? t('wizard.step9.valueLogoAdded') : t('wizard.step9.valueLogoNotAdded')}
             </span>
           </div>
           <div className="summary-row">
-            <span className="summary-label">Photos :</span>
+            <span className="summary-label">{t('wizard.step9.labelPhotos')}</span>
             <span className="summary-value">
-              {formData.images?.length > 0 ? `${formData.images.length} photo(s)` : 'Aucune photo'}
+              {formData.images?.length > 0 ? t('wizard.step9.valuePhotosCount', { count: formData.images.length }) : t('wizard.step9.valuePhotosNone')}
             </span>
           </div>
         </div>
 
         <div className="summary-section">
-          <h3 className="summary-section-title">📞 Contact</h3>
+          <h3 className="summary-section-title">{t('wizard.step9.sectionContact')}</h3>
           <div className="summary-row">
-            <span className="summary-label">Téléphone :</span>
+            <span className="summary-label">{t('wizard.step9.labelPhone')}</span>
             <span className="summary-value">{displayValue(formData.phone)}</span>
           </div>
           <div className="summary-row">
-            <span className="summary-label">Email :</span>
+            <span className="summary-label">{t('wizard.step9.labelEmail')}</span>
             <span className="summary-value">{displayValue(formData.email)}</span>
           </div>
           <div className="summary-row">
-            <span className="summary-label">Site web :</span>
+            <span className="summary-label">{t('wizard.step9.labelWebsite')}</span>
             <span className="summary-value">{displayValue(formData.website)}</span>
           </div>
         </div>
 
         <div className="summary-section">
-          <h3 className="summary-section-title">📍 Localisation</h3>
+          <h3 className="summary-section-title">{t('wizard.step9.sectionLocation')}</h3>
           <div className="summary-row">
-            <span className="summary-label">Adresse :</span>
+            <span className="summary-label">{t('wizard.step9.labelAddress')}</span>
             <span className="summary-value">
               {formData.address && formData.city
                 ? `${formData.address}, ${formData.city}, ${formData.province} ${formData.postal_code}`
-                : 'Non spécifiée'}
-            </span>
-          </div>
-          <div className="summary-row">
-            <span className="summary-label">Coordonnées GPS :</span>
-            <span className="summary-value">
-              {formData.latitude && formData.longitude
-                ? `${formData.latitude.toFixed(6)}, ${formData.longitude.toFixed(6)}`
-                : 'Non spécifiées'}
+                : t('wizard.step9.valueNotSpecified')}
             </span>
           </div>
         </div>
 
         <div className="summary-section">
-          <h3 className="summary-section-title">🏷️ Catégorie et services</h3>
+          <h3 className="summary-section-title">{t('wizard.step9.sectionCategory')}</h3>
           <div className="summary-row">
-            <span className="summary-label">Catégorie :</span>
+            <span className="summary-label">{t('wizard.step9.labelCategory')}</span>
             <span className="summary-value">{displayValue(formData.main_category_name)}</span>
           </div>
           <div className="summary-row">
-            <span className="summary-label">Services :</span>
+            <span className="summary-label">{t('wizard.step9.labelServices')}</span>
             <span className="summary-value">
               {formData.services?.length > 0
                 ? formData.services.join(', ')
-                : 'Aucun service spécifié'}
+                : t('wizard.step9.valueServicesNone')}
             </span>
           </div>
         </div>
@@ -137,7 +119,7 @@ const WizardStep9_Summary = ({ formData, updateFormData, onValidationChange }) =
               className="checkbox-input"
             />
             <span className="checkbox-text">
-              J'accepte que mes informations soient vérifiées avant publication et je confirme que toutes les informations fournies sont exactes.
+              {t('wizard.step9.termsText')}
             </span>
           </label>
           {errors.terms && (
@@ -145,13 +127,6 @@ const WizardStep9_Summary = ({ formData, updateFormData, onValidationChange }) =
           )}
         </div>
 
-        <div className="info-box">
-          <div className="info-icon">⏳</div>
-          <div className="info-content">
-            <strong>Processus d'approbation</strong>
-            <p>Votre entreprise sera examinée par notre équipe dans les 24-48 heures. Vous recevrez un email une fois qu'elle sera approuvée et publiée.</p>
-          </div>
-        </div>
       </div>
     </div>
   );

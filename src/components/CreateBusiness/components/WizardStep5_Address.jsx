@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './WizardStep.css';
 
 const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) => {
+  const { t } = useTranslation();
   const [errors, setErrors] = useState({});
   const [suggestions, setSuggestions] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -14,30 +16,30 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
     const newErrors = {};
 
     if (!formData.address || formData.address.trim().length < 5) {
-      newErrors.address = 'L\'adresse doit contenir au moins 5 caractères';
+      newErrors.address = t('wizard.step5.addressError');
     }
 
     if (!formData.city || formData.city.trim().length < 2) {
-      newErrors.city = 'La ville est requise';
+      newErrors.city = t('wizard.step5.cityError');
     }
 
     if (!formData.province) {
-      newErrors.province = 'La province est requise';
+      newErrors.province = t('wizard.step5.provinceError');
     }
 
     if (!formData.postal_code) {
-      newErrors.postal_code = 'Le code postal est requis';
+      newErrors.postal_code = t('wizard.step5.postalCodeError');
     } else {
       // Canadian postal code format: A1A 1A1
       const postalRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
       if (!postalRegex.test(formData.postal_code)) {
-        newErrors.postal_code = 'Code postal invalide (format: A1A 1A1)';
+        newErrors.postal_code = t('wizard.step5.postalCodeErrorFormat');
       }
     }
 
     setErrors(newErrors);
     onValidationChange(Object.keys(newErrors).length === 0);
-  }, [formData.address, formData.city, formData.province, formData.postal_code, onValidationChange]);
+  }, [formData.address, formData.city, formData.province, formData.postal_code, onValidationChange, t]);
 
   const handleAddressChange = (e) => {
     const value = e.target.value;
@@ -156,16 +158,16 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
   return (
     <div className="wizard-step">
       <div className="step-header">
-        <h2>Adresse</h2>
+        <h2>{t('wizard.step5.title')}</h2>
         <p className="step-description">
-          Où se trouve votre entreprise ? Utilisez l'auto-complétion gratuite pour remplir rapidement.
+          {t('wizard.step5.description')}
         </p>
       </div>
 
       <div className="step-content">
         <div className="form-group">
           <label htmlFor="address" className="form-label required">
-            Adresse civique <span className="badge-autocomplete">✨ Auto-complétion gratuite</span>
+            {t('wizard.step5.addressLabel')}
           </label>
           <div className="autocomplete-wrapper">
             <input
@@ -174,7 +176,7 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
               className={`form-input ${errors.address ? 'error' : ''}`}
               value={formData.address || ''}
               onChange={handleAddressChange}
-              placeholder="Commencez à taper votre adresse..."
+              placeholder={t('wizard.step5.addressPlaceholder')}
               autoComplete="off"
             />
             {isSearching && (
@@ -201,14 +203,14 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
           </div>
           {errors.address && <span className="error-message">{errors.address}</span>}
           <span className="help-text">
-            💡 Tapez votre adresse et sélectionnez-la dans la liste pour remplir automatiquement tous les champs
+            {t('wizard.step5.addressHelp')}
           </span>
         </div>
 
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="city" className="form-label required">
-              Ville
+              {t('wizard.step5.cityLabel')}
             </label>
             <input
               id="city"
@@ -216,14 +218,14 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
               className={`form-input ${errors.city ? 'error' : ''}`}
               value={formData.city || ''}
               onChange={handleCityChange}
-              placeholder="Montréal"
+              placeholder={t('wizard.step5.cityPlaceholder')}
             />
             {errors.city && <span className="error-message">{errors.city}</span>}
           </div>
 
           <div className="form-group">
             <label htmlFor="province" className="form-label required">
-              Province
+              {t('wizard.step5.provinceLabel')}
             </label>
             <select
               id="province"
@@ -231,19 +233,19 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
               value={formData.province || 'QC'}
               onChange={handleProvinceChange}
             >
-              <option value="QC">Québec</option>
-              <option value="ON">Ontario</option>
-              <option value="BC">Colombie-Britannique</option>
-              <option value="AB">Alberta</option>
-              <option value="MB">Manitoba</option>
-              <option value="SK">Saskatchewan</option>
-              <option value="NS">Nouvelle-Écosse</option>
-              <option value="NB">Nouveau-Brunswick</option>
-              <option value="PE">Île-du-Prince-Édouard</option>
-              <option value="NL">Terre-Neuve-et-Labrador</option>
-              <option value="YT">Yukon</option>
-              <option value="NT">Territoires du Nord-Ouest</option>
-              <option value="NU">Nunavut</option>
+              <option value="QC">{t('wizard.step5.provinces.QC')}</option>
+              <option value="ON">{t('wizard.step5.provinces.ON')}</option>
+              <option value="BC">{t('wizard.step5.provinces.BC')}</option>
+              <option value="AB">{t('wizard.step5.provinces.AB')}</option>
+              <option value="MB">{t('wizard.step5.provinces.MB')}</option>
+              <option value="SK">{t('wizard.step5.provinces.SK')}</option>
+              <option value="NS">{t('wizard.step5.provinces.NS')}</option>
+              <option value="NB">{t('wizard.step5.provinces.NB')}</option>
+              <option value="PE">{t('wizard.step5.provinces.PE')}</option>
+              <option value="NL">{t('wizard.step5.provinces.NL')}</option>
+              <option value="YT">{t('wizard.step5.provinces.YT')}</option>
+              <option value="NT">{t('wizard.step5.provinces.NT')}</option>
+              <option value="NU">{t('wizard.step5.provinces.NU')}</option>
             </select>
             {errors.province && <span className="error-message">{errors.province}</span>}
           </div>
@@ -251,7 +253,7 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
 
         <div className="form-group">
           <label htmlFor="postal-code" className="form-label required">
-            Code postal
+            {t('wizard.step5.postalCodeLabel')}
           </label>
           <input
             id="postal-code"
@@ -259,12 +261,12 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
             className={`form-input ${errors.postal_code ? 'error' : ''}`}
             value={formData.postal_code || ''}
             onChange={handlePostalCodeChange}
-            placeholder="H1A 1A1"
+            placeholder={t('wizard.step5.postalCodePlaceholder')}
             maxLength={7}
           />
           {errors.postal_code && <span className="error-message">{errors.postal_code}</span>}
           <span className="help-text">
-            Format canadien: A1A 1A1
+            {t('wizard.step5.postalCodeHelp')}
           </span>
         </div>
       </div>

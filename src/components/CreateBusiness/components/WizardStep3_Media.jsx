@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './WizardStep.css';
 
 const WizardStep3_Media = ({ formData, updateFormData, onValidationChange }) => {
+  const { t } = useTranslation();
   const [errors, setErrors] = useState({});
 
   const MAX_IMAGES = 10;
@@ -14,24 +16,24 @@ const WizardStep3_Media = ({ formData, updateFormData, onValidationChange }) => 
 
     // Logo is now required
     if (!formData.logo && !formData.logo_preview) {
-      newErrors.logo = 'Le logo est obligatoire';
+      newErrors.logo = t('wizard.step3.logoError');
     }
 
     setErrors(newErrors);
     onValidationChange(Object.keys(newErrors).length === 0);
-  }, [formData.logo, formData.logo_preview, formData.images, onValidationChange]);
+  }, [formData.logo, formData.logo_preview, formData.images, onValidationChange, t]);
 
   const handleLogoUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     if (file.size > MAX_FILE_SIZE) {
-      alert('Le fichier est trop volumineux. Maximum 5MB.');
+      alert(t('wizard.step3.fileTooLarge'));
       return;
     }
 
     if (!file.type.startsWith('image/')) {
-      alert('Veuillez sélectionner une image valide.');
+      alert(t('wizard.step3.invalidImage'));
       return;
     }
 
@@ -50,17 +52,17 @@ const WizardStep3_Media = ({ formData, updateFormData, onValidationChange }) => 
     const currentImageCount = formData.images?.length || 0;
 
     if (currentImageCount + files.length > MAX_IMAGES) {
-      alert(`Vous ne pouvez ajouter que ${MAX_IMAGES - currentImageCount} image(s) supplémentaire(s).`);
+      alert(t('wizard.step3.tooManyFiles', { remaining: MAX_IMAGES - currentImageCount }));
       return;
     }
 
     const validFiles = files.filter(file => {
       if (file.size > MAX_FILE_SIZE) {
-        alert(`${file.name} est trop volumineux (max 5MB)`);
+        alert(t('wizard.step3.fileNameTooLarge', { name: file.name }));
         return false;
       }
       if (!file.type.startsWith('image/')) {
-        alert(`${file.name} n'est pas une image valide`);
+        alert(t('wizard.step3.fileNotImage', { name: file.name }));
         return false;
       }
       return true;
@@ -115,16 +117,16 @@ const WizardStep3_Media = ({ formData, updateFormData, onValidationChange }) => 
   return (
     <div className="wizard-step">
       <div className="step-header">
-        <h2>Médias</h2>
+        <h2>{t('wizard.step3.title')}</h2>
         <p className="step-description">
-          Ajoutez un logo (obligatoire) et des photos pour rendre votre profil plus attractif
+          {t('wizard.step3.description')}
         </p>
       </div>
 
       <div className="step-content">
         {/* Logo Upload */}
         <div className="form-group">
-          <label className="form-label required">Logo de l'entreprise</label>
+          <label className="form-label required">{t('wizard.step3.logoLabel')}</label>
 
           {formData.logo_preview ? (
             <div className="media-preview-container">
@@ -152,22 +154,22 @@ const WizardStep3_Media = ({ formData, updateFormData, onValidationChange }) => 
               <label htmlFor="logo-upload" className="upload-label">
                 <div className="upload-icon">📷</div>
                 <div className="upload-text">
-                  <strong>Cliquez pour ajouter un logo</strong>
-                  <span>PNG, JPG, GIF (max 5MB)</span>
+                  <strong>{t('wizard.step3.logoUploadText')}</strong>
+                  <span>{t('wizard.step3.logoUploadHint')}</span>
                 </div>
               </label>
             </div>
           )}
           {errors.logo && <span className="error-message">{errors.logo}</span>}
           <span className="help-text">
-            Un logo professionnel aide les clients à reconnaître votre entreprise
+            {t('wizard.step3.logoHelp')}
           </span>
         </div>
 
         {/* Gallery Upload */}
         <div className="form-group">
           <label className="form-label">
-            Photos ({imageCount}/{MAX_IMAGES})
+            {t('wizard.step3.photosLabel', { count: imageCount, max: MAX_IMAGES })}
           </label>
 
           {formData.image_previews && formData.image_previews.length > 0 && (
@@ -201,15 +203,15 @@ const WizardStep3_Media = ({ formData, updateFormData, onValidationChange }) => 
               <label htmlFor="images-upload" className="upload-label">
                 <div className="upload-icon">🖼️</div>
                 <div className="upload-text">
-                  <strong>Cliquez pour ajouter des photos</strong>
-                  <span>Vous pouvez ajouter jusqu'à {MAX_IMAGES - imageCount} photo(s) de plus</span>
+                  <strong>{t('wizard.step3.photosUploadText')}</strong>
+                  <span>{t('wizard.step3.photosUploadHint', { remaining: MAX_IMAGES - imageCount })}</span>
                 </div>
               </label>
             </div>
           )}
 
           <span className="help-text">
-            Montrez votre entreprise, vos produits ou services en action
+            {t('wizard.step3.photosHelp')}
           </span>
         </div>
       </div>

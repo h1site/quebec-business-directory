@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './WizardStep.css';
 
 const WizardStep6_Geolocation = ({ formData, updateFormData, onValidationChange }) => {
+  const { t } = useTranslation();
   const [errors, setErrors] = useState({});
   const [isGeocoding, setIsGeocoding] = useState(false);
 
@@ -10,21 +12,19 @@ const WizardStep6_Geolocation = ({ formData, updateFormData, onValidationChange 
   useEffect(() => {
     const newErrors = {};
 
-    if (!formData.latitude && formData.latitude !== 0) {
-      newErrors.latitude = 'La latitude est requise';
-    } else if (formData.latitude < -90 || formData.latitude > 90) {
-      newErrors.latitude = 'La latitude doit être entre -90 et 90';
+    // Latitude and longitude are now optional
+    if (formData.latitude && (formData.latitude < -90 || formData.latitude > 90)) {
+      newErrors.latitude = t('wizard.step6.latitudeErrorRange');
     }
 
-    if (!formData.longitude && formData.longitude !== 0) {
-      newErrors.longitude = 'La longitude est requise';
-    } else if (formData.longitude < -180 || formData.longitude > 180) {
-      newErrors.longitude = 'La longitude doit être entre -180 et 180';
+    if (formData.longitude && (formData.longitude < -180 || formData.longitude > 180)) {
+      newErrors.longitude = t('wizard.step6.longitudeErrorRange');
     }
 
     setErrors(newErrors);
-    onValidationChange(Object.keys(newErrors).length === 0);
-  }, [formData.latitude, formData.longitude, onValidationChange]);
+    // Always valid since fields are optional
+    onValidationChange(true);
+  }, [formData.latitude, formData.longitude, onValidationChange, t]);
 
   const handleLatitudeChange = (e) => {
     const value = e.target.value;
@@ -40,31 +40,43 @@ const WizardStep6_Geolocation = ({ formData, updateFormData, onValidationChange 
     const { address, city, province, postal_code } = formData;
 
     if (!address || !city) {
-      alert('Veuillez d\'abord remplir l\'adresse et la ville (étape précédente)');
+      alert(t('wizard.step6.addressRequired'));
       return;
     }
 
-    const fullAddress = `${address}, ${city}, ${province}, Canada ${postal_code}`;
+    const fullAddress = `${address}, ${city}, ${province}, Canada ${postal_code || ''}`;
     setIsGeocoding(true);
 
     try {
+      // Nominatim API (OpenStreetMap) - 100% gratuit
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(fullAddress)}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
+        `https://nominatim.openstreetmap.org/search?` +
+        `format=json&` +
+        `q=${encodeURIComponent(fullAddress)}&` +
+        `countrycodes=ca&` +
+        `limit=1`,
+        {
+          headers: {
+            'User-Agent': 'QuebecBusinessDirectory/1.0'
+          }
+        }
       );
+
       const data = await response.json();
 
-      if (data.status === 'OK' && data.results.length > 0) {
-        const location = data.results[0].geometry.location;
+      if (data && data.length > 0) {
+        const location = data[0];
         updateFormData({
-          latitude: location.lat,
-          longitude: location.lng
+          latitude: parseFloat(location.lat),
+          longitude: parseFloat(location.lon)
         });
+        alert(`✓ Coordonnées trouvées: ${location.lat}, ${location.lon}`);
       } else {
-        alert('Impossible de trouver les coordonnées pour cette adresse. Veuillez les entrer manuellement.');
+        alert(t('wizard.step6.geocodeError'));
       }
     } catch (error) {
       console.error('Geocoding error:', error);
-      alert('Erreur lors de la recherche des coordonnées. Veuillez les entrer manuellement.');
+      alert(t('wizard.step6.geocodeErrorGeneric'));
     } finally {
       setIsGeocoding(false);
     }
@@ -73,7 +85,7 @@ const WizardStep6_Geolocation = ({ formData, updateFormData, onValidationChange 
   const openGoogleMaps = () => {
     const { address, city, province } = formData;
     if (!address || !city) {
-      alert('Veuillez d\'abord remplir l\'adresse et la ville (étape précédente)');
+      alert(t('wizard.step6.addressRequired'));
       return;
     }
     const fullAddress = `${address}, ${city}, ${province}, Canada`;
@@ -83,20 +95,31 @@ const WizardStep6_Geolocation = ({ formData, updateFormData, onValidationChange 
   return (
     <div className="wizard-step">
       <div className="step-header">
-        <h2>Géolocalisation</h2>
+        <h2>{t('wizard.step6.title')}</h2>
         <p className="step-description">
-          Coordonnées GPS pour localiser précisément votre entreprise
+          {t('wizard.step6.description')}
         </p>
       </div>
 
       <div className="step-content">
+        <div className="warning-box">
+          <div className="warning-box-icon">⚠️</div>
+          <div className="warning-box-content">
+            <p className="warning-box-title">Coordonnées GPS optionnelles</p>
+            <p className="warning-box-message">
+              Si vous ne remplissez pas les coordonnées GPS, votre fiche n'aura pas de carte interactive.
+              Il est fortement recommandé de les ajouter pour une meilleure visibilité.
+            </p>
+          </div>
+        </div>
+
         <div className="info-box">
           <div className="info-icon">💡</div>
           <div className="info-content">
-            <strong>Comment obtenir vos coordonnées ?</strong>
+            <strong>{t('wizard.step6.infoTitle')}</strong>
             <ol>
-              <li><strong>Automatiquement</strong> : Cliquez sur "Obtenir automatiquement" pour utiliser votre adresse</li>
-              <li><strong>Manuellement</strong> : Cherchez votre entreprise sur Google Maps, cliquez droit sur l'emplacement et sélectionnez les coordonnées qui apparaissent</li>
+              <li><strong>{t('wizard.step6.infoAuto')}</strong></li>
+              <li><strong>{t('wizard.step6.infoManual')}</strong></li>
             </ol>
           </div>
         </div>
@@ -108,21 +131,21 @@ const WizardStep6_Geolocation = ({ formData, updateFormData, onValidationChange 
             onClick={geocodeAddress}
             disabled={isGeocoding}
           >
-            {isGeocoding ? '⏳ Recherche en cours...' : '🎯 Obtenir automatiquement'}
+            {isGeocoding ? t('wizard.step6.btnAutoLoading') : t('wizard.step6.btnAuto')}
           </button>
           <button
             type="button"
             className="btn btn-secondary"
             onClick={openGoogleMaps}
           >
-            🗺️ Ouvrir Google Maps
+            {t('wizard.step6.btnMaps')}
           </button>
         </div>
 
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="latitude" className="form-label required">
-              Latitude
+            <label htmlFor="latitude" className="form-label">
+              {t('wizard.step6.latitudeLabel')} <span className="optional">(optionnel)</span>
             </label>
             <input
               id="latitude"
@@ -131,17 +154,17 @@ const WizardStep6_Geolocation = ({ formData, updateFormData, onValidationChange 
               className={`form-input ${errors.latitude ? 'error' : ''}`}
               value={formData.latitude ?? ''}
               onChange={handleLatitudeChange}
-              placeholder="45.5017"
+              placeholder={t('wizard.step6.latitudePlaceholder')}
             />
             {errors.latitude && <span className="error-message">{errors.latitude}</span>}
             <span className="help-text">
-              Entre -90 et 90
+              {t('wizard.step6.latitudeHelp')}
             </span>
           </div>
 
           <div className="form-group">
-            <label htmlFor="longitude" className="form-label required">
-              Longitude
+            <label htmlFor="longitude" className="form-label">
+              {t('wizard.step6.longitudeLabel')} <span className="optional">(optionnel)</span>
             </label>
             <input
               id="longitude"
@@ -150,11 +173,11 @@ const WizardStep6_Geolocation = ({ formData, updateFormData, onValidationChange 
               className={`form-input ${errors.longitude ? 'error' : ''}`}
               value={formData.longitude ?? ''}
               onChange={handleLongitudeChange}
-              placeholder="-73.5673"
+              placeholder={t('wizard.step6.longitudePlaceholder')}
             />
             {errors.longitude && <span className="error-message">{errors.longitude}</span>}
             <span className="help-text">
-              Entre -180 et 180
+              {t('wizard.step6.longitudeHelp')}
             </span>
           </div>
         </div>
@@ -162,7 +185,7 @@ const WizardStep6_Geolocation = ({ formData, updateFormData, onValidationChange 
         {formData.latitude && formData.longitude && (
           <div className="success-box">
             <span className="success-icon">✓</span>
-            Coordonnées enregistrées : {formData.latitude.toFixed(6)}, {formData.longitude.toFixed(6)}
+            {t('wizard.step6.successMessage', { lat: formData.latitude.toFixed(6), lon: formData.longitude.toFixed(6) })}
           </div>
         )}
       </div>
