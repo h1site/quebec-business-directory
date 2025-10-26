@@ -192,6 +192,14 @@ const CreateBusinessWizard = () => {
 
       // Récupérer le slug de la catégorie depuis la base de données
       let categorySlug = 'autre';
+
+      console.log('💾 Wizard - Sauvegarde des catégories:', {
+        businessId: business.id,
+        main_category_id: formData.main_category_id,
+        subcategory_id: formData.subcategory_id,
+        formData: formData
+      });
+
       if (formData.main_category_id) {
         const { data: categoryData } = await supabase
           .from('main_categories')
@@ -210,14 +218,21 @@ const CreateBusinessWizard = () => {
           sub_category_id: formData.subcategory_id || null
         }];
 
-        const { error: categoryError } = await supabase
+        console.log('➡️ Insertion dans businesses_categories:', categoryLinks);
+
+        const { data: insertedData, error: categoryError } = await supabase
           .from('businesses_categories')
-          .insert(categoryLinks);
+          .insert(categoryLinks)
+          .select();
 
         if (categoryError) {
-          console.error('Error linking categories:', categoryError);
-          // Non bloquant - continuer même si l'insertion des catégories échoue
+          console.error('❌ Error linking categories:', categoryError);
+          alert(`Erreur lors de la liaison des catégories: ${categoryError.message}`);
+        } else {
+          console.log('✅ Catégories insérées avec succès:', insertedData);
         }
+      } else {
+        console.warn('⚠️ Aucune catégorie principale sélectionnée');
       }
 
       // Upload logo si présent
