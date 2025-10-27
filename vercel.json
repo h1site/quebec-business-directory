@@ -45,6 +45,18 @@
   ],
   "rewrites": [
     {
+      "source": "/:categorySlug/:citySlug/:businessSlug",
+      "destination": "/api/seo?categorySlug=:categorySlug&citySlug=:citySlug&slug=:businessSlug"
+    },
+    {
+      "source": "/ville/:citySlug",
+      "destination": "/api/seo?citySlug=:citySlug"
+    },
+    {
+      "source": "/categorie/:categorySlug",
+      "destination": "/api/seo?categorySlug=:categorySlug"
+    },
+    {
       "source": "/((?!api/|sitemaps/|sitemap\\.xml).*)",
       "destination": "/index.html"
     }
