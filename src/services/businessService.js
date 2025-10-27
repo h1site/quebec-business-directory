@@ -31,14 +31,15 @@ const buildFilters = ({ query, city, region, mrc, category, phone, distance, coo
     }
   }
 
-  // TEMPORARY FIX: Disable category slug filtering until businesses_enriched view is created
-  // The primary_*_category_slug columns only exist in the view, not in businesses table
-  // TODO: Re-enable once businesses_enriched view is created
-
-  // For now, we skip category filtering entirely to get the search working
-  // Users can still search by region, city, MRC, and business name
-  if (category) {
-    // Fallback to old text-based category search if categories column exists
+  // Category filtering using slug-based columns from businesses_enriched view
+  if (subCategorySlug) {
+    // Filter by subcategory (most specific)
+    filters.push({ column: 'primary_sub_category_slug', operator: 'eq', value: subCategorySlug });
+  } else if (mainCategorySlug) {
+    // Filter by main category
+    filters.push({ column: 'primary_main_category_slug', operator: 'eq', value: mainCategorySlug });
+  } else if (category) {
+    // Fallback to old text-based category search for backwards compatibility
     filters.push({ column: 'categories', operator: 'cs', value: `{${category}}` });
   }
 
@@ -111,15 +112,10 @@ export const searchBusinesses = async ({
     return { data, error: null };
   }
 
-  // TEMPORARY FIX: Use businesses table directly until businesses_enriched view is recreated
-  // TODO: Switch back to businesses_enriched once the view is created in Supabase
+  // Use businesses_enriched view for category slug filtering
   let request = supabase
-    .from('businesses')
-    .select(
-      `id, slug, name, description, phone, email, address, city, region, categories, products_services,
-       website, postal_code, google_rating, google_reviews_count, logo_url, latitude, longitude`,
-      { count: 'exact' }
-    )
+    .from('businesses_enriched')
+    .select('*', { count: 'exact' })
     .range(offset, offset + limit - 1);
 
   const filters = buildFilters({ query, city, region, mrc, category, phone, distance, coordinates, language, serviceMode, businessSize, mainCategorySlug, subCategorySlug });
@@ -150,16 +146,10 @@ export const searchBusinesses = async ({
     result = await request.order('created_at', { ascending: false });
   } else {
     // Sans filtres: ordre VRAIMENT aléatoire via PostgreSQL random()
-    // Note: On ne peut pas utiliser .order() avec random(), donc on utilise un truc
-    // On mélange en utilisant un offset aléatoire
     const randomOffset = Math.floor(Math.random() * 1000); // Random start point
     result = await supabase
-      .from('businesses')
-      .select(
-        `id, slug, name, description, phone, email, address, city, region, categories, products_services,
-         website, postal_code, google_rating, google_reviews_count, logo_url, latitude, longitude`,
-        { count: 'exact' }
-      )
+      .from('businesses_enriched')
+      .select('*', { count: 'exact' })
       .range(randomOffset, randomOffset + limit - 1)
       .order('id', { ascending: false });
   }
