@@ -94,8 +94,8 @@ export default async function handler(req, res) {
         description = description.substring(0, lastSpace) + '...';
       }
     } else {
-      // Simple fallback: just name and city
-      description = `${business.name} à ${business.city || 'Québec'}`;
+      // Engaging fallback description
+      description = `Une belle entreprise ${business.name} à ${business.city || 'Québec'} au Québec`;
     }
 
     const canonical = `https://registreduquebec.com/${categorySlug}/${citySlug}/${slug}`;
