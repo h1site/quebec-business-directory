@@ -304,6 +304,10 @@
     padding: 0.5rem 1rem;
   }
 
+  .hero-yelp-categories-title {
+    padding-top: 50px;
+  }
+
   .hero-yelp-categories-grid {
     grid-template-columns: 1fr;
   }
