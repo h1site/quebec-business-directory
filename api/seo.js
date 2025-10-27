@@ -8,15 +8,11 @@ const supabase = createClient(
   process.env.VITE_SUPABASE_ANON_KEY
 );
 
-// Cache the template
-let htmlTemplate = null;
-
+// Load fresh template each time (DO NOT CACHE - causes canonical URL bug)
 async function loadTemplate() {
-  if (!htmlTemplate) {
-    const templatePath = path.join(process.cwd(), 'dist/index.html');
-    htmlTemplate = await fs.readFile(templatePath, 'utf-8');
-  }
-  return htmlTemplate;
+  const templatePath = path.join(process.cwd(), 'dist/index.html');
+  const template = await fs.readFile(templatePath, 'utf-8');
+  return template;
 }
 
 // Generate Schema.org JSON-LD
