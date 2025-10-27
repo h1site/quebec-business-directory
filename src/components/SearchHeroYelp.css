@@ -162,10 +162,21 @@
   background-repeat: no-repeat;
 }
 
+.hero-yelp-categories::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 0;
+}
+
 .hero-yelp-categories-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #1a202c;
   margin: 0 0 2rem 0;
   text-align: center;
   position: relative;
