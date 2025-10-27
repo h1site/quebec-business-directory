@@ -14,7 +14,8 @@ Disallow: /connexion
 Disallow: /inscription
 Disallow: /mes-entreprises
 Disallow: /entreprise/nouvelle
-Disallow: /*/modifier
+# Disallow edit pages for businesses
+Disallow: /*/modifier$
 
 # Block aggressive crawlers
 User-agent: AhrefsBot
