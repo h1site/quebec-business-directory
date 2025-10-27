@@ -153,22 +153,31 @@
 
 /* Categories Section */
 .hero-yelp-categories {
+  position: relative;
   padding: 100px 0;
-  background: #f8f9fa;
+  background-image: url('/images/background/background-overlay-dark.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 .hero-yelp-categories-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #1a202c;
+  color: #ffffff;
   margin: 0 0 2rem 0;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-yelp-categories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 2.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-yelp-category-card {
