@@ -155,14 +155,24 @@
 .hero-yelp-categories {
   position: relative;
   padding: 100px 0;
-  background-image: url('/images/background/background-overlay.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
 }
 
 .hero-yelp-categories::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/images/background/background-overlay.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: invert(1);
+  z-index: -1;
+}
+
+.hero-yelp-categories::after {
   content: '';
   position: absolute;
   top: 0;
