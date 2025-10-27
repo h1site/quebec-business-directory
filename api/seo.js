@@ -98,16 +98,8 @@ export default async function handler(req, res) {
         description = description.substring(0, lastSpace) + '...';
       }
     } else {
-      // Generate appealing description
-      description = `Découvrez l'entreprise ${business.name}, une belle entreprise du Québec à ${business.city || 'votre service'}.`;
-
-      // Add contact info if available
-      if (business.phone) {
-        description += ` Téléphone: ${business.phone}.`;
-      }
-      if (business.address) {
-        description += ` ${business.address}.`;
-      }
+      // Simple fallback: just name and city
+      description = `${business.name} à ${business.city || 'Québec'}`;
     }
 
     const canonical = `https://registreduquebec.com/${categorySlug}/${citySlug}/${slug}`;
