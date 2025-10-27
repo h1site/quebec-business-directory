@@ -20,12 +20,7 @@ CREATE TABLE IF NOT EXISTS business_views (
   referrer TEXT,
   country VARCHAR(2),
   city VARCHAR(255),
-  viewed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-
-  -- Indexes pour optimiser les requêtes
-  INDEX idx_business_views_business_id (business_id),
-  INDEX idx_business_views_viewed_at (viewed_at),
-  INDEX idx_business_views_ip (ip_address)
+  viewed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 -- Table pour tracker les clics sur les sites web externes
@@ -36,28 +31,33 @@ CREATE TABLE IF NOT EXISTS website_clicks (
   ip_address INET,
   user_agent TEXT,
   referrer TEXT,
-  clicked_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-
-  -- Indexes
-  INDEX idx_website_clicks_business_id (business_id),
-  INDEX idx_website_clicks_clicked_at (clicked_at),
-  INDEX idx_website_clicks_ip (ip_address)
+  clicked_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 -- Table pour les statistiques agrégées par jour (pour performance)
 CREATE TABLE IF NOT EXISTS daily_stats (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  date DATE NOT NULL,
+  date DATE NOT NULL UNIQUE,
   total_views INTEGER DEFAULT 0,
   total_clicks INTEGER DEFAULT 0,
   unique_visitors INTEGER DEFAULT 0,
   new_businesses INTEGER DEFAULT 0,
   claimed_businesses INTEGER DEFAULT 0,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-
-  UNIQUE(date),
-  INDEX idx_daily_stats_date (date)
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Indexes pour business_views
+CREATE INDEX IF NOT EXISTS idx_business_views_business_id ON business_views(business_id);
+CREATE INDEX IF NOT EXISTS idx_business_views_viewed_at ON business_views(viewed_at);
+CREATE INDEX IF NOT EXISTS idx_business_views_ip ON business_views(ip_address);
+
+-- Indexes pour website_clicks
+CREATE INDEX IF NOT EXISTS idx_website_clicks_business_id ON website_clicks(business_id);
+CREATE INDEX IF NOT EXISTS idx_website_clicks_clicked_at ON website_clicks(clicked_at);
+CREATE INDEX IF NOT EXISTS idx_website_clicks_ip ON website_clicks(ip_address);
+
+-- Indexes pour daily_stats
+CREATE INDEX IF NOT EXISTS idx_daily_stats_date ON daily_stats(date);
 
 -- Table pour les statistiques par entreprise (cache)
 CREATE TABLE IF NOT EXISTS business_stats (
