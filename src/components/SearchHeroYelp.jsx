@@ -161,7 +161,7 @@ const SearchHeroYelp = () => {
           </div>
 
           {/* Notice - Add Your Business */}
-          <div style={{
+          <div className="hero-add-business-notice" style={{
             margin: '2rem auto 0px',
             padding: '1.25rem 1.5rem',
             background: 'rgb(2 6 52)',
