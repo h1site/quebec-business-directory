@@ -101,11 +101,18 @@ export default async function handler(req, res) {
       .replace(
         /<meta name="description" content=".*?">/,
         `<meta name="description" content="${escapeHtml(description)}">`
-      )
-      .replace(
-        /<link rel="canonical" href=".*?">/,
+      );
+
+    // Replace or inject canonical URL - IMPORTANT FIX!
+    if (html.includes('<link rel="canonical"')) {
+      html = html.replace(
+        /<link rel="canonical" href="[^"]*"[^>]*>/,
         `<link rel="canonical" href="${canonical}">`
       );
+    } else {
+      // Inject canonical if not present
+      html = html.replace('</head>', `    <link rel="canonical" href="${canonical}">\n</head>`);
+    }
 
     // Add Open Graph and Schema.org
     const seoTags = `
@@ -113,6 +120,7 @@ export default async function handler(req, res) {
     <meta property="og:description" content="${escapeHtml(description)}">
     <meta property="og:url" content="${canonical}">
     <meta property="og:type" content="business.business">
+    <meta property="og:locale" content="fr_CA">
 
     <script type="application/ld+json">
     ${JSON.stringify(schemaOrg, null, 2)}
