@@ -28,6 +28,7 @@
   max-width: 900px;
   width: 90%;
   text-align: center;
+  padding-top: 100px;
 }
 
 .hero-yelp-title {
@@ -35,7 +36,6 @@
   font-weight: 800;
   color: white;
   margin: 0 0 0.5rem 0;
-  padding-top: 100px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   letter-spacing: -0.5px;
 }
