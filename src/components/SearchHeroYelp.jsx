@@ -101,6 +101,13 @@ const SearchHeroYelp = () => {
           <h1 className="hero-yelp-title">
             {t('hero.findTitle')}
           </h1>
+
+          {/* Beta Notice */}
+          <div className="hero-beta-notice">
+            <span className="beta-badge">BÊTA</span>
+            <p>{t('hero.betaNotice')}</p>
+          </div>
+
           <p className="hero-yelp-subtitle">
             {t('hero.businessCount', { count: totalBusinesses.toLocaleString() })}
           </p>

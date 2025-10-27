@@ -9,6 +9,7 @@ const resources = {
         findTitle: 'Trouvez ce dont vous avez besoin',
         subtitle:
           'Parcourez des milliers d\'entreprises locales du Québec pour des services fiables et de qualité.',
+        betaNotice: 'L\'annuaire d\'entreprises est actuellement en phase bêta. Nous procédons à l\'attribution des fiches par région et au classement des entreprises par catégorie.',
         businessCount: '{{count}} entreprises au Québec',
         whatLabel: 'Quoi?',
         whereLabel: 'Où?',
@@ -389,6 +390,7 @@ const resources = {
         findTitle: 'Find what you need',
         subtitle:
           'Browse thousands of Quebec-based local businesses for reliable, high-quality services.',
+        betaNotice: 'The business directory is currently in beta phase. We are assigning listings by region and categorizing businesses.',
         businessCount: '{{count}} businesses in Quebec',
         whatLabel: 'What?',
         whereLabel: 'Where?',
