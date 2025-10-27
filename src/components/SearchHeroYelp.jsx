@@ -99,19 +99,16 @@ const SearchHeroYelp = () => {
         <div className="hero-yelp-overlay"></div>
         <div className="hero-yelp-content">
           <h1 className="hero-yelp-title">
-            {i18n.language === 'fr'
-              ? 'Trouvez ce dont vous avez besoin'
-              : 'Find what you need'
-            }
+            {t('hero.findTitle')}
           </h1>
           <p className="hero-yelp-subtitle">
-            {totalBusinesses.toLocaleString()} {i18n.language === 'fr' ? 'entreprises au Québec' : 'businesses in Quebec'}
+            {t('hero.businessCount', { count: totalBusinesses.toLocaleString() })}
           </p>
 
           {/* Search Form */}
           <form className="hero-yelp-search" onSubmit={onSubmit}>
             <div className="hero-yelp-search-group">
-              <label>{i18n.language === 'fr' ? 'Quoi?' : 'What?'}</label>
+              <label>{t('hero.whatLabel')}</label>
               <input
                 type="search"
                 placeholder={t('hero.whatPlaceholder')}
@@ -121,7 +118,7 @@ const SearchHeroYelp = () => {
               />
             </div>
             <div className="hero-yelp-search-group">
-              <label>{i18n.language === 'fr' ? 'Où?' : 'Where?'}</label>
+              <label>{t('hero.whereLabel')}</label>
               <CityAutocomplete
                 value={where}
                 onChange={setWhere}
@@ -155,6 +152,56 @@ const SearchHeroYelp = () => {
               </button>
             ))}
           </div>
+
+          {/* Notice - Add Your Business */}
+          <div style={{
+            margin: '2rem auto 0px',
+            padding: '1.25rem 1.5rem',
+            background: 'rgb(2 6 52)',
+            border: '1px solid rgba(255, 255, 255, 0.8)',
+            borderRadius: '8px',
+            textAlign: 'center',
+            backdropFilter: 'blur(10px)',
+            maxWidth: '600px'
+          }}>
+            <p style={{
+              margin: '0 0 1rem 0',
+              fontSize: '0.95rem',
+              color: '#ffffff',
+              lineHeight: '1.6',
+              fontWeight: '500'
+            }}>
+              {t('home.addBusinessNotice')}
+            </p>
+            <Link
+              to="/entreprise/nouvelle"
+              style={{
+                display: 'inline-block',
+                padding: '0.75rem 1.5rem',
+                background: 'rgb(41 127 166)',
+                color: '#f9f9f9',
+                textDecoration: 'none',
+                borderRadius: '6px',
+                fontWeight: '600',
+                fontSize: '0.95rem',
+                transition: '0.2s',
+                boxShadow: 'rgba(14, 165, 233, 0.3) 0px 2px 8px',
+                transform: 'translateY(0px)'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'rgb(31 107 146)';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(14, 165, 233, 0.4)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'rgb(41 127 166)';
+                e.currentTarget.style.transform = 'translateY(0px)';
+                e.currentTarget.style.boxShadow = 'rgba(14, 165, 233, 0.3) 0px 2px 8px';
+              }}
+            >
+              {t('home.addBusinessButton')}
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -162,8 +209,10 @@ const SearchHeroYelp = () => {
       <div className="hero-yelp-categories">
         <div className="container">
           <h2 className="hero-yelp-categories-title">
-            {i18n.language === 'fr' ? 'Explorer par catégorie' : 'Browse by category'}
+            {t('hero.browseByCategory')}
           </h2>
+
+          {/* All categories */}
           <div className="hero-yelp-categories-grid">
             {mainCategories.map((category) => (
               <Link

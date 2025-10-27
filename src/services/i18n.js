@@ -6,11 +6,16 @@ const resources = {
     translation: {
       hero: {
         title: 'Trouvez les meilleurs professionnels près de chez vous',
+        findTitle: 'Trouvez ce dont vous avez besoin',
         subtitle:
           'Parcourez des milliers d\'entreprises locales du Québec pour des services fiables et de qualité.',
+        businessCount: '{{count}} entreprises au Québec',
+        whatLabel: 'Quoi?',
+        whereLabel: 'Où?',
         whatPlaceholder: 'Que recherchez-vous?',
         wherePlaceholder: 'Où?',
-        searchButton: 'Rechercher'
+        searchButton: 'Rechercher',
+        browseByCategory: 'Explorer par catégorie'
       },
       navigation: {
         home: 'Accueil',
@@ -39,7 +44,9 @@ const resources = {
         randomBusinessesSubtitle: 'Chaque jour, de nouvelles pépites à découvrir',
         reviews: 'avis',
         seeDetails: 'Voir les détails',
-        discoverOthers: 'Découvrir d\'autres entreprises'
+        discoverOthers: 'Découvrir d\'autres entreprises',
+        addBusinessNotice: 'Il est possible que votre entreprise ne figure pas encore dans notre annuaire d\'entreprises. Dans ce cas, nous vous invitons à créer votre fiche dès maintenant.',
+        addBusinessButton: 'Ajouter votre entreprise'
       },
       business: {
         unclaimedNotice: 'Les données affichées sont les dernières informations publiques que nous avons pu obtenir. Veuillez toujours vérifier avec le site web de l\'entreprise ou par téléphone pour des informations à jour.'
@@ -379,11 +386,16 @@ const resources = {
     translation: {
       hero: {
         title: 'Find the best professionals near you',
+        findTitle: 'Find what you need',
         subtitle:
           'Browse thousands of Quebec-based local businesses for reliable, high-quality services.',
+        businessCount: '{{count}} businesses in Quebec',
+        whatLabel: 'What?',
+        whereLabel: 'Where?',
         whatPlaceholder: 'What are you looking for?',
         wherePlaceholder: 'Where?',
-        searchButton: 'Search'
+        searchButton: 'Search',
+        browseByCategory: 'Browse by category'
       },
       navigation: {
         home: 'Home',
@@ -412,7 +424,9 @@ const resources = {
         reviews: 'reviews',
         seeDetails: 'See details',
         discoverOthers: 'Discover other businesses',
-        cityDescription: 'Discover local businesses, services and trusted professionals in {{city}}.'
+        cityDescription: 'Discover local businesses, services and trusted professionals in {{city}}.',
+        addBusinessNotice: 'Your business may not yet be listed in our directory. In that case, we invite you to create your listing now.',
+        addBusinessButton: 'Add your business'
       },
       business: {
         unclaimedNotice: 'The information displayed is the latest public data we were able to obtain. Always verify with the business website or phone number for up-to-date information.'

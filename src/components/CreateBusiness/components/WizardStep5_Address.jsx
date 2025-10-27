@@ -176,6 +176,7 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
               className={`form-input ${errors.address ? 'error' : ''}`}
               value={formData.address || ''}
               onChange={handleAddressChange}
+              onPaste={handleAddressChange}
               placeholder={t('wizard.step5.addressPlaceholder')}
               autoComplete="off"
             />
@@ -218,6 +219,7 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
               className={`form-input ${errors.city ? 'error' : ''}`}
               value={formData.city || ''}
               onChange={handleCityChange}
+              onPaste={handleCityChange}
               placeholder={t('wizard.step5.cityPlaceholder')}
             />
             {errors.city && <span className="error-message">{errors.city}</span>}
@@ -261,6 +263,7 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
             className={`form-input ${errors.postal_code ? 'error' : ''}`}
             value={formData.postal_code || ''}
             onChange={handlePostalCodeChange}
+            onPaste={handlePostalCodeChange}
             placeholder={t('wizard.step5.postalCodePlaceholder')}
             maxLength={7}
           />

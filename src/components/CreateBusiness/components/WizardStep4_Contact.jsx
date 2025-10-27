@@ -87,6 +87,7 @@ const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) =
             className={`form-input ${errors.phone ? 'error' : ''}`}
             value={formData.phone || ''}
             onChange={handlePhoneChange}
+            onPaste={handlePhoneChange}
             placeholder={t('wizard.step4.phonePlaceholder')}
           />
           {errors.phone && <span className="error-message">{errors.phone}</span>}
@@ -105,6 +106,7 @@ const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) =
             className={`form-input ${errors.email ? 'error' : ''}`}
             value={formData.email || ''}
             onChange={handleEmailChange}
+            onPaste={handleEmailChange}
             placeholder={t('wizard.step4.emailPlaceholder')}
           />
           {errors.email && <span className="error-message">{errors.email}</span>}
@@ -123,6 +125,7 @@ const WizardStep4_Contact = ({ formData, updateFormData, onValidationChange }) =
             className={`form-input ${errors.website ? 'error' : ''}`}
             value={formData.website || ''}
             onChange={handleWebsiteChange}
+            onPaste={handleWebsiteChange}
             placeholder={t('wizard.step4.websitePlaceholder')}
           />
           {errors.website && <span className="error-message">{errors.website}</span>}

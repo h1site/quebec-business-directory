@@ -371,6 +371,41 @@ const Search = () => {
                 <button className="btn btn-primary" onClick={handleClearFilters}>
                   {t('search.clearFilters')}
                 </button>
+
+                {/* Notice - Add Your Business */}
+                <div style={{
+                  marginTop: '2rem',
+                  padding: '1.5rem',
+                  background: '#f0f9ff',
+                  border: '1px solid #bae6fd',
+                  borderRadius: '8px',
+                  textAlign: 'center'
+                }}>
+                  <p style={{
+                    margin: '0 0 1rem 0',
+                    fontSize: '1rem',
+                    color: '#334155',
+                    lineHeight: '1.6'
+                  }}>
+                    {t('home.addBusinessNotice')}
+                  </p>
+                  <a
+                    href="/entreprise/nouvelle"
+                    style={{
+                      display: 'inline-block',
+                      padding: '0.75rem 1.5rem',
+                      background: '#0ea5e9',
+                      color: 'white',
+                      textDecoration: 'none',
+                      borderRadius: '6px',
+                      fontWeight: '600',
+                      fontSize: '0.95rem',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    {t('home.addBusinessButton')}
+                  </a>
+                </div>
               </div>
             ) : businesses.length === 0 ? (
               <div className="welcome-state">

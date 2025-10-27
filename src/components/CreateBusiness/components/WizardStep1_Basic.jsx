@@ -59,6 +59,7 @@ const WizardStep1_Basic = ({ formData, updateFormData, onValidationChange }) => 
             className={`form-input ${errors.name ? 'error' : ''}`}
             value={formData.name || ''}
             onChange={handleNameChange}
+            onPaste={handleNameChange}
             placeholder={t('wizard.step1.namePlaceholder')}
             maxLength={100}
           />
@@ -77,6 +78,7 @@ const WizardStep1_Basic = ({ formData, updateFormData, onValidationChange }) => 
             className={`form-textarea ${errors.description ? 'error' : ''}`}
             value={formData.description || ''}
             onChange={handleDescriptionChange}
+            onPaste={handleDescriptionChange}
             placeholder={t('wizard.step1.descriptionPlaceholder')}
             rows={8}
           />
