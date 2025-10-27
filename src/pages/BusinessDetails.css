@@ -47,6 +47,43 @@
   gap: 0.5rem;
 }
 
+/* Beta Notice on Business Details */
+.business-beta-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem 0;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50px;
+  max-width: 700px;
+}
+
+.business-beta-notice .beta-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 0.75rem;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+}
+
+.business-beta-notice p {
+  margin: 0;
+  color: #1a202c;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .business-header-top {
   display: flex;
   align-items: flex-start;
@@ -584,6 +621,17 @@
 
   .business-header-content {
     justify-content: center;
+  }
+
+  .business-beta-notice {
+    flex-direction: column;
+    padding: 1rem;
+    margin: 0 0 1rem 0;
+    gap: 0.5rem;
+  }
+
+  .business-beta-notice p {
+    font-size: 0.875rem;
   }
 
   .business-name {

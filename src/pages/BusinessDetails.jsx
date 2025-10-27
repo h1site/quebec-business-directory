@@ -220,6 +220,12 @@ const BusinessDetails = () => {
           </div>
         </div>
 
+        {/* Beta Notice */}
+        <div className="business-beta-notice">
+          <span className="beta-badge">BÊTA</span>
+          <p>{t('hero.betaNotice')}</p>
+        </div>
+
         {/* Main Content */}
         <div className="business-content">
           {/* Left Column */}
