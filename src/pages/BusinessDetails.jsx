@@ -151,35 +151,10 @@ const BusinessDetails = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{business.name} - {cityName} | Registre d'entreprise du Québec</title>
-        <meta name="description" content={metaDescription} />
-        <link rel="canonical" href={canonicalUrl} />
-
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="business.business" />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:title" content={`${business.name} - ${cityName}`} />
-        <meta property="og:description" content={metaDescription} />
-        {business.logo_url && <meta property="og:image" content={business.logo_url} />}
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={canonicalUrl} />
-        <meta name="twitter:title" content={`${business.name} - ${cityName}`} />
-        <meta name="twitter:description" content={metaDescription} />
-        {business.logo_url && <meta name="twitter:image" content={business.logo_url} />}
-
-        {/* Enhanced Business Schema.org markup */}
-        <script type="application/ld+json">
-          {JSON.stringify(generateBusinessSchema(business, canonicalUrl, businessHours))}
-        </script>
-
-        {/* BreadcrumbList Schema.org markup */}
-        <script type="application/ld+json">
-          {JSON.stringify(generateBreadcrumbSchema(business))}
-        </script>
-      </Helmet>
+      {/* IMPORTANT: React Helmet disabled for business pages - SSR handles all meta tags
+          The server-side rendering (api/seo.js) already injects correct meta tags in HTML
+          React Helmet would override them with wrong data causing canonical/description issues
+          SEO bots read the initial HTML, not React-modified DOM */}
 
       <div className="business-details-page">
         <div className="container">
