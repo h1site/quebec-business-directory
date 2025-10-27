@@ -155,7 +155,7 @@
 .hero-yelp-categories {
   position: relative;
   padding: 100px 0;
-  background-image: url('/images/background/background-overlay-dark.png');
+  background-image: url('/images/background/background-overlay.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
