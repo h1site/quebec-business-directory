@@ -617,6 +617,20 @@ nav .donate-button:hover {
   object-fit: contain;
 }
 
+.header-beta-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 0.65rem;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(251, 191, 36, 0.3);
+  margin-left: 0.5rem;
+}
+
 .language-toggle {
   padding: 0.5rem 1rem;
   border-radius: 999px;

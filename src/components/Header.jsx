@@ -70,6 +70,7 @@ const Header = () => {
               </Link>
               <div className="nav-brand-text-mobile">
                 <Link to="/">Registre d'entreprise du Québec</Link>
+                <span className="header-beta-badge">BÊTA</span>
               </div>
             </div>
 
@@ -77,6 +78,7 @@ const Header = () => {
             <Link to="/" className="nav-brand">
               <img src="/images/logos/logo.webp" alt="Logo" className="nav-brand-logo" />
               <span>Registre d'entreprise du Québec</span>
+              <span className="header-beta-badge">BÊTA</span>
             </Link>
 
             {/* Menu hamburger pour mobile (colonne droite) */}
