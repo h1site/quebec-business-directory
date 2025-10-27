@@ -60,6 +60,11 @@ function escapeHtml(text) {
 
 // Main serverless function handler
 export default async function handler(req, res) {
+  // CRITICAL: Disable Vercel caching - each business page MUST be unique!
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   try {
     const { slug, categorySlug, citySlug } = req.query;
 
