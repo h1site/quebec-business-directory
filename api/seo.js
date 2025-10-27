@@ -94,8 +94,19 @@ export default async function handler(req, res) {
         description = description.substring(0, lastSpace) + '...';
       }
     } else {
-      // Engaging fallback description
+      // Engaging fallback description (ensure min 70 characters for SEO)
       description = `Une belle entreprise ${business.name} à ${business.city || 'Québec'} au Québec`;
+
+      // Ensure minimum 70 characters by adding contact info if needed
+      if (description.length < 70) {
+        if (business.phone) {
+          description += `. Téléphone: ${business.phone}`;
+        } else if (business.address) {
+          description += `. ${business.address}`;
+        } else {
+          description += `. Découvrez cette entreprise québécoise dans notre répertoire complet`;
+        }
+      }
     }
 
     const canonical = `https://registreduquebec.com/${categorySlug}/${citySlug}/${slug}`;
