@@ -17,6 +17,7 @@ import MigrationTools from './pages/Dashboard/MigrationTools.jsx';
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
 import AdminTools from './pages/Admin/AdminTools.jsx';
 import AdminClaims from './pages/Admin/AdminClaims.jsx';
+import AdminModeration from './pages/Admin/AdminModeration.jsx';
 import BusinessDetails from './pages/BusinessDetails.jsx';
 import LegalNotice from './pages/LegalNotice.jsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
@@ -129,6 +130,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <AdminClaims />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/moderation"
+                element={
+                  <AdminRoute>
+                    <AdminModeration />
                   </AdminRoute>
                 }
               />

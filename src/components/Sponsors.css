@@ -1,117 +1,81 @@
 .sponsors-section {
   padding: 2rem 0;
-  background: #f8f9fa;
-  border-top: 1px solid #e0e0e0;
+  background: #2c3e50;
+  border-top: 3px solid #3498db;
 }
 
 .sponsors-title {
   text-align: center;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: #666;
+  font-size: 0.75rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  color: #95a5a6;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.sponsors-carousel {
-  position: relative;
-  overflow: hidden;
+.sponsors-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
   max-width: 600px;
   margin: 0 auto;
-}
-
-.sponsors-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.sponsor-slide {
-  min-width: 100%;
-  flex-shrink: 0;
 }
 
 .sponsor-link {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  background: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  text-decoration: none;
-  color: #333;
+  justify-content: center;
+  padding: 1rem;
   transition: all 0.3s ease;
-  border: 1px solid #e0e0e0;
+  opacity: 0.85;
 }
 
 .sponsor-link:hover {
-  border-color: #007bff;
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
-  transform: translateY(-2px);
+  opacity: 1;
+  transform: scale(1.05);
 }
 
-.sponsor-logo-container {
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 120px;
+.sponsor-link-oval {
+  background: white;
+  border-radius: 50px;
+  padding: 0.8rem 1.5rem;
+}
+
+.sponsor-link-oval:hover {
+  background: #f8f9fa;
 }
 
 .sponsor-logo {
-  max-width: 120px;
-  max-height: 60px;
+  height: 45px;
   width: auto;
-  height: auto;
   object-fit: contain;
+  filter: brightness(1.1);
 }
 
-.sponsor-info {
-  flex: 1;
-  text-align: left;
+.sponsor-link-oval .sponsor-logo {
+  filter: none;
+  height: 30px;
 }
 
-.sponsor-name {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #333;
-}
-
-.sponsor-description {
+.sponsors-contact {
+  text-align: center;
+  margin-top: 1.5rem;
   font-size: 0.85rem;
-  line-height: 1.5;
-  color: #666;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  color: #95a5a6;
 }
 
-.sponsors-indicators {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
+.sponsors-contact a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
-.indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 1px solid #ccc;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-}
-
-.indicator:hover {
-  background: #999;
-  border-color: #999;
-}
-
-.indicator.active {
-  background: #007bff;
-  border-color: #007bff;
+.sponsors-contact a:hover {
+  color: #5dade2;
+  text-decoration: underline;
 }
 
 /* Responsive */
@@ -121,34 +85,19 @@
   }
 
   .sponsors-title {
-    font-size: 1rem;
-    margin-bottom: 1rem;
+    font-size: 0.7rem;
+    margin-bottom: 0.8rem;
   }
 
-  .sponsor-link {
-    flex-direction: column;
-    text-align: center;
-    padding: 1rem;
-  }
-
-  .sponsor-logo-container {
-    width: 100px;
+  .sponsors-grid {
+    gap: 2rem;
   }
 
   .sponsor-logo {
-    max-width: 100px;
-    max-height: 50px;
+    height: 35px;
   }
 
-  .sponsor-info {
-    text-align: center;
-  }
-
-  .sponsor-name {
-    font-size: 1rem;
-  }
-
-  .sponsor-description {
-    font-size: 0.8rem;
+  .sponsor-link-oval .sponsor-logo {
+    height: 25px;
   }
 }

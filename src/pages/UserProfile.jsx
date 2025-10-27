@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../services/supabaseClient';
 import WriteReviewModal from '../components/WriteReviewModal';
 import './UserProfile.css';
@@ -9,6 +9,7 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [profile, setProfile] = useState({
     full_name: '',
     bio: '',
@@ -34,6 +35,15 @@ const UserProfile = () => {
       }
 
       setUser(user);
+
+      // Vérifier si l'utilisateur est admin
+      const { data: adminData } = await supabase
+        .from('admins')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      setIsAdmin(!!adminData);
 
       // Récupérer le profil existant
       const { data: existingProfile } = await supabase
@@ -224,9 +234,16 @@ const UserProfile = () => {
       <div className="container">
         <div className="profile-header">
           <h1>Mon Profil</h1>
-          <button onClick={handleLogout} className="btn-logout">
-            Déconnexion
-          </button>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            {isAdmin && (
+              <Link to="/admin/moderation" className="btn-admin-link">
+                🔍 Modération
+              </Link>
+            )}
+            <button onClick={handleLogout} className="btn-logout">
+              Déconnexion
+            </button>
+          </div>
         </div>
 
         <div className="profile-content">
