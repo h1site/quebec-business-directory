@@ -60,10 +60,11 @@ function escapeHtml(text) {
 
 // Main serverless function handler
 export default async function handler(req, res) {
-  // CRITICAL: Disable Vercel caching - each business page MUST be unique!
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  // CRITICAL: Disable ALL caching - each business page MUST be unique!
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
   res.setHeader('Pragma', 'no-cache');
   res.setHeader('Expires', '0');
+  res.setHeader('Vary', '*');
 
   try {
     const { slug, categorySlug, citySlug } = req.query;
@@ -120,6 +121,10 @@ export default async function handler(req, res) {
     // IMPORTANT: Use the URL slug from the request, not params
     const canonical = `https://registreduquebec.com/${categorySlug}/${citySlug}/${slug}`;
     const schemaOrg = generateSchemaOrg(business);
+
+    // Generate unique ETag for this specific business page
+    const etag = `"${slug}-${business.id}-${Date.now()}"`;
+    res.setHeader('ETag', etag);
 
     // CRITICAL: Load fresh template for each request
     const template = await loadTemplate();
