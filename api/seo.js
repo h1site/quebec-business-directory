@@ -107,8 +107,8 @@ export default async function handler(req, res) {
     let html = template
       .replace(/<title>.*?<\/title>/, `<title>${escapeHtml(title)}</title>`)
       .replace(
-        /<meta name="description" content=".*?">/,
-        `<meta name="description" content="${escapeHtml(description)}">`
+        /<meta name="description" content=".*?"[^>]*>/,
+        `<meta name="description" content="${escapeHtml(description)}" />`
       );
 
     // Replace or inject canonical URL - IMPORTANT FIX!
