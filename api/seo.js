@@ -94,44 +94,46 @@ export default async function handler(req, res) {
         description = description.substring(0, lastSpace) + '...';
       }
     } else {
-      // Engaging fallback description (ensure min 70 characters for SEO)
-      description = `Une belle entreprise ${business.name} à ${business.city || 'Québec'} au Québec`;
+      // Generate description ensuring minimum 70 characters
+      const baseDesc = `Une belle entreprise ${business.name} à ${business.city || 'Québec'} au Québec`;
 
-      // Ensure minimum 70 characters by adding contact info if needed
-      if (description.length < 70) {
-        if (business.phone) {
-          description += `. Téléphone: ${business.phone}`;
-        } else if (business.address) {
-          description += `. ${business.address}`;
+      if (baseDesc.length >= 70) {
+        // Already long enough
+        description = baseDesc;
+      } else {
+        // Add info to reach 70 characters
+        if (business.address) {
+          description = `${baseDesc}. Adresse: ${business.address}`;
+        } else if (business.phone) {
+          description = `${baseDesc}. Téléphone: ${business.phone}`;
         } else {
-          description += `. Découvrez cette entreprise québécoise dans notre répertoire complet`;
+          description = `${baseDesc}. Découvrez cette entreprise québécoise`;
         }
       }
     }
 
+    // IMPORTANT: Use the URL slug from the request, not params
     const canonical = `https://registreduquebec.com/${categorySlug}/${citySlug}/${slug}`;
     const schemaOrg = generateSchemaOrg(business);
 
-    // Load and modify template
+    // CRITICAL: Load fresh template for each request
     const template = await loadTemplate();
 
+    // Replace title and description
     let html = template
-      .replace(/<title>.*?<\/title>/, `<title>${escapeHtml(title)}</title>`)
+      .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
       .replace(
-        /<meta name="description" content=".*?"[^>]*>/,
+        /<meta name="description" content=".*?"[^>]*>/i,
         `<meta name="description" content="${escapeHtml(description)}" />`
       );
 
-    // Replace or inject canonical URL - IMPORTANT FIX!
-    if (html.includes('<link rel="canonical"')) {
-      html = html.replace(
-        /<link rel="canonical" href="[^"]*"[^>]*>/,
-        `<link rel="canonical" href="${canonical}">`
-      );
-    } else {
-      // Inject canonical if not present
-      html = html.replace('</head>', `    <link rel="canonical" href="${canonical}">\n</head>`);
-    }
+    // Replace or remove existing canonical, then inject the correct one
+    // Remove any existing canonical first
+    html = html.replace(/<link rel="canonical"[^>]*>/gi, '');
+
+    // Inject new canonical before </head>
+    const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
+    html = html.replace('</head>', `${canonicalTag}\n</head>`);
 
     // Add Open Graph and Schema.org
     const seoTags = `
