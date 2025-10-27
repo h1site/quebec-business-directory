@@ -8,14 +8,17 @@ const supabase = createClient(
   process.env.VITE_SUPABASE_ANON_KEY
 );
 
-// Load fresh template each time (DO NOT CACHE - causes canonical URL bug)
+// Cache the HTML template (safe to cache - we modify a copy for each request)
+let htmlTemplateCache = null;
 async function loadTemplate() {
-  const templatePath = path.join(process.cwd(), 'dist/index.html');
-  const template = await fs.readFile(templatePath, 'utf-8');
-  return template;
+  if (!htmlTemplateCache) {
+    const templatePath = path.join(process.cwd(), 'dist/index.html');
+    htmlTemplateCache = await fs.readFile(templatePath, 'utf-8');
+  }
+  return htmlTemplateCache; // Return cached template (we modify a copy)
 }
 
-// Generate Schema.org JSON-LD
+// Generate Schema.org JSON-LD with enhanced data
 function generateSchemaOrg(business) {
   const schema = {
     "@context": "https://schema.org",
@@ -35,12 +38,25 @@ function generateSchemaOrg(business) {
   if (business.phone) schema.telephone = business.phone;
   if (business.website) schema.url = business.website;
   if (business.email) schema.email = business.email;
+  if (business.logo_url) schema.image = business.logo_url;
 
-  if (business.rating && business.review_count) {
+  // Geographic coordinates for better local SEO
+  if (business.latitude && business.longitude) {
+    schema.geo = {
+      "@type": "GeoCoordinates",
+      "latitude": business.latitude,
+      "longitude": business.longitude
+    };
+  }
+
+  // Ratings for rich snippets
+  if (business.google_rating && business.google_reviews_count) {
     schema.aggregateRating = {
       "@type": "AggregateRating",
-      "ratingValue": business.rating,
-      "reviewCount": business.review_count
+      "ratingValue": business.google_rating,
+      "reviewCount": business.google_reviews_count,
+      "bestRating": "5",
+      "worstRating": "1"
     };
   }
 
@@ -100,20 +116,22 @@ export default async function handler(req, res) {
         description = description.substring(0, lastSpace) + '...';
       }
     } else {
-      // Generate description ensuring minimum 70 characters
-      const baseDesc = `Une belle entreprise ${business.name} à ${business.city || 'Québec'} au Québec`;
+      // Generate SEO-optimized description with category info
+      const category = business.primary_main_category_fr || business.categories?.[0] || '';
+      const baseDesc = category
+        ? `${business.name} - ${category} à ${business.city || 'Québec'}, Québec`
+        : `${business.name} à ${business.city || 'Québec'}, Québec`;
 
       if (baseDesc.length >= 70) {
-        // Already long enough
         description = baseDesc;
       } else {
-        // Add info to reach 70 characters
-        if (business.address) {
-          description = `${baseDesc}. Adresse: ${business.address}`;
-        } else if (business.phone) {
+        // Add contact info to reach 70 characters
+        if (business.phone) {
           description = `${baseDesc}. Téléphone: ${business.phone}`;
+        } else if (business.address) {
+          description = `${baseDesc}. ${business.address}`;
         } else {
-          description = `${baseDesc}. Découvrez cette entreprise québécoise`;
+          description = `${baseDesc}. Trouvez toutes les coordonnées sur Registre du Québec`;
         }
       }
     }
@@ -158,8 +176,12 @@ export default async function handler(req, res) {
     <meta property="og:url" content="${canonical}">
     <meta property="og:type" content="business.business">
     <meta property="og:locale" content="fr_CA">
+    <meta property="og:site_name" content="Registre du Québec">
+    ${business.logo_url ? `<meta property="og:image" content="${business.logo_url}">` : ''}
+    <meta name="twitter:card" content="summary${business.logo_url ? '_large_image' : ''}">
     <meta name="twitter:title" content="${escapeHtml(title)}">
     <meta name="twitter:description" content="${escapeHtml(description)}">
+    ${business.logo_url ? `<meta name="twitter:image" content="${business.logo_url}">` : ''}
 
     <script type="application/ld+json">
     ${JSON.stringify(schemaOrg, null, 2)}
