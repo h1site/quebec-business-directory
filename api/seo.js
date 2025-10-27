@@ -127,37 +127,45 @@ export default async function handler(req, res) {
     res.setHeader('ETag', etag);
 
     // CRITICAL: Load fresh template for each request
-    const template = await loadTemplate();
+    let html = await loadTemplate();
 
-    // Replace title and description
-    let html = template
+    // STEP 1: Replace default meta tags with business-specific ones
+    html = html
       .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
       .replace(
         /<meta name="description" content=".*?"[^>]*>/i,
         `<meta name="description" content="${escapeHtml(description)}" />`
       );
 
-    // Replace or remove existing canonical, then inject the correct one
-    // Remove any existing canonical first
+    // STEP 2: Remove ALL default Open Graph and Twitter tags
+    html = html
+      .replace(/<meta property="og:type" content="website"[^>]*>/gi, '')
+      .replace(/<meta property="og:url" content="https:\/\/registreduquebec\.com\/"[^>]*>/gi, '')
+      .replace(/<meta property="og:title" content="[^"]*Annuaire officiel"[^>]*>/gi, '')
+      .replace(/<meta property="og:description" content="[^"]*Annuaire officiel[^"]*"[^>]*>/gi, '')
+      .replace(/<meta name="twitter:title" content="[^"]*"[^>]*>/gi, '')
+      .replace(/<meta name="twitter:description" content="[^"]*Annuaire officiel[^"]*"[^>]*>/gi, '');
+
+    // STEP 3: Remove existing canonical
     html = html.replace(/<link rel="canonical"[^>]*>/gi, '');
 
-    // Inject new canonical before </head>
+    // STEP 4: Inject new canonical and business-specific SEO tags
     const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
-    html = html.replace('</head>', `${canonicalTag}\n</head>`);
 
-    // Add Open Graph and Schema.org
     const seoTags = `
     <meta property="og:title" content="${escapeHtml(title)}">
     <meta property="og:description" content="${escapeHtml(description)}">
     <meta property="og:url" content="${canonical}">
     <meta property="og:type" content="business.business">
     <meta property="og:locale" content="fr_CA">
+    <meta name="twitter:title" content="${escapeHtml(title)}">
+    <meta name="twitter:description" content="${escapeHtml(description)}">
 
     <script type="application/ld+json">
     ${JSON.stringify(schemaOrg, null, 2)}
     </script>`;
 
-    html = html.replace('</head>', `${seoTags}\n</head>`);
+    html = html.replace('</head>', `${canonicalTag}\n${seoTags}\n</head>`);
 
     // Add initial data for client
     const dataScript = `
