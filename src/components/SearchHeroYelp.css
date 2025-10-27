@@ -155,31 +155,7 @@
 .hero-yelp-categories {
   position: relative;
   padding: 100px 0;
-}
-
-.hero-yelp-categories::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: -1;
-}
-
-.hero-yelp-categories::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.3);
-  z-index: 0;
+  background: #f8f9fa;
 }
 
 .hero-yelp-categories-title {
