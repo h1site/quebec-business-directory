@@ -38,6 +38,37 @@ const BusinessDetails = () => {
     const loadBusiness = async () => {
       try {
         setLoading(true);
+
+        // CRITICAL FIX: Check if SSR provided initial data for THIS specific business
+        if (window.__INITIAL_BUSINESS_DATA__ && window.__INITIAL_BUSINESS_DATA__.slug === slug) {
+          const data = window.__INITIAL_BUSINESS_DATA__;
+          delete window.__INITIAL_BUSINESS_DATA__; // Use it only once to prevent stale data
+
+          console.log('✅ Using SSR data for:', data.name);
+          setBusiness(data);
+
+          // Load business hours for schema markup
+          if (data && data.id) {
+            try {
+              const { data: hours } = await getBusinessHours(data.id);
+              setBusinessHours(hours);
+            } catch (hoursError) {
+              console.error('Error loading business hours:', hoursError);
+            }
+          }
+
+          // Redirect legacy URLs to new SEO format
+          if (data && isLegacyUrl(location.pathname)) {
+            const newUrl = getBusinessUrl(data);
+            navigate(newUrl, { replace: true });
+          }
+
+          setLoading(false);
+          return; // Skip the Supabase fetch
+        }
+
+        // Fallback: Fetch from Supabase (for client-side navigation)
+        console.log('🔄 Fetching from Supabase for:', slug);
         const { data, error: fetchError } = await getBusinessBySlug(slug);
 
         if (fetchError) {
