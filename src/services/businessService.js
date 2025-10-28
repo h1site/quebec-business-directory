@@ -121,9 +121,11 @@ export const searchBusinesses = async ({
   }
 
   // Use businesses_enriched view for category slug filtering
+  // Only count on first page to improve performance (count is expensive)
+  const shouldCount = offset === 0;
   let request = supabase
     .from('businesses_enriched')
-    .select('*', { count: 'exact' })
+    .select('*', shouldCount ? { count: 'exact' } : {})
     .range(offset, offset + limit - 1);
 
   const filters = buildFilters({ query, city, region, mrc, category, phone, distance, coordinates, language, serviceMode, businessSize, mainCategorySlug, subCategorySlug, mainCategoryId, subCategoryId });
@@ -155,9 +157,10 @@ export const searchBusinesses = async ({
   } else {
     // Sans filtres: ordre VRAIMENT aléatoire via PostgreSQL random()
     const randomOffset = Math.floor(Math.random() * 1000); // Random start point
+    // Don't count on random queries for better performance
     result = await supabase
       .from('businesses_enriched')
-      .select('*', { count: 'exact' })
+      .select('*')
       .range(randomOffset, randomOffset + limit - 1)
       .order('id', { ascending: false });
   }
