@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { supabase } from '../../services/supabaseClient.js';
 import { getBusinessUrl } from '../../utils/urlHelpers.js';
 import BusinessCard from '../../components/BusinessCard.jsx';
+import Breadcrumb from '../../components/Breadcrumb.jsx';
 import './Browse.css';
 
 const CategoryBrowse = () => {
@@ -150,13 +151,16 @@ const CategoryBrowse = () => {
       </Helmet>
 
       <div className="container browse-page">
+        {/* Breadcrumb Navigation with Schema */}
+        <Breadcrumb
+          items={[
+            { name: 'Accueil', url: '/' },
+            { name: categoryName, url: `/categorie/${categorySlug}` },
+            ...(subCategorySlug && subCategoryName ? [{ name: subCategoryName }] : [])
+          ]}
+        />
+
         <div className="browse-header">
-          {subCategorySlug && categoryName && (
-            <div className="breadcrumb">
-              <Link to={`/categorie/${categorySlug}`}>{categoryName}</Link>
-              <span> / </span>
-            </div>
-          )}
           <h1>{titlePrefix} {displayName}</h1>
           <p className="browse-count">{businesses.length} entreprise{businesses.length > 1 ? 's' : ''} trouvée{businesses.length > 1 ? 's' : ''}</p>
         </div>

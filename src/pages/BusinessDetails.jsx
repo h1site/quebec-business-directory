@@ -12,6 +12,7 @@ import ClaimBusinessModal from '../components/ClaimBusinessModal.jsx';
 import BusinessReviews from '../components/BusinessReviews.jsx';
 import WriteReviewModal from '../components/WriteReviewModal.jsx';
 import AmazonProducts from '../components/AmazonProducts.jsx';
+import Breadcrumb from '../components/Breadcrumb.jsx';
 import { getBusinessUrl, isLegacyUrl } from '../utils/urlHelpers.js';
 import { generateBusinessSchema, generateBreadcrumbSchema } from '../utils/schemaMarkup.js';
 import './BusinessDetails.css';
@@ -165,6 +166,23 @@ const BusinessDetails = () => {
               <img src={business.logo_url} alt={`Logo ${business.name}`} />
             </div>
           )}
+
+          {/* Breadcrumb Navigation */}
+          <Breadcrumb
+            items={[
+              { name: i18n.language === 'en' ? 'Home' : 'Accueil', url: '/' },
+              ...(business.main_category ? [{
+                name: i18n.language === 'en' ? business.main_category.label_en : business.main_category.label_fr,
+                url: `/categorie/${business.main_category.slug}`
+              }] : []),
+              ...(business.city ? [{
+                name: business.city,
+                url: `/ville/${business.city.toLowerCase().replace(/\s+/g, '-')}`
+              }] : []),
+              { name: business.name }
+            ]}
+          />
+
           <div className="business-header-main">
             <div className="business-header-top">
               <div className="business-header-content">
