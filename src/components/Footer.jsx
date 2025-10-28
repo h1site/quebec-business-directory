@@ -59,6 +59,15 @@ const Footer = () => {
               {i18n.language === 'fr' ? 'Mentions légales' : 'Legal Notice'}
             </Link>
             {' · '}
+            <a
+              href="/sitemap.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link"
+            >
+              Sitemap
+            </a>
+            {' · '}
             {t('footer.createdBy')}{' '}
             <a
               href="https://h1site.com"

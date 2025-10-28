@@ -261,6 +261,39 @@ const Register = () => {
               {t('auth.signIn')}
             </button>
           </div>
+
+          {/* Business Directory Registration Link */}
+          <div style={{
+            textAlign: 'center',
+            marginTop: '1.5rem',
+            paddingTop: '1.5rem',
+            borderTop: '1px solid #e2e8f0'
+          }}>
+            <button
+              onClick={() => navigate('/entreprise/nouvelle')}
+              type="button"
+              style={{
+                background: '#10b981',
+                border: 'none',
+                color: 'white',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '4px',
+                fontSize: '0.875rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                width: '100%'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = '#059669';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = '#10b981';
+              }}
+            >
+              Inscription à notre Annuaire d'entreprise
+            </button>
+          </div>
         </div>
       </div>
     </section>
