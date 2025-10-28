@@ -98,8 +98,8 @@ const SearchFilters = ({
         </select>
       </div>
 
-      {/* Subcategory Filter - Only shows when category is selected */}
-      {filteredSubCategories.length > 0 && (
+      {/* Subcategory Filter - Temporarily hidden */}
+      {false && filteredSubCategories.length > 0 && (
         <div className="filter-group">
           <label htmlFor="filter-subcategory">{t('search.subCategory')}</label>
           <select
