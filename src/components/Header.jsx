@@ -38,7 +38,7 @@ const Header = () => {
       .from('user_profiles')
       .select('avatar_url')
       .eq('user_id', user.id)
-      .single();
+      .maybeSingle();
 
     if (data && data.avatar_url) {
       setAvatarUrl(data.avatar_url);

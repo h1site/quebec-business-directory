@@ -41,7 +41,7 @@ const UserProfile = () => {
         .from('admins')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
 
       setIsAdmin(!!adminData);
 
@@ -50,7 +50,7 @@ const UserProfile = () => {
         .from('user_profiles')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
 
       if (existingProfile) {
         setProfile(existingProfile);
