@@ -22,7 +22,7 @@ const CategoryBrowse = () => {
         // Get category info
         const { data: mainCat } = await supabase
           .from('main_categories')
-          .select('label_fr')
+          .select('id, label_fr')
           .eq('slug', categorySlug)
           .single();
 
@@ -50,8 +50,10 @@ const CategoryBrowse = () => {
           // Filter by subcategory
           query = query.eq('primary_sub_category_slug', subCategorySlug);
         } else {
-          // Filter by main category
-          query = query.eq('primary_main_category_slug', categorySlug);
+          // Filter by main category using main_category_id instead of slug
+          if (mainCat && mainCat.id) {
+            query = query.eq('main_category_id', mainCat.id);
+          }
         }
 
         const { data, error: searchError } = await query.limit(100);
