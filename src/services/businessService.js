@@ -4,7 +4,7 @@ import { quebecMunicipalities } from '../data/quebecMunicipalities.js';
 
 const tableName = 'businesses';
 
-const buildFilters = ({ query, city, region, mrc, category, phone, distance, coordinates, language, serviceMode, businessSize, mainCategorySlug, subCategorySlug }) => {
+const buildFilters = ({ query, city, region, mrc, category, phone, distance, coordinates, language, serviceMode, businessSize, mainCategorySlug, subCategorySlug, mainCategoryId, subCategoryId }) => {
   const filters = [];
 
   if (query) {
@@ -31,12 +31,18 @@ const buildFilters = ({ query, city, region, mrc, category, phone, distance, coo
     }
   }
 
-  // Category filtering using slug-based columns from businesses_enriched view
-  if (subCategorySlug) {
-    // Filter by subcategory (most specific)
+  // Category filtering - prefer ID over slug for better reliability
+  if (subCategoryId) {
+    // Filter by subcategory ID (most specific)
+    filters.push({ column: 'sub_category_id', operator: 'eq', value: subCategoryId });
+  } else if (subCategorySlug) {
+    // Fallback to subcategory slug
     filters.push({ column: 'primary_sub_category_slug', operator: 'eq', value: subCategorySlug });
+  } else if (mainCategoryId) {
+    // Filter by main category ID
+    filters.push({ column: 'main_category_id', operator: 'eq', value: mainCategoryId });
   } else if (mainCategorySlug) {
-    // Filter by main category
+    // Fallback to main category slug (kept for backwards compatibility but won't match anything)
     filters.push({ column: 'primary_main_category_slug', operator: 'eq', value: mainCategorySlug });
   } else if (category) {
     // Fallback to old text-based category search for backwards compatibility
@@ -85,6 +91,8 @@ export const searchBusinesses = async ({
   businessSize,
   mainCategorySlug,
   subCategorySlug,
+  mainCategoryId,
+  subCategoryId,
   limit = 20,
   offset = 0
 }) => {
@@ -118,7 +126,7 @@ export const searchBusinesses = async ({
     .select('*', { count: 'exact' })
     .range(offset, offset + limit - 1);
 
-  const filters = buildFilters({ query, city, region, mrc, category, phone, distance, coordinates, language, serviceMode, businessSize, mainCategorySlug, subCategorySlug });
+  const filters = buildFilters({ query, city, region, mrc, category, phone, distance, coordinates, language, serviceMode, businessSize, mainCategorySlug, subCategorySlug, mainCategoryId, subCategoryId });
 
   filters.forEach((filter) => {
     if (filter.operator === 'fts') {

@@ -179,20 +179,22 @@ const Search = () => {
         offset: offset
       };
 
-      // Add category filter - handle both slugs (from URL) and IDs (from state)
-      if (params.subcategorySlug) {
-        searchParams.subCategorySlug = params.subcategorySlug;
-      } else if (selectedSubCategory) {
-        const subCat = subCategories.find(s => s.id === selectedSubCategory);
-        if (subCat?.slug) {
-          searchParams.subCategorySlug = subCat.slug;
+      // Add category filter - pass IDs directly instead of slugs
+      if (selectedSubCategory) {
+        searchParams.subCategoryId = selectedSubCategory;
+      } else if (params.subcategorySlug) {
+        // Convert slug to ID if coming from URL
+        const subCat = subCategories.find(s => s.slug === params.subcategorySlug);
+        if (subCat) {
+          searchParams.subCategoryId = subCat.id;
         }
-      } else if (params.categorySlug) {
-        searchParams.mainCategorySlug = params.categorySlug;
       } else if (selectedCategory) {
-        const mainCat = categories.find(c => c.id === selectedCategory);
-        if (mainCat?.slug) {
-          searchParams.mainCategorySlug = mainCat.slug;
+        searchParams.mainCategoryId = selectedCategory;
+      } else if (params.categorySlug) {
+        // Convert slug to ID if coming from URL
+        const mainCat = categories.find(c => c.slug === params.categorySlug);
+        if (mainCat) {
+          searchParams.mainCategoryId = mainCat.id;
         }
       }
 
