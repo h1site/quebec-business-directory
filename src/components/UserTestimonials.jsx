@@ -34,14 +34,14 @@ const UserTestimonials = () => {
               .from('user_profiles')
               .select('full_name, avatar_url')
               .eq('user_id', review.user_id)
-              .single();
+              .maybeSingle();
 
             // Charger l'entreprise
             const { data: business } = await supabase
               .from('businesses')
               .select('id, name, slug, city')
               .eq('id', review.business_id)
-              .single();
+              .maybeSingle();
 
             return {
               ...review,

@@ -34,7 +34,7 @@ const BusinessReviews = ({ businessId, onWriteReviewClick }) => {
               .from('user_profiles')
               .select('full_name, avatar_url')
               .eq('user_id', review.user_id)
-              .single();
+              .maybeSingle();
 
             return {
               ...review,
