@@ -325,6 +325,52 @@
   margin: 0;
 }
 
+/* Unclaimed Owner Notice */
+.unclaimed-owner-notice {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-left: 4px solid #3b82f6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.unclaimed-info-source {
+  color: #1e3a8a;
+  font-size: 0.95rem;
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.unclaimed-owner-title {
+  color: #1e40af;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+}
+
+.unclaimed-owner-cta {
+  color: #1e3a8a;
+  font-size: 1rem;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.6;
+  font-weight: 600;
+}
+
+.unclaimed-owner-benefits {
+  color: #1e40af;
+  font-size: 0.95rem;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.7;
+}
+
+.unclaimed-owner-manage {
+  color: #1e40af;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.7;
+}
+
 .business-section p {
   color: #4a5568;
   line-height: 1.7;

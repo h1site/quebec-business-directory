@@ -113,7 +113,12 @@ const resources = {
         stars: 'étoiles',
         review: 'critique',
         reviews: 'critiques',
-        anonymousUser: 'Utilisateur anonyme'
+        anonymousUser: 'Utilisateur anonyme',
+        unclaimedInfoSource: 'Les informations affichées proviennent de sources publiques ou ont été fournies par l\'entreprise elle-même.',
+        unclaimedOwnerTitle: 'Vous êtes le propriétaire ?',
+        unclaimedOwnerCTA: '👉 Réclamez gratuitement votre fiche grâce à notre système de vérification.',
+        unclaimedOwnerBenefits: 'Une fois votre fiche revendiquée, vous pourrez ajouter vos photos, logo, site web, horaires et catégories afin de perfectionner votre profil et augmenter votre visibilité sur le Registre du Québec — le tout gratuitement.',
+        unclaimedOwnerManage: 'Vous pouvez également modifier ou supprimer votre fiche à tout moment à l\'aide des boutons prévus à cet effet.'
       },
       reviewModal: {
         title: 'Écrire une critique',
@@ -698,7 +703,12 @@ const resources = {
         stars: 'stars',
         review: 'review',
         reviews: 'reviews',
-        anonymousUser: 'Anonymous user'
+        anonymousUser: 'Anonymous user',
+        unclaimedInfoSource: 'The information displayed comes from public sources or was provided by the business itself.',
+        unclaimedOwnerTitle: 'Are you the owner?',
+        unclaimedOwnerCTA: '👉 Claim your listing for free through our verification system.',
+        unclaimedOwnerBenefits: 'Once your listing is claimed, you can add your photos, logo, website, hours, and categories to enhance your profile and increase your visibility on Registre du Québec — all for free.',
+        unclaimedOwnerManage: 'You can also edit or delete your listing at any time using the buttons provided.'
       },
       reviewModal: {
         title: 'Write a review',

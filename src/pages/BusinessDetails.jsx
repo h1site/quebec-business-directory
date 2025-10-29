@@ -319,6 +319,17 @@ const BusinessDetails = () => {
               <h2 className="section-title">{t('business.about')}</h2>
               <p className="business-description">{business.description}</p>
 
+              {/* Unclaimed Business Notice - Only show if business is not claimed */}
+              {!business.user_id && (
+                <div className="unclaimed-owner-notice">
+                  <p className="unclaimed-info-source">{t('business.unclaimedInfoSource')}</p>
+                  <h3 className="unclaimed-owner-title">{t('business.unclaimedOwnerTitle')}</h3>
+                  <p className="unclaimed-owner-cta">{t('business.unclaimedOwnerCTA')}</p>
+                  <p className="unclaimed-owner-benefits">{t('business.unclaimedOwnerBenefits')}</p>
+                  <p className="unclaimed-owner-manage">{t('business.unclaimedOwnerManage')}</p>
+                </div>
+              )}
+
               {business.products_services && (
                 <div style={{ marginTop: '2rem' }}>
                   <h3 className="section-subtitle">{t('business.productsServices')}</h3>
