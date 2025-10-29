@@ -30,6 +30,32 @@ Disallow: /
 User-agent: MJ12bot
 Disallow: /
 
+# AI Crawlers - Allow with rate limiting
+# ChatGPT (OpenAI)
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 1
+
+# Google AI (Bard/Gemini)
+User-agent: Google-Extended
+Allow: /
+Crawl-delay: 1
+
+# Anthropic Claude
+User-agent: ClaudeBot
+Allow: /
+Crawl-delay: 1
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+Crawl-delay: 1
+
+# Common Crawl (used by many AI models)
+User-agent: CCBot
+Allow: /
+Crawl-delay: 1
+
 # Sitemaps
 Sitemap: https://registreduquebec.com/sitemap.xml
 Sitemap: https://registreduquebec.com/sitemap-en.xml
