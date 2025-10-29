@@ -233,7 +233,7 @@
   }
 
   .footer-logo {
-    text-align: center;
+    text-align: left;
     margin-bottom: 0.75rem;
   }
 
@@ -242,25 +242,25 @@
   }
 
   .footer-disclaimer-inline {
-    text-align: center;
-    padding: 0 1rem;
+    text-align: left;
+    padding: 0;
   }
 
   .footer-disclaimer-inline p {
     font-size: 0.8rem;
   }
 
-  /* Center all footer columns content in mobile */
+  /* Align all footer columns content to left on mobile */
   .footer-yelp-column {
-    text-align: center;
+    text-align: left;
   }
 
   .footer-yelp-title {
-    text-align: center;
+    text-align: left;
   }
 
   .footer-yelp-links {
-    align-items: center;
+    align-items: flex-start;
   }
 
   .footer-yelp-facebook {
