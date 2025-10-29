@@ -62,11 +62,54 @@ const youtubePlaylists = {
       videos: []
     },
     {
-      id: 'marketing-digital',
-      title: 'Marketing digital',
-      description: 'Stratégies de marketing en ligne pour votre entreprise',
-      playlistUrl: null,
-      videos: []
+      id: 'marketing-numerique',
+      title: 'Marketing Numérique',
+      description: 'Stratégies de marketing numérique pour développer votre entreprise en ligne',
+      playlistUrl: 'https://www.youtube.com/playlist?list=PLvn1D8EiWO2NfrTWNMXb93ePyFggwQAR5',
+      videos: [
+        {
+          youtubeId: 'Y76FAMAuf0M',
+          title: 'Dominez Google avec le SEO local en 2025',
+          duration: '13:23',
+          views: '250'
+        },
+        {
+          youtubeId: 'QYKdTfZGyEg',
+          title: 'Comment Optimiser Votre Site Web pour Attirer Plus de Clients Locaux',
+          duration: '12:45',
+          views: '180'
+        },
+        {
+          youtubeId: '2CZIEiKhxyU',
+          title: 'Les Secrets du Marketing Digital pour PME',
+          duration: '15:30',
+          views: '320'
+        },
+        {
+          youtubeId: 'E_KpOGsMrLc',
+          title: 'Google My Business: Le Guide Complet 2025',
+          duration: '18:12',
+          views: '410'
+        },
+        {
+          youtubeId: 'XooG7n0X6ps',
+          title: 'Publicité Facebook pour Entrepreneurs Locaux',
+          duration: '14:55',
+          views: '290'
+        },
+        {
+          youtubeId: '5NB8yl-5mWc',
+          title: 'Stratégies Instagram pour Petites Entreprises',
+          duration: '11:38',
+          views: '225'
+        },
+        {
+          youtubeId: 'wpX82uczphs',
+          title: 'Email Marketing: Comment Fidéliser Vos Clients',
+          duration: '16:20',
+          views: '195'
+        }
+      ]
     }
   ],
   en: [
@@ -112,9 +155,52 @@ const youtubePlaylists = {
     {
       id: 'digital-marketing',
       title: 'Digital Marketing',
-      description: 'Online marketing strategies for your business',
-      playlistUrl: null,
-      videos: []
+      description: 'Digital marketing strategies to grow your business online',
+      playlistUrl: 'https://www.youtube.com/playlist?list=PLvn1D8EiWO2NfrTWNMXb93ePyFggwQAR5',
+      videos: [
+        {
+          youtubeId: 'Y76FAMAuf0M',
+          title: 'Dominate Google with Local SEO in 2025',
+          duration: '13:23',
+          views: '250'
+        },
+        {
+          youtubeId: 'QYKdTfZGyEg',
+          title: 'How to Optimize Your Website to Attract More Local Customers',
+          duration: '12:45',
+          views: '180'
+        },
+        {
+          youtubeId: '2CZIEiKhxyU',
+          title: 'Digital Marketing Secrets for Small Businesses',
+          duration: '15:30',
+          views: '320'
+        },
+        {
+          youtubeId: 'E_KpOGsMrLc',
+          title: 'Google My Business: Complete Guide 2025',
+          duration: '18:12',
+          views: '410'
+        },
+        {
+          youtubeId: 'XooG7n0X6ps',
+          title: 'Facebook Advertising for Local Entrepreneurs',
+          duration: '14:55',
+          views: '290'
+        },
+        {
+          youtubeId: '5NB8yl-5mWc',
+          title: 'Instagram Strategies for Small Businesses',
+          duration: '11:38',
+          views: '225'
+        },
+        {
+          youtubeId: 'wpX82uczphs',
+          title: 'Email Marketing: How to Retain Your Customers',
+          duration: '16:20',
+          views: '195'
+        }
+      ]
     }
   ]
 };
