@@ -415,6 +415,16 @@ const BusinessDetails = () => {
                     </p>
                   )}
                 </div>
+                {business.latitude && business.longitude && (
+                  <a
+                    href={`https://waze.com/ul?ll=${business.latitude},${business.longitude}&navigate=yes&utm_source=registreduquebec`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-waze waze-address-button"
+                  >
+                    🚗 {t('business.openInWaze')}
+                  </a>
+                )}
               </div>
 
               {/* Contact Information Section */}
