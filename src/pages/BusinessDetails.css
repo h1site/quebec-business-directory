@@ -700,4 +700,20 @@
     font-size: 0.85rem;
     padding: 0.875rem 1rem;
   }
+
+  /* Fix overflowing buttons on mobile */
+  .btn-claim,
+  .btn-delete,
+  .btn-edit {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .business-actions {
+    width: 100%;
+  }
 }
