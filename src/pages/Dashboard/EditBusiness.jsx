@@ -144,7 +144,7 @@ const EditBusiness = () => {
         const { data: business, error: businessError } = await getBusinessBySlug(slug);
 
         if (businessError || !business) {
-          setStatus({ type: 'error', message: 'Entreprise introuvable' });
+          setStatus({ type: 'error', message: t('editBusiness.businessNotFound') });
           return;
         }
 
@@ -530,7 +530,7 @@ const EditBusiness = () => {
   if (loading) {
     return (
       <div className="container" style={{ padding: '3rem 0', textAlign: 'center' }}>
-        <div className="loading-spinner">Chargement...</div>
+        <div className="loading-spinner">{t('editBusiness.loading')}</div>
       </div>
     );
   }
@@ -609,7 +609,7 @@ const EditBusiness = () => {
 
                 <div className="form-group">
                   <label htmlFor="name">
-                    Nom de l'entreprise <span className="required">*</span>
+                    {t('editBusiness.businessName')} <span className="required">*</span>
                   </label>
                   <input
                     type="text"
@@ -617,13 +617,13 @@ const EditBusiness = () => {
                     name="name"
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="Ex: Restaurant Le Gourmet"
+                    placeholder={t('editBusiness.businessNamePlaceholder')}
                   />
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="slug">
-                    URL personnalisée (slug) <span className="required">*</span>
+                    {t('editBusiness.slug')} <span className="required">*</span>
                   </label>
                   <div style={{ position: 'relative' }}>
                     <input
@@ -632,7 +632,7 @@ const EditBusiness = () => {
                       name="slug"
                       value={form.slug}
                       onChange={handleChange}
-                      placeholder="mon-entreprise"
+                      placeholder={t('editBusiness.slugPlaceholder')}
                       style={{
                         paddingRight: '40px',
                         borderColor: slugError ? '#ef4444' : (slugAvailable ? '#22c55e' : '#d1d5db')
@@ -679,17 +679,17 @@ const EditBusiness = () => {
                   {slugError && <span className="error-message">{slugError}</span>}
                   {slugAvailable && !slugError && (
                     <small className="field-hint" style={{ color: '#22c55e' }}>
-                      ✓ Ce slug est disponible
+                      ✓ {t('editBusiness.slugAvailable')}
                     </small>
                   )}
                   <small className="field-hint">
-                    URL finale: /{form.slug || 'votre-slug'}
+                    {t('editBusiness.finalUrl')} /{form.slug || t('editBusiness.slugPlaceholder')}
                   </small>
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="description">
-                    Description <span className="required">*</span>
+                    {t('editBusiness.description')} <span className="required">*</span>
                   </label>
                   <textarea
                     id="description"
@@ -697,21 +697,21 @@ const EditBusiness = () => {
                     value={form.description}
                     onChange={handleChange}
                     rows="5"
-                    placeholder="Décrivez votre entreprise..."
+                    placeholder={t('editBusiness.descriptionPlaceholder')}
                   />
-                  <div className="char-count">{form.description.length} caractères</div>
+                  <div className="char-count">{form.description.length} {t('editBusiness.characters')}</div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label htmlFor="business_size_id">Taille de l'entreprise</label>
+                    <label htmlFor="business_size_id">{t('editBusiness.businessSize')}</label>
                     <select
                       id="business_size_id"
                       name="business_size_id"
                       value={form.business_size_id}
                       onChange={handleChange}
                     >
-                      <option value="">Sélectionnez...</option>
+                      <option value="">{t('editBusiness.selectOption')}</option>
                       {lookupData.businessSizes.map((size) => (
                         <option key={size.id} value={size.id}>
                           {getLabel(size)}
@@ -721,7 +721,7 @@ const EditBusiness = () => {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="established_year">Année de fondation</label>
+                    <label htmlFor="established_year">{t('editBusiness.establishedYear')}</label>
                     <input
                       type="number"
                       id="established_year"
@@ -730,7 +730,7 @@ const EditBusiness = () => {
                       onChange={handleChange}
                       min="1800"
                       max={new Date().getFullYear()}
-                      placeholder="Ex: 2015"
+                      placeholder={t('editBusiness.yearPlaceholder')}
                     />
                   </div>
                 </div>
@@ -743,7 +743,7 @@ const EditBusiness = () => {
                       checked={form.is_franchise}
                       onChange={handleChange}
                     />
-                    <span>Cette entreprise est une franchise</span>
+                    <span>{t('editBusiness.isFranchise')}</span>
                   </label>
                 </div>
 
@@ -766,7 +766,7 @@ const EditBusiness = () => {
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="phone">
-                      Téléphone <span className="required">*</span>
+                      {t('editBusiness.phone')} <span className="required">*</span>
                     </label>
                     <input
                       type="tel"
@@ -774,13 +774,13 @@ const EditBusiness = () => {
                       name="phone"
                       value={form.phone}
                       onChange={handleChange}
-                      placeholder="Ex: (514) 555-1234"
+                      placeholder={t('editBusiness.phonePlaceholder')}
                     />
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="email">
-                      Email <span className="required">*</span>
+                      {t('editBusiness.email')} <span className="required">*</span>
                     </label>
                     <input
                       type="email"
@@ -788,7 +788,7 @@ const EditBusiness = () => {
                       name="email"
                       value={form.email}
                       onChange={handleChange}
-                      placeholder="contact@entreprise.com"
+                      placeholder={t('editBusiness.emailPlaceholder')}
                     />
                   </div>
                 </div>
@@ -801,23 +801,23 @@ const EditBusiness = () => {
                       checked={form.show_email}
                       onChange={handleChange}
                     />
-                    <span>Afficher le courriel publiquement sur la fiche d'entreprise</span>
+                    <span>{t('editBusiness.showEmail')}</span>
                   </label>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="website">Site web</label>
+                  <label htmlFor="website">{t('editBusiness.website')}</label>
                   <input
                     type="url"
                     id="website"
                     name="website"
                     value={form.website}
                     onChange={handleChange}
-                    placeholder="https://www.entreprise.com"
+                    placeholder={t('editBusiness.websitePlaceholder')}
                   />
                 </div>
 
-                <h3 style={{ marginTop: '2rem', marginBottom: '1rem', color: '#1e293b' }}>Réseaux sociaux</h3>
+                <h3 style={{ marginTop: '2rem', marginBottom: '1rem', color: '#1e293b' }}>{t('editBusiness.socialNetworks')}</h3>
 
                 <div className="form-group">
                   <label htmlFor="facebook_url">Facebook</label>
@@ -827,7 +827,7 @@ const EditBusiness = () => {
                     name="facebook_url"
                     value={form.facebook_url}
                     onChange={handleChange}
-                    placeholder="https://www.facebook.com/votreentreprise"
+                    placeholder={t('editBusiness.facebookPlaceholder')}
                   />
                 </div>
 
@@ -839,7 +839,7 @@ const EditBusiness = () => {
                     name="instagram_url"
                     value={form.instagram_url}
                     onChange={handleChange}
-                    placeholder="https://www.instagram.com/votreentreprise"
+                    placeholder={t('editBusiness.instagramPlaceholder')}
                   />
                 </div>
 
@@ -851,7 +851,7 @@ const EditBusiness = () => {
                     name="twitter_url"
                     value={form.twitter_url}
                     onChange={handleChange}
-                    placeholder="https://x.com/votreentreprise"
+                    placeholder={t('editBusiness.twitterPlaceholder')}
                   />
                 </div>
 
@@ -863,7 +863,7 @@ const EditBusiness = () => {
                     name="linkedin_url"
                     value={form.linkedin_url}
                     onChange={handleChange}
-                    placeholder="https://www.linkedin.com/company/votreentreprise"
+                    placeholder={t('editBusiness.linkedinPlaceholder')}
                   />
                 </div>
 
@@ -875,7 +875,7 @@ const EditBusiness = () => {
                     name="threads_url"
                     value={form.threads_url}
                     onChange={handleChange}
-                    placeholder="https://www.threads.net/@votreentreprise"
+                    placeholder={t('editBusiness.threadsPlaceholder')}
                   />
                 </div>
 
@@ -887,13 +887,13 @@ const EditBusiness = () => {
                     name="tiktok_url"
                     value={form.tiktok_url}
                     onChange={handleChange}
-                    placeholder="https://www.tiktok.com/@votreentreprise"
+                    placeholder={t('editBusiness.tiktokPlaceholder')}
                   />
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="address">
-                    Adresse <span className="required">*</span>
+                    {t('editBusiness.address')} <span className="required">*</span>
                   </label>
                   <input
                     type="text"
@@ -901,26 +901,26 @@ const EditBusiness = () => {
                     name="address"
                     value={form.address}
                     onChange={handleChange}
-                    placeholder="123 Rue Principale"
+                    placeholder={t('editBusiness.addressPlaceholder')}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="address_line2">Adresse (ligne 2)</label>
+                  <label htmlFor="address_line2">{t('editBusiness.addressLine2')}</label>
                   <input
                     type="text"
                     id="address_line2"
                     name="address_line2"
                     value={form.address_line2}
                     onChange={handleChange}
-                    placeholder="Bureau 200"
+                    placeholder={t('editBusiness.addressLine2Placeholder')}
                   />
                 </div>
 
                 <div className="form-row">
                   <div className="form-group" style={{ flex: '2' }}>
                     <label htmlFor="city">
-                      Ville <span className="required">*</span>
+                      {t('editBusiness.city')} <span className="required">*</span>
                     </label>
                     <CityAutocompleteQuebec
                       value={form.city}
@@ -936,13 +936,13 @@ const EditBusiness = () => {
                         });
                       }}
                       required
-                      placeholder="Ex: Vaudreuil-Dorion, Montréal, Québec..."
+                      placeholder={t('editBusiness.cityPlaceholder')}
                     />
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="postal_code">
-                      Code postal <span className="required">*</span>
+                      {t('editBusiness.postalCode')} <span className="required">*</span>
                     </label>
                     <input
                       type="text"
@@ -950,14 +950,14 @@ const EditBusiness = () => {
                       name="postal_code"
                       value={form.postal_code}
                       onChange={handleChange}
-                      placeholder="H1A 1A1"
+                      placeholder={t('editBusiness.postalCodePlaceholder')}
                     />
                   </div>
                 </div>
 
                 {form.region && (
                   <div className="form-group">
-                    <label>Région détectée</label>
+                    <label>{t('editBusiness.regionDetected')}</label>
                     <input
                       type="text"
                       value={form.region}
@@ -970,7 +970,7 @@ const EditBusiness = () => {
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="latitude">
-                      Latitude
+                      {t('editBusiness.latitude')}
                     </label>
                     <input
                       type="text"
@@ -978,15 +978,15 @@ const EditBusiness = () => {
                       name="latitude"
                       value={form.latitude}
                       onChange={handleChange}
-                      placeholder="45.5017"
+                      placeholder={t('editBusiness.latitudePlaceholder')}
                     />
                     <small className="help-text">
-                      📍 Coordonnée GPS Nord-Sud (ex: 45.5017)
+                      📍 {t('editBusiness.latitudeHelp')}
                     </small>
                   </div>
                   <div className="form-group">
                     <label htmlFor="longitude">
-                      Longitude
+                      {t('editBusiness.longitude')}
                     </label>
                     <input
                       type="text"
@@ -994,10 +994,10 @@ const EditBusiness = () => {
                       name="longitude"
                       value={form.longitude}
                       onChange={handleChange}
-                      placeholder="-73.5673"
+                      placeholder={t('editBusiness.longitudePlaceholder')}
                     />
                     <small className="help-text">
-                      📍 Coordonnée GPS Est-Ouest (ex: -73.5673)
+                      📍 {t('editBusiness.longitudeHelp')}
                     </small>
                   </div>
                 </div>
@@ -1097,16 +1097,16 @@ const EditBusiness = () => {
                 <p className="help-text">{t('editBusiness.servicesHelp')}</p>
 
                 <div className="form-group">
-                  <label htmlFor="products_services">Services et produits</label>
+                  <label htmlFor="products_services">{t('editBusiness.productsServices')}</label>
                   <textarea
                     id="products_services"
                     name="products_services"
                     value={form.products_services}
                     onChange={handleChange}
                     rows="5"
-                    placeholder="Ex: Consultation gratuite, Livraison à domicile, Service 24/7..."
+                    placeholder={t('editBusiness.productsServicesPlaceholder')}
                   />
-                  <span className="help-text">Séparez les services par des virgules ou des retours à la ligne</span>
+                  <span className="help-text">{t('editBusiness.productsServicesHelp')}</span>
                 </div>
 
                 <button
@@ -1126,8 +1126,8 @@ const EditBusiness = () => {
                 <h2>{t('editBusiness.images')}</h2>
 
                 <div className="form-group">
-                  <label>Logo de l'entreprise (format carré 1:1 recommandé)</label>
-                  <p className="field-hint">Le logo sera automatiquement compressé en format WebP</p>
+                  <label>{t('editBusiness.logoLabel')}</label>
+                  <p className="field-hint">{t('editBusiness.logoHelp')}</p>
                   <ImageUploader
                     type="logo"
                     currentImage={currentLogoUrl}
@@ -1137,14 +1137,14 @@ const EditBusiness = () => {
                 </div>
 
                 <div className="form-group">
-                  <label>Galerie photos (jusqu'à 10 images)</label>
-                  <p className="field-hint">Les images seront automatiquement compressées en format WebP</p>
+                  <label>{t('editBusiness.galleryLabel')}</label>
+                  <p className="field-hint">{t('editBusiness.galleryHelp')}</p>
 
                   {/* Display existing gallery images */}
                   {currentGalleryImages.length > 0 && (
                     <div className="existing-gallery" style={{ marginBottom: '1rem' }}>
                       <p style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '0.5rem' }}>
-                        Images actuelles ({currentGalleryImages.length})
+                        {t('editBusiness.currentImages')} ({currentGalleryImages.length})
                       </p>
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '0.75rem' }}>
                         {currentGalleryImages.map((imageUrl, index) => (
@@ -1177,7 +1177,7 @@ const EditBusiness = () => {
                                 fontWeight: 'bold',
                                 lineHeight: '1'
                               }}
-                              title="Supprimer cette image"
+                              title={t('editBusiness.deleteImage')}
                             >
                               ×
                             </button>
@@ -1197,13 +1197,13 @@ const EditBusiness = () => {
 
                 {uploadProgress.logo > 0 && uploadProgress.logo < 100 && (
                   <div className="upload-progress">
-                    Logo: {uploadProgress.logo}%
+                    {t('editBusiness.logoProgress')} {uploadProgress.logo}%
                   </div>
                 )}
 
                 {uploadProgress.gallery > 0 && uploadProgress.gallery < 100 && (
                   <div className="upload-progress">
-                    Galerie: {uploadProgress.gallery}%
+                    {t('editBusiness.galleryProgress')} {uploadProgress.gallery}%
                   </div>
                 )}
 
