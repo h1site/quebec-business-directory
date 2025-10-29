@@ -150,7 +150,7 @@ const EditBusiness = () => {
 
         // Check ownership
         if (business.owner_id !== user?.id) {
-          setStatus({ type: 'error', message: 'Vous n\'êtes pas autorisé à modifier cette entreprise' });
+          setStatus({ type: 'error', message: t('editBusiness.unauthorizedEdit') });
           setTimeout(() => navigate('/'), 2000);
           return;
         }
@@ -539,7 +539,7 @@ const EditBusiness = () => {
     <div className="edit-business-page">
       <div className="container">
         <div className="page-header">
-          <h1>Modifier l'entreprise</h1>
+          <h1>{t('editBusiness.title')}</h1>
           <div style={{ display: 'flex', gap: '1rem' }}>
             <button
               type="button"
@@ -554,7 +554,7 @@ const EditBusiness = () => {
                 navigate(getBusinessUrl(updatedBusiness));
               }}
             >
-              Retour à la fiche
+              {t('editBusiness.backToListing')}
             </button>
           </div>
         </div>
@@ -572,25 +572,25 @@ const EditBusiness = () => {
               className={`tab-button ${activeTab === 'basic' ? 'active' : ''}`}
               onClick={() => setActiveTab('basic')}
             >
-              📋 Informations de base
+              📋 {t('editBusiness.basicInfo')}
             </button>
             <button
               className={`tab-button ${activeTab === 'images' ? 'active' : ''}`}
               onClick={() => setActiveTab('images')}
             >
-              📸 Logo et Photos
+              📸 {t('editBusiness.logoPhotos')}
             </button>
             <button
               className={`tab-button ${activeTab === 'contact' ? 'active' : ''}`}
               onClick={() => setActiveTab('contact')}
             >
-              📞 Contact
+              📞 {t('editBusiness.contact')}
             </button>
             <button
               className={`tab-button ${activeTab === 'categories' ? 'active' : ''}`}
               onClick={() => setActiveTab('categories')}
             >
-              🏷️ Catégories
+              🏷️ {t('editBusiness.categories')}
             </button>
             <button
               className={`tab-button ${activeTab === 'services' ? 'active' : ''}`}
@@ -605,7 +605,7 @@ const EditBusiness = () => {
             {/* Basic Information Tab */}
             {activeTab === 'basic' && (
               <div className="tab-panel">
-                <h2>Informations de base</h2>
+                <h2>{t('editBusiness.basicInfo')}</h2>
 
                 <div className="form-group">
                   <label htmlFor="name">
@@ -753,7 +753,7 @@ const EditBusiness = () => {
                   onClick={() => saveTab('basic')}
                   disabled={submitting}
                 >
-                  {submitting ? 'Enregistrement...' : 'Enregistrer les informations de base'}
+                  {submitting ? t('editBusiness.saving') : t('editBusiness.saveBasicInfo')}
                 </button>
               </div>
             )}
@@ -761,7 +761,7 @@ const EditBusiness = () => {
             {/* Contact Information Tab */}
             {activeTab === 'contact' && (
               <div className="tab-panel">
-                <h2>Coordonnées</h2>
+                <h2>{t('editBusiness.contact')}</h2>
 
                 <div className="form-row">
                   <div className="form-group">
@@ -1029,7 +1029,7 @@ const EditBusiness = () => {
                   onClick={() => saveTab('contact')}
                   disabled={submitting}
                 >
-                  {submitting ? 'Enregistrement...' : 'Enregistrer les coordonnées'}
+                  {submitting ? t('editBusiness.saving') : t('editBusiness.saveContact')}
                 </button>
               </div>
             )}
@@ -1037,11 +1037,11 @@ const EditBusiness = () => {
             {/* Categories Tab */}
             {activeTab === 'categories' && (
               <div className="tab-panel">
-                <h2>Catégories</h2>
+                <h2>{t('editBusiness.categories')}</h2>
 
                 <div className="form-group">
                   <label htmlFor="main_category_id">
-                    Catégorie principale <span className="required">*</span>
+                    {t('editBusiness.mainCategory')} <span className="required">*</span>
                   </label>
                   <select
                     id="main_category_id"
@@ -1049,7 +1049,7 @@ const EditBusiness = () => {
                     value={form.main_category_id || ''}
                     onChange={handleChange}
                   >
-                    <option value="">Sélectionnez une catégorie...</option>
+                    <option value="">{t('editBusiness.selectCategory')}</option>
                     {lookupData.mainCategories.map((cat) => (
                       <option key={cat.id} value={cat.id}>
                         {getLabel(cat)}
@@ -1061,7 +1061,7 @@ const EditBusiness = () => {
                 {form.main_category_id && filteredSubCategories.length > 0 && (
                   <div className="form-group">
                     <label htmlFor="sub_category_id">
-                      Sous-catégorie (optionnel)
+                      {t('editBusiness.subCategory')}
                     </label>
                     <select
                       id="sub_category_id"
@@ -1069,7 +1069,7 @@ const EditBusiness = () => {
                       value={form.sub_category_id || ''}
                       onChange={handleChange}
                     >
-                      <option value="">Aucune sous-catégorie</option>
+                      <option value="">{t('editBusiness.noSubCategory')}</option>
                       {filteredSubCategories.map((sub) => (
                         <option key={sub.id} value={sub.id}>
                           {getLabel(sub)}
@@ -1085,7 +1085,7 @@ const EditBusiness = () => {
                   onClick={() => saveTab('categories')}
                   disabled={submitting}
                 >
-                  {submitting ? 'Enregistrement...' : 'Enregistrer les catégories'}
+                  {submitting ? t('editBusiness.saving') : t('editBusiness.saveCategories')}
                 </button>
               </div>
             )}
@@ -1093,8 +1093,8 @@ const EditBusiness = () => {
             {/* Services Tab */}
             {activeTab === 'services' && (
               <div className="tab-panel">
-                <h2>Services offerts</h2>
-                <p className="help-text">Listez les services que vous offrez (maximum 20)</p>
+                <h2>{t('editBusiness.servicesOffered')}</h2>
+                <p className="help-text">{t('editBusiness.servicesHelp')}</p>
 
                 <div className="form-group">
                   <label htmlFor="products_services">Services et produits</label>
@@ -1115,7 +1115,7 @@ const EditBusiness = () => {
                   onClick={() => saveTab('services')}
                   disabled={submitting}
                 >
-                  {submitting ? 'Enregistrement...' : 'Enregistrer les services'}
+                  {submitting ? t('editBusiness.saving') : t('editBusiness.saveServices')}
                 </button>
               </div>
             )}
@@ -1123,7 +1123,7 @@ const EditBusiness = () => {
             {/* Images Tab */}
             {activeTab === 'images' && (
               <div className="tab-panel">
-                <h2>Images</h2>
+                <h2>{t('editBusiness.images')}</h2>
 
                 <div className="form-group">
                   <label>Logo de l'entreprise (format carré 1:1 recommandé)</label>
@@ -1213,7 +1213,7 @@ const EditBusiness = () => {
                   onClick={() => saveTab('images')}
                   disabled={submitting || (!logoFile && galleryFiles.length === 0)}
                 >
-                  {submitting ? 'Téléversement...' : 'Téléverser les images'}
+                  {submitting ? t('editBusiness.uploading') : t('editBusiness.uploadImages')}
                 </button>
               </div>
             )}
