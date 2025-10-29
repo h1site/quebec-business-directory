@@ -135,6 +135,12 @@ const resources = {
         stillDelete: 'Supprimer quand même',
         cancel: 'Annuler'
       },
+      amazonProducts: {
+        title: 'Produits et Ressources Recommandés',
+        subtitle: 'Des outils et ressources qui pourraient vous intéresser',
+        viewOnAmazon: 'Voir sur Amazon',
+        disclosure: 'En tant que Partenaire Amazon, nous réalisons un bénéfice sur les achats remplissant les conditions requises.'
+      },
       reviewModal: {
         title: 'Écrire une critique',
         editTitle: 'Modifier votre critique',
@@ -739,6 +745,12 @@ const resources = {
         claimButton: 'Claim my listing for free',
         stillDelete: 'Delete anyway',
         cancel: 'Cancel'
+      },
+      amazonProducts: {
+        title: 'Recommended Products and Resources',
+        subtitle: 'Tools and resources that might interest you',
+        viewOnAmazon: 'View on Amazon',
+        disclosure: 'As an Amazon Partner, we earn from qualifying purchases.'
       },
       reviewModal: {
         title: 'Write a review',

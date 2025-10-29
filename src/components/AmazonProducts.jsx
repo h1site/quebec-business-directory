@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './AmazonProducts.css';
 
 function AmazonProducts({ categorySlug }) {
+  const { t } = useTranslation();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,9 +40,9 @@ function AmazonProducts({ categorySlug }) {
   return (
     <div className="amazon-products-section">
       <div className="amazon-products-header">
-        <h3>Produits et Ressources Recommandés</h3>
+        <h3>{t('amazonProducts.title')}</h3>
         <p className="amazon-products-subtitle">
-          Des outils et ressources qui pourraient vous intéresser
+          {t('amazonProducts.subtitle')}
         </p>
       </div>
 
@@ -85,7 +87,7 @@ function AmazonProducts({ categorySlug }) {
               </div>
 
               <div className="amazon-cta">
-                Voir sur Amazon
+                {t('amazonProducts.viewOnAmazon')}
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                   <path
                     d="M1 11L11 1M11 1H1M11 1V11"
@@ -102,8 +104,7 @@ function AmazonProducts({ categorySlug }) {
       </div>
 
       <p className="amazon-disclosure">
-        En tant que Partenaire Amazon, nous réalisons un bénéfice sur les achats remplissant
-        les conditions requises.
+        {t('amazonProducts.disclosure')}
       </p>
     </div>
   );

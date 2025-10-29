@@ -3,6 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Dynamic Language Meta Tags Script -->
+    <script>
+      (function() {
+        const isEnglish = window.location.pathname.startsWith('/en') || window.location.search.includes('lang=en');
+        const lang = isEnglish ? 'en' : 'fr';
+
+        // Set HTML lang attribute
+        document.documentElement.lang = lang;
+
+        // Set title and meta tags based on language
+        if (isEnglish) {
+          document.title = 'Quebec Business Registry - Business Directory';
+
+          // Update meta description
+          const metaDesc = document.querySelector('meta[name="description"]');
+          if (metaDesc) metaDesc.content = 'Quebec business directory. Over 600,000 businesses with contact information, reviews and detailed information. Find the business you need.';
+
+          // Update meta keywords
+          const metaKeywords = document.querySelector('meta[name="keywords"]');
+          if (metaKeywords) metaKeywords.content = 'quebec businesses, business directory, business registry, NEQ, quebec directory, local businesses, quebec services';
+        }
+      })();
+    </script>
+
     <title>Registre d'entreprise du Québec - Annuaire des entreprises</title>
 
     <!-- SEO Meta Tags -->
@@ -17,12 +42,12 @@
     <meta name="ICBM" content="46.8139, -71.2080" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Registre d'entreprise du Québec" />
+    <meta property="og:site_name" content="Registre d'entreprise du Québec" id="og-site-name" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://registreduquebec.com/" />
-    <meta property="og:title" content="Registre d'entreprise du Québec - Annuaire des entreprises" />
-    <meta property="og:description" content="Annuaire des entreprises du Québec. Plus de 600 000 entreprises avec coordonnées et informations détaillées." />
-    <meta property="og:locale" content="fr_CA" />
+    <meta property="og:url" content="https://registreduquebec.com/" id="og-url" />
+    <meta property="og:title" content="Registre d'entreprise du Québec - Annuaire des entreprises" id="og-title" />
+    <meta property="og:description" content="Annuaire des entreprises du Québec. Plus de 600 000 entreprises avec coordonnées et informations détaillées." id="og-description" />
+    <meta property="og:locale" content="fr_CA" id="og-locale" />
     <meta property="og:locale:alternate" content="en_CA" />
     <meta property="og:image" content="https://registreduquebec.com/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
@@ -30,8 +55,27 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Registre d'entreprise du Québec" />
-    <meta name="twitter:description" content="Annuaire des entreprises du Québec. Plus de 600 000 entreprises." />
+    <meta name="twitter:title" content="Registre d'entreprise du Québec" id="twitter-title" />
+    <meta name="twitter:description" content="Annuaire des entreprises du Québec. Plus de 600 000 entreprises." id="twitter-description" />
+
+    <script>
+      (function() {
+        const isEnglish = window.location.pathname.startsWith('/en') || window.location.search.includes('lang=en');
+
+        if (isEnglish) {
+          // Update Open Graph tags
+          document.getElementById('og-site-name').content = 'Quebec Business Registry';
+          document.getElementById('og-url').content = 'https://registreduquebec.com/en';
+          document.getElementById('og-title').content = 'Quebec Business Registry - Business Directory';
+          document.getElementById('og-description').content = 'Quebec business directory. Over 600,000 businesses with contact information and detailed information.';
+          document.getElementById('og-locale').content = 'en_CA';
+
+          // Update Twitter Card tags
+          document.getElementById('twitter-title').content = 'Quebec Business Registry';
+          document.getElementById('twitter-description').content = 'Quebec business directory. Over 600,000 businesses.';
+        }
+      })();
+    </script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />

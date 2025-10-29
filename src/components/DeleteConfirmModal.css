@@ -319,16 +319,26 @@
   border-top: 1px solid #e2e8f0;
 }
 
+.delete-modal-actions .btn {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  min-height: 48px;
+}
+
 .btn-claim-instead {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 1rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
@@ -340,13 +350,7 @@
 .btn-delete-confirm {
   background: transparent;
   color: #e53e3e;
-  padding: 0.75rem 1.5rem;
-  font-size: 0.9rem;
-  font-weight: 600;
   border: 1px solid #fc8181;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
 }
 
 .btn-delete-confirm:hover:not(:disabled) {
