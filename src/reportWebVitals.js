@@ -4,18 +4,18 @@
  *
  * Metrics tracked:
  * - CLS (Cumulative Layout Shift) - Visual stability
- * - FID (First Input Delay) - Interactivity
+ * - INP (Interaction to Next Paint) - Interactivity (replaced FID)
  * - FCP (First Contentful Paint) - Loading
  * - LCP (Largest Contentful Paint) - Loading
  * - TTFB (Time to First Byte) - Server response
  */
 
-import { onCLS, onFID, onFCP, onLCP, onTTFB } from 'web-vitals';
+import { onCLS, onINP, onFCP, onLCP, onTTFB } from 'web-vitals';
 
 const reportWebVitals = (onPerfEntry) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     onCLS(onPerfEntry);
-    onFID(onPerfEntry);
+    onINP(onPerfEntry);
     onFCP(onPerfEntry);
     onLCP(onPerfEntry);
     onTTFB(onPerfEntry);
@@ -48,7 +48,7 @@ const sendToAnalytics = ({ name, delta, value, id }) => {
 const getRating = (name, value) => {
   const thresholds = {
     CLS: [0.1, 0.25],
-    FID: [100, 300],
+    INP: [200, 500],
     FCP: [1800, 3000],
     LCP: [2500, 4000],
     TTFB: [800, 1800],
