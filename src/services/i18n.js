@@ -68,7 +68,10 @@ const resources = {
         h1siteServices: 'Services H1Site',
         languages: 'Langues',
         copyright: 'Copyright © 2004-{{year}} Registre du Québec Inc. et marques connexes sont des marques déposées du Registre du Québec.',
-        createdByLink: 'Créé par'
+        createdByLink: 'Créé par',
+        disclaimerLine1: 'RegistreduQuebec.com est un annuaire privé et indépendant.',
+        disclaimerLine2: 'Ce site n\'est pas affilié au Registraire des entreprises du Québec.',
+        disclaimerLine3: 'Les informations affichées proviennent de sources publiques et peuvent être mises à jour par les entreprises elles-mêmes.'
       },
       home: {
         popularCategoriesTitle: 'Explorez les catégories populaires',
@@ -650,7 +653,10 @@ const resources = {
         h1siteServices: 'H1Site Services',
         languages: 'Languages',
         copyright: 'Copyright © 2004-{{year}} Registre du Québec Inc. and related trademarks are registered trademarks of Registre du Québec.',
-        createdByLink: 'Created by'
+        createdByLink: 'Created by',
+        disclaimerLine1: 'RegistreduQuebec.com is a private and independent directory.',
+        disclaimerLine2: 'This site is not affiliated with the Registraire des entreprises du Québec.',
+        disclaimerLine3: 'The information displayed comes from public sources and can be updated by the businesses themselves.'
       },
       home: {
         popularCategoriesTitle: 'Explore popular categories',

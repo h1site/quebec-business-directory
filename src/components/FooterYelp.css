@@ -8,8 +8,8 @@
 /* Main Columns */
 .footer-yelp-columns {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2.5rem;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  gap: 2rem;
   margin-bottom: 2.5rem;
   padding-bottom: 2.5rem;
   border-bottom: 1px solid #e6e6e6;
@@ -135,6 +135,41 @@
   font-family: 'Helvetica Neue', sans-serif;
 }
 
+/* Logo & Disclaimer Column */
+.footer-yelp-column-wide {
+  /* Takes 1.5fr in the grid */
+}
+
+.footer-logo-with-title {
+  /* No margin-top needed - logo aligns with column titles */
+}
+
+.footer-logo {
+  margin-bottom: 0.5rem;
+}
+
+.footer-logo img {
+  max-width: 75px;
+  height: auto;
+}
+
+.footer-disclaimer-inline {
+  padding-right: 0.5rem;
+}
+
+.footer-disclaimer-inline p {
+  margin: 0.6rem 0;
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.footer-disclaimer-inline p:first-child {
+  font-weight: 600;
+  color: #1e3a8a;
+  font-size: 0.8rem;
+}
+
 /* Bottom Copyright */
 .footer-yelp-bottom {
   text-align: center;
@@ -181,10 +216,51 @@
   }
 
   .footer-yelp-columns {
-    grid-template-columns: 1fr;
-    gap: 1.75rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
     margin-bottom: 2rem;
     padding-bottom: 2rem;
+  }
+
+  .footer-yelp-column-wide {
+    grid-column: 1 / -1; /* Logo/disclaimer spans full width */
+    min-width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .footer-logo-with-title {
+    margin-top: 0; /* Reset desktop alignment for mobile */
+  }
+
+  .footer-logo {
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-logo img {
+    max-width: 120px;
+  }
+
+  .footer-disclaimer-inline {
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .footer-disclaimer-inline p {
+    font-size: 0.8rem;
+  }
+
+  /* Center all footer columns content in mobile */
+  .footer-yelp-column {
+    text-align: center;
+  }
+
+  .footer-yelp-title {
+    text-align: center;
+  }
+
+  .footer-yelp-links {
+    align-items: center;
   }
 
   .footer-yelp-facebook {

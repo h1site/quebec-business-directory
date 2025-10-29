@@ -25,6 +25,20 @@ const FooterYelp = () => {
       <div className="container">
         {/* Main Footer Columns */}
         <div className="footer-yelp-columns">
+          {/* Logo & Disclaimer Column */}
+          <div className="footer-yelp-column footer-yelp-column-wide">
+            <div className="footer-logo-with-title">
+              <div className="footer-logo">
+                <img src="/images/logos/logoblue.webp" alt="Registre du Québec" />
+              </div>
+              <div className="footer-disclaimer-inline">
+                <p>{t('footer.disclaimerLine1')}</p>
+                <p>{t('footer.disclaimerLine2')}</p>
+                <p>{t('footer.disclaimerLine3')}</p>
+              </div>
+            </div>
+          </div>
+
           {/* About Column */}
           <div className="footer-yelp-column">
             <h3 className="footer-yelp-title">{t('footer.about')}</h3>
