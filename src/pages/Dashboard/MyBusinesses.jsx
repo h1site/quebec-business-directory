@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import LocalizedLink from '../../components/LocalizedLink.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { getBusinessesByOwner, deleteBusiness } from '../../services/businessService.js';
@@ -7,6 +9,7 @@ import DeleteConfirmModal from '../../components/DeleteConfirmModal.jsx';
 import './MyBusinesses.css';
 
 const MyBusinesses = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,14 +30,14 @@ const MyBusinesses = () => {
         const { data, error: fetchError } = await getBusinessesByOwner(user.id);
 
         if (fetchError) {
-          setError('Erreur lors du chargement de vos entreprises');
+          setError(t('myBusinesses.loading'));
           console.error(fetchError);
           return;
         }
 
         setBusinesses(data || []);
       } catch (err) {
-        setError('Erreur lors du chargement de vos entreprises');
+        setError(t('myBusinesses.loading'));
         console.error(err);
       } finally {
         setLoading(false);
@@ -76,7 +79,7 @@ const MyBusinesses = () => {
       }, 5000);
     } catch (err) {
       console.error('Error deleting business:', err);
-      setError('Erreur lors de la suppression de l\'entreprise. Veuillez réessayer.');
+      setError(t('myBusinesses.deleteError'));
     } finally {
       setIsDeleting(false);
     }
@@ -85,10 +88,10 @@ const MyBusinesses = () => {
   if (!user) {
     return (
       <div className="container" style={{ padding: '3rem 0', textAlign: 'center' }}>
-        <h2>Accès refusé</h2>
-        <p>Vous devez être connecté pour voir vos entreprises.</p>
+        <h2>{t('myBusinesses.accessDenied')}</h2>
+        <p>{t('myBusinesses.mustBeLoggedIn')}</p>
         <LocalizedLink to="/connexion" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>
-          Se connecter
+          {t('myBusinesses.signIn')}
         </LocalizedLink>
       </div>
     );
@@ -97,7 +100,7 @@ const MyBusinesses = () => {
   if (loading) {
     return (
       <div className="container" style={{ padding: '3rem 0', textAlign: 'center' }}>
-        <div className="loading-spinner">Chargement de vos entreprises...</div>
+        <div className="loading-spinner">{t('myBusinesses.loading')}</div>
       </div>
     );
   }
@@ -107,7 +110,7 @@ const MyBusinesses = () => {
       <div className="container" style={{ padding: '3rem 0', textAlign: 'center' }}>
         <div className="alert alert-error">{error}</div>
         <LocalizedLink to="/" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>
-          Retour à l'accueil
+          {t('myBusinesses.backHome')}
         </LocalizedLink>
       </div>
     );
@@ -118,9 +121,9 @@ const MyBusinesses = () => {
       <div className="container">
         <div className="page-header">
           <div>
-            <h1>Mes entreprises</h1>
+            <h1>{t('myBusinesses.title')}</h1>
             <p className="subtitle">
-              Gérez vos {businesses.length} entreprise{businesses.length !== 1 ? 's' : ''}
+              {t('myBusinesses.manage')} {businesses.length} {businesses.length !== 1 ? t('myBusinesses.businesses') : t('myBusinesses.business')}
             </p>
           </div>
           <LocalizedLink to="/entreprise/nouvelle" className="btn btn-primary">
@@ -128,7 +131,7 @@ const MyBusinesses = () => {
               <line x1="12" y1="5" x2="12" y2="19"></line>
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            Ajouter une entreprise
+            {t('myBusinesses.addBusiness')}
           </LocalizedLink>
         </div>
 
@@ -144,10 +147,10 @@ const MyBusinesses = () => {
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
-            <h2>Aucune entreprise</h2>
-            <p>Vous n'avez pas encore ajouté d'entreprise à l'annuaire.</p>
+            <h2>{t('myBusinesses.noBusiness')}</h2>
+            <p>{t('myBusinesses.noBusinessDescription')}</p>
             <LocalizedLink to="/entreprise/nouvelle" className="btn btn-primary">
-              Ajouter ma première entreprise
+              {t('myBusinesses.addFirst')}
             </LocalizedLink>
           </div>
         ) : (
@@ -157,7 +160,7 @@ const MyBusinesses = () => {
                 <div className="business-item-header">
                   <h3>{business.name}</h3>
                   {business.is_franchise && (
-                    <span className="franchise-badge">Franchise</span>
+                    <span className="franchise-badge">{t('myBusinesses.franchise')}</span>
                   )}
                 </div>
 
@@ -186,7 +189,7 @@ const MyBusinesses = () => {
                   </div>
 
                   {business.established_year && (
-                    <p className="established-year">Fondée en {business.established_year}</p>
+                    <p className="established-year">{t('myBusinesses.foundedIn')} {business.established_year}</p>
                   )}
                 </div>
 
@@ -201,7 +204,7 @@ const MyBusinesses = () => {
                           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                           <circle cx="12" cy="12" r="3"></circle>
                         </svg>
-                        Voir la fiche
+                        {t('myBusinesses.viewListing')}
                       </Link>
                       <Link
                         to={getBusinessEditUrl(business)}
@@ -211,12 +214,12 @@ const MyBusinesses = () => {
                           <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                           <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                         </svg>
-                        Modifier
+                        {t('myBusinesses.edit')}
                       </Link>
                       <button
                         onClick={() => handleDeleteClick(business)}
                         className="btn btn-danger"
-                        title="Supprimer cette entreprise"
+                        title={t('myBusinesses.deleteTitle')}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <polyline points="3 6 5 6 21 6"></polyline>
@@ -224,7 +227,7 @@ const MyBusinesses = () => {
                           <line x1="10" y1="11" x2="10" y2="17"></line>
                           <line x1="14" y1="11" x2="14" y2="17"></line>
                         </svg>
-                        Supprimer
+                        {t('myBusinesses.delete')}
                       </button>
                     </>
                   ) : (
