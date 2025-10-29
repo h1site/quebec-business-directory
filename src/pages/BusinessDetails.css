@@ -756,3 +756,27 @@
     flex-basis: 100%;
   }
 }
+
+/* Extra small screens - stack buttons vertically */
+@media (max-width: 480px) {
+  .btn-claim,
+  .btn-delete,
+  .btn-delete-db,
+  .btn-edit {
+    width: 100%;
+    font-size: 0.65rem;
+    padding: 0.55rem 0.7rem;
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+  .business-actions {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .business-actions > * {
+    flex-basis: 100%;
+    width: 100%;
+  }
+}
