@@ -233,7 +233,7 @@ const BusinessDetails = () => {
           SEO bots read the initial HTML, not React-modified DOM */}
 
       <div className="business-details-page">
-        <div className="container">
+        <div className="container business-main-container">
           {/* Breadcrumb Navigation - Outside header box */}
           <Breadcrumb
             items={[
@@ -426,7 +426,8 @@ const BusinessDetails = () => {
                     rel="noopener noreferrer"
                     className="btn btn-waze waze-address-button"
                   >
-                    🚗 {t('business.openInWaze')}
+                    <img src="/images/logos/waze.svg" alt="Waze" className="waze-icon" />
+                    {t('business.openInWaze')}
                   </a>
                 ) : null}
               </div>
@@ -554,7 +555,7 @@ const BusinessDetails = () => {
       </div>
 
       {/* Reviews Section - Full Width */}
-      <div className="container">
+      <div className="container business-reviews-section">
         <BusinessReviews
           key={reviewsKey}
           businessId={business.id}
