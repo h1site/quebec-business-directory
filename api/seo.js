@@ -83,7 +83,11 @@ export default async function handler(req, res) {
   res.setHeader('Vary', '*');
 
   try {
-    const { slug, categorySlug, citySlug } = req.query;
+    const { slug, categorySlug, citySlug, lang } = req.query;
+
+    // Detect language from query parameter or default to French
+    const isEnglish = lang === 'en';
+    const locale = isEnglish ? 'en_CA' : 'fr_CA';
 
     // If no slug, return default template
     if (!slug) {
@@ -102,8 +106,9 @@ export default async function handler(req, res) {
       return res.status(404).send('Entreprise non trouvée');
     }
 
-    // Generate SEO content
-    const title = `${business.name} - ${business.city} | Registre du Québec`;
+    // Generate SEO content (bilingual)
+    const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
+    const title = `${business.name} - ${business.city} | ${siteName}`;
 
     // Generate optimized meta description
     let description;
@@ -117,27 +122,40 @@ export default async function handler(req, res) {
       }
     } else {
       // Generate SEO-optimized description with category info
-      const category = business.primary_main_category_fr || business.categories?.[0] || '';
+      const category = isEnglish
+        ? (business.primary_main_category_en || business.categories?.[0] || '')
+        : (business.primary_main_category_fr || business.categories?.[0] || '');
+
+      const locationText = isEnglish
+        ? `in ${business.city || 'Quebec'}, Quebec`
+        : `à ${business.city || 'Québec'}, Québec`;
+
       const baseDesc = category
-        ? `${business.name} - ${category} à ${business.city || 'Québec'}, Québec`
-        : `${business.name} à ${business.city || 'Québec'}, Québec`;
+        ? `${business.name} - ${category} ${locationText}`
+        : `${business.name} ${locationText}`;
 
       if (baseDesc.length >= 70) {
         description = baseDesc;
       } else {
         // Add contact info to reach 70 characters
+        const phoneLabel = isEnglish ? 'Phone' : 'Téléphone';
+        const findMoreText = isEnglish
+          ? `Find all contact details on ${siteName}`
+          : `Trouvez toutes les coordonnées sur ${siteName}`;
+
         if (business.phone) {
-          description = `${baseDesc}. Téléphone: ${business.phone}`;
+          description = `${baseDesc}. ${phoneLabel}: ${business.phone}`;
         } else if (business.address) {
           description = `${baseDesc}. ${business.address}`;
         } else {
-          description = `${baseDesc}. Trouvez toutes les coordonnées sur Registre du Québec`;
+          description = `${baseDesc}. ${findMoreText}`;
         }
       }
     }
 
-    // IMPORTANT: Use the URL slug from the request, not params
-    const canonical = `https://registreduquebec.com/${categorySlug}/${citySlug}/${slug}`;
+    // IMPORTANT: Canonical URL with language prefix for English
+    const langPrefix = isEnglish ? '/en' : '';
+    const canonical = `https://registreduquebec.com${langPrefix}/${categorySlug}/${citySlug}/${slug}`;
     const schemaOrg = generateSchemaOrg(business);
 
     // Generate unique ETag for this specific business page
@@ -175,8 +193,8 @@ export default async function handler(req, res) {
     <meta property="og:description" content="${escapeHtml(description)}">
     <meta property="og:url" content="${canonical}">
     <meta property="og:type" content="business.business">
-    <meta property="og:locale" content="fr_CA">
-    <meta property="og:site_name" content="Registre du Québec">
+    <meta property="og:locale" content="${locale}">
+    <meta property="og:site_name" content="${siteName}">
     ${business.logo_url ? `<meta property="og:image" content="${business.logo_url}">` : ''}
     <meta name="twitter:card" content="summary${business.logo_url ? '_large_image' : ''}">
     <meta name="twitter:title" content="${escapeHtml(title)}">
@@ -187,7 +205,13 @@ export default async function handler(req, res) {
     ${JSON.stringify(schemaOrg, null, 2)}
     </script>`;
 
-    html = html.replace('</head>', `${canonicalTag}\n${seoTags}\n</head>`);
+    // Add hreflang tags for bilingual support
+    const hreflangTags = `
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/${categorySlug}/${citySlug}/${slug}" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/${categorySlug}/${citySlug}/${slug}" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/${categorySlug}/${citySlug}/${slug}" />`;
+
+    html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
 
     // Add initial data for client
     const dataScript = `

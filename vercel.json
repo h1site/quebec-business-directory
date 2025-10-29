@@ -78,19 +78,31 @@
   ],
   "rewrites": [
     {
+      "source": "/en/:categorySlug/:citySlug/:businessSlug",
+      "destination": "/api/seo?categorySlug=:categorySlug&citySlug=:citySlug&slug=:businessSlug&lang=en"
+    },
+    {
       "source": "/:categorySlug/:citySlug/:businessSlug",
       "destination": "/api/seo?categorySlug=:categorySlug&citySlug=:citySlug&slug=:businessSlug"
+    },
+    {
+      "source": "/en/city/:citySlug",
+      "destination": "/api/seo?citySlug=:citySlug&lang=en"
     },
     {
       "source": "/ville/:citySlug",
       "destination": "/api/seo?citySlug=:citySlug"
     },
     {
+      "source": "/en/category/:categorySlug",
+      "destination": "/api/seo?categorySlug=:categorySlug&lang=en"
+    },
+    {
       "source": "/categorie/:categorySlug",
       "destination": "/api/seo?categorySlug=:categorySlug"
     },
     {
-      "source": "/((?!api/|sitemaps/|sitemap\\.xml).*)",
+      "source": "/((?!api/|sitemaps/|sitemap\\.xml|sitemap-en\\.xml).*)",
       "destination": "/index.html"
     }
   ]
