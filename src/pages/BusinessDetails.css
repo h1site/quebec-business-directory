@@ -337,7 +337,8 @@
 .unclaimed-info-source {
   color: #1e3a8a;
   font-size: 0.95rem;
-  margin: 0 0 2.5rem 0;
+  margin: 0 0 3rem 0;
+  padding-bottom: 1rem;
   line-height: 1.6;
   font-weight: 500;
 }
@@ -352,7 +353,8 @@
 .unclaimed-owner-cta {
   color: #1e3a8a;
   font-size: 1rem;
-  margin: 0 0 2.5rem 0;
+  margin: 0 0 3rem 0;
+  padding-bottom: 1rem;
   line-height: 1.6;
   font-weight: 600;
 }
@@ -360,7 +362,8 @@
 .unclaimed-owner-benefits {
   color: #1e40af;
   font-size: 0.95rem;
-  margin: 0 0 2.5rem 0;
+  margin: 0 0 3rem 0;
+  padding-bottom: 1rem;
   line-height: 1.7;
 }
 
