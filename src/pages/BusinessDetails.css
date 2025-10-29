@@ -700,28 +700,7 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .business-content {
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Ordre sur mobile/tablette: Beta (1), Sidebar/Adresse (2), À propos (3) */
-  .business-beta-section {
-    order: 1;
-  }
-
-  .business-sidebar {
-    order: 2;
-    width: 100%;
-  }
-
-  .business-main {
-    order: 3;
-    width: 100%;
-  }
-
-  /* Retirer beta de business-main pour éviter duplication */
-  .business-main .business-beta-section {
-    display: none;
+    grid-template-columns: 1fr;
   }
 
   .map-container > div:last-child {
@@ -732,21 +711,6 @@
 @media (max-width: 768px) {
   .business-details-page {
     padding: 1rem 0 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Réorganiser l'ordre des sections sur mobile */
-  .business-main-container {
-    order: 1;
-  }
-
-  .business-reviews-section {
-    order: 3; /* Mettre les évaluations à la fin */
-  }
-
-  .full-width-map-section {
-    order: 2; /* Carte après le contenu principal */
   }
 
   .business-header {
@@ -759,24 +723,6 @@
   .business-header-top {
     flex-direction: column;
     align-items: center;
-  }
-
-  /* Sidebar garde la même taille que les autres sections sur mobile */
-  .sidebar-card {
-    padding: 1.5rem;
-  }
-
-  /* Retirer le padding/margin extra de contact-section pour matcher les autres */
-  .contact-section {
-    padding-bottom: 0;
-    margin-bottom: 0;
-    border-bottom: none;
-  }
-
-  .contact-section:not(:last-child) {
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #e2e8f0;
   }
 
   .business-logo img {
