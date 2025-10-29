@@ -188,6 +188,12 @@ export default async function handler(req, res) {
     // STEP 4: Inject new canonical and business-specific SEO tags
     const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
 
+    // Use business logo if available, otherwise use default OG image
+    const defaultOgImage = isEnglish
+      ? 'https://registreduquebec.com/og-default-en.svg'
+      : 'https://registreduquebec.com/og-default.svg';
+    const ogImage = business.logo_url || defaultOgImage;
+
     const seoTags = `
     <meta property="og:title" content="${escapeHtml(title)}">
     <meta property="og:description" content="${escapeHtml(description)}">
@@ -195,11 +201,14 @@ export default async function handler(req, res) {
     <meta property="og:type" content="business.business">
     <meta property="og:locale" content="${locale}">
     <meta property="og:site_name" content="${siteName}">
-    ${business.logo_url ? `<meta property="og:image" content="${business.logo_url}">` : ''}
-    <meta name="twitter:card" content="summary${business.logo_url ? '_large_image' : ''}">
+    <meta property="og:image" content="${ogImage}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="${business.logo_url ? 'image/jpeg' : 'image/svg+xml'}">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${escapeHtml(title)}">
     <meta name="twitter:description" content="${escapeHtml(description)}">
-    ${business.logo_url ? `<meta name="twitter:image" content="${business.logo_url}">` : ''}
+    <meta name="twitter:image" content="${ogImage}">
 
     <script type="application/ld+json">
     ${JSON.stringify(schemaOrg, null, 2)}
