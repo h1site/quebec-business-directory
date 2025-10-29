@@ -135,6 +135,323 @@
   margin-top: auto;
 }
 
+/* YouTube Section */
+.youtube-section {
+  background: white;
+  padding: 3rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.youtube-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(255, 0, 0, 0.2);
+}
+
+.youtube-header-content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.youtube-icon {
+  width: 60px;
+  height: 60px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.youtube-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 0.5rem 0;
+}
+
+.youtube-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+}
+
+.youtube-subscribe-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 2rem;
+  background: white;
+  color: #ff0000;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+}
+
+.youtube-subscribe-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  background: #f8f8f8;
+}
+
+.youtube-icon-small {
+  width: 24px;
+  height: 24px;
+}
+
+/* Playlists Grid */
+.playlists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.playlist-card {
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.playlist-card:hover {
+  transform: translateY(-4px);
+  border-color: #ff0000;
+  box-shadow: 0 8px 24px rgba(255, 0, 0, 0.15);
+}
+
+.playlist-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+  border-radius: 50%;
+  color: white;
+}
+
+.playlist-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.playlist-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 0.75rem;
+}
+
+.playlist-description {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.playlist-coming-soon {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-style: italic;
+  margin: 0;
+}
+
+.playlist-stats {
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.video-count {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+.playlist-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+  color: white;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.playlist-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 0, 0, 0.3);
+}
+
+.play-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Playlist Section with Videos */
+.playlist-section {
+  margin-top: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.playlist-section:last-child {
+  border-bottom: none;
+}
+
+.playlist-header-inline {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  border-radius: 12px;
+  border-left: 4px solid #ff0000;
+}
+
+.playlist-icon-inline {
+  width: 50px;
+  height: 50px;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+  border-radius: 12px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.playlist-icon-inline svg {
+  width: 100%;
+  height: 100%;
+}
+
+.playlist-title-large {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin: 0 0 0.25rem 0;
+}
+
+.playlist-description-inline {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.playlist-link-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+  color: white;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.playlist-link-header:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 0, 0, 0.3);
+}
+
+/* Videos Grid */
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.video-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.video-embed {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  background: #000;
+}
+
+.video-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-info {
+  padding: 1rem;
+}
+
+.video-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.video-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.video-duration {
+  font-weight: 600;
+}
+
+.coming-soon-header {
+  margin-top: 3rem;
+  text-align: center;
+  padding: 2rem 0 1rem;
+}
+
+.coming-soon-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin: 0;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .blog-hero {
@@ -147,6 +464,86 @@
 
   .blog-subtitle {
     font-size: 1.125rem;
+  }
+
+  .youtube-section {
+    padding: 2rem 0;
+  }
+
+  .youtube-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .youtube-header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .youtube-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .youtube-title {
+    font-size: 1.5rem;
+  }
+
+  .youtube-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .youtube-subscribe-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .playlists-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .playlist-card {
+    padding: 1.5rem;
+  }
+
+  .playlist-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1rem;
+  }
+
+  .playlist-title {
+    font-size: 1.25rem;
+  }
+
+  .playlist-header-inline {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .playlist-link-header {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .playlist-title-large {
+    font-size: 1.5rem;
+  }
+
+  .videos-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .coming-soon-header h2 {
+    font-size: 1.5rem;
   }
 
   .articles-grid {

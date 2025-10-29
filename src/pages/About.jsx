@@ -80,7 +80,7 @@ const About = () => {
             <section>
               <h2>Rejoignez notre communauté</h2>
               <p>
-                Connectez avec des milliers d'entrepreneurs québécois dans notre groupe Facebook officiel. Partagez vos expériences, posez des questions et développez votre réseau professionnel.
+                Connectez avec des milliers d'entrepreneurs québécois dans notre groupe Facebook. Partagez vos expériences, posez des questions et développez votre réseau professionnel.
               </p>
               <div className="cta-box">
                 <a
@@ -175,7 +175,7 @@ const About = () => {
             <section>
               <h2>Join Our Community</h2>
               <p>
-                Connect with thousands of Quebec entrepreneurs in our official Facebook group. Share experiences, ask questions and grow your professional network.
+                Connect with thousands of Quebec entrepreneurs in our Facebook group. Share experiences, ask questions and grow your professional network.
               </p>
               <div className="cta-box">
                 <a

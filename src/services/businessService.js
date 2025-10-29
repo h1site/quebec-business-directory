@@ -1,6 +1,7 @@
 import { supabase, isSupabaseConfigured } from './supabaseClient.js';
 import { sampleBusinesses } from '../data/sampleBusinesses.js';
 import { quebecMunicipalities } from '../data/quebecMunicipalities.js';
+import { matchesIgnoreAccents } from '../utils/textNormalization.js';
 
 const tableName = 'businesses';
 
@@ -12,7 +13,8 @@ const buildFilters = ({ query, city, region, mrc, category, phone, distance, coo
   }
 
   if (city) {
-    filters.push({ column: 'city', operator: 'ilike', value: `%${city}%` });
+    // Use unaccent for accent-insensitive search (Montréal = Montreal)
+    filters.push({ column: 'city', operator: 'unaccent_ilike', value: city });
   }
 
   if (mrc) {
@@ -101,16 +103,16 @@ export const searchBusinesses = async ({
       const matchesQuery = query
         ? [business.name, business.description, business.products_services]
             .filter(Boolean)
-            .some((value) => value.toLowerCase().includes(query.toLowerCase()))
+            .some((value) => matchesIgnoreAccents(value, query))
         : true;
       const matchesCity = city
-        ? business.city.toLowerCase().includes(city.toLowerCase())
+        ? matchesIgnoreAccents(business.city, city)
         : true;
       const matchesRegion = region
-        ? business.region?.toLowerCase().includes(region.toLowerCase())
+        ? matchesIgnoreAccents(business.region, region)
         : true;
       const matchesCategory = category
-        ? business.categories?.some((cat) => cat.toLowerCase().includes(category.toLowerCase()))
+        ? business.categories?.some((cat) => matchesIgnoreAccents(cat, category))
         : true;
       const matchesPhone = phone
         ? business.phone?.replace(/\D/g, '').includes(phone.replace(/\D/g, ''))
@@ -136,6 +138,11 @@ export const searchBusinesses = async ({
         type: 'websearch',
         config: 'french'
       });
+    } else if (filter.operator === 'unaccent_ilike') {
+      // Use PostgreSQL unaccent function for accent-insensitive search
+      // This allows "Montreal" to match "Montréal" and vice versa
+      const normalizedValue = filter.value.toLowerCase();
+      request = request.filter(`f_unaccent_lower(${filter.column})`, 'ilike', `%${normalizedValue}%`);
     } else if (filter.operator === 'cs') {
       request = request.contains(filter.column, filter.value);
     } else if (filter.operator === 'lte' && filter.column === 'location') {
