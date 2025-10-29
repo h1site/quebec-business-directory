@@ -319,8 +319,8 @@ const BusinessDetails = () => {
               <h2 className="section-title">{t('business.about')}</h2>
               <p className="business-description">{business.description}</p>
 
-              {/* Unclaimed Business Notice - Only show if business is not claimed */}
-              {!business.user_id && (
+              {/* Unclaimed Business Notice - Only show if business is not claimed AND not manually added */}
+              {!business.user_id && !business.manually_added && (
                 <div className="unclaimed-owner-notice">
                   <p className="unclaimed-info-source">{t('business.unclaimedInfoSource')}</p>
                   <h3 className="unclaimed-owner-title">{t('business.unclaimedOwnerTitle')}</h3>
