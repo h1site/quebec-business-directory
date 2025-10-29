@@ -27,7 +27,9 @@ const PATH_SEGMENTS = {
     blogue: 'blogue',
     'mes-entreprises': 'mes-entreprises',
     profil: 'profil',
-    admin: 'admin'
+    admin: 'admin',
+    nouvelle: 'nouvelle',
+    parcourir: 'parcourir'
   },
   [LANGUAGES.EN]: {
     categorie: 'category',
@@ -43,7 +45,9 @@ const PATH_SEGMENTS = {
     blogue: 'blog',
     'mes-entreprises': 'my-businesses',
     profil: 'profile',
-    admin: 'admin'
+    admin: 'admin',
+    nouvelle: 'new',
+    parcourir: 'browse'
   }
 };
 
@@ -115,7 +119,10 @@ export function translatePathSegment(segment, targetLang, currentLang = DEFAULT_
  * @returns {string} Translated pathname
  */
 export function translatePath(pathname, targetLang) {
-  if (!pathname || pathname === '/') return '/';
+  // Handle root path
+  if (!pathname || pathname === '/') {
+    return targetLang === LANGUAGES.EN ? '/en' : '/';
+  }
 
   const currentLang = getCurrentLanguage(pathname);
 
@@ -274,4 +281,37 @@ export function getHreflangUrls(basePath, baseUrl = 'https://registreduquebec.co
     en: `${baseUrl}/en${cleanPath}`,
     default: `${baseUrl}${cleanPath}` // x-default points to French
   };
+}
+
+/**
+ * Create a localized link for use in Link components
+ * Adds /en/ prefix for English, keeps root for French
+ * @param {string} path - The path (e.g., '/recherche', '/categorie/restaurants', '/recherche?q=test')
+ * @param {string} lang - Current language ('fr' or 'en')
+ * @returns {string} Localized path
+ *
+ * @example
+ * localizedLink('/recherche', 'fr') // returns '/recherche'
+ * localizedLink('/recherche', 'en') // returns '/en/search'
+ * localizedLink('/categorie/restaurants', 'en') // returns '/en/category/restaurants'
+ * localizedLink('/recherche?category=test', 'en') // returns '/en/search?category=test'
+ */
+export function localizedLink(path, lang = DEFAULT_LANGUAGE) {
+  // Separate pathname and query string
+  const [pathname, queryString] = path.split('?');
+
+  // If already has language prefix, strip it first
+  const cleanPath = stripLanguagePrefix(pathname);
+
+  // For French, return clean path (no prefix)
+  if (lang === LANGUAGES.FR) {
+    const basePath = cleanPath || '/';
+    return queryString ? `${basePath}?${queryString}` : basePath;
+  }
+
+  // For English, translate path segments and add /en/ prefix
+  const translatedPath = translatePath(cleanPath, LANGUAGES.EN);
+
+  // Re-attach query string if present
+  return queryString ? `${translatedPath}?${queryString}` : translatedPath;
 }

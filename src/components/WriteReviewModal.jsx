@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../services/supabaseClient';
 import './WriteReviewModal.css';
 
 const WriteReviewModal = ({ business, existingReview: existingReviewProp, isOpen, onClose, onReviewSubmitted }) => {
+  const { t } = useTranslation();
   const [user, setUser] = useState(null);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -60,18 +62,18 @@ const WriteReviewModal = ({ business, existingReview: existingReviewProp, isOpen
 
     // Limiter à 5 photos
     if (photos.length + files.length > 5) {
-      setError('Vous pouvez ajouter un maximum de 5 photos');
+      setError(t('reviewModal.errorMaxPhotos'));
       return;
     }
 
     // Valider chaque fichier
     for (const file of files) {
       if (!file.type.startsWith('image/')) {
-        setError('Seules les images sont acceptées');
+        setError(t('reviewModal.errorImageOnly'));
         return;
       }
       if (file.size > 5 * 1024 * 1024) {
-        setError('Les images doivent faire moins de 5MB');
+        setError(t('reviewModal.errorImageSize'));
         return;
       }
     }
@@ -130,17 +132,17 @@ const WriteReviewModal = ({ business, existingReview: existingReviewProp, isOpen
 
     // Validation
     if (!user) {
-      setError('Vous devez être connecté pour écrire une critique');
+      setError(t('reviewModal.errorLogin'));
       return;
     }
 
     if (rating === 0) {
-      setError('Veuillez sélectionner une note');
+      setError(t('reviewModal.errorRating'));
       return;
     }
 
     if (comment.length < 50) {
-      setError('Votre critique doit contenir au moins 50 caractères');
+      setError(t('reviewModal.errorMinLength'));
       return;
     }
 
@@ -185,9 +187,9 @@ const WriteReviewModal = ({ business, existingReview: existingReviewProp, isOpen
     } catch (error) {
       console.error('Erreur soumission:', error);
       if (error.code === '23505') {
-        setError('Vous avez déjà écrit une critique pour cette entreprise');
+        setError(t('reviewModal.errorDuplicate'));
       } else {
-        setError('Erreur lors de la soumission de votre critique');
+        setError(t('reviewModal.errorSubmit'));
       }
     } finally {
       setSubmitting(false);
@@ -210,7 +212,7 @@ const WriteReviewModal = ({ business, existingReview: existingReviewProp, isOpen
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>
-            {existingReview ? 'Modifier votre critique' : 'Écrire une critique'}
+            {existingReview ? t('reviewModal.editTitle') : t('reviewModal.title')}
           </h2>
           <button className="modal-close" onClick={onClose}>×</button>
         </div>
@@ -224,7 +226,7 @@ const WriteReviewModal = ({ business, existingReview: existingReviewProp, isOpen
           <form onSubmit={handleSubmit}>
             {/* Sélection de la note */}
             <div className="form-section">
-              <label>Note</label>
+              <label>{t('reviewModal.rating')}</label>
               <div className="rating-input">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
@@ -240,11 +242,11 @@ const WriteReviewModal = ({ business, existingReview: existingReviewProp, isOpen
                 ))}
                 {rating > 0 && (
                   <span className="rating-label">
-                    {rating === 1 && 'Décevant'}
-                    {rating === 2 && 'Passable'}
-                    {rating === 3 && 'Correct'}
-                    {rating === 4 && 'Très bien'}
-                    {rating === 5 && 'Excellent'}
+                    {rating === 1 && t('reviewModal.ratingPoor')}
+                    {rating === 2 && t('reviewModal.ratingFair')}
+                    {rating === 3 && t('reviewModal.ratingGood')}
+                    {rating === 4 && t('reviewModal.ratingVeryGood')}
+                    {rating === 5 && t('reviewModal.ratingExcellent')}
                   </span>
                 )}
               </div>
@@ -253,25 +255,25 @@ const WriteReviewModal = ({ business, existingReview: existingReviewProp, isOpen
             {/* Commentaire */}
             <div className="form-section">
               <label htmlFor="comment">
-                Votre expérience (minimum 50 caractères)
+                {t('reviewModal.yourExperience')}
               </label>
               <textarea
                 id="comment"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="Partagez votre expérience avec cette entreprise..."
+                placeholder={t('reviewModal.placeholder')}
                 rows="6"
                 maxLength="2000"
               />
               <div className="character-count">
-                {comment.length} / 2000 caractères
-                {comment.length < 50 && ` (minimum 50)`}
+                {comment.length} / 2000 {t('reviewModal.characters')}
+                {comment.length < 50 && ` (${t('reviewModal.minimum')} 50)`}
               </div>
             </div>
 
             {/* Photos */}
             <div className="form-section">
-              <label>Photos (optionnel, max 5)</label>
+              <label>{t('reviewModal.photos')}</label>
 
               {photos.length > 0 && (
                 <div className="photo-previews">
@@ -292,7 +294,7 @@ const WriteReviewModal = ({ business, existingReview: existingReviewProp, isOpen
 
               {photos.length < 5 && (
                 <label className="photo-upload-btn">
-                  Ajouter des photos
+                  {t('reviewModal.addPhotos')}
                   <input
                     type="file"
                     accept="image/*"
@@ -315,14 +317,14 @@ const WriteReviewModal = ({ business, existingReview: existingReviewProp, isOpen
                 onClick={onClose}
                 disabled={submitting}
               >
-                Annuler
+                {t('reviewModal.cancel')}
               </button>
               <button
                 type="submit"
                 className="btn-primary"
                 disabled={submitting || rating === 0 || comment.length < 50}
               >
-                {submitting ? 'Envoi...' : existingReview ? 'Mettre à jour' : 'Publier'}
+                {submitting ? t('reviewModal.submitting') : existingReview ? t('reviewModal.update') : t('reviewModal.publish')}
               </button>
             </div>
           </form>

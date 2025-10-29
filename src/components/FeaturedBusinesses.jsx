@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import LocalizedLink from './LocalizedLink.jsx';
 import { supabase } from '../services/supabaseClient';
 import { getBusinessUrl } from '../utils/urlHelpers';
 import './FeaturedBusinesses.css';
 
 function FeaturedBusinesses() {
+  const { t } = useTranslation();
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -51,10 +53,10 @@ function FeaturedBusinesses() {
   return (
     <section className="featured-businesses desktop-only">
       <div className="container">
-        <h2 className="featured-title">Découvrez des entreprises québécoises</h2>
+        <h2 className="featured-title">{t('home.featuredTitle')}</h2>
         <div className="featured-grid">
           {businesses.map((business) => (
-            <Link
+            <LocalizedLink
               key={business.id}
               to={getBusinessUrl(business)}
               className="featured-card"
@@ -78,9 +80,9 @@ function FeaturedBusinesses() {
                 )}
               </div>
               <div className="featured-cta">
-                Voir la fiche →
+                {t('home.viewListing')} →
               </div>
-            </Link>
+            </LocalizedLink>
           ))}
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import LocalizedLink from '../components/LocalizedLink.jsx';
 import { Helmet } from 'react-helmet-async';
 import { getBusinessBySlug } from '../services/businessService.js';
 import { getBusinessHours } from '../services/businessHoursService.js';
@@ -15,6 +16,7 @@ import AmazonProducts from '../components/AmazonProducts.jsx';
 import Breadcrumb from '../components/Breadcrumb.jsx';
 import { getBusinessUrl, isLegacyUrl } from '../utils/urlHelpers.js';
 import { generateBusinessSchema, generateBreadcrumbSchema } from '../utils/schemaMarkup.js';
+import { localizedLink } from '../utils/languageRouting.js';
 import './BusinessDetails.css';
 
 const BusinessDetails = () => {
@@ -34,6 +36,10 @@ const BusinessDetails = () => {
   const [showClaimModal, setShowClaimModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewsKey, setReviewsKey] = useState(0);
+
+  // Detect current language from URL
+  const isEnglish = location.pathname === '/en' || location.pathname.startsWith('/en/');
+  const currentLang = isEnglish ? 'en' : 'fr';
 
   useEffect(() => {
     const loadBusiness = async () => {
@@ -128,9 +134,9 @@ const BusinessDetails = () => {
     return (
       <div className="container" style={{ padding: '3rem 0', textAlign: 'center' }}>
         <h2>{error || 'Entreprise introuvable'}</h2>
-        <Link to="/" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>
+        <LocalizedLink to="/" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>
           Retour à l'accueil
-        </Link>
+        </LocalizedLink>
       </div>
     );
   }
@@ -159,15 +165,7 @@ const BusinessDetails = () => {
 
       <div className="business-details-page">
         <div className="container">
-          {/* Header Section */}
-        <div className="business-header">
-          {business.logo_url && (
-            <div className="business-logo">
-              <img src={business.logo_url} alt={`Logo ${business.name}`} />
-            </div>
-          )}
-
-          {/* Breadcrumb Navigation */}
+          {/* Breadcrumb Navigation - Outside header box */}
           <Breadcrumb
             items={[
               { name: i18n.language === 'en' ? 'Home' : 'Accueil', url: '/' },
@@ -177,11 +175,19 @@ const BusinessDetails = () => {
               }] : []),
               ...(business.city ? [{
                 name: business.city,
-                url: `/ville/${business.city.toLowerCase().replace(/\s+/g, '-')}`
+                url: `/recherche?city=${encodeURIComponent(business.city)}`
               }] : []),
               { name: business.name }
             ]}
           />
+
+          {/* Header Section */}
+          <div className="business-header">
+          {business.logo_url && (
+            <div className="business-logo">
+              <img src={business.logo_url} alt={`Logo ${business.name}`} />
+            </div>
+          )}
 
           <div className="business-header-main">
             <div className="business-header-top">
@@ -197,7 +203,7 @@ const BusinessDetails = () => {
                     to={getBusinessUrl(business) + '/modifier'}
                     className="btn btn-edit"
                   >
-                    Modifier la fiche
+                    {t('business.editListing')}
                   </Link>
                 )}
                 {!isClaimed && user && !isOwner && (
@@ -205,15 +211,15 @@ const BusinessDetails = () => {
                     className="btn btn-claim"
                     onClick={() => setShowClaimModal(true)}
                   >
-                    📋 Réclamer votre fiche
+                    📋 {t('business.claimListing')}
                   </button>
                 )}
                 {!isClaimed && !user && (
                   <button
                     className="btn btn-claim"
-                    onClick={() => window.location.href = 'https://registreduquebec.com/connexion'}
+                    onClick={() => navigate(localizedLink('/connexion', currentLang), { state: { from: location.pathname } })}
                   >
-                    📋 Réclamer votre fiche
+                    📋 {t('business.claimListing')}
                   </button>
                 )}
                 {!isClaimed && (
@@ -221,13 +227,13 @@ const BusinessDetails = () => {
                     href={`mailto:info@h1site.com?subject=${encodeURIComponent(window.location.href)}`}
                     className="btn btn-delete"
                   >
-                    🗑️ Supprimer cette fiche
+                    🗑️ {t('business.deleteListing')}
                   </a>
                 )}
               </div>
             </div>
             {business.established_year && (
-              <p className="established-year">Fondée en {business.established_year}</p>
+              <p className="established-year">{t('business.establishedIn')} {business.established_year}</p>
             )}
             {/* Unclaimed business notice - only show for REQ imports */}
             {!isClaimed && business.data_source === 'req' && (
@@ -238,24 +244,26 @@ const BusinessDetails = () => {
           </div>
         </div>
 
-        {/* Beta Notice */}
-        <div className="business-beta-notice">
-          <span className="beta-badge">BÊTA</span>
-          <p>{t('hero.betaNotice')}</p>
-        </div>
-
         {/* Main Content */}
         <div className="business-content">
           {/* Left Column */}
           <div className="business-main">
+            {/* Beta Notice */}
+            <section className="business-section business-beta-section">
+              <div className="beta-content">
+                <span className="beta-badge">BÊTA</span>
+                <p>{t('hero.betaNotice')}</p>
+              </div>
+            </section>
+
             {/* About & Products/Services Combined */}
             <section className="business-section">
-              <h2 className="section-title">À propos</h2>
+              <h2 className="section-title">{t('business.about')}</h2>
               <p className="business-description">{business.description}</p>
 
               {business.products_services && (
                 <div style={{ marginTop: '2rem' }}>
-                  <h3 className="section-subtitle">Produits et services</h3>
+                  <h3 className="section-subtitle">{t('business.productsServices')}</h3>
                   <ul className="services-list">
                     {business.products_services.split('\n').filter(line => line.trim()).map((service, index) => (
                       <li key={index}>{service.trim()}</li>
@@ -268,7 +276,7 @@ const BusinessDetails = () => {
             {/* Gallery */}
             {business.gallery_images && business.gallery_images.length > 0 && (
               <section className="business-section">
-                <h2 className="section-title">Galerie photos</h2>
+                <h2 className="section-title">{t('business.photoGallery')}</h2>
                 <div className="business-gallery">
                   {business.gallery_images.map((imageUrl, index) => (
                     <div key={index} className="gallery-item">
@@ -285,14 +293,14 @@ const BusinessDetails = () => {
 
             {business.mission_statement && (
               <section className="business-section">
-                <h2 className="section-title">Mission</h2>
+                <h2 className="section-title">{t('business.mission')}</h2>
                 <p>{business.mission_statement}</p>
               </section>
             )}
 
             {business.core_values && (
               <section className="business-section">
-                <h2 className="section-title">Valeurs</h2>
+                <h2 className="section-title">{t('business.values')}</h2>
                 <p>{business.core_values}</p>
               </section>
             )}
@@ -304,7 +312,7 @@ const BusinessDetails = () => {
             <div className="sidebar-card">
               {/* Address Section */}
               <div className="contact-section">
-                <h3 className="sidebar-title">Adresse</h3>
+                <h3 className="sidebar-title">{t('business.address')}</h3>
                 <div className="address-info">
                   <p>{business.address}</p>
                   {business.address_line2 && <p>{business.address_line2}</p>}
@@ -322,7 +330,7 @@ const BusinessDetails = () => {
 
               {/* Contact Information Section */}
               <div className="contact-section">
-                <h3 className="sidebar-title">Coordonnées</h3>
+                <h3 className="sidebar-title">{t('business.contact')}</h3>
                 <div className="contact-info">
                   {business.phone && (
                     <div className="contact-item">
@@ -349,7 +357,7 @@ const BusinessDetails = () => {
                         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                       </svg>
                       <a href={business.website} target="_blank" rel="noopener noreferrer">
-                        Site web
+                        {t('business.website')}
                       </a>
                     </div>
                   )}
@@ -364,7 +372,7 @@ const BusinessDetails = () => {
               {/* Social Media Section */}
               {(business.facebook_url || business.instagram_url || business.twitter_url || business.linkedin_url || business.threads_url || business.tiktok_url) && (
                 <div className="contact-section">
-                  <h3 className="sidebar-title">Réseaux sociaux</h3>
+                  <h3 className="sidebar-title">{t('business.socialMedia')}</h3>
                   <div className="social-media-links">
                     {business.facebook_url && (
                       <a href={business.facebook_url} target="_blank" rel="noopener noreferrer" className="social-link facebook" title="Facebook">
@@ -449,7 +457,7 @@ const BusinessDetails = () => {
           businessId={business.id}
           onWriteReviewClick={() => {
             if (!user) {
-              navigate('/connexion', { state: { from: location.pathname } });
+              navigate(localizedLink('/connexion', currentLang), { state: { from: location.pathname } });
             } else {
               setShowReviewModal(true);
             }

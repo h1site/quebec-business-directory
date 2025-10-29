@@ -32,6 +32,7 @@ import CookieConsent from './components/CookieConsent.jsx';
 import GoogleAnalytics from './components/GoogleAnalytics.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AdminRoute from './components/AdminRoute.jsx';
+import LanguageRouteWrapper from './components/LanguageRouteWrapper.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 
 function ScrollToTop() {
@@ -57,11 +58,13 @@ function App() {
             <Header />
             <CookieConsent />
             <main>
-            <Routes>
-              <Route path="/" element={<Home />} />
+            <LanguageRouteWrapper>
+              <Routes>
+                {/* ===== FRENCH ROUTES (root) ===== */}
+                <Route path="/" element={<Home />} />
 
-              {/* New Search Engine */}
-              <Route path="/recherche" element={<Search />} />
+                {/* Search */}
+                <Route path="/recherche" element={<Search />} />
 
               {/* Browse Pages */}
               <Route path="/ville/:citySlug" element={<CityBrowse />} />
@@ -180,7 +183,131 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
+              {/* ===== ENGLISH ROUTES (/en/) ===== */}
+              <Route path="/en" element={<Home />} />
+
+              {/* Search */}
+              <Route path="/en/search" element={<Search />} />
+
+              {/* Browse Pages */}
+              <Route path="/en/city/:citySlug" element={<CityBrowse />} />
+              <Route path="/en/region/:regionSlug" element={<RegionBrowse />} />
+              <Route path="/en/category/:categorySlug" element={<CategoryBrowse />} />
+              <Route path="/en/category/:categorySlug/:subCategorySlug" element={<CategoryBrowse />} />
+
+              {/* Auth */}
+              <Route path="/en/login" element={<Login />} />
+              <Route path="/en/register" element={<Register />} />
+
+              {/* Legal & Info */}
+              <Route path="/en/about" element={<About />} />
+              <Route path="/en/legal-notice" element={<LegalNotice />} />
+              <Route path="/en/privacy-policy" element={<PrivacyPolicy />} />
+
+              {/* Blog */}
+              <Route path="/en/blog" element={<Blog />} />
+              <Route path="/en/blog/:articleId" element={<BlogArticle />} />
+
+              {/* Dashboard */}
+              <Route
+                path="/en/business/new"
+                element={
+                  <ProtectedRoute>
+                    <CreateBusinessWizard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/en/my-businesses"
+                element={
+                  <ProtectedRoute>
+                    <MyBusinesses />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/en/profile"
+                element={
+                  <ProtectedRoute>
+                    <UserProfile />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Admin routes (keep same in English) */}
+              <Route
+                path="/en/admin/migration"
+                element={
+                  <AdminRoute>
+                    <MigrationTools />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/en/admin/tools"
+                element={
+                  <AdminRoute>
+                    <AdminTools />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/en/admin/claims"
+                element={
+                  <AdminRoute>
+                    <AdminClaims />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/en/admin/moderation"
+                element={
+                  <AdminRoute>
+                    <AdminModeration />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/en/admin/stats"
+                element={
+                  <AdminRoute>
+                    <AdminStats />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/en/admin"
+                element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                }
+              />
+
+              {/* Business Details - English URLs */}
+              <Route path="/en/:categorySlug/:citySlug/:slug" element={<BusinessDetails />} />
+              <Route
+                path="/en/:categorySlug/:citySlug/:slug/edit"
+                element={
+                  <ProtectedRoute>
+                    <EditBusiness />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Legacy English routes */}
+              <Route path="/en/business/:slug" element={<BusinessDetails />} />
+              <Route
+                path="/en/business/:slug/edit"
+                element={
+                  <ProtectedRoute>
+                    <EditBusiness />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
+          </LanguageRouteWrapper>
           </main>
           <FooterYelp />
         </div>

@@ -1,10 +1,24 @@
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, useLocation } from 'react-router-dom';
+import LocalizedLink from './LocalizedLink.jsx';
+import { translatePath } from '../utils/languageRouting';
 import './FooterYelp.css';
 
 const FooterYelp = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const currentYear = new Date().getFullYear();
+
+  const handleLanguageChange = (targetLang) => {
+    // Translate current path to target language
+    const newPath = translatePath(location.pathname, targetLang);
+
+    // Save preference and navigate
+    localStorage.setItem('language', targetLang);
+    i18n.changeLanguage(targetLang);
+    navigate(newPath);
+  };
 
   return (
     <footer className="footer-yelp">
@@ -13,48 +27,48 @@ const FooterYelp = () => {
         <div className="footer-yelp-columns">
           {/* About Column */}
           <div className="footer-yelp-column">
-            <h3 className="footer-yelp-title">À propos</h3>
+            <h3 className="footer-yelp-title">{t('footer.about')}</h3>
             <ul className="footer-yelp-links">
-              <li><Link to="/a-propos">À propos du Registre</Link></li>
-              <li><Link to="/blogue">Blogue</Link></li>
-              <li><a href="https://www.facebook.com/groups/registreduquebec" target="_blank" rel="nofollow noopener noreferrer">Groupe Facebook</a></li>
-              <li><Link to="/mentions-legales">Mentions légales</Link></li>
-              <li><Link to="/politique-confidentialite">Politique de confidentialité</Link></li>
-              <li><a href="mailto:info@h1site.com">Nous joindre</a></li>
+              <li><LocalizedLink to="/a-propos">{t('footer.aboutRegistry')}</LocalizedLink></li>
+              <li><LocalizedLink to="/blogue">{t('footer.blog')}</LocalizedLink></li>
+              <li><a href="https://www.facebook.com/groups/registreduquebec" target="_blank" rel="nofollow noopener noreferrer">{t('footer.facebookGroup')}</a></li>
+              <li><LocalizedLink to="/mentions-legales">{t('footer.legalNotice')}</LocalizedLink></li>
+              <li><LocalizedLink to="/politique-confidentialite">{t('footer.privacyPolicy')}</LocalizedLink></li>
+              <li><a href="mailto:info@h1site.com">{t('footer.contactUs')}</a></li>
             </ul>
           </div>
 
           {/* Discover Column */}
           <div className="footer-yelp-column">
-            <h3 className="footer-yelp-title">Découvrir</h3>
+            <h3 className="footer-yelp-title">{t('footer.discover')}</h3>
             <ul className="footer-yelp-links">
-              <li><Link to="/recherche">Rechercher des entreprises</Link></li>
-              <li><Link to="/parcourir">Parcourir par ville</Link></li>
-              <li><Link to="/parcourir/regions">Parcourir par région</Link></li>
-              <li><Link to="/recherche?category=restaurants">Restaurants</Link></li>
-              <li><Link to="/recherche?category=services">Services</Link></li>
+              <li><LocalizedLink to="/recherche">{t('footer.searchBusinesses')}</LocalizedLink></li>
+              <li><LocalizedLink to="/parcourir">{t('footer.browseByCity')}</LocalizedLink></li>
+              <li><LocalizedLink to="/parcourir/regions">{t('footer.browseByRegion')}</LocalizedLink></li>
+              <li><LocalizedLink to="/recherche?category=restaurants">{t('footer.restaurants')}</LocalizedLink></li>
+              <li><LocalizedLink to="/recherche?category=services">{t('footer.services')}</LocalizedLink></li>
             </ul>
           </div>
 
           {/* For Business Column */}
           <div className="footer-yelp-column">
-            <h3 className="footer-yelp-title">Pour les entreprises</h3>
+            <h3 className="footer-yelp-title">{t('footer.forBusinesses')}</h3>
             <ul className="footer-yelp-links">
-              <li><Link to="/connexion">Connexion propriétaire</Link></li>
-              <li><Link to="/inscription">Créer un compte</Link></li>
-              <li><Link to="/entreprise/nouvelle">Ajouter votre entreprise</Link></li>
-              <li><Link to="/mes-entreprises">Gérer mes entreprises</Link></li>
-              <li><a href="https://h1site.com" target="_blank" rel="noopener noreferrer">Services H1Site</a></li>
+              <li><LocalizedLink to="/connexion">{t('footer.ownerLogin')}</LocalizedLink></li>
+              <li><LocalizedLink to="/inscription">{t('footer.createAccount')}</LocalizedLink></li>
+              <li><LocalizedLink to="/entreprise/nouvelle">{t('footer.addBusiness')}</LocalizedLink></li>
+              <li><LocalizedLink to="/mes-entreprises">{t('footer.manageBusinesses')}</LocalizedLink></li>
+              <li><a href="https://h1site.com" target="_blank" rel="noopener noreferrer">{t('footer.h1siteServices')}</a></li>
             </ul>
           </div>
 
           {/* Languages Column */}
           <div className="footer-yelp-column">
-            <h3 className="footer-yelp-title">Langues</h3>
+            <h3 className="footer-yelp-title">{t('footer.languages')}</h3>
             <ul className="footer-yelp-links">
               <li>
                 <button
-                  onClick={() => i18n.changeLanguage('fr')}
+                  onClick={() => handleLanguageChange('fr')}
                   className={`lang-btn ${i18n.language === 'fr' ? 'active' : ''}`}
                 >
                   Français {i18n.language === 'fr' && '✓'}
@@ -62,7 +76,7 @@ const FooterYelp = () => {
               </li>
               <li>
                 <button
-                  onClick={() => i18n.changeLanguage('en')}
+                  onClick={() => handleLanguageChange('en')}
                   className={`lang-btn ${i18n.language === 'en' ? 'active' : ''}`}
                 >
                   English {i18n.language === 'en' && '✓'}
@@ -76,8 +90,8 @@ const FooterYelp = () => {
         <div className="footer-yelp-facebook">
           <div className="footer-yelp-facebook-content">
             <div className="footer-yelp-facebook-text">
-              <strong>Joignez notre groupe d'entrepreneurs</strong>
-              <span>Connectez avec des milliers d'entrepreneurs québécois</span>
+              <strong>{t('footer.facebookBannerTitle')}</strong>
+              <span>{t('footer.facebookBannerSubtitle')}</span>
             </div>
             <a
               href="https://www.facebook.com/groups/registreduquebec"
@@ -86,7 +100,7 @@ const FooterYelp = () => {
               className="footer-yelp-facebook-btn"
             >
               <span className="footer-yelp-facebook-logo">f</span>
-              Rejoindre le groupe
+              {t('footer.facebookJoinButton')}
             </a>
           </div>
         </div>
@@ -94,10 +108,10 @@ const FooterYelp = () => {
         {/* Bottom Copyright */}
         <div className="footer-yelp-bottom">
           <p>
-            Copyright © 2004-{currentYear} Registre du Québec Inc. et marques connexes sont des marques déposées du Registre du Québec.
+            {t('footer.copyright', { year: currentYear })}
           </p>
           <p className="footer-yelp-credits">
-            Créé par <a href="https://h1site.com" target="_blank" rel="noopener noreferrer">H1Site.com</a>
+            {t('footer.createdByLink')} <a href="https://h1site.com" target="_blank" rel="noopener noreferrer">H1Site.com</a>
           </p>
         </div>
       </div>

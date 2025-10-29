@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import './Sponsors.css';
 
 const Sponsors = () => {
+  const { t } = useTranslation();
   const sponsors = [
     {
       name: 'KracRadio',
@@ -27,7 +29,7 @@ const Sponsors = () => {
   return (
     <section className="sponsors-section">
       <div className="container">
-        <p className="sponsors-title">Commanditaires</p>
+        <p className="sponsors-title">{t('home.sponsors')}</p>
         <div className="sponsors-grid">
           {sponsors.map((sponsor, index) => (
             <a
@@ -47,7 +49,7 @@ const Sponsors = () => {
           ))}
         </div>
         <p className="sponsors-contact">
-          Pour commanditer notre registre, nous rejoindre sur{' '}
+          {t('home.sponsorContact')}{' '}
           <a href="https://h1site.com" target="_blank" rel="noopener noreferrer">
             h1site.com
           </a>

@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import LocalizedLink from './LocalizedLink.jsx';
 import { getBusinessUrl } from '../utils/urlHelpers.js';
 
 const BusinessCard = ({ business }) => (
-  <Link to={getBusinessUrl(business)} className="business-card-link">
+  <LocalizedLink to={getBusinessUrl(business)} className="business-card-link">
     <article className="business-card">
       <div>
         <h3>{business.name}</h3>
@@ -19,7 +19,7 @@ const BusinessCard = ({ business }) => (
       )}
     </div>
     </article>
-  </Link>
+  </LocalizedLink>
 );
 
 BusinessCard.propTypes = {

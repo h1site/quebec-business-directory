@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import LocalizedLink from './LocalizedLink.jsx';
+import LocalizedNavLink from './LocalizedNavLink.jsx';
 import LanguageToggle from './LanguageToggle.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { supabase } from '../services/supabaseClient.js';
@@ -65,21 +66,21 @@ const Header = () => {
 
             {/* Centre: Logo + texte pour mobile */}
             <div className="nav-mobile-center">
-              <Link to="/" className="nav-brand-logo-link-mobile">
+              <LocalizedLink to="/" className="nav-brand-logo-link-mobile">
                 <img src="/images/logos/logo.webp" alt="Logo" className="nav-brand-logo" />
-              </Link>
+              </LocalizedLink>
               <div className="nav-brand-text-mobile">
-                <Link to="/">Registre d'entreprise du Québec</Link>
+                <LocalizedLink to="/">{t('navigation.siteTitle')}</LocalizedLink>
                 <span className="header-beta-badge">BÊTA</span>
               </div>
             </div>
 
             {/* Brand avec logo et texte pour desktop */}
-            <Link to="/" className="nav-brand">
+            <LocalizedLink to="/" className="nav-brand">
               <img src="/images/logos/logo.webp" alt="Logo" className="nav-brand-logo" />
-              <span>Registre d'entreprise du Québec</span>
+              <span>{t('navigation.siteTitle')}</span>
               <span className="header-beta-badge">BÊTA</span>
-            </Link>
+            </LocalizedLink>
 
             {/* Menu hamburger pour mobile (colonne droite) */}
             <button className="hamburger" onClick={toggleMenu} aria-label="Toggle menu">
@@ -92,24 +93,24 @@ const Header = () => {
 
             {/* Navigation links desktop */}
             <div className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-              <NavLink to="/" onClick={closeMenu}>{t('navigation.home')}</NavLink>
-              <NavLink to="/recherche" onClick={closeMenu}>{t('navigation.search')}</NavLink>
+              <LocalizedNavLink to="/" onClick={closeMenu}>{t('navigation.home')}</LocalizedNavLink>
+              <LocalizedNavLink to="/recherche" onClick={closeMenu}>{t('navigation.search')}</LocalizedNavLink>
               {user ? (
                 <>
-                  <NavLink to="/entreprise/nouvelle" onClick={closeMenu}>{t('navigation.addListing')}</NavLink>
-                  <NavLink to="/mes-entreprises" onClick={closeMenu}>Mes entreprises</NavLink>
-                  <NavLink to="/profil" onClick={closeMenu} className="profile-avatar-link">
+                  <LocalizedNavLink to="/entreprise/nouvelle" onClick={closeMenu}>{t('navigation.addListing')}</LocalizedNavLink>
+                  <LocalizedNavLink to="/mes-entreprises" onClick={closeMenu}>{t('navigation.myBusinesses')}</LocalizedNavLink>
+                  <LocalizedNavLink to="/profil" onClick={closeMenu} className="profile-avatar-link">
                     <img
                       src={avatarUrl || '/default-avatar.svg'}
                       alt="Profil"
                       className="header-avatar"
                     />
-                  </NavLink>
+                  </LocalizedNavLink>
                 </>
               ) : (
                 <>
-                  <NavLink to="/connexion" onClick={closeMenu}>{t('navigation.login')}</NavLink>
-                  <NavLink to="/inscription" onClick={closeMenu}>{t('navigation.register')}</NavLink>
+                  <LocalizedNavLink to="/connexion" onClick={closeMenu}>{t('navigation.login')}</LocalizedNavLink>
+                  <LocalizedNavLink to="/inscription" onClick={closeMenu}>{t('navigation.register')}</LocalizedNavLink>
                 </>
               )}
               <a

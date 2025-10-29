@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { searchBusinesses } from '../../services/businessService.js';
@@ -8,13 +8,19 @@ import { getAllRegions, getMRCsByRegion, getCitiesByMRC } from '../../data/quebe
 import BusinessCard from '../../components/BusinessCard.jsx';
 import SearchBar from './SearchBar.jsx';
 import SearchFilters from './SearchFilters.jsx';
+import { localizedLink } from '../../utils/languageRouting.js';
 import './Search.css';
 
 const Search = () => {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const isInitialMount = useRef(true);
+
+  // Detect current language from URL
+  const isEnglish = location.pathname === '/en/search' || location.pathname.startsWith('/en/');
+  const currentLang = isEnglish ? 'en' : 'fr';
 
   const [query, setQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
@@ -156,7 +162,8 @@ const Search = () => {
       }
     }
 
-    const newURL = params.toString() ? `/recherche?${params.toString()}` : '/recherche';
+    const basePath = localizedLink('/recherche', currentLang);
+    const newURL = params.toString() ? `${basePath}?${params.toString()}` : basePath;
     navigate(newURL, { replace: true });
     performSearch();
   };
@@ -251,7 +258,7 @@ const Search = () => {
     setSelectedSubCategory('');
     setBusinesses([]);
     setTotalResults(0);
-    navigate('/recherche');
+    navigate(localizedLink('/recherche', currentLang));
   };
 
 

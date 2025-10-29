@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import LocalizedLink from './LocalizedLink.jsx';
 import CityAutocomplete from './CityAutocomplete.jsx';
 import { getMainCategories } from '../services/lookupService.js';
 import { supabase } from '../services/supabaseClient.js';
+import { localizedLink } from '../utils/languageRouting';
 import './SearchHeroYelp.css';
 
 // Mapping des icônes par slug de catégorie
@@ -32,11 +34,16 @@ const categoryIcons = {
 const SearchHeroYelp = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
   const [what, setWhat] = useState('');
   const [where, setWhere] = useState('');
   const [totalBusinesses, setTotalBusinesses] = useState(0);
   const [mainCategories, setMainCategories] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState('');
+
+  // Detect current language from URL
+  const isEnglish = location.pathname === '/en' || location.pathname.startsWith('/en/');
+  const currentLang = isEnglish ? 'en' : 'fr';
 
   // 5 background images for different sectors
   const backgroundImages = [
@@ -77,7 +84,8 @@ const SearchHeroYelp = () => {
     if (what) params.set('q', what);
     if (where) params.set('city', where);
     const queryString = params.toString();
-    navigate(queryString ? `/recherche?${queryString}` : '/recherche');
+    const searchPath = localizedLink('/recherche', currentLang);
+    navigate(queryString ? `${searchPath}?${queryString}` : searchPath);
   };
 
   const getLabel = (item) => {
@@ -86,10 +94,10 @@ const SearchHeroYelp = () => {
 
   // Quick search suggestions (like Yelp)
   const quickSearches = [
-    { icon: '🍔', label: 'Restaurants', query: 'restaurants' },
-    { icon: '☕', label: 'Cafés', query: 'cafés' },
-    { icon: '🔧', label: 'Plombiers', query: 'plombiers' },
-    { icon: '✂️', label: 'Salons', query: 'salon de coiffure' },
+    { icon: '🍔', labelKey: 'hero.quickSearch.restaurants', query: 'restaurants' },
+    { icon: '☕', labelKey: 'hero.quickSearch.cafes', query: i18n.language === 'en' ? 'cafes' : 'cafés' },
+    { icon: '🔧', labelKey: 'hero.quickSearch.plumbers', query: i18n.language === 'en' ? 'plumbers' : 'plombiers' },
+    { icon: '✂️', labelKey: 'hero.quickSearch.salons', query: i18n.language === 'en' ? 'hair salon' : 'salon de coiffure' },
   ];
 
   return (
@@ -151,11 +159,12 @@ const SearchHeroYelp = () => {
                   setWhat(item.query);
                   const params = new URLSearchParams();
                   params.set('q', item.query);
-                  navigate(`/recherche?${params.toString()}`);
+                  const searchPath = localizedLink('/recherche', currentLang);
+                  navigate(`${searchPath}?${params.toString()}`);
                 }}
               >
                 <span className="hero-yelp-quick-icon">{item.icon}</span>
-                {item.label}
+                {t(item.labelKey)}
               </button>
             ))}
           </div>
@@ -180,8 +189,8 @@ const SearchHeroYelp = () => {
             }}>
               {t('home.addBusinessNotice')}
             </p>
-            <Link
-              to="/entreprise/nouvelle"
+            <LocalizedLink
+              to="/inscription"
               style={{
                 display: 'inline-block',
                 padding: '0.75rem 1.5rem',
@@ -207,7 +216,7 @@ const SearchHeroYelp = () => {
               }}
             >
               {t('home.addBusinessButton')}
-            </Link>
+            </LocalizedLink>
           </div>
         </div>
       </div>
@@ -222,7 +231,7 @@ const SearchHeroYelp = () => {
           {/* All categories */}
           <div className="hero-yelp-categories-grid">
             {mainCategories.map((category) => (
-              <Link
+              <LocalizedLink
                 key={category.id}
                 to={`/recherche?category=${category.slug}`}
                 className="hero-yelp-category-card"
@@ -235,7 +244,7 @@ const SearchHeroYelp = () => {
                   />
                 )}
                 <div className="hero-yelp-category-name">{getLabel(category)}</div>
-              </Link>
+              </LocalizedLink>
             ))}
           </div>
         </div>

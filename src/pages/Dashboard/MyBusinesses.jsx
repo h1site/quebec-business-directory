@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import LocalizedLink from '../../components/LocalizedLink.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { getBusinessesByOwner, deleteBusiness } from '../../services/businessService.js';
 import { getBusinessUrl, getBusinessEditUrl } from '../../utils/urlHelpers.js';
@@ -87,9 +87,9 @@ const MyBusinesses = () => {
       <div className="container" style={{ padding: '3rem 0', textAlign: 'center' }}>
         <h2>Accès refusé</h2>
         <p>Vous devez être connecté pour voir vos entreprises.</p>
-        <Link to="/connexion" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>
+        <LocalizedLink to="/connexion" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>
           Se connecter
-        </Link>
+        </LocalizedLink>
       </div>
     );
   }
@@ -106,9 +106,9 @@ const MyBusinesses = () => {
     return (
       <div className="container" style={{ padding: '3rem 0', textAlign: 'center' }}>
         <div className="alert alert-error">{error}</div>
-        <Link to="/" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>
+        <LocalizedLink to="/" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>
           Retour à l'accueil
-        </Link>
+        </LocalizedLink>
       </div>
     );
   }
@@ -123,13 +123,13 @@ const MyBusinesses = () => {
               Gérez vos {businesses.length} entreprise{businesses.length !== 1 ? 's' : ''}
             </p>
           </div>
-          <Link to="/entreprise/nouvelle" className="btn btn-primary">
+          <LocalizedLink to="/entreprise/nouvelle" className="btn btn-primary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="12" y1="5" x2="12" y2="19"></line>
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
             Ajouter une entreprise
-          </Link>
+          </LocalizedLink>
         </div>
 
         {successMessage && (
@@ -146,9 +146,9 @@ const MyBusinesses = () => {
             </svg>
             <h2>Aucune entreprise</h2>
             <p>Vous n'avez pas encore ajouté d'entreprise à l'annuaire.</p>
-            <Link to="/entreprise/nouvelle" className="btn btn-primary">
+            <LocalizedLink to="/entreprise/nouvelle" className="btn btn-primary">
               Ajouter ma première entreprise
-            </Link>
+            </LocalizedLink>
           </div>
         ) : (
           <div className="businesses-grid">
@@ -234,7 +234,7 @@ const MyBusinesses = () => {
                         <line x1="12" y1="8" x2="12" y2="12"></line>
                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                       </svg>
-                      <span>Slug manquant - Visitez <Link to="/admin/migration">la page de migration</Link></span>
+                      <span>Slug manquant - Visitez <LocalizedLink to="/admin/migration">la page de migration</LocalizedLink></span>
                     </div>
                   )}
                 </div>

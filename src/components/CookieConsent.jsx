@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import LocalizedLink from './LocalizedLink.jsx';
 import './CookieConsent.css';
 
 const CookieConsent = () => {
@@ -37,7 +37,7 @@ const CookieConsent = () => {
                 </p>
                 <p className="cookie-details">
                   Aucun cookie publicitaire ou de tracking.{' '}
-                  <Link to="/politique-confidentialite" className="cookie-link">En savoir plus</Link>
+                  <LocalizedLink to="/politique-confidentialite" className="cookie-link">En savoir plus</LocalizedLink>
                 </p>
               </>
             ) : (
@@ -49,7 +49,7 @@ const CookieConsent = () => {
                 </p>
                 <p className="cookie-details">
                   No advertising or tracking cookies.{' '}
-                  <Link to="/privacy-policy" className="cookie-link">Learn more</Link>
+                  <LocalizedLink to="/politique-confidentialite" className="cookie-link">Learn more</LocalizedLink>
                 </p>
               </>
             )}

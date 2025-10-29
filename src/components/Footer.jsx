@@ -21,8 +21,8 @@ const Footer = () => {
                 className="facebook-icon"
               />
               <div className="facebook-banner-message">
-                <strong>Joignez notre groupe d'entrepreneurs sur Facebook</strong>
-                <span className="facebook-subtitle">Connectez avec des milliers d'entrepreneurs québécois</span>
+                <strong>{t('footer.facebookBannerTitle')}</strong>
+                <span className="facebook-subtitle">{t('footer.facebookBannerSubtitle')}</span>
               </div>
             </div>
             <a
@@ -32,7 +32,7 @@ const Footer = () => {
               className="btn-join-facebook"
             >
               <span className="facebook-logo">f</span>
-              Rejoindre le groupe
+              {t('footer.facebookJoinButton')}
             </a>
           </div>
         </div>

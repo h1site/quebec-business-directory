@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import LocalizedLink from './LocalizedLink.jsx';
 import { generateBreadcrumbSchema } from '../utils/schemaMarkup';
 import './Breadcrumb.css';
 
@@ -46,9 +46,9 @@ const Breadcrumb = ({ items }) => {
                 {isLast ? (
                   <span itemProp="name">{item.name}</span>
                 ) : (
-                  <Link to={item.url} itemProp="item">
+                  <LocalizedLink to={item.url} itemProp="item">
                     <span itemProp="name">{item.name}</span>
-                  </Link>
+                  </LocalizedLink>
                 )}
                 <meta itemProp="position" content={index + 1} />
               </li>

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../services/supabaseClient';
 import './BusinessReviews.css';
 
 const BusinessReviews = ({ businessId, onWriteReviewClick }) => {
+  const { t, i18n } = useTranslation();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -71,7 +73,8 @@ const BusinessReviews = ({ businessId, onWriteReviewClick }) => {
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('fr-CA', {
+    const locale = i18n.language === 'en' ? 'en-CA' : 'fr-CA';
+    return new Date(dateString).toLocaleDateString(locale, {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -94,7 +97,7 @@ const BusinessReviews = ({ businessId, onWriteReviewClick }) => {
     const percentage = stats.count > 0 ? (count / stats.count) * 100 : 0;
     return (
       <div className="rating-bar">
-        <span className="rating-label">{rating} étoiles</span>
+        <span className="rating-label">{rating} {t('business.stars')}</span>
         <div className="bar-container">
           <div className="bar-fill" style={{ width: `${percentage}%` }}></div>
         </div>
@@ -104,17 +107,17 @@ const BusinessReviews = ({ businessId, onWriteReviewClick }) => {
   };
 
   if (loading) {
-    return <div className="reviews-loading">Chargement des critiques...</div>;
+    return <div className="reviews-loading">{t('business.loadingReviews')}</div>;
   }
 
   return (
     <div className="business-reviews">
-      <h2>Critiques et évaluations</h2>
+      <h2>{t('business.reviewsTitle')}</h2>
 
       {reviews.length === 0 ? (
         <div className="no-reviews">
-          <p>Aucune critique pour le moment.</p>
-          <p>Soyez le premier à partager votre expérience!</p>
+          <p>{t('business.noReviews')}</p>
+          <p>{t('business.beFirst')}</p>
         </div>
       ) : (
         <>
@@ -124,7 +127,7 @@ const BusinessReviews = ({ businessId, onWriteReviewClick }) => {
               <div className="rating-number">{stats.average}</div>
               {renderStars(Math.round(stats.average))}
               <div className="rating-text">
-                {stats.count} {stats.count === 1 ? 'critique' : 'critiques'}
+                {stats.count} {stats.count === 1 ? t('business.review') : t('business.reviews')}
               </div>
             </div>
 
@@ -150,7 +153,7 @@ const BusinessReviews = ({ businessId, onWriteReviewClick }) => {
                     />
                     <div>
                       <div className="reviewer-name">
-                        {review.user_profiles?.full_name || 'Utilisateur anonyme'}
+                        {review.user_profiles?.full_name || t('business.anonymousUser')}
                       </div>
                       <div className="review-date">{formatDate(review.created_at)}</div>
                     </div>
@@ -185,7 +188,7 @@ const BusinessReviews = ({ businessId, onWriteReviewClick }) => {
             className="btn btn-primary btn-write-review-bottom"
             onClick={onWriteReviewClick}
           >
-            ✍️ Écrire une critique
+            ✍️ {t('business.writeReview')}
           </button>
         </div>
       )}

@@ -16,17 +16,26 @@ const resources = {
         whatPlaceholder: 'Que recherchez-vous?',
         wherePlaceholder: 'Où?',
         searchButton: 'Rechercher',
-        browseByCategory: 'Explorer par catégorie'
+        browseByCategory: 'Explorer par catégorie',
+        quickSearch: {
+          restaurants: 'Restaurants',
+          cafes: 'Cafés',
+          plumbers: 'Plombiers',
+          salons: 'Salons'
+        }
       },
       navigation: {
         home: 'Accueil',
         search: 'Recherche',
         addListing: 'Ajouter une entreprise',
+        myBusinesses: 'Mes entreprises',
+        profile: 'Profil',
         login: 'Connexion',
         register: 'Créer un compte',
         dashboard: 'Tableau de bord',
         logout: 'Déconnexion',
-        donate: 'Faire un don'
+        donate: 'Faire un don',
+        siteTitle: 'Registre d\'entreprise du Québec'
       },
       footer: {
         localSearches: 'Recherches locales populaires',
@@ -34,7 +43,32 @@ const resources = {
         languageToggle: 'English',
         copyrightYear: '© {{year}} Registre d\'entreprise du Québec.',
         copyrightRights: 'Tous droits réservés.',
-        createdBy: 'Création de l\'agence web'
+        createdBy: 'Création de l\'agence web',
+        facebookBannerTitle: 'Joignez notre groupe d\'entrepreneurs sur Facebook',
+        facebookBannerSubtitle: 'Connectez avec des milliers d\'entrepreneurs québécois',
+        facebookJoinButton: 'Rejoindre le groupe',
+        about: 'À propos',
+        aboutRegistry: 'À propos du Registre',
+        blog: 'Blogue',
+        facebookGroup: 'Groupe Facebook',
+        legalNotice: 'Mentions légales',
+        privacyPolicy: 'Politique de confidentialité',
+        contactUs: 'Nous joindre',
+        discover: 'Découvrir',
+        searchBusinesses: 'Rechercher des entreprises',
+        browseByCity: 'Parcourir par ville',
+        browseByRegion: 'Parcourir par région',
+        restaurants: 'Restaurants',
+        services: 'Services',
+        forBusinesses: 'Pour les entreprises',
+        ownerLogin: 'Connexion propriétaire',
+        createAccount: 'Créer un compte',
+        addBusiness: 'Ajouter votre entreprise',
+        manageBusinesses: 'Gérer mes entreprises',
+        h1siteServices: 'Services H1Site',
+        languages: 'Langues',
+        copyright: 'Copyright © 2004-{{year}} Registre du Québec Inc. et marques connexes sont des marques déposées du Registre du Québec.',
+        createdByLink: 'Créé par'
       },
       home: {
         popularCategoriesTitle: 'Explorez les catégories populaires',
@@ -47,10 +81,64 @@ const resources = {
         seeDetails: 'Voir les détails',
         discoverOthers: 'Découvrir d\'autres entreprises',
         addBusinessNotice: 'Il est possible que votre entreprise ne figure pas encore dans notre annuaire d\'entreprises. Dans ce cas, nous vous invitons à créer votre fiche dès maintenant.',
-        addBusinessButton: 'Ajouter votre entreprise'
+        addBusinessButton: 'Ajouter votre entreprise',
+        featuredTitle: 'Découvrez des entreprises québécoises',
+        viewListing: 'Voir la fiche',
+        sponsors: 'Commanditaires',
+        sponsorContact: 'Pour commanditer notre registre, nous rejoindre sur'
       },
       business: {
-        unclaimedNotice: 'Les données affichées sont les dernières informations publiques que nous avons pu obtenir. Veuillez toujours vérifier avec le site web de l\'entreprise ou par téléphone pour des informations à jour.'
+        unclaimedNotice: 'Les données affichées sont les dernières informations publiques que nous avons pu obtenir. Veuillez toujours vérifier avec le site web de l\'entreprise ou par téléphone pour des informations à jour.',
+        editListing: 'Modifier la fiche',
+        claimListing: 'Réclamer votre fiche',
+        deleteListing: 'Supprimer cette fiche',
+        establishedIn: 'Fondée en',
+        about: 'À propos',
+        productsServices: 'Produits et services',
+        photoGallery: 'Galerie photos',
+        mission: 'Mission',
+        values: 'Valeurs',
+        address: 'Adresse',
+        contact: 'Coordonnées',
+        website: 'Site web',
+        socialMedia: 'Réseaux sociaux',
+        reviewsTitle: 'Critiques et évaluations',
+        noReviews: 'Aucune critique pour le moment.',
+        beFirst: 'Soyez le premier à partager votre expérience!',
+        writeReview: 'Écrire une critique',
+        loadingReviews: 'Chargement des critiques...',
+        stars: 'étoiles',
+        review: 'critique',
+        reviews: 'critiques',
+        anonymousUser: 'Utilisateur anonyme'
+      },
+      reviewModal: {
+        title: 'Écrire une critique',
+        editTitle: 'Modifier votre critique',
+        rating: 'Note',
+        ratingPoor: 'Décevant',
+        ratingFair: 'Passable',
+        ratingGood: 'Correct',
+        ratingVeryGood: 'Très bien',
+        ratingExcellent: 'Excellent',
+        yourExperience: 'Votre expérience (minimum 50 caractères)',
+        placeholder: 'Partagez votre expérience avec cette entreprise...',
+        characters: 'caractères',
+        minimum: 'minimum',
+        photos: 'Photos (optionnel, max 5)',
+        addPhotos: 'Ajouter des photos',
+        cancel: 'Annuler',
+        publish: 'Publier',
+        update: 'Mettre à jour',
+        submitting: 'Envoi...',
+        errorLogin: 'Vous devez être connecté pour écrire une critique',
+        errorRating: 'Veuillez sélectionner une note',
+        errorMinLength: 'Votre critique doit contenir au moins 50 caractères',
+        errorMaxPhotos: 'Vous pouvez ajouter un maximum de 5 photos',
+        errorImageOnly: 'Seules les images sont acceptées',
+        errorImageSize: 'Les images doivent faire moins de 5MB',
+        errorDuplicate: 'Vous avez déjà écrit une critique pour cette entreprise',
+        errorSubmit: 'Erreur lors de la soumission de votre critique'
       },
       auth: {
         email: 'Courriel',
@@ -397,17 +485,26 @@ const resources = {
         whatPlaceholder: 'What are you looking for?',
         wherePlaceholder: 'Where?',
         searchButton: 'Search',
-        browseByCategory: 'Browse by category'
+        browseByCategory: 'Browse by category',
+        quickSearch: {
+          restaurants: 'Restaurants',
+          cafes: 'Cafes',
+          plumbers: 'Plumbers',
+          salons: 'Salons'
+        }
       },
       navigation: {
         home: 'Home',
         search: 'Search',
         addListing: 'Add a business',
+        myBusinesses: 'My businesses',
+        profile: 'Profile',
         login: 'Sign in',
         register: 'Create account',
         dashboard: 'Dashboard',
         logout: 'Sign out',
-        donate: 'Donate'
+        donate: 'Donate',
+        siteTitle: 'Quebec Business Directory'
       },
       footer: {
         localSearches: 'Popular local searches',
@@ -415,7 +512,32 @@ const resources = {
         languageToggle: 'Français',
         copyrightYear: '© {{year}} Quebec Business Directory.',
         copyrightRights: 'All rights reserved.',
-        createdBy: 'Created by web agency'
+        createdBy: 'Created by web agency',
+        facebookBannerTitle: 'Join our entrepreneur group on Facebook',
+        facebookBannerSubtitle: 'Connect with thousands of Quebec entrepreneurs',
+        facebookJoinButton: 'Join the group',
+        about: 'About',
+        aboutRegistry: 'About the Registry',
+        blog: 'Blog',
+        facebookGroup: 'Facebook Group',
+        legalNotice: 'Legal Notice',
+        privacyPolicy: 'Privacy Policy',
+        contactUs: 'Contact Us',
+        discover: 'Discover',
+        searchBusinesses: 'Search Businesses',
+        browseByCity: 'Browse by City',
+        browseByRegion: 'Browse by Region',
+        restaurants: 'Restaurants',
+        services: 'Services',
+        forBusinesses: 'For Businesses',
+        ownerLogin: 'Owner Login',
+        createAccount: 'Create Account',
+        addBusiness: 'Add Your Business',
+        manageBusinesses: 'Manage My Businesses',
+        h1siteServices: 'H1Site Services',
+        languages: 'Languages',
+        copyright: 'Copyright © 2004-{{year}} Registre du Québec Inc. and related trademarks are registered trademarks of Registre du Québec.',
+        createdByLink: 'Created by'
       },
       home: {
         popularCategoriesTitle: 'Explore popular categories',
@@ -428,10 +550,64 @@ const resources = {
         discoverOthers: 'Discover other businesses',
         cityDescription: 'Discover local businesses, services and trusted professionals in {{city}}.',
         addBusinessNotice: 'Your business may not yet be listed in our directory. In that case, we invite you to create your listing now.',
-        addBusinessButton: 'Add your business'
+        addBusinessButton: 'Add your business',
+        featuredTitle: 'Discover Quebec businesses',
+        viewListing: 'View listing',
+        sponsors: 'Sponsors',
+        sponsorContact: 'To sponsor our directory, contact us at'
       },
       business: {
-        unclaimedNotice: 'The information displayed is the latest public data we were able to obtain. Always verify with the business website or phone number for up-to-date information.'
+        unclaimedNotice: 'The information displayed is the latest public data we were able to obtain. Always verify with the business website or phone number for up-to-date information.',
+        editListing: 'Edit listing',
+        claimListing: 'Claim your listing',
+        deleteListing: 'Delete this listing',
+        establishedIn: 'Established in',
+        about: 'About',
+        productsServices: 'Products and Services',
+        photoGallery: 'Photo Gallery',
+        mission: 'Mission',
+        values: 'Values',
+        address: 'Address',
+        contact: 'Contact',
+        website: 'Website',
+        socialMedia: 'Social Media',
+        reviewsTitle: 'Reviews and Ratings',
+        noReviews: 'No reviews yet.',
+        beFirst: 'Be the first to share your experience!',
+        writeReview: 'Write a review',
+        loadingReviews: 'Loading reviews...',
+        stars: 'stars',
+        review: 'review',
+        reviews: 'reviews',
+        anonymousUser: 'Anonymous user'
+      },
+      reviewModal: {
+        title: 'Write a review',
+        editTitle: 'Edit your review',
+        rating: 'Rating',
+        ratingPoor: 'Poor',
+        ratingFair: 'Fair',
+        ratingGood: 'Good',
+        ratingVeryGood: 'Very good',
+        ratingExcellent: 'Excellent',
+        yourExperience: 'Your experience (minimum 50 characters)',
+        placeholder: 'Share your experience with this business...',
+        characters: 'characters',
+        minimum: 'minimum',
+        photos: 'Photos (optional, max 5)',
+        addPhotos: 'Add photos',
+        cancel: 'Cancel',
+        publish: 'Publish',
+        update: 'Update',
+        submitting: 'Submitting...',
+        errorLogin: 'You must be logged in to write a review',
+        errorRating: 'Please select a rating',
+        errorMinLength: 'Your review must contain at least 50 characters',
+        errorMaxPhotos: 'You can add a maximum of 5 photos',
+        errorImageOnly: 'Only images are accepted',
+        errorImageSize: 'Images must be less than 5MB',
+        errorDuplicate: 'You have already written a review for this business',
+        errorSubmit: 'Error submitting your review'
       },
       auth: {
         email: 'Email',
@@ -768,9 +944,32 @@ const resources = {
   }
 };
 
+// Detect language from localStorage or browser
+const getInitialLanguage = () => {
+  // Check if we're in a browser environment
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    // 1. Check localStorage
+    const storedLang = localStorage.getItem('language');
+    if (storedLang === 'en' || storedLang === 'fr') {
+      return storedLang;
+    }
+
+    // 2. Check browser language
+    if (typeof navigator !== 'undefined') {
+      const browserLang = navigator.language.toLowerCase();
+      if (browserLang.startsWith('en')) {
+        return 'en';
+      }
+    }
+  }
+
+  // 3. Default to French
+  return 'fr';
+};
+
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'fr',
+  lng: getInitialLanguage(),
   fallbackLng: 'fr',
   interpolation: {
     escapeValue: false
