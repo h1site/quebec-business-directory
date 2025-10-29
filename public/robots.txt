@@ -30,5 +30,6 @@ Disallow: /
 User-agent: MJ12bot
 Disallow: /
 
-# Sitemap
+# Sitemaps
 Sitemap: https://registreduquebec.com/sitemap.xml
+Sitemap: https://registreduquebec.com/sitemap-en.xml
