@@ -29,7 +29,8 @@ const PATH_SEGMENTS = {
     profil: 'profil',
     admin: 'admin',
     nouvelle: 'nouvelle',
-    parcourir: 'parcourir'
+    parcourir: 'parcourir',
+    modifier: 'modifier'
   },
   [LANGUAGES.EN]: {
     categorie: 'category',
@@ -47,7 +48,8 @@ const PATH_SEGMENTS = {
     profil: 'profile',
     admin: 'admin',
     nouvelle: 'new',
-    parcourir: 'browse'
+    parcourir: 'browse',
+    modifier: 'edit'
   }
 };
 
