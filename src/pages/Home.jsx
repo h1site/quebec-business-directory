@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import SearchHeroYelp from '../components/SearchHeroYelp.jsx';
+import ThanksPartners from '../components/ThanksPartners.jsx';
 import FeaturedBusinesses from '../components/FeaturedBusinesses.jsx';
 import UserTestimonials from '../components/UserTestimonials.jsx';
 import Sponsors from '../components/Sponsors.jsx';
@@ -78,6 +79,7 @@ const Home = () => {
 
       <div>
         <SearchHeroYelp />
+        <ThanksPartners />
         <FeaturedBusinesses />
         <UserTestimonials />
         <Sponsors />
