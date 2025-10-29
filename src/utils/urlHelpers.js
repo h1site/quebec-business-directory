@@ -23,10 +23,17 @@ export const generateSlug = (text) => {
 /**
  * Generate SEO-friendly URL for a business
  * @param {Object} business - Business object with category, city, and slug
- * @returns {string} - SEO URL like /agence-web/vaudreuil-dorion/business-slug
+ * @param {string} lang - Language code ('fr' or 'en'), auto-detected from URL if not provided
+ * @returns {string} - SEO URL like /agence-web/vaudreuil-dorion/business-slug or /en/agence-web/vaudreuil-dorion/business-slug
  */
-export const getBusinessUrl = (business) => {
+export const getBusinessUrl = (business, lang = null) => {
   if (!business) return '/';
+
+  // Auto-detect language from current URL if not provided
+  if (!lang) {
+    const currentPath = window.location.pathname;
+    lang = (currentPath === '/en' || currentPath.startsWith('/en/')) ? 'en' : 'fr';
+  }
 
   // Get category slug (from main_category or first sub_category)
   let categorySlug = 'entreprise'; // Default fallback
@@ -44,16 +51,29 @@ export const getBusinessUrl = (business) => {
   // Get business slug
   const businessSlug = business.slug || generateSlug(business.name);
 
-  return `/${categorySlug}/${citySlug}/${businessSlug}`;
+  const baseUrl = `/${categorySlug}/${citySlug}/${businessSlug}`;
+
+  // Add language prefix for English
+  return lang === 'en' ? `/en${baseUrl}` : baseUrl;
 };
 
 /**
  * Generate edit URL for a business
  * @param {Object} business - Business object
- * @returns {string} - Edit URL with /modifier suffix
+ * @param {string} lang - Language code ('fr' or 'en'), auto-detected from URL if not provided
+ * @returns {string} - Edit URL with /modifier (FR) or /edit (EN) suffix
  */
-export const getBusinessEditUrl = (business) => {
-  return `${getBusinessUrl(business)}/modifier`;
+export const getBusinessEditUrl = (business, lang = null) => {
+  // Auto-detect language from current URL if not provided
+  if (!lang) {
+    const currentPath = window.location.pathname;
+    lang = (currentPath === '/en' || currentPath.startsWith('/en/')) ? 'en' : 'fr';
+  }
+
+  const baseUrl = getBusinessUrl(business, lang);
+  const editSuffix = lang === 'en' ? '/edit' : '/modifier';
+
+  return `${baseUrl}${editSuffix}`;
 };
 
 /**
