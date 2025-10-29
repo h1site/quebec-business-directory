@@ -701,6 +701,19 @@
 @media (max-width: 1024px) {
   .business-content {
     grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Sur mobile: Sidebar (adresse) apparaît AVANT business-main (à propos) */
+  .business-sidebar {
+    order: 1;
+    width: 100%;
+  }
+
+  .business-main {
+    order: 2;
+    width: 100%;
   }
 
   .map-container > div:last-child {
@@ -757,6 +770,8 @@
   .business-section {
     padding: 1.5rem;
     border-radius: 14px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .section-title {
@@ -766,6 +781,8 @@
   .sidebar-card {
     padding: 1.5rem;
     border-radius: 14px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .sidebar-title {
