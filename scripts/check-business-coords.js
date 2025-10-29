@@ -26,8 +26,12 @@ if (error) {
 
   if (data.latitude && data.longitude) {
     const wazeUrl = `https://waze.com/ul?ll=${data.latitude},${data.longitude}&navigate=yes&utm_source=registreduquebec`;
-    console.log('\n🚗 Waze URL:', wazeUrl);
+    console.log('\n🚗 Waze URL (GPS):', wazeUrl);
+  } else if (data.address) {
+    const addressQuery = encodeURIComponent(`${data.address}, ${data.city}, QC`);
+    const wazeUrl = `https://waze.com/ul?q=${addressQuery}&navigate=yes&utm_source=registreduquebec`;
+    console.log('\n🚗 Waze URL (Address):', wazeUrl);
   } else {
-    console.log('\n⚠️  No coordinates - Waze button will NOT appear');
+    console.log('\n⚠️  No coordinates or address - Waze button will NOT appear');
   }
 }

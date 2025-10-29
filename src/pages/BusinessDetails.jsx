@@ -415,16 +415,20 @@ const BusinessDetails = () => {
                     </p>
                   )}
                 </div>
-                {business.latitude && business.longitude && (
+                {(business.latitude && business.longitude) || business.address ? (
                   <a
-                    href={`https://waze.com/ul?ll=${business.latitude},${business.longitude}&navigate=yes&utm_source=registreduquebec`}
+                    href={
+                      business.latitude && business.longitude
+                        ? `https://waze.com/ul?ll=${business.latitude},${business.longitude}&navigate=yes&utm_source=registreduquebec`
+                        : `https://waze.com/ul?q=${encodeURIComponent(`${business.address}, ${business.city}, ${business.province || 'QC'}`)}&navigate=yes&utm_source=registreduquebec`
+                    }
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-waze waze-address-button"
                   >
                     🚗 {t('business.openInWaze')}
                   </a>
-                )}
+                ) : null}
               </div>
 
               {/* Contact Information Section */}
