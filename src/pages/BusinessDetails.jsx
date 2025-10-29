@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import { getBusinessBySlug } from '../services/businessService.js';
 import { getBusinessHours } from '../services/businessHoursService.js';
 import { useAuth } from '../context/AuthContext.jsx';
+import { supabase } from '../services/supabaseClient.js';
 import OpenStreetMap from '../components/OpenStreetMap.jsx';
 import BusinessHours from '../components/BusinessHours.jsx';
 import GoogleReviews from '../components/GoogleReviews.jsx';
@@ -147,8 +148,56 @@ const BusinessDetails = () => {
   // This prevents display bugs if is_claimed flag is out of sync with owner_id
   const isClaimed = business.is_claimed || !!business.owner_id;
 
+  // Check if user is admin (based on email domain or specific admin emails)
+  const isAdmin = user && (
+    user.email === 'info@h1site.com' ||
+    user.email === 'admin@registreduquebec.com' ||
+    user.email?.endsWith('@h1site.com')
+  );
+
   // Generate canonical URL
   const canonicalUrl = `${window.location.origin}${getBusinessUrl(business)}`;
+
+  // Handler to permanently delete business from database (Admin only)
+  const handleDeleteFromDB = async () => {
+    if (!isAdmin) {
+      alert('Accès non autorisé');
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      `⚠️ ATTENTION: Voulez-vous vraiment SUPPRIMER DÉFINITIVEMENT cette entreprise de la base de données?\n\n` +
+      `Entreprise: ${business.name}\n` +
+      `ID: ${business.id}\n\n` +
+      `Cette action est IRRÉVERSIBLE et supprimera toutes les données associées.`
+    );
+
+    if (!confirmDelete) return;
+
+    const doubleConfirm = window.prompt(
+      `Pour confirmer la suppression, tapez le nom exact de l'entreprise:\n"${business.name}"`
+    );
+
+    if (doubleConfirm !== business.name) {
+      alert('Nom incorrect. Suppression annulée.');
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('businesses')
+        .delete()
+        .eq('id', business.id);
+
+      if (error) throw error;
+
+      alert('✅ Entreprise supprimée de la base de données.');
+      navigate('/');
+    } catch (error) {
+      console.error('Error deleting business:', error);
+      alert('❌ Erreur lors de la suppression: ' + error.message);
+    }
+  };
 
   // Generate description for meta tags
   const cityName = business.city || 'Québec';
@@ -211,7 +260,7 @@ const BusinessDetails = () => {
                     className="btn btn-claim"
                     onClick={() => setShowClaimModal(true)}
                   >
-                    📋 {t('business.claimListing')}
+                    {t('business.claimListing')}
                   </button>
                 )}
                 {!isClaimed && !user && (
@@ -219,7 +268,7 @@ const BusinessDetails = () => {
                     className="btn btn-claim"
                     onClick={() => navigate(localizedLink('/connexion', currentLang), { state: { from: location.pathname } })}
                   >
-                    📋 {t('business.claimListing')}
+                    {t('business.claimListing')}
                   </button>
                 )}
                 {!isClaimed && (
@@ -227,8 +276,17 @@ const BusinessDetails = () => {
                     href={`mailto:info@h1site.com?subject=${encodeURIComponent(window.location.href)}`}
                     className="btn btn-delete"
                   >
-                    🗑️ {t('business.deleteListing')}
+                    {t('business.deleteListing')}
                   </a>
+                )}
+                {isAdmin && (
+                  <button
+                    className="btn btn-delete-db"
+                    onClick={handleDeleteFromDB}
+                    title="Supprimer définitivement de la base de données (Admin seulement)"
+                  >
+                    🗑️ Supprimer DB
+                  </button>
                 )}
               </div>
             </div>
