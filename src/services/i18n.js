@@ -120,6 +120,21 @@ const resources = {
         unclaimedOwnerBenefits: 'Une fois votre fiche revendiquée, vous pourrez ajouter vos photos, logo, site web, horaires et catégories afin de perfectionner votre profil et augmenter votre visibilité sur le Registre du Québec — le tout gratuitement.',
         unclaimedOwnerManage: 'Vous pouvez également modifier ou supprimer votre fiche à tout moment à l\'aide des boutons prévus à cet effet.'
       },
+      deleteModal: {
+        title: 'Attendez ! Avant de supprimer...',
+        subtitle: 'Saviez-vous que vous pouvez réclamer cette fiche gratuitement ?',
+        benefit1Title: '🎯 Construisez votre présence en ligne',
+        benefit1Text: 'Créez votre propre fiche personnalisée avec photos, logo, horaires et description.',
+        benefit2Title: '🔗 Backlinks gratuits de qualité',
+        benefit2Text: 'Améliorez votre SEO avec un lien vers votre site web depuis notre registre.',
+        benefit3Title: '📈 Augmentez votre visibilité',
+        benefit3Text: 'Notre site reçoit des milliers de visiteurs chaque mois. Profitez de ce trafic gratuitement!',
+        benefit4Title: '✅ Contrôle total',
+        benefit4Text: 'Modifiez ou supprimez votre fiche à tout moment selon vos besoins.',
+        claimButton: 'Réclamer ma fiche gratuitement',
+        stillDelete: 'Supprimer quand même',
+        cancel: 'Annuler'
+      },
       reviewModal: {
         title: 'Écrire une critique',
         editTitle: 'Modifier votre critique',
@@ -709,6 +724,21 @@ const resources = {
         unclaimedOwnerCTA: '👉 Claim your listing for free through our verification system.',
         unclaimedOwnerBenefits: 'Once your listing is claimed, you can add your photos, logo, website, hours, and categories to enhance your profile and increase your visibility on Registre du Québec — all for free.',
         unclaimedOwnerManage: 'You can also edit or delete your listing at any time using the buttons provided.'
+      },
+      deleteModal: {
+        title: 'Wait! Before you delete...',
+        subtitle: 'Did you know you can claim this listing for free?',
+        benefit1Title: '🎯 Build your online presence',
+        benefit1Text: 'Create your own customized listing with photos, logo, hours, and description.',
+        benefit2Title: '🔗 Quality free backlinks',
+        benefit2Text: 'Improve your SEO with a link to your website from our directory.',
+        benefit3Title: '📈 Increase your visibility',
+        benefit3Text: 'Our site receives thousands of visitors every month. Take advantage of this free traffic!',
+        benefit4Title: '✅ Full control',
+        benefit4Text: 'Edit or delete your listing at any time according to your needs.',
+        claimButton: 'Claim my listing for free',
+        stillDelete: 'Delete anyway',
+        cancel: 'Cancel'
       },
       reviewModal: {
         title: 'Write a review',

@@ -250,3 +250,146 @@
     justify-content: center;
   }
 }
+
+/* Delete Confirm Modal with Benefits */
+.delete-confirm-modal {
+  max-width: 600px;
+}
+
+.delete-modal-header {
+  padding: 2rem 2rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+}
+
+.delete-modal-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+}
+
+.delete-modal-subtitle {
+  font-size: 1.1rem;
+  margin: 0;
+  opacity: 0.95;
+  font-weight: 500;
+}
+
+.delete-modal-benefits {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.benefit-item {
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+  border-left: 4px solid #667eea;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.benefit-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.benefit-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin: 0 0 0.5rem 0;
+}
+
+.benefit-text {
+  font-size: 0.95rem;
+  color: #4a5568;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.delete-modal-actions {
+  padding: 1.5rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.btn-claim-instead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-claim-instead:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.btn-delete-confirm {
+  background: transparent;
+  color: #e53e3e;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid #fc8181;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-delete-confirm:hover:not(:disabled) {
+  background: #fff5f5;
+  border-color: #e53e3e;
+}
+
+/* Mobile responsive for benefits modal */
+@media (max-width: 640px) {
+  .delete-confirm-modal {
+    max-width: 100%;
+  }
+
+  .delete-modal-header {
+    padding: 1.5rem;
+  }
+
+  .delete-modal-title {
+    font-size: 1.4rem;
+  }
+
+  .delete-modal-subtitle {
+    font-size: 1rem;
+  }
+
+  .delete-modal-benefits {
+    padding: 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .benefit-item {
+    padding: 1rem;
+  }
+
+  .benefit-title {
+    font-size: 1rem;
+  }
+
+  .benefit-text {
+    font-size: 0.9rem;
+  }
+
+  .delete-modal-actions {
+    padding: 1.25rem 1.5rem 1.5rem;
+  }
+}

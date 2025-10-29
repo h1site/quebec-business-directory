@@ -11,6 +11,7 @@ import OpenStreetMap from '../components/OpenStreetMap.jsx';
 import BusinessHours from '../components/BusinessHours.jsx';
 import GoogleReviews from '../components/GoogleReviews.jsx';
 import ClaimBusinessModal from '../components/ClaimBusinessModal.jsx';
+import DeleteConfirmModal from '../components/DeleteConfirmModal.jsx';
 import BusinessReviews from '../components/BusinessReviews.jsx';
 import WriteReviewModal from '../components/WriteReviewModal.jsx';
 import AmazonProducts from '../components/AmazonProducts.jsx';
@@ -35,6 +36,7 @@ const BusinessDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showClaimModal, setShowClaimModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewsKey, setReviewsKey] = useState(0);
 
@@ -158,6 +160,24 @@ const BusinessDetails = () => {
   // Generate canonical URL
   const canonicalUrl = `${window.location.origin}${getBusinessUrl(business)}`;
 
+  // Handler to open delete confirmation modal
+  const handleDeleteRequest = () => {
+    setShowDeleteModal(true);
+  };
+
+  // Handler to confirm deletion (sends email)
+  const handleConfirmDelete = () => {
+    // Send email to request deletion
+    window.location.href = `mailto:info@h1site.com?subject=${encodeURIComponent('Demande de suppression - ' + window.location.href)}`;
+    setShowDeleteModal(false);
+  };
+
+  // Handler to claim business from delete modal
+  const handleClaimFromDeleteModal = () => {
+    setShowDeleteModal(false);
+    setShowClaimModal(true);
+  };
+
   // Handler to permanently delete business from database (Admin only)
   const handleDeleteFromDB = async () => {
     if (!isAdmin) {
@@ -272,12 +292,12 @@ const BusinessDetails = () => {
                   </button>
                 )}
                 {!isClaimed && (
-                  <a
-                    href={`mailto:info@h1site.com?subject=${encodeURIComponent(window.location.href)}`}
+                  <button
+                    onClick={handleDeleteRequest}
                     className="btn btn-delete"
                   >
                     {t('business.deleteListing')}
-                  </a>
+                  </button>
                 )}
                 {isAdmin && (
                   <button
@@ -561,6 +581,16 @@ const BusinessDetails = () => {
         }}
       />
     )}
+
+    {/* Delete Confirmation Modal */}
+    <DeleteConfirmModal
+      isOpen={showDeleteModal}
+      onClose={() => setShowDeleteModal(false)}
+      onConfirm={handleConfirmDelete}
+      onClaim={handleClaimFromDeleteModal}
+      businessName={business?.name}
+      isDeleting={false}
+    />
 
     {/* Write Review Modal */}
     {showReviewModal && (
