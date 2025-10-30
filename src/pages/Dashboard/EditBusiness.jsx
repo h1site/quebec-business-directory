@@ -86,11 +86,14 @@ const EditBusiness = () => {
     postal_code: '',
     show_address: true,
 
-    // Step 5: Categories
+    // Step 5: Opening Hours
+    opening_hours: null,
+
+    // Step 6: Categories
     main_category_id: '',
     sub_category_id: '',
 
-    // Step 6: Services
+    // Step 7: Services
     products_services: ''
   });
 
@@ -221,6 +224,7 @@ const EditBusiness = () => {
           province: business.province || 'QC',
           postal_code: business.postal_code || '',
           show_address: business.show_address !== false,
+          opening_hours: business.opening_hours || null,
           main_category_id: mainCategoryId,
           sub_category_id: subCategoryId,
           products_services: business.products_services || ''
@@ -389,6 +393,12 @@ const EditBusiness = () => {
             province: form.province || 'QC',
             postal_code: form.postal_code,
             show_address: form.show_address
+          };
+          break;
+
+        case 'hours':
+          payload = {
+            opening_hours: form.opening_hours
           };
           break;
 
@@ -591,6 +601,13 @@ const EditBusiness = () => {
             >
               <span className="tab-emoji">📞</span>
               <span className="tab-label">{t('editBusiness.contact')}</span>
+            </button>
+            <button
+              className={`tab-button ${activeTab === 'hours' ? 'active' : ''}`}
+              onClick={() => setActiveTab('hours')}
+            >
+              <span className="tab-emoji">🕐</span>
+              <span className="tab-label">{t('editBusiness.hours')}</span>
             </button>
             <button
               className={`tab-button ${activeTab === 'categories' ? 'active' : ''}`}
@@ -1067,6 +1084,231 @@ const EditBusiness = () => {
                 >
                   {submitting ? t('editBusiness.saving') : t('editBusiness.saveContact')}
                 </button>
+              </div>
+            )}
+
+            {/* Hours Tab */}
+            {activeTab === 'hours' && (
+              <div className="tab-panel">
+                <h2>{t('editBusiness.hours')}</h2>
+
+                {(() => {
+                  const DAYS_OF_WEEK = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+                  const initializeHours = () => {
+                    const defaultHours = {};
+                    DAYS_OF_WEEK.forEach(day => {
+                      defaultHours[day] = {
+                        open: '09:00',
+                        close: '17:00',
+                        closed: day === 'sunday'
+                      };
+                    });
+                    setForm(prev => ({ ...prev, opening_hours: defaultHours }));
+                  };
+
+                  const handleDayChange = (day, field, value) => {
+                    const updatedHours = {
+                      ...form.opening_hours,
+                      [day]: {
+                        ...form.opening_hours[day],
+                        [field]: value
+                      }
+                    };
+                    setForm(prev => ({ ...prev, opening_hours: updatedHours }));
+                  };
+
+                  const handleToggleClosed = (day) => {
+                    const currentDay = form.opening_hours[day];
+                    handleDayChange(day, 'closed', !currentDay.closed);
+                  };
+
+                  const handleCopyToAll = (day) => {
+                    const sourceDay = form.opening_hours[day];
+                    const updatedHours = {};
+                    DAYS_OF_WEEK.forEach(d => {
+                      updatedHours[d] = {
+                        open: sourceDay.open,
+                        close: sourceDay.close,
+                        closed: sourceDay.closed
+                      };
+                    });
+                    setForm(prev => ({ ...prev, opening_hours: updatedHours }));
+                  };
+
+                  if (!form.opening_hours) {
+                    return (
+                      <div style={{ textAlign: 'center', padding: '3rem 0' }}>
+                        <p style={{ fontSize: '1.1rem', marginBottom: '2rem', color: '#64748b' }}>
+                          {t('editBusiness.noHoursSet')}
+                        </p>
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          onClick={initializeHours}
+                        >
+                          {t('editBusiness.addHours')}
+                        </button>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <>
+                      <div style={{ marginBottom: '1.5rem', padding: '1rem', background: '#f0f9ff', borderRadius: '8px', border: '1px solid #bae6fd' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                          <input
+                            type="checkbox"
+                            checked={!form.opening_hours}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setForm(prev => ({ ...prev, opening_hours: null }));
+                              } else {
+                                initializeHours();
+                              }
+                            }}
+                            style={{ width: '18px', height: '18px' }}
+                          />
+                          <span style={{ fontSize: '0.95rem', color: '#0c4a6e' }}>
+                            {t('editBusiness.removeHours')}
+                          </span>
+                        </label>
+                      </div>
+
+                      <div className="hours-grid">
+                        {DAYS_OF_WEEK.map((day) => {
+                          const dayData = form.opening_hours[day];
+                          return (
+                            <div key={day} className="hours-row">
+                              <div className="hours-day">
+                                <label style={{ fontWeight: 600, textTransform: 'capitalize' }}>
+                                  {t(`wizard.step6_hours.days.${day}`)}
+                                </label>
+                              </div>
+
+                              <div className="hours-controls">
+                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                  <input
+                                    type="checkbox"
+                                    checked={dayData.closed}
+                                    onChange={() => handleToggleClosed(day)}
+                                  />
+                                  <span>{t('wizard.step6_hours.closed')}</span>
+                                </label>
+
+                                {!dayData.closed && (
+                                  <>
+                                    <div className="time-inputs">
+                                      <input
+                                        type="time"
+                                        value={dayData.open}
+                                        onChange={(e) => handleDayChange(day, 'open', e.target.value)}
+                                        className="form-input"
+                                        style={{ width: '120px' }}
+                                      />
+                                      <span>-</span>
+                                      <input
+                                        type="time"
+                                        value={dayData.close}
+                                        onChange={(e) => handleDayChange(day, 'close', e.target.value)}
+                                        className="form-input"
+                                        style={{ width: '120px' }}
+                                      />
+                                    </div>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => handleCopyToAll(day)}
+                                      className="btn-copy-hours"
+                                      title={t('wizard.step6_hours.copyToAll')}
+                                    >
+                                      📋
+                                    </button>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      <style>{`
+                        .hours-grid {
+                          display: flex;
+                          flex-direction: column;
+                          gap: 1rem;
+                          margin-top: 1.5rem;
+                        }
+
+                        .hours-row {
+                          display: grid;
+                          grid-template-columns: 150px 1fr;
+                          gap: 1.5rem;
+                          align-items: center;
+                          padding: 1rem;
+                          background: #f8fafc;
+                          border-radius: 8px;
+                          border: 1px solid #e2e8f0;
+                        }
+
+                        .hours-day label {
+                          color: #1e293b;
+                          font-size: 1rem;
+                        }
+
+                        .hours-controls {
+                          display: flex;
+                          align-items: center;
+                          gap: 1rem;
+                          flex-wrap: wrap;
+                        }
+
+                        .time-inputs {
+                          display: flex;
+                          align-items: center;
+                          gap: 0.5rem;
+                        }
+
+                        .btn-copy-hours {
+                          background: #3b82f6;
+                          color: white;
+                          border: none;
+                          padding: 0.5rem 1rem;
+                          border-radius: 6px;
+                          cursor: pointer;
+                          font-size: 1.2rem;
+                          transition: background 0.2s;
+                        }
+
+                        .btn-copy-hours:hover {
+                          background: #2563eb;
+                        }
+
+                        @media (max-width: 768px) {
+                          .hours-row {
+                            grid-template-columns: 1fr;
+                            gap: 0.75rem;
+                          }
+
+                          .hours-controls {
+                            flex-direction: column;
+                            align-items: flex-start;
+                          }
+                        }
+                      `}</style>
+
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={() => saveTab('hours')}
+                        disabled={submitting}
+                        style={{ marginTop: '2rem' }}
+                      >
+                        {submitting ? t('editBusiness.saving') : t('editBusiness.saveHours')}
+                      </button>
+                    </>
+                  );
+                })()}
               </div>
             )}
 

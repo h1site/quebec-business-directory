@@ -12,13 +12,14 @@ import WizardStep1_Basic from './components/WizardStep1_Basic.jsx';
 import WizardStep3_Media from './components/WizardStep3_Media.jsx';
 import WizardStep4_Contact from './components/WizardStep4_Contact.jsx';
 import WizardStep5_Address from './components/WizardStep5_Address.jsx';
+import WizardStep6_Hours from './components/WizardStep6_Hours.jsx';
 import WizardStep7_Category from './components/WizardStep7_Category.jsx';
 import WizardStep8_Services from './components/WizardStep8_Services.jsx';
 import WizardStep9_Summary from './components/WizardStep9_Summary.jsx';
 
 import './CreateBusinessWizard.css';
 
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 8;
 
 const CreateBusinessWizard = () => {
   const navigate = useNavigate();
@@ -53,7 +54,10 @@ const CreateBusinessWizard = () => {
     postal_code: '',
     show_address: true,
 
-    // Step 5: Category
+    // Step 5: Opening Hours (optional)
+    opening_hours: null,
+
+    // Step 6: Category
     main_category_id: null,
     main_category_slug: null,
     main_category_name: null,
@@ -61,10 +65,10 @@ const CreateBusinessWizard = () => {
     subcategory_slug: null,
     subcategory_name: null,
 
-    // Step 6: Services
+    // Step 7: Services
     services: [],
 
-    // Step 7: Summary
+    // Step 8: Summary
     terms_accepted: false
   });
 
@@ -330,10 +334,12 @@ const CreateBusinessWizard = () => {
       case 4:
         return <WizardStep5_Address {...stepProps} />;
       case 5:
-        return <WizardStep7_Category {...stepProps} />;
+        return <WizardStep6_Hours {...stepProps} />;
       case 6:
-        return <WizardStep8_Services {...stepProps} />;
+        return <WizardStep7_Category {...stepProps} />;
       case 7:
+        return <WizardStep8_Services {...stepProps} />;
+      case 8:
         return <WizardStep9_Summary {...stepProps} />;
       default:
         return null;
