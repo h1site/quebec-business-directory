@@ -534,6 +534,31 @@ const BusinessDetails = () => {
                 <BusinessHours businessId={business.id} language={i18n.language} />
               </div>
 
+              {/* Opening Hours Section */}
+              {business.opening_hours && (
+                <div className="contact-section">
+                  <h3 className="sidebar-title">{t('business.openingHours')}</h3>
+                  <div className="hours-list">
+                    {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => {
+                      const hours = business.opening_hours[day];
+                      if (!hours) return null;
+
+                      return (
+                        <div key={day} className="hours-item">
+                          <span className="hours-day">{t(`business.days.${day}`)}</span>
+                          <span className="hours-time">
+                            {hours.closed
+                              ? t('business.closed')
+                              : `${hours.open} - ${hours.close}`
+                            }
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               {/* Social Media Section */}
               {(business.facebook_url || business.instagram_url || business.twitter_url || business.linkedin_url || business.threads_url || business.tiktok_url) && (
                 <div className="contact-section">

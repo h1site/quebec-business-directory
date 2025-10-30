@@ -1071,3 +1071,46 @@
     width: 100%;
   }
 }
+
+/* Opening Hours Section */
+.hours-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hours-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.hours-item:last-child {
+  border-bottom: none;
+}
+
+.hours-day {
+  font-weight: 600;
+  text-transform: capitalize;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.hours-time {
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .hours-item {
+    padding: 0.6rem 0;
+  }
+
+  .hours-day,
+  .hours-time {
+    font-size: 0.85rem;
+  }
+}
