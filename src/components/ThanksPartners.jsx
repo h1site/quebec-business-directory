@@ -16,11 +16,11 @@ function ThanksPartners() {
 
   const loadNewBusinesses = async () => {
     try {
-      // Charger les 3 dernières entreprises ajoutées manuellement (data_source = 'manual')
+      // Charger les 3 dernières entreprises ajoutées manuellement (data_source = 'manual' OU 'user_created')
       const { data, error } = await supabase
         .from('businesses')
         .select('id, name, slug, city, primary_main_category_fr, primary_main_category_en, primary_main_category_slug')
-        .eq('data_source', 'manual')
+        .in('data_source', ['manual', 'user_created'])
         .order('created_at', { ascending: false })
         .limit(3);
 
