@@ -105,6 +105,38 @@
   .adsbygoogle {
     min-height: 100px;
   }
+
+  /* CRITICAL: Mobile CLS fixes - reserve space for all dynamic content */
+  .business-header-hero {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .business-logo-large {
+    text-align: center;
+    margin: 0 auto;
+    min-height: 150px;
+  }
+
+  /* Prevent reviews section from shifting layout */
+  .business-reviews-section {
+    min-height: 300px;
+  }
+
+  /* Prevent map from shifting layout on mobile */
+  .full-width-map-section {
+    min-height: 400px;
+  }
+
+  /* Gallery with mobile-friendly aspect ratio */
+  .gallery-item {
+    aspect-ratio: 16/9;
+  }
+
+  /* Reserve space for loading content */
+  .business-skeleton {
+    min-height: 600px;
+  }
 }
 
 /* Title section - Column 2, takes remaining space */

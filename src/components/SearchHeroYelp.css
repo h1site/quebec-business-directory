@@ -255,6 +255,7 @@
 @media (max-width: 768px) {
   .hero-yelp-main {
     height: 500px;
+    min-height: 500px; /* CRITICAL CLS fix - force exact height */
   }
 
   .hero-yelp-title {
