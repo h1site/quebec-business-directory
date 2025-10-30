@@ -28,7 +28,19 @@ const GooglePlacesImportModal = ({ isOpen, onClose, onImport, businessName, busi
         body: JSON.stringify({ query: searchQuery }),
       });
 
-      const data = await response.json();
+      // Check if response has content before parsing JSON
+      const text = await response.text();
+      if (!text) {
+        throw new Error('API endpoint non disponible. Assurez-vous que le serveur API est déployé.');
+      }
+
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (parseErr) {
+        console.error('JSON parse error:', parseErr);
+        throw new Error('Réponse invalide du serveur. Le endpoint API n\'est peut-être pas déployé sur Vercel.');
+      }
 
       if (!response.ok) {
         throw new Error(data.error || 'Erreur lors de la recherche');
