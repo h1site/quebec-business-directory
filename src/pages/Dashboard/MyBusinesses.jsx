@@ -252,8 +252,10 @@ const MyBusinesses = () => {
         isOpen={deleteModal.isOpen}
         onClose={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
+        onClaim={() => {}} // No-op: user already owns this business
         businessName={deleteModal.business?.name || ''}
         isDeleting={isDeleting}
+        showClaimButton={false} // Hide claim button in MyBusinesses
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import './DeleteConfirmModal.css';
 
-const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, onClaim, businessName, isDeleting }) => {
+const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, onClaim, businessName, isDeleting, showClaimButton = true }) => {
   const { t } = useTranslation();
 
   if (!isOpen) return null;
@@ -39,13 +39,15 @@ const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, onClaim, businessName,
         </div>
 
         <div className="delete-modal-actions">
-          <button
-            className="btn btn-primary btn-claim-instead"
-            onClick={onClaim}
-            disabled={isDeleting}
-          >
-            {t('deleteModal.claimButton')}
-          </button>
+          {showClaimButton && (
+            <button
+              className="btn btn-primary btn-claim-instead"
+              onClick={onClaim}
+              disabled={isDeleting}
+            >
+              {t('deleteModal.claimButton')}
+            </button>
+          )}
 
           <button
             className="btn btn-secondary"
