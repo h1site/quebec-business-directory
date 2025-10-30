@@ -749,6 +749,21 @@
     font-size: 0.85rem;
     padding: 0.5rem 0.75rem;
   }
+
+  /* Fix input-with-button layout on mobile */
+  .input-with-button {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .input-with-button .form-input {
+    width: 100%;
+  }
+
+  .input-with-button .btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
 }
 
 @media (max-width: 480px) {
