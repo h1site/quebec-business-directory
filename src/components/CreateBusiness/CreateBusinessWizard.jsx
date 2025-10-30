@@ -51,6 +51,7 @@ const CreateBusinessWizard = () => {
     city: '',
     province: 'QC',
     postal_code: '',
+    show_address: true,
 
     // Step 5: Category
     main_category_id: null,

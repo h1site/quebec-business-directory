@@ -458,38 +458,40 @@ const BusinessDetails = () => {
           <aside className="business-sidebar">
             {/* Combined Contact Card */}
             <div className="sidebar-card">
-              {/* Address Section */}
-              <div className="contact-section">
-                <h3 className="sidebar-title">{t('business.address')}</h3>
-                <div className="address-info">
-                  <p>{business.address}</p>
-                  {business.address_line2 && <p>{business.address_line2}</p>}
-                  <p>
-                    {business.city}, {business.province || 'QC'} {business.postal_code}
-                  </p>
-                  {business.region && <p className="region">{business.region}</p>}
-                  {business.neq && (
-                    <p style={{ marginTop: '1rem', fontSize: '0.875rem', color: '#666' }}>
-                      <strong>NEQ:</strong> {business.neq}
+              {/* Address Section - Afficher seulement si show_address est TRUE */}
+              {business.show_address !== false && (
+                <div className="contact-section">
+                  <h3 className="sidebar-title">{t('business.address')}</h3>
+                  <div className="address-info">
+                    <p>{business.address}</p>
+                    {business.address_line2 && <p>{business.address_line2}</p>}
+                    <p>
+                      {business.city}, {business.province || 'QC'} {business.postal_code}
                     </p>
-                  )}
+                    {business.region && <p className="region">{business.region}</p>}
+                    {business.neq && (
+                      <p style={{ marginTop: '1rem', fontSize: '0.875rem', color: '#666' }}>
+                        <strong>NEQ:</strong> {business.neq}
+                      </p>
+                    )}
+                  </div>
+                  {(business.latitude && business.longitude) || business.address ? (
+                    <a
+                      href={
+                        business.latitude && business.longitude
+                          ? `https://waze.com/ul?ll=${business.latitude},${business.longitude}&navigate=yes&utm_source=registreduquebec`
+                          : `https://waze.com/ul?q=${encodeURIComponent(`${business.address}, ${business.city}, ${business.province || 'QC'}`)}&navigate=yes&utm_source=registreduquebec`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-waze waze-address-button"
+                    >
+                      <img src="/images/logos/waze.svg" alt="Waze" className="waze-icon" />
+                      {t('business.openInWaze')}
+                    </a>
+                  ) : null}
                 </div>
-                {(business.latitude && business.longitude) || business.address ? (
-                  <a
-                    href={
-                      business.latitude && business.longitude
-                        ? `https://waze.com/ul?ll=${business.latitude},${business.longitude}&navigate=yes&utm_source=registreduquebec`
-                        : `https://waze.com/ul?q=${encodeURIComponent(`${business.address}, ${business.city}, ${business.province || 'QC'}`)}&navigate=yes&utm_source=registreduquebec`
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-waze waze-address-button"
-                  >
-                    <img src="/images/logos/waze.svg" alt="Waze" className="waze-icon" />
-                    {t('business.openInWaze')}
-                  </a>
-                ) : null}
-              </div>
+              )}
 
               {/* Contact Information Section */}
               <div className="contact-section">
@@ -628,19 +630,21 @@ const BusinessDetails = () => {
         />
       </div>
 
-      {/* Full Width Map Section */}
-      <div className="full-width-map-section">
-        <div className="map-container">
-          <h2 className="map-title">Localisation</h2>
-          <OpenStreetMap
-            address={business.address}
-            city={business.city}
-            businessName={business.name}
-            latitude={business.latitude}
-            longitude={business.longitude}
-          />
+      {/* Full Width Map Section - Afficher seulement si show_address est TRUE */}
+      {business.show_address !== false && (
+        <div className="full-width-map-section">
+          <div className="map-container">
+            <h2 className="map-title">Localisation</h2>
+            <OpenStreetMap
+              address={business.address}
+              city={business.city}
+              businessName={business.name}
+              latitude={business.latitude}
+              longitude={business.longitude}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
 
     {/* Claim Business Modal */}

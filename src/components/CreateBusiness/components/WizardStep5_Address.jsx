@@ -272,6 +272,34 @@ const WizardStep5_Address = ({ formData, updateFormData, onValidationChange }) =
             {t('wizard.step5.postalCodeHelp')}
           </span>
         </div>
+
+        {/* Toggle pour afficher/cacher l'adresse */}
+        <div className="form-group" style={{ marginTop: '2rem', padding: '1.5rem', background: '#f8f9ff', borderRadius: '12px', border: '1px solid #e6e9f0' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+            <input
+              id="show_address"
+              type="checkbox"
+              checked={formData.show_address !== false}
+              onChange={(e) => updateFormData({ show_address: e.target.checked })}
+              style={{ marginTop: '0.25rem', width: '20px', height: '20px', cursor: 'pointer' }}
+            />
+            <div style={{ flex: 1 }}>
+              <label htmlFor="show_address" style={{ fontWeight: 600, color: '#1e3a8a', cursor: 'pointer', display: 'block', marginBottom: '0.5rem' }}>
+                {t('wizard.step5.showAddressLabel')}
+              </label>
+              <p style={{ margin: 0, fontSize: '0.95rem', color: '#4b5563', lineHeight: '1.6' }}>
+                {t('wizard.step5.showAddressHelp')}
+              </p>
+              {formData.show_address === false && (
+                <div style={{ marginTop: '0.75rem', padding: '0.75rem 1rem', background: '#fef3c7', border: '1px solid #fbbf24', borderRadius: '8px' }}>
+                  <span style={{ fontSize: '0.9rem', color: '#92400e' }}>
+                    ⚠️ {t('wizard.step5.showAddressWarning')}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

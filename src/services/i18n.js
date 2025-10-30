@@ -477,7 +477,10 @@ const resources = {
           postalCodePlaceholder: 'H1A 1A1',
           postalCodeError: 'Le code postal est requis',
           postalCodeErrorFormat: 'Code postal invalide (format: A1A 1A1)',
-          postalCodeHelp: 'Format canadien: A1A 1A1'
+          postalCodeHelp: 'Format canadien: A1A 1A1',
+          showAddressLabel: 'Afficher mon adresse sur ma fiche publique',
+          showAddressHelp: 'Si vous décochez cette option, votre adresse complète, la carte et le bouton Waze ne seront pas affichés sur votre fiche publique. Vous pourrez activer ou désactiver cette option à tout moment en modifiant votre fiche.',
+          showAddressWarning: 'Votre adresse, la carte et les coordonnées GPS ne seront pas visibles sur votre fiche publique.'
         },
         step6: {
           title: 'Géolocalisation',
@@ -1095,7 +1098,10 @@ const resources = {
           postalCodePlaceholder: 'H1A 1A1',
           postalCodeError: 'Postal code is required',
           postalCodeErrorFormat: 'Invalid postal code (format: A1A 1A1)',
-          postalCodeHelp: 'Canadian format: A1A 1A1'
+          postalCodeHelp: 'Canadian format: A1A 1A1',
+          showAddressLabel: 'Display my address on my public listing',
+          showAddressHelp: 'If you uncheck this option, your full address, map, and Waze button will not be displayed on your public listing. You can enable or disable this option at any time by editing your listing.',
+          showAddressWarning: 'Your address, map, and GPS coordinates will not be visible on your public listing.'
         },
         step6: {
           title: 'Geolocation',
