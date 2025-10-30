@@ -70,7 +70,7 @@ const Sponsors = () => {
                   key={index}
                   href={sponsor.url}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="sponsored noopener"
                   className={`sponsor-link sponsor-carousel-item ${
                     index === currentIndex ? 'active' : ''
                   } ${sponsor.name === 'AppGratuit.com' ? 'sponsor-link-oval' : ''}`}
@@ -104,7 +104,7 @@ const Sponsors = () => {
                 key={index}
                 href={sponsor.url}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="sponsored noopener"
                 className={`sponsor-link ${sponsor.name === 'AppGratuit.com' ? 'sponsor-link-oval' : ''}`}
                 title={sponsor.name}
               >
