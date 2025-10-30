@@ -19,7 +19,7 @@ function ThanksPartners() {
       // Charger les 3 dernières entreprises ajoutées manuellement (data_source = 'manual' OU 'user_created')
       const { data, error } = await supabase
         .from('businesses')
-        .select('id, name, slug, city, primary_main_category_fr, primary_main_category_en, primary_main_category_slug')
+        .select('id, name, slug, city, categories, main_category_slug')
         .in('data_source', ['manual', 'user_created'])
         .order('created_at', { ascending: false })
         .limit(3);
@@ -53,28 +53,35 @@ function ThanksPartners() {
           <p className="thanks-subtitle">{t('home.newBusinessesSubtitle')}</p>
         </div>
         <div className="thanks-grid">
-          {newBusinesses.map((business) => (
-            <LocalizedLink
-              key={business.id}
-              to={getBusinessUrl(business)}
-              className="thanks-card"
-            >
-              <div className="thanks-content">
-                <h3 className="thanks-business-name">{business.name}</h3>
-                {business.city && (
-                  <p className="thanks-city">📍 {business.city}</p>
-                )}
-                {business.primary_main_category_fr && (
-                  <p className="thanks-category">
-                    {i18n.language === 'en' ? business.primary_main_category_en : business.primary_main_category_fr}
-                  </p>
-                )}
-              </div>
-              <div className="thanks-cta">
-                {t('home.viewListing')} →
-              </div>
-            </LocalizedLink>
-          ))}
+          {newBusinesses.map((business) => {
+            // Générer URL: utiliser legacy /entreprise/:slug si pas de main_category_slug
+            const businessUrl = business.main_category_slug && business.city
+              ? `/${business.main_category_slug}/${business.city.toLowerCase().replace(/\s+/g, '-')}/${business.slug}`
+              : `/entreprise/${business.slug}`;
+
+            return (
+              <LocalizedLink
+                key={business.id}
+                to={businessUrl}
+                className="thanks-card"
+              >
+                <div className="thanks-content">
+                  <h3 className="thanks-business-name">{business.name}</h3>
+                  {business.city && (
+                    <p className="thanks-city">📍 {business.city}</p>
+                  )}
+                  {business.categories && (
+                    <p className="thanks-category">
+                      {business.categories}
+                    </p>
+                  )}
+                </div>
+                <div className="thanks-cta">
+                  {t('home.viewListing')} →
+                </div>
+              </LocalizedLink>
+            );
+          })}
         </div>
       </div>
     </section>
