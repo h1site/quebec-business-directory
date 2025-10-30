@@ -51,4 +51,14 @@
   .breadcrumb-item + .breadcrumb-item::before {
     padding: 0 0.3rem;
   }
+
+  /* Hide business name (last item) on mobile to save space */
+  .breadcrumb-item.active {
+    display: none;
+  }
+
+  /* Also hide the separator before the last item */
+  .breadcrumb-item:nth-last-child(2)::after {
+    display: none;
+  }
 }
