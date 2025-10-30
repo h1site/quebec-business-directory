@@ -28,6 +28,88 @@
   z-index: 1;
 }
 
+/* Actions buttons - Top right - Smaller and less dominant */
+.business-actions-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.business-actions-top .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+/* Header hero - 2 columns: Logo | Title */
+.business-header-hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.5rem;
+  align-items: flex-start;
+  margin: 1.5rem 0 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(15, 76, 129, 0.1);
+}
+
+.business-logo-large {
+  flex-shrink: 0;
+}
+
+.business-logo-large img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 16px;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Title section - Column 2, takes remaining space */
+.business-title-full {
+  flex: 1;
+}
+
+.business-name-large {
+  font-size: 30px;
+  font-weight: 800;
+  color: #0f4c81;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.2;
+}
+
+.business-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.established-year-inline {
+  font-size: 1.1rem;
+  color: #718096;
+  font-weight: 500;
+}
+
+/* Unclaimed notice under title */
+.business-title-full .unclaimed-notice {
+  margin-top: 1rem;
+}
+
+/* Claim/Delete buttons below warning */
+.business-actions-below-warning {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
 .business-header {
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   padding: 1.75rem;
@@ -724,6 +806,39 @@
 @media (max-width: 768px) {
   .business-details-page {
     padding: 1rem 0 0;
+  }
+
+  /* Actions buttons mobile */
+  .business-actions-top {
+    justify-content: center;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Header hero mobile - Stack vertically */
+  .business-header-hero {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 1.5rem;
+    margin: 1rem 0 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .business-logo-large img {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* Title section mobile */
+  .business-title-full {
+    text-align: center;
+  }
+
+  .business-name-large {
+    font-size: 2rem;
+  }
+
+  .business-meta-row {
+    justify-content: center;
   }
 
   .business-header {

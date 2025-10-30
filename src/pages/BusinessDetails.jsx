@@ -234,7 +234,28 @@ const BusinessDetails = () => {
 
       <div className="business-details-page">
         <div className="container business-main-container">
-          {/* Breadcrumb Navigation - Outside header box */}
+          {/* Actions buttons - Top right (Owner/Admin only) */}
+          <div className="business-actions-top">
+            {isOwner && (
+              <Link
+                to={getBusinessUrl(business) + '/modifier'}
+                className="btn btn-edit"
+              >
+                {t('business.editListing')}
+              </Link>
+            )}
+            {isAdmin && (
+              <button
+                className="btn btn-delete-db"
+                onClick={handleDeleteFromDB}
+                title="Supprimer définitivement de la base de données (Admin seulement)"
+              >
+                🗑️ Supprimer DB
+              </button>
+            )}
+          </div>
+
+          {/* Breadcrumb Navigation */}
           <Breadcrumb
             items={[
               { name: i18n.language === 'en' ? 'Home' : 'Accueil', url: '/' },
@@ -250,77 +271,58 @@ const BusinessDetails = () => {
             ]}
           />
 
-          {/* Header Section */}
-          <div className="business-header">
-          {business.logo_url && (
-            <div className="business-logo">
-              <img src={business.logo_url} alt={`Logo ${business.name}`} />
-            </div>
-          )}
-
-          <div className="business-header-main">
-            <div className="business-header-top">
-              <div className="business-header-content">
-                <h1 className="business-name">{business.name}</h1>
+          {/* Header: 2 columns - Logo left, Title right */}
+          <div className="business-header-hero">
+            {business.logo_url && (
+              <div className="business-logo-large">
+                <img src={business.logo_url} alt={`Logo ${business.name}`} />
+              </div>
+            )}
+            <div className="business-title-full">
+              <h1 className="business-name-large">{business.name}</h1>
+              <div className="business-meta-row">
                 {business.is_franchise && (
                   <span className="franchise-badge">Franchise</span>
                 )}
+                {business.established_year && (
+                  <span className="established-year-inline">{t('business.establishedIn')} {business.established_year}</span>
+                )}
               </div>
-              <div className="business-actions">
-                {isOwner && (
-                  <Link
-                    to={getBusinessUrl(business) + '/modifier'}
-                    className="btn btn-edit"
-                  >
-                    {t('business.editListing')}
-                  </Link>
-                )}
-                {!isClaimed && user && !isOwner && (
-                  <button
-                    className="btn btn-claim"
-                    onClick={() => setShowClaimModal(true)}
-                  >
-                    {t('business.claimListing')}
-                  </button>
-                )}
-                {!isClaimed && !user && (
-                  <button
-                    className="btn btn-claim"
-                    onClick={() => navigate(localizedLink('/connexion', currentLang), { state: { from: location.pathname } })}
-                  >
-                    {t('business.claimListing')}
-                  </button>
-                )}
-                {!isClaimed && (
+              {/* Unclaimed business notice - only show for REQ imports */}
+              {!isClaimed && business.data_source === 'req' && (
+                <div className="unclaimed-notice">
+                  ℹ️ {t('business.unclaimedNotice')}
+                </div>
+              )}
+              {/* Claim/Delete buttons - Below warning */}
+              {!isClaimed && (
+                <div className="business-actions-below-warning">
+                  {user && !isOwner && (
+                    <button
+                      className="btn btn-claim"
+                      onClick={() => setShowClaimModal(true)}
+                    >
+                      {t('business.claimListing')}
+                    </button>
+                  )}
+                  {!user && (
+                    <button
+                      className="btn btn-claim"
+                      onClick={() => navigate(localizedLink('/connexion', currentLang), { state: { from: location.pathname } })}
+                    >
+                      {t('business.claimListing')}
+                    </button>
+                  )}
                   <button
                     onClick={handleDeleteRequest}
                     className="btn btn-delete"
                   >
                     {t('business.deleteListing')}
                   </button>
-                )}
-                {isAdmin && (
-                  <button
-                    className="btn btn-delete-db"
-                    onClick={handleDeleteFromDB}
-                    title="Supprimer définitivement de la base de données (Admin seulement)"
-                  >
-                    🗑️ Supprimer DB
-                  </button>
-                )}
-              </div>
+                </div>
+              )}
             </div>
-            {business.established_year && (
-              <p className="established-year">{t('business.establishedIn')} {business.established_year}</p>
-            )}
-            {/* Unclaimed business notice - only show for REQ imports */}
-            {!isClaimed && business.data_source === 'req' && (
-              <div className="unclaimed-notice">
-                ℹ️ {t('business.unclaimedNotice')}
-              </div>
-            )}
           </div>
-        </div>
 
         {/* Main Content */}
         <div className="business-content">

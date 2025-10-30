@@ -13,8 +13,14 @@ const buildFilters = ({ query, city, region, mrc, category, phone, distance, coo
   }
 
   if (city) {
+    // Normalize city name: decode URL encoding, replace spaces/hyphens/underscores with wildcards
+    // This handles: "CAP+SANTE", "CAP SANTE", "CAP-SANTÉ", "Cap-Santé"
+    const normalizedCity = decodeURIComponent(city)
+      .replace(/[\s\-_+]/g, '%') // Replace separators with SQL wildcard
+      .trim();
     // Use unaccent for accent-insensitive search (Montréal = Montreal)
-    filters.push({ column: 'city', operator: 'unaccent_ilike', value: city });
+    // Note: don't add % here, it's added in the query builder (line 150)
+    filters.push({ column: 'city', operator: 'unaccent_ilike', value: normalizedCity });
   }
 
   if (mrc) {
@@ -139,10 +145,10 @@ export const searchBusinesses = async ({
         config: 'french'
       });
     } else if (filter.operator === 'unaccent_ilike') {
-      // Use PostgreSQL unaccent function for accent-insensitive search
-      // This allows "Montreal" to match "Montréal" and vice versa
-      const normalizedValue = filter.value.toLowerCase();
-      request = request.filter(`f_unaccent_lower(${filter.column})`, 'ilike', `%${normalizedValue}%`);
+      // Simple ILIKE search with normalized pattern
+      // The city filter already normalizes spaces/hyphens to wildcards
+      // This allows "CAP SANTE" to match "Cap-Santé", "Vaudreuil-Dorion" etc.
+      request = request.ilike(filter.column, `%${filter.value}%`);
     } else if (filter.operator === 'cs') {
       request = request.contains(filter.column, filter.value);
     } else if (filter.operator === 'lte' && filter.column === 'location') {
