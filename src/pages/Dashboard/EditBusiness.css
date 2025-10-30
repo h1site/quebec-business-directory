@@ -49,6 +49,26 @@
   border-bottom: 2px solid #e2e8f0;
   overflow-x: auto;
   overflow-y: hidden;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f7fafc;
+}
+
+.tabs-navigation::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tabs-navigation::-webkit-scrollbar-track {
+  background: #f7fafc;
+}
+
+.tabs-navigation::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+.tabs-navigation::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
 }
 
 .tab-button {
@@ -309,6 +329,64 @@
   color: #718096;
 }
 
+/* GPS Help Box */
+.gps-help-box {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  line-height: 1.6;
+}
+
+.gps-help-title {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 1.05rem;
+  color: #1e3a8a;
+}
+
+.gps-help-method {
+  margin-bottom: 1rem;
+}
+
+.gps-help-method strong {
+  color: #1e40af;
+  font-size: 0.95rem;
+}
+
+.gps-help-steps {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  padding-left: 1.5rem;
+  line-height: 1.8;
+}
+
+.gps-help-steps li {
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.gps-help-steps a {
+  color: #2563eb;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.gps-help-steps a:hover {
+  color: #1d4ed8;
+}
+
+.gps-help-warning {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #fef3c7;
+  border: 1px solid #fbbf24;
+  border-radius: 6px;
+  color: #78350f;
+  font-size: 0.9rem;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .tabs-navigation {
@@ -323,38 +401,136 @@
 
 @media (max-width: 768px) {
   .edit-business-page {
-    padding: 1rem 0 2rem;
+    padding: 0.5rem 0 2rem;
   }
 
   .page-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+    padding: 0 1rem;
   }
 
   .page-header h1 {
     font-size: 1.5rem;
   }
 
+  /* Tabs navigation - better mobile experience */
+  .tabs-navigation {
+    position: relative;
+    padding-bottom: 2px; /* Space for scrollbar */
+  }
+
+  /* Gradient hint to show more tabs on the right */
+  .tabs-navigation::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to left, #f7fafc, transparent);
+    pointer-events: none;
+  }
+
+  .tab-button {
+    min-width: auto;
+    padding: 0.75rem 1rem;
+    font-size: 1.25rem; /* Larger emoji size */
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Hide text labels on mobile, show only emojis */
+  .tab-button .tab-label {
+    display: none;
+  }
+
+  .tab-button .tab-emoji {
+    display: inline-block;
+  }
+
   .tab-content {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 
   .tab-panel h2 {
     font-size: 1.25rem;
+    margin-bottom: 1.5rem;
   }
 
   .form-row {
     grid-template-columns: 1fr;
   }
 
-  .checkbox-grid {
-    grid-template-columns: 1fr;
+  .form-group {
+    margin-bottom: 1.25rem;
   }
 
-  .tab-button {
-    min-width: 120px;
-    padding: 0.875rem 1rem;
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="tel"],
+  .form-group input[type="url"],
+  .form-group input[type="number"],
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px; /* Prevent zoom on iOS */
+    padding: 0.75rem;
+  }
+
+  .checkbox-grid {
+    gap: 0.5rem;
+  }
+
+  .checkbox-item {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  /* Ensure inputs don't overflow */
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* GPS Help Box - Mobile */
+  .gps-help-box {
+    padding: 1rem;
+    margin-top: 0.75rem;
     font-size: 0.9rem;
+  }
+
+  .gps-help-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .gps-help-method strong {
+    font-size: 0.875rem;
+  }
+
+  .gps-help-steps {
+    padding-left: 1.25rem;
+    line-height: 1.6;
+    font-size: 0.875rem;
+  }
+
+  .gps-help-steps li {
+    margin-bottom: 0.4rem;
+  }
+
+  .gps-help-warning {
+    padding: 0.625rem;
+    font-size: 0.8rem;
+    margin-top: 0.75rem;
   }
 }

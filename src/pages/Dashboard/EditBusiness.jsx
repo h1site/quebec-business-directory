@@ -572,31 +572,36 @@ const EditBusiness = () => {
               className={`tab-button ${activeTab === 'basic' ? 'active' : ''}`}
               onClick={() => setActiveTab('basic')}
             >
-              📋 {t('editBusiness.basicInfo')}
+              <span className="tab-emoji">📋</span>
+              <span className="tab-label">{t('editBusiness.basicInfo')}</span>
             </button>
             <button
               className={`tab-button ${activeTab === 'images' ? 'active' : ''}`}
               onClick={() => setActiveTab('images')}
             >
-              📸 {t('editBusiness.logoPhotos')}
+              <span className="tab-emoji">📸</span>
+              <span className="tab-label">{t('editBusiness.logoPhotos')}</span>
             </button>
             <button
               className={`tab-button ${activeTab === 'contact' ? 'active' : ''}`}
               onClick={() => setActiveTab('contact')}
             >
-              📞 {t('editBusiness.contact')}
+              <span className="tab-emoji">📞</span>
+              <span className="tab-label">{t('editBusiness.contact')}</span>
             </button>
             <button
               className={`tab-button ${activeTab === 'categories' ? 'active' : ''}`}
               onClick={() => setActiveTab('categories')}
             >
-              🏷️ {t('editBusiness.categories')}
+              <span className="tab-emoji">🏷️</span>
+              <span className="tab-label">{t('editBusiness.categories')}</span>
             </button>
             <button
               className={`tab-button ${activeTab === 'services' ? 'active' : ''}`}
               onClick={() => setActiveTab('services')}
             >
-              ⚙️ Services
+              <span className="tab-emoji">⚙️</span>
+              <span className="tab-label">Services</span>
             </button>
           </div>
 
@@ -1003,13 +1008,13 @@ const EditBusiness = () => {
                 </div>
 
                 {(!form.latitude || !form.longitude) && (
-                  <div className="alert alert-info" style={{ marginTop: '1rem', padding: '1.25rem', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px', lineHeight: '1.6' }}>
-                    <strong style={{ display: 'block', marginBottom: '0.75rem', fontSize: '1.05rem' }}>🗺️ Comment obtenir les coordonnées GPS?</strong>
+                  <div className="gps-help-box">
+                    <strong className="gps-help-title">🗺️ Comment obtenir les coordonnées GPS?</strong>
 
-                    <div style={{ marginBottom: '1rem' }}>
+                    <div className="gps-help-method">
                       <strong>Méthode: Google Maps</strong>
-                      <ol style={{ marginTop: '0.5rem', marginBottom: '0', paddingLeft: '1.5rem' }}>
-                        <li>Allez sur <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'underline' }}>Google Maps</a></li>
+                      <ol className="gps-help-steps">
+                        <li>Allez sur <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">Google Maps</a></li>
                         <li>Tapez votre adresse dans la barre de recherche</li>
                         <li><strong>Clic droit</strong> sur le marqueur rouge (ou sur l'emplacement exact)</li>
                         <li>Cliquez sur les coordonnées qui apparaissent en premier dans le menu</li>
@@ -1017,7 +1022,7 @@ const EditBusiness = () => {
                       </ol>
                     </div>
 
-                    <div style={{ marginTop: '1rem', padding: '0.75rem', background: '#fef3c7', border: '1px solid #fbbf24', borderRadius: '6px' }}>
+                    <div className="gps-help-warning">
                       <strong>⚠️ Important:</strong> Sans coordonnées GPS, la carte Google Maps ne s'affichera pas sur la page de votre entreprise.
                     </div>
                   </div>
