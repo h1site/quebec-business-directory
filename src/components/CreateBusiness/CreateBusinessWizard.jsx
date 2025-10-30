@@ -172,6 +172,8 @@ const CreateBusinessWizard = () => {
         city: formData.city,
         province: formData.province,
         postal_code: formData.postal_code,
+        show_address: formData.show_address,
+        opening_hours: formData.opening_hours,
         latitude: latitude,
         longitude: longitude,
         slug: slugBase,
