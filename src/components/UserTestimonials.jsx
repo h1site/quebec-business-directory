@@ -94,6 +94,10 @@ const UserTestimonials = () => {
                   <img
                     src={testimonial.user_profiles?.avatar_url || '/default-avatar.svg'}
                     alt={testimonial.user_profiles?.full_name || 'Utilisateur'}
+                    loading="lazy"
+                    decoding="async"
+                    width="48"
+                    height="48"
                   />
                 </div>
                 <div className="testimonial-author">

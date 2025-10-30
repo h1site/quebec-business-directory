@@ -67,6 +67,44 @@
   background: white;
   padding: 1rem;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  /* Prevent CLS */
+  display: block;
+}
+
+/* Reserve space for logo even when loading */
+.business-logo-large {
+  min-width: 150px;
+  min-height: 150px;
+}
+
+/* Skeleton loader animation to prevent CLS */
+.business-skeleton {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Reserve space for ads to prevent CLS */
+.adsbygoogle {
+  min-height: 250px;
+  display: block !important;
+  background-color: #f8fafc;
+  border: 1px dashed #cbd5e0;
+  border-radius: 8px;
+}
+
+/* Mobile ad container */
+@media (max-width: 768px) {
+  .adsbygoogle {
+    min-height: 100px;
+  }
 }
 
 /* Title section - Column 2, takes remaining space */

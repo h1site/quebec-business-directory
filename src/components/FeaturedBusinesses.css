@@ -46,12 +46,16 @@
   margin-bottom: 1.5rem;
   background: #f8f9fa;
   border-radius: 8px;
+  /* Prevent CLS - fixed dimensions */
+  min-height: 120px;
 }
 
 .featured-logo img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  /* Prevent CLS */
+  display: block;
 }
 
 .featured-content {

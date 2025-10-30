@@ -241,6 +241,10 @@ const SearchHeroYelp = () => {
                     src={`/images/icons/${categoryIcons[category.slug]}`}
                     alt={getLabel(category)}
                     className="hero-yelp-category-icon"
+                    loading="lazy"
+                    decoding="async"
+                    width="64"
+                    height="64"
                   />
                 )}
                 <div className="hero-yelp-category-name">{getLabel(category)}</div>

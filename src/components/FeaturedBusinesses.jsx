@@ -63,7 +63,14 @@ function FeaturedBusinesses() {
             >
               {business.logo_url && (
                 <div className="featured-logo">
-                  <img src={business.logo_url} alt={business.name} />
+                  <img
+                    src={business.logo_url}
+                    alt={business.name}
+                    loading="lazy"
+                    decoding="async"
+                    width="120"
+                    height="120"
+                  />
                 </div>
               )}
               <div className="featured-content">

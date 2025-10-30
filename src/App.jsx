@@ -1,31 +1,7 @@
-import { Suspense, useEffect, useMemo } from 'react';
+import { Suspense, useEffect, useMemo, lazy } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { HelmetProvider } from 'react-helmet-async';
-import Home from './pages/Home.jsx';
-import Search from './pages/Search/Search.jsx';
-import CityBrowse from './pages/Browse/CityBrowse.jsx';
-import RegionBrowse from './pages/Browse/RegionBrowse.jsx';
-import CategoryBrowse from './pages/Browse/CategoryBrowse.jsx';
-import Login from './pages/Auth/Login.jsx';
-import Register from './pages/Auth/Register.jsx';
-import CreateBusiness from './pages/Dashboard/CreateBusiness.jsx';
-import CreateBusinessWizard from './components/CreateBusiness/CreateBusinessWizard.jsx';
-import EditBusiness from './pages/Dashboard/EditBusiness.jsx';
-import MyBusinesses from './pages/Dashboard/MyBusinesses.jsx';
-import MigrationTools from './pages/Dashboard/MigrationTools.jsx';
-import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
-import AdminTools from './pages/Admin/AdminTools.jsx';
-import AdminClaims from './pages/Admin/AdminClaims.jsx';
-import AdminModeration from './pages/Admin/AdminModeration.jsx';
-import AdminStats from './pages/Admin/AdminStats.jsx';
-import BusinessDetails from './pages/BusinessDetails.jsx';
-import LegalNotice from './pages/LegalNotice.jsx';
-import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
-import About from './pages/About.jsx';
-import UserProfile from './pages/UserProfile.jsx';
-import Blog from './pages/Blog.jsx';
-import BlogArticle from './pages/BlogArticle.jsx';
 import Header from './components/Header.jsx';
 import FooterYelp from './components/FooterYelp.jsx';
 import CookieConsent from './components/CookieConsent.jsx';
@@ -34,6 +10,31 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AdminRoute from './components/AdminRoute.jsx';
 import LanguageRouteWrapper from './components/LanguageRouteWrapper.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
+
+// Lazy load heavy pages for better performance
+const Home = lazy(() => import('./pages/Home.jsx'));
+const Search = lazy(() => import('./pages/Search/Search.jsx'));
+const CityBrowse = lazy(() => import('./pages/Browse/CityBrowse.jsx'));
+const RegionBrowse = lazy(() => import('./pages/Browse/RegionBrowse.jsx'));
+const CategoryBrowse = lazy(() => import('./pages/Browse/CategoryBrowse.jsx'));
+const Login = lazy(() => import('./pages/Auth/Login.jsx'));
+const Register = lazy(() => import('./pages/Auth/Register.jsx'));
+const CreateBusinessWizard = lazy(() => import('./components/CreateBusiness/CreateBusinessWizard.jsx'));
+const EditBusiness = lazy(() => import('./pages/Dashboard/EditBusiness.jsx'));
+const MyBusinesses = lazy(() => import('./pages/Dashboard/MyBusinesses.jsx'));
+const MigrationTools = lazy(() => import('./pages/Dashboard/MigrationTools.jsx'));
+const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard.jsx'));
+const AdminTools = lazy(() => import('./pages/Admin/AdminTools.jsx'));
+const AdminClaims = lazy(() => import('./pages/Admin/AdminClaims.jsx'));
+const AdminModeration = lazy(() => import('./pages/Admin/AdminModeration.jsx'));
+const AdminStats = lazy(() => import('./pages/Admin/AdminStats.jsx'));
+const BusinessDetails = lazy(() => import('./pages/BusinessDetails.jsx'));
+const LegalNotice = lazy(() => import('./pages/LegalNotice.jsx'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
+const About = lazy(() => import('./pages/About.jsx'));
+const UserProfile = lazy(() => import('./pages/UserProfile.jsx'));
+const Blog = lazy(() => import('./pages/Blog.jsx'));
+const BlogArticle = lazy(() => import('./pages/BlogArticle.jsx'));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -48,18 +49,35 @@ function App() {
     document.documentElement.lang = i18n.language;
   }, [i18n.language]);
 
+  // Loading fallback component
+  const LoadingFallback = () => (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '60vh',
+      color: '#666',
+      fontSize: '1.1rem'
+    }}>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ marginBottom: '1rem', fontSize: '2rem' }}>⏳</div>
+        <div>{i18n.language === 'en' ? 'Loading...' : 'Chargement...'}</div>
+      </div>
+    </div>
+  );
+
   return (
     <HelmetProvider>
-      <Suspense fallback={<div>Chargement...</div>}>
-        <AuthProvider>
-          <GoogleAnalytics />
-          <ScrollToTop />
-          <div className={`app theme-${i18n.language}`}>
-            <Header />
-            <CookieConsent />
-            <main>
-            <LanguageRouteWrapper>
-              <Routes>
+      <AuthProvider>
+        <GoogleAnalytics />
+        <ScrollToTop />
+        <div className={`app theme-${i18n.language}`}>
+          <Header />
+          <CookieConsent />
+          <main>
+            <Suspense fallback={<LoadingFallback />}>
+              <LanguageRouteWrapper>
+                <Routes>
                 {/* ===== FRENCH ROUTES (root) ===== */}
                 <Route path="/" element={<Home />} />
 
@@ -306,13 +324,13 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-            </Routes>
-          </LanguageRouteWrapper>
+                </Routes>
+              </LanguageRouteWrapper>
+            </Suspense>
           </main>
           <FooterYelp />
         </div>
       </AuthProvider>
-    </Suspense>
     </HelmetProvider>
   );
 }

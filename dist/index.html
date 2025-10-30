@@ -95,7 +95,57 @@
 
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+    <!-- Preload critical resources -->
+    <link rel="modulepreload" href="data:text/jsx;base64,aW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JzsKaW1wb3J0IFJlYWN0RE9NIGZyb20gJ3JlYWN0LWRvbS9jbGllbnQnOwppbXBvcnQgeyBCcm93c2VyUm91dGVyIH0gZnJvbSAncmVhY3Qtcm91dGVyLWRvbSc7CmltcG9ydCBBcHAgZnJvbSAnLi9BcHAuanN4JzsKaW1wb3J0ICcuL3N0eWxlcy9pbmRleC5jc3MnOwppbXBvcnQgJy4vc3R5bGVzL2dsb2JhbC5jc3MnOwppbXBvcnQgJy4vc2VydmljZXMvaTE4bi5qcyc7CmltcG9ydCAnLi9yZXBvcnRXZWJWaXRhbHMuanMnOwoKUmVhY3RET00uY3JlYXRlUm9vdChkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncm9vdCcpKS5yZW5kZXIoCiAgPFJlYWN0LlN0cmljdE1vZGU+CiAgICA8QnJvd3NlclJvdXRlcgogICAgICBmdXR1cmU9e3sKICAgICAgICB2N19zdGFydFRyYW5zaXRpb246IHRydWUsCiAgICAgICAgdjdfcmVsYXRpdmVTcGxhdFBhdGg6IHRydWUKICAgICAgfX0KICAgID4KICAgICAgPEFwcCAvPgogICAgPC9Ccm93c2VyUm91dGVyPgogIDwvUmVhY3QuU3RyaWN0TW9kZT4KKTsK" />
+
+    <!-- Critical CSS inline for faster FCP -->
+    <style>
+      /* Critical above-the-fold CSS */
+      :root {
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        line-height: 1.5;
+        font-weight: 400;
+        color: #1f2933;
+        background-color: #f8fafc;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background-color: #f1f5f9;
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background-color: #f1f5f9;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        font-family: inherit;
+      }
+      .container {
+        width: min(1200px, 90vw);
+        margin: 0 auto;
+      }
+      /* Loading state */
+      #root {
+        min-height: 100vh;
+      }
+    </style>
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8781698761921917"
@@ -111,8 +161,8 @@
   gtag('config', 'G-67FQWQH0KL');
 </script>
 
-    <script type="module" crossorigin src="/assets/index-DI0mTKhn.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DPkgXygs.css">
+    <script type="module" crossorigin src="/assets/index-QKyFCZf0.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-mItkSnj0.css">
   </head>
   <body>
     <div id="root"></div>

@@ -127,8 +127,55 @@ const BusinessDetails = () => {
 
   if (loading) {
     return (
-      <div className="container" style={{ padding: '3rem 0', textAlign: 'center' }}>
-        <div className="loading-spinner">Chargement...</div>
+      <div className="business-details-page">
+        <div className="container business-main-container">
+          {/* Skeleton loader to reserve space and prevent CLS */}
+          <div className="business-skeleton">
+            <div className="skeleton-breadcrumb" style={{
+              height: '20px',
+              width: '300px',
+              backgroundColor: '#e2e8f0',
+              borderRadius: '4px',
+              marginBottom: '2rem'
+            }}></div>
+            <div className="business-header-hero">
+              <div className="skeleton-logo" style={{
+                width: '150px',
+                height: '150px',
+                backgroundColor: '#e2e8f0',
+                borderRadius: '16px'
+              }}></div>
+              <div style={{ flex: 1 }}>
+                <div className="skeleton-title" style={{
+                  height: '40px',
+                  width: '60%',
+                  backgroundColor: '#e2e8f0',
+                  borderRadius: '8px',
+                  marginBottom: '1rem'
+                }}></div>
+                <div className="skeleton-meta" style={{
+                  height: '20px',
+                  width: '40%',
+                  backgroundColor: '#e2e8f0',
+                  borderRadius: '4px',
+                  marginBottom: '0.5rem'
+                }}></div>
+                <div className="skeleton-meta" style={{
+                  height: '20px',
+                  width: '50%',
+                  backgroundColor: '#e2e8f0',
+                  borderRadius: '4px'
+                }}></div>
+              </div>
+            </div>
+            <div style={{
+              height: '200px',
+              backgroundColor: '#e2e8f0',
+              borderRadius: '12px',
+              marginTop: '2rem'
+            }}></div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -275,7 +322,14 @@ const BusinessDetails = () => {
           <div className="business-header-hero">
             {business.logo_url && (
               <div className="business-logo-large">
-                <img src={business.logo_url} alt={`Logo ${business.name}`} />
+                <img
+                  src={business.logo_url}
+                  alt={`Logo ${business.name}`}
+                  loading="lazy"
+                  decoding="async"
+                  width="150"
+                  height="150"
+                />
               </div>
             )}
             <div className="business-title-full">
@@ -375,6 +429,9 @@ const BusinessDetails = () => {
                         src={imageUrl}
                         alt={`${business.name} - Photo ${index + 1}`}
                         loading="lazy"
+                        decoding="async"
+                        width="400"
+                        height="300"
                       />
                     </div>
                   ))}

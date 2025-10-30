@@ -11,6 +11,9 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  /* Prevent CLS - reserve space immediately */
+  min-height: 450px;
+  background-color: #0f4c81;
 }
 
 .hero-yelp-overlay {
