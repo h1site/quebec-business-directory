@@ -44,8 +44,13 @@
 
 /* Mobile responsive */
 @media (max-width: 768px) {
+  .breadcrumb-container {
+    text-align: center;
+  }
+
   .breadcrumb {
     font-size: 0.8rem;
+    justify-content: center;
   }
 
   .breadcrumb-item + .breadcrumb-item::before {
