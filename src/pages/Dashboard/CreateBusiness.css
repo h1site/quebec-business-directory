@@ -456,17 +456,14 @@
     padding: 1rem 0 2rem;
   }
 
-  .create-business-header h1 {
-    font-size: 1.875rem;
-  }
-
-  .create-business-header .subtitle {
-    font-size: 1rem;
+  .create-business-header {
+    display: none; /* Hide header on mobile */
   }
 
   .progress-steps {
     flex-wrap: wrap;
     gap: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .progress-steps::before {
@@ -488,11 +485,16 @@
   }
 
   .business-form {
-    padding: 1.5rem;
+    max-width: 100%; /* Full width on mobile */
+    padding: 1rem;
+    margin: 0;
+    border-radius: 0; /* No rounded corners on mobile */
+    box-shadow: none; /* Remove shadow on mobile */
   }
 
   .step-title {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
   }
 
   .form-row {
@@ -505,11 +507,23 @@
 
   .form-actions {
     flex-direction: column;
+    padding-top: 1.5rem;
   }
 
   .btn-primary {
     margin-left: 0;
     order: -1;
+  }
+
+  /* Ensure form inputs take full width on mobile */
+  .form-group input[type='text'],
+  .form-group input[type='email'],
+  .form-group input[type='url'],
+  .form-group input[type='tel'],
+  .form-group input[type='number'],
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px; /* Prevent zoom on iOS */
   }
 }
 

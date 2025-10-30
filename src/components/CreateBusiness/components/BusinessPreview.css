@@ -254,25 +254,7 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .preview-business-header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .preview-logo,
-  .preview-logo-placeholder {
-    margin: 0 auto;
-  }
-
-  .preview-business-info {
-    text-align: center;
-  }
-
-  .preview-company-details {
-    justify-content: center;
-  }
-
-  .preview-gallery {
-    grid-template-columns: repeat(2, 1fr);
+  .business-preview {
+    display: none; /* Hide preview on mobile */
   }
 }
