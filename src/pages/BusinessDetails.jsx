@@ -12,6 +12,7 @@ import BusinessHours from '../components/BusinessHours.jsx';
 import GoogleReviews from '../components/GoogleReviews.jsx';
 import ClaimBusinessModal from '../components/ClaimBusinessModal.jsx';
 import DeleteConfirmModal from '../components/DeleteConfirmModal.jsx';
+import GooglePlacesImportModal from '../components/GooglePlacesImportModal.jsx';
 import BusinessReviews from '../components/BusinessReviews.jsx';
 import WriteReviewModal from '../components/WriteReviewModal.jsx';
 import AmazonProducts from '../components/AmazonProducts.jsx';
@@ -37,6 +38,7 @@ const BusinessDetails = () => {
   const [error, setError] = useState(null);
   const [showClaimModal, setShowClaimModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showGMBImportModal, setShowGMBImportModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewsKey, setReviewsKey] = useState(0);
 
@@ -266,6 +268,41 @@ const BusinessDetails = () => {
     }
   };
 
+  // Handler to import Google My Business data (Admin only)
+  const handleImportGMB = async (placeId) => {
+    if (!isAdmin) {
+      alert('Accès non autorisé');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/import-gmb-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          businessId: business.id,
+          placeId: placeId,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erreur lors de l\'importation');
+      }
+
+      alert(`✅ Import réussi!\n\n${data.summary}`);
+
+      // Reload business data to show updated info
+      window.location.reload();
+    } catch (error) {
+      console.error('Error importing GMB data:', error);
+      throw error;
+    }
+  };
+
   // Generate description for meta tags
   const cityName = business.city || 'Québec';
   const metaDescription = business.description
@@ -292,13 +329,22 @@ const BusinessDetails = () => {
               </Link>
             )}
             {isAdmin && (
-              <button
-                className="btn btn-delete-db"
-                onClick={handleDeleteFromDB}
-                title="Supprimer définitivement de la base de données (Admin seulement)"
-              >
-                🗑️ Supprimer DB
-              </button>
+              <>
+                <button
+                  className="btn btn-import-gmb"
+                  onClick={() => setShowGMBImportModal(true)}
+                  title="Importer les données depuis Google My Business (Admin seulement)"
+                >
+                  🌐 Importer GMB
+                </button>
+                <button
+                  className="btn btn-delete-db"
+                  onClick={handleDeleteFromDB}
+                  title="Supprimer définitivement de la base de données (Admin seulement)"
+                >
+                  🗑️ Supprimer DB
+                </button>
+              </>
             )}
           </div>
 
@@ -695,6 +741,16 @@ const BusinessDetails = () => {
       onClaim={handleClaimFromDeleteModal}
       businessName={business?.name}
       isDeleting={false}
+    />
+
+    {/* Google My Business Import Modal (Admin only) */}
+    <GooglePlacesImportModal
+      isOpen={showGMBImportModal}
+      onClose={() => setShowGMBImportModal(false)}
+      onImport={handleImportGMB}
+      businessName={business?.name || ''}
+      businessAddress={business?.address || ''}
+      businessCity={business?.city || ''}
     />
 
     {/* Write Review Modal */}

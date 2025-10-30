@@ -426,6 +426,28 @@
   display: inline-block;
 }
 
+.btn-import-gmb {
+  padding: 0.65rem 1.5rem;
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+  color: white;
+  border: 2px solid #06b6d4;
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(8, 145, 178, 0.4);
+  font-size: 0.9rem;
+  display: inline-block;
+}
+
+.btn-import-gmb:hover {
+  background: linear-gradient(135deg, #0e7490 0%, #155e75 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(8, 145, 178, 0.6);
+  border-color: #22d3ee;
+}
+
 .btn-delete-db {
   padding: 0.65rem 1.5rem;
   background: linear-gradient(135deg, #8b0000 0%, #660000 100%);
@@ -1019,6 +1041,7 @@
   /* Fix overflowing buttons on mobile */
   .btn-claim,
   .btn-delete,
+  .btn-import-gmb,
   .btn-delete-db,
   .btn-edit {
     padding: 0.6rem 0.8rem;
@@ -1052,6 +1075,7 @@
 @media (max-width: 480px) {
   .btn-claim,
   .btn-delete,
+  .btn-import-gmb,
   .btn-delete-db,
   .btn-edit {
     width: 100%;
