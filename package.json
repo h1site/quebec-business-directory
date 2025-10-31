@@ -10,7 +10,9 @@
     "build": "vite build",
     "start:seo": "node server-seo.js",
     "preview": "vite preview",
-    "lint": "eslint src --ext jsx,js"
+    "lint": "eslint src --ext jsx,js",
+    "sitemap:generate": "node scripts/generate-sitemap-all-businesses.js && node scripts/generate-sitemap-en-split.js",
+    "sitemap:notify": "curl 'https://www.google.com/ping?sitemap=https://registreduquebec.com/sitemap.xml' && curl 'https://www.google.com/ping?sitemap=https://registreduquebec.com/sitemap-en.xml'"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.43.1",
