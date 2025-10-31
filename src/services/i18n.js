@@ -28,7 +28,7 @@ const resources = {
         home: 'Accueil',
         search: 'Recherche',
         addListing: 'Ajouter une entreprise',
-        myBusinesses: 'Mes entreprises',
+        myBusinesses: 'Tableau de bord',
         profile: 'Profil',
         login: 'Connexion',
         register: 'Créer un compte',
@@ -92,7 +92,10 @@ const resources = {
         featuredTitle: 'Découvrez des entreprises québécoises',
         viewListing: 'Voir la fiche',
         sponsors: 'Commanditaires',
-        sponsorContact: 'Pour commanditer notre registre, nous rejoindre sur'
+        sponsorContact: 'Pour commanditer notre registre, nous rejoindre sur',
+        sponsorsGrowthTitle: 'Une croissance fulgurante : 900 vues par jour après seulement 4 jours !',
+        sponsorsGrowthDescription: 'Positionnez votre entreprise au cœur de cette visibilité en nous appuyant par une commandite stratégique.',
+        sponsorsCtaButton: 'Devenir commanditaire'
       },
       business: {
         unclaimedNotice: 'Les données affichées sont les dernières informations publiques que nous avons pu obtenir. Veuillez toujours vérifier avec le site web de l\'entreprise ou par téléphone pour des informations à jour.',
@@ -681,7 +684,7 @@ const resources = {
         home: 'Home',
         search: 'Search',
         addListing: 'Add a business',
-        myBusinesses: 'My businesses',
+        myBusinesses: 'Dashboard',
         profile: 'Profile',
         login: 'Sign in',
         register: 'Create account',
@@ -745,7 +748,10 @@ const resources = {
         featuredTitle: 'Discover Quebec businesses',
         viewListing: 'View listing',
         sponsors: 'Sponsors',
-        sponsorContact: 'To sponsor our directory, contact us at'
+        sponsorContact: 'To sponsor our directory, contact us at',
+        sponsorsGrowthTitle: 'Explosive growth: 900 views per day after only 4 days!',
+        sponsorsGrowthDescription: 'Position your business at the heart of this visibility by supporting us with a strategic sponsorship.',
+        sponsorsCtaButton: 'Become a sponsor'
       },
       business: {
         unclaimedNotice: 'The information displayed is the latest public data we were able to obtain. Always verify with the business website or phone number for up-to-date information.',

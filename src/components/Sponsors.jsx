@@ -1,133 +1,41 @@
 import { useTranslation } from 'react-i18next';
-import { useState, useEffect } from 'react';
 import './Sponsors.css';
 
 const Sponsors = () => {
   const { t } = useTranslation();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  const sponsors = [
-    {
-      name: 'KracRadio',
-      logo: '/images/sponsors/kracradio.png',
-      url: 'https://kracradio.com'
-    },
-    {
-      name: 'MenuCochon',
-      logo: '/images/sponsors/menucochon-blanc.svg',
-      url: 'https://menucochon.com'
-    },
-    {
-      name: 'KEmp3.app',
-      logo: '/images/sponsors/kemp3.png',
-      url: 'https://kemp3.app'
-    },
-    {
-      name: 'AppGratuit.com',
-      logo: '/images/sponsors/appgratuit.com.svg',
-      url: 'https://appgratuit.com'
-    }
-  ];
-
-  // Detect mobile screen size
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // Auto-rotate carousel on mobile
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % sponsors.length);
-    }, 3000); // Change every 3 seconds
-
-    return () => clearInterval(interval);
-  }, [isMobile, sponsors.length]);
-
-  const handleDotClick = (index) => {
-    setCurrentIndex(index);
-  };
 
   return (
     <section className="sponsors-section">
       <div className="container">
-        <p className="sponsors-title">{t('home.sponsors')}</p>
-
-        {isMobile ? (
-          // Mobile: Carousel
-          <div className="sponsors-carousel">
-            <div className="sponsors-carousel-track">
-              {sponsors.map((sponsor, index) => (
-                <a
-                  key={index}
-                  href={sponsor.url}
-                  target="_blank"
-                  rel="sponsored noopener"
-                  className={`sponsor-link sponsor-carousel-item ${
-                    index === currentIndex ? 'active' : ''
-                  } ${sponsor.name === 'AppGratuit.com' ? 'sponsor-link-oval' : ''} ${
-                    sponsor.name === 'KracRadio' || sponsor.name === 'MenuCochon' ? 'sponsor-link-dark' : ''
-                  }`}
-                  title={sponsor.name}
-                  style={{ display: index === currentIndex ? 'flex' : 'none' }}
-                >
-                  <img
-                    src={sponsor.logo}
-                    alt={sponsor.name}
-                    className="sponsor-logo"
-                  />
-                </a>
-              ))}
-            </div>
-            <div className="sponsors-carousel-dots">
-              {sponsors.map((_, index) => (
-                <button
-                  key={index}
-                  className={`carousel-dot ${index === currentIndex ? 'active' : ''}`}
-                  onClick={() => handleDotClick(index)}
-                  aria-label={`Go to sponsor ${index + 1}`}
-                />
-              ))}
-            </div>
+        {/* Hero Section avec message de croissance */}
+        <div className="sponsors-hero">
+          <div className="sponsors-hero-badge">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 15.5L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z" fill="currentColor"/>
+            </svg>
+            <span>{t('home.sponsors')}</span>
           </div>
-        ) : (
-          // Desktop: Grid
-          <div className="sponsors-grid">
-            {sponsors.map((sponsor, index) => (
-              <a
-                key={index}
-                href={sponsor.url}
-                target="_blank"
-                rel="sponsored noopener"
-                className={`sponsor-link ${sponsor.name === 'AppGratuit.com' ? 'sponsor-link-oval' : ''} ${
-                  sponsor.name === 'KracRadio' || sponsor.name === 'MenuCochon' ? 'sponsor-link-dark' : ''
-                }`}
-                title={sponsor.name}
-              >
-                <img
-                  src={sponsor.logo}
-                  alt={sponsor.name}
-                  className="sponsor-logo"
-                />
-              </a>
-            ))}
-          </div>
-        )}
 
-        <p className="sponsors-contact">
-          {t('home.sponsorContact')}{' '}
-          <a href="https://h1site.com" target="_blank" rel="noopener noreferrer">
-            h1site.com
+          <h2 className="sponsors-hero-title">
+            {t('home.sponsorsGrowthTitle')}
+          </h2>
+
+          <p className="sponsors-hero-description">
+            {t('home.sponsorsGrowthDescription')}
+          </p>
+
+          <a
+            href="https://h1site.com/contact/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="sponsors-cta-button"
+          >
+            {t('home.sponsorsCtaButton')}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </a>
-        </p>
+        </div>
       </div>
     </section>
   );
