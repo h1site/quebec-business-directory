@@ -1,6 +1,7 @@
 /**
- * Génère un sitemap avec TOUTES les 480K businesses
- * Format: /entreprise/city/slug (pas de catégorie car la plupart n'en ont pas)
+ * Génère un sitemap avec TOUTES les businesses (français)
+ * Format: /{category-slug}/{city}/{slug}
+ * Utilise main_category_slug si disponible, sinon categories[0] UUID
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -163,7 +164,7 @@ for (let fileIndex = 0; fileIndex < numBusinessSitemaps; fileIndex++) {
     try {
       const { data: businesses, error } = await supabase
         .from('businesses')
-        .select('slug, updated_at, city')
+        .select('slug, updated_at, city, main_category_slug, categories')
         .order('id')
         .range(batchOffset, batchOffset + BATCH_SIZE - 1);
 
@@ -173,8 +174,20 @@ for (let fileIndex = 0; fileIndex < numBusinessSitemaps; fileIndex++) {
       businesses.forEach(biz => {
         if (businessUrls.length < MAX_URLS_PER_SITEMAP && biz.slug && biz.city) {
           const citySlug = generateSlug(biz.city);
-          // Format: /entreprise/city/slug
-          const businessUrl = `${baseUrl}/entreprise/${citySlug}/${biz.slug}`;
+
+          // Use main_category_slug if available, otherwise use first category UUID as fallback
+          let categoryPart = biz.main_category_slug;
+          if (!categoryPart && biz.categories && biz.categories.length > 0) {
+            categoryPart = biz.categories[0]; // Use UUID as fallback
+          }
+
+          // Skip if no category at all
+          if (!categoryPart) {
+            return;
+          }
+
+          // Format: /{category-slug}/{city}/{slug}
+          const businessUrl = `${baseUrl}/${categoryPart}/${citySlug}/${biz.slug}`;
 
           businessUrls.push({
             loc: businessUrl,
