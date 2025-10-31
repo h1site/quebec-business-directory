@@ -27,7 +27,7 @@ const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard.jsx'));
 const AdminTools = lazy(() => import('./pages/Admin/AdminTools.jsx'));
 const AdminClaims = lazy(() => import('./pages/Admin/AdminClaims.jsx'));
 const AdminModeration = lazy(() => import('./pages/Admin/AdminModeration.jsx'));
-const AdminStats = lazy(() => import('./pages/Admin/AdminStats.jsx'));
+const AdminStats = lazy(() => import('./pages/Admin/AdminStatsNew.jsx'));
 const AdminSponsors = lazy(() => import('./pages/Admin/AdminSponsors.jsx'));
 const BusinessDetails = lazy(() => import('./pages/BusinessDetails.jsx'));
 const LegalNotice = lazy(() => import('./pages/LegalNotice.jsx'));
