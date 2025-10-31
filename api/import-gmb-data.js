@@ -7,7 +7,7 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
-const googleApiKey = process.env.GOOGLE_PLACES_API_KEY;
+const googleApiKey = process.env.GOOGLE_PLACES_API_KEY || process.env.VITE_GOOGLE_MAPS_API_KEY;
 
 // Admin emails for authorization
 const ADMIN_EMAILS = ['karpe_25@hotmail.com', 'info@h1site.com'];
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
   }
 
   if (!googleApiKey) {
-    console.error('Missing GOOGLE_PLACES_API_KEY');
+    console.error('Missing GOOGLE_PLACES_API_KEY or VITE_GOOGLE_MAPS_API_KEY');
     return res.status(500).json({ error: 'Google API key not configured' });
   }
 

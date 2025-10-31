@@ -291,7 +291,10 @@ const BusinessDetails = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Erreur lors de l\'importation');
+        console.error('GMB Import API Error:', data);
+        const errorMsg = data.message || data.error || 'Erreur lors de l\'importation';
+        alert(`❌ Erreur d'importation:\n\n${errorMsg}`);
+        throw new Error(errorMsg);
       }
 
       alert(`✅ Import réussi!\n\n${data.summary}`);
@@ -300,6 +303,9 @@ const BusinessDetails = () => {
       window.location.reload();
     } catch (error) {
       console.error('Error importing GMB data:', error);
+      if (!error.message.includes('Erreur')) {
+        alert(`❌ Erreur technique:\n\n${error.message}`);
+      }
       throw error;
     }
   };
