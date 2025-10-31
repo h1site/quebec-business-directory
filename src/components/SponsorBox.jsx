@@ -50,17 +50,25 @@ export default function SponsorBox() {
    */
   async function loadRandomSponsor() {
     try {
+      console.log('🔍 SponsorBox: Chargement des sponsors...');
       const { data, error } = await supabase
         .from('sponsors')
         .select('*')
         .eq('is_active', true);
 
-      if (error) throw error;
+      if (error) {
+        console.error('❌ SponsorBox: Erreur Supabase:', error);
+        throw error;
+      }
+
+      console.log('✅ SponsorBox: Sponsors trouvés:', data);
 
       if (data && data.length > 0) {
         // Sélectionner un sponsor aléatoire
         const randomIndex = Math.floor(Math.random() * data.length);
         const selectedSponsor = data[randomIndex];
+
+        console.log('🎯 SponsorBox: Sponsor sélectionné:', selectedSponsor);
 
         // Générer l'URL du logo (Storage ou statique)
         if (selectedSponsor.use_storage_logo && selectedSponsor.logo_storage_path) {
@@ -69,14 +77,18 @@ export default function SponsorBox() {
             .getPublicUrl(selectedSponsor.logo_storage_path);
 
           selectedSponsor.logo_url = publicUrl.publicUrl;
+          console.log('📦 SponsorBox: URL Storage:', selectedSponsor.logo_url);
         } else {
           selectedSponsor.logo_url = selectedSponsor.logo_path;
+          console.log('📁 SponsorBox: URL Statique:', selectedSponsor.logo_url);
         }
 
         setSponsor(selectedSponsor);
+      } else {
+        console.warn('⚠️ SponsorBox: Aucun sponsor actif trouvé');
       }
     } catch (error) {
-      console.error('Erreur chargement sponsor:', error);
+      console.error('❌ SponsorBox: Erreur chargement sponsor:', error);
     } finally {
       setLoading(false);
     }
