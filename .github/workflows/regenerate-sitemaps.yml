@@ -1,0 +1,62 @@
+name: Régénération Automatique des Sitemaps
+
+on:
+  # Option 1: Déclenchement quotidien à 3h du matin
+  schedule:
+    - cron: '0 3 * * *'  # Chaque jour à 3h UTC (23h EST)
+
+  # Option 2: Déclenchement manuel via GitHub UI
+  workflow_dispatch:
+
+  # Option 3: Après chaque push sur main (optionnel)
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - 'scripts/generate-sitemap-*.js'
+
+jobs:
+  regenerate-sitemaps:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Supabase credentials
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          echo "VITE_SUPABASE_URL=${VITE_SUPABASE_URL}" >> .env
+          echo "VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}" >> .env
+
+      - name: Régénérer sitemap français
+        run: node scripts/generate-sitemap-all-businesses.js
+
+      - name: Régénérer sitemap anglais
+        run: node scripts/generate-sitemap-en-split.js
+
+      - name: Commit et push les nouveaux sitemaps
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add public/sitemap*.xml public/sitemaps/*.xml
+          git diff --staged --quiet || git commit -m "🗺️ Régénération automatique des sitemaps [skip ci]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notifier Google (optionnel)
+        run: |
+          curl "https://www.google.com/ping?sitemap=https://registreduquebec.com/sitemap.xml"
+          curl "https://www.google.com/ping?sitemap=https://registreduquebec.com/sitemap-en.xml"
