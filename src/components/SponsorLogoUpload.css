@@ -1,0 +1,126 @@
+.sponsor-logo-upload {
+  margin: 20px 0;
+}
+
+.upload-section {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.upload-label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  color: #212529;
+  margin-bottom: 12px;
+}
+
+.logo-preview {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 16px;
+  padding: 20px;
+  background: white;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.upload-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.upload-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.upload-button:hover {
+  background: #0052a3;
+}
+
+.upload-button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.remove-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.remove-button:hover {
+  background: #c82333;
+}
+
+.remove-button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.upload-hint {
+  font-size: 13px;
+  color: #6c757d;
+  text-align: center;
+  margin: 0;
+}
+
+.upload-error {
+  margin-top: 12px;
+  padding: 10px;
+  background: #f8d7da;
+  border: 1px solid #f5c2c7;
+  border-radius: 6px;
+  color: #842029;
+  font-size: 14px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .logo-preview {
+    width: 150px;
+    height: 150px;
+  }
+
+  .upload-actions {
+    flex-direction: column;
+  }
+
+  .upload-button,
+  .remove-button {
+    width: 100%;
+  }
+}

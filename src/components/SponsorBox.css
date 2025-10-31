@@ -1,0 +1,154 @@
+.sponsor-box {
+  background: linear-gradient(266deg, #e1e1e27e 0%, #dadada6a 100% !important);
+  border: 1px solid #f7f7f7;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.sponsor-box:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+}
+
+.sponsor-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #fefefe;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.sponsor-label::before {
+  content: '★';
+  margin-right: 6px;
+  color: #fbbf24;
+  opacity: 0.8;
+}
+
+.sponsor-content {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 16px;
+  transition: all 0.2s ease;
+}
+
+.sponsor-content:hover {
+  opacity: 0.9;
+}
+
+.sponsor-content:hover .sponsor-cta {
+  transform: translateX(4px);
+}
+
+.sponsor-logo-container {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8 !important;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.sponsor-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.sponsor-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.sponsor-company {
+  font-size: 16px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 4px;
+}
+
+.sponsor-slogan {
+  font-size: 13px;
+  color: #ffffff !important;
+  line-height: 1.4;
+}
+
+.sponsor-cta {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #efefef;
+  border-radius: 50%;
+  color: rgb(77, 77, 77);
+  transition: all 0.2s ease;
+}
+
+.sponsor-content:hover .sponsor-cta {
+  background: #d9d7d7;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .sponsor-box {
+    padding: 16px;
+  }
+
+  .sponsor-logo-container {
+    width: 50px;
+    height: 50px;
+  }
+
+  .sponsor-company {
+    font-size: 14px;
+  }
+
+  .sponsor-slogan {
+    font-size: 12px;
+  }
+
+  .sponsor-cta {
+    width: 28px;
+    height: 28px;
+  }
+
+  .sponsor-cta svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Dark mode (optionnel) */
+@media (prefers-color-scheme: dark) {
+  .sponsor-box {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-color: #334155;
+  }
+
+  .sponsor-logo-container {
+    background: #1e293b;
+    border: 1px solid #334155;
+  }
+
+  .sponsor-company {
+    color: #f1f5f9;
+  }
+
+  .sponsor-slogan {
+    color: #94a3b8;
+  }
+}
