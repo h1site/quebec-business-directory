@@ -9,10 +9,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const googleApiKey = process.env.VITE_GOOGLE_MAPS_API_KEY;
+  const googleApiKey = process.env.GOOGLE_PLACES_API_KEY;
 
   if (!googleApiKey) {
-    console.error('Missing VITE_GOOGLE_MAPS_API_KEY');
+    console.error('Missing GOOGLE_PLACES_API_KEY');
     return res.status(500).json({ error: 'Google API key not configured' });
   }
 
