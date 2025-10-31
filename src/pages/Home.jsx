@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import SearchHeroYelp from '../components/SearchHeroYelp.jsx';
 import ThanksPartners from '../components/ThanksPartners.jsx';
-import FeaturedBusinesses from '../components/FeaturedBusinesses.jsx';
+import BlogSection from '../components/BlogSection.jsx';
 import UserTestimonials from '../components/UserTestimonials.jsx';
 import Sponsors from '../components/Sponsors.jsx';
 import { generateOrganizationSchema, generateWebSiteSchema } from '../utils/schemaMarkup.js';
@@ -80,7 +80,7 @@ const Home = () => {
       <div>
         <SearchHeroYelp />
         <ThanksPartners />
-        <FeaturedBusinesses />
+        <BlogSection />
         <UserTestimonials />
         <Sponsors />
       </div>

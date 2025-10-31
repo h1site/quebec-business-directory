@@ -83,6 +83,25 @@ function ThanksPartners() {
             );
           })}
         </div>
+
+        {/* CTA Section - Ajouter votre entreprise */}
+        <div className="thanks-cta-section">
+          <div className="thanks-cta-content">
+            <h3 className="thanks-cta-title">
+              {i18n.language === 'fr'
+                ? 'Votre entreprise mérite d\'être visible'
+                : 'Your business deserves to be visible'}
+            </h3>
+            <p className="thanks-cta-text">
+              {i18n.language === 'fr'
+                ? 'Ajoutez votre entreprise gratuitement et rejoignez plus de 480 000 entreprises québécoises sur notre plateforme.'
+                : 'Add your business for free and join over 480,000 Quebec businesses on our platform.'}
+            </p>
+            <a href="/entreprise/nouvelle" className="thanks-cta-button">
+              {i18n.language === 'fr' ? 'Ajouter votre entreprise' : 'Add your business'}
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
