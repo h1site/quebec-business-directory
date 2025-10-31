@@ -18,6 +18,17 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Check required environment variables
+  if (!supabaseUrl) {
+    console.error('Missing SUPABASE_URL or VITE_SUPABASE_URL');
+    return res.status(500).json({ error: 'Supabase URL not configured' });
+  }
+
+  if (!supabaseKey) {
+    console.error('Missing SUPABASE_SERVICE_KEY or VITE_SUPABASE_ANON_KEY');
+    return res.status(500).json({ error: 'Supabase key not configured' });
+  }
+
   if (!googleApiKey) {
     console.error('Missing GOOGLE_PLACES_API_KEY');
     return res.status(500).json({ error: 'Google API key not configured' });
@@ -203,9 +214,11 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Error importing GMB data:', error);
+    console.error('Error stack:', error.stack);
     return res.status(500).json({
       error: 'Internal server error',
-      message: error.message
+      message: error.message,
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
 }
