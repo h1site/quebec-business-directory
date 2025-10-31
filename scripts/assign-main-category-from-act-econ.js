@@ -93,13 +93,15 @@ async function assignMainCategoryFromActEcon() {
     const codeGroups = {};
 
     for (const biz of businesses) {
-      // Extract first 4 characters (main code)
-      const mainCode = biz.act_econ_code.substring(0, 4);
+      // Extract first 2 digits and round to nearest 100 (ex: 7215 → 7200, 4561 → 4500, 0111 → 0100)
+      const code = biz.act_econ_code;
+      const first2Digits = parseInt(code.substring(0, 2));
+      const roundedCode = (first2Digits * 100).toString().padStart(4, '0');
 
-      if (!codeGroups[mainCode]) {
-        codeGroups[mainCode] = [];
+      if (!codeGroups[roundedCode]) {
+        codeGroups[roundedCode] = [];
       }
-      codeGroups[mainCode].push(biz);
+      codeGroups[roundedCode].push(biz);
     }
 
     console.log(`   Codes ACT_ECON uniques dans ce batch: ${Object.keys(codeGroups).length}`);
@@ -122,16 +124,32 @@ async function assignMainCategoryFromActEcon() {
       // Update all businesses in this group
       const bizIds = bizGroup.map(b => b.id);
 
+      // Get the category slug
+      const { data: category } = await supabase
+        .from('main_categories')
+        .select('slug')
+        .eq('id', mapping.main_category_id)
+        .single();
+
+      if (!category || !category.slug) {
+        console.log(`   ⚠️  Code ${mainCode}: Catégorie trouvée mais sans slug`);
+        totalNotFound += bizGroup.length;
+        continue;
+      }
+
       const { error: updateError } = await supabase
         .from('businesses')
-        .update({ main_category_id: mapping.main_category_id })
+        .update({
+          main_category_id: mapping.main_category_id,
+          main_category_slug: category.slug
+        })
         .in('id', bizIds);
 
       if (updateError) {
         console.error(`   ❌ Erreur lors de la mise à jour pour le code ${mainCode}:`, updateError);
       } else {
         totalUpdated += bizGroup.length;
-        console.log(`   ✅ Code ${mainCode}: ${bizGroup.length} entreprises mises à jour`);
+        console.log(`   ✅ Code ${mainCode} → ${category.slug}: ${bizGroup.length} entreprises`);
       }
     }
 

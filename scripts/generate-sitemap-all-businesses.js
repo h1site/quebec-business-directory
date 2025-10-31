@@ -181,13 +181,12 @@ for (let fileIndex = 0; fileIndex < numBusinessSitemaps; fileIndex++) {
             categoryPart = biz.categories[0]; // Use UUID as fallback
           }
 
-          // Skip if no category at all
-          if (!categoryPart) {
-            return;
-          }
-
-          // Format: /{category-slug}/{city}/{slug}
-          const businessUrl = `${baseUrl}/${categoryPart}/${citySlug}/${biz.slug}`;
+          // Format URLs:
+          // - With category: /{category-slug}/{city}/{slug}
+          // - Without category: /entreprise/{city}/{slug}
+          const businessUrl = categoryPart
+            ? `${baseUrl}/${categoryPart}/${citySlug}/${biz.slug}`
+            : `${baseUrl}/entreprise/${citySlug}/${biz.slug}`;
 
           businessUrls.push({
             loc: businessUrl,

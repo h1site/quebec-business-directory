@@ -161,7 +161,7 @@ let businessSitemapFiles = [];
 while (true) {
   const { data: businesses, error } = await supabase
     .from('businesses')
-    .select('slug, updated_at, main_category_slug, city')
+    .select('slug, updated_at, main_category_slug, city, categories')
     .order('id')
     .range(page * pageSize, (page + 1) * pageSize - 1);
 
@@ -170,9 +170,16 @@ while (true) {
   }
 
   businesses.forEach(biz => {
-    if (!biz.main_category_slug || !biz.city || !biz.slug) {
+    // Skip if missing essential fields
+    if (!biz.city || !biz.slug) {
       skippedBusinesses++;
       return;
+    }
+
+    // Use main_category_slug if available, otherwise use first category UUID as fallback
+    let categoryPart = biz.main_category_slug;
+    if (!categoryPart && biz.categories && biz.categories.length > 0) {
+      categoryPart = biz.categories[0]; // Use UUID as fallback
     }
 
     const lastmod = biz.updated_at ?
@@ -180,7 +187,13 @@ while (true) {
       currentDate;
 
     const citySlug = generateSlug(biz.city);
-    const businessUrl = `${baseUrl}/en/${biz.main_category_slug}/${citySlug}/${biz.slug}`;
+
+    // Format URLs:
+    // - With category: /en/{category-slug}/{city}/{slug}
+    // - Without category: /en/entreprise/{city}/{slug}
+    const businessUrl = categoryPart
+      ? `${baseUrl}/en/${categoryPart}/${citySlug}/${biz.slug}`
+      : `${baseUrl}/en/entreprise/${citySlug}/${biz.slug}`;
 
     const urlEntry = `  <url>
     <loc>${businessUrl}</loc>
