@@ -16,6 +16,7 @@ import GooglePlacesImportModal from '../components/GooglePlacesImportModal.jsx';
 import BusinessReviews from '../components/BusinessReviews.jsx';
 import WriteReviewModal from '../components/WriteReviewModal.jsx';
 import AmazonProducts from '../components/AmazonProducts.jsx';
+import SponsorBox from '../components/SponsorBox.jsx';
 import Breadcrumb from '../components/Breadcrumb.jsx';
 import { getBusinessUrl, isLegacyUrl } from '../utils/urlHelpers.js';
 import { generateBusinessSchema, generateBreadcrumbSchema } from '../utils/schemaMarkup.js';
@@ -668,6 +669,9 @@ const BusinessDetails = () => {
                 />
               </div>
             )}
+
+            {/* Sponsor Box */}
+            <SponsorBox />
 
             {/* Service Area */}
             {business.service_area && (

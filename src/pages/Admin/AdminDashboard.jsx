@@ -242,6 +242,12 @@ export default function AdminDashboard() {
       <div className="admin-quick-actions">
         <h3>Actions rapides</h3>
         <div className="quick-action-buttons">
+          <Link to="/admin/sponsors" className="btn-quick-action">
+            ⭐ Gestion Commanditaires
+          </Link>
+          <Link to="/admin/stats" className="btn-quick-action">
+            📊 Statistiques
+          </Link>
           <Link to="/admin/tools" className="btn-quick-action">
             🛠️ Outils & Scripts
           </Link>

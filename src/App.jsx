@@ -28,6 +28,7 @@ const AdminTools = lazy(() => import('./pages/Admin/AdminTools.jsx'));
 const AdminClaims = lazy(() => import('./pages/Admin/AdminClaims.jsx'));
 const AdminModeration = lazy(() => import('./pages/Admin/AdminModeration.jsx'));
 const AdminStats = lazy(() => import('./pages/Admin/AdminStats.jsx'));
+const AdminSponsors = lazy(() => import('./pages/Admin/AdminSponsors.jsx'));
 const BusinessDetails = lazy(() => import('./pages/BusinessDetails.jsx'));
 const LegalNotice = lazy(() => import('./pages/LegalNotice.jsx'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
@@ -172,6 +173,14 @@ function App() {
                 }
               />
               <Route
+                path="/admin/sponsors"
+                element={
+                  <AdminRoute>
+                    <AdminSponsors />
+                  </AdminRoute>
+                }
+              />
+              <Route
                 path="/admin"
                 element={
                   <AdminRoute>
@@ -291,6 +300,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <AdminStats />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/en/admin/sponsors"
+                element={
+                  <AdminRoute>
+                    <AdminSponsors />
                   </AdminRoute>
                 }
               />
