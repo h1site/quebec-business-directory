@@ -73,7 +73,9 @@ const Sponsors = () => {
                   rel="sponsored noopener"
                   className={`sponsor-link sponsor-carousel-item ${
                     index === currentIndex ? 'active' : ''
-                  } ${sponsor.name === 'AppGratuit.com' ? 'sponsor-link-oval' : ''}`}
+                  } ${sponsor.name === 'AppGratuit.com' ? 'sponsor-link-oval' : ''} ${
+                    sponsor.name === 'KracRadio' || sponsor.name === 'MenuCochon' ? 'sponsor-link-dark' : ''
+                  }`}
                   title={sponsor.name}
                   style={{ display: index === currentIndex ? 'flex' : 'none' }}
                 >
@@ -105,7 +107,9 @@ const Sponsors = () => {
                 href={sponsor.url}
                 target="_blank"
                 rel="sponsored noopener"
-                className={`sponsor-link ${sponsor.name === 'AppGratuit.com' ? 'sponsor-link-oval' : ''}`}
+                className={`sponsor-link ${sponsor.name === 'AppGratuit.com' ? 'sponsor-link-oval' : ''} ${
+                  sponsor.name === 'KracRadio' || sponsor.name === 'MenuCochon' ? 'sponsor-link-dark' : ''
+                }`}
                 title={sponsor.name}
               >
                 <img

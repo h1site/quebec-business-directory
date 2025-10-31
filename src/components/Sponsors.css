@@ -1,17 +1,29 @@
 .sponsors-section {
-  padding: 2rem 0;
-  background: #2c3e50;
-  border-top: 3px solid #3498db;
+  padding: 4rem 0;
+  background: #f8f9fa;
+  border-top: 1px solid #e6e9f0;
 }
 
 .sponsors-title {
   text-align: center;
-  font-size: 0.75rem;
-  font-weight: 400;
-  margin-bottom: 1rem;
-  color: #95a5a6;
-  text-transform: uppercase;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: #1e3a8a;
   letter-spacing: 1px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.sponsors-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  margin: 1rem auto 0;
+  border-radius: 2px;
 }
 
 .sponsors-grid {
@@ -27,54 +39,70 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.5rem;
   transition: all 0.3s ease;
-  opacity: 0.85;
+  opacity: 0.9;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .sponsor-link:hover {
   opacity: 1;
-  transform: scale(1.05);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 .sponsor-link-oval {
   background: white;
   border-radius: 50px;
-  padding: 0.8rem 1.5rem;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .sponsor-link-oval:hover {
-  background: #f8f9fa;
+  background: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .sponsor-logo {
-  height: 45px;
+  height: 50px;
   width: auto;
   object-fit: contain;
-  filter: brightness(1.1);
+  filter: grayscale(0%);
 }
 
 .sponsor-link-oval .sponsor-logo {
   filter: none;
-  height: 30px;
+  height: 35px;
+}
+
+.sponsor-link-dark {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sponsor-link-dark:hover {
+  background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .sponsors-contact {
   text-align: center;
-  margin-top: 1.5rem;
-  font-size: 0.85rem;
-  color: #95a5a6;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #6b7280;
 }
 
 .sponsors-contact a {
-  color: #3498db;
+  color: #667eea;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
   transition: color 0.3s ease;
 }
 
 .sponsors-contact a:hover {
-  color: #5dade2;
+  color: #764ba2;
   text-decoration: underline;
 }
 
@@ -140,12 +168,13 @@
 /* Responsive */
 @media (max-width: 768px) {
   .sponsors-section {
-    padding: 1.5rem 0;
+    padding: 2rem 0;
   }
 
   .sponsors-title {
-    font-size: 0.7rem;
-    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
   }
 
   .sponsors-grid {
