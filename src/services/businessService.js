@@ -9,7 +9,13 @@ const buildFilters = ({ query, city, region, mrc, category, phone, distance, coo
   const filters = [];
 
   if (query) {
-    filters.push({ column: 'search_vector', operator: 'fts', value: query });
+    // Full Text Search on search_vector with both original and normalized query
+    // The normalized_name field in the database will handle accent-insensitive matching
+    filters.push({
+      column: 'search_vector',
+      operator: 'fts',
+      value: query // Use original query for FTS
+    });
   }
 
   if (city) {
@@ -160,13 +166,16 @@ export const searchBusinesses = async ({
     }
   });
 
-  // Si aucun filtre, ordre aléatoire. Sinon, ordre par date de création
+  // Si aucun filtre, ordre aléatoire. Sinon, ordre par priorité puis date
   const hasFilters = filters.length > 0;
   let result;
 
   if (hasFilters) {
-    // Avec filtres: ordre chronologique (plus récents en premier)
-    result = await request.order('created_at', { ascending: false });
+    // Avec filtres: ordre par priorité (claimed/manual > GMB) puis par date
+    // search_priority_score: 3 = claimed, 2 = manual, 1 = GMB
+    result = await request
+      .order('search_priority_score', { ascending: false, nullsFirst: false })
+      .order('created_at', { ascending: false });
   } else {
     // Sans filtres: ordre VRAIMENT aléatoire via PostgreSQL random()
     const randomOffset = Math.floor(Math.random() * 1000); // Random start point
