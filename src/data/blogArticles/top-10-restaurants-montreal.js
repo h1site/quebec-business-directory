@@ -1,5 +1,5 @@
 /**
- * Blog Article: Top 10 Restaurants à Montréal
+ * Blog Article: 10 Recommandations de Restaurants à Montréal
  * Bilingual content (French/English)
  */
 
@@ -66,7 +66,7 @@ export const top10RestaurantsMontreal = {
         fr: `
           <h2>1. Restaurant Le Filet</h2>
 
-          <h3>Pourquoi il est dans le Top 10</h3>
+          <h3>Pourquoi cette recommandation</h3>
           <p>Le <strong><a href="/recherche?q=restaurant+le+filet+montreal">Restaurant Le Filet</a></strong> incarne la cuisine de marché montréalaise axée sur la mer. Son ambiance chic de quartier, combinée à un service affûté et une carte créative, en fait une destination incontournable pour les amateurs de produits de la mer.</p>
 
           <h4>Spécialités à essayer</h4>
@@ -87,7 +87,7 @@ export const top10RestaurantsMontreal = {
         en: `
           <h2>1. Restaurant Le Filet</h2>
 
-          <h3>Why It's in the Top 10</h3>
+          <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=restaurant+le+filet+montreal">Restaurant Le Filet</a></strong> embodies Montreal's market-driven seafood cuisine. Its chic neighborhood ambiance, combined with sharp service and a creative menu, makes it an essential destination for seafood lovers.</p>
 
           <h4>Specialties to Try</h4>
@@ -124,7 +124,7 @@ export const top10RestaurantsMontreal = {
       content: {
         fr: `
           <h2>2. Tuck Shop Restaurant - Bistro Saint-Henri</h2>
-          <h3>Pourquoi il est dans le Top 10</h3>
+          <h3>Pourquoi cette recommandation</h3>
           <p>Le <strong><a href="/recherche?q=tuck+shop+restaurant+montreal">Tuck Shop</a></strong> est un bistro réputé de Saint-Henri qui brille par sa carte saisonnière, son exécution précise et sa belle sélection de vins naturels.</p>
 
           <h4>À essayer</h4>
@@ -136,7 +136,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>3. Restaurant Chez Victoire - Bistronomie du Plateau</h2>
-          <h3>Pourquoi il est dans le Top 10</h3>
+          <h3>Pourquoi cette recommandation</h3>
           <p><strong><a href="/recherche?q=chez+victoire+montreal">Chez Victoire</a></strong> représente la bistronomie montréalaise moderne : produits locaux, dressages soignés et ambiance conviviale qui définit l'esprit du Plateau.</p>
 
           <h4>À essayer</h4>
@@ -148,7 +148,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>4. Restaurant Yoko Luna - Supper Club Spectaculaire</h2>
-          <h3>Pourquoi il est dans le Top 10</h3>
+          <h3>Pourquoi cette recommandation</h3>
           <p>Le <strong><a href="/recherche?q=yoko+luna+montreal">Yoko Luna</a></strong> offre une expérience supper-club unique : cuisine asiatique contemporaine, cocktails créatifs et décor immersif pour une soirée mémorable.</p>
 
           <h4>À essayer</h4>
@@ -160,7 +160,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>5. Deville Dînerbar - Institution Rétro-Moderne</h2>
-          <h3>Pourquoi il est dans le Top 10</h3>
+          <h3>Pourquoi cette recommandation</h3>
           <p><strong><a href="/recherche?q=deville+dinerbar+montreal">Deville Dînerbar</a></strong> est une institution du centre-ville : diner rétro-moderne avec portions généreuses et esprit festif qui plaît à tous.</p>
 
           <h4>À essayer</h4>
@@ -172,7 +172,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>6. Uniburger - Le Smash Burger Culte</h2>
-          <h3>Pourquoi il est dans le Top 10</h3>
+          <h3>Pourquoi cette recommandation</h3>
           <p><strong><a href="/recherche?q=uniburger+montreal">Uniburger</a></strong> a révolutionné le burger à Montréal : menu court, qualité constante et excellent rapport qualité-prix en font LE burger incontournable.</p>
 
           <h4>À essayer</h4>
@@ -184,7 +184,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>7. Crêperie Chez Suzette - Tradition Bretonne</h2>
-          <h3>Pourquoi il est dans le Top 10</h3>
+          <h3>Pourquoi cette recommandation</h3>
           <p>La <strong><a href="/recherche?q=creperie+chez+suzette+montreal">Crêperie Chez Suzette</a></strong> est une adresse emblématique du Vieux-Montréal pour ses crêpes authentiques et son ambiance chaleureuse.</p>
 
           <h4>À essayer</h4>
@@ -196,7 +196,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>8. Vieux Vélo - Brunch Emblématique</h2>
-          <h3>Pourquoi il est dans le Top 10</h3>
+          <h3>Pourquoi cette recommandation</h3>
           <p>Le <strong><a href="/recherche?q=vieux+velo+montreal">Vieux Vélo</a></strong> est le chéri des locaux pour le brunch : œufs parfaitement exécutés, sandwichs créatifs et cafés soignés.</p>
 
           <h4>À essayer</h4>
@@ -208,7 +208,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>9. Restaurant Kiku - Classique Japonais</h2>
-          <h3>Pourquoi il est dans le Top 10</h3>
+          <h3>Pourquoi cette recommandation</h3>
           <p><strong><a href="/recherche?q=restaurant+kiku+montreal">Restaurant Kiku</a></strong> sur Monkland est un classique pour ses sushis de qualité et son atmosphère conviviale de quartier.</p>
 
           <h4>À essayer</h4>
@@ -220,7 +220,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>10. Gibeau Orange Julep - Icône Pop-Culture</h2>
-          <h3>Pourquoi il est dans le Top 10</h3>
+          <h3>Pourquoi cette recommandation</h3>
           <p>Le <strong><a href="/recherche?q=orange+julep+montreal">Gibeau Orange Julep</a></strong> est une véritable icône : architecture unique en forme d'orange, rassemblements auto et jus d'orange mythique depuis 1932.</p>
 
           <h4>À essayer</h4>
@@ -231,7 +231,7 @@ export const top10RestaurantsMontreal = {
         `,
         en: `
           <h2>2. Tuck Shop Restaurant - Saint-Henri Bistro</h2>
-          <h3>Why It's in the Top 10</h3>
+          <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=tuck+shop+restaurant+montreal">Tuck Shop</a></strong> is a renowned Saint-Henri bistro that shines with its seasonal menu, precise execution, and beautiful natural wine selection.</p>
 
           <h4>Must Try</h4>
@@ -243,7 +243,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>3. Restaurant Chez Victoire - Plateau Bistronomy</h2>
-          <h3>Why It's in the Top 10</h3>
+          <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=chez+victoire+montreal">Chez Victoire</a></strong> represents modern Montreal bistronomy: local products, refined plating, and friendly ambiance that defines the Plateau spirit.</p>
 
           <h4>Must Try</h4>
@@ -255,7 +255,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>4. Restaurant Yoko Luna - Spectacular Supper Club</h2>
-          <h3>Why It's in the Top 10</h3>
+          <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=yoko+luna+montreal">Yoko Luna</a></strong> offers a unique supper club experience: contemporary Asian cuisine, creative cocktails, and immersive decor for a memorable evening.</p>
 
           <h4>Must Try</h4>
@@ -267,7 +267,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>5. Deville Dînerbar - Retro-Modern Institution</h2>
-          <h3>Why It's in the Top 10</h3>
+          <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=deville+dinerbar+montreal">Deville Dînerbar</a></strong> is a downtown institution: retro-modern diner with generous portions and festive spirit that pleases everyone.</p>
 
           <h4>Must Try</h4>
@@ -279,7 +279,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>6. Uniburger - The Cult Smash Burger</h2>
-          <h3>Why It's in the Top 10</h3>
+          <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=uniburger+montreal">Uniburger</a></strong> revolutionized burgers in Montreal: short menu, consistent quality, and excellent value make it THE essential burger spot.</p>
 
           <h4>Must Try</h4>
@@ -291,7 +291,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>7. Crêperie Chez Suzette - Breton Tradition</h2>
-          <h3>Why It's in the Top 10</h3>
+          <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=creperie+chez+suzette+montreal">Crêperie Chez Suzette</a></strong> is an iconic Old Montreal address for authentic crepes and warm atmosphere.</p>
 
           <h4>Must Try</h4>
@@ -303,7 +303,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>8. Vieux Vélo - Iconic Brunch</h2>
-          <h3>Why It's in the Top 10</h3>
+          <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=vieux+velo+montreal">Vieux Vélo</a></strong> is the locals' favorite for brunch: perfectly executed eggs, creative sandwiches, and carefully crafted coffees.</p>
 
           <h4>Must Try</h4>
@@ -315,7 +315,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>9. Restaurant Kiku - Japanese Classic</h2>
-          <h3>Why It's in the Top 10</h3>
+          <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=restaurant+kiku+montreal">Restaurant Kiku</a></strong> on Monkland is a classic for quality sushi and friendly neighborhood atmosphere.</p>
 
           <h4>Must Try</h4>
@@ -327,7 +327,7 @@ export const top10RestaurantsMontreal = {
           <hr>
 
           <h2>10. Gibeau Orange Julep - Pop-Culture Icon</h2>
-          <h3>Why It's in the Top 10</h3>
+          <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=orange+julep+montreal">Gibeau Orange Julep</a></strong> is a true icon: unique orange-shaped architecture, car gatherings, and legendary orange juice since 1932.</p>
 
           <h4>Must Try</h4>
@@ -339,10 +339,10 @@ export const top10RestaurantsMontreal = {
       }
     },
     {
-      id: 'mentions-honorables',
+      id: 'autres-mentions',
       title: {
-        fr: 'Mentions Honorables',
-        en: 'Honorable Mentions'
+        fr: 'Autres Mentions',
+        en: 'Other Mentions'
       },
       image: {
         url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5',
@@ -354,7 +354,7 @@ export const top10RestaurantsMontreal = {
       },
       content: {
         fr: `
-          <h2>Mentions Honorables</h2>
+          <h2>Autres Mentions</h2>
 
           <p>Ces restaurants méritent également votre attention pour leurs spécialités uniques :</p>
 
@@ -381,7 +381,7 @@ export const top10RestaurantsMontreal = {
           <p><strong>$$</strong> | 📍 7093 rue Saint-Denis, Montréal</p>
         `,
         en: `
-          <h2>Honorable Mentions</h2>
+          <h2>Other Mentions</h2>
 
           <p>These restaurants also deserve your attention for their unique specialties:</p>
 
