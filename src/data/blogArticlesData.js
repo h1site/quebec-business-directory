@@ -11,6 +11,7 @@ function articleToCard(article, lang = 'fr') {
 
   return {
     id: article.slug,
+    slug: article.slug,
     title: article.title[lang],
     excerpt: article.intro[lang].replace(/<[^>]*>/g, '').substring(0, 200) + '...',
     image: article.heroImage.url + '?w=800&auto=format&fit=crop',
