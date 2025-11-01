@@ -214,6 +214,7 @@
 @media (max-width: 768px) {
   .footer-yelp {
     padding: 2rem 0 1.5rem;
+    min-height: 850px;
   }
 
   .footer-yelp-columns {
