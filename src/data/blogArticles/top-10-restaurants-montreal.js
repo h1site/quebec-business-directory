@@ -14,14 +14,14 @@ export const top10RestaurantsMontreal = {
   // SEO metadata
   seo: {
     fr: {
-      title: 'Top 10 des Meilleurs Restaurants à Montréal 2025 | Guide Complet',
-      description: 'Découvrez les 10 meilleurs restaurants à Montréal : du bistro élégant au burger culte, avec prix, spécialités et adresses. Guide complet 2025.',
-      keywords: 'restaurants Montréal, meilleurs restaurants Montréal, où manger Montréal, gastronomie Montréal, restaurants top Montréal 2025'
+      title: '10 Recommandations de Restaurants à Montréal 2025 | Guide Complet',
+      description: 'Découvrez 10 recommandations de restaurants à Montréal : du bistro élégant au burger culte, avec prix, spécialités et adresses. Guide complet 2025.',
+      keywords: 'restaurants Montréal, recommandations restaurants Montréal, où manger Montréal, gastronomie Montréal, restaurants Montréal 2025'
     },
     en: {
-      title: 'Top 10 Best Restaurants in Montreal 2025 | Complete Guide',
-      description: 'Discover the 10 best restaurants in Montreal: from elegant bistros to cult burgers, with prices, specialties and addresses. Complete 2025 guide.',
-      keywords: 'Montreal restaurants, best restaurants Montreal, where to eat Montreal, Montreal gastronomy, top Montreal restaurants 2025'
+      title: '10 Restaurant Recommendations in Montreal 2025 | Complete Guide',
+      description: 'Discover 10 restaurant recommendations in Montreal: from elegant bistros to cult burgers, with prices, specialties and addresses. Complete 2025 guide.',
+      keywords: 'Montreal restaurants, restaurant recommendations Montreal, where to eat Montreal, Montreal gastronomy, Montreal restaurants 2025'
     }
   },
 
@@ -36,14 +36,14 @@ export const top10RestaurantsMontreal = {
 
   // Article title (H1)
   title: {
-    fr: 'Top 10 des Meilleurs Restaurants à Montréal en 2025',
-    en: 'Top 10 Best Restaurants in Montreal in 2025'
+    fr: '10 Recommandations de Restaurants à Montréal en 2025',
+    en: '10 Restaurant Recommendations in Montreal in 2025'
   },
 
   // Intro text
   intro: {
-    fr: '<p>Montréal est une <strong>capitale gastronomique</strong> reconnue mondialement. Des bistrots élégants aux adresses culte, découvrez notre sélection des 10 meilleurs restaurants qui définissent la scène culinaire montréalaise en 2025.</p><p><strong>Barème prix (indicatif)</strong> : <strong>$</strong> &lt; 15$ | <strong>$$</strong> 15–30$ | <strong>$$$</strong> 30–60$ | <strong>$$$$</strong> 60$+</p>',
-    en: '<p>Montreal is a <strong>world-renowned gastronomic capital</strong>. From elegant bistros to cult addresses, discover our selection of the 10 best restaurants defining Montreal\'s culinary scene in 2025.</p><p><strong>Price range (indicative)</strong>: <strong>$</strong> &lt; $15 | <strong>$$</strong> $15–30 | <strong>$$$</strong> $30–60 | <strong>$$$$</strong> $60+</p>'
+    fr: '<p>Montréal est une <strong>capitale gastronomique</strong> reconnue mondialement. Des bistrots élégants aux adresses culte, découvrez nos 10 recommandations de restaurants qui définissent la scène culinaire montréalaise en 2025.</p><p><strong>Barème prix (indicatif)</strong> : <strong>$</strong> &lt; 15$ | <strong>$$</strong> 15–30$ | <strong>$$$</strong> 30–60$ | <strong>$$$$</strong> 60$+</p>',
+    en: '<p>Montreal is a <strong>world-renowned gastronomic capital</strong>. From elegant bistros to cult addresses, discover our 10 restaurant recommendations defining Montreal\'s culinary scene in 2025.</p><p><strong>Price range (indicative)</strong>: <strong>$</strong> &lt; $15 | <strong>$$</strong> $15–30 | <strong>$$$</strong> $30–60 | <strong>$$$$</strong> $60+</p>'
   },
 
   // Article sections
