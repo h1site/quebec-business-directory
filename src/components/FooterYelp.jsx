@@ -29,7 +29,7 @@ const FooterYelp = () => {
           <div className="footer-yelp-column footer-yelp-column-wide">
             <div className="footer-logo-with-title">
               <div className="footer-logo">
-                <img src="/images/logos/logoblue.webp" alt="Registre du Québec" />
+                <img src="/images/logos/logoblue.webp" alt="Registre du Québec" width="100" height="100" />
               </div>
               <div className="footer-disclaimer-inline">
                 <p>{t('footer.disclaimerLine1')}</p>
