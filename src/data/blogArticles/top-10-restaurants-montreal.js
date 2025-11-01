@@ -14,104 +14,45 @@ export const top10RestaurantsMontreal = {
   // SEO metadata
   seo: {
     fr: {
-      title: '10 Recommandations de Restaurants à Montréal 2025 | Guide Complet',
-      description: 'Découvrez 10 recommandations de restaurants à Montréal : du bistro élégant au burger culte, avec prix, spécialités et adresses. Guide complet 2025.',
+      title: '9 Recommandations de Restaurants à Montréal 2025 | Guide Complet',
+      description: 'Découvrez 9 recommandations de restaurants à Montréal : du bistro élégant au burger culte, avec prix, spécialités et adresses. Guide complet 2025.',
       keywords: 'restaurants Montréal, recommandations restaurants Montréal, où manger Montréal, gastronomie Montréal, restaurants Montréal 2025'
     },
     en: {
-      title: '10 Restaurant Recommendations in Montreal 2025 | Complete Guide',
-      description: 'Discover 10 restaurant recommendations in Montreal: from elegant bistros to cult burgers, with prices, specialties and addresses. Complete 2025 guide.',
+      title: '9 Restaurant Recommendations in Montreal 2025 | Complete Guide',
+      description: 'Discover 9 restaurant recommendations in Montreal: from elegant bistros to cult burgers, with prices, specialties and addresses. Complete 2025 guide.',
       keywords: 'Montreal restaurants, restaurant recommendations Montreal, where to eat Montreal, Montreal gastronomy, Montreal restaurants 2025'
     }
   },
 
   // Hero image
   heroImage: {
-    url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
+    url: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0',
     alt: {
-      fr: 'Intérieur élégant de restaurant avec tables dressées et ambiance chaleureuse à Montréal',
-      en: 'Elegant restaurant interior with set tables and warm ambiance in Montreal'
+      fr: 'Table de restaurant avec plats gastronomiques variés et verres de vin',
+      en: 'Restaurant table with various gourmet dishes and wine glasses'
     }
   },
 
   // Article title (H1)
   title: {
-    fr: '10 Recommandations de Restaurants à Montréal en 2025',
-    en: '10 Restaurant Recommendations in Montreal in 2025'
+    fr: '9 Recommandations de Restaurants à Montréal en 2025',
+    en: '9 Restaurant Recommendations in Montreal in 2025'
   },
 
   // Intro text
   intro: {
-    fr: '<p>Montréal est une <strong>capitale gastronomique</strong> reconnue mondialement. Des bistrots élégants aux adresses culte, découvrez nos 10 recommandations de restaurants qui définissent la scène culinaire montréalaise en 2025.</p><p><strong>Barème prix (indicatif)</strong> : <strong>$</strong> &lt; 15$ | <strong>$$</strong> 15–30$ | <strong>$$$</strong> 30–60$ | <strong>$$$$</strong> 60$+</p>',
-    en: '<p>Montreal is a <strong>world-renowned gastronomic capital</strong>. From elegant bistros to cult addresses, discover our 10 restaurant recommendations defining Montreal\'s culinary scene in 2025.</p><p><strong>Price range (indicative)</strong>: <strong>$</strong> &lt; $15 | <strong>$$</strong> $15–30 | <strong>$$$</strong> $30–60 | <strong>$$$$</strong> $60+</p>'
+    fr: '<p>Montréal est une <strong>capitale gastronomique</strong> reconnue mondialement. Des bistrots élégants aux adresses culte, découvrez nos 9 recommandations de restaurants qui définissent la scène culinaire montréalaise en 2025.</p><p><strong>Barème prix (indicatif)</strong> : <strong>$</strong> &lt; 15$ | <strong>$$</strong> 15–30$ | <strong>$$$</strong> 30–60$ | <strong>$$$$</strong> 60$+</p>',
+    en: '<p>Montreal is a <strong>world-renowned gastronomic capital</strong>. From elegant bistros to cult addresses, discover our 9 restaurant recommendations defining Montreal\'s culinary scene in 2025.</p><p><strong>Price range (indicative)</strong>: <strong>$</strong> &lt; $15 | <strong>$$</strong> $15–30 | <strong>$$$</strong> $30–60 | <strong>$$$$</strong> $60+</p>'
   },
 
   // Article sections
   sections: [
     {
-      id: 'restaurant-1',
+      id: 'restaurant-1-9',
       title: {
-        fr: '1. Restaurant Le Filet - Cuisine de la Mer Élégante',
-        en: '1. Restaurant Le Filet - Elegant Seafood Cuisine'
-      },
-      image: {
-        url: 'https://images.unsplash.com/photo-1559339352-11d035aa65de',
-        alt: {
-          fr: 'Assiette de fruits de mer élégamment dressée dans un restaurant gastronomique',
-          en: 'Elegantly plated seafood dish in a gourmet restaurant'
-        },
-        credit: 'Photo par Jay Wennington sur Unsplash'
-      },
-      content: {
-        fr: `
-          <h2>1. Restaurant Le Filet</h2>
-
-          <h3>Pourquoi cette recommandation</h3>
-          <p>Le <strong><a href="/recherche?q=restaurant+le+filet+montreal">Restaurant Le Filet</a></strong> incarne la cuisine de marché montréalaise axée sur la mer. Son ambiance chic de quartier, combinée à un service affûté et une carte créative, en fait une destination incontournable pour les amateurs de produits de la mer.</p>
-
-          <h4>Spécialités à essayer</h4>
-          <ul>
-            <li><strong>Tartares créatifs</strong> - Préparations innovantes avec poissons frais du jour</li>
-            <li><strong>Poissons entiers travaillés</strong> - Techniques de cuisson maîtrisées</li>
-            <li><strong>Assiettes à partager</strong> - Expérience conviviale de dégustation</li>
-          </ul>
-
-          <h5>Fourchette de prix</h5>
-          <p><strong>$$$–$$$$</strong> (30-60$+)</p>
-
-          <h6>Informations pratiques</h6>
-          <p>📍 <strong>Adresse</strong> : 219, avenue Mont-Royal Ouest, Montréal<br>
-          🏙️ <strong>Quartier</strong> : Plateau-Mont-Royal<br>
-          🍷 <strong>Ambiance</strong> : Chic décontracté, idéal pour occasions spéciales</p>
-        `,
-        en: `
-          <h2>1. Restaurant Le Filet</h2>
-
-          <h3>Why We Recommend It</h3>
-          <p><strong><a href="/en/search?q=restaurant+le+filet+montreal">Restaurant Le Filet</a></strong> embodies Montreal's market-driven seafood cuisine. Its chic neighborhood ambiance, combined with sharp service and a creative menu, makes it an essential destination for seafood lovers.</p>
-
-          <h4>Specialties to Try</h4>
-          <ul>
-            <li><strong>Creative tartares</strong> - Innovative preparations with fresh daily fish</li>
-            <li><strong>Whole worked fish</strong> - Masterful cooking techniques</li>
-            <li><strong>Sharing plates</strong> - Convivial tasting experience</li>
-          </ul>
-
-          <h5>Price Range</h5>
-          <p><strong>$$$–$$$$</strong> ($30-60+)</p>
-
-          <h6>Practical Information</h6>
-          <p>📍 <strong>Address</strong>: 219 Mont-Royal Avenue West, Montreal<br>
-          🏙️ <strong>Neighborhood</strong>: Plateau-Mont-Royal<br>
-          🍷 <strong>Ambiance</strong>: Casual chic, ideal for special occasions</p>
-        `
-      }
-    },
-    {
-      id: 'restaurant-2-10',
-      title: {
-        fr: 'Les Autres Incontournables',
-        en: 'Other Must-Try Restaurants'
+        fr: 'Recommandations de Restaurants',
+        en: 'Restaurant Recommendations'
       },
       image: {
         url: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0',
@@ -123,7 +64,7 @@ export const top10RestaurantsMontreal = {
       },
       content: {
         fr: `
-          <h2>2. Tuck Shop Restaurant - Bistro Saint-Henri</h2>
+          <h2>1. Tuck Shop Restaurant - Bistro Saint-Henri</h2>
           <h3>Pourquoi cette recommandation</h3>
           <p>Le <strong><a href="/recherche?q=tuck+shop+restaurant+montreal">Tuck Shop</a></strong> est un bistro réputé de Saint-Henri qui brille par sa carte saisonnière, son exécution précise et sa belle sélection de vins naturels.</p>
 
@@ -135,7 +76,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>3. Restaurant Chez Victoire - Bistronomie du Plateau</h2>
+          <h2>2. Restaurant Chez Victoire - Bistronomie du Plateau</h2>
           <h3>Pourquoi cette recommandation</h3>
           <p><strong><a href="/recherche?q=chez+victoire+montreal">Chez Victoire</a></strong> représente la bistronomie montréalaise moderne : produits locaux, dressages soignés et ambiance conviviale qui définit l'esprit du Plateau.</p>
 
@@ -147,7 +88,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>4. Restaurant Yoko Luna - Supper Club Spectaculaire</h2>
+          <h2>3. Restaurant Yoko Luna - Supper Club Spectaculaire</h2>
           <h3>Pourquoi cette recommandation</h3>
           <p>Le <strong><a href="/recherche?q=yoko+luna+montreal">Yoko Luna</a></strong> offre une expérience supper-club unique : cuisine asiatique contemporaine, cocktails créatifs et décor immersif pour une soirée mémorable.</p>
 
@@ -159,7 +100,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>5. Deville Dînerbar - Institution Rétro-Moderne</h2>
+          <h2>4. Deville Dînerbar - Institution Rétro-Moderne</h2>
           <h3>Pourquoi cette recommandation</h3>
           <p><strong><a href="/recherche?q=deville+dinerbar+montreal">Deville Dînerbar</a></strong> est une institution du centre-ville : diner rétro-moderne avec portions généreuses et esprit festif qui plaît à tous.</p>
 
@@ -171,7 +112,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>6. Uniburger - Le Smash Burger Culte</h2>
+          <h2>5. Uniburger - Le Smash Burger Culte</h2>
           <h3>Pourquoi cette recommandation</h3>
           <p><strong><a href="/recherche?q=uniburger+montreal">Uniburger</a></strong> a révolutionné le burger à Montréal : menu court, qualité constante et excellent rapport qualité-prix en font LE burger incontournable.</p>
 
@@ -183,7 +124,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>7. Crêperie Chez Suzette - Tradition Bretonne</h2>
+          <h2>6. Crêperie Chez Suzette - Tradition Bretonne</h2>
           <h3>Pourquoi cette recommandation</h3>
           <p>La <strong><a href="/recherche?q=creperie+chez+suzette+montreal">Crêperie Chez Suzette</a></strong> est une adresse emblématique du Vieux-Montréal pour ses crêpes authentiques et son ambiance chaleureuse.</p>
 
@@ -195,7 +136,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>8. Vieux Vélo - Brunch Emblématique</h2>
+          <h2>7. Vieux Vélo - Brunch Emblématique</h2>
           <h3>Pourquoi cette recommandation</h3>
           <p>Le <strong><a href="/recherche?q=vieux+velo+montreal">Vieux Vélo</a></strong> est le chéri des locaux pour le brunch : œufs parfaitement exécutés, sandwichs créatifs et cafés soignés.</p>
 
@@ -207,7 +148,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>9. Restaurant Kiku - Classique Japonais</h2>
+          <h2>8. Restaurant Kiku - Classique Japonais</h2>
           <h3>Pourquoi cette recommandation</h3>
           <p><strong><a href="/recherche?q=restaurant+kiku+montreal">Restaurant Kiku</a></strong> sur Monkland est un classique pour ses sushis de qualité et son atmosphère conviviale de quartier.</p>
 
@@ -219,7 +160,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>10. Gibeau Orange Julep - Icône Pop-Culture</h2>
+          <h2>9. Gibeau Orange Julep - Icône Pop-Culture</h2>
           <h3>Pourquoi cette recommandation</h3>
           <p>Le <strong><a href="/recherche?q=orange+julep+montreal">Gibeau Orange Julep</a></strong> est une véritable icône : architecture unique en forme d'orange, rassemblements auto et jus d'orange mythique depuis 1932.</p>
 
@@ -230,7 +171,7 @@ export const top10RestaurantsMontreal = {
           <h6>📍 7700 boulevard Décarie, Montréal | 🚗 Parking disponible</h6>
         `,
         en: `
-          <h2>2. Tuck Shop Restaurant - Saint-Henri Bistro</h2>
+          <h2>1. Tuck Shop Restaurant - Saint-Henri Bistro</h2>
           <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=tuck+shop+restaurant+montreal">Tuck Shop</a></strong> is a renowned Saint-Henri bistro that shines with its seasonal menu, precise execution, and beautiful natural wine selection.</p>
 
@@ -242,7 +183,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>3. Restaurant Chez Victoire - Plateau Bistronomy</h2>
+          <h2>2. Restaurant Chez Victoire - Plateau Bistronomy</h2>
           <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=chez+victoire+montreal">Chez Victoire</a></strong> represents modern Montreal bistronomy: local products, refined plating, and friendly ambiance that defines the Plateau spirit.</p>
 
@@ -254,7 +195,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>4. Restaurant Yoko Luna - Spectacular Supper Club</h2>
+          <h2>3. Restaurant Yoko Luna - Spectacular Supper Club</h2>
           <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=yoko+luna+montreal">Yoko Luna</a></strong> offers a unique supper club experience: contemporary Asian cuisine, creative cocktails, and immersive decor for a memorable evening.</p>
 
@@ -266,7 +207,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>5. Deville Dînerbar - Retro-Modern Institution</h2>
+          <h2>4. Deville Dînerbar - Retro-Modern Institution</h2>
           <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=deville+dinerbar+montreal">Deville Dînerbar</a></strong> is a downtown institution: retro-modern diner with generous portions and festive spirit that pleases everyone.</p>
 
@@ -278,7 +219,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>6. Uniburger - The Cult Smash Burger</h2>
+          <h2>5. Uniburger - The Cult Smash Burger</h2>
           <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=uniburger+montreal">Uniburger</a></strong> revolutionized burgers in Montreal: short menu, consistent quality, and excellent value make it THE essential burger spot.</p>
 
@@ -290,7 +231,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>7. Crêperie Chez Suzette - Breton Tradition</h2>
+          <h2>6. Crêperie Chez Suzette - Breton Tradition</h2>
           <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=creperie+chez+suzette+montreal">Crêperie Chez Suzette</a></strong> is an iconic Old Montreal address for authentic crepes and warm atmosphere.</p>
 
@@ -302,7 +243,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>8. Vieux Vélo - Iconic Brunch</h2>
+          <h2>7. Vieux Vélo - Iconic Brunch</h2>
           <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=vieux+velo+montreal">Vieux Vélo</a></strong> is the locals' favorite for brunch: perfectly executed eggs, creative sandwiches, and carefully crafted coffees.</p>
 
@@ -314,7 +255,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>9. Restaurant Kiku - Japanese Classic</h2>
+          <h2>8. Restaurant Kiku - Japanese Classic</h2>
           <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=restaurant+kiku+montreal">Restaurant Kiku</a></strong> on Monkland is a classic for quality sushi and friendly neighborhood atmosphere.</p>
 
@@ -326,7 +267,7 @@ export const top10RestaurantsMontreal = {
 
           <hr>
 
-          <h2>10. Gibeau Orange Julep - Pop-Culture Icon</h2>
+          <h2>9. Gibeau Orange Julep - Pop-Culture Icon</h2>
           <h3>Why We Recommend It</h3>
           <p><strong><a href="/en/search?q=orange+julep+montreal">Gibeau Orange Julep</a></strong> is a true icon: unique orange-shaped architecture, car gatherings, and legendary orange juice since 1932.</p>
 
