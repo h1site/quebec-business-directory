@@ -41,10 +41,8 @@ function ThanksPartners() {
     }
   };
 
-  if (loading || newBusinesses.length === 0) {
-    return null; // Ne rien afficher si pas de données
-  }
-
+  // Always render the section with min-height to prevent CLS
+  // Show skeleton during loading
   return (
     <section className="thanks-partners">
       <div className="container">
@@ -52,8 +50,23 @@ function ThanksPartners() {
           <h2 className="thanks-title">{t('home.newBusinessesTitle')}</h2>
           <p className="thanks-subtitle">{t('home.newBusinessesSubtitle')}</p>
         </div>
-        <div className="thanks-grid">
-          {newBusinesses.map((business) => {
+
+        {loading || newBusinesses.length === 0 ? (
+          // Skeleton loader to prevent CLS
+          <div className="thanks-grid">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="thanks-card thanks-card-skeleton">
+                <div className="thanks-content">
+                  <div className="skeleton-title"></div>
+                  <div className="skeleton-text"></div>
+                  <div className="skeleton-category"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="thanks-grid">
+            {newBusinesses.map((business) => {
             // Générer URL: utiliser legacy /entreprise/:slug si pas de main_category_slug
             const businessUrl = business.main_category_slug && business.city
               ? `/${business.main_category_slug}/${business.city.toLowerCase().replace(/\s+/g, '-')}/${business.slug}`
@@ -82,7 +95,8 @@ function ThanksPartners() {
               </LocalizedLink>
             );
           })}
-        </div>
+          </div>
+        )}
 
         {/* CTA Section - Ajouter votre entreprise */}
         <div className="thanks-cta-section">
