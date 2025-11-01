@@ -14,13 +14,13 @@ export const top10RestaurantsMontreal = {
   // SEO metadata
   seo: {
     fr: {
-      title: '9 Recommandations de Restaurants à Montréal 2025 | Guide Complet',
-      description: 'Découvrez 9 recommandations de restaurants à Montréal : du bistro élégant au burger culte, avec prix, spécialités et adresses. Guide complet 2025.',
+      title: '10 Recommandations de Restaurants à Montréal 2025 | Guide Complet',
+      description: 'Découvrez 10 recommandations de restaurants à Montréal : du bistro élégant au steak frites, avec prix, spécialités et adresses. Guide complet 2025.',
       keywords: 'restaurants Montréal, recommandations restaurants Montréal, où manger Montréal, gastronomie Montréal, restaurants Montréal 2025'
     },
     en: {
-      title: '9 Restaurant Recommendations in Montreal 2025 | Complete Guide',
-      description: 'Discover 9 restaurant recommendations in Montreal: from elegant bistros to cult burgers, with prices, specialties and addresses. Complete 2025 guide.',
+      title: '10 Restaurant Recommendations in Montreal 2025 | Complete Guide',
+      description: 'Discover 10 restaurant recommendations in Montreal: from elegant bistros to steak frites, with prices, specialties and addresses. Complete 2025 guide.',
       keywords: 'Montreal restaurants, restaurant recommendations Montreal, where to eat Montreal, Montreal gastronomy, Montreal restaurants 2025'
     }
   },
@@ -36,14 +36,14 @@ export const top10RestaurantsMontreal = {
 
   // Article title (H1)
   title: {
-    fr: '9 Recommandations de Restaurants à Montréal en 2025',
-    en: '9 Restaurant Recommendations in Montreal in 2025'
+    fr: '10 Recommandations de Restaurants à Montréal en 2025',
+    en: '10 Restaurant Recommendations in Montreal in 2025'
   },
 
   // Intro text
   intro: {
-    fr: '<p>Montréal est une <strong>capitale gastronomique</strong> reconnue mondialement. Des bistrots élégants aux adresses culte, découvrez nos 9 recommandations de restaurants qui définissent la scène culinaire montréalaise en 2025.</p><p><strong>Barème prix (indicatif)</strong> : <strong>$</strong> &lt; 15$ | <strong>$$</strong> 15–30$ | <strong>$$$</strong> 30–60$ | <strong>$$$$</strong> 60$+</p>',
-    en: '<p>Montreal is a <strong>world-renowned gastronomic capital</strong>. From elegant bistros to cult addresses, discover our 9 restaurant recommendations defining Montreal\'s culinary scene in 2025.</p><p><strong>Price range (indicative)</strong>: <strong>$</strong> &lt; $15 | <strong>$$</strong> $15–30 | <strong>$$$</strong> $30–60 | <strong>$$$$</strong> $60+</p>'
+    fr: '<p>Montréal est une <strong>capitale gastronomique</strong> reconnue mondialement. Des bistrots élégants aux adresses culte, découvrez nos 10 recommandations de restaurants qui définissent la scène culinaire montréalaise en 2025.</p><p><strong>Barème prix (indicatif)</strong> : <strong>$</strong> &lt; 15$ | <strong>$$</strong> 15–30$ | <strong>$$$</strong> 30–60$ | <strong>$$$$</strong> 60$+</p>',
+    en: '<p>Montreal is a <strong>world-renowned gastronomic capital</strong>. From elegant bistros to cult addresses, discover our 10 restaurant recommendations defining Montreal\'s culinary scene in 2025.</p><p><strong>Price range (indicative)</strong>: <strong>$</strong> &lt; $15 | <strong>$$</strong> $15–30 | <strong>$$$</strong> $30–60 | <strong>$$$$</strong> $60+</p>'
   },
 
   // Article sections
@@ -169,6 +169,18 @@ export const top10RestaurantsMontreal = {
 
           <h5>Prix : <strong>$</strong> (&lt;15$)</h5>
           <h6>📍 7700 boulevard Décarie, Montréal | 🚗 Parking disponible</h6>
+
+          <hr>
+
+          <h2>10. Steak Frites St-Paul - Bistro Viande</h2>
+          <h3>Pourquoi cette recommandation</h3>
+          <p><strong><a href="/entreprise/steak-frites-3">Steak Frites</a></strong> excelle dans la simplicité : le concept parfaitement exécuté du steak grillé accompagné de frites croustillantes. Une adresse sans prétention qui maîtrise l'art du classique.</p>
+
+          <h4>À essayer</h4>
+          <p>Steak grillé au choix de cuisson, frites maison croustillantes, sauces variées</p>
+
+          <h5>Prix : <strong>$$–$$$</strong> (15-60$)</h5>
+          <h6>📍 405 rue Saint-Antoine O, Montréal</h6>
         `,
         en: `
           <h2>1. Tuck Shop Restaurant - Saint-Henri Bistro</h2>
@@ -276,6 +288,18 @@ export const top10RestaurantsMontreal = {
 
           <h5>Price: <strong>$</strong> (&lt;$15)</h5>
           <h6>📍 7700 Décarie Boulevard, Montreal | 🚗 Parking available</h6>
+
+          <hr>
+
+          <h2>10. Steak Frites St-Paul - Meat Bistro</h2>
+          <h3>Why We Recommend It</h3>
+          <p><strong><a href="/en/entreprise/steak-frites-3">Steak Frites</a></strong> excels in simplicity: the perfectly executed concept of grilled steak with crispy fries. An unpretentious address that masters the art of the classic.</p>
+
+          <h4>Must Try</h4>
+          <p>Grilled steak cooked to order, crispy homemade fries, variety of sauces</p>
+
+          <h5>Price: <strong>$$–$$$</strong> ($15-60)</h5>
+          <h6>📍 405 Saint-Antoine Street W, Montreal</h6>
         `
       }
     },
@@ -297,12 +321,6 @@ export const top10RestaurantsMontreal = {
         fr: `
           <p>Ces restaurants méritent également votre attention pour leurs spécialités uniques :</p>
 
-          <h3>Steak Frites St-Paul - Bistro Viande</h3>
-          <p><strong><a href="/entreprise/steak-frites-3">Steak Frites</a></strong> excelle dans la simplicité : steak parfaitement grillé et frites croustillantes.</p>
-          <p><strong>$$–$$$</strong> | 📍 405 rue Saint-Antoine O, Montréal</p>
-
-          <hr>
-
           <h3>Crêpe Moundo - Crêpes Conviviales</h3>
           <p><strong><a href="/entreprise/crepe-moundo">Crêpe Moundo</a></strong> propose des crêpes sucrées et salées dans une ambiance décontractée.</p>
           <p><strong>$–$$</strong> | 📍 10650 place de l'Acadie, Montréal</p>
@@ -321,12 +339,6 @@ export const top10RestaurantsMontreal = {
         `,
         en: `
           <p>These restaurants also deserve your attention for their unique specialties:</p>
-
-          <h3>Steak Frites St-Paul - Meat Bistro</h3>
-          <p><strong><a href="/en/entreprise/steak-frites-3">Steak Frites</a></strong> excels in simplicity: perfectly grilled steak and crispy fries.</p>
-          <p><strong>$$–$$$</strong> | 📍 405 Saint-Antoine Street W, Montreal</p>
-
-          <hr>
 
           <h3>Crêpe Moundo - Friendly Crepes</h3>
           <p><strong><a href="/en/entreprise/crepe-moundo">Crêpe Moundo</a></strong> offers sweet and savory crepes in a casual atmosphere.</p>
