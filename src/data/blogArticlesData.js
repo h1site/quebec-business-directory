@@ -5,6 +5,7 @@
 
 import { neqQuebecArticle } from './blogArticles/neq-quebec-guide.js';
 import { reclamerFicheArticle } from './blogArticles/comment-reclamer-fiche.js';
+import { top10RestaurantsMontreal } from './blogArticles/top-10-restaurants-montreal.js';
 
 // Convert article data to blog card format
 function articleToCard(article, lang = 'fr') {
@@ -30,6 +31,7 @@ function articleToCard(article, lang = 'fr') {
 
 // All blog articles (sorted by date, newest first)
 export const allArticles = [
+  top10RestaurantsMontreal,
   reclamerFicheArticle,
   neqQuebecArticle
 ];
