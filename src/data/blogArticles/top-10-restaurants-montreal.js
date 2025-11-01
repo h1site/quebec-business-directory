@@ -345,101 +345,6 @@ export const top10RestaurantsMontreal = {
           <p><strong>$$</strong> | 📍 7093 Saint-Denis Street, Montreal</p>
         `
       }
-    },
-    {
-      id: 'conseils-pratiques',
-      title: {
-        fr: 'Conseils Pratiques pour Profiter des Restaurants',
-        en: 'Practical Tips to Enjoy Restaurants'
-      },
-      image: {
-        url: 'https://images.unsplash.com/photo-1424847651672-bf20a4b0982b',
-        alt: {
-          fr: 'Chef préparant des plats dans une cuisine de restaurant professionnel',
-          en: 'Chef preparing dishes in a professional restaurant kitchen'
-        },
-        credit: 'Photo par Louis Hansel sur Unsplash'
-      },
-      content: {
-        fr: `
-          <h2>Conseils Pratiques</h2>
-
-          <h3>Réservations</h3>
-          <p>Pour les restaurants <strong>$$$–$$$$</strong>, réservez <strong>2-3 semaines à l'avance</strong>, surtout pour les vendredis et samedis soir. Les établissements plus décontractés acceptent généralement les clients sans réservation.</p>
-
-          <h3>Meilleur Moment pour Visiter</h3>
-          <ul>
-            <li><strong>Brunch weekend</strong> : Arrivez avant 10h ou après 13h pour éviter l'attente</li>
-            <li><strong>Déjeuner en semaine</strong> : Excellentes promotions lunch (11h30-14h)</li>
-            <li><strong>Happy hour</strong> : Plusieurs restaurants offrent des rabais 16h-18h</li>
-            <li><strong>Souper tôt</strong> : Réservez avant 18h30 pour plus de disponibilités</li>
-          </ul>
-
-          <h3>Budget Pratique</h3>
-          <p><strong>Couple pour souper (2 personnes) estimations moyennes :</strong></p>
-          <ul>
-            <li><strong>$</strong> : 20-40$ total</li>
-            <li><strong>$$</strong> : 40-80$ total</li>
-            <li><strong>$$$</strong> : 80-150$ total</li>
-            <li><strong>$$$$</strong> : 150$+ total</li>
-          </ul>
-          <p><em>Prix incluent taxes et pourboire (15-20% d'usage au Québec)</em></p>
-
-          <h3>Stationnement à Montréal</h3>
-          <ul>
-            <li><strong>Plateau/Mile-End</strong> : Stationnement rue difficile, privilégiez métro ou Bixi</li>
-            <li><strong>Centre-ville</strong> : Stationnements payants (15-25$/soir)</li>
-            <li><strong>Vieux-Montréal</strong> : Stationnements Champ-de-Mars ou Ville-Marie</li>
-            <li><strong>Applications utiles</strong> : SPAQ, PayByPhone pour stationnement rue</li>
-          </ul>
-
-          <h3>Code Vestimentaire</h3>
-          <ul>
-            <li><strong>Casual élégant</strong> : La plupart des restaurants $$$–$$$$</li>
-            <li><strong>Décontracté</strong> : Burgers, crêperies, diners</li>
-            <li><strong>Évitez</strong> : Shorts/sandales dans les établissements haut de gamme</li>
-          </ul>
-        `,
-        en: `
-          <h2>Practical Tips</h2>
-
-          <h3>Reservations</h3>
-          <p>For <strong>$$$–$$$$</strong> restaurants, book <strong>2-3 weeks ahead</strong>, especially for Friday and Saturday evenings. More casual establishments generally accept walk-ins.</p>
-
-          <h3>Best Time to Visit</h3>
-          <ul>
-            <li><strong>Weekend brunch</strong>: Arrive before 10am or after 1pm to avoid waits</li>
-            <li><strong>Weekday lunch</strong>: Excellent lunch promotions (11:30am-2pm)</li>
-            <li><strong>Happy hour</strong>: Several restaurants offer discounts 4-6pm</li>
-            <li><strong>Early dinner</strong>: Book before 6:30pm for more availability</li>
-          </ul>
-
-          <h3>Practical Budget</h3>
-          <p><strong>Couple for dinner (2 people) average estimates:</strong></p>
-          <ul>
-            <li><strong>$</strong>: $20-40 total</li>
-            <li><strong>$$</strong>: $40-80 total</li>
-            <li><strong>$$$</strong>: $80-150 total</li>
-            <li><strong>$$$$</strong>: $150+ total</li>
-          </ul>
-          <p><em>Prices include taxes and tip (15-20% customary in Quebec)</em></p>
-
-          <h3>Parking in Montreal</h3>
-          <ul>
-            <li><strong>Plateau/Mile-End</strong>: Street parking difficult, prefer metro or Bixi</li>
-            <li><strong>Downtown</strong>: Paid parking ($15-25/evening)</li>
-            <li><strong>Old Montreal</strong>: Champ-de-Mars or Ville-Marie parking</li>
-            <li><strong>Useful apps</strong>: SPAQ, PayByPhone for street parking</li>
-          </ul>
-
-          <h3>Dress Code</h3>
-          <ul>
-            <li><strong>Smart casual</strong>: Most $$$–$$$$ restaurants</li>
-            <li><strong>Casual</strong>: Burgers, creperies, diners</li>
-            <li><strong>Avoid</strong>: Shorts/sandals in upscale establishments</li>
-          </ul>
-        `
-      }
     }
   ],
 
@@ -449,13 +354,13 @@ export const top10RestaurantsMontreal = {
       title: 'Découvrez Plus de Restaurants à Montréal',
       description: 'Explorez notre répertoire complet de restaurants montréalais avec avis, photos et coordonnées.',
       buttonText: 'Rechercher des Restaurants',
-      buttonLink: '/recherche?category=restaurants'
+      buttonLink: '/recherche?category=restauration-et-alimentation'
     },
     en: {
       title: 'Discover More Restaurants in Montreal',
       description: 'Explore our complete directory of Montreal restaurants with reviews, photos and contact information.',
       buttonText: 'Search Restaurants',
-      buttonLink: '/en/search?category=restaurants'
+      buttonLink: '/en/search?category=restauration-et-alimentation'
     }
   }
 };
