@@ -386,6 +386,27 @@
   box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
 }
 
+.btn-report {
+  padding: 0.65rem 1.5rem;
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  color: white;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(255, 152, 0, 0.3);
+  font-size: 0.95rem;
+  display: inline-block;
+  border: none;
+}
+
+.btn-report:hover {
+  background: linear-gradient(135deg, #f57c00 0%, #ef6c00 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+}
+
 .btn-waze {
   padding: 0.65rem 1.5rem;
   background: linear-gradient(135deg, #33CCFF 0%, #00BFFF 100%);
@@ -1043,7 +1064,8 @@
   .btn-delete,
   .btn-import-gmb,
   .btn-delete-db,
-  .btn-edit {
+  .btn-edit,
+  .btn-report {
     padding: 0.6rem 0.8rem;
     font-size: 0.7rem;
     white-space: nowrap;
@@ -1077,7 +1099,8 @@
   .btn-delete,
   .btn-import-gmb,
   .btn-delete-db,
-  .btn-edit {
+  .btn-edit,
+  .btn-report {
     width: 100%;
     font-size: 0.65rem;
     padding: 0.55rem 0.7rem;

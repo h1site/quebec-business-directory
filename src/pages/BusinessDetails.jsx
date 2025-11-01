@@ -355,6 +355,14 @@ const BusinessDetails = () => {
                 </button>
               </>
             )}
+            {/* Report button - visible to all users */}
+            <a
+              href={`mailto:info@h1site.com?subject=${encodeURIComponent(`Signalement : ${business.name}`)}%0D%0A%0D%0A${encodeURIComponent(`Lien de la fiche : ${window.location.href}`)}%0D%0A%0D%0A${encodeURIComponent('Raison du signalement :')}`}
+              className="btn btn-report"
+              title={t('business.reportListing')}
+            >
+              {t('business.reportListing')}
+            </a>
           </div>
 
           {/* Breadcrumb Navigation */}
