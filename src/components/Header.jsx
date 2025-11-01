@@ -67,7 +67,7 @@ const Header = () => {
             {/* Centre: Logo + texte pour mobile */}
             <div className="nav-mobile-center">
               <LocalizedLink to="/" className="nav-brand-logo-link-mobile">
-                <img src="/images/logos/logo.webp" alt="Logo" className="nav-brand-logo" />
+                <img src="/images/logos/logo.webp" alt="Logo" className="nav-brand-logo" width="40" height="40" />
               </LocalizedLink>
               <div className="nav-brand-text-mobile">
                 <LocalizedLink to="/">{t('navigation.siteTitle')}</LocalizedLink>
@@ -77,7 +77,7 @@ const Header = () => {
 
             {/* Brand avec logo et texte pour desktop */}
             <LocalizedLink to="/" className="nav-brand">
-              <img src="/images/logos/logo.webp" alt="Logo" className="nav-brand-logo" />
+              <img src="/images/logos/logo.webp" alt="Logo" className="nav-brand-logo" width="40" height="40" />
               <span>{t('navigation.siteTitle')}</span>
               <span className="header-beta-badge">BÊTA</span>
             </LocalizedLink>

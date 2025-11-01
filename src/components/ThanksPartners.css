@@ -3,6 +3,7 @@
   background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
   border-top: 1px solid #e6e9f0;
   border-bottom: 1px solid #e6e9f0;
+  min-height: 750px;
 }
 
 .thanks-header {
@@ -170,6 +171,7 @@
 @media (max-width: 768px) {
   .thanks-partners {
     padding: 3rem 0;
+    min-height: 650px;
   }
 
   .thanks-header {
