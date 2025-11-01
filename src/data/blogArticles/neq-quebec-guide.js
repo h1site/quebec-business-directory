@@ -6,8 +6,8 @@
 export const neqQuebecArticle = {
   id: 'neq-quebec-guide',
   slug: 'neq-quebec-tout-savoir-numero-entreprise',
-  publishedDate: '2025-01-31',
-  lastUpdated: '2025-01-31',
+  publishedDate: '2025-11-01',
+  lastUpdated: '2025-11-01',
   author: 'Registre du Québec',
   readTime: '8 min',
 
