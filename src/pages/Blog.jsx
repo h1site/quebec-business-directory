@@ -2,22 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
+import { getBlogCards } from '../data/blogArticlesData';
 import './Blog.css';
-
-// Articles de blog - vous pourrez ajouter de nouveaux articles ici
-const blogArticles = [
-  // Les articles seront ajoutés ici au fur et à mesure
-  // Format:
-  // {
-  //   id: 'slug-de-l-article',
-  //   title: 'Titre de l\'article',
-  //   excerpt: 'Court résumé de l\'article...',
-  //   image: '/path/to/image.jpg',
-  //   date: '2025-10-25',
-  //   author: 'Auteur',
-  //   readTime: '5 min'
-  // }
-];
 
 // YouTube playlists - organisées par thème
 const youtubePlaylists = {
@@ -209,6 +195,7 @@ function Blog() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const playlists = youtubePlaylists[lang] || youtubePlaylists.fr;
+  const blogArticles = getBlogCards(lang);
 
   // Generate schema markup for videos
   const videoSchemas = playlists
