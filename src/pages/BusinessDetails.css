@@ -397,7 +397,10 @@
   transition: all 0.3s ease;
   box-shadow: 0 2px 10px rgba(255, 152, 0, 0.3);
   font-size: 0.95rem;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   border: none;
 }
 
