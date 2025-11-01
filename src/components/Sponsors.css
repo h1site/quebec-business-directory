@@ -1,9 +1,16 @@
 .sponsors-section {
   padding: 5rem 0;
+  min-height: 600px;
   background:
     linear-gradient(180deg, rgba(248, 249, 250, 0.25) 0%, rgba(255, 255, 255, 0.25) 100%),
-    url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80') center/cover fixed;
+    #f8f9fa;
   border-top: 1px solid #e6e9f0;
+  background-image:
+    linear-gradient(180deg, rgba(248, 249, 250, 0.25) 0%, rgba(255, 255, 255, 0.25) 100%),
+    url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80');
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 /* Hero Section */
@@ -122,6 +129,7 @@
 @media (max-width: 768px) {
   .sponsors-section {
     padding: 3rem 0;
+    min-height: 500px;
   }
 
   .sponsors-hero {

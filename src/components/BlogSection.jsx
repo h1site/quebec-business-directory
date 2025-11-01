@@ -82,6 +82,8 @@ const BlogSection = () => {
                 <img
                   src={article.image}
                   alt={article.title[language]}
+                  width="1280"
+                  height="720"
                   loading="lazy"
                 />
                 <span className="blog-card-category">
