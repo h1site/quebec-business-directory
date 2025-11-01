@@ -1,0 +1,1001 @@
+Code ACT_ECON,Label FR,Catégorie Mappée (FR),Catégorie Mappée (EN),Slug Catégorie,Nombre Entreprises
+1010,"Industrie de l'abattage et du conditionnement de la viande","NON MAPPÉ","NOT MAPPED",,0
+1011,"Industrie de l'abattage et du conditionnement de la viande (sauf la volaille)","NON MAPPÉ","NOT MAPPED",,0
+1012,"Industrie de l'abattage et du conditionnement de la volaille","NON MAPPÉ","NOT MAPPED",,0
+1019,"Industrie des boyaux à saucisses naturels","NON MAPPÉ","NOT MAPPED",,0
+1020,"Industrie de la transformation du poisson","NON MAPPÉ","NOT MAPPED",,0
+1021,"Industrie de la transformation du poisson","NON MAPPÉ","NOT MAPPED",,0
+1030,"Industries de la préparation des fruits et légumes","NON MAPPÉ","NOT MAPPED",,0
+1031,"Conserveries de fruits et légumes","NON MAPPÉ","NOT MAPPED",,0
+1032,"Industrie des fruits et légumes congelés","NON MAPPÉ","NOT MAPPED",,0
+1039,"Industrie des produits alimentaires à base de fruits et légumes","NON MAPPÉ","NOT MAPPED",,0
+1040,"Industries des produits laitiers","NON MAPPÉ","NOT MAPPED",,0
+1041,"Industrie du lait de consommation","NON MAPPÉ","NOT MAPPED",,0
+1049,"Autres industries de produits laitiers","NON MAPPÉ","NOT MAPPED",,0
+1050,"Industries de la farine et des céréales de table préparées","NON MAPPÉ","NOT MAPPED",,0
+1051,"Meuneries","NON MAPPÉ","NOT MAPPED",,0
+1052,"Industrie des mélanges à base de farine et des céréales de table préparées","NON MAPPÉ","NOT MAPPED",,0
+1060,"Industrie des aliments pour animaux","NON MAPPÉ","NOT MAPPED",,0
+1061,"Industrie des aliments pour animaux","NON MAPPÉ","NOT MAPPED",,0
+1070,"Industries des produits de boulangerie et de la pâtisserie","NON MAPPÉ","NOT MAPPED",,0
+1071,"Industrie des biscuits","NON MAPPÉ","NOT MAPPED",,0
+1072,"Industrie du pain et des autres produits de boulangerie-pâtisserie","NON MAPPÉ","NOT MAPPED",,0
+1080,"Industries du sucre et des confiseries","NON MAPPÉ","NOT MAPPED",,0
+1081,"Industrie du sucre de canne et de betterave","NON MAPPÉ","NOT MAPPED",,0
+1083,"Industrie des confiseries et du chocolat","NON MAPPÉ","NOT MAPPED",,0
+1090,"Autres industries de produits alimentaires","NON MAPPÉ","NOT MAPPED",,0
+1091,"Industrie du thé et du café","NON MAPPÉ","NOT MAPPED",,0
+1092,"Industrie des pâtes alimentaires","NON MAPPÉ","NOT MAPPED",,0
+1093,"Industrie des croustilles","NON MAPPÉ","NOT MAPPED",,0
+1099,"Autres industries de produits alimentaires","NON MAPPÉ","NOT MAPPED",,0
+1110,"Industrie des boissons gazeuses","NON MAPPÉ","NOT MAPPED",,0
+1111,"Industrie des boissons gazeuses","NON MAPPÉ","NOT MAPPED",,0
+1120,"Industrie des alcools destinés à la consommation","NON MAPPÉ","NOT MAPPED",,0
+1121,"Industrie des alcools destinés à la consommation","NON MAPPÉ","NOT MAPPED",,0
+1130,"Industrie de la bière","NON MAPPÉ","NOT MAPPED",,0
+1131,"Industrie de la bière","NON MAPPÉ","NOT MAPPED",,0
+1140,"Industrie du vin et du cidre","NON MAPPÉ","NOT MAPPED",,0
+1141,"Industrie du vin et du cidre","NON MAPPÉ","NOT MAPPED",,0
+1210,"Industrie du tabac en feuilles","NON MAPPÉ","NOT MAPPED",,0
+1211,"Industrie du tabac en feuilles","NON MAPPÉ","NOT MAPPED",,0
+1220,"Industrie des produits du tabac","NON MAPPÉ","NOT MAPPED",,0
+1221,"Industrie des produits du tabac","NON MAPPÉ","NOT MAPPED",,0
+1510,"Industrie des pneus et chambres à air","NON MAPPÉ","NOT MAPPED",,0
+1511,"Industrie des pneus et chambres à air","NON MAPPÉ","NOT MAPPED",,0
+1520,"Industrie des boyaux et courroies en caoutchouc","NON MAPPÉ","NOT MAPPED",,0
+1521,"Industrie des boyaux et courroies en caoutchouc","NON MAPPÉ","NOT MAPPED",,0
+1590,"Autres industries de produits en caoutchouc","NON MAPPÉ","NOT MAPPED",,0
+1599,"Autres industries de produits en caoutchouc","NON MAPPÉ","NOT MAPPED",,0
+1610,"Industrie des produits en matière plastique en mousse et soufflée","NON MAPPÉ","NOT MAPPED",,0
+1611,"Industrie des produits en matière plastique en mousse et soufflée","NON MAPPÉ","NOT MAPPED",,0
+1620,"Industrie des tuyaux et raccords de tuyauterie en matière plastique","NON MAPPÉ","NOT MAPPED",,0
+1621,"Industrie des tuyaux et raccords de tuyauterie en matière plastique","NON MAPPÉ","NOT MAPPED",,0
+1630,"Industrie des pellicules et feuilles en matière plastique","NON MAPPÉ","NOT MAPPED",,0
+1631,"Industrie des pellicules et feuilles en matière plastique","NON MAPPÉ","NOT MAPPED",,0
+1640,"Industrie des produits en matière plastique stratifiée sous pression ou renforcée","NON MAPPÉ","NOT MAPPED",,0
+1641,"Industrie des produits en matière plastique stratifiée sous pression ou renforcée","NON MAPPÉ","NOT MAPPED",,0
+1650,"Industrie des produits d'architecture en matière plastique","NON MAPPÉ","NOT MAPPED",,0
+1651,"Industrie des produits d'architecture en matière plastique","NON MAPPÉ","NOT MAPPED",,0
+1660,"Industrie des contenants en matière en plastique","NON MAPPÉ","NOT MAPPED",,0
+1661,"Industrie des contenants en matière plastique (sauf en mousse)","NON MAPPÉ","NOT MAPPED",,0
+1690,"Autres industries de produits en matière plastique","NON MAPPÉ","NOT MAPPED",,0
+1691,"Autres industries de sacs en matière plastique","NON MAPPÉ","NOT MAPPED",,0
+1699,"Autres industries de produits en matière plastique","NON MAPPÉ","NOT MAPPED",,0
+1710,"Industries du cuir et des produits connexes","NON MAPPÉ","NOT MAPPED",,0
+1711,"Tanneries","NON MAPPÉ","NOT MAPPED",,0
+1712,"Industrie de la chaussure","NON MAPPÉ","NOT MAPPED",,0
+1713,"Industrie des valises","NON MAPPÉ","NOT MAPPED",,0
+1714,"Industrie des accessoires pour bottes et chaussures","NON MAPPÉ","NOT MAPPED",,0
+1719,"Autres industries du cuir et des produits connexes","NON MAPPÉ","NOT MAPPED",,0
+1810,"Industrie des fibres synthétiques et de filés de filaments","NON MAPPÉ","NOT MAPPED",,0
+1811,"Industrie des fibres synthétiques et des filés de filaments","NON MAPPÉ","NOT MAPPED",,0
+1820,"Industries des filés et tissus tissés","NON MAPPÉ","NOT MAPPED",,0
+1821,"Industrie de la filature et du tissage de la laine","NON MAPPÉ","NOT MAPPED",,0
+1822,"Industrie de la filature et du tissage du coton","NON MAPPÉ","NOT MAPPED",,0
+1824,"Industrie du tissage de fibres synthétiques","NON MAPPÉ","NOT MAPPED",,0
+1829,"Autres industries des filés et tissus tissés","NON MAPPÉ","NOT MAPPED",,0
+1830,"Industrie des tissus tricotés","NON MAPPÉ","NOT MAPPED",,0
+1831,"Industrie des tissus tricotés","NON MAPPÉ","NOT MAPPED",,0
+1910,"Industrie du feutre et du traitement des fibres naturelles","NON MAPPÉ","NOT MAPPED",,0
+1911,"Industrie du feutre et du traitement des fibres naturelles","NON MAPPÉ","NOT MAPPED",,0
+1920,"Industrie des tapis","NON MAPPÉ","NOT MAPPED",,0
+1921,"Industrie des tapis","NON MAPPÉ","NOT MAPPED",,0
+1930,"Industrie des articles en grosse toile","NON MAPPÉ","NOT MAPPED",,0
+1931,"Industrie des articles en grosse toile","NON MAPPÉ","NOT MAPPED",,0
+1932,"Industrie des sacs et poches en matière textile","NON MAPPÉ","NOT MAPPED",,0
+1990,"Autres industries des produits textiles","NON MAPPÉ","NOT MAPPED",,0
+1991,"Industrie des tissus étroits","NON MAPPÉ","NOT MAPPED",,0
+1992,"Industrie de la teinture et du finissage à façon de produits textiles","NON MAPPÉ","NOT MAPPED",,0
+1993,"Industrie des articles de maison en textile","NON MAPPÉ","NOT MAPPED",,0
+1994,"Industrie des articles d'hygiène en textile","NON MAPPÉ","NOT MAPPED",,0
+1995,"Industrie des tissus pour armature de pneus","NON MAPPÉ","NOT MAPPED",,0
+1996,"Industrie du fil","NON MAPPÉ","NOT MAPPED",,0
+1999,"Autres industries de produits textiles","NON MAPPÉ","NOT MAPPED",,0
+2430,"Industries des vêtements pour hommes","NON MAPPÉ","NOT MAPPED",,0
+2431,"Industrie des manteaux pour hommes","NON MAPPÉ","NOT MAPPED",,0
+2432,"Industrie des complets et vestons pour hommes","NON MAPPÉ","NOT MAPPED",,0
+2433,"Industrie des pantalons pour hommes","NON MAPPÉ","NOT MAPPED",,0
+2434,"Industrie des chemises","NON MAPPÉ","NOT MAPPED",,0
+2435,"Industrie de la confection à forfait de vêtements pour hommes","NON MAPPÉ","NOT MAPPED",,0
+2440,"Industries des vêtements pour femmes","NON MAPPÉ","NOT MAPPED",,0
+2441,"Industrie des manteaux et vestes pour femmes","NON MAPPÉ","NOT MAPPED",,0
+2442,"Industrie des vêtements de sport pour femmes","NON MAPPÉ","NOT MAPPED",,0
+2443,"Industrie des robes pour femmes","NON MAPPÉ","NOT MAPPED",,0
+2444,"Industrie des blouses et chemisiers pour femmes","NON MAPPÉ","NOT MAPPED",,0
+2445,"Industrie des sous-vêtements et vêtements de nuit pour femmes","NON MAPPÉ","NOT MAPPED",,0
+2446,"Industrie de la confection à forfait de vêtements pour femmes","NON MAPPÉ","NOT MAPPED",,0
+2450,"Industries des vêtements pour enfants","NON MAPPÉ","NOT MAPPED",,0
+2451,"Industrie des vêtements pour enfants","NON MAPPÉ","NOT MAPPED",,0
+2453,"Industrie des sous-vêtements et vêtements de nuit pour enfants","NON MAPPÉ","NOT MAPPED",,0
+2454,"Industrie de la confection à forfait pour enfants","NON MAPPÉ","NOT MAPPED",,0
+2490,"Autres industries de l'habillement","NON MAPPÉ","NOT MAPPED",,0
+2491,"Industrie des chandails","NON MAPPÉ","NOT MAPPED",,0
+2492,"Industrie des vêtements professionnels","NON MAPPÉ","NOT MAPPED",,0
+2493,"Industrie des gants","NON MAPPÉ","NOT MAPPED",,0
+2494,"Industrie des bas et chaussettes","NON MAPPÉ","NOT MAPPED",,0
+2495,"Industrie des articles en fourrure","NON MAPPÉ","NOT MAPPED",,0
+2496,"Industrie des vêtements de base","NON MAPPÉ","NOT MAPPED",,0
+2497,"Industrie des chapeaux (sauf en fourrure)","NON MAPPÉ","NOT MAPPED",,0
+2499,"Autres industries de l'habillement","NON MAPPÉ","NOT MAPPED",,0
+2510,"Industrie du bois de sciage et des bardeaux","NON MAPPÉ","NOT MAPPED",,0
+2511,"Industrie du bardeau et du bardeau fendu","NON MAPPÉ","NOT MAPPED",,0
+2512,"Industrie des produits de scieries et d'ateliers de rabotage (sauf les bardeaux et les bardeaux fendus)","NON MAPPÉ","NOT MAPPED",,0
+2520,"Industries des placages et contre-plaqués","NON MAPPÉ","NOT MAPPED",,0
+2521,"Industrie des placages en bois de feuillus et de résineux","NON MAPPÉ","NOT MAPPED",,0
+2522,"Industrie des contre-plaqués de feuillus et de résineux","NON MAPPÉ","NOT MAPPED",,0
+2540,"Industries des portes","NON MAPPÉ","NOT MAPPED",,0
+2541,"Industrie des bâtiments préfabriqués à charpente de bois","NON MAPPÉ","NOT MAPPED",,0
+2542,"Industrie des armoires et placards de cuisine et des coiffeuses de salle de bain en bois","NON MAPPÉ","NOT MAPPED",,0
+2543,"Industrie des portes et fenêtres en bois","NON MAPPÉ","NOT MAPPED",,0
+2544,"Industrie d'éléments de charpente en bois","NON MAPPÉ","NOT MAPPED",,0
+2545,"Industrie des parquets en bois dur","NON MAPPÉ","NOT MAPPED",,0
+2549,"Autres industries du bois travaillé","NON MAPPÉ","NOT MAPPED",,0
+2560,"Industrie des boîtes et palettes en bois","NON MAPPÉ","NOT MAPPED",,0
+2561,"Industrie des boîtes et palettes en bois","NON MAPPÉ","NOT MAPPED",,0
+2580,"Industries des cercueils","NON MAPPÉ","NOT MAPPED",,0
+2581,"Industrie des cercueils","NON MAPPÉ","NOT MAPPED",,0
+2590,"Autres industries du bois","NON MAPPÉ","NOT MAPPED",,0
+2591,"Industrie de la préservation du bois","NON MAPPÉ","NOT MAPPED",,0
+2592,"Industrie du bois tourné et façonné","NON MAPPÉ","NOT MAPPED",,0
+2593,"Industrie des panneaux agglomérés","NON MAPPÉ","NOT MAPPED",,0
+2599,"Autres industries du bois","NON MAPPÉ","NOT MAPPED",,0
+2610,"Industries des meubles de maison","NON MAPPÉ","NOT MAPPED",,0
+2611,"Industrie des meubles de maison en bois","NON MAPPÉ","NOT MAPPED",,0
+2612,"Industrie des meubles de maison rembourrés","NON MAPPÉ","NOT MAPPED",,0
+2619,"Autres industries des meubles de maison","NON MAPPÉ","NOT MAPPED",,0
+2640,"Industries des meubles de bureau","NON MAPPÉ","NOT MAPPED",,0
+2641,"Industrie des meubles de bureau en métal","NON MAPPÉ","NOT MAPPED",,0
+2642,"Industrie des meubles de bureau en bois","NON MAPPÉ","NOT MAPPED",,0
+2649,"Autres industries des meubles de bureau","NON MAPPÉ","NOT MAPPED",,0
+2690,"Autres industries du meuble et des articles d'ameublement","NON MAPPÉ","NOT MAPPED",,0
+2691,"Industrie des sommiers et matelas","NON MAPPÉ","NOT MAPPED",,0
+2692,"Industrie des meubles et articles d'ameublement pour hôtels","NON MAPPÉ","NOT MAPPED",,0
+2693,"Industrie des meubles de jardin","NON MAPPÉ","NOT MAPPED",,0
+2694,"Industrie des rayonnages et des armoires de sûreté","NON MAPPÉ","NOT MAPPED",,0
+2695,"Industrie des cadres","NON MAPPÉ","NOT MAPPED",,0
+2699,"Autres industries du meuble et des articles d'ameublement","NON MAPPÉ","NOT MAPPED",,0
+2710,"Industrie des pâtes et papiers","NON MAPPÉ","NOT MAPPED",,0
+2711,"Industrie des pâtes à papier","NON MAPPÉ","NOT MAPPED",,0
+2712,"Industrie du papier journal","NON MAPPÉ","NOT MAPPED",,0
+2713,"Industrie du carton","NON MAPPÉ","NOT MAPPED",,0
+2714,"Industrie des panneaux et du papier de construction","NON MAPPÉ","NOT MAPPED",,0
+2719,"Autres industries du papier","NON MAPPÉ","NOT MAPPED",,0
+2720,"Industrie du papier à couverture asphalté","NON MAPPÉ","NOT MAPPED",,0
+2721,"Industrie du papier à couverture asphalté","NON MAPPÉ","NOT MAPPED",,0
+2730,"Industries des boîtes en carton et des sacs en papier","NON MAPPÉ","NOT MAPPED",,0
+2731,"Industrie des boîtes pliantes et rigides","NON MAPPÉ","NOT MAPPED",,0
+2732,"Industrie des boîtes en carton ondulé","NON MAPPÉ","NOT MAPPED",,0
+2733,"Industrie des sacs en papier","NON MAPPÉ","NOT MAPPED",,0
+2790,"Autres industries des produits en papier transformé","NON MAPPÉ","NOT MAPPED",,0
+2791,"Industrie des papiers couchés ou traités","NON MAPPÉ","NOT MAPPED",,0
+2792,"Industrie des produits de papeterie","NON MAPPÉ","NOT MAPPED",,0
+2793,"Industrie des produits de consommation en papier","NON MAPPÉ","NOT MAPPED",,0
+2799,"Autres industries des produits en papier transformé","NON MAPPÉ","NOT MAPPED",,0
+2810,"Industries de l'impression commerciale","NON MAPPÉ","NOT MAPPED",,0
+2811,"Industrie de l'impression de formulaires commerciaux","NON MAPPÉ","NOT MAPPED",,0
+2812,"Industrie de l'impression des journaux","NON MAPPÉ","NOT MAPPED",,0
+2819,"Autres industries d'impression commerciale","NON MAPPÉ","NOT MAPPED",,0
+2820,"Industrie de clichage","NON MAPPÉ","NOT MAPPED",,0
+2821,"Industrie du clichage","NON MAPPÉ","NOT MAPPED",,0
+2830,"Industries de l'édition","NON MAPPÉ","NOT MAPPED",,0
+2831,"Industrie de l'édition du livre","NON MAPPÉ","NOT MAPPED",,0
+2839,"Autres industries de l'édition","NON MAPPÉ","NOT MAPPED",,0
+2840,"Industries de l'impression et de l'édition combinées","NON MAPPÉ","NOT MAPPED",,0
+2841,"Industrie des journaux (impression et édition combinées)","NON MAPPÉ","NOT MAPPED",,0
+2849,"Autres industries d'impression et d'édition combinées","NON MAPPÉ","NOT MAPPED",,0
+2850,"Industrie du progiciel","NON MAPPÉ","NOT MAPPED",,0
+2851,"Industrie du progiciel","NON MAPPÉ","NOT MAPPED",,0
+2910,"Industries sidérurgiques","NON MAPPÉ","NOT MAPPED",,0
+2911,"Industrie des ferro-alliages","NON MAPPÉ","NOT MAPPED",,0
+2912,"Fonderies d'acier","NON MAPPÉ","NOT MAPPED",,0
+2919,"Autres industries sidérurgiques","NON MAPPÉ","NOT MAPPED",,0
+2920,"Industrie des tubes et tuyaux d'acier","NON MAPPÉ","NOT MAPPED",,0
+2921,"Industrie des tubes et tuyaux d'acier","NON MAPPÉ","NOT MAPPED",,0
+2940,"Fonderies de fer","NON MAPPÉ","NOT MAPPED",,0
+2941,"Fonderies de fer","NON MAPPÉ","NOT MAPPED",,0
+2950,"Industries de la fonte et de l'affinage des métaux non ferreux","NON MAPPÉ","NOT MAPPED",,0
+2951,"Industrie de la production d'aluminium de première fusion","NON MAPPÉ","NOT MAPPED",,0
+2959,"Autres industries de la fonte et de l'affinage des métaux non ferreux","NON MAPPÉ","NOT MAPPED",,0
+2960,"Industries du laminage","NON MAPPÉ","NOT MAPPED",,0
+2961,"Industrie du laminage de l'aluminium","NON MAPPÉ","NOT MAPPED",,0
+2962,"Industrie du moulage et de l'extrusion de l'aluminium","NON MAPPÉ","NOT MAPPED",,0
+2970,"Industrie du laminage","NON MAPPÉ","NOT MAPPED",,0
+2971,"Industrie du laminage","NON MAPPÉ","NOT MAPPED",,0
+2990,"Autres industries du laminage","NON MAPPÉ","NOT MAPPED",,0
+2999,"Autres industries du laminage","NON MAPPÉ","NOT MAPPED",,0
+3010,"Industrie des produits en tôle forte","NON MAPPÉ","NOT MAPPED",,0
+3011,"Industrie des produits en tôle forte","NON MAPPÉ","NOT MAPPED",,0
+3020,"Industries des produits de construction en métal","NON MAPPÉ","NOT MAPPED",,0
+3021,"Industrie des bâtiments préfabriqués en métal (sauf transportables)","NON MAPPÉ","NOT MAPPED",,0
+3029,"Autres industries de la fabrication d'éléments de charpentes métalliques","NON MAPPÉ","NOT MAPPED",,0
+3030,"Industries des produits métalliques d'ornement et d'architecture","NON MAPPÉ","NOT MAPPED",,0
+3031,"Industrie des portes et fenêtres en métal","NON MAPPÉ","NOT MAPPED",,0
+3032,"Industrie des bâtiments préfabriqués en métal transportables","NON MAPPÉ","NOT MAPPED",,0
+3039,"Autres industries des produits métalliques d'ornement et d'architecture","NON MAPPÉ","NOT MAPPED",,0
+3040,"Industries de l'emboutissage","NON MAPPÉ","NOT MAPPED",,0
+3041,"Industrie du revêtement sur commande de produits en métal","NON MAPPÉ","NOT MAPPED",,0
+3042,"Industrie des récipients et fermetures en métal","NON MAPPÉ","NOT MAPPED",,0
+3043,"Industrie de la tôlerie pour l'aéraulique","NON MAPPÉ","NOT MAPPED",,0
+3049,"Autres industries de l'emboutissage et du matriçage de produits en métal","NON MAPPÉ","NOT MAPPED",,0
+3050,"Industries du fil métallique et de ses produits","NON MAPPÉ","NOT MAPPED",,0
+3051,"Industrie des ressorts de rembourrage et des ressorts à boudin","NON MAPPÉ","NOT MAPPED",,0
+3052,"Industrie des fils et des câbles métalliques","NON MAPPÉ","NOT MAPPED",,0
+3053,"Industrie des attaches d'usage industriel","NON MAPPÉ","NOT MAPPED",,0
+3059,"Autres industries des produits en fil métallique","NON MAPPÉ","NOT MAPPED",,0
+3060,"Industries des articles de quincaillerie","NON MAPPÉ","NOT MAPPED",,0
+3061,"Industrie de la quincaillerie de base","NON MAPPÉ","NOT MAPPED",,0
+3062,"Industrie des matrices","NON MAPPÉ","NOT MAPPED",,0
+3063,"Industrie de l'outillage à main","NON MAPPÉ","NOT MAPPED",,0
+3069,"Industrie de la coutellerie et des autres articles de quincaillerie ou d'outillage","NON MAPPÉ","NOT MAPPED",,0
+3070,"Industrie du matériel de chauffage","NON MAPPÉ","NOT MAPPED",,0
+3071,"Industrie du matériel de chauffage","NON MAPPÉ","NOT MAPPED",,0
+3080,"Ateliers d'usinage","NON MAPPÉ","NOT MAPPED",,0
+3081,"Ateliers d'usinage","NON MAPPÉ","NOT MAPPED",,0
+3090,"Autres industries de produits en métal","NON MAPPÉ","NOT MAPPED",,0
+3091,"Industrie des garnitures et raccords de plomberie en métal","NON MAPPÉ","NOT MAPPED",,0
+3092,"Industrie des soupapes en métal","NON MAPPÉ","NOT MAPPED",,0
+3099,"Autres industries de produits en métal","NON MAPPÉ","NOT MAPPED",,0
+3110,"Industrie des instruments aratoires","NON MAPPÉ","NOT MAPPED",,0
+3111,"Industrie des instruments aratoires","NON MAPPÉ","NOT MAPPED",,0
+3120,"Industrie du matériel commercial de réfrigération et de climatisation","NON MAPPÉ","NOT MAPPED",,0
+3121,"Industrie du matériel commercial de réfrigération et de climatisation","NON MAPPÉ","NOT MAPPED",,0
+3190,"Autres industries de la machinerie et de l'équipement","NON MAPPÉ","NOT MAPPED",,0
+3191,"Industrie des compresseurs","NON MAPPÉ","NOT MAPPED",,0
+3192,"Industrie de l'équipement de manutention","NON MAPPÉ","NOT MAPPED",,0
+3193,"Industrie de la machinerie pour récolter","NON MAPPÉ","NOT MAPPED",,0
+3194,"Industrie des turbines et du matériel de transmission d'énergie mécanique","NON MAPPÉ","NOT MAPPED",,0
+3195,"Industrie de la machinerie pour l'industrie des pâtes et papiers","NON MAPPÉ","NOT MAPPED",,0
+3196,"Industrie de la machinerie et du matériel de construction et d'entretien","NON MAPPÉ","NOT MAPPED",,0
+3199,"Autres industries de la machinerie et de l'équipement","NON MAPPÉ","NOT MAPPED",,0
+3210,"Industrie des aéronefs et des pièces d'aéronefs","NON MAPPÉ","NOT MAPPED",,0
+3211,"Industrie des aéronefs et des pièces d'aéronefs","NON MAPPÉ","NOT MAPPED",,0
+3230,"Industrie des véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+3231,"Industrie des véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+3240,"Industries des carrosseries de camions","NON MAPPÉ","NOT MAPPED",,0
+3241,"Industrie des carrosseries de camions et d'autobus","NON MAPPÉ","NOT MAPPED",,0
+3242,"Industrie des semi-remorques et remorques d'usage commercial","NON MAPPÉ","NOT MAPPED",,0
+3243,"Industrie des remorques d'usage non commercial","NON MAPPÉ","NOT MAPPED",,0
+3244,"Industrie des maisons mobiles","NON MAPPÉ","NOT MAPPED",,0
+3250,"Industries des pièces et accessoires pour véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+3251,"Industrie des moteurs et pièces de moteurs de véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+3254,"Industrie des pièces pour systèmes de direction et de suspension de véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+3255,"Industrie des roues et des freins pour véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+3256,"Industrie des pièces et accessoires en matière plastique pour véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+3257,"Industrie des accessoires en matière textile pour véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+3259,"Autres industries des pièces et accessoires pour véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+3260,"Industrie du matériel ferroviaire roulant","NON MAPPÉ","NOT MAPPED",,0
+3261,"Industrie du matériel ferroviaire roulant","NON MAPPÉ","NOT MAPPED",,0
+3270,"Industrie de la construction et de la réparation de navires","NON MAPPÉ","NOT MAPPED",,0
+3271,"Industrie de la construction et de la réparation de navires","NON MAPPÉ","NOT MAPPED",,0
+3280,"Industrie de la construction et de la réparation d'embarcations","NON MAPPÉ","NOT MAPPED",,0
+3281,"Industrie de la construction et de la réparation d'embarcations","NON MAPPÉ","NOT MAPPED",,0
+3290,"Autres industries du matériel de transport","NON MAPPÉ","NOT MAPPED",,0
+3299,"Autres industries du matériel de transport","NON MAPPÉ","NOT MAPPED",,0
+3310,"Industrie des petits appareils électroménagers","NON MAPPÉ","NOT MAPPED",,0
+3311,"Industrie des petits appareils électroménagers","NON MAPPÉ","NOT MAPPED",,0
+3320,"Industrie des gros appareils (électriques ou non)","NON MAPPÉ","NOT MAPPED",,0
+3321,"Industrie des gros appareils (électriques ou non)","NON MAPPÉ","NOT MAPPED",,0
+3330,"Industrie des appareils d'éclairage","NON MAPPÉ","NOT MAPPED",,0
+3331,"Industrie des appareils d'éclairage pour immeubles","NON MAPPÉ","NOT MAPPED",,0
+3332,"Industrie des luminaires pour résidences","NON MAPPÉ","NOT MAPPED",,0
+3333,"Industrie des lampes électriques (ampoules et tubes)","NON MAPPÉ","NOT MAPPED",,0
+3339,"Autres industries des appareils d'éclairage","NON MAPPÉ","NOT MAPPED",,0
+3340,"Industrie du matériel électronique ménager","NON MAPPÉ","NOT MAPPED",,0
+3341,"Industrie du matériel électronique ménager","NON MAPPÉ","NOT MAPPED",,0
+3350,"Industrie du matériel électronique professionnel","NON MAPPÉ","NOT MAPPED",,0
+3351,"Industrie de l'équipement de télécommunication","NON MAPPÉ","NOT MAPPED",,0
+3352,"Industrie des pièces et des composantes électroniques","NON MAPPÉ","NOT MAPPED",,0
+3359,"Autres industries du matériel électronique et de communication","NON MAPPÉ","NOT MAPPED",,0
+3360,"Industries des machines pour bureaux","NON MAPPÉ","NOT MAPPED",,0
+3361,"Industrie des ordinateurs et de leurs unités périphériques","NON MAPPÉ","NOT MAPPED",,0
+3369,"Autres industries des machines pour bureaux","NON MAPPÉ","NOT MAPPED",,0
+3370,"Industries du matériel électrique d'usage industriel","NON MAPPÉ","NOT MAPPED",,0
+3371,"Industrie des transformateurs électriques","NON MAPPÉ","NOT MAPPED",,0
+3372,"Industrie du matériel électrique de commutation et de protection","NON MAPPÉ","NOT MAPPED",,0
+3379,"Autres industries du matériel électrique d'usage industriel","NON MAPPÉ","NOT MAPPED",,0
+3380,"Industrie des fils et des câbles électriques","NON MAPPÉ","NOT MAPPED",,0
+3381,"Industrie des fils et des câbles électriques","NON MAPPÉ","NOT MAPPED",,0
+3390,"Autres industries de produits électriques","NON MAPPÉ","NOT MAPPED",,0
+3391,"Industrie des accumulateurs","NON MAPPÉ","NOT MAPPED",,0
+3392,"Industrie des dispositifs de câblage non porteurs de courant","NON MAPPÉ","NOT MAPPED",,0
+3399,"Autres industries de produits électriques","NON MAPPÉ","NOT MAPPED",,0
+3510,"Industries des produits en argile","NON MAPPÉ","NOT MAPPED",,0
+3511,"Industrie des produits en argile (argile canadienne)","NON MAPPÉ","NOT MAPPED",,0
+3512,"Industrie des produits en argile (argile importée)","NON MAPPÉ","NOT MAPPED",,0
+3520,"Industrie du ciment","NON MAPPÉ","NOT MAPPED",,0
+3521,"Industrie du ciment","NON MAPPÉ","NOT MAPPED",,0
+3530,"Industrie des produits en pierre","NON MAPPÉ","NOT MAPPED",,0
+3531,"Industrie des produits en pierre","NON MAPPÉ","NOT MAPPED",,0
+3540,"Industries des produits en béton","NON MAPPÉ","NOT MAPPED",,0
+3541,"Industrie des tuyaux en béton","NON MAPPÉ","NOT MAPPED",,0
+3542,"Industrie des produits de construction en béton","NON MAPPÉ","NOT MAPPED",,0
+3549,"Autres industries de produits en béton","NON MAPPÉ","NOT MAPPED",,0
+3550,"Industrie du béton préparé","NON MAPPÉ","NOT MAPPED",,0
+3551,"Industrie du béton préparé","NON MAPPÉ","NOT MAPPED",,0
+3560,"Industries du verre et des articles en verre","NON MAPPÉ","NOT MAPPED",,0
+3561,"Industrie des contenants en verre","NON MAPPÉ","NOT MAPPED",,0
+3562,"Industrie des produits en verre (sauf les contenants en verre)","NON MAPPÉ","NOT MAPPED",,0
+3570,"Industrie des abrasifs","NON MAPPÉ","NOT MAPPED",,0
+3571,"Industrie des abrasifs","NON MAPPÉ","NOT MAPPED",,0
+3580,"Industrie de la chaux","NON MAPPÉ","NOT MAPPED",,0
+3581,"Industrie de la chaux","NON MAPPÉ","NOT MAPPED",,0
+3590,"Autres industries de produits minéraux non métalliques","NON MAPPÉ","NOT MAPPED",,0
+3591,"Industrie des produits réfractaires","NON MAPPÉ","NOT MAPPED",,0
+3592,"Industrie des produits en amiante","NON MAPPÉ","NOT MAPPED",,0
+3593,"Industrie des produits en gypse","NON MAPPÉ","NOT MAPPED",,0
+3594,"Industrie des matériaux isolants de minéraux non métalliques","NON MAPPÉ","NOT MAPPED",,0
+3599,"Autres industries de produits minéraux non métalliques","NON MAPPÉ","NOT MAPPED",,0
+3610,"Industries des produits raffinés du pétrole","NON MAPPÉ","NOT MAPPED",,0
+3611,"Industrie des produits pétroliers raffinés (sauf les huiles de graissage et les graisses lubrifiantes)","NON MAPPÉ","NOT MAPPED",,0
+3612,"Industrie des huiles de graissage et des graisses lubrifiantes","NON MAPPÉ","NOT MAPPED",,0
+3690,"Autres industries des produits du pétrole et du charbon","NON MAPPÉ","NOT MAPPED",,0
+3699,"Autres industries des produits du pétrole et du charbon","NON MAPPÉ","NOT MAPPED",,0
+3710,"Industries des produits chimiques d'usage industriel","NON MAPPÉ","NOT MAPPED",,0
+3711,"Industrie des produits chimiques inorganiques d'usage industriel","NON MAPPÉ","NOT MAPPED",,0
+3712,"Industrie des produits chimiques organiques d'usage industriel","NON MAPPÉ","NOT MAPPED",,0
+3720,"Industries des produits chimiques d'usage agricole","NON MAPPÉ","NOT MAPPED",,0
+3721,"Industrie des engrais chimiques et des engrais composés","NON MAPPÉ","NOT MAPPED",,0
+3729,"Autres industries des produits chimiques d'usage agricole","NON MAPPÉ","NOT MAPPED",,0
+3730,"Industrie des matières plastiques et des résines synthétiques","NON MAPPÉ","NOT MAPPED",,0
+3731,"Industrie des matières plastiques et des résines synthétiques","NON MAPPÉ","NOT MAPPED",,0
+3740,"Industrie des produits pharmaceutiques et des médicaments","NON MAPPÉ","NOT MAPPED",,0
+3741,"Industrie des produits pharmaceutiques et des médicaments","NON MAPPÉ","NOT MAPPED",,0
+3750,"Industrie des peintures et vernis","NON MAPPÉ","NOT MAPPED",,0
+3751,"Industrie des peintures et vernis","NON MAPPÉ","NOT MAPPED",,0
+3760,"Industrie des savons et composés pour le nettoyage","NON MAPPÉ","NOT MAPPED",,0
+3761,"Industrie des savons et composés pour le nettoyage","NON MAPPÉ","NOT MAPPED",,0
+3770,"Industrie des produits de toilette","NON MAPPÉ","NOT MAPPED",,0
+3771,"Industrie des produits de toilette","NON MAPPÉ","NOT MAPPED",,0
+3790,"Autres industries des produits chimiques","NON MAPPÉ","NOT MAPPED",,0
+3791,"Industrie des encres d'imprimerie","NON MAPPÉ","NOT MAPPED",,0
+3792,"Industrie des adhésifs","NON MAPPÉ","NOT MAPPED",,0
+3793,"Industrie des explosifs et munitions","NON MAPPÉ","NOT MAPPED",,0
+3799,"Autres industries des produits chimiques","NON MAPPÉ","NOT MAPPED",,0
+3910,"Industries du matériel scientifique et professionnel","NON MAPPÉ","NOT MAPPED",,0
+3911,"Industrie des instruments d'indication","NON MAPPÉ","NOT MAPPED",,0
+3912,"Autres industries des instruments et produits connexes","NON MAPPÉ","NOT MAPPED",,0
+3913,"Industrie des horloges et des montres","NON MAPPÉ","NOT MAPPED",,0
+3914,"Industrie des articles ophtalmiques","NON MAPPÉ","NOT MAPPED",,0
+3915,"Industries des appareils orthopédiques","NON MAPPÉ","NOT MAPPED",,0
+3920,"Industries de la bijouterie et de l'orfèvrerie","NON MAPPÉ","NOT MAPPED",,0
+3921,"Industrie de la bijouterie et de l'orfèvrerie","NON MAPPÉ","NOT MAPPED",,0
+3922,"Industrie de l'affinage secondaire de métaux précieux","NON MAPPÉ","NOT MAPPED",,0
+3930,"Industries des articles de sport et des jouets","NON MAPPÉ","NOT MAPPED",,0
+3931,"Industrie des articles de sport","NON MAPPÉ","NOT MAPPED",,0
+3932,"Industrie des jouets et jeux","NON MAPPÉ","NOT MAPPED",,0
+3933,"Industrie des bicyclettes","NON MAPPÉ","NOT MAPPED",,0
+3970,"Industrie des enseignes et étalages","NON MAPPÉ","NOT MAPPED",,0
+3971,"Industrie des enseignes et étalages","NON MAPPÉ","NOT MAPPED",,0
+3990,"Autres industries des produits manufacturés","NON MAPPÉ","NOT MAPPED",,0
+3991,"Industrie des balais","NON MAPPÉ","NOT MAPPED",,0
+3992,"Industrie des boutons","NON MAPPÉ","NOT MAPPED",,0
+3993,"Industrie des carreaux","NON MAPPÉ","NOT MAPPED",,0
+3994,"Industrie de la fabrication de supports d'enregistrement et de la reproduction du son","NON MAPPÉ","NOT MAPPED",,0
+3996,"Industrie des instruments de musique","NON MAPPÉ","NOT MAPPED",,0
+3997,"Industrie des articles de bureau et fournitures pour artistes (sauf les articles en papier)","NON MAPPÉ","NOT MAPPED",,0
+3999,"Autres industries de produits manufacturés","NON MAPPÉ","NOT MAPPED",,0
+4010,"Promotion et construction de bâtiments résidentiels","NON MAPPÉ","NOT MAPPED",,0
+4011,"Promotion et construction de maisons individuelles","NON MAPPÉ","NOT MAPPED",,0
+4012,"Promotion et construction d'autres types de constructions résidentielles","NON MAPPÉ","NOT MAPPED",,0
+4013,"Rénovation de bâtiments résidentiels","NON MAPPÉ","NOT MAPPED",,0
+4020,"Promotion et construction de bâtiments non résidentiels","NON MAPPÉ","NOT MAPPED",,0
+4021,"Bâtiments industriels légers et manufactures","NON MAPPÉ","NOT MAPPED",,0
+4022,"Bâtiments commerciaux","NON MAPPÉ","NOT MAPPED",,0
+4023,"Bâtiments d'institutions","NON MAPPÉ","NOT MAPPED",,0
+4024,"Rénovation de bâtiments non résidentiels","NON MAPPÉ","NOT MAPPED",,0
+4030,"Travaux de génie","NON MAPPÉ","NOT MAPPED",,0
+4031,"Centrales d'énergie et infrastructures connexes (sauf les lignes de transmission)","NON MAPPÉ","NOT MAPPED",,0
+4032,"Infrastructures pétrolières ou gazières et constructions connexes (sauf les pipelines)","NON MAPPÉ","NOT MAPPED",,0
+4033,"Oléoducs et gazoducs","NON MAPPÉ","NOT MAPPED",,0
+4034,"Grosses structures industrielles","NON MAPPÉ","NOT MAPPED",,0
+4035,"Routes","NON MAPPÉ","NOT MAPPED",,0
+4036,"Systèmes d'adduction d'eau et réseaux d'égouts","NON MAPPÉ","NOT MAPPED",,0
+4037,"Lignes de transmission d'énergie et de télécommunication","NON MAPPÉ","NOT MAPPED",,0
+4039,"Autres travaux de génie","NON MAPPÉ","NOT MAPPED",,0
+4210,"Travaux sur chantier","NON MAPPÉ","NOT MAPPED",,0
+4211,"Démolition","NON MAPPÉ","NOT MAPPED",,0
+4212,"Forage de puits d'eau","NON MAPPÉ","NOT MAPPED",,0
+4213,"Installation de fosses septiques","NON MAPPÉ","NOT MAPPED",,0
+4214,"Travaux d'excavation et de nivellement","NON MAPPÉ","NOT MAPPED",,0
+4215,"Location d'équipement (avec opérateur)","NON MAPPÉ","NOT MAPPED",,0
+4216,"Travaux d'asphaltage","NON MAPPÉ","NOT MAPPED",,0
+4217,"Pose de clôtures","NON MAPPÉ","NOT MAPPED",,0
+4219,"Autres travaux sur chantier","NON MAPPÉ","NOT MAPPED",,0
+4220,"Travaux de charpenterie et travaux connexes","NON MAPPÉ","NOT MAPPED",,0
+4221,"Enfoncement des pieux","NON MAPPÉ","NOT MAPPED",,0
+4222,"Travaux de coffrage","NON MAPPÉ","NOT MAPPED",,0
+4223,"Renforçage du béton à l'acier","NON MAPPÉ","NOT MAPPED",,0
+4224,"Coulage et finition du béton","NON MAPPÉ","NOT MAPPED",,0
+4225,"Mise en place de béton précontraint","NON MAPPÉ","NOT MAPPED",,0
+4226,"Gros oeuvre et charpenterie","NON MAPPÉ","NOT MAPPED",,0
+4227,"Montage de charpentes d'acier","NON MAPPÉ","NOT MAPPED",,0
+4229,"Autres travaux de charpente et travaux connexes","NON MAPPÉ","NOT MAPPED",,0
+4230,"Travaux de finition à l'extérieur","NON MAPPÉ","NOT MAPPED",,0
+4231,"Travaux de maçonnerie","NON MAPPÉ","NOT MAPPED",,0
+4232,"Pose et réparation de revêtement","NON MAPPÉ","NOT MAPPED",,0
+4233,"Installation de la verrerie et de la vitrerie","NON MAPPÉ","NOT MAPPED",,0
+4234,"Travaux d'isolation","NON MAPPÉ","NOT MAPPED",,0
+4235,"Pose de bardeaux pour toits","NON MAPPÉ","NOT MAPPED",,0
+4236,"Installation de couvertures en tôle ou en tout autre matériau","NON MAPPÉ","NOT MAPPED",,0
+4239,"Autres travaux de finition à l'extérieur","NON MAPPÉ","NOT MAPPED",,0
+4240,"Installations mécaniques","NON MAPPÉ","NOT MAPPED",,0
+4241,"Plomberie","NON MAPPÉ","NOT MAPPED",,0
+4242,"Installation de canalisations de gaz et de systèmes de chauffage à air chaud","NON MAPPÉ","NOT MAPPED",,0
+4243,"Installation de systèmes de chauffage par fluide caloporteur et de systèmes de climatisation","NON MAPPÉ","NOT MAPPED",,0
+4244,"Tôlerie et autres travaux sur conduites","NON MAPPÉ","NOT MAPPED",,0
+4250,"Travaux de mécanique spécialisée","NON MAPPÉ","NOT MAPPED",,0
+4251,"Travaux de tuyauterie industrielle","NON MAPPÉ","NOT MAPPED",,0
+4252,"Installation d'extincteurs automatiques d'incendie","NON MAPPÉ","NOT MAPPED",,0
+4253,"Installation d'équipements de réfrigération commerciale","NON MAPPÉ","NOT MAPPED",,0
+4254,"Installation d'équipements de contrôle de l'environnement","NON MAPPÉ","NOT MAPPED",,0
+4255,"Installation et montage de gros équipements","NON MAPPÉ","NOT MAPPED",,0
+4256,"Installation d'isolation thermique","NON MAPPÉ","NOT MAPPED",,0
+4259,"Autres travaux de mécanique spécialisée","NON MAPPÉ","NOT MAPPED",,0
+4260,"Travaux d'électricité","NON MAPPÉ","NOT MAPPED",,0
+4261,"Travaux d'électricité","NON MAPPÉ","NOT MAPPED",,0
+4270,"Travaux de finition à l'intérieur","NON MAPPÉ","NOT MAPPED",,0
+4271,"Plâtrage et crépissage","NON MAPPÉ","NOT MAPPED",,0
+4272,"Travaux de murs secs","NON MAPPÉ","NOT MAPPED",,0
+4273,"Pose de matériaux acoustiques","NON MAPPÉ","NOT MAPPED",,0
+4274,"Menuiserie","NON MAPPÉ","NOT MAPPED",,0
+4275,"Travaux de peinture et de décoration","NON MAPPÉ","NOT MAPPED",,0
+4276,"Pose de terrazzo et de carrelages","NON MAPPÉ","NOT MAPPED",,0
+4277,"Pose de revêtements de plancher en bois dur","NON MAPPÉ","NOT MAPPED",,0
+4278,"Pose de revêtements de sol souples et de tapis","NON MAPPÉ","NOT MAPPED",,0
+4279,"Autres travaux de finition à l'intérieur","NON MAPPÉ","NOT MAPPED",,0
+4290,"Autres travaux spécialisés","NON MAPPÉ","NOT MAPPED",,0
+4291,"Installation d'ascenseurs et d'escaliers mécaniques","NON MAPPÉ","NOT MAPPED",,0
+4292,"Installation d'éléments d'ornementation et autre pièces travaillées en métal","NON MAPPÉ","NOT MAPPED",,0
+4293,"Installation de piscines privées","NON MAPPÉ","NOT MAPPED",,0
+4299,"Autres travaux spécialisés","NON MAPPÉ","NOT MAPPED",,0
+4410,"Gestion de travaux de construction","NON MAPPÉ","NOT MAPPED",,0
+4411,"Gestion de travaux de construction","NON MAPPÉ","NOT MAPPED",,0
+4490,"Autres services relatifs à la construction","NON MAPPÉ","NOT MAPPED",,0
+4491,"Lotissement","NON MAPPÉ","NOT MAPPED",,0
+4499,"Autres services relatifs à la construction","NON MAPPÉ","NOT MAPPED",,0
+4510,"Transports aériens","NON MAPPÉ","NOT MAPPED",,0
+4511,"Transports aériens (vols réguliers ou nolisés)","NON MAPPÉ","NOT MAPPED",,0
+4513,"Transports aériens spécialisés (vols non réguliers)","NON MAPPÉ","NOT MAPPED",,0
+4520,"Services relatifs aux transports aériens","NON MAPPÉ","NOT MAPPED",,0
+4521,"Exploitation et entretien d'aéroports","NON MAPPÉ","NOT MAPPED",,0
+4522,"Location d'aéronefs","NON MAPPÉ","NOT MAPPED",,0
+4523,"Entretien d'aéronefs","NON MAPPÉ","NOT MAPPED",,0
+4529,"Autres services relatifs aux transports aériens","NON MAPPÉ","NOT MAPPED",,0
+4530,"Transports et services ferroviaires","NON MAPPÉ","NOT MAPPED",,0
+4531,"Transports ferroviaires","NON MAPPÉ","NOT MAPPED",,0
+4532,"Services relatifs aux transports ferroviaires","NON MAPPÉ","NOT MAPPED",,0
+4540,"Transports par eau","NON MAPPÉ","NOT MAPPED",,0
+4541,"Transports par eau de voyageurs et de marchandises","NON MAPPÉ","NOT MAPPED",,0
+4542,"Traversiers","NON MAPPÉ","NOT MAPPED",,0
+4543,"Remorquage maritime","NON MAPPÉ","NOT MAPPED",,0
+4544,"Affrètement de navires","NON MAPPÉ","NOT MAPPED",,0
+4549,"Autres transports par eau","NON MAPPÉ","NOT MAPPED",,0
+4550,"Services relatifs aux transports par eau","NON MAPPÉ","NOT MAPPED",,0
+4551,"Manutention de cargaisons","NON MAPPÉ","NOT MAPPED",,0
+4552,"Administration portuaire","NON MAPPÉ","NOT MAPPED",,0
+4553,"Sauvetage maritime","NON MAPPÉ","NOT MAPPED",,0
+4554,"Services de pilotage de navires","NON MAPPÉ","NOT MAPPED",,0
+4555,"Agences d'expédition maritime","NON MAPPÉ","NOT MAPPED",,0
+4559,"Autres services relatifs aux transports par eau","NON MAPPÉ","NOT MAPPED",,0
+4560,"Camionnage","NON MAPPÉ","NOT MAPPED",,0
+4561,"Camionnage de marchandises ordinaires","NON MAPPÉ","NOT MAPPED",,0
+4562,"Déménagement et entreposage de biens usagés","NON MAPPÉ","NOT MAPPED",,0
+4563,"Camionnage en vrac par camion-citerne","NON MAPPÉ","NOT MAPPED",,0
+4564,"Autres camionnages en vrac","NON MAPPÉ","NOT MAPPED",,0
+4565,"Camionnage de produits forestiers","NON MAPPÉ","NOT MAPPED",,0
+4569,"Autres camionnages","NON MAPPÉ","NOT MAPPED",,0
+4570,"Transports en commun","NON MAPPÉ","NOT MAPPED",,0
+4571,"Transports en commun urbains","NON MAPPÉ","NOT MAPPED",,0
+4572,"Transports en commun interurbains et ruraux","NON MAPPÉ","NOT MAPPED",,0
+4573,"Transports par autobus scolaires","NON MAPPÉ","NOT MAPPED",,0
+4574,"Transports par autobus nolisés et d'excursion","NON MAPPÉ","NOT MAPPED",,0
+4575,"Services de limousine aux aéroports et aux gares","NON MAPPÉ","NOT MAPPED",,0
+4580,"Autres transports","NON MAPPÉ","NOT MAPPED",,0
+4581,"Taxi","NON MAPPÉ","NOT MAPPED",,0
+4589,"Autres transports","NON MAPPÉ","NOT MAPPED",,0
+4590,"Autres services relatifs aux transports","NON MAPPÉ","NOT MAPPED",,0
+4591,"Entretien des routes","NON MAPPÉ","NOT MAPPED",,0
+4592,"Services aux commerces transitaires","NON MAPPÉ","NOT MAPPED",,0
+4599,"Autres services relatifs aux transports","NON MAPPÉ","NOT MAPPED",,0
+4610,"Transports par pipelines","NON MAPPÉ","NOT MAPPED",,0
+4611,"Transport du gaz naturel par gazoduc","NON MAPPÉ","NOT MAPPED",,0
+4612,"Transport du pétrole brut par oléoduc","NON MAPPÉ","NOT MAPPED",,0
+4619,"Autres transports par pipelines","NON MAPPÉ","NOT MAPPED",,0
+4710,"Silos a grain","NON MAPPÉ","NOT MAPPED",,0
+4711,"Silos à grain","NON MAPPÉ","NOT MAPPED",,0
+4790,"Autres services d'entreposage","NON MAPPÉ","NOT MAPPED",,0
+4791,"Entrepôts frigorifiques","NON MAPPÉ","NOT MAPPED",,0
+4799,"Autres services d'entreposage","NON MAPPÉ","NOT MAPPED",,0
+4810,"Radiodiffusion et télévision","NON MAPPÉ","NOT MAPPED",,0
+4811,"Radiodiffusion","NON MAPPÉ","NOT MAPPED",,0
+4812,"Télévision","NON MAPPÉ","NOT MAPPED",,0
+4813,"Radiodiffusion et télévision intégrées","NON MAPPÉ","NOT MAPPED",,0
+4814,"Câblovision","NON MAPPÉ","NOT MAPPED",,0
+4820,"Télégraphie et téléphonie","NON MAPPÉ","NOT MAPPED",,0
+4821,"Réseaux de télégraphie et de câbles","NON MAPPÉ","NOT MAPPED",,0
+4822,"Réseaux de téléphonie","NON MAPPÉ","NOT MAPPED",,0
+4823,"Fournisseurs de services Internet et sites portails de recherche","NON MAPPÉ","NOT MAPPED",,0
+4824,"Revendeurs de services de télécommunications","NON MAPPÉ","NOT MAPPED",,0
+4830,"Autres services des télécommunications","NON MAPPÉ","NOT MAPPED",,0
+4839,"Autres services de télécommunications","NON MAPPÉ","NOT MAPPED",,0
+4840,"Services postaux et services de messagers","NON MAPPÉ","NOT MAPPED",,0
+4841,"Services postaux","NON MAPPÉ","NOT MAPPED",,0
+4842,"Services de messagers","NON MAPPÉ","NOT MAPPED",,0
+4910,"Production et distribution d'électricité","NON MAPPÉ","NOT MAPPED",,0
+4911,"Production et distribution d'électricité","NON MAPPÉ","NOT MAPPED",,0
+4920,"Distribution de gaz","NON MAPPÉ","NOT MAPPED",,0
+4921,"Distribution de gaz","NON MAPPÉ","NOT MAPPED",,0
+4930,"Distribution d'eau","NON MAPPÉ","NOT MAPPED",,0
+4931,"Distribution d'eau","NON MAPPÉ","NOT MAPPED",,0
+4990,"Autres services publics","NON MAPPÉ","NOT MAPPED",,0
+4999,"Autres services publics","NON MAPPÉ","NOT MAPPED",,0
+5010,"Commerces de gros de produits agricoles","NON MAPPÉ","NOT MAPPED",,0
+5011,"Commerce de gros d'animaux vivants","NON MAPPÉ","NOT MAPPED",,0
+5012,"Commerce de gros de grains et céréales","NON MAPPÉ","NOT MAPPED",,0
+5013,"Commerce de gros de peaux et fourrures brutes","NON MAPPÉ","NOT MAPPED",,0
+5019,"Autres types de commerce de gros de produits agricoles","NON MAPPÉ","NOT MAPPED",,0
+5110,"Commerce de gros de produits pétroliers","NON MAPPÉ","NOT MAPPED",,0
+5111,"Commerce de gros de produits du gaz et du gaz propane","NON MAPPÉ","NOT MAPPED",,0
+5112,"Commerce de gros de produits pétroliers","NON MAPPÉ","NOT MAPPED",,0
+5210,"Commerces de gros de produits alimentaires","NON MAPPÉ","NOT MAPPED",,0
+5211,"Commerce de gros de confiseries","NON MAPPÉ","NOT MAPPED",,0
+5212,"Commerce de gros de produits alimentaires congelés et emballés","NON MAPPÉ","NOT MAPPED",,0
+5213,"Commerce de gros de produits laitiers","NON MAPPÉ","NOT MAPPED",,0
+5214,"Commerce de gros de volaille et d'œufs","NON MAPPÉ","NOT MAPPED",,0
+5215,"Commerce de gros de poissons et fruits de mer","NON MAPPÉ","NOT MAPPED",,0
+5216,"Commerce de gros de fruits et légumes frais","NON MAPPÉ","NOT MAPPED",,0
+5217,"Commerce de gros de viandes et produits de la viande","NON MAPPÉ","NOT MAPPED",,0
+5218,"Commerce de gros de produits de boulangerie et de pâtisserie","NON MAPPÉ","NOT MAPPED",,0
+5219,"Autres types de commerce de gros de produits alimentaires","NON MAPPÉ","NOT MAPPED",,0
+5220,"Commerces de gros de boissons","NON MAPPÉ","NOT MAPPED",,0
+5221,"Commerce de gros de boissons non alcooliques","NON MAPPÉ","NOT MAPPED",,0
+5222,"Commerce de gros de boissons alcooliques","NON MAPPÉ","NOT MAPPED",,0
+5223,"Grossistes-distributeurs d'autres produits alimentaires spéciaux","NON MAPPÉ","NOT MAPPED",,0
+5230,"Commerce de gros de médicaments et de produits de toilette","NON MAPPÉ","NOT MAPPED",,0
+5231,"Commerce de gros de médicaments","NON MAPPÉ","NOT MAPPED",,0
+5232,"Commerce de gros de savons et de produits de toilette","NON MAPPÉ","NOT MAPPED",,0
+5239,"Commerce de gros de produits pharmaceutiques divers et d'autres produits de toilette","NON MAPPÉ","NOT MAPPED",,0
+5240,"Commerce de gros de produits du tabac","NON MAPPÉ","NOT MAPPED",,0
+5241,"Commerce de gros de produits du tabac","NON MAPPÉ","NOT MAPPED",,0
+5310,"Commerces de gros de vêtements et de chaussures","NON MAPPÉ","NOT MAPPED",,0
+5311,"Commerce de gros de vêtements et d'articles d'habillement pour hommes","NON MAPPÉ","NOT MAPPED",,0
+5312,"Commerce de gros de vêtements de dessus pour femmes et enfants","NON MAPPÉ","NOT MAPPED",,0
+5313,"Commerce de gros de bas","NON MAPPÉ","NOT MAPPED",,0
+5314,"Commerce de gros de chaussures","NON MAPPÉ","NOT MAPPED",,0
+5315,"Commerce de gros de fourrures préparées","NON MAPPÉ","NOT MAPPED",,0
+5316,"Grossistes-distributeurs de vêtements et d'accessoires vestimentaires","NON MAPPÉ","NOT MAPPED",,0
+5319,"Autres types de commerce de gros de vêtements","NON MAPPÉ","NOT MAPPED",,0
+5320,"Commerces de gros de tissus et mercerie","NON MAPPÉ","NOT MAPPED",,0
+5321,"Commerce de gros de tissus","NON MAPPÉ","NOT MAPPED",,0
+5329,"Commerce de gros de mercerie","NON MAPPÉ","NOT MAPPED",,0
+5410,"Commerces de gros d'appareils ménagers électriques et électroniques","NON MAPPÉ","NOT MAPPED",,0
+5411,"Commerce de gros d'appareils ménagers électriques","NON MAPPÉ","NOT MAPPED",,0
+5412,"Commerce de gros d'appareils ménagers électroniques","NON MAPPÉ","NOT MAPPED",,0
+5420,"Commerce de gros de meubles de maison","NON MAPPÉ","NOT MAPPED",,0
+5421,"Commerce de gros de meubles de maison","NON MAPPÉ","NOT MAPPED",,0
+5430,"Commerces de gros d'accessoires ménagers d'ameublement","NON MAPPÉ","NOT MAPPED",,0
+5431,"Commerce de gros de porcelaine","NON MAPPÉ","NOT MAPPED",,0
+5432,"Commerce de gros de revêtements de sol","NON MAPPÉ","NOT MAPPED",,0
+5433,"Commerce de gros de linge de maison","NON MAPPÉ","NOT MAPPED",,0
+5439,"Autres types de commerce de gros d'articles ménagers","NON MAPPÉ","NOT MAPPED",,0
+5510,"Commerces de gros de véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+5511,"Commerce de gros d'automobiles","NON MAPPÉ","NOT MAPPED",,0
+5512,"Commerce de gros de camions et d'autobus","NON MAPPÉ","NOT MAPPED",,0
+5513,"Agents et courtiers (véhicules automobiles et pièces)","NON MAPPÉ","NOT MAPPED",,0
+5519,"Autres types de commerce de gros de véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+5520,"Commerces de gros de pièces et accessoires de véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+5521,"Commerce de gros de pneus et chambres à air","NON MAPPÉ","NOT MAPPED",,0
+5529,"Autres types de commerce de gros de pièces et accessoires pour véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+5610,"Commerce de gros de métaux et produits en métal","NON MAPPÉ","NOT MAPPED",,0
+5611,"Commerce de gros de formes primaires et profilés de charpente en fer et en acier","NON MAPPÉ","NOT MAPPED",,0
+5612,"Autres types de commerce de gros de produits en fer et en acier","NON MAPPÉ","NOT MAPPED",,0
+5613,"Commerce de gros de métaux non ferreux et produits en métaux non ferreux","NON MAPPÉ","NOT MAPPED",,0
+5619,"Commerce de gros d'une combinaison de métaux et produits en métal","NON MAPPÉ","NOT MAPPED",,0
+5620,"Commerces de gros d'articles de quincaillerie","NON MAPPÉ","NOT MAPPED",,0
+5621,"Commerce de gros d'articles de quincaillerie","NON MAPPÉ","NOT MAPPED",,0
+5622,"Commerce de gros de matériel et fournitures de plomberie","NON MAPPÉ","NOT MAPPED",,0
+5630,"Commerces de gros de bois et matériaux de construction","NON MAPPÉ","NOT MAPPED",,0
+5631,"Commerce de gros de bois de construction","NON MAPPÉ","NOT MAPPED",,0
+5632,"Commerce de gros de peintures","NON MAPPÉ","NOT MAPPED",,0
+5633,"Commerce de gros de bois de sciage","NON MAPPÉ","NOT MAPPED",,0
+5639,"Autres types de commerce de gros de matériaux de construction","NON MAPPÉ","NOT MAPPED",,0
+5710,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5711,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5712,"Grossistes-distributeurs de machines et de matériel pour l'agriculture","NON MAPPÉ","NOT MAPPED",,0
+5720,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5721,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5722,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5730,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5731,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5740,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5741,"Commerce de gros de fournitures pour canalisations électriques et de matériaux d'installations électriques","NON MAPPÉ","NOT MAPPED",,0
+5742,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5743,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5744,"Commerce de gros d'ordinateurs","NON MAPPÉ","NOT MAPPED",,0
+5749,"Autres types de commerce de machines","NON MAPPÉ","NOT MAPPED",,0
+5790,"Autres commerces de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5791,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5792,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5793,"Commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5794,"Grossistes-distributeurs de machines","NON MAPPÉ","NOT MAPPED",,0
+5799,"Autres types de commerce de gros de machines","NON MAPPÉ","NOT MAPPED",,0
+5910,"Commerces de gros de rebuts et de matériaux de récupération","NON MAPPÉ","NOT MAPPED",,0
+5911,"Récupération et démontage d'automobiles","NON MAPPÉ","NOT MAPPED",,0
+5912,"Commerce de gros de ferraille et vieux métaux","NON MAPPÉ","NOT MAPPED",,0
+5913,"Commerce de gros de vieux papiers et vieux cartons","NON MAPPÉ","NOT MAPPED",,0
+5919,"Autres types de commerce de gros de rebuts et matériaux de récupération","NON MAPPÉ","NOT MAPPED",,0
+5920,"Commerces de gros de papier et produits du papier","NON MAPPÉ","NOT MAPPED",,0
+5921,"Commerce de gros de papier journal","NON MAPPÉ","NOT MAPPED",,0
+5922,"Commerce de gros de papeterie et fournitures de bureau","NON MAPPÉ","NOT MAPPED",,0
+5923,"Commerce de gros de papiers fins","NON MAPPÉ","NOT MAPPED",,0
+5929,"Autres types de commerce de gros de papier et produits du papier","NON MAPPÉ","NOT MAPPED",,0
+5930,"Commerce de gros de produits chimiques et autres fournitures agricoles","NON MAPPÉ","NOT MAPPED",,0
+5931,"Commerce de gros d'aliments pour animaux","NON MAPPÉ","NOT MAPPED",,0
+5932,"Commerce de gros de semences","NON MAPPÉ","NOT MAPPED",,0
+5939,"Commerce de gros de produits chimiques et autres fournitures agricoles","NON MAPPÉ","NOT MAPPED",,0
+5940,"Commerce de gros de jouets","NON MAPPÉ","NOT MAPPED",,0
+5941,"Commerce de gros de jouets","NON MAPPÉ","NOT MAPPED",,0
+5942,"Commerce de gros d'articles de loisir et de sport","NON MAPPÉ","NOT MAPPED",,0
+5950,"Commerces de gros de matériel et fournitures photographiques","NON MAPPÉ","NOT MAPPED",,0
+5951,"Commerce de gros de matériel et fournitures photographiques","NON MAPPÉ","NOT MAPPED",,0
+5952,"Commerce de gros d'instruments et accessoires de musique","NON MAPPÉ","NOT MAPPED",,0
+5960,"Commerce de gros de bijoux et montres","NON MAPPÉ","NOT MAPPED",,0
+5961,"Commerce de gros de bijoux et de montres","NON MAPPÉ","NOT MAPPED",,0
+5970,"Commerce de gros de produits chimiques d'usage ménager et industriel","NON MAPPÉ","NOT MAPPED",,0
+5971,"Commerce de gros de produits chimiques d'usage ménager et industriel","NON MAPPÉ","NOT MAPPED",,0
+5980,"Commerce de gros de marchandises diverses","NON MAPPÉ","NOT MAPPED",,0
+5981,"Commerce de gros de marchandises diverses","NON MAPPÉ","NOT MAPPED",,0
+5990,"Autres commerces de gros","NON MAPPÉ","NOT MAPPED",,0
+5991,"Commerce de gros de livres","NON MAPPÉ","NOT MAPPED",,0
+5992,"Commerce de gros de marchandise d'occasion (sauf machines et véhicules automobiles)","NON MAPPÉ","NOT MAPPED",,0
+5993,"Commerce de gros de produits forestiers","NON MAPPÉ","NOT MAPPED",,0
+5999,"Autres types de commerce de gros","NON MAPPÉ","NOT MAPPED",,0
+6010,"Magasins d'alimentation","NON MAPPÉ","NOT MAPPED",,0
+6011,"Supermarchés d'alimentation","NON MAPPÉ","NOT MAPPED",,0
+6012,"Épiceries (sauf supermarchés)","NON MAPPÉ","NOT MAPPED",,0
+6013,"Boulangeries et pâtisseries","NON MAPPÉ","NOT MAPPED",,0
+6014,"Confiseries et magasins de noix","NON MAPPÉ","NOT MAPPED",,0
+6015,"Magasins de fruits et légumes","NON MAPPÉ","NOT MAPPED",,0
+6016,"Marchés de viande","NON MAPPÉ","NOT MAPPED",,0
+6019,"Autres magasins d'alimentation spécialisés n.c.a.","NON MAPPÉ","NOT MAPPED",,0
+6020,"Commerce de détail de boissons alcooliques","NON MAPPÉ","NOT MAPPED",,0
+6021,"Commerce de détail de boissons alcooliques","NON MAPPÉ","NOT MAPPED",,0
+6030,"Commerces de détail de médicaments sur ordonnance et de médicaments brevetés","NON MAPPÉ","NOT MAPPED",,0
+6031,"Pharmacies (type clinique et traditionnel)","NON MAPPÉ","NOT MAPPED",,0
+6032,"Pharmacies (vente de médicaments au détail et consultation)","NON MAPPÉ","NOT MAPPED",,0
+6033,"Commerce de détail de médicaments brevetés et de produits de toilette","NON MAPPÉ","NOT MAPPED",,0
+6040,"Commerce de détail des produits du tabac et des journaux","NON MAPPÉ","NOT MAPPED",,0
+6041,"Commerce de détail de produits du tabac et de journaux","NON MAPPÉ","NOT MAPPED",,0
+6110,"Commerces de détail de chaussures","NON MAPPÉ","NOT MAPPED",,0
+6111,"Commerce de détail de chaussures pour femmes","NON MAPPÉ","NOT MAPPED",,0
+6112,"Commerce de détail de chaussures pour hommes","NON MAPPÉ","NOT MAPPED",,0
+6113,"Commerce de détail de chaussures pour enfants","NON MAPPÉ","NOT MAPPED",,0
+6114,"Commerce de détail de chaussures pour la famille","NON MAPPÉ","NOT MAPPED",,0
+6120,"Commerces de détail de vêtements pour hommes","NON MAPPÉ","NOT MAPPED",,0
+6121,"Commerce de détail de vêtements pour hommes","NON MAPPÉ","NOT MAPPED",,0
+6130,"Commerces de détail de vêtements pour femmes","NON MAPPÉ","NOT MAPPED",,0
+6131,"Commerce de détail de vêtements pour femmes","NON MAPPÉ","NOT MAPPED",,0
+6132,"Commerce de détail de lingerie pour femmes","NON MAPPÉ","NOT MAPPED",,0
+6140,"Autres commerces de détail de vêtements","NON MAPPÉ","NOT MAPPED",,0
+6141,"Commerce de détail de vêtements pour enfants","NON MAPPÉ","NOT MAPPED",,0
+6142,"Commerce de détail de vêtements de fourrure","NON MAPPÉ","NOT MAPPED",,0
+6143,"Autres types de commerce de détail de vêtements","NON MAPPÉ","NOT MAPPED",,0
+6150,"Commerce de détail de tissus et de filés","NON MAPPÉ","NOT MAPPED",,0
+6151,"Commerce de détail de tissus et de filés","NON MAPPÉ","NOT MAPPED",,0
+6210,"Commerces de détail de meubles de maison","NON MAPPÉ","NOT MAPPED",,0
+6211,"Commerce de détail de meubles de maison (avec appareils ménagers et accessoires d'ameublement)","NON MAPPÉ","NOT MAPPED",,0
+6212,"Commerce de détail de meubles de maison (sans appareils ménagers ni accessoires d'ameublement)","NON MAPPÉ","NOT MAPPED",,0
+6213,"Ateliers de réparation de meubles","NON MAPPÉ","NOT MAPPED",,0
+6220,"Commerces de détail d'appareils ménagers","NON MAPPÉ","NOT MAPPED",,0
+6221,"Commerce de détail d'appareils ménagers","NON MAPPÉ","NOT MAPPED",,0
+6222,"Commerce de détail de téléviseurs","NON MAPPÉ","NOT MAPPED",,0
+6223,"Ateliers de réparation d'appareils ménagers","NON MAPPÉ","NOT MAPPED",,0
+6224,"Ateliers de réparation de téléviseurs","NON MAPPÉ","NOT MAPPED",,0
+6225,"Magasins d'appareils ménagers","NON MAPPÉ","NOT MAPPED",,0
+6226,"Magasins d'ordinateurs et de logiciels","NON MAPPÉ","NOT MAPPED",,0
+6230,"Commerces de détail d'accessoires d'ameublement","NON MAPPÉ","NOT MAPPED",,0
+6231,"Commerce de détail de revêtements de sol","NON MAPPÉ","NOT MAPPED",,0
+6232,"Commerce de détail de tentures","NON MAPPÉ","NOT MAPPED",,0
+6233,"Commerce de détail d'appareils d'éclairage électrique","NON MAPPÉ","NOT MAPPED",,0
+6239,"Autres types de commerce de détail d'accessoires d'ameublement","NON MAPPÉ","NOT MAPPED",,0
+6310,"Concessionnaires d'automobiles","NON MAPPÉ","NOT MAPPED",,0
+6311,"Concessionnaires d'automobiles neuves","NON MAPPÉ","NOT MAPPED",,0
+6312,"Concessionnaires d'automobiles d'occasion","NON MAPPÉ","NOT MAPPED",,0
+6320,"Commerces de détail de véhicules de loisir","NON MAPPÉ","NOT MAPPED",,0
+6321,"Commerce de détail de roulottes motorisées et de roulottes de voyage","NON MAPPÉ","NOT MAPPED",,0
+6322,"Commerce de détail de bateaux","NON MAPPÉ","NOT MAPPED",,0
+6323,"Commerce de détail de motocyclettes et de motoneiges","NON MAPPÉ","NOT MAPPED",,0
+6329,"Autres types de commerce de détail de véhicules de loisir","NON MAPPÉ","NOT MAPPED",,0
+6330,"Stations-service","NON MAPPÉ","NOT MAPPED",,0
+6331,"Stations-service","NON MAPPÉ","NOT MAPPED",,0
+6340,"Commerces de détail de pièces et d'accessoires pour véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+6341,"Commerce de détail de fournitures pour la maison et pour l'automobile","NON MAPPÉ","NOT MAPPED",,0
+6342,"Commerce de détails de pneus","NON MAPPÉ","NOT MAPPED",,0
+6343,"Commerce de détail de pneus","NON MAPPÉ","NOT MAPPED",,0
+6350,"Ateliers de réparation de véhicules automobile","NON MAPPÉ","NOT MAPPED",,0
+6351,"Garages (réparations générales)","NON MAPPÉ","NOT MAPPED",,0
+6352,"Ateliers de peinture et de carrosserie","NON MAPPÉ","NOT MAPPED",,0
+6353,"Ateliers de remplacement de silencieux","NON MAPPÉ","NOT MAPPED",,0
+6354,"Ateliers de remplacement de glaces de véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+6355,"Ateliers de réparation et de remplacement de boîtes de vitesses de véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+6359,"Autres ateliers de réparation de véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+6390,"Autres commerces de détail pour véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+6391,"Lave-autos","NON MAPPÉ","NOT MAPPED",,0
+6392,"Commerce de détail de radios pour véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+6399,"Autres types de commerce de détail pour véhicules automobiles","NON MAPPÉ","NOT MAPPED",,0
+6410,"Commerces de détail de marchandises diverses","NON MAPPÉ","NOT MAPPED",,0
+6411,"Magasins à rayons","NON MAPPÉ","NOT MAPPED",,0
+6412,"Magasins généraux","NON MAPPÉ","NOT MAPPED",,0
+6413,"Autres magasins de marchandises diverses","NON MAPPÉ","NOT MAPPED",,0
+6510,"Librairies et papeteries","NON MAPPÉ","NOT MAPPED",,0
+6511,"Librairies et papeteries","NON MAPPÉ","NOT MAPPED",,0
+6520,"Fleuristes et centres de jardinage","NON MAPPÉ","NOT MAPPED",,0
+6521,"Fleuristes","NON MAPPÉ","NOT MAPPED",,0
+6522,"Centres de jardinage","NON MAPPÉ","NOT MAPPED",,0
+6530,"Commerces de détail de quincaillerie","NON MAPPÉ","NOT MAPPED",,0
+6531,"Quincailleries","NON MAPPÉ","NOT MAPPED",,0
+6532,"Commerce de détail de peinture","NON MAPPÉ","NOT MAPPED",,0
+6533,"Commerce de détail de bois et de matériaux de construction","NON MAPPÉ","NOT MAPPED",,0
+6534,"Marchands d'autres matériaux de construction","NON MAPPÉ","NOT MAPPED",,0
+6540,"Commerces de détail d'articles de sport et de bicyclettes","NON MAPPÉ","NOT MAPPED",,0
+6541,"Commerce de détail d'articles de sport","NON MAPPÉ","NOT MAPPED",,0
+6542,"Commerce de détail de bicyclettes","NON MAPPÉ","NOT MAPPED",,0
+6550,"Commerces de détail d'instruments de musique et disques","NON MAPPÉ","NOT MAPPED",,0
+6551,"Commerce de détail d'instruments de musique","NON MAPPÉ","NOT MAPPED",,0
+6552,"Commerce de détail de disques et de bandes magnétiques","NON MAPPÉ","NOT MAPPED",,0
+6560,"Bijouteries et ateliers de réparation de montres et de bijoux","NON MAPPÉ","NOT MAPPED",,0
+6561,"Bijouteries","NON MAPPÉ","NOT MAPPED",,0
+6562,"Ateliers de réparation de montres et de bijoux","NON MAPPÉ","NOT MAPPED",,0
+6570,"Commerce de détail d'appareils et de fournitures photographiques","NON MAPPÉ","NOT MAPPED",,0
+6571,"Commerce de détail d'appareils et de fournitures photographiques","NON MAPPÉ","NOT MAPPED",,0
+6580,"Commerces de détail de jouets","NON MAPPÉ","NOT MAPPED",,0
+6581,"Commerce de détail de jouets et d'articles de loisir","NON MAPPÉ","NOT MAPPED",,0
+6582,"Commerce de détail d'objets d'art et d'artisanat","NON MAPPÉ","NOT MAPPED",,0
+6585,"Magasins de matériel d'encadrement","NON MAPPÉ","NOT MAPPED",,0
+6590,"Autres commerces de détail","NON MAPPÉ","NOT MAPPED",,0
+6591,"Commerce de détail de marchandise d'occasion","NON MAPPÉ","NOT MAPPED",,0
+6592,"Commerce de détail de produits optiques","NON MAPPÉ","NOT MAPPED",,0
+6593,"Galeries d'art et magasins de fournitures pour artistes","NON MAPPÉ","NOT MAPPED",,0
+6594,"Commerce de détail de bagages et de maroquinerie","NON MAPPÉ","NOT MAPPED",,0
+6595,"Commerce de détail de monuments funéraires et de pierres tombales","NON MAPPÉ","NOT MAPPED",,0
+6596,"Commerce de détail d'animaux de maison","NON MAPPÉ","NOT MAPPED",,0
+6597,"Commerce de détail de pièces de monnaie et de timbres","NON MAPPÉ","NOT MAPPED",,0
+6598,"Commerce de détail de maisons mobiles","NON MAPPÉ","NOT MAPPED",,0
+6599,"Autres types de commerce de détail","NON MAPPÉ","NOT MAPPED",,0
+6910,"Exploitants de distributeurs automatiques","NON MAPPÉ","NOT MAPPED",,0
+6911,"Exploitants de distributeurs automatiques","NON MAPPÉ","NOT MAPPED",,0
+6920,"Entreprises de vente directe","NON MAPPÉ","NOT MAPPED",,0
+6921,"Entreprises de vente directe","NON MAPPÉ","NOT MAPPED",,0
+7010,"Banque centrale","NON MAPPÉ","NOT MAPPED",,0
+7011,"Banque centrale","NON MAPPÉ","NOT MAPPED",,0
+7020,"Banques à charte et autres intermédiaires de type bancaire","NON MAPPÉ","NOT MAPPED",,0
+7021,"Banques à charte","NON MAPPÉ","NOT MAPPED",,0
+7029,"Autres intermédiaires de type bancaire","NON MAPPÉ","NOT MAPPED",,0
+7030,"Sociétés de fiducie","NON MAPPÉ","NOT MAPPED",,0
+7031,"Sociétés de fiducie","NON MAPPÉ","NOT MAPPED",,0
+7040,"Sociétés de prêts hypothécaires recevant des dépôts","NON MAPPÉ","NOT MAPPED",,0
+7041,"Sociétés de prêts hypothécaires recevant des dépôts","NON MAPPÉ","NOT MAPPED",,0
+7050,"Caisses d'épargne et de crédit","NON MAPPÉ","NOT MAPPED",,0
+7051,"Caisses locales d'épargne et de crédit","NON MAPPÉ","NOT MAPPED",,0
+7052,"Caisses centrales d'épargne et de crédit","NON MAPPÉ","NOT MAPPED",,0
+7110,"Sociétés de prêts à la consommation","NON MAPPÉ","NOT MAPPED",,0
+7111,"Sociétés de prêts à la consommation","NON MAPPÉ","NOT MAPPED",,0
+7120,"Sociétés de financement des entreprises","NON MAPPÉ","NOT MAPPED",,0
+7121,"Sociétés de financement des ventes","NON MAPPÉ","NOT MAPPED",,0
+7122,"Sociétés de cartes de crédit","NON MAPPÉ","NOT MAPPED",,0
+7123,"Sociétés d'affacturage","NON MAPPÉ","NOT MAPPED",,0
+7124,"Sociétés de crédit-bail","NON MAPPÉ","NOT MAPPED",,0
+7125,"Sociétés de capital de risque","NON MAPPÉ","NOT MAPPED",,0
+7129,"Autres sociétés de financement des entreprises","NON MAPPÉ","NOT MAPPED",,0
+7210,"Sociétés de placement de portefeuille","NON MAPPÉ","NOT MAPPED",,0
+7211,"Sociétés de placement (fonds mutuels)","NON MAPPÉ","NOT MAPPED",,0
+7212,"Fonds d'épargne-retraite","NON MAPPÉ","NOT MAPPED",,0
+7213,"Caisses séparées","NON MAPPÉ","NOT MAPPED",,0
+7214,"Sociétés d'investissement","NON MAPPÉ","NOT MAPPED",,0
+7215,"Sociétés de portefeuille (holdings)","NON MAPPÉ","NOT MAPPED",,0
+7220,"Sociétés de prêts hypothécaires","NON MAPPÉ","NOT MAPPED",,0
+7221,"Sociétés de placement hypothécaire","NON MAPPÉ","NOT MAPPED",,0
+7222,"Fiducies de placement immobilier","NON MAPPÉ","NOT MAPPED",,0
+7229,"Autres sociétés de prêts hypothécaires","NON MAPPÉ","NOT MAPPED",,0
+7290,"Autres intermédiaires d'investissement","NON MAPPÉ","NOT MAPPED",,0
+7291,"Caisses de retraite en fiducie","NON MAPPÉ","NOT MAPPED",,0
+7292,"Fonds de succession","NON MAPPÉ","NOT MAPPED",,0
+7299,"Autres intermédiaires d'investissement","NON MAPPÉ","NOT MAPPED",,0
+7310,"Sociétés d'assurance-vie","NON MAPPÉ","NOT MAPPED",,0
+7311,"Sociétés d'assurance-vie","NON MAPPÉ","NOT MAPPED",,0
+7320,"Sociétés d'assurance-dépôts","NON MAPPÉ","NOT MAPPED",,0
+7321,"Sociétés d'assurance-dépôts","NON MAPPÉ","NOT MAPPED",,0
+7330,"Sociétés d'assurance biens et risques divers","NON MAPPÉ","NOT MAPPED",,0
+7331,"Sociétés d'assurance-maladie","NON MAPPÉ","NOT MAPPED",,0
+7339,"Autres sociétés d'assurance biens et risques divers","NON MAPPÉ","NOT MAPPED",,0
+7410,"Courtiers et négociant en valeurs mobilières","NON MAPPÉ","NOT MAPPED",,0
+7411,"Négociants de titres","NON MAPPÉ","NOT MAPPED",,0
+7412,"Courtiers boursiers","NON MAPPÉ","NOT MAPPED",,0
+7413,"Courtiers en marchandises","NON MAPPÉ","NOT MAPPED",,0
+7414,"Commerce de contrats de marchandises","NON MAPPÉ","NOT MAPPED",,0
+7420,"Courtiers en prêts hypothécaires","NON MAPPÉ","NOT MAPPED",,0
+7421,"Agences ou courtiers en prêts hypothécaires","NON MAPPÉ","NOT MAPPED",,0
+7430,"Bourses des valeurs et des marchandises","NON MAPPÉ","NOT MAPPED",,0
+7431,"Bourses des valeurs","NON MAPPÉ","NOT MAPPED",,0
+7432,"Bourses des marchandises","NON MAPPÉ","NOT MAPPED",,0
+7490,"Autres intermédiaires financiers","NON MAPPÉ","NOT MAPPED",,0
+7499,"Autres intermédiaires financiers","NON MAPPÉ","NOT MAPPED",,0
+7510,"Exploitants de bâtiments et de logements","NON MAPPÉ","NOT MAPPED",,0
+7511,"Exploitants de bâtiments résidentiels et de logements","NON MAPPÉ","NOT MAPPED",,0
+7512,"Exploitants de bâtiments non résidentiels","NON MAPPÉ","NOT MAPPED",,0
+7590,"Autres exploitants immobiliers","NON MAPPÉ","NOT MAPPED",,0
+7599,"Autres exploitants immobiliers","NON MAPPÉ","NOT MAPPED",,0
+7610,"Agences d'assurances et agences immobilières","NON MAPPÉ","NOT MAPPED",,0
+7611,"Agences d'assurances","NON MAPPÉ","NOT MAPPED",,0
+7612,"Agences ou courtiers immobiliers","NON MAPPÉ","NOT MAPPED",,0
+7613,"Experts en sinistres","NON MAPPÉ","NOT MAPPED",,0
+7614,"Évaluateurs agréés","NON MAPPÉ","NOT MAPPED",,0
+7710,"Bureaux de placement et services de location de personnel","NON MAPPÉ","NOT MAPPED",,0
+7711,"Bureaux de placement","NON MAPPÉ","NOT MAPPED",,0
+7712,"Services de location de personnel","NON MAPPÉ","NOT MAPPED",,0
+7720,"Services d'informatique et services connexes","NON MAPPÉ","NOT MAPPED",,0
+7721,"Services d'informatique","NON MAPPÉ","NOT MAPPED",,0
+7722,"Réparation et entretien de matériel informatique","NON MAPPÉ","NOT MAPPED",,0
+7730,"Services de comptabilité et de tenue de livres","NON MAPPÉ","NOT MAPPED",,0
+7731,"Bureaux de comptables","NON MAPPÉ","NOT MAPPED",,0
+7732,"Bureaux de comptables professionnels agréés","NON MAPPÉ","NOT MAPPED",,0
+7739,"Autres services de comptabilité et de tenue de livres","NON MAPPÉ","NOT MAPPED",,0
+7740,"Services de publicité","NON MAPPÉ","NOT MAPPED",,0
+7741,"Agences de publicité","NON MAPPÉ","NOT MAPPED",,0
+7742,"Représentants de médias","NON MAPPÉ","NOT MAPPED",,0
+7743,"Étalages et panneaux d'affichage publicitaire en extérieur","NON MAPPÉ","NOT MAPPED",,0
+7748,"Bureaux d'urbanistes","NON MAPPÉ","NOT MAPPED",,0
+7749,"Autres services de publicité","NON MAPPÉ","NOT MAPPED",,0
+7750,"Bureaux d'architectes","NON MAPPÉ","NOT MAPPED",,0
+7751,"Bureaux d'architectes","NON MAPPÉ","NOT MAPPED",,0
+7752,"Bureaux d'ingénieurs","NON MAPPÉ","NOT MAPPED",,0
+7753,"Services de laboratoires de recherches","NON MAPPÉ","NOT MAPPED",,0
+7754,"Services de prospection et de relevés géophysiques et géodésiques","NON MAPPÉ","NOT MAPPED",,0
+7755,"Bureaux d'arpenteurs-géomètres","NON MAPPÉ","NOT MAPPED",,0
+7756,"Bureaux de chimistes ou de chimistes professionnels","NON MAPPÉ","NOT MAPPED",,0
+7757,"Services de géologues","NON MAPPÉ","NOT MAPPED",,0
+7758,"Bureaux d'ingénieurs forestiers","NON MAPPÉ","NOT MAPPED",,0
+7759,"Autres services techniques","NON MAPPÉ","NOT MAPPED",,0
+7760,"Études d'avocats et de notaires","NON MAPPÉ","NOT MAPPED",,0
+7761,"Études d'avocats ou de notaires","NON MAPPÉ","NOT MAPPED",,0
+7762,"Bureaux de technologues professionnels","NON MAPPÉ","NOT MAPPED",,0
+7763,"Huissiers de justice","NON MAPPÉ","NOT MAPPED",,0
+7770,"Bureaux de conseillers","NON MAPPÉ","NOT MAPPED",,0
+7771,"Bureaux de conseillers en gestion","NON MAPPÉ","NOT MAPPED",,0
+7772,"Bureaux d'administrateurs agréés","NON MAPPÉ","NOT MAPPED",,0
+7773,"Bureaux de conseillers en ressources humaines agréés ou de conseillers en relations industrielles agréés","NON MAPPÉ","NOT MAPPED",,0
+7774,"Bureaux d’évaluateurs agréés ou d’estimateurs agréés","NON MAPPÉ","NOT MAPPED",,0
+7790,"Autres services aux entreprises","NON MAPPÉ","NOT MAPPED",,0
+7791,"Services de sécurité et d'enquêtes","NON MAPPÉ","NOT MAPPED",,0
+7792,"Bureaux de crédit","NON MAPPÉ","NOT MAPPED",,0
+7793,"Agences de recouvrement","NON MAPPÉ","NOT MAPPED",,0
+7794,"Courtiers en douane","NON MAPPÉ","NOT MAPPED",,0
+7795,"Services de secrétariat téléphonique","NON MAPPÉ","NOT MAPPED",,0
+7796,"Services de reproduction","NON MAPPÉ","NOT MAPPED",,0
+7797,"Autres services spécialisés de design","NON MAPPÉ","NOT MAPPED",,0
+7798,"Traducteurs agréés","NON MAPPÉ","NOT MAPPED",,0
+7799,"Autres services aux entreprises","NON MAPPÉ","NOT MAPPED",,0
+8110,"Services de défense","NON MAPPÉ","NOT MAPPED",,0
+8111,"Services de défense","NON MAPPÉ","NOT MAPPED",,0
+8120,"Services de protection","NON MAPPÉ","NOT MAPPED",,0
+8121,"Tribunaux","NON MAPPÉ","NOT MAPPED",,0
+8122,"Services correctionnels","NON MAPPÉ","NOT MAPPED",,0
+8123,"Services de police","NON MAPPÉ","NOT MAPPED",,0
+8125,"Services de réglementation","NON MAPPÉ","NOT MAPPED",,0
+8129,"Autres services de protection","NON MAPPÉ","NOT MAPPED",,0
+8130,"Services relatifs au travail et à l'emploi et services d'immigration","NON MAPPÉ","NOT MAPPED",,0
+8131,"Services relatifs au travail et à l'emploi","NON MAPPÉ","NOT MAPPED",,0
+8132,"Services d'immigration","NON MAPPÉ","NOT MAPPED",,0
+8139,"Autres services relatifs au travail","NON MAPPÉ","NOT MAPPED",,0
+8140,"Affaires étrangères et aide internationale","NON MAPPÉ","NOT MAPPED",,0
+8141,"Affaires étrangères","NON MAPPÉ","NOT MAPPED",,0
+8142,"Aide internationale","NON MAPPÉ","NOT MAPPED",,0
+8150,"Services administratifs généraux","NON MAPPÉ","NOT MAPPED",,0
+8151,"Organismes des pouvoirs exécutif et législatif","NON MAPPÉ","NOT MAPPED",,0
+8152,"Gestion des finances et de l'économie","NON MAPPÉ","NOT MAPPED",,0
+8153,"Gestion de la fiscalité","NON MAPPÉ","NOT MAPPED",,0
+8154,"Gestion des affaires intergouvernementales","NON MAPPÉ","NOT MAPPED",,0
+8159,"Autres services administratifs généraux","NON MAPPÉ","NOT MAPPED",,0
+8160,"Gestion des ressources humaines","NON MAPPÉ","NOT MAPPED",,0
+8161,"Gestion des services de santé","NON MAPPÉ","NOT MAPPED",,0
+8162,"Gestion des services sociaux","NON MAPPÉ","NOT MAPPED",,0
+8163,"Gestion de l'éducation","NON MAPPÉ","NOT MAPPED",,0
+8164,"Gestion des loisirs et de la culture","NON MAPPÉ","NOT MAPPED",,0
+8170,"Gestion des services économiques","NON MAPPÉ","NOT MAPPED",,0
+8171,"Gestion des transports et des communications","NON MAPPÉ","NOT MAPPED",,0
+8172,"Gestion des programmes de conservation des richesses naturelles et de développement industriel","NON MAPPÉ","NOT MAPPED",,0
+8173,"Gestion de l'environnement","NON MAPPÉ","NOT MAPPED",,0
+8174,"Gestion de l'habitation","NON MAPPÉ","NOT MAPPED",,0
+8175,"Gestion de l'aménagement et de mise en valeur du territoire","NON MAPPÉ","NOT MAPPED",,0
+8176,"Gestion de la recherche","NON MAPPÉ","NOT MAPPED",,0
+8220,"Services de protection","NON MAPPÉ","NOT MAPPED",,0
+8221,"Tribunaux","NON MAPPÉ","NOT MAPPED",,0
+8222,"Services correctionnels","NON MAPPÉ","NOT MAPPED",,0
+8223,"Services de police","NON MAPPÉ","NOT MAPPED",,0
+8224,"Services de lutte contre l'incendie","NON MAPPÉ","NOT MAPPED",,0
+8225,"Services de réglementation","NON MAPPÉ","NOT MAPPED",,0
+8229,"Autres services de protection","NON MAPPÉ","NOT MAPPED",,0
+8230,"Services relatifs au travail et à l'emploi","NON MAPPÉ","NOT MAPPED",,0
+8231,"Services relatifs au travail et à l'emploi","NON MAPPÉ","NOT MAPPED",,0
+8250,"Services administratifs généraux","NON MAPPÉ","NOT MAPPED",,0
+8251,"Organismes des pouvoirs exécutif et législatif","NON MAPPÉ","NOT MAPPED",,0
+8252,"Gestion des finances et de l'économie","NON MAPPÉ","NOT MAPPED",,0
+8253,"Gestion de la fiscalité","NON MAPPÉ","NOT MAPPED",,0
+8254,"Gestion des affaires intergouvernementales","NON MAPPÉ","NOT MAPPED",,0
+8259,"Autres services administratifs généraux","NON MAPPÉ","NOT MAPPED",,0
+8260,"Gestion des ressources humaines","NON MAPPÉ","NOT MAPPED",,0
+8261,"Gestion des services de santé","NON MAPPÉ","NOT MAPPED",,0
+8262,"Gestion des services sociaux","NON MAPPÉ","NOT MAPPED",,0
+8263,"Gestion de l'éducation","NON MAPPÉ","NOT MAPPED",,0
+8264,"Gestion des loisirs et de la culture","NON MAPPÉ","NOT MAPPED",,0
+8270,"Gestion des services économiques","NON MAPPÉ","NOT MAPPED",,0
+8271,"Gestion des transports et des communications","NON MAPPÉ","NOT MAPPED",,0
+8272,"Gestion des programmes de conservation des richesses naturelles et de développement industriel","NON MAPPÉ","NOT MAPPED",,0
+8273,"Gestion de l'environnement","NON MAPPÉ","NOT MAPPED",,0
+8274,"Gestion de l'habitation","NON MAPPÉ","NOT MAPPED",,0
+8275,"Gestion de l'aménagement et de la mise en valeur du territoire","NON MAPPÉ","NOT MAPPED",,0
+8276,"Gestion de la recherche","NON MAPPÉ","NOT MAPPED",,0
+8320,"Services de protection","NON MAPPÉ","NOT MAPPED",,0
+8321,"Tribunaux et services correctionnels","NON MAPPÉ","NOT MAPPED",,0
+8322,"Services de criminologie","NON MAPPÉ","NOT MAPPED",,0
+8323,"Services de police","NON MAPPÉ","NOT MAPPED",,0
+8324,"Services de lutte contre l'incendie","NON MAPPÉ","NOT MAPPED",,0
+8325,"Services de réglementation","NON MAPPÉ","NOT MAPPED",,0
+8329,"Autres services de protection","NON MAPPÉ","NOT MAPPED",,0
+8350,"Services administratifs généraux","NON MAPPÉ","NOT MAPPED",,0
+8351,"Organismes des pouvoirs exécutif et législatif","NON MAPPÉ","NOT MAPPED",,0
+8352,"Gestion des finances et de l'économie","NON MAPPÉ","NOT MAPPED",,0
+8353,"Gestion de la fiscalité","NON MAPPÉ","NOT MAPPED",,0
+8354,"Gestion des affaires intergouvernementales","NON MAPPÉ","NOT MAPPED",,0
+8359,"Autres services administratifs généraux","NON MAPPÉ","NOT MAPPED",,0
+8360,"Gestion des ressources humaines","NON MAPPÉ","NOT MAPPED",,0
+8361,"Gestion des services de santé","NON MAPPÉ","NOT MAPPED",,0
+8362,"Gestion des services sociaux","NON MAPPÉ","NOT MAPPED",,0
+8363,"Gestion de l'éducation","NON MAPPÉ","NOT MAPPED",,0
+8364,"Gestion des loisirs et de la culture","NON MAPPÉ","NOT MAPPED",,0
+8370,"Gestion des services économiques","NON MAPPÉ","NOT MAPPED",,0
+8371,"Gestion des transports","NON MAPPÉ","NOT MAPPED",,0
+8372,"Gestion des programmes de conservation des richesses naturelles et de développement industriel","NON MAPPÉ","NOT MAPPED",,0
+8373,"Gestion de l'environnement","NON MAPPÉ","NOT MAPPED",,0
+8374,"Gestion de l'habitation","NON MAPPÉ","NOT MAPPED",,0
+8375,"Gestion de l'aménagement et de la mise en valeur du territoire","NON MAPPÉ","NOT MAPPED",,0
+8410,"Organismes internationaux et autres organismes extraterritoriaux","NON MAPPÉ","NOT MAPPED",,0
+8411,"Organismes internationaux et autres organismes extraterritoriaux","NON MAPPÉ","NOT MAPPED",,0
+8510,"Enseignement aux niveaux de la  maternelle","NON MAPPÉ","NOT MAPPED",,0
+8511,"Enseignement maternel","NON MAPPÉ","NOT MAPPED",,0
+8520,"Enseignement postsecondaire non universitaire","NON MAPPÉ","NOT MAPPED",,0
+8521,"Enseignement postsecondaire non universitaire","NON MAPPÉ","NOT MAPPED",,0
+8530,"Enseignement universitaire","NON MAPPÉ","NOT MAPPED",,0
+8531,"Enseignement universitaire","NON MAPPÉ","NOT MAPPED",,0
+8540,"Enseignement de formation personnelle et populaire","NON MAPPÉ","NOT MAPPED",,0
+8541,"Enseignement de formation personnelle et populaire","NON MAPPÉ","NOT MAPPED",,0
+8550,"Musées et archives","NON MAPPÉ","NOT MAPPED",,0
+8551,"Musées et archives","NON MAPPÉ","NOT MAPPED",,0
+8560,"Bibliothèques","NON MAPPÉ","NOT MAPPED",,0
+8561,"Bibliothèques","NON MAPPÉ","NOT MAPPED",,0
+8590,"Autres services d'enseignement","NON MAPPÉ","NOT MAPPED",,0
+8591,"Autres services d'enseignement","NON MAPPÉ","NOT MAPPED",,0
+8610,"Centres hospitaliers","NON MAPPÉ","NOT MAPPED",,0
+8611,"Centres hospitaliers de soins de courte durée","NON MAPPÉ","NOT MAPPED",,0
+8613,"Centres hospitaliers de soins prolongés pour convalescents","NON MAPPÉ","NOT MAPPED",,0
+8614,"Centres hospitaliers de soins prolongés pour malades à long terme","NON MAPPÉ","NOT MAPPED",,0
+8620,"Centres d'accueil","NON MAPPÉ","NOT MAPPED",,0
+8621,"Centres de transition","NON MAPPÉ","NOT MAPPED",,0
+8622,"Centres de réadaptation pour handicapés physiques","NON MAPPÉ","NOT MAPPED",,0
+8624,"Centres de réadaptation pour handicapés mentaux","NON MAPPÉ","NOT MAPPED",,0
+8625,"Centres de réadaptation pour mésadaptés sociaux","NON MAPPÉ","NOT MAPPED",,0
+8626,"Centres de réadaptation pour alcooliques et toxicomanes","NON MAPPÉ","NOT MAPPED",,0
+8627,"Centre d'hébergement pour des personnes victimes de violences","NON MAPPÉ","NOT MAPPED",,0
+8628,"Centre d'hébergement","NON MAPPÉ","NOT MAPPED",,0
+8629,"Centre d'aide et de lutte contre les agressions à caractère sexuel et centre d'aide aux victimes (CALACS)","NON MAPPÉ","NOT MAPPED",,0
+8630,"Services de soins de santé hors institution","NON MAPPÉ","NOT MAPPED",,0
+8631,"Centres locaux de services communautaires","NON MAPPÉ","NOT MAPPED",,0
+8632,"Sages-femmes","NON MAPPÉ","NOT MAPPED",,0
+8633,"Technologues en imagerie médicale dans le domaine du radiodiagnostic","NON MAPPÉ","NOT MAPPED",,0
+8640,"Services sociaux hors institution","NON MAPPÉ","NOT MAPPED",,0
+8641,"Garderies pour enfants","NON MAPPÉ","NOT MAPPED",,0
+8644,"Centres de travail adapté","NON MAPPÉ","NOT MAPPED",,0
+8645,"Services de maintien à domicile","NON MAPPÉ","NOT MAPPED",,0
+8648,"Services d'aide de nature affective ou psychologique","NON MAPPÉ","NOT MAPPED",,0
+8649,"Centres de services sociaux","NON MAPPÉ","NOT MAPPED",,0
+8650,"Cabinets privés de médecins","NON MAPPÉ","NOT MAPPED",,0

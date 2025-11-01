@@ -41,24 +41,19 @@
 }
 
 .star-full {
-  color: #fbbf24;
+  color: #fbbf24 !important;
 }
 
 .star-half {
-  color: #fbbf24;
-  position: relative;
-}
-
-.star-half::after {
-  content: '☆';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  color: #d1d5db;
+  background: linear-gradient(90deg, #fbbf24 50%, #d1d5db 50%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
 }
 
 .star-empty {
-  color: #d1d5db;
+  color: #d1d5db !important;
 }
 
 .rating-info {

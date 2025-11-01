@@ -25,7 +25,7 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
+    const hasHalfStar = rating % 1 >= 0.3; // Lower threshold for half star display
 
     for (let i = 1; i <= 5; i++) {
       if (i <= fullStars) {
@@ -38,7 +38,7 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
         );
       } else {
         stars.push(
-          <span key={i} className="star star-empty">☆</span>
+          <span key={i} className="star star-empty">★</span>
         );
       }
     }
@@ -50,7 +50,9 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
     return null;
   }
 
-  const currentReview = reviews && reviews.length > 0 ? reviews[currentReviewIndex] : null;
+  // Display up to 5 reviews in carousel
+  const reviewsToShow = reviews && reviews.length > 0 ? reviews.slice(0, 5) : [];
+  const currentReview = reviewsToShow.length > 0 ? reviewsToShow[currentReviewIndex] : null;
 
   return (
     <div className="google-reviews-section">
@@ -69,13 +71,6 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
         <div className="reviews-carousel">
           <div className="review-card">
             <div className="review-header">
-              {currentReview.profile_photo_url && (
-                <img
-                  src={currentReview.profile_photo_url}
-                  alt={currentReview.author_name}
-                  className="reviewer-photo"
-                />
-              )}
               <div className="reviewer-info">
                 <div className="reviewer-name">{currentReview.author_name}</div>
                 <div className="review-rating">{renderStars(currentReview.rating)}</div>
@@ -90,7 +85,7 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
           </div>
 
           {/* Carousel Controls */}
-          {reviews && reviews.length > 1 && (
+          {reviewsToShow.length > 1 && (
             <>
               <div className="carousel-navigation">
                 <button
@@ -101,7 +96,7 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
                   ‹
                 </button>
                 <div className="carousel-indicators">
-                  {reviews.map((_, index) => (
+                  {reviewsToShow.map((_, index) => (
                     <button
                       key={index}
                       className={`carousel-indicator ${index === currentReviewIndex ? 'active' : ''}`}
@@ -119,7 +114,7 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
                 </button>
               </div>
               <div className="carousel-counter">
-                {currentReviewIndex + 1} / {reviews.length}
+                {currentReviewIndex + 1} / {reviewsToShow.length}
               </div>
             </>
           )}
