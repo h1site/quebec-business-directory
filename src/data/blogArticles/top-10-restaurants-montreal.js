@@ -295,8 +295,6 @@ export const top10RestaurantsMontreal = {
       },
       content: {
         fr: `
-          <h2>Autres Mentions</h2>
-
           <p>Ces restaurants méritent également votre attention pour leurs spécialités uniques :</p>
 
           <h3>Steak Frites St-Paul - Bistro Viande</h3>
@@ -322,8 +320,6 @@ export const top10RestaurantsMontreal = {
           <p><strong>$$</strong> | 📍 7093 rue Saint-Denis, Montréal</p>
         `,
         en: `
-          <h2>Other Mentions</h2>
-
           <p>These restaurants also deserve your attention for their unique specialties:</p>
 
           <h3>Steak Frites St-Paul - Meat Bistro</h3>
