@@ -9,7 +9,6 @@ export const reclamerFicheArticle = {
   publishedDate: '2025-11-01',
   lastUpdated: '2025-11-01',
   author: 'Registre du Québec',
-  readTime: '7 min',
 
   // SEO metadata
   seo: {
