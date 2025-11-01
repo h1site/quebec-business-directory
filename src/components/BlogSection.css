@@ -1,7 +1,8 @@
 .blog-section {
   padding: 80px 20px;
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  min-height: 700px;
+  min-height: 850px;
+  contain-intrinsic-size: 850px;
 }
 
 .blog-container {

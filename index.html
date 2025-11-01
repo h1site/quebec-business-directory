@@ -107,11 +107,18 @@
     <!-- Preload critical resources -->
     <link rel="modulepreload" href="/src/main.jsx" />
 
+    <!-- Preload critical font to prevent FOIT/FOUT -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Preload LCP hero image -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=80" fetchpriority="high" />
+
     <!-- Critical CSS inline for faster FCP -->
     <style>
       /* Critical above-the-fold CSS */
       :root {
         font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-display: swap;
         line-height: 1.5;
         font-weight: 400;
         color: #1f2933;
