@@ -50,6 +50,8 @@ Clique **"Run"**. Tu devrais voir le résultat "rennai cafe".
 
 ### Étape 3: Créer les index
 
+**IMPORTANT**: Cette étape peut prendre 2-3 minutes (création d'index sur 480k entreprises).
+
 Nouvelle query, copie-colle:
 
 ```sql
@@ -70,7 +72,7 @@ ON businesses (
 );
 ```
 
-Clique **"Run"**. Ça peut prendre 1-2 minutes (création d'index sur 480k entreprises).
+Clique **"Run"** et attends que ça termine (2-3 minutes). Ne ferme pas la fenêtre!
 
 ---
 

@@ -40,4 +40,8 @@ ON businesses USING gin(to_tsvector('simple', normalize_text(address)));
 CREATE INDEX IF NOT EXISTS idx_businesses_priority
 ON businesses (is_claimed DESC NULLS LAST, (CASE WHEN source = 'manual' THEN 1 ELSE 0 END) DESC, created_at DESC);
 
-RAISE NOTICE 'Index créés avec succès!';
+-- Message de succès
+DO $$
+BEGIN
+  RAISE NOTICE 'Index créés avec succès!';
+END $$;
