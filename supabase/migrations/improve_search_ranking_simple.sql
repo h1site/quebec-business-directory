@@ -6,11 +6,11 @@
 -- ================================================
 
 -- 1. Créer des index pour la priorisation des fiches
--- Les fiches avec is_claimed=true ou source='manual' sont prioritaires
+-- Les fiches avec is_claimed=true ou data_source='manual' sont prioritaires
 CREATE INDEX IF NOT EXISTS idx_businesses_priority
 ON businesses (
   is_claimed DESC NULLS LAST,
-  (CASE WHEN source = 'manual' THEN 1 ELSE 0 END) DESC,
+  (CASE WHEN data_source = 'manual' THEN 1 ELSE 0 END) DESC,
   created_at DESC
 );
 
@@ -21,15 +21,9 @@ DROP VIEW IF EXISTS businesses_enriched CASCADE;
 CREATE VIEW businesses_enriched AS
 SELECT
   b.*,
-  mc.id as main_category_id,
   mc.slug as main_category_slug,
   mc.label_fr as main_category_label_fr,
   mc.label_en as main_category_label_en,
-  sc.id as sub_category_id,
-  sc.slug as sub_category_slug,
-  sc.label_fr as sub_category_label_fr,
-  sc.label_en as sub_category_label_en,
-  bs.id as business_size_id,
   bs.label_fr as business_size_label_fr,
   bs.label_en as business_size_label_en,
   -- Score de priorité pour le tri des résultats
@@ -38,7 +32,7 @@ SELECT
   -- Les fiches GMB ont un score de 1
   CASE
     WHEN b.is_claimed = true THEN 3
-    WHEN b.source = 'manual' THEN 2
+    WHEN b.data_source = 'manual' THEN 2
     ELSE 1
   END as search_priority_score,
   -- Version lowercase du nom pour recherche insensible à la casse
@@ -46,7 +40,6 @@ SELECT
   lower(b.address) as address_lower
 FROM businesses b
 LEFT JOIN main_categories mc ON b.main_category_id = mc.id
-LEFT JOIN sub_categories sc ON b.sub_category_id = sc.id
 LEFT JOIN business_sizes bs ON b.business_size_id = bs.id;
 
 -- 4. Créer un index sur le nom en minuscules
@@ -68,8 +61,8 @@ BEGIN
   RAISE NOTICE '';
   RAISE NOTICE '🔍 Ordre de tri:';
   RAISE NOTICE '   1. Fiches réclamées (is_claimed=true)';
-  RAISE NOTICE '   2. Fiches manuelles (source=manual)';
-  RAISE NOTICE '   3. Fiches GMB (source=gmb)';
+  RAISE NOTICE '   2. Fiches manuelles (data_source=manual)';
+  RAISE NOTICE '   3. Fiches GMB (data_source=gmb)';
   RAISE NOTICE '';
   RAISE NOTICE '⚠️  Note: Recherche insensible aux accents non disponible';
   RAISE NOTICE '   (extension unaccent non activée sur cet environnement)';
@@ -84,8 +77,8 @@ DECLARE
   gmb_count int;
 BEGIN
   SELECT COUNT(*) INTO claimed_count FROM businesses WHERE is_claimed = true;
-  SELECT COUNT(*) INTO manual_count FROM businesses WHERE source = 'manual';
-  SELECT COUNT(*) INTO gmb_count FROM businesses WHERE source = 'gmb';
+  SELECT COUNT(*) INTO manual_count FROM businesses WHERE data_source = 'manual';
+  SELECT COUNT(*) INTO gmb_count FROM businesses WHERE data_source = 'gmb';
 
   RAISE NOTICE '';
   RAISE NOTICE '📈 Statistiques:';
