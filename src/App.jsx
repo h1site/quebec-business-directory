@@ -36,6 +36,7 @@ const About = lazy(() => import('./pages/About.jsx'));
 const UserProfile = lazy(() => import('./pages/UserProfile.jsx'));
 const Blog = lazy(() => import('./pages/Blog.jsx'));
 const BlogArticle = lazy(() => import('./pages/BlogArticle.jsx'));
+const FAQ = lazy(() => import('./pages/FAQ.jsx'));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -106,6 +107,9 @@ function App() {
               {/* Blog */}
               <Route path="/blogue" element={<Blog />} />
               <Route path="/blogue/:articleId" element={<BlogArticle />} />
+
+              {/* FAQ */}
+              <Route path="/faq" element={<FAQ />} />
 
               {/* Dashboard */}
               <Route
@@ -235,6 +239,9 @@ function App() {
               {/* Blog */}
               <Route path="/en/blog" element={<Blog />} />
               <Route path="/en/blog/:articleId" element={<BlogArticle />} />
+
+              {/* FAQ */}
+              <Route path="/en/faq" element={<FAQ />} />
 
               {/* Dashboard */}
               <Route

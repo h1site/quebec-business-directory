@@ -45,6 +45,7 @@ const FooterYelp = () => {
             <ul className="footer-yelp-links">
               <li><LocalizedLink to="/a-propos">{t('footer.aboutRegistry')}</LocalizedLink></li>
               <li><LocalizedLink to="/blogue">{t('footer.blog')}</LocalizedLink></li>
+              <li><LocalizedLink to="/faq">{t('footer.faq')}</LocalizedLink></li>
               <li><a href="https://www.facebook.com/groups/registreduquebec" target="_blank" rel="nofollow noopener noreferrer">{t('footer.facebookGroup')}</a></li>
               <li><LocalizedLink to="/mentions-legales">{t('footer.legalNotice')}</LocalizedLink></li>
               <li><LocalizedLink to="/politique-confidentialite">{t('footer.privacyPolicy')}</LocalizedLink></li>

@@ -645,7 +645,7 @@ export const reclamerFicheArticle = {
           <p>Notre équipe est là pour vous accompagner dans la <strong>gestion de votre fiche</strong> d'entreprise.</p>
 
           <h3>Centre d'aide et FAQ</h3>
-          <p>Consultez notre <strong>base de connaissances complète</strong> avec des guides détaillés, tutoriels vidéo et réponses aux questions fréquentes.</p>
+          <p>Consultez notre <strong><a href="/faq">page FAQ complète</a></strong> avec plus de 40 questions et réponses détaillées sur tous les aspects du Registre du Québec : recherche, réclamation, gestion de fiches, optimisation et bien plus.</p>
 
           <h3>Support technique</h3>
           <p>Rencontrez-vous un problème technique? Notre équipe de support peut vous aider avec :</p>
@@ -682,7 +682,7 @@ export const reclamerFicheArticle = {
           <p>Our team is here to support you in <strong>managing your business listing</strong>.</p>
 
           <h3>Help Center and FAQ</h3>
-          <p>Consult our <strong>comprehensive knowledge base</strong> with detailed guides, video tutorials and answers to frequently asked questions.</p>
+          <p>Consult our <strong><a href="/en/faq">comprehensive FAQ page</a></strong> with over 40 detailed questions and answers about all aspects of Quebec Business Directory: search, claiming, listing management, optimization and more.</p>
 
           <h3>Technical Support</h3>
           <p>Experiencing a technical issue? Our support team can help you with:</p>
