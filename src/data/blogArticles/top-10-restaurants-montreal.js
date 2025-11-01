@@ -14,13 +14,15 @@ export const top10RestaurantsMontreal = {
   seo: {
     fr: {
       title: '10 Recommandations de Restaurants à Montréal 2025 | Guide Complet',
-      description: 'Découvrez 10 recommandations de restaurants à Montréal : du bistro élégant au steak frites, avec prix, spécialités et adresses. Guide complet 2025.',
-      keywords: 'restaurants Montréal, recommandations restaurants Montréal, où manger Montréal, gastronomie Montréal, restaurants Montréal 2025'
+      description: 'Découvrez nos 10 meilleures recommandations de restaurants à Montréal 2025 : bistros élégants, burgers cultes, brunch emblématiques et supper clubs. Prix, spécialités et adresses complètes pour chaque établissement.',
+      keywords: 'restaurants Montréal, recommandations restaurants Montréal, où manger Montréal, gastronomie Montréal, restaurants Montréal 2025',
+      canonical: 'https://registreduquebec.ca/blog/top-10-restaurants-montreal'
     },
     en: {
       title: '10 Restaurant Recommendations in Montreal 2025 | Complete Guide',
-      description: 'Discover 10 restaurant recommendations in Montreal: from elegant bistros to steak frites, with prices, specialties and addresses. Complete 2025 guide.',
-      keywords: 'Montreal restaurants, restaurant recommendations Montreal, where to eat Montreal, Montreal gastronomy, Montreal restaurants 2025'
+      description: 'Discover our top 10 restaurant recommendations in Montreal 2025: elegant bistros, cult burgers, iconic brunches and supper clubs. Prices, specialties and complete addresses for each establishment.',
+      keywords: 'Montreal restaurants, restaurant recommendations Montreal, where to eat Montreal, Montreal gastronomy, Montreal restaurants 2025',
+      canonical: 'https://registreduquebec.ca/en/blog/top-10-restaurants-montreal'
     }
   },
 

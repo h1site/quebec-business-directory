@@ -14,13 +14,15 @@ export const neqQuebecArticle = {
   seo: {
     fr: {
       title: 'NEQ Québec : tout savoir sur le numéro d\'entreprise du Québec | Guide 2025',
-      description: 'Guide complet sur le NEQ Québec : qu\'est-ce que c\'est, qui en a besoin, comment l\'obtenir et le rechercher. Tout sur le numéro d\'entreprise du Québec.',
-      keywords: 'NEQ Québec, numéro entreprise Québec, NEQ recherche, comment obtenir NEQ, registre entreprise Québec, NEQ number Quebec'
+      description: 'Guide complet NEQ Québec 2025 : définition du numéro d\'entreprise à 10 chiffres, qui doit l\'obtenir (inc., freelance, OSBL), étapes d\'immatriculation, recherche et vérification au registre. Tout savoir sur le NEQ.',
+      keywords: 'NEQ Québec, numéro entreprise Québec, NEQ recherche, comment obtenir NEQ, registre entreprise Québec, NEQ number Quebec',
+      canonical: 'https://registreduquebec.ca/blog/neq-quebec-tout-savoir-numero-entreprise'
     },
     en: {
       title: 'Quebec NEQ: Everything About the Quebec Enterprise Number | 2025 Guide',
-      description: 'Complete guide to Quebec NEQ: what it is, who needs it, how to get it and search for it. Everything about the Quebec enterprise number.',
-      keywords: 'Quebec NEQ, Quebec enterprise number, NEQ search, how to get NEQ, Quebec business registry, NEQ number Quebec'
+      description: 'Complete Quebec NEQ guide 2025: definition of the 10-digit enterprise number, who needs it (inc., freelance, NPO), registration steps, search and verification in the registry. Everything about NEQ.',
+      keywords: 'Quebec NEQ, Quebec enterprise number, NEQ search, how to get NEQ, Quebec business registry, NEQ number Quebec',
+      canonical: 'https://registreduquebec.ca/en/blog/neq-quebec-tout-savoir-numero-entreprise'
     }
   },
 

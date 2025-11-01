@@ -14,13 +14,15 @@ export const reclamerFicheArticle = {
   seo: {
     fr: {
       title: 'Comment réclamer sa fiche d\'entreprise | Guide complet 2025',
-      description: 'Guide étape par étape pour réclamer votre fiche d\'entreprise sur le Registre du Québec. Contrôlez votre présence en ligne et attirez plus de clients.',
-      keywords: 'réclamer fiche entreprise, gérer fiche entreprise Québec, profil entreprise, visibilité en ligne, marketing local Québec'
+      description: 'Guide complet 2025 pour réclamer votre fiche d\'entreprise sur le Registre du Québec : étapes de vérification, optimisation SEO, backlink dofollow gratuit, gestion des avis clients. Prenez le contrôle de votre visibilité en ligne.',
+      keywords: 'réclamer fiche entreprise, gérer fiche entreprise Québec, profil entreprise, visibilité en ligne, marketing local Québec',
+      canonical: 'https://registreduquebec.ca/blog/comment-reclamer-fiche-entreprise'
     },
     en: {
       title: 'How to Claim Your Business Listing | Complete Guide 2025',
-      description: 'Step-by-step guide to claim your business listing on Quebec Business Directory. Control your online presence and attract more customers.',
-      keywords: 'claim business listing, manage business profile Quebec, business listing, online visibility, local marketing Quebec'
+      description: 'Complete 2025 guide to claim your business listing on Quebec Business Directory: verification steps, SEO optimization, free dofollow backlink, customer review management. Take control of your online visibility.',
+      keywords: 'claim business listing, manage business profile Quebec, business listing, online visibility, local marketing Quebec',
+      canonical: 'https://registreduquebec.ca/en/blog/comment-reclamer-fiche-entreprise'
     }
   },
 
