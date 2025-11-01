@@ -1,16 +1,15 @@
 .sponsor-box {
-  background: linear-gradient(266deg, #1c1c1e7e 0%, #0000006a 100% !important);
-  border: 1px solid #f7f7f7;
+  background: white;
   border-radius: 12px;
-  padding: 20px;
-  margin: 20px 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 
 .sponsor-box:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .sponsor-label {
@@ -18,7 +17,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #fefefe;
+  color: #64748b;
   margin-bottom: 12px;
   display: flex;
   align-items: center;
@@ -28,7 +27,6 @@
   content: '★';
   margin-right: 6px;
   color: #fbbf24;
-  opacity: 0.8;
 }
 
 .sponsor-content {
@@ -54,11 +52,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8f8f8 !important;
-  border: 1px solid #334155;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
   border-radius: 8px;
   padding: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .sponsor-logo {
@@ -75,13 +72,13 @@
 .sponsor-company {
   font-size: 16px;
   font-weight: 600;
-  color: #f1f5f9;
+  color: #1e293b;
   margin-bottom: 4px;
 }
 
 .sponsor-slogan {
   font-size: 13px;
-  color: #ffffff !important;
+  color: #64748b;
   line-height: 1.4;
 }
 
@@ -92,14 +89,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #efefef;
+  background: #f1f5f9;
   border-radius: 50%;
-  color: rgb(77, 77, 77);
+  color: #475569;
   transition: all 0.2s ease;
 }
 
 .sponsor-content:hover .sponsor-cta {
-  background: #d9d7d7;
+  background: #e2e8f0;
+  color: #1e293b;
 }
 
 /* Responsive */
@@ -132,23 +130,3 @@
   }
 }
 
-/* Dark mode (optionnel) */
-@media (prefers-color-scheme: dark) {
-  .sponsor-box {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    border-color: #334155;
-  }
-
-  .sponsor-logo-container {
-    background: #1e293b;
-    border: 1px solid #334155;
-  }
-
-  .sponsor-company {
-    color: #f1f5f9;
-  }
-
-  .sponsor-slogan {
-    color: #94a3b8;
-  }
-}

@@ -18,6 +18,7 @@ import WriteReviewModal from '../components/WriteReviewModal.jsx';
 import AmazonProducts from '../components/AmazonProducts.jsx';
 import SponsorBox from '../components/SponsorBox.jsx';
 import Breadcrumb from '../components/Breadcrumb.jsx';
+import SocialShare from '../components/SocialShare.jsx';
 import { getBusinessUrl, isLegacyUrl } from '../utils/urlHelpers.js';
 import { generateBusinessSchema, generateBreadcrumbSchema } from '../utils/schemaMarkup.js';
 import { localizedLink } from '../utils/languageRouting.js';
@@ -595,6 +596,9 @@ const BusinessDetails = () => {
                   </div>
                 </div>
               )}
+
+              {/* Social Share Section */}
+              <SocialShare business={business} />
 
               {/* Business Hours Section */}
               <div className="contact-section">
