@@ -195,7 +195,7 @@ let businessSitemapFiles = [];
 while (true) {
   const { data: businesses, error } = await supabase
     .from('businesses')
-    .select('slug, updated_at, main_category_slug, city, categories')
+    .select('slug, updated_at, main_category_slug, city, categories, description, website, google_reviews_count, google_rating')
     .order('id')
     .range(page * pageSize, (page + 1) * pageSize - 1);
 
@@ -223,11 +223,26 @@ while (true) {
     // Format URLs: /en/{category-slug}/{city}/{slug}
     const businessUrl = `${baseUrl}/en/${categoryPart}/${citySlug}/${biz.slug}`;
 
+    // Calculate priority based on content quality (0.4-0.8)
+    let priority = 0.4; // Base priority for minimal content
+
+    // +0.1 if has description
+    if (biz.description && biz.description.trim().length > 20) priority += 0.1;
+
+    // +0.1 if has website
+    if (biz.website && biz.website.trim().length > 0) priority += 0.1;
+
+    // +0.1 if has reviews
+    if (biz.google_reviews_count && biz.google_reviews_count > 0) priority += 0.1;
+
+    // +0.1 if has good rating (4.0+)
+    if (biz.google_rating && biz.google_rating >= 4.0) priority += 0.1;
+
     const urlEntry = `  <url>
     <loc>${businessUrl}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>${priority.toFixed(1)}</priority>
   </url>
 `;
 
