@@ -25,6 +25,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://registreduquebec.com/blogue/comment-reclamer-fiche-entreprise</loc>
+    <lastmod>2025-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://registreduquebec.com/blogue/neq-quebec-tout-savoir-numero-entreprise</loc>
+    <lastmod>2025-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://registreduquebec.com/blogue/top-10-restaurants-montreal</loc>
+    <lastmod>2025-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://registreduquebec.com/categorie/commerce-de-detail</loc>
     <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>

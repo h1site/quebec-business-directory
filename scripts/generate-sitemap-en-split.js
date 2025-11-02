@@ -77,7 +77,29 @@ let staticSitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <priority>0.7</priority>
   </url>
 
+  <!-- Blog Articles English -->
+  <url>
+    <loc>${baseUrl}/en/blog/comment-reclamer-fiche-entreprise</loc>
+    <lastmod>2025-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/en/blog/neq-quebec-tout-savoir-numero-entreprise</loc>
+    <lastmod>2025-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/en/blog/top-10-restaurants-montreal</loc>
+    <lastmod>2025-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 `;
+
+console.log('✅ 3 articles de blog (EN)');
 
 // Main Categories
 const { data: mainCategories } = await supabase

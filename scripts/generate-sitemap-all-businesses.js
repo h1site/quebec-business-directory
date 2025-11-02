@@ -84,6 +84,15 @@ staticUrls.push(
   { loc: `${baseUrl}/a-propos`, lastmod: currentDate, changefreq: 'monthly', priority: '0.6' }
 );
 
+// Blog Articles (French)
+staticUrls.push(
+  { loc: `${baseUrl}/blogue/comment-reclamer-fiche-entreprise`, lastmod: '2025-11-01', changefreq: 'monthly', priority: '0.8' },
+  { loc: `${baseUrl}/blogue/neq-quebec-tout-savoir-numero-entreprise`, lastmod: '2025-11-01', changefreq: 'monthly', priority: '0.8' },
+  { loc: `${baseUrl}/blogue/top-10-restaurants-montreal`, lastmod: '2025-11-01', changefreq: 'monthly', priority: '0.7' }
+);
+
+console.log('   ✅ 3 articles de blog (FR)');
+
 // Main Categories
 const { data: mainCategories } = await supabase.from('main_categories').select('slug');
 if (mainCategories) {
