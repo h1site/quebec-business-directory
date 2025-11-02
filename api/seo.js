@@ -225,10 +225,11 @@ export default async function handler(req, res) {
     </script>`;
 
     // Add hreflang tags for bilingual support
+    // IMPORTANT: Use correct slugs from business data (not URL params which might be wrong)
     const hreflangTags = `
-    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/${categorySlug}/${citySlug}/${slug}" />
-    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/${categorySlug}/${citySlug}/${slug}" />
-    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/${categorySlug}/${citySlug}/${slug}" />`;
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/${correctCategorySlug}/${correctCitySlug}/${slug}" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/${correctCategorySlug}/${correctCitySlug}/${slug}" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/${correctCategorySlug}/${correctCitySlug}/${slug}" />`;
 
     html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
 
