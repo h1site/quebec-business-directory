@@ -116,7 +116,7 @@
 .article-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f9f9f9;
+  color: #f9f9f9 !important;
   margin-bottom: 0.75rem;
   line-height: 1.3;
 }

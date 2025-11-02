@@ -83,13 +83,15 @@ const BlogArticleRenderer = ({ article }) => {
         <title>{seo.title}</title>
         <meta name="description" content={seo.description} />
         <meta name="keywords" content={seo.keywords} />
-        <link rel="canonical" href={`https://registreduquebec.com/${isEn ? 'en/' : ''}blogue/${article.slug}`} />
+        {/* Use canonical from article SEO if available (allows .ca or .com), otherwise default to .com */}
+        <link rel="canonical" href={seo.canonical || `https://registreduquebec.com/${isEn ? 'en/' : ''}blogue/${article.slug}`} />
 
         {/* Open Graph */}
         <meta property="og:title" content={seo.title} />
         <meta property="og:description" content={seo.description} />
         <meta property="og:image" content={article.heroImage.url} />
-        <meta property="og:url" content={`https://registreduquebec.com/${isEn ? 'en/' : ''}blogue/${article.slug}`} />
+        {/* Use canonical for og:url to ensure consistency */}
+        <meta property="og:url" content={seo.canonical || `https://registreduquebec.com/${isEn ? 'en/' : ''}blogue/${article.slug}`} />
         <meta property="og:type" content="article" />
         <meta property="article:published_time" content={article.publishedDate} />
         <meta property="article:modified_time" content={article.lastUpdated || article.publishedDate} />

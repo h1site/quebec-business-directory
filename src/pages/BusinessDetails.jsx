@@ -20,6 +20,7 @@ import SponsorBox from '../components/SponsorBox.jsx';
 import Breadcrumb from '../components/Breadcrumb.jsx';
 import SocialShare from '../components/SocialShare.jsx';
 import { getBusinessUrl, isLegacyUrl } from '../utils/urlHelpers.js';
+import { checkUrlRedirect } from '../utils/urlValidator.js';
 import { generateBusinessSchema, generateBreadcrumbSchema } from '../utils/schemaMarkup.js';
 import { localizedLink } from '../utils/languageRouting.js';
 import { trackPhoneClick, trackWebsiteClick, trackWazeClick } from '../services/ctaTrackingService';
@@ -72,10 +73,13 @@ const BusinessDetails = () => {
             }
           }
 
-          // Redirect legacy URLs to new SEO format
-          if (data && isLegacyUrl(location.pathname)) {
-            const newUrl = getBusinessUrl(data);
-            navigate(newUrl, { replace: true });
+          // CRITICAL: Redirect ALL invalid URLs (legacy + wrong category/city)
+          if (data) {
+            const { needsRedirect, correctUrl } = checkUrlRedirect(location.pathname, data);
+            if (needsRedirect) {
+              console.log(`🔀 301 Redirect: ${location.pathname} → ${correctUrl}`);
+              navigate(correctUrl, { replace: true });
+            }
           }
 
           setLoading(false);
@@ -114,10 +118,13 @@ const BusinessDetails = () => {
           }
         }
 
-        // Redirect legacy URLs to new SEO format
-        if (data && isLegacyUrl(location.pathname)) {
-          const newUrl = getBusinessUrl(data);
-          navigate(newUrl, { replace: true });
+        // CRITICAL: Redirect ALL invalid URLs (legacy + wrong category/city)
+        if (data) {
+          const { needsRedirect, correctUrl } = checkUrlRedirect(location.pathname, data);
+          if (needsRedirect) {
+            console.log(`🔀 301 Redirect: ${location.pathname} → ${correctUrl}`);
+            navigate(correctUrl, { replace: true });
+          }
         }
       } catch (err) {
         setError('Erreur lors du chargement de l\'entreprise');
