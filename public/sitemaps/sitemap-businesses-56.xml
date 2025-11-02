@@ -24517,12 +24517,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://registreduquebec.com/entreprise/baie-d-urfe/investissement-luciano-rossi-inc-2</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://registreduquebec.com/entreprise/mont-saint-michel/groupe-fhl-inc-1179061818</loc>
     <lastmod>2025-10-24</lastmod>
     <changefreq>monthly</changefreq>
@@ -29997,6 +29991,12 @@
   <url>
     <loc>https://registreduquebec.com/commerce-de-detail/montreal/afj-distribution-inc-1147518089</loc>
     <lastmod>2025-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://registreduquebec.com/entreprise/montreal/copropriete-du-5136-5138-5140-rue-hutchison-2</loc>
+    <lastmod>2025-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

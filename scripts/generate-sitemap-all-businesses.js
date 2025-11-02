@@ -196,18 +196,12 @@ for (let fileIndex = 0; fileIndex < numBusinessSitemaps; fileIndex++) {
         if (businessUrls.length < MAX_URLS_PER_SITEMAP && biz.slug && biz.city) {
           const citySlug = generateSlug(biz.city);
 
-          // Use main_category_slug if available, otherwise use first category UUID as fallback
-          let categoryPart = biz.main_category_slug;
-          if (!categoryPart && biz.categories && biz.categories.length > 0) {
-            categoryPart = biz.categories[0]; // Use UUID as fallback
-          }
+          // Use main_category_slug if available, otherwise use 'entreprise' as fallback
+          // IMPORTANT: Don't use categories[0] as it contains UUIDs, not slugs
+          const categoryPart = biz.main_category_slug || 'entreprise';
 
-          // Format URLs:
-          // - With category: /{category-slug}/{city}/{slug}
-          // - Without category: /entreprise/{city}/{slug}
-          const businessUrl = categoryPart
-            ? `${baseUrl}/${categoryPart}/${citySlug}/${biz.slug}`
-            : `${baseUrl}/entreprise/${citySlug}/${biz.slug}`;
+          // Format URLs: /{category-slug}/{city}/{slug}
+          const businessUrl = `${baseUrl}/${categoryPart}/${citySlug}/${biz.slug}`;
 
           businessUrls.push({
             loc: businessUrl,
