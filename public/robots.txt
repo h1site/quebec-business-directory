@@ -1,11 +1,8 @@
 # robots.txt pour Registre du Québec
 
-# Allow all good bots
+# Public crawl
 User-agent: *
 Allow: /
-Crawl-delay: 1
-
-# Disallow admin/dashboard pages
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /dashboard
@@ -14,44 +11,34 @@ Disallow: /connexion
 Disallow: /inscription
 Disallow: /mes-entreprises
 Disallow: /entreprise/nouvelle
-# Disallow edit pages for businesses
 Disallow: /*/modifier$
 
-# Block aggressive crawlers
+# Optional: rate limiting for AI/others (Google ignore Crawl-delay)
+Crawl-delay: 1
+
+# Aggressive crawlers
 User-agent: AhrefsBot
 Disallow: /
-
 User-agent: SemrushBot
 Disallow: /
-
 User-agent: DotBot
 Disallow: /
-
 User-agent: MJ12bot
 Disallow: /
 
-# AI Crawlers - Allow with rate limiting
-# ChatGPT (OpenAI)
+# AI crawlers (informative; ne change rien pour Search)
 User-agent: GPTBot
 Allow: /
 Crawl-delay: 1
-
-# Google AI (Bard/Gemini)
 User-agent: Google-Extended
 Allow: /
 Crawl-delay: 1
-
-# Anthropic Claude
 User-agent: ClaudeBot
 Allow: /
 Crawl-delay: 1
-
-# Perplexity AI
 User-agent: PerplexityBot
 Allow: /
 Crawl-delay: 1
-
-# Common Crawl (used by many AI models)
 User-agent: CCBot
 Allow: /
 Crawl-delay: 1
