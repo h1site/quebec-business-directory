@@ -22,7 +22,7 @@ export const neqQuebecArticle = {
       title: 'Quebec NEQ: Everything About the Quebec Enterprise Number | 2025 Guide',
       description: 'Complete Quebec NEQ guide 2025: definition of the 10-digit enterprise number, who needs it (inc., freelance, NPO), registration steps, search and verification in the registry. Everything about NEQ.',
       keywords: 'Quebec NEQ, Quebec enterprise number, NEQ search, how to get NEQ, Quebec business registry, NEQ number Quebec',
-      canonical: 'https://registreduquebec.com/en/blogue/neq-quebec-tout-savoir-numero-entreprise'
+      canonical: 'https://registreduquebec.com/en/blog/neq-quebec-tout-savoir-numero-entreprise'
     }
   },
 

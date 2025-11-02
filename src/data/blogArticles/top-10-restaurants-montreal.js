@@ -22,7 +22,7 @@ export const top10RestaurantsMontreal = {
       title: '10 Restaurant Recommendations in Montreal 2025 | Complete Guide',
       description: 'Discover our top 10 restaurant recommendations in Montreal 2025: elegant bistros, cult burgers, iconic brunches and supper clubs. Prices, specialties and complete addresses for each establishment.',
       keywords: 'Montreal restaurants, restaurant recommendations Montreal, where to eat Montreal, Montreal gastronomy, Montreal restaurants 2025',
-      canonical: 'https://registreduquebec.com/en/blogue/top-10-restaurants-montreal'
+      canonical: 'https://registreduquebec.com/en/blog/top-10-restaurants-montreal'
     }
   },
 

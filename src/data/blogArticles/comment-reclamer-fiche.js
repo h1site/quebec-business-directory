@@ -22,7 +22,7 @@ export const reclamerFicheArticle = {
       title: 'How to Claim Your Business Listing | Complete Guide 2025',
       description: 'Complete 2025 guide to claim your business listing on Quebec Business Directory: verification steps, SEO optimization, free dofollow backlink, customer review management. Take control of your online visibility.',
       keywords: 'claim business listing, manage business profile Quebec, business listing, online visibility, local marketing Quebec',
-      canonical: 'https://registreduquebec.com/en/blogue/comment-reclamer-fiche-entreprise'
+      canonical: 'https://registreduquebec.com/en/blog/comment-reclamer-fiche-entreprise'
     }
   },
 
