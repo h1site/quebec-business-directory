@@ -13,8 +13,18 @@
         // Set HTML lang attribute
         document.documentElement.lang = lang;
 
-        // Set title and meta tags based on language
-        if (isEnglish) {
+        // IMPORTANT: Only update title/meta for homepage, NOT for business pages
+        // Business pages get their meta tags from SSR (api/seo.js)
+        // Detect business pages by URL pattern: /category/city/slug or /en/category/city/slug
+        const path = window.location.pathname;
+        const pathParts = path.split('/').filter(p => p);
+
+        // Business pages have 3 parts: category/city/slug (or 4 with /en)
+        // Homepage has 0 or 1 part (/en)
+        const isBusinessPage = (pathParts.length >= 3 && !pathParts.includes('blog'));
+
+        if (!isBusinessPage && isEnglish) {
+          // Only update homepage title/meta for English
           document.title = 'Quebec Business Registry - Business Directory';
 
           // Update meta description
@@ -42,12 +52,12 @@
     <meta name="ICBM" content="46.8139, -71.2080" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Registre d'entreprise du Québec" id="og-site-name" />
+    <meta property="og:site_name" content="Registre d'entreprise du Québec" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://registreduquebec.com/" id="og-url" />
-    <meta property="og:title" content="Registre d'entreprise du Québec - Annuaire des entreprises" id="og-title" />
-    <meta property="og:description" content="Annuaire des entreprises du Québec. Plus de 600 000 entreprises avec coordonnées et informations détaillées." id="og-description" />
-    <meta property="og:locale" content="fr_CA" id="og-locale" />
+    <meta property="og:url" content="https://registreduquebec.com/" />
+    <meta property="og:title" content="Registre d'entreprise du Québec - Annuaire des entreprises" />
+    <meta property="og:description" content="Annuaire des entreprises du Québec. Plus de 600 000 entreprises avec coordonnées et informations détaillées." />
+    <meta property="og:locale" content="fr_CA" />
     <meta property="og:locale:alternate" content="en_CA" />
     <meta property="og:image" content="https://registreduquebec.com/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
@@ -55,27 +65,8 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Registre d'entreprise du Québec" id="twitter-title" />
-    <meta name="twitter:description" content="Annuaire des entreprises du Québec. Plus de 600 000 entreprises." id="twitter-description" />
-
-    <script>
-      (function() {
-        const isEnglish = window.location.pathname.startsWith('/en') || window.location.search.includes('lang=en');
-
-        if (isEnglish) {
-          // Update Open Graph tags
-          document.getElementById('og-site-name').content = 'Quebec Business Registry';
-          document.getElementById('og-url').content = 'https://registreduquebec.com/en';
-          document.getElementById('og-title').content = 'Quebec Business Registry - Business Directory';
-          document.getElementById('og-description').content = 'Quebec business directory. Over 600,000 businesses with contact information and detailed information.';
-          document.getElementById('og-locale').content = 'en_CA';
-
-          // Update Twitter Card tags
-          document.getElementById('twitter-title').content = 'Quebec Business Registry';
-          document.getElementById('twitter-description').content = 'Quebec business directory. Over 600,000 businesses.';
-        }
-      })();
-    </script>
+    <meta name="twitter:title" content="Registre d'entreprise du Québec" />
+    <meta name="twitter:description" content="Annuaire des entreprises du Québec. Plus de 600 000 entreprises." />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
@@ -98,17 +89,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://www.googletagmanager.com" />
     <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+    <link rel="preconnect" href="https://images.unsplash.com" />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <link rel="dns-prefetch" href="https://img.youtube.com" />
 
     <!-- Preload critical resources -->
     <link rel="modulepreload" href="data:text/jsx;base64,aW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JzsKaW1wb3J0IFJlYWN0RE9NIGZyb20gJ3JlYWN0LWRvbS9jbGllbnQnOwppbXBvcnQgeyBCcm93c2VyUm91dGVyIH0gZnJvbSAncmVhY3Qtcm91dGVyLWRvbSc7CmltcG9ydCBBcHAgZnJvbSAnLi9BcHAuanN4JzsKaW1wb3J0ICcuL3N0eWxlcy9pbmRleC5jc3MnOwppbXBvcnQgJy4vc3R5bGVzL2dsb2JhbC5jc3MnOwppbXBvcnQgJy4vc2VydmljZXMvaTE4bi5qcyc7CmltcG9ydCAnLi9yZXBvcnRXZWJWaXRhbHMuanMnOwoKUmVhY3RET00uY3JlYXRlUm9vdChkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncm9vdCcpKS5yZW5kZXIoCiAgPFJlYWN0LlN0cmljdE1vZGU+CiAgICA8QnJvd3NlclJvdXRlcgogICAgICBmdXR1cmU9e3sKICAgICAgICB2N19zdGFydFRyYW5zaXRpb246IHRydWUsCiAgICAgICAgdjdfcmVsYXRpdmVTcGxhdFBhdGg6IHRydWUKICAgICAgfX0KICAgID4KICAgICAgPEFwcCAvPgogICAgPC9Ccm93c2VyUm91dGVyPgogIDwvUmVhY3QuU3RyaWN0TW9kZT4KKTsK" />
+
+    <!-- Preload critical font to prevent FOIT/FOUT -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Preload LCP hero image -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=80" fetchpriority="high" />
 
     <!-- Critical CSS inline for faster FCP -->
     <style>
       /* Critical above-the-fold CSS */
       :root {
         font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-display: swap;
         line-height: 1.5;
         font-weight: 400;
         color: #1f2933;
@@ -161,8 +162,8 @@
   gtag('config', 'G-67FQWQH0KL');
 </script>
 
-    <script type="module" crossorigin src="/assets/index-Cz64FywH.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-mItkSnj0.css">
+    <script type="module" crossorigin src="/assets/index-mycR6UmN.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-eGxVMeci.css">
   </head>
   <body>
     <div id="root"></div>
