@@ -119,24 +119,36 @@ if (mainCategories) {
   });
 }
 
-// Sub Categories
+// Sub Categories (only include if they have businesses)
 const { data: subCategories } = await supabase
   .from('sub_categories')
   .select('slug, main_category:main_categories(slug)');
 
 if (subCategories) {
-  console.log(`✅ ${subCategories.length} sous-catégories`);
-  subCategories.forEach(sub => {
+  console.log(`📋 ${subCategories.length} sous-catégories totales, filtrage des vides...`);
+  let nonEmptyCount = 0;
+
+  for (const sub of subCategories) {
     if (sub.main_category && sub.main_category.slug) {
-      staticSitemap += `  <url>
+      // Check if subcategory has at least one business
+      const { count } = await supabase
+        .from('businesses_enriched')
+        .select('*', { count: 'exact', head: true })
+        .eq('primary_sub_category_slug', sub.slug);
+
+      if (count && count > 0) {
+        staticSitemap += `  <url>
     <loc>${baseUrl}/en/category/${sub.main_category.slug}/${sub.slug}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 `;
+        nonEmptyCount++;
+      }
     }
-  });
+  }
+  console.log(`✅ ${nonEmptyCount} sous-catégories avec entreprises`);
 }
 
 // Regions
