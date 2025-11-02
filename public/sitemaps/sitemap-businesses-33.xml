@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://registreduquebec.com/entreprise/montreal/groupe-an-logements-inc</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://registreduquebec.com/finance-assurance-et-juridique/montreal/cooperative-dhabitation-le-phoenix</loc>
     <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
@@ -5612,7 +5606,7 @@
   </url>
   <url>
     <loc>https://registreduquebec.com/Spas & centres esthétiques/longueuil/eve-laser-brossard</loc>
-    <lastmod>2025-10-29</lastmod>
+    <lastmod>2025-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -29997,6 +29991,12 @@
   <url>
     <loc>https://registreduquebec.com/entreprise/pincourt/gouttieres-mobile</loc>
     <lastmod>2025-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://registreduquebec.com/commerce-de-detail/val-d-or/depanneur-des-hauts-bois-1160258084-1</loc>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

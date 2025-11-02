@@ -259,12 +259,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://registreduquebec.com/entreprise/gatineau/lagence-hendrix-inc</loc>
-    <lastmod>2025-10-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://registreduquebec.com/construction-et-renovation/laval/chauffage-de-lavenir-inc-1141994971</loc>
     <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
@@ -29996,6 +29990,12 @@
   </url>
   <url>
     <loc>https://registreduquebec.com/commerce-de-detail/laval/les-aliments-verona-inc</loc>
+    <lastmod>2025-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://registreduquebec.com/agriculture-et-environnement/saint-tite/zweifel-armin-2266467960-1</loc>
     <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

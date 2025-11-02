@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://registreduquebec.com/entreprise/mascouche/syndicat-des-coproprietaires-sdc-2101-des-fontaine</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://registreduquebec.com/entreprise/montreal/construction-naya</loc>
     <lastmod>2025-10-28</lastmod>
     <changefreq>monthly</changefreq>
@@ -29996,6 +29990,12 @@
   </url>
   <url>
     <loc>https://registreduquebec.com/entreprise/longueuil/renobel-ljs-inc-1175852541</loc>
+    <lastmod>2025-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://registreduquebec.com/entreprise/quebec/les-entreprises-michel-halligan-inc-2</loc>
     <lastmod>2025-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

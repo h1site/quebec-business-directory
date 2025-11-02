@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://registreduquebec.com/agriculture-et-environnement/saint-tite/zweifel-armin-2266467960-1</loc>
-    <lastmod>2025-10-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://registreduquebec.com/restauration-et-alimentation/metis-sur-mer/place-petit-miami</loc>
     <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
@@ -29997,6 +29991,12 @@
   <url>
     <loc>https://registreduquebec.com/finance-assurance-et-juridique/kirkland/gestion-mona-leroux-2</loc>
     <lastmod>2025-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://registreduquebec.com/entreprise/independance-mo/dealers-choice-truckaway-system-inc-1166719782</loc>
+    <lastmod>2025-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

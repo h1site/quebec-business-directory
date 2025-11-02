@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://registreduquebec.com/entreprise/les-cedres/jrdequip</loc>
-    <lastmod>2025-10-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://registreduquebec.com/organismes-publics-et-communautaires/quebec/association-quebecoise-des-lobbyistes-aql-1165166654</loc>
     <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
@@ -29996,6 +29990,12 @@
   </url>
   <url>
     <loc>https://registreduquebec.com/automobile-et-transport/val-d-or/sous-poste-camionnage-en-vrac-abitibi-est-zone-6-i-4</loc>
+    <lastmod>2025-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://registreduquebec.com/construction-et-renovation/levis/les-entreprises-mario-roberge-inc-2</loc>
     <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

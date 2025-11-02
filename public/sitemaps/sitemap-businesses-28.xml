@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://registreduquebec.com/entreprise/delson/les-immeubles-suzanne-longtin-inc-2</loc>
-    <lastmod>2025-10-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://registreduquebec.com/entreprise/saint-charles-sur-richelieu/mecanique-de-lindustrie-inc</loc>
     <lastmod>2025-10-28</lastmod>
     <changefreq>monthly</changefreq>
@@ -29997,6 +29991,12 @@
   <url>
     <loc>https://registreduquebec.com/finance-assurance-et-juridique/montreal/syndicat-de-la-copropriete-3495-3497-et-3499-de-bu</loc>
     <lastmod>2025-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://registreduquebec.com/entreprise/varennes/la-compagnie-de-telephone-bell-du-canada-ou-bell-canada-1172462849-74</loc>
+    <lastmod>2025-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

@@ -4,7 +4,7 @@
   <!-- Homepage English -->
   <url>
     <loc>https://registreduquebec.com/en</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,7 +12,7 @@
   <!-- Search English -->
   <url>
     <loc>https://registreduquebec.com/en/search</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
@@ -20,1340 +20,1340 @@
   <!-- Add business English -->
   <url>
     <loc>https://registreduquebec.com/en/business/new</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-professionnels</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/tourisme-et-hebergement</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/immobilier</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/education-et-formation</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/organismes-publics-et-communautaires</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/finance-assurance-et-juridique</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/industrie-fabrication-et-logistique</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/agriculture-et-environnement</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/maison-et-services-domestiques</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sports-et-loisirs</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/soins-a-domicile</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-funeraires</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/vetements-hommes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/vetements-femmes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/enfants-bebes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/chaussures</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/bijouteries-montres</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/librairies-papeteries</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/jeux-jouets</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/electronique-telephonie</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/informatique-accessoires</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/animaleries-toilettage</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/sport-plein-air</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/meubles-decoration</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/antiquites-art-decoratif</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/cosmetiques-parfumeries</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/pharmacies-parapharmacie</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/quincailleries-materiaux</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/magasins-ecologiques-vrac</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/commerce-de-detail/magasins-liquidation-outlet</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-professionnels/comptables-fiscalistes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-professionnels/avocats-notaires</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-professionnels/consultants-conseillers-affaires</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-professionnels/agences-marketing-publicite</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-professionnels/architectes-designers</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-professionnels/ingenieurs-conseils</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-professionnels/traducteurs-redacteurs</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-professionnels/recrutement-rh</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-professionnels/agences-communication</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-professionnels/centres-appels-bpo</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/cliniques-medicales</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/dentistes-orthodontistes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/physiotherapie-kinesitherapie</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/osteopathie-chiropratique</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/psychologues-therapeutes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/massotherapeutes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/optometristes-opticiens</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/audiologistes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/nutritionnistes-naturopathes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/centres-entrainement</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/studios-yoga-pilates</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sante-et-bien-etre/spas-centres-esthetiques</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation/restaurants</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation/cafes-salons-the</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation/bars-pubs</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation/microbrasseries-distilleries</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation/traiteurs</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation/boulangeries-patisseries</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation/chocolateries-glaciers</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation/food-trucks</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation/epiceries-marches-locaux</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation/boucheries-poissonneries</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/restauration-et-alimentation/cavistes-bars-vin</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/tourisme-et-hebergement/hotels-motels</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/tourisme-et-hebergement/auberges-gites</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/tourisme-et-hebergement/chalets-locations-saisonnieres</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/tourisme-et-hebergement/centres-villegiature</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/tourisme-et-hebergement/spas-nordiques</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/tourisme-et-hebergement/agences-voyage</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/tourisme-et-hebergement/guides-touristiques</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/tourisme-et-hebergement/attractions-parcs</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/tourisme-et-hebergement/musees-galeries</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/tourisme-et-hebergement/centres-information-touristique</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/entrepreneurs-generaux</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/electriciens</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/plombiers</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/couvreurs</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/isolation-ventilation</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/menuisiers-charpentiers</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/peintres-platriers</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/macons-excavation</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/carrelage-revetements</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/cuisines-armoires</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/designers-interieur</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/construction-et-renovation/paysagistes-terrassement</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/immobilier/courtiers-immobiliers</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/immobilier/gestion-immobiliere</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/immobilier/inspecteurs-batiment</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/immobilier/promoteurs-constructeurs</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/immobilier/evaluateurs-agrees</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/immobilier/financement-hypothecaire</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/immobilier/home-staging</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/immobilier/photographie-immobiliere</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/immobilier/location-gestion-airbnb</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport/concessionnaires-automobiles</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport/vehicules-usages</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport/garages-mecanique</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport/carrosserie-pare-brise</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport/pneus-jantes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport/location-vehicules</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport/autopartage-taxi</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport/transport-routier</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport/demenagement</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport/ecoles-conduite</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/automobile-et-transport/esthetique-automobile</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/developpement-logiciel</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/developpement-web-mobile</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/services-ti-geres</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/infonuagique-hebergement</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/cybersecurite</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/reseaux-telecoms</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/vente-materiel-informatique</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/integration-erp-crm</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/startups-saas</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/intelligence-artificielle</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/automatisation-robotique</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/technologie-et-informatique/realite-virtuelle-augmentee</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement/design-graphique-multimedia</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement/agences-evenementielles</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement/studios-enregistrement</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement/production-video</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement/photographie</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement/galeries-art-ateliers</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement/theatre-spectacles</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement/ecoles-arts-danse</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement/medias-journaux</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement/podcasts-radio</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/arts-medias-et-divertissement/createurs-contenu</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/education-et-formation/garderies-cpe</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/education-et-formation/ecoles-privees-specialisees</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/education-et-formation/centres-formation-professionnelle</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/education-et-formation/services-tutorat</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/education-et-formation/formation-continue</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/education-et-formation/ecoles-langues</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/education-et-formation/centres-emploi-orientation</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/education-et-formation/formation-entreprise</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/organismes-publics-et-communautaires/municipalites-mrc</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/organismes-publics-et-communautaires/organismes-sans-but-lucratif</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/organismes-publics-et-communautaires/fondations-associations</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/organismes-publics-et-communautaires/centres-communautaires</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/organismes-publics-et-communautaires/services-sociaux</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/organismes-publics-et-communautaires/cooperatives</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/organismes-publics-et-communautaires/bibliotheques</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/organismes-publics-et-communautaires/centres-culturels</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/organismes-publics-et-communautaires/lieux-culte</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/finance-assurance-et-juridique/banques-caisses</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/finance-assurance-et-juridique/assureurs-courtiers</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/finance-assurance-et-juridique/planificateurs-financiers</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/finance-assurance-et-juridique/gestion-patrimoine</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/finance-assurance-et-juridique/cabinets-juridiques</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/finance-assurance-et-juridique/notaires</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/finance-assurance-et-juridique/services-paie</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/finance-assurance-et-juridique/comptabilite-fiscalite</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/finance-assurance-et-juridique/investissement-capital-risque</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/industrie-fabrication-et-logistique/usines-manufacturieres</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/industrie-fabrication-et-logistique/transformation-alimentaire</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/industrie-fabrication-et-logistique/metallurgie-mecanique</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/industrie-fabrication-et-logistique/plastiques-composites</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/industrie-fabrication-et-logistique/menuiserie-ebenisterie</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/industrie-fabrication-et-logistique/emballage-impression</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/industrie-fabrication-et-logistique/entrepots-distribution</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/industrie-fabrication-et-logistique/logistique-transport</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/industrie-fabrication-et-logistique/maintenance-industrielle</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/industrie-fabrication-et-logistique/prototypage-impression-3d</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/agriculture-et-environnement/fermes-producteurs-locaux</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/agriculture-et-environnement/producteurs-biologiques</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/agriculture-et-environnement/cooperatives-agricoles</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/agriculture-et-environnement/horticulture-serres</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/agriculture-et-environnement/foresterie-bois-oeuvre</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/agriculture-et-environnement/gestion-dechets-recyclage</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/agriculture-et-environnement/energies-renouvelables</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/agriculture-et-environnement/technologies-vertes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/agriculture-et-environnement/irrigation-entretien-agricole</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/maison-et-services-domestiques/nettoyage-residentiel</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/maison-et-services-domestiques/conciergerie-commerciale</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/maison-et-services-domestiques/blanchisserie-pressing</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/maison-et-services-domestiques/couture-reparation</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/maison-et-services-domestiques/serrurerie-vitrerie</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/maison-et-services-domestiques/deratisation-extermination</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/maison-et-services-domestiques/organisation-rangement</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sports-et-loisirs/clubs-sportifs</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sports-et-loisirs/ecoles-sport</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sports-et-loisirs/centres-recreatifs</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sports-et-loisirs/golf-simulateurs</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sports-et-loisirs/escalade-trampoline</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sports-et-loisirs/location-equipement-plein-air</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sports-et-loisirs/activites-nautiques</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sports-et-loisirs/gym-fitness</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/sports-et-loisirs/yoga-meditation</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/soins-a-domicile/aide-domicile</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/soins-a-domicile/soins-infirmiers-prives</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/soins-a-domicile/garde-enfants-domicile</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/soins-a-domicile/accompagnement-personnes-agees</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/soins-a-domicile/transport-medical-non-medical</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-funeraires/salons-funeraires</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-funeraires/cremation-cimetieres</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-funeraires/monuments-urnes</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-funeraires/planification-prealable</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/category/services-funeraires/celebrants-officiants</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/monteregie</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/montreal</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/laval</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/laurentides</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/lanaudiere</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/capitale-nationale</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/outaouais</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/estrie</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/mauricie</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/saguenay-lac-saint-jean</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/abitibi-temiscamingue</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/cote-nord</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/gaspesie-iles-de-la-madeleine</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/bas-saint-laurent</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/chaudiere-appalaches</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://registreduquebec.com/en/region/centre-du-quebec</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
