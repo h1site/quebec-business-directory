@@ -210,8 +210,10 @@ export default async function handler(req, res) {
       .replace(/<meta name="twitter:description"[^>]*>/gi, '')
       .replace(/<meta name="twitter:image"[^>]*>/gi, '');
 
-    // STEP 3: Remove existing canonical
-    html = html.replace(/<link rel="canonical"[^>]*>/gi, '');
+    // STEP 3: Remove existing canonical and hreflang tags
+    html = html
+      .replace(/<link rel="canonical"[^>]*>/gi, '')
+      .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '');
 
     // STEP 4: Inject new canonical and business-specific SEO tags
     const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
