@@ -94,6 +94,14 @@
       "destination": "/api/seo?citySlug=:citySlug"
     },
     {
+      "source": "/en/region/:regionSlug",
+      "destination": "/api/seo?regionSlug=:regionSlug&lang=en"
+    },
+    {
+      "source": "/region/:regionSlug",
+      "destination": "/api/seo?regionSlug=:regionSlug"
+    },
+    {
       "source": "/en/category/:categorySlug",
       "destination": "/api/seo?categorySlug=:categorySlug&lang=en"
     },
