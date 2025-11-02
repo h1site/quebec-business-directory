@@ -13,8 +13,12 @@
         // Set HTML lang attribute
         document.documentElement.lang = lang;
 
-        // Set title and meta tags based on language
-        if (isEnglish) {
+        // IMPORTANT: Only update title/meta for homepage, NOT for business pages
+        // Business pages get their meta tags from SSR (api/seo.js)
+        const isBusinessPage = document.title.includes(' - ') && document.title.includes(' | ');
+
+        if (!isBusinessPage && isEnglish) {
+          // Only update homepage title/meta for English
           document.title = 'Quebec Business Registry - Business Directory';
 
           // Update meta description
