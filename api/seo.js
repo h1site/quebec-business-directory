@@ -153,9 +153,19 @@ export default async function handler(req, res) {
       }
     }
 
-    // IMPORTANT: Canonical URL with language prefix for English
+    // IMPORTANT: Generate correct canonical URL from business data (not URL params)
+    // URL params (categorySlug/citySlug) can be wrong/missing, so we rebuild from business data
+    const correctCategorySlug = business.main_category_slug || business.primary_main_category_slug || 'entreprise';
+    const correctCitySlug = business.city
+      ? business.city.toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '') // Remove accents
+          .replace(/[^a-z0-9]+/g, '-')     // Replace non-alphanumeric with hyphens
+          .replace(/^-+|-+$/g, '')          // Remove leading/trailing hyphens
+      : 'quebec';
+
     const langPrefix = isEnglish ? '/en' : '';
-    const canonical = `https://registreduquebec.com${langPrefix}/${categorySlug}/${citySlug}/${slug}`;
+    const canonical = `https://registreduquebec.com${langPrefix}/${correctCategorySlug}/${correctCitySlug}/${slug}`;
     const schemaOrg = generateSchemaOrg(business);
 
     // Generate unique ETag for this specific business page
