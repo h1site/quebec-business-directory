@@ -25,9 +25,10 @@ const CityBrowse = () => {
 
         setCityName(name);
 
+        // Show all businesses in city for SEO (high limit)
         const { data, error: searchError } = await searchBusinesses({
           city: name,
-          limit: 100
+          limit: 10000
         });
 
         if (searchError) {

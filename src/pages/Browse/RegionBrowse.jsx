@@ -41,9 +41,10 @@ const RegionBrowse = () => {
         const name = regionMap[regionSlug] || regionSlug;
         setRegionName(name);
 
+        // Show all businesses in region for SEO (high limit)
         const { data, error: searchError } = await searchBusinesses({
           region: regionSlug,
-          limit: 100
+          limit: 10000
         });
 
         if (searchError) {
