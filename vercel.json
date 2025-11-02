@@ -102,8 +102,16 @@
       "destination": "/api/seo?regionSlug=:regionSlug"
     },
     {
+      "source": "/en/category/:categorySlug/:subCategorySlug",
+      "destination": "/api/seo?categorySlug=:categorySlug&subCategorySlug=:subCategorySlug&lang=en"
+    },
+    {
       "source": "/en/category/:categorySlug",
       "destination": "/api/seo?categorySlug=:categorySlug&lang=en"
+    },
+    {
+      "source": "/categorie/:categorySlug/:subCategorySlug",
+      "destination": "/api/seo?categorySlug=:categorySlug&subCategorySlug=:subCategorySlug"
     },
     {
       "source": "/categorie/:categorySlug",
