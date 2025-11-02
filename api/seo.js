@@ -19,12 +19,17 @@ async function loadTemplate() {
 }
 
 // Generate Schema.org JSON-LD with enhanced data
-function generateSchemaOrg(business) {
+function generateSchemaOrg(business, isEnglish = false) {
+  const businessDescription = isEnglish ? business.description_en : business.description;
+  const defaultDesc = isEnglish
+    ? `${business.name} in ${business.city}`
+    : `${business.name} à ${business.city}`;
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": business.name,
-    "description": business.description || `${business.name} à ${business.city}`,
+    "description": businessDescription || defaultDesc,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": business.address || "",
@@ -112,9 +117,12 @@ export default async function handler(req, res) {
 
     // Generate optimized meta description
     let description;
-    if (business.description && business.description.length > 10) {
+    // Use correct language description
+    const businessDescription = isEnglish ? business.description_en : business.description;
+
+    if (businessDescription && businessDescription.length > 10) {
       // Use first 150 characters of description
-      description = business.description.substring(0, 150);
+      description = businessDescription.substring(0, 150);
       // Cut at last complete word to avoid cutting mid-word
       const lastSpace = description.lastIndexOf(' ');
       if (lastSpace > 100) {
@@ -166,7 +174,7 @@ export default async function handler(req, res) {
 
     const langPrefix = isEnglish ? '/en' : '';
     const canonical = `https://registreduquebec.com${langPrefix}/${correctCategorySlug}/${correctCitySlug}/${slug}`;
-    const schemaOrg = generateSchemaOrg(business);
+    const schemaOrg = generateSchemaOrg(business, isEnglish);
 
     // Generate unique ETag for this specific business page
     const etag = `"${slug}-${business.id}-${Date.now()}"`;
