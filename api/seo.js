@@ -191,14 +191,24 @@ export default async function handler(req, res) {
         `<meta name="description" content="${escapeHtml(description)}" />`
       );
 
-    // STEP 2: Remove ALL default Open Graph and Twitter tags
+    // STEP 2: Remove ALL default Open Graph and Twitter tags (including those with IDs)
     html = html
-      .replace(/<meta property="og:type" content="website"[^>]*>/gi, '')
-      .replace(/<meta property="og:url" content="https:\/\/registreduquebec\.com\/"[^>]*>/gi, '')
-      .replace(/<meta property="og:title" content="[^"]*Annuaire officiel"[^>]*>/gi, '')
-      .replace(/<meta property="og:description" content="[^"]*Annuaire officiel[^"]*"[^>]*>/gi, '')
-      .replace(/<meta name="twitter:title" content="[^"]*"[^>]*>/gi, '')
-      .replace(/<meta name="twitter:description" content="[^"]*Annuaire officiel[^"]*"[^>]*>/gi, '');
+      // Remove OG tags (with or without IDs)
+      .replace(/<meta property="og:site_name"[^>]*>/gi, '')
+      .replace(/<meta property="og:type"[^>]*>/gi, '')
+      .replace(/<meta property="og:url"[^>]*>/gi, '')
+      .replace(/<meta property="og:title"[^>]*>/gi, '')
+      .replace(/<meta property="og:description"[^>]*>/gi, '')
+      .replace(/<meta property="og:locale"[^>]*>/gi, '')
+      .replace(/<meta property="og:locale:alternate"[^>]*>/gi, '')
+      .replace(/<meta property="og:image"[^>]*>/gi, '')
+      .replace(/<meta property="og:image:width"[^>]*>/gi, '')
+      .replace(/<meta property="og:image:height"[^>]*>/gi, '')
+      // Remove Twitter tags (with or without IDs)
+      .replace(/<meta name="twitter:card"[^>]*>/gi, '')
+      .replace(/<meta name="twitter:title"[^>]*>/gi, '')
+      .replace(/<meta name="twitter:description"[^>]*>/gi, '')
+      .replace(/<meta name="twitter:image"[^>]*>/gi, '');
 
     // STEP 3: Remove existing canonical
     html = html.replace(/<link rel="canonical"[^>]*>/gi, '');
