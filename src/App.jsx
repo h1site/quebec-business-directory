@@ -37,6 +37,7 @@ const UserProfile = lazy(() => import('./pages/UserProfile.jsx'));
 const Blog = lazy(() => import('./pages/Blog.jsx'));
 const BlogArticle = lazy(() => import('./pages/BlogArticle.jsx'));
 const FAQ = lazy(() => import('./pages/FAQ.jsx'));
+const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -110,6 +111,9 @@ function App() {
 
               {/* FAQ */}
               <Route path="/faq" element={<FAQ />} />
+
+              {/* 404 Page */}
+              <Route path="/404" element={<NotFound />} />
 
               {/* Dashboard */}
               <Route
@@ -348,6 +352,9 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
+              {/* 404 - Must be last route */}
+              <Route path="*" element={<NotFound />} />
                 </Routes>
               </LanguageRouteWrapper>
             </Suspense>

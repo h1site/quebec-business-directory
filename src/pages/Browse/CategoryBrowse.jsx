@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase } from '../../services/supabaseClient.js';
 import { getBusinessUrl } from '../../utils/urlHelpers.js';
@@ -14,6 +14,7 @@ const CategoryBrowse = () => {
   const [error, setError] = useState(null);
   const [categoryName, setCategoryName] = useState('');
   const [subCategoryName, setSubCategoryName] = useState('');
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     const loadBusinesses = async () => {
@@ -21,15 +22,20 @@ const CategoryBrowse = () => {
         setLoading(true);
 
         // Get category info
-        const { data: mainCat } = await supabase
+        const { data: mainCat, error: catError } = await supabase
           .from('main_categories')
           .select('id, label_fr')
           .eq('slug', categorySlug)
           .single();
 
-        if (mainCat) {
-          setCategoryName(mainCat.label_fr);
+        // If category doesn't exist, show 404
+        if (catError || !mainCat) {
+          setNotFound(true);
+          setLoading(false);
+          return;
         }
+
+        setCategoryName(mainCat.label_fr);
 
         // Build query
         let query = supabase
@@ -38,15 +44,20 @@ const CategoryBrowse = () => {
 
         if (subCategorySlug) {
           // Get subcategory info
-          const { data: subCat } = await supabase
+          const { data: subCat, error: subCatError } = await supabase
             .from('sub_categories')
             .select('label_fr')
             .eq('slug', subCategorySlug)
             .single();
 
-          if (subCat) {
-            setSubCategoryName(subCat.label_fr);
+          // If subcategory doesn't exist, show 404
+          if (subCatError || !subCat) {
+            setNotFound(true);
+            setLoading(false);
+            return;
           }
+
+          setSubCategoryName(subCat.label_fr);
 
           // Filter by subcategory
           query = query.eq('primary_sub_category_slug', subCategorySlug);
@@ -76,6 +87,11 @@ const CategoryBrowse = () => {
 
     loadBusinesses();
   }, [categorySlug, subCategorySlug]);
+
+  // Redirect to 404 page if category/subcategory doesn't exist
+  if (notFound) {
+    return <Navigate to="/404" replace />;
+  }
 
   if (loading) {
     return (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { searchBusinesses } from '../../services/businessService.js';
 import { getBusinessUrl } from '../../utils/urlHelpers.js';
@@ -12,6 +12,7 @@ const CityBrowse = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [cityName, setCityName] = useState('');
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     const loadBusinesses = async () => {
@@ -36,7 +37,14 @@ const CityBrowse = () => {
           return;
         }
 
-        setBusinesses(data || []);
+        // If no businesses found in this city, show 404
+        if (!data || data.length === 0) {
+          setNotFound(true);
+          setLoading(false);
+          return;
+        }
+
+        setBusinesses(data);
       } catch (err) {
         setError('Erreur lors du chargement des entreprises');
         console.error(err);
@@ -47,6 +55,11 @@ const CityBrowse = () => {
 
     loadBusinesses();
   }, [citySlug]);
+
+  // Redirect to 404 page if city doesn't exist (no businesses)
+  if (notFound) {
+    return <Navigate to="/404" replace />;
+  }
 
   if (loading) {
     return (

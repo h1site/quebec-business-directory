@@ -1,0 +1,146 @@
+.not-found-page {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.not-found-content {
+  max-width: 600px;
+  text-align: center;
+  width: 100%;
+}
+
+.not-found-icon {
+  font-size: 8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0066cc 0%, #004999 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.not-found-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.not-found-description {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.not-found-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.not-found-actions .btn {
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.not-found-actions .btn-primary {
+  background: #0066cc;
+  color: white;
+}
+
+.not-found-actions .btn-primary:hover {
+  background: #0052a3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.not-found-actions .btn-secondary {
+  background: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.not-found-actions .btn-secondary:hover {
+  background: #e8e8e8;
+  border-color: #ccc;
+  transform: translateY(-2px);
+}
+
+.not-found-suggestions {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.not-found-suggestions h2 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.not-found-suggestions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.not-found-suggestions li {
+  margin: 0;
+}
+
+.not-found-suggestions a {
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.not-found-suggestions a:hover {
+  color: #004999;
+  text-decoration: underline;
+}
+
+.not-found-suggestions a::before {
+  content: '→';
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .not-found-icon {
+    font-size: 5rem;
+  }
+
+  .not-found-title {
+    font-size: 1.5rem;
+  }
+
+  .not-found-description {
+    font-size: 1rem;
+  }
+
+  .not-found-actions {
+    flex-direction: column;
+  }
+
+  .not-found-actions .btn {
+    width: 100%;
+  }
+}

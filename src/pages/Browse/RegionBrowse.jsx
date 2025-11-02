@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { searchBusinesses } from '../../services/businessService.js';
 import { getBusinessUrl } from '../../utils/urlHelpers.js';
@@ -12,6 +12,7 @@ const RegionBrowse = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [regionName, setRegionName] = useState('');
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     const loadBusinesses = async () => {
@@ -38,7 +39,15 @@ const RegionBrowse = () => {
           'nord-du-quebec': 'Nord-du-Québec'
         };
 
-        const name = regionMap[regionSlug] || regionSlug;
+        const name = regionMap[regionSlug];
+
+        // If region doesn't exist in our map, show 404
+        if (!name) {
+          setNotFound(true);
+          setLoading(false);
+          return;
+        }
+
         setRegionName(name);
 
         // Show all businesses in region for SEO (limit 100k for large regions)
@@ -63,6 +72,11 @@ const RegionBrowse = () => {
 
     loadBusinesses();
   }, [regionSlug]);
+
+  // Redirect to 404 page if region doesn't exist
+  if (notFound) {
+    return <Navigate to="/404" replace />;
+  }
 
   if (loading) {
     return (
