@@ -15,7 +15,13 @@
 
         // IMPORTANT: Only update title/meta for homepage, NOT for business pages
         // Business pages get their meta tags from SSR (api/seo.js)
-        const isBusinessPage = document.title.includes(' - ') && document.title.includes(' | ');
+        // Detect business pages by URL pattern: /category/city/slug or /en/category/city/slug
+        const path = window.location.pathname;
+        const pathParts = path.split('/').filter(p => p);
+
+        // Business pages have 3 parts: category/city/slug (or 4 with /en)
+        // Homepage has 0 or 1 part (/en)
+        const isBusinessPage = (pathParts.length >= 3 && !pathParts.includes('blog'));
 
         if (!isBusinessPage && isEnglish) {
           // Only update homepage title/meta for English
