@@ -57,8 +57,8 @@ const CategoryBrowse = () => {
           }
         }
 
-        // Show all businesses in category for SEO (limit set to 10000)
-        const { data, error: searchError } = await query.limit(10000);
+        // Show all businesses in category for SEO (limit set to 100k)
+        const { data, error: searchError } = await query.limit(100000);
 
         if (searchError) {
           setError('Erreur lors du chargement des entreprises');
