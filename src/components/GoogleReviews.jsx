@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import './GoogleReviews.css';
 
 const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
+  const { t } = useTranslation();
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 
   const goToNextReview = () => {
@@ -62,7 +64,7 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
           <div className="rating-stars">{renderStars(rating || 0)}</div>
           <div className="rating-info">
             <span className="rating-value">{rating ? rating.toFixed(1) : '0.0'}</span>
-            <span className="reviews-count">({reviewsCount || 0} avis)</span>
+            <span className="reviews-count">({reviewsCount || 0} {t('home.reviews')})</span>
           </div>
         </div>
       </div>
@@ -91,7 +93,7 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
                 <button
                   className="carousel-button carousel-prev"
                   onClick={goToPreviousReview}
-                  aria-label="Avis précédent"
+                  aria-label={t('business.previousReview')}
                 >
                   ‹
                 </button>
@@ -101,14 +103,14 @@ const GoogleReviews = ({ rating, reviewsCount, reviews }) => {
                       key={index}
                       className={`carousel-indicator ${index === currentReviewIndex ? 'active' : ''}`}
                       onClick={() => goToReview(index)}
-                      aria-label={`Aller à l'avis ${index + 1}`}
+                      aria-label={`${t('business.goToReview')} ${index + 1}`}
                     />
                   ))}
                 </div>
                 <button
                   className="carousel-button carousel-next"
                   onClick={goToNextReview}
-                  aria-label="Avis suivant"
+                  aria-label={t('business.nextReview')}
                 >
                   ›
                 </button>

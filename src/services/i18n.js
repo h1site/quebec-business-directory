@@ -145,7 +145,10 @@ const resources = {
         share: 'Partager',
         shareOnSocial: 'Partager sur réseaux sociaux',
         copyLink: 'Copier le lien',
-        linkCopied: 'Lien copié !'
+        linkCopied: 'Lien copié !',
+        previousReview: 'Avis précédent',
+        nextReview: 'Avis suivant',
+        goToReview: 'Aller à l\'avis'
       },
       deleteModal: {
         title: 'Attendez ! Avant de supprimer...',
@@ -809,7 +812,10 @@ const resources = {
         share: 'Share',
         shareOnSocial: 'Share on social media',
         copyLink: 'Copy link',
-        linkCopied: 'Link copied!'
+        linkCopied: 'Link copied!',
+        previousReview: 'Previous review',
+        nextReview: 'Next review',
+        goToReview: 'Go to review'
       },
       deleteModal: {
         title: 'Wait! Before you delete...',
