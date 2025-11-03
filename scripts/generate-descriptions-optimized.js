@@ -1,5 +1,6 @@
 /**
  * Generate automatic descriptions for businesses based on available data
+ * OPTIMIZED VERSION with timeout handling and smaller batches
  * Uses: name, city, region, category, subcategory
  * Outputs: French and English descriptions
  */
@@ -19,7 +20,7 @@ const supabase = createClient(
   process.env.VITE_SUPABASE_ANON_KEY
 );
 
-console.log('📝 GÉNÉRATION DE DESCRIPTIONS AUTOMATIQUES');
+console.log('📝 GÉNÉRATION DE DESCRIPTIONS AUTOMATIQUES (OPTIMISÉE)');
 console.log('═'.repeat(60));
 
 // Templates for descriptions - varied to avoid duplicate content
@@ -339,145 +340,195 @@ function generateDescription(business, templateIndex = 0) {
   };
 }
 
+// Sleep function for delays
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // Main execution
 async function main() {
-  const { count: totalBusinesses } = await supabase
+  const { count: totalBusinesses, error: countError1 } = await supabase
     .from('businesses')
     .select('*', { count: 'exact', head: true });
 
-  console.log(`📊 Total d'entreprises: ${totalBusinesses.toLocaleString()}`);
+  if (countError1 || !totalBusinesses) {
+    console.log('📊 Total d\'entreprises: (impossible de compter)');
+  } else {
+    console.log(`📊 Total d'entreprises: ${totalBusinesses.toLocaleString()}`);
+  }
 
   // Count businesses without descriptions
-  const { count: withoutDesc } = await supabase
+  const { count: withoutDesc, error: countError2 } = await supabase
     .from('businesses')
     .select('*', { count: 'exact', head: true })
     .or('description.is.null,description.eq.');
 
-  console.log(`📝 Sans description: ${withoutDesc.toLocaleString()}`);
+  if (countError2 || !withoutDesc) {
+    console.log('📝 Sans description: (impossible de compter)');
+  } else {
+    console.log(`📝 Sans description: ${withoutDesc.toLocaleString()}`);
+  }
 
-  // Priority: businesses with reviews and/or website (premium content)
-  // EXCLUDE claimed businesses (they have manual descriptions)
-  console.log('\n🎯 Ciblage des entreprises prioritaires (NON réclamées)...');
-
-  // Process ALL non-claimed businesses in batches
-  const BATCH_SIZE = 1000;
+  // OPTIMIZED: Smaller batch size to avoid timeouts
+  const BATCH_SIZE = 500;  // Reduced from 1000 to 500
+  const MAX_BATCHES_PER_SESSION = 50;  // Process max 25,000 descriptions per session
   let offset = 0;
   let totalUpdated = 0;
   let totalSkipped = 0;
+  let batchesProcessed = 0;
   let hasMore = true;
+  let consecutiveErrors = 0;
+  const MAX_CONSECUTIVE_ERRORS = 3;
 
-  while (hasMore) {
-    console.log(`\n📦 Traitement du batch ${Math.floor(offset / BATCH_SIZE) + 1} (offset: ${offset})...`);
+  console.log('\n🎯 Ciblage des entreprises prioritaires (NON réclamées)...');
+  console.log(`   Taille de batch: ${BATCH_SIZE}`);
+  console.log(`   Limite par session: ${MAX_BATCHES_PER_SESSION} batches (${MAX_BATCHES_PER_SESSION * BATCH_SIZE} descriptions)\n`);
 
-    const { data: priorityBusinesses, error } = await supabase
-      .from('businesses_enriched')
-      .select('id, name, slug, city, region, mrc, primary_main_category_fr, primary_main_category_en, primary_sub_category_fr, primary_sub_category_en, google_reviews_count, google_rating, website, description, is_claimed')
-      .eq('is_claimed', false) // ONLY non-claimed businesses
-      .or('description.is.null,description.eq.')
-      .order('google_reviews_count', { ascending: false, nullsLast: true })
-      .range(offset, offset + BATCH_SIZE - 1);
+  while (hasMore && batchesProcessed < MAX_BATCHES_PER_SESSION) {
+    console.log(`\n📦 Traitement du batch ${batchesProcessed + 1} (offset: ${offset})...`);
 
-    if (error) {
-      console.error('❌ Erreur batch:', error.message);
-      break;
-    }
+    try {
+      // Add timeout handling with retry
+      const { data: priorityBusinesses, error } = await supabase
+        .from('businesses_enriched')
+        .select('id, name, slug, city, region, mrc, primary_main_category_fr, primary_main_category_en, primary_sub_category_fr, primary_sub_category_en, google_reviews_count, google_rating, website, description, is_claimed')
+        .eq('is_claimed', false)
+        .or('description.is.null,description.eq.')
+        .order('google_reviews_count', { ascending: false, nullsLast: true })
+        .range(offset, offset + BATCH_SIZE - 1);
 
-    if (!priorityBusinesses || priorityBusinesses.length === 0) {
-      console.log('✅ Aucune entreprise dans ce batch - terminé!');
-      hasMore = false;
-      break;
-    }
+      if (error) {
+        console.error('❌ Erreur batch:', error.message);
+        consecutiveErrors++;
 
-    console.log(`   Trouvé ${priorityBusinesses.length} entreprises dans ce batch`);
+        if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
+          console.log(`\n⚠️  ${MAX_CONSECUTIVE_ERRORS} erreurs consécutives - arrêt du script`);
+          break;
+        }
 
-    let batchUpdated = 0;
-    let batchSkipped = 0;
-
-    for (let i = 0; i < priorityBusinesses.length; i++) {
-      const business = priorityBusinesses[i];
-
-      // Skip if already has description
-      if (business.description && business.description.length > 20) {
-        batchSkipped++;
-        totalSkipped++;
+        // Wait before retrying
+        console.log(`   Attente de 5 secondes avant de réessayer...`);
+        await sleep(5000);
         continue;
       }
 
-      // Generate descriptions (FR + EN)
-      const { description_fr, description_en } = generateDescription(business, offset + i);
+      // Reset error counter on success
+      consecutiveErrors = 0;
 
-      // Update database with BOTH French and English descriptions
-      const { error: updateError } = await supabase
-        .from('businesses')
-        .update({
-          description: description_fr,
-          description_en: description_en,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', business.id);
-
-      if (updateError) {
-        console.error(`❌ Erreur pour ${business.name}:`, updateError.message);
-        continue;
+      if (!priorityBusinesses || priorityBusinesses.length === 0) {
+        console.log('✅ Aucune entreprise dans ce batch - terminé!');
+        hasMore = false;
+        break;
       }
 
-      batchUpdated++;
-      totalUpdated++;
+      console.log(`   Trouvé ${priorityBusinesses.length} entreprises dans ce batch`);
 
-      if (batchUpdated % 100 === 0) {
-        console.log(`   ✅ ${batchUpdated}/${priorityBusinesses.length} dans ce batch...`);
+      let batchUpdated = 0;
+      let batchSkipped = 0;
+
+      for (let i = 0; i < priorityBusinesses.length; i++) {
+        const business = priorityBusinesses[i];
+
+        // Skip if already has description
+        if (business.description && business.description.length > 20) {
+          batchSkipped++;
+          totalSkipped++;
+          continue;
+        }
+
+        // Generate descriptions (FR + EN)
+        const { description_fr, description_en } = generateDescription(business, offset + i);
+
+        // Update database with BOTH French and English descriptions
+        const { error: updateError } = await supabase
+          .from('businesses')
+          .update({
+            description: description_fr,
+            description_en: description_en,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', business.id);
+
+        if (updateError) {
+          console.error(`❌ Erreur pour ${business.name}:`, updateError.message);
+          continue;
+        }
+
+        batchUpdated++;
+        totalUpdated++;
+
+        if (batchUpdated % 100 === 0) {
+          console.log(`   ✅ ${batchUpdated}/${priorityBusinesses.length} dans ce batch...`);
+        }
       }
-    }
 
-    console.log(`   Batch terminé: ${batchUpdated} créées, ${batchSkipped} déjà présentes`);
-    console.log(`   📊 Total global: ${totalUpdated} descriptions générées`);
+      console.log(`   Batch terminé: ${batchUpdated} créées, ${batchSkipped} déjà présentes`);
+      console.log(`   📊 Total global: ${totalUpdated} descriptions générées`);
 
-    // Move to next batch
-    offset += BATCH_SIZE;
+      // Move to next batch
+      offset += BATCH_SIZE;
+      batchesProcessed++;
 
-    // If we got less than BATCH_SIZE, we're done
-    if (priorityBusinesses.length < BATCH_SIZE) {
-      hasMore = false;
+      // If we got less than BATCH_SIZE, we're done
+      if (priorityBusinesses.length < BATCH_SIZE) {
+        hasMore = false;
+      }
+
+      // Small delay between batches to avoid overwhelming the database
+      await sleep(1000);
+
+    } catch (error) {
+      console.error('❌ Erreur inattendue:', error.message);
+      consecutiveErrors++;
+
+      if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
+        console.log(`\n⚠️  ${MAX_CONSECUTIVE_ERRORS} erreurs consécutives - arrêt du script`);
+        break;
+      }
+
+      await sleep(5000);
     }
   }
 
   console.log('\n' + '═'.repeat(60));
-  console.log('✅ GÉNÉRATION TERMINÉE!');
-  console.log(`📊 Résultats:`);
+  console.log('✅ SESSION TERMINÉE!');
+  console.log(`📊 Résultats de cette session:`);
   console.log(`   - Descriptions créées: ${totalUpdated}`);
   console.log(`   - Déjà présentes: ${totalSkipped}`);
-  console.log(`   - Total traité: ${totalUpdated + totalSkipped}`);
+  console.log(`   - Batches traités: ${batchesProcessed}/${MAX_BATCHES_PER_SESSION}`);
   console.log('═'.repeat(60));
+
+  if (batchesProcessed >= MAX_BATCHES_PER_SESSION) {
+    console.log('\n💡 Session terminée après traitement du maximum de batches autorisés.');
+    console.log('   Relancez le script pour continuer où vous vous êtes arrêté.');
+  }
 
   // Show examples
   if (totalUpdated > 0) {
     console.log('\n📄 Exemples de descriptions générées:\n');
 
     const { data: examples } = await supabase
-      .from('businesses_enriched')
-      .select('name, city, primary_main_category_fr, google_reviews_count, google_rating, website, description')
+      .from('businesses')
+      .select('name, city, description, description_en')
       .not('description', 'is', null)
       .neq('description', '')
+      .not('description_en', 'is', null)
+      .neq('description_en', '')
       .order('updated_at', { ascending: false })
-      .limit(10);
+      .limit(3);
 
     if (examples) {
       examples.forEach((ex, i) => {
         console.log(`${i + 1}. ${ex.name} (${ex.city})`);
-        console.log(`   Catégorie: ${ex.primary_main_category_fr || 'Aucune'}`);
-        console.log(`   Avis: ${ex.google_reviews_count || 0} (${ex.google_rating || 'N/A'})`);
-        console.log(`   Site web: ${ex.website ? 'Oui' : 'Non'}`);
-        console.log(`   FR: ${ex.description}`);
+        console.log(`   🇫🇷 FR: ${ex.description}`);
+        console.log(`   🇬🇧 EN: ${ex.description_en}`);
         console.log('');
       });
     }
   }
 
-  console.log('\n💡 Prochaines étapes:');
-  console.log('   1. Vérifier la qualité des descriptions générées');
-  console.log('   2. Augmenter la limite pour traiter plus d\'entreprises');
-  console.log('   3. Régénérer les sitemaps avec nouvelles priorités');
-  console.log('   4. Soumettre à Google Search Console');
+  console.log('\n💡 Pour continuer:');
+  console.log('   Relancez simplement ce script - il reprendra automatiquement là où il s\'est arrêté.');
   console.log('');
 }
 

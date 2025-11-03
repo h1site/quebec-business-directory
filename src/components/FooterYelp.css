@@ -3,8 +3,6 @@
   background: #f5f5f5;
   border-top: 1px solid #e6e6e6;
   padding: 3rem 0 1.5rem;
-  min-height: 900px;
-  contain-intrinsic-size: 900px;
 }
 
 /* Main Columns */
@@ -215,8 +213,6 @@
 @media (max-width: 768px) {
   .footer-yelp {
     padding: 2rem 0 1.5rem;
-    min-height: 1000px;
-    contain-intrinsic-size: 1000px;
   }
 
   .footer-yelp-columns {
