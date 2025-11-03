@@ -65,6 +65,36 @@ function generateSchemaOrg(business, isEnglish = false) {
     };
   }
 
+  // Opening hours for better local SEO
+  if (business.opening_hours && typeof business.opening_hours === 'object') {
+    const daysMap = {
+      'monday': 'Monday',
+      'tuesday': 'Tuesday',
+      'wednesday': 'Wednesday',
+      'thursday': 'Thursday',
+      'friday': 'Friday',
+      'saturday': 'Saturday',
+      'sunday': 'Sunday'
+    };
+
+    const openingHours = [];
+    for (const [day, hours] of Object.entries(business.opening_hours)) {
+      const dayName = daysMap[day.toLowerCase()];
+      if (dayName && hours && hours.open && hours.close) {
+        openingHours.push({
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": dayName,
+          "opens": hours.open,
+          "closes": hours.close
+        });
+      }
+    }
+
+    if (openingHours.length > 0) {
+      schema.openingHoursSpecification = openingHours;
+    }
+  }
+
   return schema;
 }
 
@@ -334,7 +364,7 @@ export default async function handler(req, res) {
         `<meta name="description" content="${escapeHtml(description)}" />`
       );
 
-    // STEP 2: Remove ALL default Open Graph and Twitter tags (including those with IDs)
+    // STEP 2: Remove ALL default Open Graph, Twitter, and Geo tags
     html = html
       // Remove OG tags (with or without IDs)
       .replace(/<meta property="og:site_name"[^>]*>/gi, '')
@@ -351,7 +381,12 @@ export default async function handler(req, res) {
       .replace(/<meta name="twitter:card"[^>]*>/gi, '')
       .replace(/<meta name="twitter:title"[^>]*>/gi, '')
       .replace(/<meta name="twitter:description"[^>]*>/gi, '')
-      .replace(/<meta name="twitter:image"[^>]*>/gi, '');
+      .replace(/<meta name="twitter:image"[^>]*>/gi, '')
+      // Remove Geo tags (will be replaced with accurate business location)
+      .replace(/<meta name="geo\.region"[^>]*>/gi, '')
+      .replace(/<meta name="geo\.placename"[^>]*>/gi, '')
+      .replace(/<meta name="geo\.position"[^>]*>/gi, '')
+      .replace(/<meta name="ICBM"[^>]*>/gi, '');
 
     // STEP 3: Remove existing canonical and hreflang tags
     html = html
@@ -367,7 +402,18 @@ export default async function handler(req, res) {
       : 'https://registreduquebec.com/og-default.svg';
     const ogImage = business.logo_url || defaultOgImage;
 
+    // Build geo meta tags with accurate business coordinates (if available)
+    let geoTags = '';
+    if (business.latitude && business.longitude) {
+      geoTags = `
+    <meta name="geo.region" content="CA-QC">
+    <meta name="geo.placename" content="${escapeHtml(business.city || 'Québec')}">
+    <meta name="geo.position" content="${business.latitude};${business.longitude}">
+    <meta name="ICBM" content="${business.latitude}, ${business.longitude}">`;
+    }
+
     const seoTags = `
+    ${geoTags}
     <meta property="og:title" content="${escapeHtml(title)}">
     <meta property="og:description" content="${escapeHtml(description)}">
     <meta property="og:url" content="${canonical}">
