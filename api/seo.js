@@ -43,7 +43,27 @@ function generateSchemaOrg(business, isEnglish = false) {
   if (business.phone) schema.telephone = business.phone;
   if (business.website) schema.url = business.website;
   if (business.email) schema.email = business.email;
-  if (business.logo_url) schema.image = business.logo_url;
+
+  // Image (logo or photo)
+  if (business.logo_url) {
+    schema.image = {
+      "@type": "ImageObject",
+      "url": business.logo_url,
+      "caption": `Logo de ${business.name}`
+    };
+  }
+
+  // Social media profiles (sameAs)
+  const socialLinks = [];
+  if (business.facebook_url) socialLinks.push(business.facebook_url);
+  if (business.instagram_url) socialLinks.push(business.instagram_url);
+  if (business.linkedin_url) socialLinks.push(business.linkedin_url);
+  if (business.twitter_url) socialLinks.push(business.twitter_url);
+  if (business.youtube_url) socialLinks.push(business.youtube_url);
+
+  if (socialLinks.length > 0) {
+    schema.sameAs = socialLinks;
+  }
 
   // Geographic coordinates for better local SEO
   if (business.latitude && business.longitude) {
@@ -347,7 +367,61 @@ export default async function handler(req, res) {
 
     const langPrefix = isEnglish ? '/en' : '';
     const canonical = `https://registreduquebec.com${langPrefix}/${correctCategorySlug}/${correctCitySlug}/${slug}`;
-    const schemaOrg = generateSchemaOrg(business, isEnglish);
+
+    // Generate LocalBusiness schema
+    const localBusinessSchema = generateSchemaOrg(business, isEnglish);
+
+    // Generate BreadcrumbList schema for navigation
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": isEnglish ? "Home" : "Accueil",
+          "item": `https://registreduquebec.com${isEnglish ? '/en' : ''}`
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": business.city || (isEnglish ? "Quebec" : "Québec"),
+          "item": `https://registreduquebec.com${isEnglish ? '/en' : ''}/ville/${correctCitySlug}`
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": business.name
+        }
+      ]
+    };
+
+    // Generate WebPage (ItemPage) schema
+    const webPageSchema = {
+      "@context": "https://schema.org",
+      "@type": "ItemPage",
+      "name": title,
+      "description": description,
+      "url": canonical,
+      "inLanguage": isEnglish ? "en-CA" : "fr-CA",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": siteName,
+        "url": "https://registreduquebec.com"
+      },
+      "breadcrumb": breadcrumbSchema,
+      "mainEntity": localBusinessSchema
+    };
+
+    // Combine all schemas into a graph
+    const schemaOrg = {
+      "@context": "https://schema.org",
+      "@graph": [
+        localBusinessSchema,
+        webPageSchema,
+        breadcrumbSchema
+      ]
+    };
 
     // Generate unique ETag for this specific business page
     const etag = `"${slug}-${business.id}-${Date.now()}"`;
