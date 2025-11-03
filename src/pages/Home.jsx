@@ -82,7 +82,7 @@ const Home = () => {
         <ThanksPartners />
         <BlogSection />
         <UserTestimonials />
-        <Sponsors />
+        {/* <Sponsors /> */}
       </div>
     </>
   );
