@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../services/supabaseClient';
 import './SponsorBox.css';
 
@@ -7,6 +8,7 @@ import './SponsorBox.css';
  * Affiche un sponsor aléatoire et track les impressions/clicks
  */
 export default function SponsorBox() {
+  const { t } = useTranslation();
   const [sponsor, setSponsor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [impressionTracked, setImpressionTracked] = useState(false);
@@ -159,7 +161,7 @@ export default function SponsorBox() {
 
   return (
     <div className="sponsor-box">
-      <div className="sponsor-label">Commanditaire</div>
+      <div className="sponsor-label">{t('business.sponsor')}</div>
       <a
         href={sponsor.cta_url}
         onClick={handleClick}

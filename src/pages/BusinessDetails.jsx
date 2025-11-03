@@ -46,9 +46,17 @@ const BusinessDetails = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewsKey, setReviewsKey] = useState(0);
 
-  // Detect current language from URL
-  const isEnglish = location.pathname === '/en' || location.pathname.startsWith('/en/');
+  // Detect current language from URL and i18n
+  const isEnglish = i18n.language === 'en' || location.pathname === '/en' || location.pathname.startsWith('/en/');
   const currentLang = isEnglish ? 'en' : 'fr';
+
+  // Debug language detection
+  console.log('🌐 Language detection:', {
+    'i18n.language': i18n.language,
+    pathname: location.pathname,
+    isEnglish,
+    currentLang
+  });
 
   useEffect(() => {
     const loadBusiness = async () => {
@@ -319,10 +327,22 @@ const BusinessDetails = () => {
     }
   };
 
-  // Generate description for meta tags
+  // Generate description for meta tags (language-aware)
   const cityName = business.city || 'Québec';
-  const metaDescription = business.description
-    ? business.description.substring(0, 160)
+  const businessDescription = isEnglish
+    ? (business.description_en || business.description)
+    : (business.description || business.description_en);
+
+  // Debug description selection
+  console.log('📝 Description selection:', {
+    isEnglish,
+    hasDescriptionEn: !!business.description_en,
+    hasDescription: !!business.description,
+    selectedDescription: businessDescription?.substring(0, 80) + '...'
+  });
+
+  const metaDescription = businessDescription
+    ? businessDescription.substring(0, 160)
     : `${business.name} - ${cityName}, QC`;
 
   return (
@@ -463,7 +483,7 @@ const BusinessDetails = () => {
             {/* About & Products/Services Combined */}
             <section className="business-section">
               <h2 className="section-title">{t('business.about')}</h2>
-              <p className="business-description">{business.description}</p>
+              <p className="business-description">{businessDescription}</p>
 
               {/* Unclaimed Business Notice - Only show if business is not claimed (no owner_id and is_claimed = false) */}
               {!business.owner_id && !business.is_claimed && (
@@ -698,7 +718,7 @@ const BusinessDetails = () => {
             {/* Google Reviews */}
             {(business.google_rating || (business.google_reviews && business.google_reviews.length > 0)) && (
               <div className="sidebar-card">
-                <h3 className="sidebar-title">Avis Google</h3>
+                <h3 className="sidebar-title">{t('business.googleReviews')}</h3>
                 <GoogleReviews
                   rating={business.google_rating}
                   reviewsCount={business.google_reviews_count}

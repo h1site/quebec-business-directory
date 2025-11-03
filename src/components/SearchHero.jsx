@@ -179,11 +179,17 @@ const SearchHero = () => {
                       )}
                     </div>
                   )}
-                  {business.description && (
-                    <p className="discovery-description">
-                      {business.description.substring(0, 100)}...
-                    </p>
-                  )}
+                  {(() => {
+                    const isEnglish = i18n.language === 'en';
+                    const description = isEnglish
+                      ? (business.description_en || business.description)
+                      : (business.description || business.description_en);
+                    return description && (
+                      <p className="discovery-description">
+                        {description.substring(0, 100)}...
+                      </p>
+                    );
+                  })()}
                 </div>
               </Link>
             ))}

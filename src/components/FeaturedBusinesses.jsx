@@ -6,7 +6,7 @@ import { getBusinessUrl } from '../utils/urlHelpers';
 import './FeaturedBusinesses.css';
 
 function FeaturedBusinesses() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -78,13 +78,19 @@ function FeaturedBusinesses() {
                 {business.city && (
                   <p className="featured-city">📍 {business.city}</p>
                 )}
-                {business.description && (
-                  <p className="featured-description">
-                    {business.description.length > 120
-                      ? business.description.substring(0, 120) + '...'
-                      : business.description}
-                  </p>
-                )}
+                {(() => {
+                  const isEnglish = i18n.language === 'en';
+                  const description = isEnglish
+                    ? (business.description_en || business.description)
+                    : (business.description || business.description_en);
+                  return description && (
+                    <p className="featured-description">
+                      {description.length > 120
+                        ? description.substring(0, 120) + '...'
+                        : description}
+                    </p>
+                  );
+                })()}
               </div>
               <div className="featured-cta">
                 {t('home.viewListing')} →

@@ -139,16 +139,21 @@ const generateAreaServed = (business) => {
 /**
  * Generate main LocalBusiness schema
  */
-export const generateBusinessSchema = (business, canonicalUrl, businessHours = null) => {
+export const generateBusinessSchema = (business, canonicalUrl, businessHours = null, isEnglish = false) => {
   const baseUrl = window.location.origin;
   const businessType = getCategoryType(business.main_category_slug);
+
+  // Use language-appropriate description
+  const description = isEnglish
+    ? (business.description_en || business.description)
+    : (business.description || business.description_en);
 
   const schema = {
     '@context': 'https://schema.org',
     '@type': businessType,
     '@id': `${canonicalUrl}#business`,
     name: business.name,
-    description: business.description,
+    description: description,
     url: canonicalUrl,
     telephone: business.phone,
     email: business.show_email ? business.email : undefined,

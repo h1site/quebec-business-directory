@@ -239,9 +239,10 @@ export const getBusinessBySlug = async (slug) => {
     return { data: business || null, error: business ? null : { message: 'Business not found' } };
   }
 
-  // Get business data with enriched view (includes category slugs after migration)
+  // IMPORTANT: Use businesses table directly (not enriched view) to get description_en
+  // The enriched view was not refreshed when description_en column was added
   const { data, error } = await supabase
-    .from('businesses_enriched')
+    .from('businesses')
     .select('*')
     .eq('slug', slug)
     .single();
@@ -257,7 +258,8 @@ export const getBusinessBySlug = async (slug) => {
     primary_sub_category_fr: data.primary_sub_category_fr,
     primary_sub_category_slug: data.primary_sub_category_slug,
     region: data.region,
-    city: data.city
+    city: data.city,
+    has_description_en: !!data.description_en
   });
 
   return { data, error: null };

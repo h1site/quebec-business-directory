@@ -69,12 +69,17 @@ const updateMetaTag = (name, content) => {
  * @param {Object} business - Business data
  * @returns {Object} - Schema markup object
  */
-export const generateLocalBusinessSchema = (business) => {
+export const generateLocalBusinessSchema = (business, isEnglish = false) => {
+  // Use language-appropriate description
+  const description = isEnglish
+    ? (business.description_en || business.description)
+    : (business.description || business.description_en);
+
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: business.name,
-    description: business.description,
+    description: description,
     image: business.logo_url || business.gallery_images?.[0],
     '@id': window.location.href,
     url: window.location.href,
@@ -184,12 +189,21 @@ export const generateBusinessMetaTitle = (business) => {
 /**
  * Generate meta description for business page
  * @param {Object} business - Business data
+ * @param {boolean} isEnglish - Whether to use English description
  * @returns {string} - Optimized meta description
  */
-export const generateBusinessMetaDescription = (business) => {
-  const description = business.description.substring(0, 140);
+export const generateBusinessMetaDescription = (business, isEnglish = false) => {
+  const businessDescription = isEnglish
+    ? (business.description_en || business.description)
+    : (business.description || business.description_en);
+
+  const description = businessDescription ? businessDescription.substring(0, 140) : business.name;
   const location = `${business.city}, ${business.province || 'QC'}`;
-  return `${description}... Situé à ${location}. ${business.phone ? `Téléphone: ${business.phone}` : ''} | Registre d'entreprise du Québec`;
+  const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre d\'entreprise du Québec';
+  const locatedText = isEnglish ? 'Located in' : 'Situé à';
+  const phoneText = isEnglish ? 'Phone:' : 'Téléphone:';
+
+  return `${description}... ${locatedText} ${location}. ${business.phone ? `${phoneText} ${business.phone}` : ''} | ${siteName}`;
 };
 
 /**

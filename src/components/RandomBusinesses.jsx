@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './RandomBusinesses.css';
 
 const RandomBusinesses = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -94,12 +94,18 @@ const RandomBusinesses = () => {
                   </div>
                 )}
 
-                {business.description && (
-                  <p className="random-business-description">
-                    {business.description.substring(0, 120)}
-                    {business.description.length > 120 ? '...' : ''}
-                  </p>
-                )}
+                {(() => {
+                  const isEnglish = i18n.language === 'en';
+                  const description = isEnglish
+                    ? (business.description_en || business.description)
+                    : (business.description || business.description_en);
+                  return description && (
+                    <p className="random-business-description">
+                      {description.substring(0, 120)}
+                      {description.length > 120 ? '...' : ''}
+                    </p>
+                  );
+                })()}
 
                 <div className="random-business-cta">
                   {t('home.seeDetails')} →

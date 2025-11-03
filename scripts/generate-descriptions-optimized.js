@@ -35,25 +35,21 @@ const frenchTemplates = [
       if (data.mrc) desc += ` (MRC ${data.mrc})`;
       desc += ', Québec.';
 
-      if (data.hasReviews) {
-        desc += ` Avec une note moyenne de ${data.rating}/5 basée sur ${data.reviewCount} avis Google, ${data.name} est reconnu${data.feminine ? 'e' : ''} pour la qualité de ses services.`;
-      }
-
       if (data.hasWebsite) {
         desc += ` Pour plus d'informations, visitez le site web officiel ou contactez l'entreprise directement.`;
+      } else {
+        desc += ` Contactez ${data.name} pour obtenir plus d'informations sur les services offerts.`;
       }
 
       return desc;
     }
 
-    // WITHOUT category - Focus on location + reputation
+    // WITHOUT category - Focus on location
     let desc = `${data.name} est une entreprise locale établie à ${data.city}`;
     if (data.region) desc += ` dans la région ${data.region}`;
     desc += ', Québec.';
 
-    if (data.hasReviews) {
-      desc += ` Avec une note moyenne de ${data.rating}/5 basée sur ${data.reviewCount} avis Google, cette entreprise est reconnue pour la qualité de ses services professionnels.`;
-    } else if (data.hasWebsite) {
+    if (data.hasWebsite) {
       desc += ` Pour plus d'informations sur les services offerts, visitez le site web officiel ou contactez l'entreprise directement.`;
     } else if (data.region || data.mrc) {
       desc += ` Contactez ${data.name} pour obtenir plus d'informations sur les services offerts dans votre région.`;
@@ -75,10 +71,8 @@ const frenchTemplates = [
 
       if (data.subcategory) {
         desc += ` Spécialisé${data.feminine ? 'e' : ''} en ${data.subcategory}, ${data.name} offre des services professionnels adaptés à vos besoins.`;
-      }
-
-      if (data.hasReviews) {
-        desc += ` Noté${data.feminine ? 'e' : ''} ${data.rating}/5 par ${data.reviewCount} client${data.reviewCount > 1 ? 's' : ''}, cette entreprise jouit d'une excellente réputation locale.`;
+      } else {
+        desc += ` ${data.name} offre des services professionnels adaptés à vos besoins.`;
       }
 
       desc += ` Contactez ${data.name} pour obtenir plus d'informations sur les services offerts.`;
@@ -91,9 +85,7 @@ const frenchTemplates = [
     if (data.region) desc += ` (${data.region})`;
     desc += '.';
 
-    if (data.hasReviews) {
-      desc += ` Offrant des services professionnels de qualité, ${data.name} répond à vos besoins avec expertise. Noté${data.feminine ? 'e' : ''} ${data.rating}/5 par ${data.reviewCount} clients satisfaits, l'entreprise jouit d'une excellente réputation dans la région.`;
-    } else if (data.hasWebsite) {
+    if (data.hasWebsite) {
       desc += ` Offrant des services professionnels adaptés à vos besoins, cette entreprise locale met son expertise à votre disposition. Visitez le site web pour en savoir plus.`;
     } else {
       desc += ` Cette entreprise locale offre des services adaptés à vos besoins. Contactez ${data.name} dès aujourd'hui pour discuter de votre projet.`;
@@ -122,10 +114,6 @@ const frenchTemplates = [
 
       desc += ` au Québec.`;
 
-      if (data.hasReviews) {
-        desc += ` L'entreprise maintient une note de ${data.rating}/5 étoiles grâce à ${data.reviewCount} avis de clients satisfaits.`;
-      }
-
       desc += ` Trouvez toutes les coordonnées et informations pratiques sur cette page.`;
 
       return desc;
@@ -136,9 +124,7 @@ const frenchTemplates = [
     if (data.region) desc += ` dans la région ${data.region}`;
     desc += `, ${data.name}`;
 
-    if (data.hasReviews) {
-      desc += ` dessert la région avec des services de qualité. L'entreprise locale maintient une note de ${data.rating}/5 étoiles grâce à ${data.reviewCount} avis de clients satisfaits de la région.`;
-    } else if (data.hasWebsite) {
+    if (data.hasWebsite) {
       desc += ` est une entreprise locale au service de la communauté. Consultez le site web pour découvrir la gamme complète de services offerts.`;
     } else {
       desc += ` est une entreprise de la région offrant des services à la communauté locale. Trouvez les coordonnées et prenez contact directement pour vos besoins.`;
@@ -159,25 +145,21 @@ const englishTemplates = [
       if (data.mrc) desc += ` (MRC ${data.mrc})`;
       desc += ', Quebec.';
 
-      if (data.hasReviews) {
-        desc += ` With an average rating of ${data.rating}/5 based on ${data.reviewCount} Google reviews, ${data.name} is recognized for quality service.`;
-      }
-
       if (data.hasWebsite) {
         desc += ` For more information, visit the official website or contact the business directly.`;
+      } else {
+        desc += ` Contact ${data.name} for more information about the services offered.`;
       }
 
       return desc;
     }
 
-    // WITHOUT category - Focus on location + reputation
+    // WITHOUT category - Focus on location
     let desc = `${data.name} is a local business established in ${data.city}`;
     if (data.region) desc += ` in the ${data.region} region`;
     desc += ', Quebec.';
 
-    if (data.hasReviews) {
-      desc += ` With an average rating of ${data.rating}/5 based on ${data.reviewCount} Google reviews, this business is recognized for quality professional services.`;
-    } else if (data.hasWebsite) {
+    if (data.hasWebsite) {
       desc += ` For more information about the services offered, visit the official website or contact the business directly.`;
     } else if (data.region || data.mrc) {
       desc += ` Contact ${data.name} for more information about the services offered in your area.`;
@@ -215,12 +197,10 @@ const englishTemplates = [
     if (data.region) desc += ` (${data.region} region)`;
     desc += '.';
 
-    if (data.hasReviews) {
-      desc += ` Offering quality professional services, ${data.name} meets your needs with expertise. Rated ${data.rating}/5 by ${data.reviewCount} satisfied customers, the business enjoys an excellent reputation in the region.`;
-    } else if (data.hasWebsite) {
-      desc += ` Offering professional services tailored to your needs, this local business puts its expertise at your disposal. Visit the website to learn more.`;
+    if (data.subcategory_en) {
+      desc += ` Specialized in ${data.subcategory_en}, ${data.name} offers professional services tailored to your needs.`;
     } else {
-      desc += ` This local business offers services adapted to your needs. Contact ${data.name} today to discuss your project.`;
+      desc += ` ${data.name} offers professional services tailored to your needs.`;
     }
 
     return desc;
@@ -244,13 +224,7 @@ const englishTemplates = [
         desc += ` offering services in ${data.subcategory_en}`;
       }
 
-      desc += ` in Quebec.`;
-
-      if (data.hasReviews) {
-        desc += ` The business maintains a ${data.rating}/5 star rating thanks to ${data.reviewCount} satisfied customer reviews.`;
-      }
-
-      desc += ` Find all contact details and practical information on this page.`;
+      desc += ` in Quebec. Find all contact details and practical information on this page.`;
 
       return desc;
     }
@@ -260,9 +234,7 @@ const englishTemplates = [
     if (data.region) desc += ` in the ${data.region} region`;
     desc += `, ${data.name}`;
 
-    if (data.hasReviews) {
-      desc += ` serves the region with quality services. The local business maintains a ${data.rating}/5 star rating thanks to ${data.reviewCount} satisfied customer reviews from the region.`;
-    } else if (data.hasWebsite) {
+    if (data.hasWebsite) {
       desc += ` is a local business serving the community. Visit the website to discover the full range of services offered.`;
     } else {
       desc += ` is a local business offering services to the community. Find contact details and get in touch directly for your needs.`;
