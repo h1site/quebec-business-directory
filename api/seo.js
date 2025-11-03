@@ -79,6 +79,149 @@ function escapeHtml(text) {
     .replace(/'/g, '&#039;');
 }
 
+// Generate SSR HTML content for business page (for Google crawlers)
+function generateSSRContent(business, isEnglish = false) {
+  const businessDescription = isEnglish ? business.description_en : business.description;
+
+  // Get category name (avoid UUIDs)
+  let category = '';
+  if (isEnglish) {
+    category = business.main_category_name_en || business.primary_category_name_en || '';
+  } else {
+    category = business.main_category_name_fr || business.primary_category_name_fr || '';
+  }
+
+  // Fallback: check if primary_main_category_fr/en is NOT a UUID
+  if (!category) {
+    const primaryCat = isEnglish ? business.primary_main_category_en : business.primary_main_category_fr;
+    if (primaryCat && !primaryCat.match(/^[0-9a-f]{8}-[0-9a-f]{4}-/)) {
+      category = primaryCat;
+    }
+  }
+
+  // Translations
+  const labels = isEnglish ? {
+    phone: 'Phone',
+    website: 'Website',
+    email: 'Email',
+    address: 'Address',
+    neq: 'NEQ',
+    about: 'About',
+    reviews: 'Reviews',
+    openingHours: 'Opening Hours'
+  } : {
+    phone: 'Téléphone',
+    website: 'Site web',
+    email: 'Courriel',
+    address: 'Adresse',
+    neq: 'NEQ',
+    about: 'À propos',
+    reviews: 'Avis',
+    openingHours: 'Heures d\'ouverture'
+  };
+
+  // Build SSR HTML (semantic HTML for SEO)
+  let html = `
+  <article itemscope itemtype="https://schema.org/LocalBusiness" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+    <header style="margin-bottom: 2rem;">
+      <h1 itemprop="name" style="font-size: 2.5rem; margin-bottom: 0.5rem; color: #1a202c;">${escapeHtml(business.name)}</h1>
+      ${category ? `<p style="font-size: 1.1rem; color: #4a5568; margin-bottom: 0.5rem;">${escapeHtml(category)}</p>` : ''}
+      ${business.city ? `<p itemprop="addressLocality" style="font-size: 1rem; color: #718096;">${escapeHtml(business.city)}, Québec</p>` : ''}
+    </header>`;
+
+  // Description
+  if (businessDescription && businessDescription.length > 10) {
+    html += `
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #2d3748;">${labels.about}</h2>
+      <div itemprop="description" style="line-height: 1.6; color: #4a5568;">
+        ${escapeHtml(businessDescription)}
+      </div>
+    </section>`;
+  }
+
+  // Contact Information
+  html += `
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #2d3748;">Contact</h2>
+      <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" style="display: flex; flex-direction: column; gap: 0.75rem;">`;
+
+  if (business.phone) {
+    html += `
+        <p style="margin: 0;">
+          <strong>${labels.phone}:</strong>
+          <a href="tel:${escapeHtml(business.phone)}" itemprop="telephone" style="color: #3182ce; text-decoration: none;">
+            ${escapeHtml(business.phone)}
+          </a>
+        </p>`;
+  }
+
+  if (business.address) {
+    const fullAddress = `${business.address}${business.city ? ', ' + business.city : ''}${business.postal_code ? ', ' + business.postal_code : ''}`;
+    html += `
+        <p style="margin: 0;" itemprop="streetAddress">
+          <strong>${labels.address}:</strong> ${escapeHtml(fullAddress)}
+        </p>`;
+  }
+
+  if (business.website) {
+    html += `
+        <p style="margin: 0;">
+          <strong>${labels.website}:</strong>
+          <a href="${escapeHtml(business.website)}" target="_blank" rel="noopener noreferrer" itemprop="url" style="color: #3182ce; text-decoration: none;">
+            ${escapeHtml(business.website)}
+          </a>
+        </p>`;
+  }
+
+  if (business.email) {
+    html += `
+        <p style="margin: 0;">
+          <strong>${labels.email}:</strong>
+          <a href="mailto:${escapeHtml(business.email)}" itemprop="email" style="color: #3182ce; text-decoration: none;">
+            ${escapeHtml(business.email)}
+          </a>
+        </p>`;
+  }
+
+  if (business.neq) {
+    html += `
+        <p style="margin: 0;">
+          <strong>${labels.neq}:</strong> ${escapeHtml(business.neq)}
+        </p>`;
+  }
+
+  html += `
+      </div>
+    </section>`;
+
+  // Ratings (if available)
+  if (business.google_rating && business.google_reviews_count) {
+    html += `
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #2d3748;">${labels.reviews}</h2>
+      <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating" style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="font-size: 2rem; font-weight: bold; color: #f6ad55;">${business.google_rating}</span>
+        <span style="color: #f6ad55;">★</span>
+        <span style="color: #718096;">
+          (<span itemprop="ratingValue">${business.google_rating}</span>/5 -
+          <span itemprop="reviewCount">${business.google_reviews_count}</span> ${labels.reviews.toLowerCase()})
+        </span>
+      </div>
+    </section>`;
+  }
+
+  html += `
+  </article>
+  <noscript>
+    <style>
+      #root > article { display: block !important; }
+    </style>
+  </noscript>`;
+
+  return html;
+}
+
 // Main serverless function handler
 export default async function handler(req, res) {
   // CRITICAL: Disable ALL caching - each business page MUST be unique!
@@ -252,6 +395,15 @@ export default async function handler(req, res) {
     <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/${correctCategorySlug}/${correctCitySlug}/${slug}" />`;
 
     html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
+
+    // Generate SSR content for Google (critical content only)
+    const ssrContent = generateSSRContent(business, isEnglish);
+
+    // Inject SSR content into <div id="root">
+    html = html.replace(
+      '<div id="root"></div>',
+      `<div id="root">${ssrContent}</div>`
+    );
 
     // Add initial data for client
     const dataScript = `
