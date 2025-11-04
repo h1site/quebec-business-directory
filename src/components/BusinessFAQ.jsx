@@ -61,22 +61,15 @@ const BusinessFAQ = ({ business, businessHours }) => {
     {
       question: t('faq.industryQuestion', { name: business.name }),
       answer: (() => {
-        // Get main category
-        let mainCategory = null;
-        if (business.main_category) {
-          mainCategory = i18n.language === 'en' ? business.main_category.label_en : business.main_category.label_fr;
-        } else if (business.primary_main_category_fr || business.primary_main_category_en) {
-          mainCategory = i18n.language === 'en' ? business.primary_main_category_en : business.primary_main_category_fr;
-        }
+        // Get main category - use primary_main_category_* fields
+        const mainCategory = i18n.language === 'en'
+          ? business.primary_main_category_en
+          : business.primary_main_category_fr;
 
-        // Get subcategory if available
-        let subCategory = null;
-        if (business.sub_categories && business.sub_categories.length > 0) {
-          const firstSub = business.sub_categories[0];
-          subCategory = i18n.language === 'en' ? firstSub.label_en : firstSub.label_fr;
-        } else if (business.primary_sub_category_fr || business.primary_sub_category_en) {
-          subCategory = i18n.language === 'en' ? business.primary_sub_category_en : business.primary_sub_category_fr;
-        }
+        // Get subcategory if available - use primary_sub_category_* fields
+        const subCategory = i18n.language === 'en'
+          ? business.primary_sub_category_en
+          : business.primary_sub_category_fr;
 
         // Build answer
         if (mainCategory) {
@@ -142,12 +135,11 @@ BusinessFAQ.propTypes = {
     postal_code: PropTypes.string,
     phone: PropTypes.string,
     website: PropTypes.string,
-    main_category: PropTypes.shape({
-      label_fr: PropTypes.string,
-      label_en: PropTypes.string
-    }),
+    opening_hours: PropTypes.object,
     primary_main_category_fr: PropTypes.string,
-    primary_main_category_en: PropTypes.string
+    primary_main_category_en: PropTypes.string,
+    primary_sub_category_fr: PropTypes.string,
+    primary_sub_category_en: PropTypes.string
   }).isRequired,
   businessHours: PropTypes.array
 };

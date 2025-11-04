@@ -503,23 +503,15 @@ export const generateFAQSchema = (business, businessHours = null, isEnglish = fa
   });
 
   // Question 6: Industry/Category (with subcategory if available)
-  let categoryName = null;
-  let subCategoryName = null;
+  // Get main category - use primary_main_category_* fields
+  const categoryName = isEnglish
+    ? business.primary_main_category_en
+    : business.primary_main_category_fr;
 
-  // Get main category
-  if (business.main_category) {
-    categoryName = isEnglish ? business.main_category.label_en : business.main_category.label_fr;
-  } else if (business.primary_main_category_fr || business.primary_main_category_en) {
-    categoryName = isEnglish ? business.primary_main_category_en : business.primary_main_category_fr;
-  }
-
-  // Get subcategory if available
-  if (business.sub_categories && business.sub_categories.length > 0) {
-    const firstSub = business.sub_categories[0];
-    subCategoryName = isEnglish ? firstSub.label_en : firstSub.label_fr;
-  } else if (business.primary_sub_category_fr || business.primary_sub_category_en) {
-    subCategoryName = isEnglish ? business.primary_sub_category_en : business.primary_sub_category_fr;
-  }
+  // Get subcategory if available - use primary_sub_category_* fields
+  const subCategoryName = isEnglish
+    ? business.primary_sub_category_en
+    : business.primary_sub_category_fr;
 
   if (categoryName) {
     const questionIndustry = isEnglish
