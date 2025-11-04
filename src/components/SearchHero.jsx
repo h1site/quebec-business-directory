@@ -50,7 +50,7 @@ const SearchHero = () => {
         // Get 3 random businesses with good ratings
         const { data } = await supabase
           .from('businesses')
-          .select('id, slug, name, city, region, description, logo_url, google_rating, google_reviews_count')
+          .select('id, slug, name, city, region, description, description_en, logo_url, google_rating, google_reviews_count')
           .not('google_rating', 'is', null)
           .gte('google_rating', 4.0)
           .limit(100);
