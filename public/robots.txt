@@ -45,4 +45,5 @@ Crawl-delay: 1
 
 # Sitemaps
 Sitemap: https://registreduquebec.com/sitemap.xml
+Sitemap: https://registreduquebec.com/sitemap-fr.xml
 Sitemap: https://registreduquebec.com/sitemap-en.xml
