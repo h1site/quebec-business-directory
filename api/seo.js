@@ -234,18 +234,30 @@ function generateFAQSchema(business, isEnglish = false) {
     }
   });
 
-  // Question 6: Industry/Category
+  // Question 6: Industry/Category (with subcategory if available)
   const categoryName = isEnglish
     ? (business.main_category_name_en || business.primary_main_category_en)
     : (business.main_category_name_fr || business.primary_main_category_fr);
+
+  const subCategoryName = isEnglish
+    ? (business.primary_sub_category_en)
+    : (business.primary_sub_category_fr);
 
   if (categoryName && !categoryName.match(/^[0-9a-f]{8}-[0-9a-f]{4}-/)) {
     const questionIndustry = isEnglish
       ? `What industry does ${business.name} operate in?`
       : `Dans quel domaine œuvre ${business.name} ?`;
-    const answerIndustry = isEnglish
-      ? `${business.name} operates in the industry: ${categoryName}.`
-      : `${business.name} œuvre dans le domaine : ${categoryName}.`;
+
+    let answerIndustry;
+    if (subCategoryName && !subCategoryName.match(/^[0-9a-f]{8}-[0-9a-f]{4}-/)) {
+      answerIndustry = isEnglish
+        ? `${business.name} operates in the industry: ${categoryName}, specializing in ${subCategoryName}.`
+        : `${business.name} œuvre dans le domaine : ${categoryName}, spécialisé en ${subCategoryName}.`;
+    } else {
+      answerIndustry = isEnglish
+        ? `${business.name} operates in the industry: ${categoryName}.`
+        : `${business.name} œuvre dans le domaine : ${categoryName}.`;
+    }
 
     faqItems.push({
       "@type": "Question",

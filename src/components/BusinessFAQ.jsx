@@ -52,25 +52,49 @@ const BusinessFAQ = ({ business, businessHours }) => {
     // Question 5: Opening hours
     {
       question: t('faq.hoursQuestion', { name: business.name }),
-      answer: businessHours && businessHours.length > 0
+      answer: (businessHours && Array.isArray(businessHours) && businessHours.length > 0) || business.opening_hours
         ? t('faq.hoursAnswer', { name: business.name })
         : t('faq.hoursAnswerNo', { name: business.name })
     },
 
-    // Question 6: Industry/Category
+    // Question 6: Industry/Category (with subcategory if available)
     {
       question: t('faq.industryQuestion', { name: business.name }),
-      answer: business.main_category
-        ? t('faq.industryAnswer', {
-            name: business.name,
-            category: i18n.language === 'en' ? business.main_category.label_en : business.main_category.label_fr
-          })
-        : business.primary_main_category_fr || business.primary_main_category_en
-        ? t('faq.industryAnswer', {
-            name: business.name,
-            category: i18n.language === 'en' ? business.primary_main_category_en : business.primary_main_category_fr
-          })
-        : t('faq.noDataAvailable')
+      answer: (() => {
+        // Get main category
+        let mainCategory = null;
+        if (business.main_category) {
+          mainCategory = i18n.language === 'en' ? business.main_category.label_en : business.main_category.label_fr;
+        } else if (business.primary_main_category_fr || business.primary_main_category_en) {
+          mainCategory = i18n.language === 'en' ? business.primary_main_category_en : business.primary_main_category_fr;
+        }
+
+        // Get subcategory if available
+        let subCategory = null;
+        if (business.sub_categories && business.sub_categories.length > 0) {
+          const firstSub = business.sub_categories[0];
+          subCategory = i18n.language === 'en' ? firstSub.label_en : firstSub.label_fr;
+        } else if (business.primary_sub_category_fr || business.primary_sub_category_en) {
+          subCategory = i18n.language === 'en' ? business.primary_sub_category_en : business.primary_sub_category_fr;
+        }
+
+        // Build answer
+        if (mainCategory) {
+          if (subCategory) {
+            return t('faq.industryAnswerWithSub', {
+              name: business.name,
+              category: mainCategory,
+              subcategory: subCategory
+            });
+          } else {
+            return t('faq.industryAnswer', {
+              name: business.name,
+              category: mainCategory
+            });
+          }
+        }
+        return t('faq.noDataAvailable');
+      })()
     }
   ];
 

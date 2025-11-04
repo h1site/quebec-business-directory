@@ -166,6 +166,7 @@ const resources = {
         hoursAnswerNo: 'Les heures d\'ouverture de {{name}} ne sont pas disponibles sur cette fiche. Nous vous recommandons de contacter directement l\'établissement pour obtenir cette information.',
         industryQuestion: 'Dans quel domaine œuvre {{name}} ?',
         industryAnswer: '{{name}} œuvre dans le domaine : {{category}}.',
+        industryAnswerWithSub: '{{name}} œuvre dans le domaine : {{category}}, spécialisé en {{subcategory}}.',
         noDataAvailable: 'Cette information n\'est pas disponible pour le moment.'
       },
       deleteModal: {
@@ -851,6 +852,7 @@ const resources = {
         hoursAnswerNo: 'Opening hours for {{name}} are not available on this listing. We recommend contacting the establishment directly to obtain this information.',
         industryQuestion: 'What industry does {{name}} operate in?',
         industryAnswer: '{{name}} operates in the industry: {{category}}.',
+        industryAnswerWithSub: '{{name}} operates in the industry: {{category}}, specializing in {{subcategory}}.',
         noDataAvailable: 'This information is not available at this time.'
       },
       deleteModal: {
