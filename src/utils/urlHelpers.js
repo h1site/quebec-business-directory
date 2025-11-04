@@ -40,16 +40,16 @@ export const getBusinessUrl = (business, lang = null) => {
 
   if (business.main_category_slug) {
     categorySlug = business.main_category_slug;
-  } else if (business.categories && business.categories.length > 0) {
-    // Use first category if available
+  } else if (business.categories && business.categories.length > 0 && business.categories[0]) {
+    // Use first category if available and not undefined
     categorySlug = business.categories[0];
   }
 
   // Get city slug
   const citySlug = generateSlug(business.city || 'quebec');
 
-  // Get business slug
-  const businessSlug = business.slug || generateSlug(business.name);
+  // Get business slug - ensure it's never undefined
+  const businessSlug = business.slug || generateSlug(business.name) || 'unknown';
 
   const baseUrl = `/${categorySlug}/${citySlug}/${businessSlug}`;
 
