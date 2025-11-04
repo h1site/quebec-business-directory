@@ -11,10 +11,13 @@ const CategoryBrowse = () => {
   const { categorySlug, subCategorySlug } = useParams();
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [categoryName, setCategoryName] = useState('');
   const [subCategoryName, setSubCategoryName] = useState('');
   const [notFound, setNotFound] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     const loadBusinesses = async () => {
@@ -68,16 +71,21 @@ const CategoryBrowse = () => {
           }
         }
 
-        // Show all businesses in category for SEO (limit to 10000 to avoid overloading client)
-        // Supabase has a max limit of ~10k results per query for performance
-        const { data, error: searchError } = await query.range(0, 9999);
+        // Load businesses in batches of 1000 (Supabase max per query)
+        // Get count for total results
+        const { data, error: searchError, count } = await query
+          .select('*', { count: 'exact' })
+          .range(0, 999);
 
         if (searchError) {
           setError('Erreur lors du chargement des entreprises');
           return;
         }
 
+        console.log('📊 CategoryBrowse - Results received:', data?.length || 0, 'Total count:', count);
         setBusinesses(data || []);
+        setTotalCount(count || 0);
+        setHasMore((data?.length || 0) === 1000 && (count || 0) > 1000);
       } catch (err) {
         setError('Erreur lors du chargement des entreprises');
         console.error(err);
@@ -88,6 +96,50 @@ const CategoryBrowse = () => {
 
     loadBusinesses();
   }, [categorySlug, subCategorySlug]);
+
+  const handleLoadMore = async () => {
+    if (loadingMore) return;
+
+    setLoadingMore(true);
+    try {
+      const offset = businesses.length;
+
+      // Build the same query as initial load
+      let query = supabase
+        .from('businesses_enriched')
+        .select('*');
+
+      if (subCategorySlug) {
+        query = query.eq('primary_sub_category_slug', subCategorySlug);
+      } else {
+        // Get category ID for filtering
+        const { data: mainCat } = await supabase
+          .from('main_categories')
+          .select('id')
+          .eq('slug', categorySlug)
+          .single();
+
+        if (mainCat?.id) {
+          query = query.eq('main_category_id', mainCat.id);
+        }
+      }
+
+      const { data, error: searchError } = await query.range(offset, offset + 999);
+
+      if (searchError) {
+        console.error('Error loading more:', searchError);
+        return;
+      }
+
+      console.log('📊 CategoryBrowse - Load more results:', data?.length || 0);
+      setBusinesses(prev => [...prev, ...(data || [])]);
+      setHasMore((data?.length || 0) === 1000 && businesses.length + (data?.length || 0) < totalCount);
+    } catch (err) {
+      console.error('Error loading more:', err);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   // Redirect to 404 page if category/subcategory doesn't exist
   if (notFound) {
@@ -180,7 +232,17 @@ const CategoryBrowse = () => {
 
         <div className="browse-header">
           <h1>{titlePrefix} {displayName}</h1>
-          <p className="browse-count">{businesses.length} entreprise{businesses.length > 1 ? 's' : ''} trouvée{businesses.length > 1 ? 's' : ''}</p>
+          <p className="browse-count">
+            {totalCount > 0 ? (
+              businesses.length < totalCount ? (
+                <>Affichage de <strong>{businesses.length}</strong> sur <strong>{totalCount}</strong> entreprise{totalCount > 1 ? 's' : ''}</>
+              ) : (
+                <><strong>{totalCount}</strong> entreprise{totalCount > 1 ? 's' : ''} trouvée{totalCount > 1 ? 's' : ''}</>
+              )
+            ) : (
+              <>{businesses.length} entreprise{businesses.length > 1 ? 's' : ''} trouvée{businesses.length > 1 ? 's' : ''}</>
+            )}
+          </p>
         </div>
 
         {businesses.length === 0 ? (
@@ -191,11 +253,32 @@ const CategoryBrowse = () => {
             </Link>
           </div>
         ) : (
-          <div className="business-grid">
-            {businesses.map((business) => (
-              <BusinessCard key={business.id} business={business} />
-            ))}
-          </div>
+          <>
+            <div className="business-grid">
+              {businesses.map((business) => (
+                <BusinessCard key={business.id} business={business} />
+              ))}
+            </div>
+
+            {hasMore && (
+              <div className="load-more-container">
+                <button
+                  className="btn-load-more"
+                  onClick={handleLoadMore}
+                  disabled={loadingMore}
+                >
+                  {loadingMore ? (
+                    <>
+                      <div className="spinner-small"></div>
+                      Chargement...
+                    </>
+                  ) : (
+                    'Charger plus'
+                  )}
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </>

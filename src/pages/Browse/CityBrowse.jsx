@@ -10,9 +10,12 @@ const CityBrowse = () => {
   const { citySlug } = useParams();
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [cityName, setCityName] = useState('');
   const [notFound, setNotFound] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     const loadBusinesses = async () => {
@@ -26,18 +29,17 @@ const CityBrowse = () => {
 
         setCityName(name);
 
-        // Fetch businesses for this city (limit to 10000 to avoid overloading client)
-        // Supabase has a max limit of ~10k results per query for performance
+        // Load businesses in batches of 1000 (Supabase max per query)
         // Normalize city name for matching (handle spaces/hyphens)
         const normalizedCity = decodeURIComponent(name)
           .replace(/[\s\-_+]/g, '%')
           .trim();
 
-        const { data, error: searchError } = await supabase
+        const { data, error: searchError, count } = await supabase
           .from('businesses_enriched')
-          .select('*')
+          .select('*', { count: 'exact' })
           .ilike('city', `%${normalizedCity}%`)
-          .range(0, 9999);
+          .range(0, 999);
 
         if (searchError) {
           setError('Erreur lors du chargement des entreprises');
@@ -52,7 +54,10 @@ const CityBrowse = () => {
           return;
         }
 
+        console.log('📊 CityBrowse - Results received:', data?.length || 0, 'Total count:', count);
         setBusinesses(data);
+        setTotalCount(count || 0);
+        setHasMore((data?.length || 0) === 1000 && (count || 0) > 1000);
       } catch (err) {
         setError('Erreur lors du chargement des entreprises');
         console.error(err);
@@ -63,6 +68,39 @@ const CityBrowse = () => {
 
     loadBusinesses();
   }, [citySlug]);
+
+  const handleLoadMore = async () => {
+    if (loadingMore) return;
+
+    setLoadingMore(true);
+    try {
+      const offset = businesses.length;
+
+      // Normalize city name the same way as initial load
+      const normalizedCity = decodeURIComponent(cityName)
+        .replace(/[\s\-_+]/g, '%')
+        .trim();
+
+      const { data, error: searchError } = await supabase
+        .from('businesses_enriched')
+        .select('*')
+        .ilike('city', `%${normalizedCity}%`)
+        .range(offset, offset + 999);
+
+      if (searchError) {
+        console.error('Error loading more:', searchError);
+        return;
+      }
+
+      console.log('📊 CityBrowse - Load more results:', data?.length || 0);
+      setBusinesses(prev => [...prev, ...(data || [])]);
+      setHasMore((data?.length || 0) === 1000 && businesses.length + (data?.length || 0) < totalCount);
+    } catch (err) {
+      console.error('Error loading more:', err);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   // Redirect to 404 page if city doesn't exist (no businesses)
   if (notFound) {
@@ -142,7 +180,17 @@ const CityBrowse = () => {
       <div className="container browse-page">
         <div className="browse-header">
           <h1>Entreprises à {cityName}</h1>
-          <p className="browse-count">{businesses.length} entreprise{businesses.length > 1 ? 's' : ''} trouvée{businesses.length > 1 ? 's' : ''}</p>
+          <p className="browse-count">
+            {totalCount > 0 ? (
+              businesses.length < totalCount ? (
+                <>Affichage de <strong>{businesses.length}</strong> sur <strong>{totalCount}</strong> entreprise{totalCount > 1 ? 's' : ''}</>
+              ) : (
+                <><strong>{totalCount}</strong> entreprise{totalCount > 1 ? 's' : ''} trouvée{totalCount > 1 ? 's' : ''}</>
+              )
+            ) : (
+              <>{businesses.length} entreprise{businesses.length > 1 ? 's' : ''} trouvée{businesses.length > 1 ? 's' : ''}</>
+            )}
+          </p>
         </div>
 
         {businesses.length === 0 ? (
@@ -153,11 +201,32 @@ const CityBrowse = () => {
             </Link>
           </div>
         ) : (
-          <div className="business-grid">
-            {businesses.map((business) => (
-              <BusinessCard key={business.id} business={business} />
-            ))}
-          </div>
+          <>
+            <div className="business-grid">
+              {businesses.map((business) => (
+                <BusinessCard key={business.id} business={business} />
+              ))}
+            </div>
+
+            {hasMore && (
+              <div className="load-more-container">
+                <button
+                  className="btn-load-more"
+                  onClick={handleLoadMore}
+                  disabled={loadingMore}
+                >
+                  {loadingMore ? (
+                    <>
+                      <div className="spinner-small"></div>
+                      Chargement...
+                    </>
+                  ) : (
+                    'Charger plus'
+                  )}
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </>
