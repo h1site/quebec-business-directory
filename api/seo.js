@@ -129,6 +129,141 @@ function escapeHtml(text) {
     .replace(/'/g, '&#039;');
 }
 
+// Generate FAQ Schema for SEO
+function generateFAQSchema(business, isEnglish = false) {
+  if (!business) return null;
+
+  const faqItems = [];
+
+  // Question 1: City
+  if (business.city) {
+    const questionCity = isEnglish
+      ? `In which city is ${business.name} located?`
+      : `Dans quelle ville se situe ${business.name} ?`;
+    const answerCity = isEnglish
+      ? `${business.name} is located in ${business.city}${business.region ? `, ${business.region}` : ''}.`
+      : `${business.name} se situe à ${business.city}${business.region ? `, ${business.region}` : ''}.`;
+
+    faqItems.push({
+      "@type": "Question",
+      "name": questionCity,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": answerCity
+      }
+    });
+  }
+
+  // Question 2: Address
+  if (business.address) {
+    const questionAddress = isEnglish
+      ? `What is the address of ${business.name}?`
+      : `À quelle adresse se situe ${business.name} ?`;
+    const answerAddress = `${business.address}${business.address_line2 ? `, ${business.address_line2}` : ''}, ${business.city}, ${business.province || 'QC'} ${business.postal_code || ''}`;
+
+    faqItems.push({
+      "@type": "Question",
+      "name": questionAddress,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": answerAddress
+      }
+    });
+  }
+
+  // Question 3: Phone
+  const questionPhone = isEnglish
+    ? `Does ${business.name} have a phone number?`
+    : `Est-ce que ${business.name} a un numéro de téléphone ?`;
+  const answerPhone = business.phone
+    ? (isEnglish
+        ? `Yes, you can contact ${business.name} at ${business.phone}.`
+        : `Oui, vous pouvez contacter ${business.name} au ${business.phone}.`)
+    : (isEnglish
+        ? `Phone information for ${business.name} is not available on this listing. We invite you to visit their website or go directly to their establishment.`
+        : `Les informations de téléphone pour ${business.name} ne sont pas disponibles sur cette fiche. Nous vous invitons à visiter leur site web ou à vous rendre directement à leur établissement.`);
+
+  faqItems.push({
+    "@type": "Question",
+    "name": questionPhone,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": answerPhone
+    }
+  });
+
+  // Question 4: Website
+  const questionWebsite = isEnglish
+    ? `Does ${business.name} have a website?`
+    : `${business.name} a-t-il un site internet ?`;
+  const answerWebsite = business.website
+    ? (isEnglish
+        ? `Yes, ${business.name} has a website. You can view it by clicking on the "Website" link in the contact information above.`
+        : `Oui, ${business.name} a un site internet. Vous pouvez le consulter en cliquant sur le lien "Site web" dans les coordonnées ci-dessus.`)
+    : (isEnglish
+        ? `Website information for ${business.name} is not available on this listing. We invite you to contact them directly for more information.`
+        : `Les informations de site internet pour ${business.name} ne sont pas disponibles sur cette fiche. Nous vous invitons à les contacter directement pour plus d'informations.`);
+
+  faqItems.push({
+    "@type": "Question",
+    "name": questionWebsite,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": answerWebsite
+    }
+  });
+
+  // Question 5: Opening hours
+  const questionHours = isEnglish
+    ? `What are the opening hours of ${business.name}?`
+    : `Quels sont les heures d'ouverture de ${business.name} ?`;
+  const answerHours = business.opening_hours && Object.keys(business.opening_hours).length > 0
+    ? (isEnglish
+        ? `The opening hours of ${business.name} are displayed in the "Opening Hours" section above. We recommend checking them or contacting the establishment directly to confirm.`
+        : `Les heures d'ouverture de ${business.name} sont affichées dans la section "Heures d'ouverture" ci-dessus. Nous vous recommandons de les consulter ou de contacter directement l'établissement pour confirmer.`)
+    : (isEnglish
+        ? `Opening hours for ${business.name} are not available on this listing. We recommend contacting the establishment directly to obtain this information.`
+        : `Les heures d'ouverture de ${business.name} ne sont pas disponibles sur cette fiche. Nous vous recommandons de contacter directement l'établissement pour obtenir cette information.`);
+
+  faqItems.push({
+    "@type": "Question",
+    "name": questionHours,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": answerHours
+    }
+  });
+
+  // Question 6: Industry/Category
+  const categoryName = isEnglish
+    ? (business.main_category_name_en || business.primary_main_category_en)
+    : (business.main_category_name_fr || business.primary_main_category_fr);
+
+  if (categoryName && !categoryName.match(/^[0-9a-f]{8}-[0-9a-f]{4}-/)) {
+    const questionIndustry = isEnglish
+      ? `What industry does ${business.name} operate in?`
+      : `Dans quel domaine œuvre ${business.name} ?`;
+    const answerIndustry = isEnglish
+      ? `${business.name} operates in the industry: ${categoryName}.`
+      : `${business.name} œuvre dans le domaine : ${categoryName}.`;
+
+    faqItems.push({
+      "@type": "Question",
+      "name": questionIndustry,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": answerIndustry
+      }
+    });
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqItems
+  };
+}
+
 // Generate SSR HTML content for business page (for Google crawlers)
 function generateSSRContent(business, isEnglish = false) {
   const businessDescription = isEnglish ? business.description_en : business.description;
@@ -371,6 +506,9 @@ export default async function handler(req, res) {
     // Generate LocalBusiness schema
     const localBusinessSchema = generateSchemaOrg(business, isEnglish);
 
+    // Generate FAQ schema for SEO
+    const faqSchema = generateFAQSchema(business, isEnglish);
+
     // Generate BreadcrumbList schema for navigation
     const breadcrumbSchema = {
       "@context": "https://schema.org",
@@ -419,7 +557,8 @@ export default async function handler(req, res) {
       "@graph": [
         localBusinessSchema,
         webPageSchema,
-        breadcrumbSchema
+        breadcrumbSchema,
+        faqSchema
       ]
     };
 

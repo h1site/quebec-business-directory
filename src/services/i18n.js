@@ -150,6 +150,24 @@ const resources = {
         nextReview: 'Avis suivant',
         goToReview: 'Aller à l\'avis'
       },
+      faq: {
+        title: 'Questions fréquentes',
+        cityQuestion: 'Dans quelle ville se situe {{name}} ?',
+        cityAnswer: '{{name}} se situe à {{city}}{{region}}.',
+        addressQuestion: 'À quelle adresse se situe {{name}} ?',
+        phoneQuestion: 'Est-ce que {{name}} a un numéro de téléphone ?',
+        phoneAnswer: 'Oui, vous pouvez contacter {{name}} au {{phone}}.',
+        phoneAnswerNo: 'Les informations de téléphone pour {{name}} ne sont pas disponibles sur cette fiche. Nous vous invitons à visiter leur site web ou à vous rendre directement à leur établissement.',
+        websiteQuestion: '{{name}} a-t-il un site internet ?',
+        websiteAnswer: 'Oui, {{name}} a un site internet. Vous pouvez le consulter en cliquant sur le lien "Site web" dans les coordonnées ci-dessus.',
+        websiteAnswerNo: 'Les informations de site internet pour {{name}} ne sont pas disponibles sur cette fiche. Nous vous invitons à les contacter directement pour plus d\'informations.',
+        hoursQuestion: 'Quels sont les heures d\'ouverture de {{name}} ?',
+        hoursAnswer: 'Les heures d\'ouverture de {{name}} sont affichées dans la section "Heures d\'ouverture" ci-dessus. Nous vous recommandons de les consulter ou de contacter directement l\'établissement pour confirmer.',
+        hoursAnswerNo: 'Les heures d\'ouverture de {{name}} ne sont pas disponibles sur cette fiche. Nous vous recommandons de contacter directement l\'établissement pour obtenir cette information.',
+        industryQuestion: 'Dans quel domaine œuvre {{name}} ?',
+        industryAnswer: '{{name}} œuvre dans le domaine : {{category}}.',
+        noDataAvailable: 'Cette information n\'est pas disponible pour le moment.'
+      },
       deleteModal: {
         title: 'Attendez ! Avant de supprimer...',
         subtitle: 'Saviez-vous que vous pouvez réclamer cette fiche gratuitement ?',
@@ -816,6 +834,24 @@ const resources = {
         previousReview: 'Previous review',
         nextReview: 'Next review',
         goToReview: 'Go to review'
+      },
+      faq: {
+        title: 'Frequently Asked Questions',
+        cityQuestion: 'In which city is {{name}} located?',
+        cityAnswer: '{{name}} is located in {{city}}{{region}}.',
+        addressQuestion: 'What is the address of {{name}}?',
+        phoneQuestion: 'Does {{name}} have a phone number?',
+        phoneAnswer: 'Yes, you can contact {{name}} at {{phone}}.',
+        phoneAnswerNo: 'Phone information for {{name}} is not available on this listing. We invite you to visit their website or go directly to their establishment.',
+        websiteQuestion: 'Does {{name}} have a website?',
+        websiteAnswer: 'Yes, {{name}} has a website. You can view it by clicking on the "Website" link in the contact information above.',
+        websiteAnswerNo: 'Website information for {{name}} is not available on this listing. We invite you to contact them directly for more information.',
+        hoursQuestion: 'What are the opening hours of {{name}}?',
+        hoursAnswer: 'The opening hours of {{name}} are displayed in the "Opening Hours" section above. We recommend checking them or contacting the establishment directly to confirm.',
+        hoursAnswerNo: 'Opening hours for {{name}} are not available on this listing. We recommend contacting the establishment directly to obtain this information.',
+        industryQuestion: 'What industry does {{name}} operate in?',
+        industryAnswer: '{{name}} operates in the industry: {{category}}.',
+        noDataAvailable: 'This information is not available at this time.'
       },
       deleteModal: {
         title: 'Wait! Before you delete...',

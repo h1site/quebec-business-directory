@@ -19,6 +19,7 @@ import AmazonProducts from '../components/AmazonProducts.jsx';
 import SponsorBox from '../components/SponsorBox.jsx';
 import Breadcrumb from '../components/Breadcrumb.jsx';
 import SocialShare from '../components/SocialShare.jsx';
+import BusinessFAQ from '../components/BusinessFAQ.jsx';
 import { getBusinessUrl, isLegacyUrl } from '../utils/urlHelpers.js';
 import { checkUrlRedirect } from '../utils/urlValidator.js';
 import { generateBusinessSchema, generateBreadcrumbSchema } from '../utils/schemaMarkup.js';
@@ -747,6 +748,11 @@ const BusinessDetails = () => {
       {/* Amazon Products Section */}
       <div className="container">
         <AmazonProducts categorySlug={business.primary_sub_category_slug || business.primary_main_category_slug} />
+      </div>
+
+      {/* FAQ Section */}
+      <div className="container">
+        <BusinessFAQ business={business} businessHours={businessHours} />
       </div>
 
       {/* Reviews Section - Full Width */}

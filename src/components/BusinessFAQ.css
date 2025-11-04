@@ -1,0 +1,145 @@
+/* Business FAQ Section */
+.business-faq-section {
+  margin: 3rem 0;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.faq-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+  color: #1e293b;
+}
+
+.faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.faq-item:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background-color: #f8fafc;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #334155;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.faq-question:hover {
+  background-color: #f1f5f9;
+  color: #1e293b;
+}
+
+.faq-question.active {
+  background-color: #ffbd3d;
+  color: #1e293b;
+}
+
+.faq-question-text {
+  flex: 1;
+  padding-right: 1rem;
+}
+
+.faq-icon {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #64748b;
+  transition: transform 0.3s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.faq-question.active .faq-icon {
+  transform: rotate(180deg);
+  color: #1e293b;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  background-color: #ffffff;
+}
+
+.faq-answer.open {
+  max-height: 500px;
+  padding: 1rem 1.25rem;
+}
+
+.faq-answer-content {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .business-faq-section {
+    padding: 1.5rem 1rem;
+    margin: 2rem 0;
+  }
+
+  .faq-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .faq-question {
+    padding: 0.875rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .faq-answer.open {
+    padding: 0.875rem 1rem;
+  }
+
+  .faq-answer-content {
+    font-size: 0.9rem;
+  }
+
+  .faq-icon {
+    font-size: 1.25rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .business-faq-section {
+    box-shadow: none;
+    border: 1px solid #e2e8f0;
+  }
+
+  .faq-answer {
+    max-height: none !important;
+    padding: 0.5rem 1rem !important;
+  }
+
+  .faq-question {
+    background-color: #f8fafc !important;
+  }
+
+  .faq-icon {
+    display: none;
+  }
+}
