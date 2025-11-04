@@ -239,10 +239,9 @@ export const getBusinessBySlug = async (slug) => {
     return { data: business || null, error: business ? null : { message: 'Business not found' } };
   }
 
-  // IMPORTANT: Use businesses table directly (not enriched view) to get description_en
-  // The enriched view was not refreshed when description_en column was added
+  // Use businesses_enriched view to get category labels (primary_main_category_fr/en, primary_sub_category_fr/en)
   const { data, error } = await supabase
-    .from('businesses')
+    .from('businesses_enriched')
     .select('*')
     .eq('slug', slug)
     .single();
