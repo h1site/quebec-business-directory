@@ -68,8 +68,9 @@ const CategoryBrowse = () => {
           }
         }
 
-        // Show all businesses in category for SEO (limit set to 100k)
-        const { data, error: searchError } = await query.limit(100000);
+        // Show all businesses in category for SEO (limit to 10000 to avoid overloading client)
+        // Supabase has a max limit of ~10k results per query for performance
+        const { data, error: searchError } = await query.range(0, 9999);
 
         if (searchError) {
           setError('Erreur lors du chargement des entreprises');

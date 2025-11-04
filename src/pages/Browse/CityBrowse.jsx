@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { searchBusinesses } from '../../services/businessService.js';
+import { supabase } from '../../services/supabaseClient.js';
 import { getBusinessUrl } from '../../utils/urlHelpers.js';
 import BusinessCard from '../../components/BusinessCard.jsx';
 import './Browse.css';
@@ -26,14 +26,22 @@ const CityBrowse = () => {
 
         setCityName(name);
 
-        // Show all businesses in city for SEO (limit 100k for cities like Montreal)
-        const { data, error: searchError } = await searchBusinesses({
-          city: name,
-          limit: 100000
-        });
+        // Fetch businesses for this city (limit to 10000 to avoid overloading client)
+        // Supabase has a max limit of ~10k results per query for performance
+        // Normalize city name for matching (handle spaces/hyphens)
+        const normalizedCity = decodeURIComponent(name)
+          .replace(/[\s\-_+]/g, '%')
+          .trim();
+
+        const { data, error: searchError } = await supabase
+          .from('businesses_enriched')
+          .select('*')
+          .ilike('city', `%${normalizedCity}%`)
+          .range(0, 9999);
 
         if (searchError) {
           setError('Erreur lors du chargement des entreprises');
+          console.error('City browse error:', searchError);
           return;
         }
 
