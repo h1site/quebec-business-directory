@@ -408,6 +408,34 @@ function generateSSRContent(business, isEnglish = false) {
     </section>`;
   }
 
+  // FAQ Section - Generate FAQ HTML for SSR
+  const faqTitle = isEnglish ? 'Frequently Asked Questions' : 'Questions fréquentes';
+  html += `
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #2d3748;">${faqTitle}</h2>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">`;
+
+  // Generate FAQ items from the schema
+  const faqSchema = generateFAQSchema(business, isEnglish);
+  if (faqSchema && faqSchema.mainEntity && faqSchema.mainEntity.length > 0) {
+    faqSchema.mainEntity.forEach((item, index) => {
+      html += `
+        <details style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+          <summary style="font-weight: 600; cursor: pointer; color: #2d3748; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+            <span>${escapeHtml(item.name)}</span>
+            <span style="color: #718096;">▼</span>
+          </summary>
+          <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; color: #4a5568; line-height: 1.6;">
+            ${escapeHtml(item.acceptedAnswer.text)}
+          </div>
+        </details>`;
+    });
+  }
+
+  html += `
+      </div>
+    </section>`;
+
   html += `
   </article>
   <noscript>
