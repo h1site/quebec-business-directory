@@ -274,43 +274,82 @@ export const generateBusinessSchema = (business, canonicalUrl, businessHours = n
 
 /**
  * Generate BreadcrumbList schema
+ * Can accept either a business object or an array of breadcrumb items
  */
-export const generateBreadcrumbSchema = (business) => {
+export const generateBreadcrumbSchema = (businessOrItems) => {
   const baseUrl = window.location.origin;
 
+  // If it's an array, it's items from Breadcrumb component
+  if (Array.isArray(businessOrItems)) {
+    const items = businessOrItems;
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: items.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        item: item.url ? `${baseUrl}${item.url}` : undefined
+      })).filter(item => item.name && item.name !== 'undefined') // Filter out invalid items
+    };
+  }
+
+  // Otherwise it's a business object
+  const business = businessOrItems;
+
   // Protection contre les valeurs null/undefined
-  const citySlug = business.city ? business.city.toLowerCase().replace(/\s+/g, '-') : 'quebec';
-  const mainCategorySlug = business.main_category_slug || 'entreprises';
+  const citySlug = business.city ? business.city.toLowerCase().replace(/\s+/g, '-') : null;
+  const mainCategorySlug = business.main_category_slug || business.main_category?.slug;
+  const businessSlug = business.slug;
+
+  // Build items array, filtering out undefined elements
+  const items = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Accueil',
+      item: baseUrl
+    }
+  ];
+
+  // Add category if available
+  if (mainCategorySlug) {
+    items.push({
+      '@type': 'ListItem',
+      position: items.length + 1,
+      name: business.main_category_name || business.main_category?.label_fr || 'Catégorie',
+      item: `${baseUrl}/categorie/${mainCategorySlug}`
+    });
+  }
+
+  // Add city if available
+  if (business.city && citySlug) {
+    items.push({
+      '@type': 'ListItem',
+      position: items.length + 1,
+      name: business.city,
+      item: mainCategorySlug ? `${baseUrl}/${mainCategorySlug}/${citySlug}` : `${baseUrl}/recherche?city=${encodeURIComponent(business.city)}`
+    });
+  }
+
+  // Add business name as final item
+  if (business.name && businessSlug) {
+    const businessUrl = mainCategorySlug && citySlug
+      ? `${baseUrl}/${mainCategorySlug}/${citySlug}/${businessSlug}`
+      : `${baseUrl}/entreprise/${businessSlug}`;
+
+    items.push({
+      '@type': 'ListItem',
+      position: items.length + 1,
+      name: business.name,
+      item: businessUrl
+    });
+  }
 
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Accueil',
-        item: baseUrl
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: business.main_category_name || 'Catégorie',
-        item: `${baseUrl}/categorie/${mainCategorySlug}`
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: business.city || 'Québec',
-        item: `${baseUrl}/${mainCategorySlug}/${citySlug}`
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: business.name,
-        item: `${baseUrl}/${mainCategorySlug}/${citySlug}/${business.slug}`
-      }
-    ]
+    itemListElement: items
   };
 };
 
