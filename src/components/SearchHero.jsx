@@ -175,7 +175,7 @@ const SearchHero = () => {
                       <span className="rating-stars">{'★'.repeat(Math.round(business.google_rating))}</span>
                       <span className="rating-value">{business.google_rating.toFixed(1)}</span>
                       {business.google_reviews_count && (
-                        <span className="rating-count">({business.google_reviews_count})</span>
+                        <span className="rating-count">({business.google_reviews_count} {t('home.reviews')})</span>
                       )}
                     </div>
                   )}
