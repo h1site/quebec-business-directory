@@ -23,284 +23,97 @@ const supabase = createClient(
 console.log('📝 GÉNÉRATION DE DESCRIPTIONS AUTOMATIQUES (OPTIMISÉE)');
 console.log('═'.repeat(60));
 
-// Templates for descriptions - varied to avoid duplicate content
+// Templates for descriptions - 20 varied templates to avoid duplicate content
 const frenchTemplates = [
-  // Template 1: Professional & detailed
-  (data) => {
-    // WITH category
-    if (data.hasCategory) {
-      let desc = `${data.name} est ${data.article} ${data.category} ${data.subcategory ? `spécialisé${data.feminine ? 'e' : ''} en ${data.subcategory}` : ''} situé${data.feminine ? 'e' : ''} à ${data.city}`;
+  (data) => `Découvrez ${data.name} à ${data.city}. Cette entreprise locale offre des services adaptés à vos besoins. Contactez-les dès aujourd'hui pour en savoir plus.`,
 
-      if (data.region) desc += ` dans la région ${data.region}`;
-      if (data.mrc) desc += ` (MRC ${data.mrc})`;
-      desc += ', Québec.';
+  (data) => `Installée à ${data.city}, ${data.name} accompagne la clientèle locale avec des services personnalisés. Communiquez avec ${data.name} pour plus de détails.`,
 
-      if (data.hasWebsite) {
-        desc += ` Pour plus d'informations, visitez le site web officiel ou contactez l'entreprise directement.`;
-      } else {
-        desc += ` Contactez ${data.name} pour obtenir plus d'informations sur les services offerts.`;
-      }
+  (data) => `Faites confiance à ${data.name} à ${data.city} pour répondre à vos besoins. Une entreprise locale à votre écoute, prête à vous accueillir.`,
 
-      return desc;
-    }
+  (data) => `${data.name}, située à ${data.city}, met son expertise au service de la communauté. Contactez-les dès maintenant pour obtenir plus d'informations.`,
 
-    // WITHOUT category - Focus on location
-    let desc = `${data.name} est une entreprise locale établie à ${data.city}`;
-    if (data.region) desc += ` dans la région ${data.region}`;
-    desc += ', Québec.';
+  (data) => `À ${data.city}, ${data.name} se démarque par son service de proximité et son professionnalisme. Prenez contact avec eux pour découvrir ce qu'ils offrent.`,
 
-    if (data.hasWebsite) {
-      desc += ` Pour plus d'informations sur les services offerts, visitez le site web officiel ou contactez l'entreprise directement.`;
-    } else if (data.region || data.mrc) {
-      desc += ` Contactez ${data.name} pour obtenir plus d'informations sur les services offerts dans votre région.`;
-    } else {
-      desc += ` Vous pouvez contacter ${data.name} pour découvrir les services offerts et obtenir un service personnalisé adapté à vos besoins.`;
-    }
+  (data) => `Besoin d'un service fiable à ${data.city}? ${data.name} est là pour vous accompagner. Communiquez avec eux dès aujourd'hui pour plus d'infos.`,
 
-    return desc;
-  },
+  (data) => `${data.name} à ${data.city} propose des solutions adaptées à la réalité locale. N'hésitez pas à les contacter pour connaître leurs services.`,
 
-  // Template 2: Service-focused
-  (data) => {
-    // WITH category
-    if (data.hasCategory) {
-      let desc = `Découvrez ${data.name}, votre ${data.category} de confiance à ${data.city}`;
+  (data) => `Entreprise établie à ${data.city}, ${data.name} vous offre un service attentif et personnalisé. Contactez-les pour en savoir davantage.`,
 
-      if (data.region) desc += ` (${data.region})`;
-      desc += '.';
+  (data) => `À la recherche d'une entreprise de confiance à ${data.city}? ${data.name} met son savoir-faire à votre disposition. Prenez rendez-vous ou passez les voir.`,
 
-      if (data.subcategory) {
-        desc += ` Spécialisé${data.feminine ? 'e' : ''} en ${data.subcategory}, ${data.name} offre des services professionnels adaptés à vos besoins.`;
-      } else {
-        desc += ` ${data.name} offre des services professionnels adaptés à vos besoins.`;
-      }
+  (data) => `${data.name}, basée à ${data.city}, accompagne la clientèle de la région avec une offre variée. Communiquez avec eux pour découvrir leurs services.`,
 
-      desc += ` Contactez ${data.name} pour obtenir plus d'informations sur les services offerts.`;
+  (data) => `Située à ${data.city}, ${data.name} est une entreprise locale à l'écoute de ses clients. Contactez-les dès aujourd'hui pour plus de renseignements.`,
 
-      return desc;
-    }
+  (data) => `Faites appel à ${data.name} à ${data.city} pour bénéficier d'un service professionnel et chaleureux. Contactez-les pour discuter de vos besoins.`,
 
-    // WITHOUT category - Focus on services
-    let desc = `Découvrez ${data.name} à ${data.city}`;
-    if (data.region) desc += ` (${data.region})`;
-    desc += '.';
+  (data) => `À ${data.city}, ${data.name} se consacre à offrir un service de qualité à sa clientèle. Communiquez avec eux pour obtenir plus de détails.`,
 
-    if (data.hasWebsite) {
-      desc += ` Offrant des services professionnels adaptés à vos besoins, cette entreprise locale met son expertise à votre disposition. Visitez le site web pour en savoir plus.`;
-    } else {
-      desc += ` Cette entreprise locale offre des services adaptés à vos besoins. Contactez ${data.name} dès aujourd'hui pour discuter de votre projet.`;
-    }
+  (data) => `${data.name} est une entreprise de ${data.city} qui met de l'avant un service humain et accessible. Contactez-les pour en profiter dès maintenant.`,
 
-    return desc;
-  },
+  (data) => `Active à ${data.city}, ${data.name} propose des services pensés pour répondre à vos attentes. N'hésitez pas à les joindre pour plus d'informations.`,
 
-  // Template 3: Location-focused
-  (data) => {
-    // WITH category
-    if (data.hasCategory) {
-      let desc = `Situé${data.feminine ? 'e' : ''} à ${data.city}`;
+  (data) => `Découvrez les services de ${data.name} à ${data.city}. Une entreprise locale prête à vous accueillir et à vous accompagner. Contactez-les dès maintenant.`,
 
-      if (data.region && data.mrc) {
-        desc += ` dans la MRC ${data.mrc} (région ${data.region})`;
-      } else if (data.region) {
-        desc += ` dans la région ${data.region}`;
-      }
+  (data) => `${data.name}, établie à ${data.city}, offre un service professionnel aux clients de la région. Prenez contact avec eux pour en savoir plus.`,
 
-      desc += `, ${data.name} est ${data.article} ${data.category}`;
+  (data) => `Basée à ${data.city}, ${data.name} met l'accent sur la satisfaction de sa clientèle. Communiquez avec eux pour découvrir leur offre.`,
 
-      if (data.subcategory) {
-        desc += ` offrant des services en ${data.subcategory}`;
-      }
+  (data) => `À ${data.city}, ${data.name} est un choix de confiance pour la population locale. Contactez-les dès aujourd'hui pour obtenir des renseignements.`,
 
-      desc += ` au Québec.`;
-
-      desc += ` Trouvez toutes les coordonnées et informations pratiques sur cette page.`;
-
-      return desc;
-    }
-
-    // WITHOUT category - Focus on geographic presence
-    let desc = `Établie à ${data.city}`;
-    if (data.region) desc += ` dans la région ${data.region}`;
-    desc += `, ${data.name}`;
-
-    if (data.hasWebsite) {
-      desc += ` est une entreprise locale au service de la communauté. Consultez le site web pour découvrir la gamme complète de services offerts.`;
-    } else {
-      desc += ` est une entreprise de la région offrant des services à la communauté locale. Trouvez les coordonnées et prenez contact directement pour vos besoins.`;
-    }
-
-    return desc;
-  }
+  (data) => `${data.name} à ${data.city} se spécialise dans des services adaptés aux besoins locaux. Joignez-les pour en savoir davantage sur ce qu'ils proposent.`
 ];
 
 const englishTemplates = [
-  // Template 1: Professional & detailed
-  (data) => {
-    // WITH category
-    if (data.hasCategory) {
-      let desc = `${data.name} is ${data.article_en} ${data.category_en} ${data.subcategory_en ? `specializing in ${data.subcategory_en}` : ''} located in ${data.city}`;
+  (data) => `Discover ${data.name} in ${data.city}. This local business offers services tailored to your needs. Contact them today to learn more.`,
 
-      if (data.region) desc += `, ${data.region} region`;
-      if (data.mrc) desc += ` (MRC ${data.mrc})`;
-      desc += ', Quebec.';
+  (data) => `Located in ${data.city}, ${data.name} serves local customers with personalized services. Contact ${data.name} for more details.`,
 
-      if (data.hasWebsite) {
-        desc += ` For more information, visit the official website or contact the business directly.`;
-      } else {
-        desc += ` Contact ${data.name} for more information about the services offered.`;
-      }
+  (data) => `Trust ${data.name} in ${data.city} to meet your needs. A local business ready to welcome you and listen to your requirements.`,
 
-      return desc;
-    }
+  (data) => `${data.name}, located in ${data.city}, puts its expertise at the service of the community. Contact them now for more information.`,
 
-    // WITHOUT category - Focus on location
-    let desc = `${data.name} is a local business established in ${data.city}`;
-    if (data.region) desc += ` in the ${data.region} region`;
-    desc += ', Quebec.';
+  (data) => `In ${data.city}, ${data.name} stands out for its local service and professionalism. Get in touch with them to discover what they offer.`,
 
-    if (data.hasWebsite) {
-      desc += ` For more information about the services offered, visit the official website or contact the business directly.`;
-    } else if (data.region || data.mrc) {
-      desc += ` Contact ${data.name} for more information about the services offered in your area.`;
-    } else {
-      desc += ` You can contact ${data.name} to discover the services offered and get personalized service tailored to your needs.`;
-    }
+  (data) => `Need a reliable service in ${data.city}? ${data.name} is here to help. Contact them today for more info.`,
 
-    return desc;
-  },
+  (data) => `${data.name} in ${data.city} offers solutions adapted to local realities. Don't hesitate to contact them to learn about their services.`,
 
-  // Template 2: Service-focused
-  (data) => {
-    // WITH category
-    if (data.hasCategory) {
-      let desc = `Discover ${data.name}, your trusted ${data.category_en} in ${data.city}`;
+  (data) => `Established business in ${data.city}, ${data.name} offers attentive and personalized service. Contact them to learn more.`,
 
-      if (data.region) desc += ` (${data.region} region)`;
-      desc += '.';
+  (data) => `Looking for a trusted business in ${data.city}? ${data.name} puts its know-how at your disposal. Make an appointment or drop by.`,
 
-      if (data.subcategory_en) {
-        desc += ` Specializing in ${data.subcategory_en}, ${data.name} offers professional services tailored to your needs.`;
-      }
+  (data) => `${data.name}, based in ${data.city}, serves regional customers with a varied offering. Contact them to discover their services.`,
 
-      if (data.hasReviews) {
-        desc += ` Rated ${data.rating}/5 by ${data.reviewCount} customer${data.reviewCount > 1 ? 's' : ''}, this business enjoys an excellent local reputation.`;
-      }
+  (data) => `Located in ${data.city}, ${data.name} is a local business that listens to its customers. Contact them today for more information.`,
 
-      desc += ` Contact ${data.name} for more information about the services offered.`;
+  (data) => `Call on ${data.name} in ${data.city} for professional and friendly service. Contact them to discuss your needs.`,
 
-      return desc;
-    }
+  (data) => `In ${data.city}, ${data.name} is dedicated to providing quality service to its customers. Contact them for more details.`,
 
-    // WITHOUT category - Focus on services
-    let desc = `Discover ${data.name} in ${data.city}`;
-    if (data.region) desc += ` (${data.region} region)`;
-    desc += '.';
+  (data) => `${data.name} is a ${data.city} business that emphasizes human and accessible service. Contact them to benefit right away.`,
 
-    if (data.subcategory_en) {
-      desc += ` Specialized in ${data.subcategory_en}, ${data.name} offers professional services tailored to your needs.`;
-    } else {
-      desc += ` ${data.name} offers professional services tailored to your needs.`;
-    }
+  (data) => `Active in ${data.city}, ${data.name} offers services designed to meet your expectations. Don't hesitate to contact them for more information.`,
 
-    return desc;
-  },
+  (data) => `Discover ${data.name}'s services in ${data.city}. A local business ready to welcome and support you. Contact them now.`,
 
-  // Template 3: Location-focused
-  (data) => {
-    // WITH category
-    if (data.hasCategory) {
-      let desc = `Located in ${data.city}`;
+  (data) => `${data.name}, established in ${data.city}, offers professional service to regional customers. Get in touch to learn more.`,
 
-      if (data.region && data.mrc) {
-        desc += ` in the MRC ${data.mrc} (${data.region} region)`;
-      } else if (data.region) {
-        desc += ` in the ${data.region} region`;
-      }
+  (data) => `Based in ${data.city}, ${data.name} focuses on customer satisfaction. Contact them to discover their offering.`,
 
-      desc += `, ${data.name} is ${data.article_en} ${data.category_en}`;
+  (data) => `In ${data.city}, ${data.name} is a trusted choice for local residents. Contact them today for information.`,
 
-      if (data.subcategory_en) {
-        desc += ` offering services in ${data.subcategory_en}`;
-      }
-
-      desc += ` in Quebec. Find all contact details and practical information on this page.`;
-
-      return desc;
-    }
-
-    // WITHOUT category - Focus on geographic presence
-    let desc = `Established in ${data.city}`;
-    if (data.region) desc += ` in the ${data.region} region`;
-    desc += `, ${data.name}`;
-
-    if (data.hasWebsite) {
-      desc += ` is a local business serving the community. Visit the website to discover the full range of services offered.`;
-    } else {
-      desc += ` is a local business offering services to the community. Find contact details and get in touch directly for your needs.`;
-    }
-
-    return desc;
-  }
+  (data) => `${data.name} in ${data.city} specializes in services adapted to local needs. Contact them to learn more about what they offer.`
 ];
-
-// Helper to determine article (un/une)
-function getArticle(categoryLabel, isFeminine) {
-  if (!categoryLabel) return isFeminine ? 'une' : 'un';
-
-  const vowels = ['a', 'e', 'i', 'o', 'u', 'h'];
-  const firstChar = categoryLabel.toLowerCase().charAt(0);
-
-  if (vowels.includes(firstChar)) return 'un';
-  return isFeminine ? 'une' : 'un';
-}
-
-function getArticleEn(categoryLabel) {
-  if (!categoryLabel) return 'a';
-
-  const vowels = ['a', 'e', 'i', 'o', 'u'];
-  const firstChar = categoryLabel.toLowerCase().charAt(0);
-
-  return vowels.includes(firstChar) ? 'an' : 'a';
-}
-
-// Categories that are typically feminine in French
-const feminineCategories = [
-  'agence', 'entreprise', 'clinique', 'école', 'boutique',
-  'pharmacie', 'librairie', 'boulangerie', 'pâtisserie'
-];
-
-function isFeminineCategory(label) {
-  if (!label) return false;
-  const lowerLabel = label.toLowerCase();
-  return feminineCategories.some(fem => lowerLabel.includes(fem));
-}
 
 // Generate description for a business
 function generateDescription(business, templateIndex = 0) {
-  const hasCategory = !!(business.primary_main_category_fr && business.primary_main_category_fr.trim());
-
   const data = {
     name: business.name,
-    city: business.city || 'Québec',
-    region: business.region,
-    mrc: business.mrc,
-    category: business.primary_main_category_fr || 'entreprise',
-    category_en: business.primary_main_category_en || 'business',
-    subcategory: business.primary_sub_category_fr,
-    subcategory_en: business.primary_sub_category_en,
-    hasCategory: hasCategory,
-    hasReviews: business.google_reviews_count > 0,
-    reviewCount: business.google_reviews_count || 0,
-    rating: business.google_rating ? business.google_rating.toFixed(1) : '0.0',
-    hasWebsite: !!business.website,
-    feminine: isFeminineCategory(business.primary_main_category_fr),
-    article: '',
-    article_en: ''
+    city: business.city || 'Québec'
   };
-
-  data.article = getArticle(data.category, data.feminine);
-  data.article_en = getArticleEn(data.category_en);
 
   // Use modulo to cycle through templates for variety
   const frIndex = templateIndex % frenchTemplates.length;
