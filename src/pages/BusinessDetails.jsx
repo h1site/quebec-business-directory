@@ -543,6 +543,23 @@ const BusinessDetails = () => {
                 <p>{business.core_values}</p>
               </section>
             )}
+
+            {/* Google Reviews - After About Section */}
+            {(business.google_rating || (business.google_reviews && business.google_reviews.length > 0)) && (
+              <section className="business-section">
+                <h2 className="section-title">{t('business.googleReviews')}</h2>
+                <GoogleReviews
+                  rating={business.google_rating}
+                  reviewsCount={business.google_reviews_count}
+                  reviews={business.google_reviews || []}
+                />
+              </section>
+            )}
+
+            {/* Sponsor Box - After Google Reviews */}
+            <section className="business-section">
+              <SponsorBox />
+            </section>
           </div>
 
           {/* Right Sidebar */}
@@ -715,21 +732,6 @@ const BusinessDetails = () => {
                 </div>
               )}
             </div>
-
-            {/* Google Reviews */}
-            {(business.google_rating || (business.google_reviews && business.google_reviews.length > 0)) && (
-              <div className="sidebar-card">
-                <h3 className="sidebar-title">{t('business.googleReviews')}</h3>
-                <GoogleReviews
-                  rating={business.google_rating}
-                  reviewsCount={business.google_reviews_count}
-                  reviews={business.google_reviews || []}
-                />
-              </div>
-            )}
-
-            {/* Sponsor Box */}
-            <SponsorBox />
 
             {/* Service Area */}
             {business.service_area && (

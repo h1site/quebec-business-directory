@@ -30,16 +30,23 @@
   max-width: 100%;
   margin: 0 auto;
   width: 100%;
-  height: calc(100vh - 120px);
-  overflow: hidden;
 }
 
-/* Left Sidebar: Filters */
+/* Left Sidebar: Filters - Sticky on Desktop */
 .search-filters-sidebar {
   background: white;
   border-right: 1px solid #e2e8f0;
-  overflow-y: auto;
-  height: 100%;
+}
+
+/* Desktop only: Make filters sticky */
+@media (min-width: 1025px) {
+  .search-filters-sidebar {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
 }
 
 .filters-header {
@@ -74,9 +81,8 @@
 /* Center: Results */
 .search-results-main {
   background: #f7fafc;
-  overflow-y: auto;
-  height: 100%;
   padding: 1.5rem;
+  min-height: 60vh;
 }
 
 .results-count {
@@ -331,18 +337,16 @@
 @media (max-width: 1024px) {
   .search-layout {
     grid-template-columns: 1fr;
-    height: auto;
   }
 
   .search-filters-sidebar {
+    position: static;
     border-right: none;
     border-bottom: 1px solid #e2e8f0;
-    height: auto;
     max-height: none;
   }
 
   .search-results-main {
-    height: auto;
     min-height: 60vh;
   }
 }
