@@ -404,7 +404,7 @@ const BusinessDetails = () => {
                 name: business.city,
                 url: `/recherche?city=${encodeURIComponent(business.city)}`
               }] : []),
-              { name: business.name }
+              { name: business.name, url: getBusinessUrl(business) }
             ]}
           />
 

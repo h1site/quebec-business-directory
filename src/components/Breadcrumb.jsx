@@ -44,7 +44,10 @@ const Breadcrumb = ({ items }) => {
                 itemType="https://schema.org/ListItem"
               >
                 {isLast ? (
-                  <span itemProp="name">{item.name}</span>
+                  <>
+                    <span itemProp="name">{item.name}</span>
+                    {item.url && <link itemProp="item" href={`${window.location.origin}${item.url}`} />}
+                  </>
                 ) : (
                   <LocalizedLink to={item.url} itemProp="item">
                     <span itemProp="name">{item.name}</span>
