@@ -639,7 +639,9 @@ export default async function handler(req, res) {
       .replace(/<meta name="geo\.region"[^>]*>/gi, '')
       .replace(/<meta name="geo\.placename"[^>]*>/gi, '')
       .replace(/<meta name="geo\.position"[^>]*>/gi, '')
-      .replace(/<meta name="ICBM"[^>]*>/gi, '');
+      .replace(/<meta name="ICBM"[^>]*>/gi, '')
+      // Remove meta keywords tag (obsolete for SEO)
+      .replace(/<meta name="keywords"[^>]*>/gi, '');
 
     // STEP 3: Remove existing canonical and hreflang tags
     html = html
