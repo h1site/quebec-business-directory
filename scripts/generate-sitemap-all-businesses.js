@@ -242,9 +242,9 @@ for (let fileIndex = 0; fileIndex < numBusinessSitemaps; fileIndex++) {
   console.log(`   ✅ ${businessUrls.length.toLocaleString()} URLs`);
 }
 
-// 3. SITEMAP INDEX
+// 3. SITEMAP INDEX (FR)
 console.log('');
-console.log('📇 Génération sitemap.xml (index)...');
+console.log('📇 Génération sitemap-fr.xml (index français)...');
 
 let sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -260,14 +260,14 @@ sitemapFiles.forEach(file => {
 
 sitemapIndex += `</sitemapindex>`;
 
-const indexPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
+const indexPath = path.join(__dirname, '..', 'public', 'sitemap-fr.xml');
 fs.writeFileSync(indexPath, sitemapIndex, 'utf-8');
 
 console.log('');
-console.log('✅ SITEMAP COMPLET GÉNÉRÉ AVEC SUCCÈS!');
+console.log('✅ SITEMAP FRANÇAIS COMPLET GÉNÉRÉ AVEC SUCCÈS!');
 console.log('═'.repeat(60));
-console.log(`📁 Index: public/sitemap.xml`);
+console.log(`📁 Index: public/sitemap-fr.xml`);
 console.log(`📂 Sitemaps: public/sitemaps/ (${sitemapFiles.length} fichiers)`);
 console.log(`📊 Total URLs: ~${(totalBusinesses + staticUrls.length).toLocaleString()}`);
-console.log(`🌐 URL: ${baseUrl}/sitemap.xml`);
+console.log(`🌐 URL: ${baseUrl}/sitemap-fr.xml`);
 console.log('═'.repeat(60));
