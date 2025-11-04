@@ -449,35 +449,62 @@ function generateSSRContent(business, isEnglish = false) {
 
 // Main serverless function handler
 export default async function handler(req, res) {
-  // CRITICAL: Disable ALL caching - each business page MUST be unique!
+  // CRITICAL: Disable ALL caching - each page MUST be unique!
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
   res.setHeader('Pragma', 'no-cache');
   res.setHeader('Expires', '0');
   res.setHeader('Vary', '*');
 
   try {
-    const { slug, categorySlug, citySlug, lang } = req.query;
+    const { slug, categorySlug, citySlug, subCategorySlug, regionSlug, lang } = req.query;
 
     // Detect language from query parameter or default to French
     const isEnglish = lang === 'en';
     const locale = isEnglish ? 'en_CA' : 'fr_CA';
 
-    // If no slug, return default template
-    if (!slug) {
+    // ROUTE 1: Category Browse Pages (/categorie/sports-et-loisirs)
+    if (categorySlug && !slug && !citySlug) {
+      return handleCategoryPage(req, res, { categorySlug, subCategorySlug, isEnglish, locale });
+    }
+
+    // ROUTE 2: City Browse Pages (/ville/montreal)
+    if (citySlug && !slug && !categorySlug) {
+      return handleCityPage(req, res, { citySlug, isEnglish, locale });
+    }
+
+    // ROUTE 3: Region Browse Pages (/region/montreal)
+    if (regionSlug && !slug) {
+      // For now, return default template - can implement later
       const template = await loadTemplate();
       return res.status(200).setHeader('Content-Type', 'text/html').send(template);
     }
 
-    // Fetch business from Supabase
-    const { data: business, error } = await supabase
-      .from('businesses')
-      .select('*')
-      .eq('slug', slug)
-      .single();
-
-    if (error || !business) {
-      return res.status(404).send('Entreprise non trouvée');
+    // ROUTE 4: Business Detail Pages (/categorie/ville/slug)
+    if (slug) {
+      return handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale });
     }
+
+    // ROUTE 5: Default - Homepage or other pages
+    const template = await loadTemplate();
+    return res.status(200).setHeader('Content-Type', 'text/html').send(template);
+  } catch (error) {
+    console.error('SEO function error:', error);
+    res.status(500).send('Erreur serveur');
+  }
+}
+
+// Handle Business Detail Pages
+async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale }) {
+  // Fetch business from Supabase
+  const { data: business, error } = await supabase
+    .from('businesses')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (error || !business) {
+    return res.status(404).send('Entreprise non trouvée');
+  }
 
     // Generate SEO content (bilingual)
     const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
@@ -715,8 +742,195 @@ export default async function handler(req, res) {
     html = html.replace('</body>', `${dataScript}\n</body>`);
 
     res.status(200).setHeader('Content-Type', 'text/html').send(html);
-  } catch (error) {
-    console.error('SEO function error:', error);
-    res.status(500).send('Erreur serveur');
+}
+
+// Handle Category Browse Pages
+async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isEnglish, locale }) {
+  const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
+
+  // Fetch category info from Supabase
+  const { data: mainCat, error: catError } = await supabase
+    .from('main_categories')
+    .select('id, label_fr, label_en, slug')
+    .eq('slug', categorySlug)
+    .single();
+
+  if (catError || !mainCat) {
+    const template = await loadTemplate();
+    return res.status(404).setHeader('Content-Type', 'text/html').send(template);
   }
+
+  const categoryName = isEnglish ? (mainCat.label_en || mainCat.label_fr) : mainCat.label_fr;
+  let subCategoryName = '';
+  let title, description, canonical;
+
+  // Handle subcategory if present
+  if (subCategorySlug) {
+    const { data: subCat } = await supabase
+      .from('sub_categories')
+      .select('label_fr, label_en, slug')
+      .eq('slug', subCategorySlug)
+      .single();
+
+    if (subCat) {
+      subCategoryName = isEnglish ? (subCat.label_en || subCat.label_fr) : subCat.label_fr;
+      const titlePrefix = isEnglish ? 'Businesses in' : 'Entreprises en';
+      title = `${titlePrefix} ${subCategoryName} | ${siteName}`;
+      description = isEnglish
+        ? `Find businesses in ${subCategoryName} in Quebec. Complete directory with contact information and reviews.`
+        : `Trouvez des entreprises en ${subCategoryName} au Québec. Annuaire complet avec coordonnées et avis.`;
+      canonical = `https://registreduquebec.com${isEnglish ? '/en' : ''}/categorie/${categorySlug}/${subCategorySlug}`;
+    }
+  }
+
+  if (!subCategorySlug) {
+    const titlePrefix = isEnglish ? 'Businesses of' : 'Entreprises de';
+    title = `${titlePrefix} ${categoryName} | ${siteName}`;
+    description = isEnglish
+      ? `Find all businesses in ${categoryName} category in Quebec. Complete directory with contact information.`
+      : `Trouvez toutes les entreprises de catégorie ${categoryName} au Québec. Annuaire complet avec coordonnées.`;
+    canonical = `https://registreduquebec.com${isEnglish ? '/en' : ''}/categorie/${categorySlug}`;
+  }
+
+  // Load template and inject meta tags
+  let html = await loadTemplate();
+
+  // Replace title and description
+  html = html
+    .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
+    .replace(
+      /<meta name="description" content=".*?"[^>]*>/i,
+      `<meta name="description" content="${escapeHtml(description)}" />`
+    );
+
+  // Remove default OG/Twitter/Geo tags
+  html = html
+    .replace(/<meta property="og:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="twitter:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="geo\.[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="ICBM"[^>]*>/gi, '')
+    .replace(/<meta name="keywords"[^>]*>/gi, '')
+    .replace(/<link rel="canonical"[^>]*>/gi, '')
+    .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '');
+
+  // Add new SEO tags
+  const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
+  const hreflangTags = `
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/categorie/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/categorie/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/categorie/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />`;
+
+  const seoTags = `
+    <meta property="og:title" content="${escapeHtml(title)}">
+    <meta property="og:description" content="${escapeHtml(description)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="${locale}">
+    <meta property="og:site_name" content="${siteName}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeHtml(title)}">
+    <meta name="twitter:description" content="${escapeHtml(description)}">`;
+
+  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
+
+  // Generate minimal SSR content for crawlers
+  const displayName = subCategoryName || categoryName;
+  const titlePrefix = subCategorySlug
+    ? (isEnglish ? 'Businesses in' : 'Entreprises en')
+    : (isEnglish ? 'Businesses of' : 'Entreprises de');
+
+  const ssrContent = `
+  <div class="container browse-page" style="padding: 2rem 0;">
+    <header style="margin-bottom: 2rem; text-align: center;">
+      <h1 style="font-size: 2.5rem; font-weight: 700; color: #0f4c81; margin-bottom: 0.5rem;">${titlePrefix} ${escapeHtml(displayName)}</h1>
+      <p style="font-size: 1.1rem; color: #718096;">${escapeHtml(description)}</p>
+    </header>
+    <noscript>
+      <p style="text-align: center; color: #718096;">${isEnglish ? 'Please enable JavaScript to view the full business directory.' : 'Veuillez activer JavaScript pour voir l\'annuaire complet des entreprises.'}</p>
+    </noscript>
+  </div>`;
+
+  html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
+
+  res.status(200).setHeader('Content-Type', 'text/html').send(html);
+}
+
+// Handle City Browse Pages
+async function handleCityPage(req, res, { citySlug, isEnglish, locale }) {
+  const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
+
+  // Convert slug to city name (montreal -> Montreal, vaudreuil-dorion -> Vaudreuil-Dorion)
+  const cityName = citySlug
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join('-');
+
+  const title = isEnglish
+    ? `Businesses in ${cityName} | ${siteName}`
+    : `Entreprises à ${cityName} | ${siteName}`;
+
+  const description = isEnglish
+    ? `Find all businesses in ${cityName}, Quebec. Complete directory with contact information, reviews and detailed information.`
+    : `Trouvez toutes les entreprises à ${cityName}, Québec. Annuaire complet avec coordonnées, avis et informations détaillées.`;
+
+  const canonical = `https://registreduquebec.com${isEnglish ? '/en' : ''}/ville/${citySlug}`;
+
+  // Load template and inject meta tags
+  let html = await loadTemplate();
+
+  // Replace title and description
+  html = html
+    .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
+    .replace(
+      /<meta name="description" content=".*?"[^>]*>/i,
+      `<meta name="description" content="${escapeHtml(description)}" />`
+    );
+
+  // Remove default OG/Twitter/Geo tags
+  html = html
+    .replace(/<meta property="og:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="twitter:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="geo\.[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="ICBM"[^>]*>/gi, '')
+    .replace(/<meta name="keywords"[^>]*>/gi, '')
+    .replace(/<link rel="canonical"[^>]*>/gi, '')
+    .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '');
+
+  // Add new SEO tags
+  const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
+  const hreflangTags = `
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/ville/${citySlug}" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/city/${citySlug}" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/ville/${citySlug}" />`;
+
+  const seoTags = `
+    <meta name="geo.region" content="CA-QC">
+    <meta name="geo.placename" content="${escapeHtml(cityName)}">
+    <meta property="og:title" content="${escapeHtml(title)}">
+    <meta property="og:description" content="${escapeHtml(description)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="${locale}">
+    <meta property="og:site_name" content="${siteName}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeHtml(title)}">
+    <meta name="twitter:description" content="${escapeHtml(description)}">`;
+
+  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
+
+  // Generate minimal SSR content for crawlers
+  const ssrContent = `
+  <div class="container browse-page" style="padding: 2rem 0;">
+    <header style="margin-bottom: 2rem; text-align: center;">
+      <h1 style="font-size: 2.5rem; font-weight: 700; color: #0f4c81; margin-bottom: 0.5rem;">${isEnglish ? 'Businesses in' : 'Entreprises à'} ${escapeHtml(cityName)}</h1>
+      <p style="font-size: 1.1rem; color: #718096;">${escapeHtml(description)}</p>
+    </header>
+    <noscript>
+      <p style="text-align: center; color: #718096;">${isEnglish ? 'Please enable JavaScript to view the full business directory.' : 'Veuillez activer JavaScript pour voir l\'annuaire complet des entreprises.'}</p>
+    </noscript>
+  </div>`;
+
+  html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
+
+  res.status(200).setHeader('Content-Type', 'text/html').send(html);
 }
