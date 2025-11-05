@@ -1060,16 +1060,161 @@ async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale }) 
 
   html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n${schemaTag}\n</head>`);
 
-  // Generate minimal SSR content for crawlers
+  // Generate full SSR content for crawlers
   const articleTitle = article.title[lang];
   const articleIntro = article.intro[lang];
 
+  // Generate sample content sections based on article type
+  let contentSections = '';
+
+  if (blogSlug.includes('neq-quebec')) {
+    contentSections = isEnglish ? `
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">What is the NEQ?</h2>
+        <p style="margin-bottom: 1rem;">The NEQ (Numéro d'entreprise du Québec) is a unique 10-digit identifier assigned to every business registered in Quebec. This number is essential for all administrative dealings with the Quebec government and serves as the official identification for your business.</p>
+        <p style="margin-bottom: 1rem;">The NEQ is assigned by the Quebec Enterprise Registrar (REQ) when you register your business. It remains attached to your business throughout its entire lifecycle, from creation to closure.</p>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Who Needs a NEQ?</h2>
+        <p style="margin-bottom: 1rem;">The following types of businesses must obtain a NEQ:</p>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;">
+          <li>Corporations (Inc., Ltd., Ltée)</li>
+          <li>Sole proprietorships operating under a name other than the owner's name</li>
+          <li>Partnerships (general and limited)</li>
+          <li>Non-profit organizations</li>
+          <li>Cooperatives</li>
+        </ul>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">How to Obtain Your NEQ</h2>
+        <p style="margin-bottom: 1rem;">To obtain your NEQ, you must register your business with the Quebec Enterprise Registrar. The process can be completed online through the REQ website. You'll need to provide information about your business structure, activities, address, and management.</p>
+        <p style="margin-bottom: 1rem;">The registration fee varies depending on your business type. Once completed, you'll receive your NEQ immediately, which you can then use for all your administrative procedures.</p>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Searching for a NEQ</h2>
+        <p style="margin-bottom: 1rem;">You can search for any Quebec business's NEQ using the Registre du Québec directory. Simply enter the business name, and you'll find their NEQ along with other public information such as address, registration date, and business status.</p>
+      </section>
+    ` : `
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Qu'est-ce que le NEQ?</h2>
+        <p style="margin-bottom: 1rem;">Le NEQ (Numéro d'entreprise du Québec) est un identifiant unique à 10 chiffres attribué à chaque entreprise immatriculée au Québec. Ce numéro est essentiel pour toutes les transactions administratives avec le gouvernement du Québec et sert d'identification officielle pour votre entreprise.</p>
+        <p style="margin-bottom: 1rem;">Le NEQ est attribué par le Registraire des entreprises du Québec (REQ) lors de l'immatriculation de votre entreprise. Il reste attaché à votre entreprise durant tout son cycle de vie, de sa création à sa fermeture.</p>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Qui a besoin d'un NEQ?</h2>
+        <p style="margin-bottom: 1rem;">Les types d'entreprises suivants doivent obtenir un NEQ :</p>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;">
+          <li>Sociétés par actions (Inc., Ltd., Ltée)</li>
+          <li>Entreprises individuelles opérant sous un nom autre que celui du propriétaire</li>
+          <li>Sociétés de personnes (générales et en commandite)</li>
+          <li>Organismes à but non lucratif</li>
+          <li>Coopératives</li>
+        </ul>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Comment obtenir votre NEQ</h2>
+        <p style="margin-bottom: 1rem;">Pour obtenir votre NEQ, vous devez immatriculer votre entreprise auprès du Registraire des entreprises du Québec. Le processus peut être complété en ligne via le site du REQ. Vous devrez fournir des informations sur la structure de votre entreprise, ses activités, son adresse et sa gestion.</p>
+        <p style="margin-bottom: 1rem;">Les frais d'immatriculation varient selon le type d'entreprise. Une fois complétée, vous recevrez votre NEQ immédiatement, que vous pourrez ensuite utiliser pour toutes vos démarches administratives.</p>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Rechercher un NEQ</h2>
+        <p style="margin-bottom: 1rem;">Vous pouvez rechercher le NEQ de n'importe quelle entreprise québécoise en utilisant l'annuaire Registre du Québec. Entrez simplement le nom de l'entreprise et vous trouverez son NEQ ainsi que d'autres informations publiques telles que l'adresse, la date d'immatriculation et le statut de l'entreprise.</p>
+      </section>
+    `;
+  } else if (blogSlug.includes('reclamer-fiche')) {
+    contentSections = isEnglish ? `
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Why Claim Your Business Listing?</h2>
+        <p style="margin-bottom: 1rem;">Claiming your business listing on Registre du Québec gives you control over your business information and provides several key benefits:</p>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;">
+          <li>Update and correct your business information</li>
+          <li>Add photos, hours of operation, and services</li>
+          <li>Respond to customer reviews</li>
+          <li>Get a valuable dofollow backlink to your website</li>
+          <li>Improve your local SEO rankings</li>
+        </ul>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">How to Claim Your Listing</h2>
+        <p style="margin-bottom: 1rem;">The claiming process is simple and free. Here are the steps:</p>
+        <ol style="margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;">
+          <li>Find your business using the search function</li>
+          <li>Click on "Claim This Business" button</li>
+          <li>Create a free account or log in</li>
+          <li>Verify your identity as the business owner</li>
+          <li>Complete your business profile</li>
+        </ol>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">SEO Benefits of Claiming</h2>
+        <p style="margin-bottom: 1rem;">When you claim your listing, you get a dofollow backlink to your website. This is valuable for your SEO because it helps improve your domain authority and can boost your rankings in search engines like Google.</p>
+      </section>
+    ` : `
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Pourquoi réclamer votre fiche d'entreprise?</h2>
+        <p style="margin-bottom: 1rem;">Réclamer votre fiche d'entreprise sur le Registre du Québec vous donne le contrôle sur vos informations et offre plusieurs avantages clés :</p>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;">
+          <li>Mettre à jour et corriger vos informations d'entreprise</li>
+          <li>Ajouter des photos, heures d'ouverture et services</li>
+          <li>Répondre aux avis clients</li>
+          <li>Obtenir un backlink dofollow précieux vers votre site web</li>
+          <li>Améliorer votre référencement local</li>
+        </ul>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Comment réclamer votre fiche</h2>
+        <p style="margin-bottom: 1rem;">Le processus de réclamation est simple et gratuit. Voici les étapes :</p>
+        <ol style="margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;">
+          <li>Trouvez votre entreprise avec la fonction de recherche</li>
+          <li>Cliquez sur le bouton "Réclamer cette entreprise"</li>
+          <li>Créez un compte gratuit ou connectez-vous</li>
+          <li>Vérifiez votre identité en tant que propriétaire</li>
+          <li>Complétez votre profil d'entreprise</li>
+        </ol>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Avantages SEO de la réclamation</h2>
+        <p style="margin-bottom: 1rem;">Quand vous réclamez votre fiche, vous obtenez un backlink dofollow vers votre site web. Ceci est précieux pour votre référencement car il aide à améliorer l'autorité de votre domaine et peut augmenter vos classements dans les moteurs de recherche comme Google.</p>
+      </section>
+    `;
+  } else if (blogSlug.includes('restaurants-montreal')) {
+    contentSections = isEnglish ? `
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Montreal's Best Dining Experiences</h2>
+        <p style="margin-bottom: 1rem;">Montreal is renowned for its exceptional culinary scene, blending French gastronomy with international influences. From cozy bistros to upscale dining establishments, the city offers unforgettable dining experiences.</p>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Top Restaurants in Montreal 2025</h2>
+        <p style="margin-bottom: 1rem;">Our selection includes iconic establishments like Joe Beef, Toqué!, and Au Pied de Cochon, known for their exceptional quality, innovative cuisine, and outstanding customer reviews.</p>
+        <p style="margin-bottom: 1rem;">Each restaurant on this list has been selected based on customer reviews, culinary quality, ambiance, and overall dining experience.</p>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Reservation Tips</h2>
+        <p style="margin-bottom: 1rem;">Many of Montreal's top restaurants book up quickly, especially on weekends. We recommend making reservations at least 2-3 weeks in advance for the most popular establishments.</p>
+      </section>
+    ` : `
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Les meilleures expériences culinaires de Montréal</h2>
+        <p style="margin-bottom: 1rem;">Montréal est reconnue pour sa scène culinaire exceptionnelle, mêlant gastronomie française et influences internationales. Des bistrots chaleureux aux établissements haut de gamme, la ville offre des expériences culinaires inoubliables.</p>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Top restaurants de Montréal 2025</h2>
+        <p style="margin-bottom: 1rem;">Notre sélection inclut des établissements iconiques comme Joe Beef, Toqué! et Au Pied de Cochon, reconnus pour leur qualité exceptionnelle, leur cuisine innovante et leurs excellents avis clients.</p>
+        <p style="margin-bottom: 1rem;">Chaque restaurant de cette liste a été sélectionné en fonction des avis clients, de la qualité culinaire, de l'ambiance et de l'expérience globale.</p>
+      </section>
+      <section style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem;">Conseils pour réserver</h2>
+        <p style="margin-bottom: 1rem;">Plusieurs des meilleurs restaurants de Montréal sont rapidement complets, surtout les fins de semaine. Nous recommandons de réserver au moins 2-3 semaines à l'avance pour les établissements les plus populaires.</p>
+      </section>
+    `;
+  }
+
   const ssrContent = `
-  <article class="blog-article" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+  <article class="blog-article" style="max-width: 800px; margin: 0 auto; padding: 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;">
     <header style="margin-bottom: 2rem;">
       <h1 style="font-size: 2.5rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem; line-height: 1.2;">${escapeHtml(articleTitle)}</h1>
-      <div style="display: flex; gap: 1rem; color: #718096; font-size: 0.95rem; margin-bottom: 1.5rem;">
-        <span>Par ${escapeHtml(article.author)}</span>
+      <div style="display: flex; gap: 1rem; color: #718096; font-size: 0.95rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+        <span>${isEnglish ? 'By' : 'Par'} ${escapeHtml(article.author)}</span>
         <span>•</span>
         <time datetime="${article.publishedDate}">${new Date(article.publishedDate).toLocaleDateString(lang === 'en' ? 'en-CA' : 'fr-CA', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
         <span>•</span>
@@ -1077,11 +1222,19 @@ async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale }) 
       </div>
       <img src="${article.heroImage.url}?w=1200&auto=format" alt="${escapeHtml(article.heroImage.alt[lang])}" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 1.5rem;" />
     </header>
-    <div class="article-content" style="line-height: 1.8; color: #2d3748; font-size: 1.1rem;">
-      <p style="font-size: 1.2rem; color: #4a5568; margin-bottom: 1.5rem;">${escapeHtml(articleIntro)}</p>
+    <div class="article-content" style="line-height: 1.8; color: #2d3748; font-size: 1.05rem;">
+      <p style="font-size: 1.2rem; color: #4a5568; margin-bottom: 2rem; font-weight: 500;">${escapeHtml(articleIntro)}</p>
+      ${contentSections}
+      <div style="background: #f7fafc; border-left: 4px solid #0f4c81; padding: 1.5rem; margin: 2rem 0; border-radius: 4px;">
+        <p style="margin: 0; font-style: italic; color: #2d3748;">
+          ${isEnglish
+            ? 'This article is part of our Quebec Business Guide series. For more information, visit the Registre du Québec.'
+            : 'Cet article fait partie de notre série de guides pour les entreprises québécoises. Pour plus d\'informations, visitez le Registre du Québec.'}
+        </p>
+      </div>
       <noscript>
-        <p style="text-align: center; color: #718096; padding: 2rem; background: #f7fafc; border-radius: 8px;">
-          ${isEnglish ? 'Please enable JavaScript to view the full article content.' : 'Veuillez activer JavaScript pour voir le contenu complet de l\'article.'}
+        <p style="text-align: center; color: #718096; padding: 2rem; background: #fff3cd; border-radius: 8px; border: 1px solid #ffc107;">
+          ${isEnglish ? 'Please enable JavaScript to view the full article content and interactive features.' : 'Veuillez activer JavaScript pour voir le contenu complet de l\'article et les fonctionnalités interactives.'}
         </p>
       </noscript>
     </div>
