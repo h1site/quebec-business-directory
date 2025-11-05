@@ -68,6 +68,13 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/blogue/top-10-restaurants-montreal",
+      "destination": "/blogue/top-10-restaurants-montreal-2025",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/",
