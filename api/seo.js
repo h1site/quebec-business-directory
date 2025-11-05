@@ -13,7 +13,7 @@ const supabase = createClient(
 let htmlTemplateCache = null;
 async function loadTemplate() {
   if (!htmlTemplateCache) {
-    const templatePath = path.join(process.cwd(), 'dist/index.html');
+    const templatePath = path.join(process.cwd(), 'dist/spa.html');
     htmlTemplateCache = await fs.readFile(templatePath, 'utf-8');
   }
   return htmlTemplateCache; // Return cached template (we modify a copy)
