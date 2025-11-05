@@ -15,6 +15,7 @@
     "sitemap:notify": "curl 'https://www.google.com/ping?sitemap=https://registreduquebec.com/sitemap.xml' && curl 'https://www.google.com/ping?sitemap=https://registreduquebec.com/sitemap-en.xml'"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.68.0",
     "@supabase/supabase-js": "^2.43.1",
     "@vis.gl/react-google-maps": "^1.5.5",
     "amazon-paapi": "^1.0.7",
