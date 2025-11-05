@@ -151,7 +151,7 @@
     },
     {
       "source": "/((?!api/|sitemaps/|sitemap\\.xml|sitemap-en\\.xml).*)",
-      "destination": "/index.html"
+      "destination": "/spa.html"
     }
   ]
 }
