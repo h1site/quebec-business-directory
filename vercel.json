@@ -110,6 +110,42 @@
       "destination": "/api/seo?categorySlug=:categorySlug"
     },
     {
+      "source": "/blogue/:articleId",
+      "destination": "/api/seo?blogSlug=:articleId&lang=fr"
+    },
+    {
+      "source": "/en/blog/:articleId",
+      "destination": "/api/seo?blogSlug=:articleId&lang=en"
+    },
+    {
+      "source": "/blogue",
+      "destination": "/api/seo?page=blog&lang=fr"
+    },
+    {
+      "source": "/en/blog",
+      "destination": "/api/seo?page=blog&lang=en"
+    },
+    {
+      "source": "/a-propos",
+      "destination": "/api/seo?page=about&lang=fr"
+    },
+    {
+      "source": "/about",
+      "destination": "/api/seo?page=about&lang=fr"
+    },
+    {
+      "source": "/en/about",
+      "destination": "/api/seo?page=about&lang=en"
+    },
+    {
+      "source": "/faq",
+      "destination": "/api/seo?page=faq&lang=fr"
+    },
+    {
+      "source": "/en/faq",
+      "destination": "/api/seo?page=faq&lang=en"
+    },
+    {
       "source": "/((?!api/|sitemaps/|sitemap\\.xml|sitemap-en\\.xml).*)",
       "destination": "/index.html"
     }

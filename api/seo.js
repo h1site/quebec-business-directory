@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import fs from 'fs/promises';
 import path from 'path';
+import { getArticleBySlug, getAllArticles } from './blog-data.js';
 
 // Initialize Supabase
 const supabase = createClient(
@@ -458,11 +459,32 @@ export default async function handler(req, res) {
   res.setHeader('Vary', 'Accept-Encoding');
 
   try {
-    const { slug, categorySlug, citySlug, subCategorySlug, regionSlug, lang } = req.query;
+    const { slug, categorySlug, citySlug, subCategorySlug, regionSlug, lang, blogSlug, page } = req.query;
 
     // Detect language from query parameter or default to French
     const isEnglish = lang === 'en';
     const locale = isEnglish ? 'en_CA' : 'fr_CA';
+
+    // ROUTE 0.1: Blog Article Pages (/blogue/:articleId)
+    if (blogSlug) {
+      return handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale });
+    }
+
+    // ROUTE 0.2: Static Pages (About, FAQ, Homepage, Blog listing)
+    if (page) {
+      if (page === 'blog') {
+        return handleBlogListingPage(req, res, { isEnglish, locale });
+      }
+      if (page === 'about') {
+        return handleAboutPage(req, res, { isEnglish, locale });
+      }
+      if (page === 'faq') {
+        return handleFAQPage(req, res, { isEnglish, locale });
+      }
+      if (page === 'home') {
+        return handleHomePage(req, res, { isEnglish, locale });
+      }
+    }
 
     // ROUTE 1: Category Browse Pages (/categorie/sports-et-loisirs)
     if (categorySlug && !slug && !citySlug) {
@@ -933,6 +955,580 @@ async function handleCityPage(req, res, { citySlug, isEnglish, locale }) {
     </header>
     <noscript>
       <p style="text-align: center; color: #718096;">${isEnglish ? 'Please enable JavaScript to view the full business directory.' : 'Veuillez activer JavaScript pour voir l\'annuaire complet des entreprises.'}</p>
+    </noscript>
+  </div>`;
+
+  html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
+
+  res.status(200).setHeader('Content-Type', 'text/html').send(html);
+}
+
+// Handle Blog Article Pages
+async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale }) {
+  const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
+
+  // Get article from blog data
+  const article = getArticleBySlug(blogSlug);
+
+  if (!article) {
+    const template = await loadTemplate();
+    return res.status(404).setHeader('Content-Type', 'text/html').send(template);
+  }
+
+  const lang = isEnglish ? 'en' : 'fr';
+  const seo = article.seo[lang];
+  const title = seo.title;
+  const description = seo.description;
+  const canonical = seo.canonical;
+
+  // Load template and inject meta tags
+  let html = await loadTemplate();
+
+  // Replace title and description
+  html = html
+    .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
+    .replace(
+      /<meta name="description" content=".*?"[^>]*>/i,
+      `<meta name="description" content="${escapeHtml(description)}" />`
+    );
+
+  // Remove default OG/Twitter/Geo tags
+  html = html
+    .replace(/<meta property="og:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="twitter:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="geo\.[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="ICBM"[^>]*>/gi, '')
+    .replace(/<meta name="keywords"[^>]*>/gi, '')
+    .replace(/<link rel="canonical"[^>]*>/gi, '')
+    .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '');
+
+  // Add new SEO tags
+  const articleDate = new Date(article.publishedDate).toISOString();
+  const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
+  const hreflangTags = `
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/blogue/${blogSlug}" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/blog/${blogSlug}" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/blogue/${blogSlug}" />`;
+
+  const seoTags = `
+    <meta name="keywords" content="${escapeHtml(seo.keywords)}">
+    <meta property="og:title" content="${escapeHtml(title)}">
+    <meta property="og:description" content="${escapeHtml(description)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="${locale}">
+    <meta property="og:site_name" content="${siteName}">
+    <meta property="og:image" content="${article.heroImage.url}?w=1200">
+    <meta property="article:published_time" content="${articleDate}">
+    <meta property="article:author" content="${escapeHtml(article.author)}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeHtml(title)}">
+    <meta name="twitter:description" content="${escapeHtml(description)}">
+    <meta name="twitter:image" content="${article.heroImage.url}?w=1200">`;
+
+  // Article Schema.org
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title[lang],
+    "description": description,
+    "image": article.heroImage.url,
+    "datePublished": article.publishedDate,
+    "dateModified": article.publishedDate,
+    "author": {
+      "@type": "Organization",
+      "name": article.author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": siteName,
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://registreduquebec.com/images/logos/logoblue.webp"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonical
+    }
+  };
+
+  const schemaTag = `
+    <script type="application/ld+json">
+      ${JSON.stringify(articleSchema)}
+    </script>`;
+
+  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n${schemaTag}\n</head>`);
+
+  // Generate minimal SSR content for crawlers
+  const articleTitle = article.title[lang];
+  const articleIntro = article.intro[lang];
+
+  const ssrContent = `
+  <article class="blog-article" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+    <header style="margin-bottom: 2rem;">
+      <h1 style="font-size: 2.5rem; font-weight: 700; color: #1a202c; margin-bottom: 1rem; line-height: 1.2;">${escapeHtml(articleTitle)}</h1>
+      <div style="display: flex; gap: 1rem; color: #718096; font-size: 0.95rem; margin-bottom: 1.5rem;">
+        <span>Par ${escapeHtml(article.author)}</span>
+        <span>•</span>
+        <time datetime="${article.publishedDate}">${new Date(article.publishedDate).toLocaleDateString(lang === 'en' ? 'en-CA' : 'fr-CA', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        <span>•</span>
+        <span>${article.readTime}</span>
+      </div>
+      <img src="${article.heroImage.url}?w=1200&auto=format" alt="${escapeHtml(article.heroImage.alt[lang])}" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 1.5rem;" />
+    </header>
+    <div class="article-content" style="line-height: 1.8; color: #2d3748; font-size: 1.1rem;">
+      <p style="font-size: 1.2rem; color: #4a5568; margin-bottom: 1.5rem;">${escapeHtml(articleIntro)}</p>
+      <noscript>
+        <p style="text-align: center; color: #718096; padding: 2rem; background: #f7fafc; border-radius: 8px;">
+          ${isEnglish ? 'Please enable JavaScript to view the full article content.' : 'Veuillez activer JavaScript pour voir le contenu complet de l\'article.'}
+        </p>
+      </noscript>
+    </div>
+  </article>`;
+
+  html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
+
+  res.status(200).setHeader('Content-Type', 'text/html').send(html);
+}
+
+// Handle Blog Listing Page
+async function handleBlogListingPage(req, res, { isEnglish, locale }) {
+  const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
+  const lang = isEnglish ? 'en' : 'fr';
+
+  const title = isEnglish
+    ? `Blog - Business Tips & Quebec Guides | ${siteName}`
+    : `Blogue - Conseils d'affaires & Guides Québec | ${siteName}`;
+
+  const description = isEnglish
+    ? 'Discover guides, tips and advice for Quebec businesses: NEQ registration, business listing optimization, local SEO and more.'
+    : 'Découvrez des guides, conseils et astuces pour les entreprises du Québec : immatriculation NEQ, optimisation de fiche, référencement local et plus.';
+
+  const canonical = `https://registreduquebec.com${isEnglish ? '/en/blog' : '/blogue'}`;
+
+  // Get all articles
+  const articles = getAllArticles();
+
+  // Load template and inject meta tags
+  let html = await loadTemplate();
+
+  // Replace title and description
+  html = html
+    .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
+    .replace(
+      /<meta name="description" content=".*?"[^>]*>/i,
+      `<meta name="description" content="${escapeHtml(description)}" />`
+    );
+
+  // Remove default OG/Twitter/Geo tags
+  html = html
+    .replace(/<meta property="og:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="twitter:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="geo\.[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="ICBM"[^>]*>/gi, '')
+    .replace(/<meta name="keywords"[^>]*>/gi, '')
+    .replace(/<link rel="canonical"[^>]*>/gi, '')
+    .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '');
+
+  // Add new SEO tags
+  const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
+  const hreflangTags = `
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/blogue" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/blog" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/blogue" />`;
+
+  const seoTags = `
+    <meta property="og:title" content="${escapeHtml(title)}">
+    <meta property="og:description" content="${escapeHtml(description)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="${locale}">
+    <meta property="og:site_name" content="${siteName}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeHtml(title)}">
+    <meta name="twitter:description" content="${escapeHtml(description)}">`;
+
+  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
+
+  // Generate SSR content with article list
+  const articlesHtml = articles.map(article => `
+    <article style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+      <img src="${article.heroImage.url}?w=600&auto=format" alt="${escapeHtml(article.heroImage.alt[lang])}" style="width: 100%; height: 250px; object-fit: cover;" />
+      <div style="padding: 1.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; color: #1a202c; margin-bottom: 0.75rem;">
+          <a href="${isEnglish ? '/en/blog' : '/blogue'}/${article.slug}" style="color: inherit; text-decoration: none;">
+            ${escapeHtml(article.title[lang])}
+          </a>
+        </h2>
+        <p style="color: #4a5568; line-height: 1.6; margin-bottom: 1rem;">${escapeHtml(article.intro[lang].substring(0, 150))}...</p>
+        <div style="display: flex; gap: 1rem; color: #718096; font-size: 0.9rem;">
+          <span>${new Date(article.publishedDate).toLocaleDateString(lang === 'en' ? 'en-CA' : 'fr-CA', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+          <span>•</span>
+          <span>${article.readTime}</span>
+        </div>
+      </div>
+    </article>
+  `).join('');
+
+  const ssrContent = `
+  <div class="blog-page" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+    <header style="text-align: center; margin-bottom: 3rem;">
+      <h1 style="font-size: 3rem; font-weight: 700; color: #0f4c81; margin-bottom: 0.5rem;">
+        ${isEnglish ? 'Blog' : 'Blogue'}
+      </h1>
+      <p style="font-size: 1.2rem; color: #718096;">${escapeHtml(description)}</p>
+    </header>
+    <div class="articles-list">
+      ${articlesHtml}
+    </div>
+    <noscript>
+      <p style="text-align: center; color: #718096;">${isEnglish ? 'Please enable JavaScript to view the full blog.' : 'Veuillez activer JavaScript pour voir le blogue complet.'}</p>
+    </noscript>
+  </div>`;
+
+  html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
+
+  res.status(200).setHeader('Content-Type', 'text/html').send(html);
+}
+
+// Handle About Page
+async function handleAboutPage(req, res, { isEnglish, locale }) {
+  const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
+
+  const title = isEnglish
+    ? `About Us - ${siteName}`
+    : `À propos - ${siteName}`;
+
+  const description = isEnglish
+    ? 'Quebec Business Directory is an independent platform with over 600,000 businesses listed. Find local businesses and claim your free listing.'
+    : 'Le Registre du Québec est une plateforme indépendante avec plus de 600 000 entreprises répertoriées. Trouvez des entreprises locales et réclamez votre fiche gratuite.';
+
+  const canonical = `https://registreduquebec.com${isEnglish ? '/en/about' : '/a-propos'}`;
+
+  // Load template and inject meta tags
+  let html = await loadTemplate();
+
+  // Replace title and description
+  html = html
+    .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
+    .replace(
+      /<meta name="description" content=".*?"[^>]*>/i,
+      `<meta name="description" content="${escapeHtml(description)}" />`
+    );
+
+  // Remove default OG/Twitter/Geo tags
+  html = html
+    .replace(/<meta property="og:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="twitter:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="geo\.[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="ICBM"[^>]*>/gi, '')
+    .replace(/<meta name="keywords"[^>]*>/gi, '')
+    .replace(/<link rel="canonical"[^>]*>/gi, '')
+    .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '');
+
+  // Add new SEO tags
+  const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
+  const hreflangTags = `
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/a-propos" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/about" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/a-propos" />`;
+
+  const seoTags = `
+    <meta property="og:title" content="${escapeHtml(title)}">
+    <meta property="og:description" content="${escapeHtml(description)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="${locale}">
+    <meta property="og:site_name" content="${siteName}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeHtml(title)}">
+    <meta name="twitter:description" content="${escapeHtml(description)}">`;
+
+  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
+
+  // Generate SSR content
+  const ssrContent = `
+  <div class="about-page" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+    <header style="text-align: center; margin-bottom: 3rem;">
+      <img src="/images/logos/logoblue.webp" alt="${siteName}" style="max-width: 200px; margin-bottom: 1.5rem;" />
+      <h1 style="font-size: 2.5rem; font-weight: 700; color: #0f4c81; margin-bottom: 0.5rem;">
+        ${isEnglish ? 'About Quebec Business Directory' : 'À propos du Registre du Québec'}
+      </h1>
+    </header>
+    <section style="margin-bottom: 2.5rem;">
+      <h2 style="font-size: 1.8rem; font-weight: 600; color: #2d3748; margin-bottom: 1rem;">
+        ${isEnglish ? 'Our Mission' : 'Notre mission'}
+      </h2>
+      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1rem;">
+        ${isEnglish
+          ? 'Quebec Business Directory is an independent private platform dedicated to making information about Quebec businesses more accessible and facilitating the visibility of local businesses throughout the province.'
+          : 'Le Registre du Québec est une plateforme privée indépendante dédiée à rendre l\'information sur les entreprises québécoises plus accessible et à faciliter la visibilité des commerces locaux à travers la province.'
+        }
+      </p>
+      <p style="line-height: 1.8; color: #4a5568;">
+        ${isEnglish
+          ? 'With over <strong>600,000 businesses listed</strong>, we offer the largest database of Quebec businesses, allowing consumers to easily find the services and products they need while helping businesses increase their online visibility.'
+          : 'Avec plus de <strong>600 000 entreprises répertoriées</strong>, nous offrons la plus grande base de données d\'entreprises du Québec, permettant aux consommateurs de trouver facilement les services et produits dont ils ont besoin, tout en aidant les entreprises à accroître leur visibilité en ligne.'
+        }
+      </p>
+    </section>
+    <noscript>
+      <p style="text-align: center; color: #718096;">${isEnglish ? 'Please enable JavaScript to view the full content.' : 'Veuillez activer JavaScript pour voir le contenu complet.'}</p>
+    </noscript>
+  </div>`;
+
+  html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
+
+  res.status(200).setHeader('Content-Type', 'text/html').send(html);
+}
+
+// Handle FAQ Page
+async function handleFAQPage(req, res, { isEnglish, locale }) {
+  const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
+  const lang = isEnglish ? 'en' : 'fr';
+
+  const title = isEnglish
+    ? `Frequently Asked Questions (FAQ) - ${siteName}`
+    : `Foire aux questions (FAQ) - ${siteName}`;
+
+  const description = isEnglish
+    ? 'Quickly find answers to your questions about Quebec Business Directory: search, claiming listings, NEQ, account management and more.'
+    : 'Trouvez rapidement les réponses à vos questions sur le Registre du Québec : recherche, réclamation de fiche, NEQ, gestion de compte et plus.';
+
+  const canonical = `https://registreduquebec.com${isEnglish ? '/en/faq' : '/faq'}`;
+
+  // Load template and inject meta tags
+  let html = await loadTemplate();
+
+  // Replace title and description
+  html = html
+    .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
+    .replace(
+      /<meta name="description" content=".*?"[^>]*>/i,
+      `<meta name="description" content="${escapeHtml(description)}" />`
+    );
+
+  // Remove default OG/Twitter/Geo tags
+  html = html
+    .replace(/<meta property="og:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="twitter:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="geo\.[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="ICBM"[^>]*>/gi, '')
+    .replace(/<meta name="keywords"[^>]*>/gi, '')
+    .replace(/<link rel="canonical"[^>]*>/gi, '')
+    .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '');
+
+  // FAQ Schema
+  const faqItems = isEnglish ? [
+    {
+      q: 'How do I find a business in Quebec?',
+      a: 'Use our search engine at the top of the page. You can search by business name, city, region, category, or Quebec Enterprise Number (NEQ). Our directory contains over 600,000 Quebec businesses with complete contact information and detailed data.'
+    },
+    {
+      q: 'What is a NEQ?',
+      a: 'The NEQ (Quebec Enterprise Number) is a unique 10-digit identifier assigned by the Enterprise Registrar to each business registered in Quebec.'
+    },
+    {
+      q: 'How do I claim my business listing?',
+      a: 'Create a free account, log in, find your business via search, then click the "Claim This Listing" button on your business page. Our team will contact you by email or phone to verify your identity.'
+    }
+  ] : [
+    {
+      q: 'Comment trouver une entreprise au Québec?',
+      a: 'Utilisez notre moteur de recherche en haut de la page. Vous pouvez rechercher par nom d\'entreprise, ville, région, catégorie ou numéro d\'entreprise du Québec (NEQ). Notre annuaire contient plus de 600 000 entreprises québécoises avec coordonnées complètes et informations détaillées.'
+    },
+    {
+      q: 'Qu\'est-ce que le NEQ?',
+      a: 'Le NEQ (Numéro d\'entreprise du Québec) est un identifiant unique à 10 chiffres attribué par le Registraire des entreprises à chaque entreprise enregistrée au Québec.'
+    },
+    {
+      q: 'Comment réclamer la fiche de mon entreprise?',
+      a: 'Créez un compte gratuit, connectez-vous, trouvez votre entreprise via la recherche, puis cliquez sur le bouton "Réclamer cette fiche" sur la page de votre entreprise. Notre équipe vous contactera par email ou téléphone pour vérifier votre identité.'
+    }
+  ];
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqItems.map(item => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.a
+      }
+    }))
+  };
+
+  // Add new SEO tags
+  const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
+  const hreflangTags = `
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/faq" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/faq" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/faq" />`;
+
+  const seoTags = `
+    <meta property="og:title" content="${escapeHtml(title)}">
+    <meta property="og:description" content="${escapeHtml(description)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="${locale}">
+    <meta property="og:site_name" content="${siteName}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeHtml(title)}">
+    <meta name="twitter:description" content="${escapeHtml(description)}">`;
+
+  const schemaTag = `
+    <script type="application/ld+json">
+      ${JSON.stringify(faqSchema)}
+    </script>`;
+
+  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n${schemaTag}\n</head>`);
+
+  // Generate SSR content
+  const faqHtml = faqItems.map((item, index) => `
+    <div style="background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+      <h3 style="font-size: 1.25rem; font-weight: 600; color: #1a202c; margin-bottom: 0.75rem;">${escapeHtml(item.q)}</h3>
+      <p style="line-height: 1.6; color: #4a5568;">${escapeHtml(item.a)}</p>
+    </div>
+  `).join('');
+
+  const ssrContent = `
+  <div class="faq-page" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+    <header style="text-align: center; margin-bottom: 3rem;">
+      <h1 style="font-size: 2.5rem; font-weight: 700; color: #0f4c81; margin-bottom: 0.5rem;">
+        ${isEnglish ? 'Frequently Asked Questions (FAQ)' : 'Foire aux questions (FAQ)'}
+      </h1>
+      <p style="font-size: 1.1rem; color: #718096;">${escapeHtml(description)}</p>
+    </header>
+    <div class="faq-list">
+      ${faqHtml}
+    </div>
+    <noscript>
+      <p style="text-align: center; color: #718096; margin-top: 2rem;">${isEnglish ? 'Please enable JavaScript to view all FAQ questions.' : 'Veuillez activer JavaScript pour voir toutes les questions.'}</p>
+    </noscript>
+  </div>`;
+
+  html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
+
+  res.status(200).setHeader('Content-Type', 'text/html').send(html);
+}
+
+// Handle Homepage
+async function handleHomePage(req, res, { isEnglish, locale }) {
+  const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
+
+  const title = isEnglish
+    ? `${siteName} - Find the best local businesses`
+    : `${siteName} - Trouvez les meilleurs entreprises locales`;
+
+  const description = isEnglish
+    ? 'Discover the best businesses in Quebec. Complete directory with reviews, contact information and detailed data. Over 600,000 Quebec businesses.'
+    : 'Découvrez les meilleures entreprises du Québec. Annuaire complet avec avis, coordonnées et informations détaillées. Plus de 600 000 entreprises québécoises.';
+
+  const canonical = `https://registreduquebec.com${isEnglish ? '/?lang=en' : '/'}`;
+
+  // Load template and inject meta tags
+  let html = await loadTemplate();
+
+  // Replace title and description
+  html = html
+    .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
+    .replace(
+      /<meta name="description" content=".*?"[^>]*>/i,
+      `<meta name="description" content="${escapeHtml(description)}" />`
+    );
+
+  // Remove default OG/Twitter/Geo tags
+  html = html
+    .replace(/<meta property="og:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="twitter:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="geo\.[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="ICBM"[^>]*>/gi, '')
+    .replace(/<meta name="keywords"[^>]*>/gi, '')
+    .replace(/<link rel="canonical"[^>]*>/gi, '')
+    .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '');
+
+  // Organization & WebSite Schema
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": siteName,
+    "url": "https://registreduquebec.com",
+    "logo": "https://registreduquebec.com/images/logos/logoblue.webp",
+    "description": description,
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "QC",
+      "addressCountry": "CA"
+    }
+  };
+
+  const webSiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": siteName,
+    "url": "https://registreduquebec.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://registreduquebec.com/recherche?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  };
+
+  // Add new SEO tags
+  const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
+  const hreflangTags = `
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/" />`;
+
+  const seoTags = `
+    <meta property="og:title" content="${escapeHtml(title)}">
+    <meta property="og:description" content="${escapeHtml(description)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="${locale}">
+    <meta property="og:site_name" content="${siteName}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeHtml(title)}">
+    <meta name="twitter:description" content="${escapeHtml(description)}">`;
+
+  const schemaTag = `
+    <script type="application/ld+json">
+      ${JSON.stringify(organizationSchema)}
+    </script>
+    <script type="application/ld+json">
+      ${JSON.stringify(webSiteSchema)}
+    </script>`;
+
+  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n${schemaTag}\n</head>`);
+
+  // Generate minimal SSR content for homepage
+  const ssrContent = `
+  <div class="home-page" style="min-height: 60vh;">
+    <div class="hero" style="text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #0f4c81 0%, #1e88e5 100%); color: white;">
+      <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 1rem;">
+        ${isEnglish ? 'Find Quebec Businesses' : 'Trouvez des entreprises au Québec'}
+      </h1>
+      <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.95;">
+        ${isEnglish
+          ? 'Over 600,000 businesses with complete information'
+          : 'Plus de 600 000 entreprises avec informations complètes'
+        }
+      </p>
+    </div>
+    <noscript>
+      <div style="text-align: center; padding: 2rem; color: #718096;">
+        ${isEnglish
+          ? 'Please enable JavaScript to search and browse businesses.'
+          : 'Veuillez activer JavaScript pour rechercher et parcourir les entreprises.'
+        }
+      </div>
     </noscript>
   </div>`;
 
