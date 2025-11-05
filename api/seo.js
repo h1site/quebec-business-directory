@@ -1508,26 +1508,216 @@ async function handleHomePage(req, res, { isEnglish, locale }) {
 
   html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n${schemaTag}\n</head>`);
 
-  // Generate minimal SSR content for homepage
+  // Top cities and categories for SEO
+  const topCities = [
+    { name: 'Montréal', slug: 'montreal', nameEn: 'Montreal' },
+    { name: 'Québec', slug: 'quebec', nameEn: 'Quebec City' },
+    { name: 'Laval', slug: 'laval', nameEn: 'Laval' },
+    { name: 'Gatineau', slug: 'gatineau', nameEn: 'Gatineau' },
+    { name: 'Longueuil', slug: 'longueuil', nameEn: 'Longueuil' },
+    { name: 'Sherbrooke', slug: 'sherbrooke', nameEn: 'Sherbrooke' },
+    { name: 'Saguenay', slug: 'saguenay', nameEn: 'Saguenay' },
+    { name: 'Lévis', slug: 'levis', nameEn: 'Levis' },
+    { name: 'Trois-Rivières', slug: 'trois-rivieres', nameEn: 'Trois-Rivieres' },
+    { name: 'Terrebonne', slug: 'terrebonne', nameEn: 'Terrebonne' },
+    { name: 'Saint-Jean-sur-Richelieu', slug: 'saint-jean-sur-richelieu', nameEn: 'Saint-Jean-sur-Richelieu' },
+    { name: 'Repentigny', slug: 'repentigny', nameEn: 'Repentigny' }
+  ];
+
+  const topCategories = [
+    { name: 'Restaurants', slug: 'restaurants', nameEn: 'Restaurants' },
+    { name: 'Construction', slug: 'construction', nameEn: 'Construction' },
+    { name: 'Services professionnels', slug: 'services-professionnels', nameEn: 'Professional Services' },
+    { name: 'Commerce de détail', slug: 'commerce-de-detail', nameEn: 'Retail' },
+    { name: 'Immobilier', slug: 'immobilier', nameEn: 'Real Estate' },
+    { name: 'Santé et services sociaux', slug: 'sante-et-services-sociaux', nameEn: 'Health & Social Services' },
+    { name: 'Services financiers', slug: 'services-financiers', nameEn: 'Financial Services' },
+    { name: 'Technologies', slug: 'technologies', nameEn: 'Technology' },
+    { name: 'Transport', slug: 'transport', nameEn: 'Transportation' },
+    { name: 'Hébergement et restauration', slug: 'hebergement-et-restauration', nameEn: 'Hospitality' }
+  ];
+
+  // Generate SSR content for homepage with full internal linking
   const ssrContent = `
-  <div class="home-page" style="min-height: 60vh;">
+  <div class="home-page" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;">
+    <!-- Hero Section -->
     <div class="hero" style="text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #0f4c81 0%, #1e88e5 100%); color: white;">
-      <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 1rem;">
+      <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.2;">
         ${isEnglish ? 'Find Quebec Businesses' : 'Trouvez des entreprises au Québec'}
       </h1>
-      <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.95;">
+      <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.95;">
         ${isEnglish
           ? 'Over 600,000 businesses with complete information'
           : 'Plus de 600 000 entreprises avec informations complètes'
         }
       </p>
+      <div style="max-width: 600px; margin: 0 auto;">
+        <p style="font-size: 0.95rem; opacity: 0.9;">
+          ${isEnglish
+            ? 'Search by business name, category, city or NEQ number'
+            : 'Recherchez par nom d\'entreprise, catégorie, ville ou numéro NEQ'
+          }
+        </p>
+      </div>
     </div>
+
+    <!-- Popular Cities Section -->
+    <div style="max-width: 1200px; margin: 3rem auto; padding: 0 2rem;">
+      <h2 style="font-size: 2rem; font-weight: 700; color: #1a202c; margin-bottom: 1.5rem; text-align: center;">
+        ${isEnglish ? 'Browse by City' : 'Parcourir par ville'}
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 3rem;">
+        ${topCities.map(city => `
+          <a href="${isEnglish ? '/en' : ''}/ville/${city.slug}"
+             style="display: block; padding: 1.25rem; background: white; border: 1px solid #e2e8f0; border-radius: 8px; text-decoration: none; color: #0f4c81; font-weight: 500; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);"
+             onmouseover="this.style.borderColor='#0f4c81'; this.style.boxShadow='0 4px 12px rgba(15,76,129,0.15)'"
+             onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)'">
+            <span style="font-size: 1.1rem;">${isEnglish ? city.nameEn : city.name}</span>
+          </a>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Popular Categories Section -->
+    <div style="max-width: 1200px; margin: 3rem auto; padding: 0 2rem; background: #f7fafc; padding: 3rem 2rem; border-radius: 12px;">
+      <h2 style="font-size: 2rem; font-weight: 700; color: #1a202c; margin-bottom: 1.5rem; text-align: center;">
+        ${isEnglish ? 'Browse by Category' : 'Parcourir par catégorie'}
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+        ${topCategories.map(cat => `
+          <a href="${isEnglish ? '/en' : ''}/categorie/${cat.slug}"
+             style="display: block; padding: 1.25rem; background: white; border: 1px solid #e2e8f0; border-radius: 8px; text-decoration: none; color: #0f4c81; font-weight: 500; transition: all 0.2s;"
+             onmouseover="this.style.borderColor='#0f4c81'; this.style.boxShadow='0 4px 12px rgba(15,76,129,0.15)'"
+             onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
+            <span style="font-size: 1.05rem;">${isEnglish ? cat.nameEn : cat.name}</span>
+          </a>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <div style="max-width: 1000px; margin: 3rem auto; padding: 0 2rem;">
+      <h2 style="font-size: 2rem; font-weight: 700; color: #1a202c; margin-bottom: 1.5rem; text-align: center;">
+        ${isEnglish ? 'About Quebec Business Registry' : 'À propos du Registre du Québec'}
+      </h2>
+      <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); line-height: 1.7; color: #4a5568;">
+        <p style="margin-bottom: 1rem; font-size: 1.05rem;">
+          ${isEnglish
+            ? 'The Quebec Business Registry is the most comprehensive directory of Quebec businesses. Our database contains over 600,000 companies with detailed information including contact details, addresses, NEQ numbers, and business descriptions.'
+            : 'Le Registre du Québec est l\'annuaire le plus complet des entreprises québécoises. Notre base de données contient plus de 600 000 entreprises avec des informations détaillées incluant les coordonnées, adresses, numéros NEQ et descriptions d\'entreprise.'
+          }
+        </p>
+        <p style="margin-bottom: 1rem; font-size: 1.05rem;">
+          ${isEnglish
+            ? 'Whether you\'re looking for a local restaurant in Montreal, a construction company in Quebec City, or professional services in Laval, our platform makes it easy to find and connect with businesses across Quebec.'
+            : 'Que vous recherchiez un restaurant local à Montréal, une entreprise de construction à Québec ou des services professionnels à Laval, notre plateforme facilite la recherche et la connexion avec les entreprises à travers le Québec.'
+          }
+        </p>
+        <div style="margin-top: 2rem; text-align: center;">
+          <a href="${isEnglish ? '/en/about' : '/a-propos'}"
+             style="display: inline-block; padding: 0.75rem 2rem; background: #0f4c81; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.2s;"
+             onmouseover="this.style.background='#1e88e5'"
+             onmouseout="this.style.background='#0f4c81'">
+            ${isEnglish ? 'Learn More' : 'En savoir plus'}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Section -->
+    <div style="max-width: 1200px; margin: 3rem auto; padding: 0 2rem;">
+      <h2 style="font-size: 2rem; font-weight: 700; color: #1a202c; margin-bottom: 1.5rem; text-align: center;">
+        ${isEnglish ? 'Latest Articles' : 'Derniers articles'}
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+        <a href="${isEnglish ? '/en/blog' : '/blogue'}/neq-quebec-tout-savoir-numero-entreprise"
+           style="display: block; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-decoration: none; transition: all 0.2s;"
+           onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'; this.style.transform='translateY(-4px)'"
+           onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)'; this.style.transform='translateY(0)'">
+          <div style="padding: 1.5rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 600; color: #1a202c; margin-bottom: 0.75rem;">
+              ${isEnglish ? 'Quebec NEQ: Everything About the Quebec Enterprise Number' : 'NEQ Québec : tout savoir sur le numéro d\'entreprise du Québec'}
+            </h3>
+            <p style="color: #718096; line-height: 1.6; font-size: 0.95rem;">
+              ${isEnglish
+                ? 'Complete guide to understand and obtain your NEQ number in Quebec.'
+                : 'Guide complet pour comprendre et obtenir votre numéro NEQ au Québec.'
+              }
+            </p>
+          </div>
+        </a>
+        <a href="${isEnglish ? '/en/blog' : '/blogue'}/comment-reclamer-fiche-entreprise-registre-quebec"
+           style="display: block; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-decoration: none; transition: all 0.2s;"
+           onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'; this.style.transform='translateY(-4px)'"
+           onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)'; this.style.transform='translateY(0)'">
+          <div style="padding: 1.5rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 600; color: #1a202c; margin-bottom: 0.75rem;">
+              ${isEnglish ? 'How to Claim Your Business Listing' : 'Comment réclamer votre fiche d\'entreprise'}
+            </h3>
+            <p style="color: #718096; line-height: 1.6; font-size: 0.95rem;">
+              ${isEnglish
+                ? 'Learn how to claim and optimize your business listing for better visibility.'
+                : 'Apprenez à réclamer et optimiser votre fiche d\'entreprise pour une meilleure visibilité.'
+              }
+            </p>
+          </div>
+        </a>
+        <a href="${isEnglish ? '/en/blog' : '/blogue'}/top-10-restaurants-montreal-2025"
+           style="display: block; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-decoration: none; transition: all 0.2s;"
+           onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'; this.style.transform='translateY(-4px)'"
+           onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)'; this.style.transform='translateY(0)'">
+          <div style="padding: 1.5rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 600; color: #1a202c; margin-bottom: 0.75rem;">
+              ${isEnglish ? 'Top 10 Best Restaurants in Montreal 2025' : 'Top 10 des meilleurs restaurants à Montréal 2025'}
+            </h3>
+            <p style="color: #718096; line-height: 1.6; font-size: 0.95rem;">
+              ${isEnglish
+                ? 'Discover the best dining experiences in Montreal this year.'
+                : 'Découvrez les meilleures expériences culinaires à Montréal cette année.'
+              }
+            </p>
+          </div>
+        </a>
+      </div>
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="${isEnglish ? '/en/blog' : '/blogue'}"
+           style="display: inline-block; padding: 0.75rem 2rem; background: #f7fafc; color: #0f4c81; text-decoration: none; border-radius: 6px; font-weight: 600; border: 2px solid #0f4c81; transition: all 0.2s;"
+           onmouseover="this.style.background='#0f4c81'; this.style.color='white'"
+           onmouseout="this.style.background='#f7fafc'; this.style.color='#0f4c81'">
+          ${isEnglish ? 'View All Articles' : 'Voir tous les articles'}
+        </a>
+      </div>
+    </div>
+
+    <!-- FAQ Quick Links -->
+    <div style="max-width: 1000px; margin: 3rem auto; padding: 0 2rem; margin-bottom: 4rem;">
+      <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 3rem 2rem; border-radius: 12px; text-align: center; color: white;">
+        <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem;">
+          ${isEnglish ? 'Questions?' : 'Des questions?'}
+        </h2>
+        <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.95;">
+          ${isEnglish
+            ? 'Visit our FAQ for answers to common questions about Quebec businesses.'
+            : 'Consultez notre FAQ pour obtenir des réponses aux questions courantes sur les entreprises québécoises.'
+          }
+        </p>
+        <a href="${isEnglish ? '/en/faq' : '/faq'}"
+           style="display: inline-block; padding: 0.875rem 2.5rem; background: white; color: #667eea; text-decoration: none; border-radius: 6px; font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+           onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.2)'"
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'">
+          ${isEnglish ? 'View FAQ' : 'Voir la FAQ'}
+        </a>
+      </div>
+    </div>
+
     <noscript>
-      <div style="text-align: center; padding: 2rem; color: #718096;">
-        ${isEnglish
-          ? 'Please enable JavaScript to search and browse businesses.'
-          : 'Veuillez activer JavaScript pour rechercher et parcourir les entreprises.'
-        }
+      <div style="text-align: center; padding: 2rem; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; margin: 2rem auto; max-width: 800px;">
+        <p style="color: #856404; font-weight: 500;">
+          ${isEnglish
+            ? 'Please enable JavaScript to search and browse businesses interactively.'
+            : 'Veuillez activer JavaScript pour rechercher et parcourir les entreprises de manière interactive.'
+          }
+        </p>
       </div>
     </noscript>
   </div>`;
