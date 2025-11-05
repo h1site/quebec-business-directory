@@ -449,11 +449,13 @@ function generateSSRContent(business, isEnglish = false) {
 
 // Main serverless function handler
 export default async function handler(req, res) {
-  // CRITICAL: Disable ALL caching - each page MUST be unique!
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
-  res.setHeader('Pragma', 'no-cache');
-  res.setHeader('Expires', '0');
-  res.setHeader('Vary', '*');
+  // SEO-friendly cache headers: Allow Google to cache but revalidate
+  // s-maxage=3600 = CDN caches for 1 hour
+  // stale-while-revalidate=86400 = Serve stale content while revalidating for 24h
+  res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+  // DO NOT use Vary: * as it prevents all caching and confuses Google
+  // Only vary on Accept-Encoding for compression
+  res.setHeader('Vary', 'Accept-Encoding');
 
   try {
     const { slug, categorySlug, citySlug, subCategorySlug, regionSlug, lang } = req.query;
@@ -629,8 +631,10 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
       ]
     };
 
-    // Generate unique ETag for this specific business page
-    const etag = `"${slug}-${business.id}-${Date.now()}"`;
+    // Generate STABLE ETag based on business data (not timestamp!)
+    // Google needs consistent ETags to understand when content actually changes
+    // Use business updated_at or a hash of key fields for proper cache validation
+    const etag = `"${slug}-${business.id}"`;
     res.setHeader('ETag', etag);
 
     // CRITICAL: Load fresh template for each request
