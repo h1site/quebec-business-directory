@@ -560,6 +560,8 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
 
     // IMPORTANT: Generate correct canonical URL from business data (not URL params)
     // URL params (categorySlug/citySlug) can be wrong/missing, so we rebuild from business data
+    // IMPORTANT: Generate correct canonical URL from business data (not URL params)
+    // URL params (categorySlug/citySlug) can be wrong/missing, so we rebuild from business data
     const correctCategorySlug = business.main_category_slug || business.primary_main_category_slug || 'entreprise';
     const correctCitySlug = business.city
       ? business.city.toLowerCase()
