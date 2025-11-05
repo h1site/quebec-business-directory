@@ -1525,16 +1525,18 @@ async function handleHomePage(req, res, { isEnglish, locale }) {
   ];
 
   const topCategories = [
-    { name: 'Restaurants', slug: 'restaurants', nameEn: 'Restaurants' },
-    { name: 'Construction', slug: 'construction', nameEn: 'Construction' },
+    { name: 'Restauration et alimentation', slug: 'restauration-et-alimentation', nameEn: 'Food & Dining' },
+    { name: 'Construction et rénovation', slug: 'construction-et-renovation', nameEn: 'Construction & Renovation' },
     { name: 'Services professionnels', slug: 'services-professionnels', nameEn: 'Professional Services' },
     { name: 'Commerce de détail', slug: 'commerce-de-detail', nameEn: 'Retail' },
     { name: 'Immobilier', slug: 'immobilier', nameEn: 'Real Estate' },
-    { name: 'Santé et services sociaux', slug: 'sante-et-services-sociaux', nameEn: 'Health & Social Services' },
-    { name: 'Services financiers', slug: 'services-financiers', nameEn: 'Financial Services' },
-    { name: 'Technologies', slug: 'technologies', nameEn: 'Technology' },
-    { name: 'Transport', slug: 'transport', nameEn: 'Transportation' },
-    { name: 'Hébergement et restauration', slug: 'hebergement-et-restauration', nameEn: 'Hospitality' }
+    { name: 'Santé et bien-être', slug: 'sante-et-bien-etre', nameEn: 'Health & Wellness' },
+    { name: 'Finance, assurance et juridique', slug: 'finance-assurance-et-juridique', nameEn: 'Finance, Insurance & Legal' },
+    { name: 'Technologie et informatique', slug: 'technologie-et-informatique', nameEn: 'Technology & IT' },
+    { name: 'Automobile et transport', slug: 'automobile-et-transport', nameEn: 'Automotive & Transportation' },
+    { name: 'Tourisme et hébergement', slug: 'tourisme-et-hebergement', nameEn: 'Tourism & Accommodation' },
+    { name: 'Arts, médias et divertissement', slug: 'arts-medias-et-divertissement', nameEn: 'Arts, Media & Entertainment' },
+    { name: 'Éducation et formation', slug: 'education-et-formation', nameEn: 'Education & Training' }
   ];
 
   // Generate SSR content for homepage with full internal linking
