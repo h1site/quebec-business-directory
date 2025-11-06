@@ -98,7 +98,7 @@ export const blogArticles = [
   },
   {
     id: 'comment-reclamer-fiche',
-    slug: 'comment-reclamer-fiche-entreprise-registre-quebec',
+    slug: 'comment-reclamer-fiche-entreprise',
     publishedDate: '2025-10-28',
     author: 'Registre du Québec',
     readTime: '6 min',
@@ -107,13 +107,13 @@ export const blogArticles = [
         title: 'Comment réclamer votre fiche d\'entreprise sur Registre du Québec | Guide complet',
         description: 'Guide complet pour réclamer votre fiche d\'entreprise sur Registre du Québec : étapes de réclamation, vérification d\'identité, avantages du backlink dofollow et optimisation SEO.',
         keywords: 'réclamer fiche entreprise, backlink dofollow, référencement local Québec, optimisation fiche entreprise',
-        canonical: 'https://registreduquebec.com/blogue/comment-reclamer-fiche-entreprise-registre-quebec'
+        canonical: 'https://registreduquebec.com/blogue/comment-reclamer-fiche-entreprise'
       },
       en: {
         title: 'How to Claim Your Business Listing on Quebec Registry | Complete Guide',
         description: 'Complete guide to claim your business listing on Quebec Registry: claiming steps, identity verification, dofollow backlink benefits and SEO optimization.',
         keywords: 'claim business listing, dofollow backlink, Quebec local SEO, business listing optimization',
-        canonical: 'https://registreduquebec.com/en/blog/comment-reclamer-fiche-entreprise-registre-quebec'
+        canonical: 'https://registreduquebec.com/en/blog/comment-reclamer-fiche-entreprise'
       }
     },
     heroImage: {
@@ -192,7 +192,7 @@ export const blogArticles = [
   },
   {
     id: 'top-10-restaurants-montreal',
-    slug: 'top-10-restaurants-montreal-2025',
+    slug: 'top-10-restaurants-montreal',
     publishedDate: '2025-10-25',
     author: 'Registre du Québec',
     readTime: '7 min',
@@ -201,13 +201,13 @@ export const blogArticles = [
         title: 'Top 10 des meilleurs restaurants à Montréal en 2025 | Registre du Québec',
         description: 'Découvrez les 10 meilleurs restaurants de Montréal en 2025 : Joe Beef, Toqué!, Liverpool House, Au Pied de Cochon et plus. Guide complet avec coordonnées et spécialités.',
         keywords: 'meilleurs restaurants Montréal, top restaurants Montréal 2025, restaurants gastronomiques Montréal, où manger Montréal',
-        canonical: 'https://registreduquebec.com/blogue/top-10-restaurants-montreal-2025'
+        canonical: 'https://registreduquebec.com/blogue/top-10-restaurants-montreal'
       },
       en: {
         title: 'Top 10 Best Restaurants in Montreal in 2025 | Quebec Registry',
         description: 'Discover the 10 best restaurants in Montreal in 2025: Joe Beef, Toqué!, Liverpool House, Au Pied de Cochon and more. Complete guide with contact info and specialties.',
         keywords: 'best restaurants Montreal, top Montreal restaurants 2025, fine dining Montreal, where to eat Montreal',
-        canonical: 'https://registreduquebec.com/en/blog/top-10-restaurants-montreal-2025'
+        canonical: 'https://registreduquebec.com/en/blog/top-10-restaurants-montreal'
       }
     },
     heroImage: {
@@ -266,18 +266,4 @@ export function getArticleBySlug(slug) {
 
 export function getAllArticles() {
   return blogArticles;
-}
-
-// Find article by partial slug (for short URL redirects)
-export function findArticleByPartialSlug(partialSlug) {
-  // Try exact match first
-  const exactMatch = blogArticles.find(article => article.slug === partialSlug);
-  if (exactMatch) return exactMatch;
-
-  // Try to find by slug that starts with or ends with the partial slug
-  const partialMatch = blogArticles.find(article =>
-    article.slug.includes(partialSlug) || partialSlug.includes(article.slug.split('-').slice(0, 3).join('-'))
-  );
-
-  return partialMatch || null;
 }

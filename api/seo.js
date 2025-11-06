@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import fs from 'fs/promises';
 import path from 'path';
-import { getArticleBySlug, getAllArticles, findArticleByPartialSlug } from './blog-data.js';
+import { getArticleBySlug, getAllArticles } from './blog-data.js';
 
 // Initialize Supabase
 const supabase = createClient(
@@ -1035,27 +1035,7 @@ async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale }) 
   const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
 
   // Get article from blog data
-  let article = getArticleBySlug(blogSlug);
-
-  // Handle short URL redirects for bots (Googlebot, Screaming Frog don't execute JavaScript)
-  // Try to find article by partial slug automatically
-  if (!article) {
-    const partialMatch = findArticleByPartialSlug(blogSlug);
-
-    if (partialMatch && partialMatch.slug !== blogSlug) {
-      // Found a match with a different (longer) slug - redirect to full URL
-      const basePath = isEnglish ? 'blog' : 'blogue';
-      const langPrefix = isEnglish ? 'en' : '';
-      const redirectUrl = '/' + buildPath(langPrefix, basePath, partialMatch.slug);
-
-      console.log(`[SSR] Redirecting short blog URL "${blogSlug}" to full URL: ${redirectUrl}`);
-
-      // 301 Permanent Redirect
-      res.setHeader('Location', redirectUrl);
-      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // Cache redirect for 1 year
-      return res.status(301).send('');
-    }
-  }
+  const article = getArticleBySlug(blogSlug);
 
   if (!article) {
     const template = setHtmlLang(await loadTemplate(), isEnglish);
