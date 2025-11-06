@@ -63,6 +63,8 @@ const BusinessDetails = () => {
     const loadBusiness = async () => {
       try {
         setLoading(true);
+        setBusiness(null); // Clear previous business data when slug changes
+        setError(null);
 
         // CRITICAL FIX: Check if SSR provided initial data for THIS specific business
         if (window.__INITIAL_BUSINESS_DATA__ && window.__INITIAL_BUSINESS_DATA__.slug === slug) {
@@ -350,21 +352,23 @@ const BusinessDetails = () => {
     <>
       {/* React Helmet updates meta tags for SPA navigation between pages
           SSR (api/seo.js) provides initial HTML for bots, Helmet updates for client-side navigation */}
-      <Helmet>
-        <title>{business.name} - {cityName} | {isEnglish ? 'Quebec Business Registry' : 'Registre du Québec'}</title>
-        <meta name="description" content={metaDescription} />
-        <link rel="canonical" href={canonicalUrl} />
+      {business && (
+        <Helmet>
+          <title>{business.name} - {cityName} | {isEnglish ? 'Quebec Business Registry' : 'Registre du Québec'}</title>
+          <meta name="description" content={metaDescription} />
+          <link rel="canonical" href={canonicalUrl} />
 
-        {/* Open Graph */}
-        <meta property="og:title" content={`${business.name} - ${cityName}`} />
-        <meta property="og:description" content={metaDescription} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="business.business" />
+          {/* Open Graph */}
+          <meta property="og:title" content={`${business.name} - ${cityName}`} />
+          <meta property="og:description" content={metaDescription} />
+          <meta property="og:url" content={canonicalUrl} />
+          <meta property="og:type" content="business.business" />
 
-        {/* Twitter Card */}
-        <meta name="twitter:title" content={`${business.name} - ${cityName}`} />
-        <meta name="twitter:description" content={metaDescription} />
-      </Helmet>
+          {/* Twitter Card */}
+          <meta name="twitter:title" content={`${business.name} - ${cityName}`} />
+          <meta name="twitter:description" content={metaDescription} />
+        </Helmet>
+      )}
 
       <div className="business-details-page">
         <div className="container business-main-container">
