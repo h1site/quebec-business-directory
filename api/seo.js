@@ -589,33 +589,46 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     return res.status(404).send('Entreprise non trouvée');
   }
 
-  // REDIRECT SHORT URLs: If citySlug is missing, build full URL and redirect 301
-  // Example: /entreprise/slug → 301 → /entreprise/ville/slug
-  if (!citySlug || citySlug === slug) {
-    // Normalize city to slug format
-    const correctCitySlug = business.city
-      ? business.city.toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '') // Remove accents
-          .replace(/[^a-z0-9]+/g, '-')     // Replace non-alphanumeric with hyphens
-          .replace(/^-+|-+$/g, '')          // Remove leading/trailing hyphens
-      : 'quebec';
+  // Normalize correct city and category from business data
+  const correctCitySlug = business.city
+    ? business.city.toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Remove accents
+        .replace(/[^a-z0-9]+/g, '-')     // Replace non-alphanumeric with hyphens
+        .replace(/^-+|-+$/g, '')          // Remove leading/trailing hyphens
+    : 'quebec';
 
-    // Determine category slug
-    const correctCategorySlug = business.main_category_slug || categorySlug || 'entreprise';
+  const correctCategorySlug = business.main_category_slug || business.primary_main_category_slug || 'entreprise';
 
-    // Build redirect URL (prevent double slashes)
+  // CRITICAL FIX: Redirect if citySlug is missing OR category is incorrect
+  // This handles:
+  // 1. Short URLs: /entreprise/slug → 301 → /entreprise/ville/slug
+  // 2. Wrong category: /wrong-category/ville/slug → 301 → /correct-category/ville/slug
+  const needsRedirect = !citySlug ||
+                        citySlug === slug ||
+                        (categorySlug && categorySlug !== correctCategorySlug);
+
+  if (needsRedirect) {
+    // Build correct redirect URL
     const langPrefix = isEnglish ? 'en' : '';
     const redirectUrl = '/' + buildPath(langPrefix, correctCategorySlug, correctCitySlug, slug);
 
-    console.log(`[SEO] 301 Redirect: ${req.url} → ${redirectUrl}`);
+    // Only redirect if the URL actually changes
+    const currentPath = req.url.split('?')[0]; // Remove query params
+    const targetPath = redirectUrl;
 
-    // CRITICAL FIX: 301 Permanent Redirect with HTML body for better bot compatibility
-    res.setHeader('Location', redirectUrl);
-    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // Cache 1 year
+    if (currentPath !== targetPath) {
+      console.log(`[SEO] 301 Redirect: ${req.url} → ${redirectUrl}`);
+      if (isBot) {
+        console.log(`[${isGooglebot ? 'GOOGLEBOT' : 'BINGBOT'}] Wrong URL detected - Redirecting to canonical`);
+      }
 
-    // Provide HTML body with meta refresh as fallback for bots
-    const redirectHtml = `<!DOCTYPE html>
+      // CRITICAL FIX: 301 Permanent Redirect with HTML body for better bot compatibility
+      res.setHeader('Location', redirectUrl);
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // Cache 1 year
+
+      // Provide HTML body with meta refresh as fallback for bots
+      const redirectHtml = `<!DOCTYPE html>
 <html lang="${isEnglish ? 'en' : 'fr'}">
 <head>
   <meta charset="UTF-8">
@@ -629,7 +642,8 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
 </body>
 </html>`;
 
-    return res.status(301).send(redirectHtml);
+      return res.status(301).send(redirectHtml);
+    }
   }
 
     // Generate SEO content (bilingual)
@@ -683,17 +697,8 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     }
 
     // IMPORTANT: Generate correct canonical URL from business data (not URL params)
-    // URL params (categorySlug/citySlug) can be wrong/missing, so we rebuild from business data
-    // IMPORTANT: Generate correct canonical URL from business data (not URL params)
-    // URL params (categorySlug/citySlug) can be wrong/missing, so we rebuild from business data
-    const correctCategorySlug = business.main_category_slug || business.primary_main_category_slug || 'entreprise';
-    const correctCitySlug = business.city
-      ? business.city.toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '') // Remove accents
-          .replace(/[^a-z0-9]+/g, '-')     // Replace non-alphanumeric with hyphens
-          .replace(/^-+|-+$/g, '')          // Remove leading/trailing hyphens
-      : 'quebec';
+    // URL params (categorySlug/citySlug) can be wrong/missing, so we use already computed values
+    // correctCategorySlug and correctCitySlug are already defined above for redirect logic
 
     const langPrefix = isEnglish ? '/en' : '';
     const canonical = `https://registreduquebec.com${langPrefix}/${correctCategorySlug}/${correctCitySlug}/${slug}`;
