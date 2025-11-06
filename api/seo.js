@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import fs from 'fs/promises';
 import path from 'path';
-import { getArticleBySlug, getAllArticles } from './blog-data.js';
+import { getArticleBySlug, getAllArticles, findArticleByPartialSlug } from './blog-data.js';
 
 // Initialize Supabase
 const supabase = createClient(
@@ -133,6 +133,15 @@ function escapeHtml(text) {
 function setHtmlLang(html, isEnglish) {
   const langAttr = isEnglish ? 'en' : 'fr';
   return html.replace('<html lang="fr">', `<html lang="${langAttr}">`);
+}
+
+// Build clean URL path without double slashes
+function buildPath(...segments) {
+  return segments
+    .filter(Boolean) // Remove empty strings
+    .map(seg => seg.replace(/^\/+|\/+$/g, '')) // Remove leading/trailing slashes
+    .join('/')
+    .replace(/\/+/g, '/'); // Replace multiple slashes with single
 }
 
 // Generate FAQ Schema for SEO
@@ -443,12 +452,7 @@ function generateSSRContent(business, isEnglish = false) {
     </section>`;
 
   html += `
-  </article>
-  <noscript>
-    <style>
-      #root > article { display: block !important; }
-    </style>
-  </noscript>`;
+  </article>`;
 
   return html;
 }
@@ -475,7 +479,7 @@ export default async function handler(req, res) {
       return handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale });
     }
 
-    // ROUTE 0.2: Static Pages (About, FAQ, Homepage, Blog listing)
+    // ROUTE 0.2: Static Pages (About, FAQ, Homepage, Blog listing, Privacy, Legal)
     if (page) {
       if (page === 'blog') {
         return handleBlogListingPage(req, res, { isEnglish, locale });
@@ -488,6 +492,12 @@ export default async function handler(req, res) {
       }
       if (page === 'home') {
         return handleHomePage(req, res, { isEnglish, locale });
+      }
+      if (page === 'privacy') {
+        return handlePrivacyPage(req, res, { isEnglish, locale });
+      }
+      if (page === 'legal') {
+        return handleLegalPage(req, res, { isEnglish, locale });
       }
     }
 
@@ -550,11 +560,11 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     // Determine category slug
     const correctCategorySlug = business.main_category_slug || categorySlug || 'entreprise';
 
-    // Build redirect URL
-    const langPrefix = isEnglish ? '/en' : '';
-    const redirectUrl = `${langPrefix}/${correctCategorySlug}/${correctCitySlug}/${slug}`;
+    // Build redirect URL (prevent double slashes)
+    const langPrefix = isEnglish ? 'en' : '';
+    const redirectUrl = '/' + buildPath(langPrefix, correctCategorySlug, correctCitySlug, slug);
 
-    console.log(`Redirecting short URL to: ${redirectUrl}`);
+    console.log(`[SEO] Redirecting short URL to: ${redirectUrl}`);
 
     // 301 Permanent Redirect
     res.setHeader('Location', redirectUrl);
@@ -787,19 +797,41 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     // Generate SSR content for Google (critical content only)
     const ssrContent = generateSSRContent(business, isEnglish);
 
-    // Inject SSR content into <div id="root">
+    // Inject SSR content into <div id="root"> with special class for hiding
     html = html.replace(
       '<div id="root"></div>',
-      `<div id="root">${ssrContent}</div>`
+      `<div id="root"><div class="ssr-content">${ssrContent}</div></div>`
     );
 
-    // Add initial data for client
-    const dataScript = `
+    // Add CSS to hide SSR content once JS loads + initial data for client
+    const ssrHideScript = `
+    <style>
+      /* Hide SSR content by default for users with JS enabled */
+      .ssr-content {
+        display: none;
+      }
+      /* Show SSR content for bots (no JS) */
+      .no-js .ssr-content {
+        display: block;
+      }
+    </style>
     <script>
-    window.__INITIAL_BUSINESS_DATA__ = ${JSON.stringify(business)};
-    </script>`;
+    // Hide SSR content immediately for users, keep visible for bots
+    document.documentElement.classList.remove('no-js');
 
-    html = html.replace('</body>', `${dataScript}\n</body>`);
+    // Store initial business data for React app
+    window.__INITIAL_BUSINESS_DATA__ = ${JSON.stringify(business)};
+    </script>
+    <noscript>
+      <style>
+        /* Force show SSR content when JavaScript is disabled (bots) */
+        .ssr-content {
+          display: block !important;
+        }
+      </style>
+    </noscript>`;
+
+    html = html.replace('</body>', `${ssrHideScript}\n</body>`);
 
     res.status(200).setHeader('Content-Type', 'text/html').send(html);
 }
@@ -1006,20 +1038,17 @@ async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale }) 
   let article = getArticleBySlug(blogSlug);
 
   // Handle short URL redirects for bots (Googlebot, Screaming Frog don't execute JavaScript)
+  // Try to find article by partial slug automatically
   if (!article) {
-    const slugRedirects = {
-      'top-10-restaurants-montreal': 'top-10-restaurants-montreal-2025',
-      'comment-reclamer-fiche-entreprise': 'comment-reclamer-fiche-entreprise-registre-quebec',
-    };
+    const partialMatch = findArticleByPartialSlug(blogSlug);
 
-    const fullSlug = slugRedirects[blogSlug];
-    if (fullSlug) {
-      // Build redirect URL
-      const basePath = isEnglish ? '/blog' : '/blogue';
-      const langPrefix = isEnglish ? '/en' : '';
-      const redirectUrl = `${langPrefix}${basePath}/${fullSlug}`;
+    if (partialMatch && partialMatch.slug !== blogSlug) {
+      // Found a match with a different (longer) slug - redirect to full URL
+      const basePath = isEnglish ? 'blog' : 'blogue';
+      const langPrefix = isEnglish ? 'en' : '';
+      const redirectUrl = '/' + buildPath(langPrefix, basePath, partialMatch.slug);
 
-      console.log(`[SSR] Redirecting short blog URL "${blogSlug}" to: ${redirectUrl}`);
+      console.log(`[SSR] Redirecting short blog URL "${blogSlug}" to full URL: ${redirectUrl}`);
 
       // 301 Permanent Redirect
       res.setHeader('Location', redirectUrl);
@@ -1790,6 +1819,143 @@ async function handleHomePage(req, res, { isEnglish, locale }) {
           }
         </p>
       </div>
+    </noscript>
+  </div>`;
+
+  html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
+
+  res.status(200).setHeader('Content-Type', 'text/html').send(html);
+}
+
+
+// Handle Privacy Policy Page
+async function handlePrivacyPage(req, res, { isEnglish, locale }) {
+  const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
+
+  const title = isEnglish
+    ? `Privacy Policy - ${siteName}`
+    : `Politique de confidentialité - ${siteName}`;
+
+  const description = isEnglish
+    ? 'Learn how Quebec Business Registry collects, uses and protects your personal information.'
+    : 'Découvrez comment le Registre du Québec collecte, utilise et protège vos informations personnelles.';
+
+  const canonical = `https://registreduquebec.com${isEnglish ? '/en/privacy-policy' : '/politique-de-confidentialite'}`;
+
+  let html = setHtmlLang(await loadTemplate(), isEnglish);
+
+  html = html
+    .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
+    .replace(
+      /<meta name="description" content=".*?"[^>]*>/i,
+      `<meta name="description" content="${escapeHtml(description)}" />`
+    );
+
+  html = html
+    .replace(/<meta property="og:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="twitter:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="geo\.[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="ICBM"[^>]*>/gi, '')
+    .replace(/<meta name="keywords"[^>]*>/gi, '')
+    .replace(/<link rel="canonical"[^>]*>/gi, '')
+    .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '');
+
+  const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
+  const hreflangTags = `
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/politique-de-confidentialite" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/privacy-policy" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/politique-de-confidentialite" />`;
+
+  const seoTags = `
+    <meta property="og:title" content="${escapeHtml(title)}">
+    <meta property="og:description" content="${escapeHtml(description)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="${locale}">
+    <meta property="og:site_name" content="${siteName}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="${escapeHtml(title)}">
+    <meta name="twitter:description" content="${escapeHtml(description)}">
+    <meta name="robots" content="index, follow">`;
+
+  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
+
+  const ssrContent = `
+  <div class="privacy-page" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+    <h1 style="font-size: 2.5rem; font-weight: 700; color: #0f4c81; margin-bottom: 1.5rem;">
+      ${isEnglish ? 'Privacy Policy' : 'Politique de confidentialité'}
+    </h1>
+    <p style="color: #718096; margin-bottom: 2rem;">${escapeHtml(description)}</p>
+    <noscript>
+      <p style="text-align: center; color: #718096;">${isEnglish ? 'Please enable JavaScript to view the full content.' : 'Veuillez activer JavaScript pour voir le contenu complet.'}</p>
+    </noscript>
+  </div>`;
+
+  html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
+
+  res.status(200).setHeader('Content-Type', 'text/html').send(html);
+}
+
+// Handle Legal Notice Page
+async function handleLegalPage(req, res, { isEnglish, locale }) {
+  const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
+
+  const title = isEnglish
+    ? `Legal Notice - ${siteName}`
+    : `Mentions légales - ${siteName}`;
+
+  const description = isEnglish
+    ? 'Legal information and terms of use for Quebec Business Registry.'
+    : 'Informations légales et conditions d\'utilisation du Registre du Québec.';
+
+  const canonical = `https://registreduquebec.com${isEnglish ? '/en/legal-notice' : '/mentions-legales'}`;
+
+  let html = setHtmlLang(await loadTemplate(), isEnglish);
+
+  html = html
+    .replace(/<title>.*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
+    .replace(
+      /<meta name="description" content=".*?"[^>]*>/i,
+      `<meta name="description" content="${escapeHtml(description)}" />`
+    );
+
+  html = html
+    .replace(/<meta property="og:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="twitter:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="geo\.[^"]*"[^>]*>/gi, '')
+    .replace(/<meta name="ICBM"[^>]*>/gi, '')
+    .replace(/<meta name="keywords"[^>]*>/gi, '')
+    .replace(/<link rel="canonical"[^>]*>/gi, '')
+    .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '');
+
+  const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
+  const hreflangTags = `
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/mentions-legales" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/legal-notice" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/mentions-legales" />`;
+
+  const seoTags = `
+    <meta property="og:title" content="${escapeHtml(title)}">
+    <meta property="og:description" content="${escapeHtml(description)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="${locale}">
+    <meta property="og:site_name" content="${siteName}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="${escapeHtml(title)}">
+    <meta name="twitter:description" content="${escapeHtml(description)}">
+    <meta name="robots" content="index, follow">`;
+
+  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
+
+  const ssrContent = `
+  <div class="legal-page" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+    <h1 style="font-size: 2.5rem; font-weight: 700; color: #0f4c81; margin-bottom: 1.5rem;">
+      ${isEnglish ? 'Legal Notice' : 'Mentions légales'}
+    </h1>
+    <p style="color: #718096; margin-bottom: 2rem;">${escapeHtml(description)}</p>
+    <noscript>
+      <p style="text-align: center; color: #718096;">${isEnglish ? 'Please enable JavaScript to view the full content.' : 'Veuillez activer JavaScript pour voir le contenu complet.'}</p>
     </noscript>
   </div>`;
 

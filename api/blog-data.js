@@ -267,3 +267,17 @@ export function getArticleBySlug(slug) {
 export function getAllArticles() {
   return blogArticles;
 }
+
+// Find article by partial slug (for short URL redirects)
+export function findArticleByPartialSlug(partialSlug) {
+  // Try exact match first
+  const exactMatch = blogArticles.find(article => article.slug === partialSlug);
+  if (exactMatch) return exactMatch;
+
+  // Try to find by slug that starts with or ends with the partial slug
+  const partialMatch = blogArticles.find(article =>
+    article.slug.includes(partialSlug) || partialSlug.includes(article.slug.split('-').slice(0, 3).join('-'))
+  );
+
+  return partialMatch || null;
+}
