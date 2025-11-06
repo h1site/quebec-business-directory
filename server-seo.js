@@ -24,7 +24,9 @@ const supabase = createClient(
 // Load HTML template
 let htmlTemplate = '';
 async function loadTemplate() {
-  htmlTemplate = await fs.readFile(join(__dirname, 'dist/index.html'), 'utf-8');
+  // Build step renames the SPA entry to spa.html (index.html is only used by SSR).
+  // Load that file to ensure the SSR server keeps working after each deploy.
+  htmlTemplate = await fs.readFile(join(__dirname, 'dist/spa.html'), 'utf-8');
 }
 
 // Serve static files from dist

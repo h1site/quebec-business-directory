@@ -74,6 +74,10 @@
       "destination": "/api/seo?page=home&lang=fr"
     },
     {
+      "source": "/en",
+      "destination": "/api/seo?page=home&lang=en"
+    },
+    {
       "source": "/blogue/:articleId",
       "destination": "/api/seo?blogSlug=:articleId&lang=fr"
     },

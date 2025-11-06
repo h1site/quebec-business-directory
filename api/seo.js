@@ -130,6 +130,11 @@ function escapeHtml(text) {
     .replace(/'/g, '&#039;');
 }
 
+function setHtmlLang(html, isEnglish) {
+  const langAttr = isEnglish ? 'en' : 'fr';
+  return html.replace('<html lang="fr">', `<html lang="${langAttr}">`);
+}
+
 // Generate FAQ Schema for SEO
 function generateFAQSchema(business, isEnglish = false) {
   if (!business) return null;
@@ -499,7 +504,7 @@ export default async function handler(req, res) {
     // ROUTE 3: Region Browse Pages (/region/montreal)
     if (regionSlug && !slug) {
       // For now, return default template - can implement later
-      const template = await loadTemplate();
+      const template = setHtmlLang(await loadTemplate(), isEnglish);
       return res.status(200).setHeader('Content-Type', 'text/html').send(template);
     }
 
@@ -509,7 +514,7 @@ export default async function handler(req, res) {
     }
 
     // ROUTE 5: Default - Homepage or other pages
-    const template = await loadTemplate();
+    const template = setHtmlLang(await loadTemplate(), isEnglish);
     return res.status(200).setHeader('Content-Type', 'text/html').send(template);
   } catch (error) {
     console.error('SEO function error:', error);
@@ -689,7 +694,7 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     res.setHeader('ETag', etag);
 
     // CRITICAL: Load fresh template for each request
-    let html = await loadTemplate();
+    let html = setHtmlLang(await loadTemplate(), isEnglish);
 
     // STEP 1: Replace default meta tags with business-specific ones
     html = html
@@ -811,7 +816,7 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
     .single();
 
   if (catError || !mainCat) {
-    const template = await loadTemplate();
+    const template = setHtmlLang(await loadTemplate(), isEnglish);
     return res.status(404).setHeader('Content-Type', 'text/html').send(template);
   }
 
@@ -820,6 +825,8 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
   let title, description, canonical;
 
   // Handle subcategory if present
+  const categoryPathBase = isEnglish ? '/en/category' : '/categorie';
+
   if (subCategorySlug) {
     const { data: subCat } = await supabase
       .from('sub_categories')
@@ -834,7 +841,7 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
       description = isEnglish
         ? `Find businesses in ${subCategoryName} in Quebec. Complete directory with contact information and reviews.`
         : `Trouvez des entreprises en ${subCategoryName} au Québec. Annuaire complet avec coordonnées et avis.`;
-      canonical = `https://registreduquebec.com${isEnglish ? '/en' : ''}/categorie/${categorySlug}/${subCategorySlug}`;
+      canonical = `https://registreduquebec.com${categoryPathBase}/${categorySlug}/${subCategorySlug}`;
     }
   }
 
@@ -844,11 +851,11 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
     description = isEnglish
       ? `Find all businesses in ${categoryName} category in Quebec. Complete directory with contact information.`
       : `Trouvez toutes les entreprises de catégorie ${categoryName} au Québec. Annuaire complet avec coordonnées.`;
-    canonical = `https://registreduquebec.com${isEnglish ? '/en' : ''}/categorie/${categorySlug}`;
+    canonical = `https://registreduquebec.com${categoryPathBase}/${categorySlug}`;
   }
 
   // Load template and inject meta tags
-  let html = await loadTemplate();
+  let html = setHtmlLang(await loadTemplate(), isEnglish);
 
   // Replace title and description
   html = html
@@ -872,7 +879,7 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
   const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
   const hreflangTags = `
     <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/categorie/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />
-    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/categorie/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/category/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />
     <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/categorie/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />`;
 
   const seoTags = `
@@ -928,10 +935,11 @@ async function handleCityPage(req, res, { citySlug, isEnglish, locale }) {
     ? `Find all businesses in ${cityName}, Quebec. Complete directory with contact information, reviews and detailed information.`
     : `Trouvez toutes les entreprises à ${cityName}, Québec. Annuaire complet avec coordonnées, avis et informations détaillées.`;
 
-  const canonical = `https://registreduquebec.com${isEnglish ? '/en' : ''}/ville/${citySlug}`;
+  const cityPath = isEnglish ? `/en/city/${citySlug}` : `/ville/${citySlug}`;
+  const canonical = `https://registreduquebec.com${cityPath}`;
 
   // Load template and inject meta tags
-  let html = await loadTemplate();
+  let html = setHtmlLang(await loadTemplate(), isEnglish);
 
   // Replace title and description
   html = html
@@ -1021,7 +1029,7 @@ async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale }) 
   }
 
   if (!article) {
-    const template = await loadTemplate();
+    const template = setHtmlLang(await loadTemplate(), isEnglish);
     return res.status(404).setHeader('Content-Type', 'text/html').send(template);
   }
 
@@ -1032,7 +1040,7 @@ async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale }) 
   const canonical = seo.canonical;
 
   // Load template and inject meta tags
-  let html = await loadTemplate();
+  let html = setHtmlLang(await loadTemplate(), isEnglish);
 
   // Replace title and description
   html = html
@@ -1172,7 +1180,7 @@ async function handleBlogListingPage(req, res, { isEnglish, locale }) {
   const articles = getAllArticles();
 
   // Load template and inject meta tags
-  let html = await loadTemplate();
+  let html = setHtmlLang(await loadTemplate(), isEnglish);
 
   // Replace title and description
   html = html
@@ -1268,7 +1276,7 @@ async function handleAboutPage(req, res, { isEnglish, locale }) {
   const canonical = `https://registreduquebec.com${isEnglish ? '/en/about' : '/a-propos'}`;
 
   // Load template and inject meta tags
-  let html = await loadTemplate();
+  let html = setHtmlLang(await loadTemplate(), isEnglish);
 
   // Replace title and description
   html = html
@@ -1360,7 +1368,7 @@ async function handleFAQPage(req, res, { isEnglish, locale }) {
   const canonical = `https://registreduquebec.com${isEnglish ? '/en/faq' : '/faq'}`;
 
   // Load template and inject meta tags
-  let html = await loadTemplate();
+  let html = setHtmlLang(await loadTemplate(), isEnglish);
 
   // Replace title and description
   html = html
@@ -1488,10 +1496,10 @@ async function handleHomePage(req, res, { isEnglish, locale }) {
     ? 'Discover the best businesses in Quebec. Complete directory with reviews, contact information and detailed data. Over 600,000 Quebec businesses.'
     : 'Découvrez les meilleures entreprises du Québec. Annuaire complet avec avis, coordonnées et informations détaillées. Plus de 600 000 entreprises québécoises.';
 
-  const canonical = `https://registreduquebec.com${isEnglish ? '/?lang=en' : '/'}`;
+  const canonical = `https://registreduquebec.com${isEnglish ? '/en' : '/'}`;
 
   // Load template and inject meta tags
-  let html = await loadTemplate();
+  let html = setHtmlLang(await loadTemplate(), isEnglish);
 
   // Replace title and description
   html = html
@@ -1545,7 +1553,7 @@ async function handleHomePage(req, res, { isEnglish, locale }) {
   const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
   const hreflangTags = `
     <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/" />
-    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/?lang=en" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en" />
     <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/" />`;
 
   const seoTags = `

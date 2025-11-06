@@ -4,40 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Dynamic Language Meta Tags Script -->
-    <script>
-      (function() {
-        const isEnglish = window.location.pathname.startsWith('/en') || window.location.search.includes('lang=en');
-        const lang = isEnglish ? 'en' : 'fr';
-
-        // Set HTML lang attribute
-        document.documentElement.lang = lang;
-
-        // IMPORTANT: Only update title/meta for homepage, NOT for business pages
-        // Business pages get their meta tags from SSR (api/seo.js)
-        // Detect business pages by URL pattern: /category/city/slug or /en/category/city/slug
-        const path = window.location.pathname;
-        const pathParts = path.split('/').filter(p => p);
-
-        // Business pages have 3 parts: category/city/slug (or 4 with /en)
-        // Homepage has 0 or 1 part (/en)
-        const isBusinessPage = (pathParts.length >= 3 && !pathParts.includes('blog'));
-
-        if (!isBusinessPage && isEnglish) {
-          // Only update homepage title/meta for English
-          document.title = 'Quebec Business Registry - Business Directory';
-
-          // Update meta description
-          const metaDesc = document.querySelector('meta[name="description"]');
-          if (metaDesc) metaDesc.content = 'Quebec business directory. Over 600,000 businesses with contact information, reviews and detailed information. Find the business you need.';
-
-          // Update meta keywords
-          const metaKeywords = document.querySelector('meta[name="keywords"]');
-          if (metaKeywords) metaKeywords.content = 'quebec businesses, business directory, business registry, NEQ, quebec directory, local businesses, quebec services';
-        }
-      })();
-    </script>
-
     <title>Registre d'entreprise du Québec - Annuaire des entreprises</title>
 
     <!-- SEO Meta Tags -->
@@ -79,7 +45,7 @@
 
     <!-- hreflang for bilingual SEO -->
     <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/" />
-    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/?lang=en" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en" />
     <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/" />
 
     <!-- Sitemap -->
