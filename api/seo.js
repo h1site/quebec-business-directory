@@ -613,11 +613,14 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     const langPrefix = isEnglish ? 'en' : '';
     const redirectUrl = '/' + buildPath(langPrefix, correctCategorySlug, correctCitySlug, slug);
 
-    // Only redirect if the URL actually changes
+    // Only redirect if the URL path actually changes (ignore query params)
     const currentPath = req.url.split('?')[0]; // Remove query params
-    const targetPath = redirectUrl;
+    const targetPath = redirectUrl.startsWith('/') ? redirectUrl : '/' + redirectUrl;
 
-    if (currentPath !== targetPath) {
+    // Normalize both paths for comparison
+    const normalizePath = (path) => path.replace(/\/+/g, '/').replace(/\/$/, '');
+
+    if (normalizePath(currentPath) !== normalizePath(targetPath)) {
       console.log(`[SEO] 301 Redirect: ${req.url} → ${redirectUrl}`);
       if (isBot) {
         console.log(`[${isGooglebot ? 'GOOGLEBOT' : 'BINGBOT'}] Wrong URL detected - Redirecting to canonical`);
