@@ -68,18 +68,6 @@
       ]
     }
   ],
-  "redirects": [
-    {
-      "source": "/blogue/top-10-restaurants-montreal",
-      "destination": "/blogue/top-10-restaurants-montreal-2025",
-      "permanent": true
-    },
-    {
-      "source": "/blogue/comment-reclamer-fiche-entreprise",
-      "destination": "/blogue/comment-reclamer-fiche-entreprise-registre-quebec",
-      "permanent": true
-    }
-  ],
   "rewrites": [
     {
       "source": "/",
