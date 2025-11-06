@@ -995,7 +995,30 @@ async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale }) 
   const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
 
   // Get article from blog data
-  const article = getArticleBySlug(blogSlug);
+  let article = getArticleBySlug(blogSlug);
+
+  // Handle short URL redirects for bots (Googlebot, Screaming Frog don't execute JavaScript)
+  if (!article) {
+    const slugRedirects = {
+      'top-10-restaurants-montreal': 'top-10-restaurants-montreal-2025',
+      'comment-reclamer-fiche-entreprise': 'comment-reclamer-fiche-entreprise-registre-quebec',
+    };
+
+    const fullSlug = slugRedirects[blogSlug];
+    if (fullSlug) {
+      // Build redirect URL
+      const basePath = isEnglish ? '/blog' : '/blogue';
+      const langPrefix = isEnglish ? '/en' : '';
+      const redirectUrl = `${langPrefix}${basePath}/${fullSlug}`;
+
+      console.log(`[SSR] Redirecting short blog URL "${blogSlug}" to: ${redirectUrl}`);
+
+      // 301 Permanent Redirect
+      res.setHeader('Location', redirectUrl);
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // Cache redirect for 1 year
+      return res.status(301).send('');
+    }
+  }
 
   if (!article) {
     const template = await loadTemplate();
