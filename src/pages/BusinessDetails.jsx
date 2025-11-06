@@ -348,10 +348,23 @@ const BusinessDetails = () => {
 
   return (
     <>
-      {/* IMPORTANT: React Helmet disabled for business pages - SSR handles all meta tags
-          The server-side rendering (api/seo.js) already injects correct meta tags in HTML
-          React Helmet would override them with wrong data causing canonical/description issues
-          SEO bots read the initial HTML, not React-modified DOM */}
+      {/* React Helmet updates meta tags for SPA navigation between pages
+          SSR (api/seo.js) provides initial HTML for bots, Helmet updates for client-side navigation */}
+      <Helmet>
+        <title>{business.name} - {cityName} | {isEnglish ? 'Quebec Business Registry' : 'Registre du Québec'}</title>
+        <meta name="description" content={metaDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={`${business.name} - ${cityName}`} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="business.business" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:title" content={`${business.name} - ${cityName}`} />
+        <meta name="twitter:description" content={metaDescription} />
+      </Helmet>
 
       <div className="business-details-page">
         <div className="container business-main-container">
