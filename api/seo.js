@@ -530,6 +530,33 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     return res.status(404).send('Entreprise non trouvée');
   }
 
+  // REDIRECT SHORT URLs: If citySlug is missing, build full URL and redirect 301
+  // Example: /entreprise/slug → 301 → /entreprise/ville/slug
+  if (!citySlug || citySlug === slug) {
+    // Normalize city to slug format
+    const correctCitySlug = business.city
+      ? business.city.toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '') // Remove accents
+          .replace(/[^a-z0-9]+/g, '-')     // Replace non-alphanumeric with hyphens
+          .replace(/^-+|-+$/g, '')          // Remove leading/trailing hyphens
+      : 'quebec';
+
+    // Determine category slug
+    const correctCategorySlug = business.main_category_slug || categorySlug || 'entreprise';
+
+    // Build redirect URL
+    const langPrefix = isEnglish ? '/en' : '';
+    const redirectUrl = `${langPrefix}/${correctCategorySlug}/${correctCitySlug}/${slug}`;
+
+    console.log(`Redirecting short URL to: ${redirectUrl}`);
+
+    // 301 Permanent Redirect
+    res.setHeader('Location', redirectUrl);
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // Cache 1 year
+    return res.status(301).send('');
+  }
+
     // Generate SEO content (bilingual)
     const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
     const title = `${business.name} - ${business.city} | ${siteName}`;
