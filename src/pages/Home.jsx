@@ -59,7 +59,8 @@ const Home = () => {
     <>
       <Helmet>
         <title>Registre d'entreprise du Québec - Trouvez les meilleurs entreprises locales</title>
-        <meta name="description" content="Découvrez les meilleures entreprises du Québec. Annuaire complet avec avis, coordonnées et informations détaillées." />
+        <meta name="description" content="Découvrez les meilleures entreprises du Québec. Annuaire complet avec avis, coordonnées et informations détaillées. Plus de 600 000 entreprises québécoises." />
+        <link rel="canonical" href="https://registreduquebec.com/" />
 
         {/* Organization Schema */}
         <script type="application/ld+json">

@@ -203,14 +203,40 @@ const BusinessDetails = () => {
     );
   }
 
+  // Pre-calculate meta tags data (works even when business is null)
+  const cityName = business?.city || 'Québec';
+  const businessDescription = business
+    ? (isEnglish
+        ? (business.description_en || business.description)
+        : (business.description || business.description_en))
+    : null;
+
+  const metaDescription = business
+    ? (businessDescription
+        ? businessDescription.substring(0, 160)
+        : `${business.name} - ${cityName}, QC`)
+    : (isEnglish ? 'Loading business information...' : 'Chargement des informations...');
+
+  const canonicalUrl = business
+    ? `${window.location.origin}${getBusinessUrl(business)}`
+    : window.location.href;
+
   if (error || !business) {
     return (
-      <div className="container" style={{ padding: '3rem 0', textAlign: 'center' }}>
-        <h2>{error || 'Entreprise introuvable'}</h2>
-        <LocalizedLink to="/" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>
-          Retour à l'accueil
-        </LocalizedLink>
-      </div>
+      <>
+        {/* Render Helmet even on error page to clear previous meta tags */}
+        <Helmet>
+          <title>{error || (isEnglish ? 'Business not found' : 'Entreprise introuvable')} | {isEnglish ? 'Quebec Business Registry' : 'Registre du Québec'}</title>
+          <meta name="description" content={isEnglish ? 'The requested business could not be found.' : 'L\'entreprise demandée est introuvable.'} />
+          <link rel="canonical" href={window.location.href} />
+        </Helmet>
+        <div className="container" style={{ padding: '3rem 0', textAlign: 'center' }}>
+          <h2>{error || 'Entreprise introuvable'}</h2>
+          <LocalizedLink to="/" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>
+            Retour à l'accueil
+          </LocalizedLink>
+        </div>
+      </>
     );
   }
 
@@ -226,9 +252,6 @@ const BusinessDetails = () => {
     user.email === 'admin@registreduquebec.com' ||
     user.email?.endsWith('@h1site.com')
   );
-
-  // Generate canonical URL
-  const canonicalUrl = `${window.location.origin}${getBusinessUrl(business)}`;
 
   // Handler to open delete confirmation modal
   const handleDeleteRequest = () => {
@@ -330,45 +353,49 @@ const BusinessDetails = () => {
     }
   };
 
-  // Generate description for meta tags (language-aware)
-  const cityName = business.city || 'Québec';
-  const businessDescription = isEnglish
-    ? (business.description_en || business.description)
-    : (business.description || business.description_en);
-
   // Debug description selection
-  console.log('📝 Description selection:', {
-    isEnglish,
-    hasDescriptionEn: !!business.description_en,
-    hasDescription: !!business.description,
-    selectedDescription: businessDescription?.substring(0, 80) + '...'
-  });
-
-  const metaDescription = businessDescription
-    ? businessDescription.substring(0, 160)
-    : `${business.name} - ${cityName}, QC`;
+  if (business) {
+    console.log('📝 Description selection:', {
+      isEnglish,
+      hasDescriptionEn: !!business.description_en,
+      hasDescription: !!business.description,
+      selectedDescription: businessDescription?.substring(0, 80) + '...'
+    });
+  }
 
   return (
     <>
       {/* React Helmet updates meta tags for SPA navigation between pages
-          SSR (api/seo.js) provides initial HTML for bots, Helmet updates for client-side navigation */}
-      {business && (
-        <Helmet>
-          <title>{business.name} - {cityName} | {isEnglish ? 'Quebec Business Registry' : 'Registre du Québec'}</title>
-          <meta name="description" content={metaDescription} />
-          <link rel="canonical" href={canonicalUrl} />
+          SSR (api/seo.js) provides initial HTML for bots, Helmet updates for client-side navigation
+          IMPORTANT: Always render Helmet (even during loading) to clear previous page's meta tags */}
+      <Helmet>
+        <title>
+          {business
+            ? `${business.name} - ${cityName} | ${isEnglish ? 'Quebec Business Registry' : 'Registre du Québec'}`
+            : (isEnglish ? 'Loading...' : 'Chargement...')
+          }
+        </title>
+        <meta name="description" content={business ? metaDescription : (isEnglish ? 'Loading business information...' : 'Chargement des informations...')} />
+        <link rel="canonical" href={business ? canonicalUrl : window.location.href} />
 
-          {/* Open Graph */}
-          <meta property="og:title" content={`${business.name} - ${cityName}`} />
-          <meta property="og:description" content={metaDescription} />
-          <meta property="og:url" content={canonicalUrl} />
-          <meta property="og:type" content="business.business" />
+        {/* Open Graph */}
+        {business && (
+          <>
+            <meta property="og:title" content={`${business.name} - ${cityName}`} />
+            <meta property="og:description" content={metaDescription} />
+            <meta property="og:url" content={canonicalUrl} />
+            <meta property="og:type" content="business.business" />
+          </>
+        )}
 
-          {/* Twitter Card */}
-          <meta name="twitter:title" content={`${business.name} - ${cityName}`} />
-          <meta name="twitter:description" content={metaDescription} />
-        </Helmet>
-      )}
+        {/* Twitter Card */}
+        {business && (
+          <>
+            <meta name="twitter:title" content={`${business.name} - ${cityName}`} />
+            <meta name="twitter:description" content={metaDescription} />
+          </>
+        )}
+      </Helmet>
 
       <div className="business-details-page">
         <div className="container business-main-container">
