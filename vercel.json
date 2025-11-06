@@ -99,7 +99,7 @@
     },
     {
       "source": "/about",
-      "destination": "/api/seo?page=about&lang=fr"
+      "destination": "/api/seo?page=about&lang=en"
     },
     {
       "source": "/en/about",
@@ -119,7 +119,7 @@
     },
     {
       "source": "/privacy-policy",
-      "destination": "/api/seo?page=privacy&lang=fr"
+      "destination": "/api/seo?page=privacy&lang=en"
     },
     {
       "source": "/en/privacy-policy",
@@ -131,7 +131,7 @@
     },
     {
       "source": "/legal-notice",
-      "destination": "/api/seo?page=legal&lang=fr"
+      "destination": "/api/seo?page=legal&lang=en"
     },
     {
       "source": "/en/legal-notice",

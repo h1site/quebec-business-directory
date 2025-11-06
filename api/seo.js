@@ -637,6 +637,7 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
 
     const langPrefix = isEnglish ? '/en' : '';
     const canonical = `https://registreduquebec.com${langPrefix}/${correctCategorySlug}/${correctCitySlug}/${slug}`;
+    const breadcrumbCityPath = isEnglish ? `/en/city/${correctCitySlug}` : `/ville/${correctCitySlug}`;
 
     // Generate LocalBusiness schema
     const localBusinessSchema = generateSchemaOrg(business, isEnglish);
@@ -659,7 +660,7 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
           "@type": "ListItem",
           "position": 2,
           "name": business.city || (isEnglish ? "Quebec" : "Québec"),
-          "item": `https://registreduquebec.com${isEnglish ? '/en' : ''}/ville/${correctCitySlug}`
+          "item": `https://registreduquebec.com${breadcrumbCityPath}`
         },
         {
           "@type": "ListItem",
@@ -1617,6 +1618,9 @@ async function handleHomePage(req, res, { isEnglish, locale }) {
     { name: 'Éducation et formation', slug: 'education-et-formation', nameEn: 'Education & Training' }
   ];
 
+  const cityHref = (slug) => (isEnglish ? `/en/city/${slug}` : `/ville/${slug}`);
+  const categoryHref = (slug) => (isEnglish ? `/en/category/${slug}` : `/categorie/${slug}`);
+
   // Generate SSR content for homepage with full internal linking
   const ssrContent = `
   <div class="home-page" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;">
@@ -1648,7 +1652,7 @@ async function handleHomePage(req, res, { isEnglish, locale }) {
       </h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 3rem;">
         ${topCities.map(city => `
-          <a href="${isEnglish ? '/en' : ''}/ville/${city.slug}"
+          <a href="${cityHref(city.slug)}"
              style="display: block; padding: 1.25rem; background: white; border: 1px solid #e2e8f0; border-radius: 8px; text-decoration: none; color: #0f4c81; font-weight: 500; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);"
              onmouseover="this.style.borderColor='#0f4c81'; this.style.boxShadow='0 4px 12px rgba(15,76,129,0.15)'"
              onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)'">
@@ -1665,7 +1669,7 @@ async function handleHomePage(req, res, { isEnglish, locale }) {
       </h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
         ${topCategories.map(cat => `
-          <a href="${isEnglish ? '/en' : ''}/categorie/${cat.slug}"
+          <a href="${categoryHref(cat.slug)}"
              style="display: block; padding: 1.25rem; background: white; border: 1px solid #e2e8f0; border-radius: 8px; text-decoration: none; color: #0f4c81; font-weight: 500; transition: all 0.2s;"
              onmouseover="this.style.borderColor='#0f4c81'; this.style.boxShadow='0 4px 12px rgba(15,76,129,0.15)'"
              onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
