@@ -10,12 +10,29 @@ const supabase = createClient(
 );
 
 // Cache the HTML template (safe to cache - we modify a copy for each request)
+// CRITICAL FIX: Add cache invalidation to prevent serving stale templates
 let htmlTemplateCache = null;
+let templateCacheTime = null;
+const TEMPLATE_CACHE_TTL = 5 * 60 * 1000; // 5 minutes cache TTL
+
 async function loadTemplate() {
-  if (!htmlTemplateCache) {
+  const now = Date.now();
+
+  // Invalidate cache in development or after TTL expires
+  if (process.env.NODE_ENV === 'development' ||
+      !htmlTemplateCache ||
+      !templateCacheTime ||
+      (now - templateCacheTime) > TEMPLATE_CACHE_TTL) {
+
     const templatePath = path.join(process.cwd(), 'dist/spa.html');
     htmlTemplateCache = await fs.readFile(templatePath, 'utf-8');
+    templateCacheTime = now;
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[TEMPLATE] Cache refreshed (dev mode)');
+    }
   }
+
   return htmlTemplateCache; // Return cached template (we modify a copy)
 }
 
@@ -459,13 +476,29 @@ function generateSSRContent(business, isEnglish = false) {
 
 // Main serverless function handler
 export default async function handler(req, res) {
-  // SEO-friendly cache headers: Allow Google to cache but revalidate
-  // s-maxage=3600 = CDN caches for 1 hour
-  // stale-while-revalidate=86400 = Serve stale content while revalidating for 24h
-  res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
-  // DO NOT use Vary: * as it prevents all caching and confuses Google
-  // Only vary on Accept-Encoding for compression
-  res.setHeader('Vary', 'Accept-Encoding');
+  // Detect bot traffic for logging and optimization
+  const userAgent = req.headers['user-agent'] || '';
+  const isGooglebot = userAgent.toLowerCase().includes('googlebot');
+  const isBingbot = userAgent.toLowerCase().includes('bingbot');
+  const isBot = isGooglebot || isBingbot;
+
+  // Log bot visits for debugging
+  if (isBot) {
+    console.log(`[${isGooglebot ? 'GOOGLEBOT' : 'BINGBOT'}] ${req.method} ${req.url}`, {
+      timestamp: new Date().toISOString(),
+      query: req.query
+    });
+  }
+
+  // CRITICAL FIX: Cache for 1 hour with must-revalidate to prevent stale content
+  // Previous: s-maxage + stale-while-revalidate could serve 24h old content to bots
+  res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
+
+  // Vary on both encoding and language for proper cache segmentation
+  res.setHeader('Vary', 'Accept-Encoding, Accept-Language');
+
+  // Allow indexing by search engines with image preview
+  res.setHeader('X-Robots-Tag', 'index, follow, max-image-preview:large');
 
   try {
     const { slug, categorySlug, citySlug, subCategorySlug, regionSlug, lang, blogSlug, page } = req.query;
@@ -528,6 +561,17 @@ export default async function handler(req, res) {
     return res.status(200).setHeader('Content-Type', 'text/html').send(template);
   } catch (error) {
     console.error('SEO function error:', error);
+
+    // CRITICAL FIX: Enhanced error logging for bot requests
+    if (isBot) {
+      console.error(`[${isGooglebot ? 'GOOGLEBOT' : 'BINGBOT'}] ERROR on ${req.url}:`, {
+        error: error.message,
+        stack: error.stack,
+        query: req.query,
+        timestamp: new Date().toISOString()
+      });
+    }
+
     res.status(500).send('Erreur serveur');
   }
 }
@@ -564,12 +608,28 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     const langPrefix = isEnglish ? 'en' : '';
     const redirectUrl = '/' + buildPath(langPrefix, correctCategorySlug, correctCitySlug, slug);
 
-    console.log(`[SEO] Redirecting short URL to: ${redirectUrl}`);
+    console.log(`[SEO] 301 Redirect: ${req.url} → ${redirectUrl}`);
 
-    // 301 Permanent Redirect
+    // CRITICAL FIX: 301 Permanent Redirect with HTML body for better bot compatibility
     res.setHeader('Location', redirectUrl);
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // Cache 1 year
-    return res.status(301).send('');
+
+    // Provide HTML body with meta refresh as fallback for bots
+    const redirectHtml = `<!DOCTYPE html>
+<html lang="${isEnglish ? 'en' : 'fr'}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url=${redirectUrl}">
+  <title>${isEnglish ? 'Redirecting...' : 'Redirection...'}</title>
+  <link rel="canonical" href="https://registreduquebec.com${redirectUrl}">
+</head>
+<body>
+  <p>${isEnglish ? 'Redirecting to' : 'Redirection vers'} <a href="${redirectUrl}">${escapeHtml(business.name)}</a></p>
+  <script>window.location.href="${redirectUrl}";</script>
+</body>
+</html>`;
+
+    return res.status(301).send(redirectHtml);
   }
 
     // Generate SEO content (bilingual)
@@ -698,11 +758,17 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
       ]
     };
 
-    // Generate STABLE ETag based on business data (not timestamp!)
-    // Google needs consistent ETags to understand when content actually changes
-    // Use business updated_at or a hash of key fields for proper cache validation
-    const etag = `"${slug}-${business.id}"`;
+    // CRITICAL FIX: Generate ETag based on actual content changes
+    // Include updated_at timestamp so Google knows when content has changed
+    // Falls back to ID if updated_at is not available
+    const contentVersion = business.updated_at || business.id;
+    const etag = `"${slug}-${contentVersion}"`;
     res.setHeader('ETag', etag);
+
+    // Log ETag for bot debugging
+    if (isBot) {
+      console.log(`[${isGooglebot ? 'GOOGLEBOT' : 'BINGBOT'}] ETag: ${etag} for ${slug}`);
+    }
 
     // CRITICAL: Load fresh template for each request
     let html = setHtmlLang(await loadTemplate(), isEnglish);
@@ -804,28 +870,29 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
       `<div id="root"><div class="ssr-content">${ssrContent}</div></div>`
     );
 
-    // Add CSS to hide SSR content once JS loads + initial data for client
+    // CRITICAL FIX: SSR content visible by default to avoid cloaking detection
+    // React will hide it once mounted - this prevents Google from seeing hidden content initially
     const ssrHideScript = `
     <style>
-      /* Hide SSR content by default for users with JS enabled */
+      /* SSR content visible by default - NO display:none to avoid cloaking */
       .ssr-content {
-        display: none;
+        /* Visible by default for bots and initial render */
       }
-      /* Show SSR content for bots (no JS) */
-      .no-js .ssr-content {
-        display: block;
+      /* Hide only after React app has loaded and mounted */
+      .app-loaded .ssr-content {
+        display: none;
       }
     </style>
     <script>
-    // Hide SSR content immediately for users, keep visible for bots
-    document.documentElement.classList.remove('no-js');
-
-    // Store initial business data for React app
+    // Store initial business data for React app BEFORE it loads
     window.__INITIAL_BUSINESS_DATA__ = ${JSON.stringify(business)};
+
+    // React will add 'app-loaded' class once mounted to hide SSR content
+    // This ensures bots see the content, but users see React UI
     </script>
     <noscript>
       <style>
-        /* Force show SSR content when JavaScript is disabled (bots) */
+        /* Explicitly show for no-JS environments (redundant but safe) */
         .ssr-content {
           display: block !important;
         }
