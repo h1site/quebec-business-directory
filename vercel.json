@@ -122,6 +122,14 @@
       "destination": "/api/seo?page=faq&lang=en"
     },
     {
+      "source": "/en/entreprise/:citySlug/:businessSlug",
+      "destination": "/api/seo?citySlug=:citySlug&slug=:businessSlug&lang=en"
+    },
+    {
+      "source": "/entreprise/:citySlug/:businessSlug",
+      "destination": "/api/seo?citySlug=:citySlug&slug=:businessSlug"
+    },
+    {
       "source": "/en/:categorySlug/:citySlug/:businessSlug",
       "destination": "/api/seo?categorySlug=:categorySlug&citySlug=:citySlug&slug=:businessSlug&lang=en"
     },
