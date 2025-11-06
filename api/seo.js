@@ -553,7 +553,7 @@ export default async function handler(req, res) {
 
     // ROUTE 4: Business Detail Pages (/categorie/ville/slug)
     if (slug) {
-      return handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale });
+      return handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale, isBot, isGooglebot, isBingbot });
     }
 
     // ROUTE 5: Default - Homepage or other pages
@@ -577,7 +577,7 @@ export default async function handler(req, res) {
 }
 
 // Handle Business Detail Pages
-async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale }) {
+async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale, isBot, isGooglebot, isBingbot }) {
   // Fetch business from Supabase
   const { data: business, error } = await supabase
     .from('businesses')
