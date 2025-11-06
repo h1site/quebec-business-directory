@@ -169,35 +169,53 @@ console.log(`   📑 Nombre de fichiers: ${numBusinessSitemaps}`);
 
 const sitemapFiles = ['sitemap-static.xml'];
 
-// Générer chaque sitemap
-for (let fileIndex = 0; fileIndex < numBusinessSitemaps; fileIndex++) {
+// Utiliser un curseur pour paginer efficacement
+let lastId = null;
+let fileIndex = 0;
+
+while (true) {
   const filename = `sitemap-businesses-${fileIndex + 1}.xml`;
   console.log(`\n   📄 ${filename}...`);
 
   const businessUrls = [];
-  const fileOffset = fileIndex * MAX_URLS_PER_SITEMAP;
-  const numBatches = Math.ceil(MAX_URLS_PER_SITEMAP / BATCH_SIZE);
 
-  // Charger par lots
-  for (let batchIndex = 0; batchIndex < numBatches && businessUrls.length < MAX_URLS_PER_SITEMAP; batchIndex++) {
-    const batchOffset = fileOffset + (batchIndex * BATCH_SIZE);
-
+  // Charger jusqu'à MAX_URLS_PER_SITEMAP URLs pour ce fichier
+  while (businessUrls.length < MAX_URLS_PER_SITEMAP) {
     try {
-      const { data: businesses, error } = await supabase
+      let query = supabase
         .from('businesses')
-        .select('slug, updated_at, city, main_category_slug, categories, description, website, google_reviews_count, google_rating')
-        .order('id')
-        .range(batchOffset, batchOffset + BATCH_SIZE - 1);
+        .select(`
+          id,
+          slug,
+          updated_at,
+          city,
+          main_category_slug,
+          description,
+          website,
+          google_reviews_count,
+          google_rating
+        `)
+        .order('id', { ascending: true })
+        .limit(BATCH_SIZE);
+
+      // Si on a un lastId, commencer après lui
+      if (lastId) {
+        query = query.gt('id', lastId);
+      }
+
+      const { data: businesses, error } = await query;
 
       if (error) throw error;
       if (!businesses || businesses.length === 0) break;
+
+      // Sauvegarder le dernier ID pour la prochaine requête
+      lastId = businesses[businesses.length - 1].id;
 
       businesses.forEach(biz => {
         if (businessUrls.length < MAX_URLS_PER_SITEMAP && biz.slug && biz.city) {
           const citySlug = generateSlug(biz.city);
 
-          // Use main_category_slug if available, otherwise use 'entreprise' as fallback
-          // IMPORTANT: Don't use categories[0] as it contains UUIDs, not slugs
+          // Use main_category_slug or fallback to 'entreprise'
           const categoryPart = biz.main_category_slug || 'entreprise';
 
           // Format URLs: /{category-slug}/{city}/{slug}
@@ -229,17 +247,24 @@ for (let fileIndex = 0; fileIndex < numBusinessSitemaps; fileIndex++) {
 
       process.stdout.write(`\r      Chargement: ${businessUrls.length.toLocaleString()}/${MAX_URLS_PER_SITEMAP.toLocaleString()}`);
 
+      // Si on a atteint le nombre max d'URLs ou qu'il n'y a plus de données
       if (businesses.length < BATCH_SIZE) break;
     } catch (error) {
-      console.error(`\n      ❌ Erreur batch ${batchIndex}:`, error.message);
+      console.error(`\n      ❌ Erreur:`, error.message);
       break;
     }
   }
 
   console.log('');
+
+  // Si aucune URL n'a été générée, on arrête
+  if (businessUrls.length === 0) break;
+
   generateSitemap(businessUrls, filename);
   sitemapFiles.push(filename);
   console.log(`   ✅ ${businessUrls.length.toLocaleString()} URLs`);
+
+  fileIndex++;
 }
 
 // 3. SITEMAP INDEX (FR)

@@ -194,7 +194,7 @@
       "destination": "/api/seo?categorySlug=:categorySlug"
     },
     {
-      "source": "/((?!api/|sitemaps/|sitemap\\.xml|sitemap-en\\.xml|sitemap-fr\\.xml).*)",
+      "source": "/((?!api/|sitemaps/|sitemap\\.xml|sitemap-en\\.xml|sitemap-fr\\.xml|blogue/|blog/).*)",
       "destination": "/spa.html"
     }
   ]

@@ -195,7 +195,16 @@ let businessSitemapFiles = [];
 while (true) {
   const { data: businesses, error } = await supabase
     .from('businesses')
-    .select('slug, updated_at, main_category_slug, city, categories, description, website, google_reviews_count, google_rating')
+    .select(`
+      slug,
+      updated_at,
+      main_category_slug,
+      city,
+      description,
+      website,
+      google_reviews_count,
+      google_rating
+    `)
     .order('id')
     .range(page * pageSize, (page + 1) * pageSize - 1);
 
@@ -210,8 +219,7 @@ while (true) {
       return;
     }
 
-    // Use main_category_slug if available, otherwise use 'entreprise' as fallback
-    // IMPORTANT: Don't use categories[0] as it contains UUIDs, not slugs
+    // Use main_category_slug or fallback to 'entreprise'
     const categoryPart = biz.main_category_slug || 'entreprise';
 
     const lastmod = biz.updated_at ?
