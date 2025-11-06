@@ -123,11 +123,11 @@
     },
     {
       "source": "/en/entreprise/:businessSlug",
-      "destination": "/api/redirect-short-url?slug=:businessSlug&prefix=entreprise&lang=en"
+      "destination": "/api/seo?slug=:businessSlug&categorySlug=entreprise&lang=en"
     },
     {
       "source": "/entreprise/:businessSlug",
-      "destination": "/api/redirect-short-url?slug=:businessSlug&prefix=entreprise"
+      "destination": "/api/seo?slug=:businessSlug&categorySlug=entreprise"
     },
     {
       "source": "/en/entreprise/:citySlug/:businessSlug",
