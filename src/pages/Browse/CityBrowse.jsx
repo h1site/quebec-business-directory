@@ -3,88 +3,65 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase } from '../../services/supabaseClient.js';
 import { getBusinessUrl } from '../../utils/urlHelpers.js';
-import Breadcrumb from '../../components/Breadcrumb.jsx';
+import BusinessCard from '../../components/BusinessCard.jsx';
 import './Browse.css';
 
 const CityBrowse = () => {
   const { citySlug } = useParams();
   const [businesses, setBusinesses] = useState([]);
-  const [filteredBusinesses, setFilteredBusinesses] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [cityName, setCityName] = useState('');
   const [notFound, setNotFound] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
-
-  // Normalize slug to city name
-  const slugToCity = (slug) => {
-    const cityMap = {
-      'montreal': 'Montréal',
-      'quebec': 'Québec',
-      'laval': 'Laval',
-      'gatineau': 'Gatineau',
-      'longueuil': 'Longueuil',
-      'sherbrooke': 'Sherbrooke',
-      'saguenay': 'Saguenay',
-      'levis': 'Lévis',
-      'trois-rivieres': 'Trois-Rivières',
-      'terrebonne': 'Terrebonne',
-      'saint-jean-sur-richelieu': 'Saint-Jean-sur-Richelieu',
-      'repentigny': 'Repentigny',
-      'brossard': 'Brossard',
-      'drummondville': 'Drummondville',
-      'granby': 'Granby',
-      'saint-jerome': 'Saint-Jérôme',
-      'mirabel': 'Mirabel',
-      'rimouski': 'Rimouski',
-      'vaudreuil-dorion': 'Vaudreuil-Dorion',
-      'victoriaville': 'Victoriaville'
-    };
-    return cityMap[slug] || null;
-  };
 
   useEffect(() => {
     const loadBusinesses = async () => {
       try {
         setLoading(true);
+        // Convert slug to city name (vaudreuil-dorion -> Vaudreuil-Dorion)
+        const name = citySlug
+          .split('-')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join('-');
 
-        // Get city name from slug
-        const city = slugToCity(citySlug);
+        setCityName(name);
 
-        // If city doesn't exist in our list, show 404
-        if (!city) {
+        // Load businesses in batches of 1000 (Supabase max per query)
+        // Normalize city name for matching (handle spaces/hyphens)
+        const normalizedCity = decodeURIComponent(name)
+          .replace(/[\s\-_+]/g, '%')
+          .trim();
+
+        const { data, error: searchError, count } = await supabase
+          .from('businesses_enriched')
+          .select('*', { count: 'exact' })
+          .ilike('city', `%${normalizedCity}%`)
+          .range(0, 999);
+
+        if (searchError) {
+          setError('Erreur lors du chargement des entreprises');
+          console.error('City browse error:', searchError);
+          return;
+        }
+
+        // If no businesses found in this city, show 404
+        if (!data || data.length === 0) {
           setNotFound(true);
           setLoading(false);
           return;
         }
 
-        setCityName(city);
-
-        // Load businesses from city (only needed fields for performance)
-        const { data, error, count } = await supabase
-          .from('businesses_enriched')
-          .select('id, name, slug, city, main_category_slug', { count: 'exact' })
-          .eq('city', city)
-          .order('name')
-          .limit(5000);
-
-        if (error) {
-          console.error('Error loading businesses:', error);
-          setError('Erreur lors du chargement des entreprises');
-          setLoading(false);
-          return;
-        }
-
-        setBusinesses(data || []);
-        setFilteredBusinesses(data || []);
+        console.log('📊 CityBrowse - Results received:', data?.length || 0, 'Total count:', count);
+        setBusinesses(data);
         setTotalCount(count || 0);
-        setLoading(false);
-
-        console.log(`📊 CityBrowse - Loaded ${data?.length || 0} businesses for ${city}`);
+        setHasMore((data?.length || 0) === 1000 && (count || 0) > 1000);
       } catch (err) {
         setError('Erreur lors du chargement des entreprises');
         console.error(err);
+      } finally {
         setLoading(false);
       }
     };
@@ -92,26 +69,38 @@ const CityBrowse = () => {
     loadBusinesses();
   }, [citySlug]);
 
-  // Normalize text by removing accents
-  const normalizeText = (text) => {
-    return text
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, ''); // Remove diacritics
-  };
+  const handleLoadMore = async () => {
+    if (loadingMore) return;
 
-  // Filter businesses based on search term
-  useEffect(() => {
-    if (!searchTerm.trim()) {
-      setFilteredBusinesses(businesses);
-    } else {
-      const normalizedSearch = normalizeText(searchTerm);
-      const filtered = businesses.filter(business =>
-        normalizeText(business.name).includes(normalizedSearch)
-      );
-      setFilteredBusinesses(filtered);
+    setLoadingMore(true);
+    try {
+      const offset = businesses.length;
+
+      // Normalize city name the same way as initial load
+      const normalizedCity = decodeURIComponent(cityName)
+        .replace(/[\s\-_+]/g, '%')
+        .trim();
+
+      const { data, error: searchError } = await supabase
+        .from('businesses_enriched')
+        .select('*')
+        .ilike('city', `%${normalizedCity}%`)
+        .range(offset, offset + 999);
+
+      if (searchError) {
+        console.error('Error loading more:', searchError);
+        return;
+      }
+
+      console.log('📊 CityBrowse - Load more results:', data?.length || 0);
+      setBusinesses(prev => [...prev, ...(data || [])]);
+      setHasMore((data?.length || 0) === 1000 && businesses.length + (data?.length || 0) < totalCount);
+    } catch (err) {
+      console.error('Error loading more:', err);
+    } finally {
+      setLoadingMore(false);
     }
-  }, [searchTerm, businesses]);
+  };
 
   // Redirect to 404 page if city doesn't exist (no businesses)
   if (notFound) {
@@ -189,73 +178,56 @@ const CityBrowse = () => {
       </Helmet>
 
       <div className="container browse-page">
-        {/* Breadcrumb Navigation with Schema */}
-        <Breadcrumb
-          items={[
-            { name: 'Accueil', url: '/' },
-            { name: 'Villes', url: '/villes' },
-            { name: cityName }
-          ]}
-        />
-
         <div className="browse-header">
-          <h1>
-            Entreprises à {cityName}
-          </h1>
+          <h1>Entreprises à {cityName}</h1>
           <p className="browse-count">
-            <strong>{totalCount}</strong> entreprise{totalCount > 1 ? 's' : ''} trouvée{totalCount > 1 ? 's' : ''}
-            {searchTerm && filteredBusinesses.length !== totalCount && (
-              <> • <strong>{filteredBusinesses.length}</strong> résultat{filteredBusinesses.length > 1 ? 's' : ''} pour "{searchTerm}"</>
+            {totalCount > 0 ? (
+              businesses.length < totalCount ? (
+                <>Affichage de <strong>{businesses.length}</strong> sur <strong>{totalCount}</strong> entreprise{totalCount > 1 ? 's' : ''}</>
+              ) : (
+                <><strong>{totalCount}</strong> entreprise{totalCount > 1 ? 's' : ''} trouvée{totalCount > 1 ? 's' : ''}</>
+              )
+            ) : (
+              <>{businesses.length} entreprise{businesses.length > 1 ? 's' : ''} trouvée{businesses.length > 1 ? 's' : ''}</>
             )}
           </p>
-
-          {/* Search field */}
-          <div className="browse-search">
-            <input
-              type="text"
-              placeholder="Rechercher par nom d'entreprise..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="browse-search-input"
-            />
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm('')}
-                className="browse-search-clear"
-                aria-label="Effacer la recherche"
-              >
-                ✕
-              </button>
-            )}
-          </div>
         </div>
 
-        {filteredBusinesses.length === 0 ? (
+        {businesses.length === 0 ? (
           <div className="no-results">
-            <p>Aucune entreprise trouvée dans cette ville</p>
+            <p>Aucune entreprise trouvée à {cityName}</p>
             <Link to="/recherche" className="btn btn-primary">
               Rechercher ailleurs
             </Link>
           </div>
         ) : (
-          <div className="business-list-simple">
-            {filteredBusinesses.map((business) => {
-              // Capitalize only first letter
-              const displayName = business.name.charAt(0).toUpperCase() + business.name.slice(1).toLowerCase();
+          <>
+            <div className="business-grid">
+              {businesses.map((business) => (
+                <BusinessCard key={business.id} business={business} />
+              ))}
+            </div>
 
-              return (
-                <Link
-                  key={business.id}
-                  to={getBusinessUrl(business)}
-                  className="business-list-item"
+            {hasMore && (
+              <div className="load-more-container">
+                <button
+                  className="btn-load-more"
+                  onClick={handleLoadMore}
+                  disabled={loadingMore}
                 >
-                  {displayName}
-                </Link>
-              );
-            })}
-          </div>
+                  {loadingMore ? (
+                    <>
+                      <div className="spinner-small"></div>
+                      Chargement...
+                    </>
+                  ) : (
+                    'Charger plus'
+                  )}
+                </button>
+              </div>
+            )}
+          </>
         )}
-
       </div>
     </>
   );

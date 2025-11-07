@@ -14,7 +14,6 @@ import { AuthProvider } from './context/AuthContext.jsx';
 // Lazy load heavy pages for better performance
 const Home = lazy(() => import('./pages/Home.jsx'));
 const Search = lazy(() => import('./pages/Search/Search.jsx'));
-const Cities = lazy(() => import('./pages/Cities.jsx'));
 const CityBrowse = lazy(() => import('./pages/Browse/CityBrowse.jsx'));
 const RegionBrowse = lazy(() => import('./pages/Browse/RegionBrowse.jsx'));
 const CategoryBrowse = lazy(() => import('./pages/Browse/CategoryBrowse.jsx'));
@@ -89,7 +88,6 @@ function App() {
                 <Route path="/recherche" element={<Search />} />
 
               {/* Browse Pages */}
-              <Route path="/villes" element={<Cities />} />
               <Route path="/ville/:citySlug" element={<CityBrowse />} />
               <Route path="/region/:regionSlug" element={<RegionBrowse />} />
               <Route path="/categorie/:categorySlug" element={<CategoryBrowse />} />
@@ -228,7 +226,6 @@ function App() {
               <Route path="/en/search" element={<Search />} />
 
               {/* Browse Pages */}
-              <Route path="/en/cities" element={<Cities />} />
               <Route path="/en/city/:citySlug" element={<CityBrowse />} />
               <Route path="/en/region/:regionSlug" element={<RegionBrowse />} />
               <Route path="/en/category/:categorySlug" element={<CategoryBrowse />} />
