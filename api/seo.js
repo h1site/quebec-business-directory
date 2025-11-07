@@ -9,6 +9,62 @@ const supabase = createClient(
   process.env.VITE_SUPABASE_ANON_KEY
 );
 
+// Bot visit logging function
+async function logBotVisit({
+  botType,
+  userAgent,
+  url,
+  path,
+  queryParams,
+  method = 'GET',
+  statusCode,
+  indexable,
+  indexableReason = null,
+  pageType = null,
+  businessId = null,
+  businessSlug = null,
+  categorySlug = null,
+  citySlug = null,
+  blogSlug = null,
+  redirectTo = null,
+  redirectReason = null,
+  hasCanonical = false,
+  canonicalUrl = null,
+  hasMetaTags = false,
+  hasSchemaOrg = false,
+  responseTimeMs = null
+}) {
+  try {
+    await supabase.from('bot_visit_logs').insert({
+      bot_type: botType,
+      user_agent: userAgent,
+      url,
+      path,
+      query_params: queryParams,
+      method,
+      status_code: statusCode,
+      indexable,
+      indexable_reason: indexableReason,
+      page_type: pageType,
+      business_id: businessId,
+      business_slug: businessSlug,
+      category_slug: categorySlug,
+      city_slug: citySlug,
+      blog_slug: blogSlug,
+      redirect_to: redirectTo,
+      redirect_reason: redirectReason,
+      has_canonical: hasCanonical,
+      canonical_url: canonicalUrl,
+      has_meta_tags: hasMetaTags,
+      has_schema_org: hasSchemaOrg,
+      response_time_ms: responseTimeMs
+    });
+  } catch (error) {
+    // Don't fail the request if logging fails
+    console.error('[BOT_LOG] Failed to log bot visit:', error.message);
+  }
+}
+
 // Cache the HTML template (safe to cache - we modify a copy for each request)
 // CRITICAL FIX: Add cache invalidation to prevent serving stale templates
 let htmlTemplateCache = null;
@@ -476,11 +532,14 @@ function generateSSRContent(business, isEnglish = false) {
 
 // Main serverless function handler
 export default async function handler(req, res) {
+  const startTime = Date.now();
+
   // Detect bot traffic for logging and optimization
   const userAgent = req.headers['user-agent'] || '';
   const isGooglebot = userAgent.toLowerCase().includes('googlebot');
   const isBingbot = userAgent.toLowerCase().includes('bingbot');
   const isBot = isGooglebot || isBingbot;
+  const botType = isGooglebot ? 'googlebot' : isBingbot ? 'bingbot' : 'other';
 
   // Log bot visits for debugging
   if (isBot) {
@@ -507,57 +566,100 @@ export default async function handler(req, res) {
     const isEnglish = lang === 'en';
     const locale = isEnglish ? 'en_CA' : 'fr_CA';
 
+    // Common logging context
+    const logContext = {
+      botType,
+      userAgent,
+      url: req.url,
+      path: req.url.split('?')[0],
+      queryParams: req.query,
+      method: req.method,
+      startTime,
+      isBot
+    };
+
     // ROUTE 0.1: Blog Article Pages (/blogue/:articleId)
     if (blogSlug) {
-      return handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale });
+      return handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale, logContext });
     }
 
     // ROUTE 0.2: Static Pages (About, FAQ, Homepage, Blog listing, Privacy, Legal)
     if (page) {
       if (page === 'blog') {
-        return handleBlogListingPage(req, res, { isEnglish, locale });
+        return handleBlogListingPage(req, res, { isEnglish, locale, logContext });
       }
       if (page === 'about') {
-        return handleAboutPage(req, res, { isEnglish, locale });
+        return handleAboutPage(req, res, { isEnglish, locale, logContext });
       }
       if (page === 'faq') {
-        return handleFAQPage(req, res, { isEnglish, locale });
+        return handleFAQPage(req, res, { isEnglish, locale, logContext });
       }
       if (page === 'home') {
-        return handleHomePage(req, res, { isEnglish, locale });
+        return handleHomePage(req, res, { isEnglish, locale, logContext });
       }
       if (page === 'privacy') {
-        return handlePrivacyPage(req, res, { isEnglish, locale });
+        return handlePrivacyPage(req, res, { isEnglish, locale, logContext });
       }
       if (page === 'legal') {
-        return handleLegalPage(req, res, { isEnglish, locale });
+        return handleLegalPage(req, res, { isEnglish, locale, logContext });
       }
     }
 
     // ROUTE 1: Category Browse Pages (/categorie/sports-et-loisirs)
     if (categorySlug && !slug && !citySlug) {
-      return handleCategoryPage(req, res, { categorySlug, subCategorySlug, isEnglish, locale });
+      return handleCategoryPage(req, res, { categorySlug, subCategorySlug, isEnglish, locale, logContext });
     }
 
     // ROUTE 2: City Browse Pages (/ville/montreal)
     if (citySlug && !slug && !categorySlug) {
-      return handleCityPage(req, res, { citySlug, isEnglish, locale });
+      return handleCityPage(req, res, { citySlug, isEnglish, locale, logContext });
     }
 
     // ROUTE 3: Region Browse Pages (/region/montreal)
     if (regionSlug && !slug) {
       // For now, return default template - can implement later
       const template = setHtmlLang(await loadTemplate(), isEnglish);
+
+      // Log for bots
+      if (isBot) {
+        await logBotVisit({
+          ...logContext,
+          statusCode: 200,
+          indexable: true,
+          pageType: 'region',
+          regionSlug,
+          hasCanonical: false,
+          hasMetaTags: false,
+          hasSchemaOrg: false,
+          responseTimeMs: Date.now() - startTime
+        });
+      }
+
       return res.status(200).setHeader('Content-Type', 'text/html').send(template);
     }
 
     // ROUTE 4: Business Detail Pages (/categorie/ville/slug)
     if (slug) {
-      return handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale, isBot, isGooglebot, isBingbot });
+      return handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale, isBot, isGooglebot, isBingbot, logContext });
     }
 
     // ROUTE 5: Default - Homepage or other pages
     const template = setHtmlLang(await loadTemplate(), isEnglish);
+
+    // Log for bots
+    if (isBot) {
+      await logBotVisit({
+        ...logContext,
+        statusCode: 200,
+        indexable: true,
+        pageType: 'default',
+        hasCanonical: false,
+        hasMetaTags: false,
+        hasSchemaOrg: false,
+        responseTimeMs: Date.now() - startTime
+      });
+    }
+
     return res.status(200).setHeader('Content-Type', 'text/html').send(template);
   } catch (error) {
     console.error('SEO function error:', error);
@@ -570,6 +672,20 @@ export default async function handler(req, res) {
         query: req.query,
         timestamp: new Date().toISOString()
       });
+
+      // Log error in database
+      await logBotVisit({
+        botType,
+        userAgent,
+        url: req.url,
+        path: req.url.split('?')[0],
+        queryParams: req.query,
+        method: req.method,
+        statusCode: 500,
+        indexable: false,
+        indexableReason: '500_error',
+        responseTimeMs: Date.now() - startTime
+      });
     }
 
     res.status(500).send('Erreur serveur');
@@ -577,7 +693,7 @@ export default async function handler(req, res) {
 }
 
 // Handle Business Detail Pages
-async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale, isBot, isGooglebot, isBingbot }) {
+async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale, isBot, isGooglebot, isBingbot, logContext }) {
   // Fetch business from Supabase
   const { data: business, error } = await supabase
     .from('businesses')
@@ -586,6 +702,21 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     .single();
 
   if (error || !business) {
+    // Log 404 for bots
+    if (isBot) {
+      await logBotVisit({
+        ...logContext,
+        statusCode: 404,
+        indexable: false,
+        indexableReason: '404_not_found',
+        pageType: 'business',
+        businessSlug: slug,
+        categorySlug,
+        citySlug,
+        responseTimeMs: Date.now() - logContext.startTime
+      });
+    }
+
     return res.status(404).send('Entreprise non trouvée');
   }
 
@@ -622,8 +753,35 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
 
     if (normalizePath(currentPath) !== normalizePath(targetPath)) {
       console.log(`[SEO] 301 Redirect: ${req.url} → ${redirectUrl}`);
+
+      // Determine redirect reason
+      let redirectReason = '';
+      if (!citySlug || citySlug === slug) {
+        redirectReason = 'missing_city';
+      } else if (categorySlug && categorySlug !== correctCategorySlug) {
+        redirectReason = 'wrong_category';
+      }
+
       if (isBot) {
-        console.log(`[${isGooglebot ? 'GOOGLEBOT' : 'BINGBOT'}] Wrong URL detected - Redirecting to canonical`);
+        console.log(`[${isGooglebot ? 'GOOGLEBOT' : 'BINGBOT'}] Wrong URL detected - Redirecting to canonical (${redirectReason})`);
+
+        // Log 301 redirect for bots
+        await logBotVisit({
+          ...logContext,
+          statusCode: 301,
+          indexable: false,
+          indexableReason: '301_redirect',
+          pageType: 'business',
+          businessId: business.id,
+          businessSlug: slug,
+          categorySlug,
+          citySlug,
+          redirectTo: redirectUrl,
+          redirectReason,
+          hasCanonical: true,
+          canonicalUrl: `https://registreduquebec.com${redirectUrl}`,
+          responseTimeMs: Date.now() - logContext.startTime
+        });
       }
 
       // CRITICAL FIX: 301 Permanent Redirect with HTML body for better bot compatibility
@@ -909,6 +1067,25 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
 
     html = html.replace('</body>', `${ssrHideScript}\n</body>`);
 
+    // Log successful indexable page for bots
+    if (isBot) {
+      await logBotVisit({
+        ...logContext,
+        statusCode: 200,
+        indexable: true,
+        pageType: 'business',
+        businessId: business.id,
+        businessSlug: slug,
+        categorySlug: correctCategorySlug,
+        citySlug: correctCitySlug,
+        hasCanonical: true,
+        canonicalUrl: canonical,
+        hasMetaTags: true,
+        hasSchemaOrg: true,
+        responseTimeMs: Date.now() - logContext.startTime
+      });
+    }
+
     res.status(200).setHeader('Content-Type', 'text/html').send(html);
 }
 
@@ -1107,13 +1284,26 @@ async function handleCityPage(req, res, { citySlug, isEnglish, locale }) {
 }
 
 // Handle Blog Article Pages
-async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale }) {
+async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale, logContext }) {
   const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
 
   // Get article from blog data
   const article = getArticleBySlug(blogSlug);
 
   if (!article) {
+    // Log 404 for bots
+    if (logContext.isBot) {
+      await logBotVisit({
+        ...logContext,
+        statusCode: 404,
+        indexable: false,
+        indexableReason: '404_not_found',
+        pageType: 'blog',
+        blogSlug,
+        responseTimeMs: Date.now() - logContext.startTime
+      });
+    }
+
     const template = setHtmlLang(await loadTemplate(), isEnglish);
     return res.status(404).setHeader('Content-Type', 'text/html').send(template);
   }
@@ -1242,6 +1432,22 @@ async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale }) 
   </article>`;
 
   html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
+
+  // Log successful blog article view for bots
+  if (logContext.isBot) {
+    await logBotVisit({
+      ...logContext,
+      statusCode: 200,
+      indexable: true,
+      pageType: 'blog',
+      blogSlug,
+      hasCanonical: true,
+      canonicalUrl: canonical,
+      hasMetaTags: true,
+      hasSchemaOrg: true,
+      responseTimeMs: Date.now() - logContext.startTime
+    });
+  }
 
   res.status(200).setHeader('Content-Type', 'text/html').send(html);
 }
