@@ -553,10 +553,6 @@ function generateSSRContent(business, isEnglish = false, relatedBusinesses = [])
         ? `/en/${categorySlug}/${citySlug}/${relBiz.slug}`
         : `/${categorySlug}/${citySlug}/${relBiz.slug}`;
 
-      const category = isEnglish
-        ? relBiz.primary_main_category_en || relBiz.primary_main_category_fr
-        : relBiz.primary_main_category_fr;
-
       const description = relBiz.description
         ? (relBiz.description.substring(0, 100) + (relBiz.description.length > 100 ? '...' : ''))
         : '';
@@ -573,7 +569,6 @@ function generateSSRContent(business, isEnglish = false, relatedBusinesses = [])
             ` : ''}
           </div>
           <div style="flex: 1; margin-bottom: 1rem;">
-            ${category ? `<p style="font-size: 0.875rem; color: #3b82f6; font-weight: 500; margin-bottom: 0.5rem;">${escapeHtml(category)}</p>` : ''}
             <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.75rem;">📍 ${escapeHtml(relBiz.city)}${relBiz.region ? `, ${escapeHtml(relBiz.region)}` : ''}</p>
             ${description ? `<p style="font-size: 0.875rem; color: #4b5563; line-height: 1.6; margin: 0;">${escapeHtml(description)}</p>` : ''}
           </div>
@@ -790,7 +785,7 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
   if (business.region) {
     const { data: regionBusinesses } = await supabase
       .from('businesses')
-      .select('id, slug, name, city, region, main_category_slug, primary_main_category_fr, primary_main_category_en, google_rating, description')
+      .select('id, slug, name, city, region, main_category_slug, google_rating, description')
       .eq('region', business.region)
       .neq('id', business.id)
       .not('slug', 'is', null)

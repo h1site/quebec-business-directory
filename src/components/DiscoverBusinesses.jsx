@@ -63,15 +63,6 @@ const DiscoverBusinesses = ({ businesses, currentBusinessId }) => {
               </div>
 
               <div className="discover-card-body">
-                {business.primary_main_category_fr && (
-                  <p className="discover-category">
-                    {i18n.language === 'en'
-                      ? business.primary_main_category_en || business.primary_main_category_fr
-                      : business.primary_main_category_fr
-                    }
-                  </p>
-                )}
-
                 <p className="discover-location">
                   📍 {business.city}{business.region ? `, ${business.region}` : ''}
                 </p>
@@ -98,18 +89,16 @@ const DiscoverBusinesses = ({ businesses, currentBusinessId }) => {
 
 DiscoverBusinesses.propTypes = {
   businesses: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     slug: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     city: PropTypes.string,
     region: PropTypes.string,
     main_category_slug: PropTypes.string,
-    primary_main_category_fr: PropTypes.string,
-    primary_main_category_en: PropTypes.string,
     google_rating: PropTypes.number,
     description: PropTypes.string
   })),
-  currentBusinessId: PropTypes.number.isRequired
+  currentBusinessId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
 };
 
 export default DiscoverBusinesses;

@@ -153,28 +153,45 @@ const BusinessDetails = () => {
   // Load related businesses from the same region
   useEffect(() => {
     const loadRelatedBusinesses = async () => {
-      if (!business || !business.region) {
+      if (!business) {
+        console.log('⏳ No business loaded yet');
+        return;
+      }
+
+      if (!business.region) {
+        console.log('⚠️ Business has no region:', business.name);
         setRelatedBusinesses([]);
         return;
       }
 
+      console.log('🔍 Loading related businesses for region:', business.region);
+
       try {
         const { data, error } = await supabase
           .from('businesses')
-          .select('id, slug, name, city, region, main_category_slug, primary_main_category_fr, primary_main_category_en, google_rating, description')
+          .select('id, slug, name, city, region, main_category_slug, google_rating, description')
           .eq('region', business.region)
           .neq('id', business.id)
           .not('slug', 'is', null)
           .not('city', 'is', null)
           .limit(50);
 
-        if (!error && data && data.length > 0) {
+        if (error) {
+          console.error('❌ Error loading related businesses:', error);
+          return;
+        }
+
+        if (data && data.length > 0) {
           // Shuffle and take 3
           const shuffled = data.sort(() => 0.5 - Math.random());
-          setRelatedBusinesses(shuffled.slice(0, 3));
+          const selected = shuffled.slice(0, 3);
+          console.log('✅ Loaded related businesses:', selected.length, selected.map(b => b.name));
+          setRelatedBusinesses(selected);
+        } else {
+          console.log('⚠️ No related businesses found in region:', business.region);
         }
       } catch (err) {
-        console.error('Error loading related businesses:', err);
+        console.error('❌ Error loading related businesses:', err);
       }
     };
 
