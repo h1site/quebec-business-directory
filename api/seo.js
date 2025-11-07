@@ -1360,8 +1360,31 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
 async function handleCityPage(req, res, { citySlug, isEnglish, locale }) {
   const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
 
-  // Convert slug to city name (montreal -> Montreal, vaudreuil-dorion -> Vaudreuil-Dorion)
-  const cityName = citySlug
+  // Map slug to actual city name (with proper accents)
+  const cityMap = {
+    'montreal': 'Montréal',
+    'quebec': 'Québec',
+    'laval': 'Laval',
+    'gatineau': 'Gatineau',
+    'longueuil': 'Longueuil',
+    'sherbrooke': 'Sherbrooke',
+    'saguenay': 'Saguenay',
+    'levis': 'Lévis',
+    'trois-rivieres': 'Trois-Rivières',
+    'terrebonne': 'Terrebonne',
+    'saint-jean-sur-richelieu': 'Saint-Jean-sur-Richelieu',
+    'repentigny': 'Repentigny',
+    'brossard': 'Brossard',
+    'drummondville': 'Drummondville',
+    'granby': 'Granby',
+    'saint-jerome': 'Saint-Jérôme',
+    'mirabel': 'Mirabel',
+    'rimouski': 'Rimouski',
+    'vaudreuil-dorion': 'Vaudreuil-Dorion',
+    'victoriaville': 'Victoriaville'
+  };
+
+  const cityName = cityMap[citySlug] || citySlug
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join('-');
@@ -1420,15 +1443,83 @@ async function handleCityPage(req, res, { citySlug, isEnglish, locale }) {
 
   html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
 
-  // Generate minimal SSR content for crawlers
+  // Fetch ALL businesses for this city (for SEO internal linking)
+  // Load in batches since Supabase limits to 1000 per query
+  let allBusinesses = [];
+  let offset = 0;
+  const batchSize = 1000;
+  let hasMore = true;
+
+  while (hasMore) {
+    const { data: batch, error: bizError } = await supabase
+      .from('businesses')
+      .select('id, name, slug, city, main_category_slug')
+      .eq('city', cityName)
+      .not('slug', 'is', null)
+      .not('city', 'is', null)
+      .order('name')
+      .range(offset, offset + batchSize - 1);
+
+    if (bizError || !batch || batch.length === 0) {
+      hasMore = false;
+      break;
+    }
+
+    allBusinesses = allBusinesses.concat(batch);
+    offset += batchSize;
+
+    // If we got less than batchSize, we've reached the end
+    if (batch.length < batchSize) {
+      hasMore = false;
+    }
+  }
+
+  // Helper to generate slug for city
+  const generateSlug = (text) => {
+    if (!text) return '';
+    return text.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  };
+
+  // Generate business links HTML
+  let businessLinksHTML = '';
+  if (allBusinesses && allBusinesses.length > 0) {
+    businessLinksHTML = `
+    <div style="margin-top: 2rem;">
+      <p style="text-align: center; color: #718096; margin-bottom: 1.5rem;">
+        <strong>${allBusinesses.length}</strong> ${isEnglish ? 'business' : 'entreprise'}${allBusinesses.length > 1 ? (isEnglish ? 'es' : 's') : ''} ${isEnglish ? 'found' : 'trouvée' + (allBusinesses.length > 1 ? 's' : '')}
+      </p>
+      <ul style="list-style: none; padding: 0; max-width: 800px; margin: 0 auto;">
+        ${allBusinesses.map(biz => {
+          const citySlugBiz = generateSlug(biz.city);
+          const catSlug = biz.main_category_slug || 'entreprise';
+          const langPrefix = isEnglish ? '/en' : '';
+          const bizUrl = `${langPrefix}/${catSlug}/${citySlugBiz}/${biz.slug}`;
+
+          return `
+        <li style="margin-bottom: 0.5rem;">
+          <a href="${bizUrl}" style="color: #0f4c81; text-decoration: none; display: block; padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">
+            ${escapeHtml(biz.name)}
+          </a>
+        </li>`;
+        }).join('')}
+      </ul>
+    </div>`;
+  }
+
+  // Generate SSR content with ALL business links for crawlers
   const ssrContent = `
   <div class="container browse-page" style="padding: 2rem 0;">
     <header style="margin-bottom: 2rem; text-align: center;">
       <h1 style="font-size: 2.5rem; font-weight: 700; color: #0f4c81; margin-bottom: 0.5rem;">${isEnglish ? 'Businesses in' : 'Entreprises à'} ${escapeHtml(cityName)}</h1>
       <p style="font-size: 1.1rem; color: #718096;">${escapeHtml(description)}</p>
     </header>
+    ${businessLinksHTML}
     <noscript>
-      <p style="text-align: center; color: #718096;">${isEnglish ? 'Please enable JavaScript to view the full business directory.' : 'Veuillez activer JavaScript pour voir l\'annuaire complet des entreprises.'}</p>
+      <p style="text-align: center; color: #718096; margin-top: 2rem;">${isEnglish ? 'Please enable JavaScript to view the full business directory.' : 'Veuillez activer JavaScript pour voir l\'annuaire complet des entreprises.'}</p>
     </noscript>
   </div>`;
 

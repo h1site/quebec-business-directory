@@ -1,0 +1,112 @@
+.cities-section {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+}
+
+.cities-section-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(135deg, #0f4c81 0%, #1e88e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.cities-section-subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #718096;
+  margin-bottom: 2.5rem;
+}
+
+.cities-grid-home {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+}
+
+.city-link-home {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.city-link-home:hover {
+  border-color: #0f4c81;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 76, 129, 0.1);
+}
+
+.city-name-home {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f4c81;
+}
+
+.city-arrow-home {
+  font-size: 1.25rem;
+  color: #1e88e5;
+  transition: transform 0.3s ease;
+}
+
+.city-link-home:hover .city-arrow-home {
+  transform: translateX(5px);
+}
+
+.view-all-cities {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.btn-view-all-cities {
+  display: inline-block;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #0f4c81 0%, #1e88e5 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(15, 76, 129, 0.2);
+}
+
+.btn-view-all-cities:hover {
+  background: linear-gradient(135deg, #1e88e5 0%, #2196f3 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 76, 129, 0.3);
+}
+
+@media (max-width: 768px) {
+  .cities-section {
+    padding: 3rem 0;
+  }
+
+  .cities-section-title {
+    font-size: 1.75rem;
+  }
+
+  .cities-grid-home {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .city-link-home {
+    padding: 0.875rem 1.25rem;
+  }
+
+  .city-name-home {
+    font-size: 0.95rem;
+  }
+}

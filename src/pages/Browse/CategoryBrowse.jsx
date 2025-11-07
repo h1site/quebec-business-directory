@@ -84,10 +84,14 @@ const CategoryBrowse = () => {
           }
 
           const { data: batch, error: batchError } = await query
+            .order('name')
+            .limit(batchSize)
             .range(offset, offset + batchSize - 1);
 
           if (batchError) {
+            console.error('Batch error:', batchError);
             setError('Erreur lors du chargement des entreprises');
+            setLoadingMore(false);
             return;
           }
 
