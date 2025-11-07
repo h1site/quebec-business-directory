@@ -169,6 +169,12 @@ const resources = {
         industryAnswerWithSub: '{{name}} œuvre dans le domaine : {{category}}, spécialisé en {{subcategory}}.',
         noDataAvailable: 'Cette information n\'est pas disponible pour le moment.'
       },
+      discover: {
+        title: 'Entreprises à découvrir dans la région',
+        subtitle: 'Découvrez d\'autres entreprises qui pourraient vous intéresser',
+        viewBusiness: 'Voir la fiche de {{name}}',
+        viewDetails: 'Voir les détails'
+      },
       deleteModal: {
         title: 'Attendez ! Avant de supprimer...',
         subtitle: 'Saviez-vous que vous pouvez réclamer cette fiche gratuitement ?',
@@ -854,6 +860,12 @@ const resources = {
         industryAnswer: '{{name}} operates in the industry: {{category}}.',
         industryAnswerWithSub: '{{name}} operates in the industry: {{category}}, specializing in {{subcategory}}.',
         noDataAvailable: 'This information is not available at this time.'
+      },
+      discover: {
+        title: 'Businesses to discover in the region',
+        subtitle: 'Discover other businesses that might interest you',
+        viewBusiness: 'View {{name}} listing',
+        viewDetails: 'View details'
       },
       deleteModal: {
         title: 'Wait! Before you delete...',

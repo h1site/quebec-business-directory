@@ -365,7 +365,7 @@ function generateFAQSchema(business, isEnglish = false) {
 }
 
 // Generate SSR HTML content for business page (for Google crawlers)
-function generateSSRContent(business, isEnglish = false) {
+function generateSSRContent(business, isEnglish = false, relatedBusinesses = []) {
   const businessDescription = isEnglish ? business.description_en : business.description;
 
   // Get category name (avoid UUIDs)
@@ -523,6 +523,71 @@ function generateSSRContent(business, isEnglish = false) {
   html += `
       </div>
     </section>`;
+
+  // Discover Businesses Section - Related businesses from the same region
+  if (relatedBusinesses && relatedBusinesses.length > 0) {
+    const discoverTitle = isEnglish ? 'Businesses to discover in the region' : 'Entreprises à découvrir dans la région';
+    const discoverSubtitle = isEnglish ? 'Discover other businesses that might interest you' : 'Découvrez d\'autres entreprises qui pourraient vous intéresser';
+    const viewDetailsText = isEnglish ? 'View details' : 'Voir les détails';
+
+    html += `
+    <section style="margin-bottom: 2rem; padding: 2rem; background: #f9fafb; border-radius: 12px;">
+      <h2 style="font-size: 1.75rem; font-weight: 700; color: #111827; margin-bottom: 0.5rem;">${discoverTitle}</h2>
+      <p style="font-size: 1rem; color: #6b7280; margin-bottom: 2rem;">${discoverSubtitle}</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">`;
+
+    relatedBusinesses.forEach(relBiz => {
+      // Generate slug for URL
+      const generateSlug = (text) => {
+        if (!text) return '';
+        return text.toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+      };
+
+      const citySlug = generateSlug(relBiz.city);
+      const categorySlug = relBiz.main_category_slug || 'entreprise';
+      const businessUrl = isEnglish
+        ? `/en/${categorySlug}/${citySlug}/${relBiz.slug}`
+        : `/${categorySlug}/${citySlug}/${relBiz.slug}`;
+
+      const category = isEnglish
+        ? relBiz.primary_main_category_en || relBiz.primary_main_category_fr
+        : relBiz.primary_main_category_fr;
+
+      const description = relBiz.description
+        ? (relBiz.description.substring(0, 100) + (relBiz.description.length > 100 ? '...' : ''))
+        : '';
+
+      html += `
+        <a href="${businessUrl}" style="display: flex; flex-direction: column; background: white; border-radius: 8px; padding: 1.5rem; text-decoration: none; color: inherit; border: 1px solid #e5e7eb; transition: all 0.2s ease;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 1rem;">
+            <h3 style="font-size: 1.125rem; font-weight: 600; color: #111827; margin: 0; line-height: 1.4;">${escapeHtml(relBiz.name)}</h3>
+            ${relBiz.google_rating ? `
+              <div style="display: flex; align-items: center; gap: 0.25rem; background: #fef3c7; padding: 0.25rem 0.5rem; border-radius: 4px;">
+                <span style="color: #f59e0b; font-size: 1rem;">★</span>
+                <span style="font-size: 0.875rem; font-weight: 600; color: #92400e;">${relBiz.google_rating.toFixed(1)}</span>
+              </div>
+            ` : ''}
+          </div>
+          <div style="flex: 1; margin-bottom: 1rem;">
+            ${category ? `<p style="font-size: 0.875rem; color: #3b82f6; font-weight: 500; margin-bottom: 0.5rem;">${escapeHtml(category)}</p>` : ''}
+            <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.75rem;">📍 ${escapeHtml(relBiz.city)}${relBiz.region ? `, ${escapeHtml(relBiz.region)}` : ''}</p>
+            ${description ? `<p style="font-size: 0.875rem; color: #4b5563; line-height: 1.6; margin: 0;">${escapeHtml(description)}</p>` : ''}
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid #e5e7eb;">
+            <span style="font-size: 0.875rem; font-weight: 500; color: #3b82f6;">${viewDetailsText}</span>
+            <span style="font-size: 1.25rem; color: #3b82f6;">→</span>
+          </div>
+        </a>`;
+    });
+
+    html += `
+      </div>
+    </section>`;
+  }
 
   html += `
   </article>`;
@@ -718,6 +783,25 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     }
 
     return res.status(404).send('Entreprise non trouvée');
+  }
+
+  // Fetch 3 random businesses from the same region for "Discover" section
+  let relatedBusinesses = [];
+  if (business.region) {
+    const { data: regionBusinesses } = await supabase
+      .from('businesses')
+      .select('id, slug, name, city, region, main_category_slug, primary_main_category_fr, primary_main_category_en, google_rating, description')
+      .eq('region', business.region)
+      .neq('id', business.id)
+      .not('slug', 'is', null)
+      .not('city', 'is', null)
+      .limit(50); // Get 50 to randomize from
+
+    if (regionBusinesses && regionBusinesses.length > 0) {
+      // Shuffle and take 3
+      const shuffled = regionBusinesses.sort(() => 0.5 - Math.random());
+      relatedBusinesses = shuffled.slice(0, 3);
+    }
   }
 
   // Normalize correct city and category from business data
@@ -1028,7 +1112,7 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
 
     // Generate SSR content for Google (critical content only)
-    const ssrContent = generateSSRContent(business, isEnglish);
+    const ssrContent = generateSSRContent(business, isEnglish, relatedBusinesses);
 
     // Inject SSR content into <div id="root"> with special class for hiding
     html = html.replace(
