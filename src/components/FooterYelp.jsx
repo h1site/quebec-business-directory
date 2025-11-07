@@ -126,6 +126,12 @@ const FooterYelp = () => {
             {t('footer.copyright', { year: currentYear })}
           </p>
           <p className="footer-yelp-credits">
+            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer">Sitemap</a>
+            {' · '}
+            <a href="/sitemap-fr.xml" target="_blank" rel="noopener noreferrer">Sitemap FR</a>
+            {' · '}
+            <a href="/sitemap-en.xml" target="_blank" rel="noopener noreferrer">Sitemap EN</a>
+            {' · '}
             {t('footer.createdByLink')} <a href="https://h1site.com" target="_blank" rel="noopener noreferrer">H1Site.com</a>
           </p>
         </div>
