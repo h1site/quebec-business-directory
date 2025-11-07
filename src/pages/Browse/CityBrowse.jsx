@@ -64,7 +64,7 @@ const CityBrowse = () => {
 
         // Load ALL businesses using cursor-based batch loading (only needed fields for performance)
         let allBusinesses = [];
-        const batchSize = 500; // Reduced from 1000 to avoid timeout on large cities
+        const batchSize = 200; // Small batch size to avoid timeout on large cities like Montréal
         let hasMoreBatches = true;
 
         // First, show loading state but continue loading in background
