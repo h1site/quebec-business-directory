@@ -67,7 +67,7 @@ const CityBrowse = () => {
           .select('id, name, slug, city, main_category_slug', { count: 'exact' })
           .eq('city', city)
           .order('name')
-          .limit(10000);
+          .limit(5000);
 
         if (error) {
           console.error('Error loading businesses:', error);
