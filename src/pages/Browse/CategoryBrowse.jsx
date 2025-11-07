@@ -13,7 +13,6 @@ const CategoryBrowse = () => {
   const [filteredBusinesses, setFilteredBusinesses] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [categoryName, setCategoryName] = useState('');
   const [categoryIcon, setCategoryIcon] = useState('');
@@ -62,71 +61,37 @@ const CategoryBrowse = () => {
           setSubCategoryName(subCat.label_fr);
         }
 
-        // Load ALL businesses using cursor-based batch loading (only needed fields for performance)
-        let allBusinesses = [];
-        const batchSize = 200; // Small batch size to avoid timeout on large categories
-        let hasMoreBatches = true;
+        // Load businesses from category (only needed fields for performance)
+        let query = supabase
+          .from('businesses_enriched')
+          .select('id, name, slug, city, main_category_slug', { count: 'exact' });
 
-        // First, show loading state but continue loading in background
-        setLoading(false); // Show UI immediately
-        setLoadingMore(true); // Show progressive loading indicator
-
-        while (hasMoreBatches) {
-          // Use cursor-based pagination instead of offset to avoid timeout
-          let query = supabase
-            .from('businesses_enriched')
-            .select('id, name, slug, city, main_category_slug'); // Only load needed fields
-
-          if (subCategorySlug) {
-            query = query.eq('primary_sub_category_slug', subCategorySlug);
-          } else {
-            query = query.eq('main_category_id', mainCat.id);
-          }
-
-          query = query.order('name').limit(batchSize);
-
-          // Add cursor for subsequent batches
-          if (allBusinesses.length > 0) {
-            const lastBusiness = allBusinesses[allBusinesses.length - 1];
-            query = query.gt('name', lastBusiness.name);
-          }
-
-          const { data: batch, error: batchError } = await query;
-
-          if (batchError) {
-            console.error('Batch error:', batchError);
-            setError('Erreur lors du chargement des entreprises');
-            setLoadingMore(false);
-            return;
-          }
-
-          if (!batch || batch.length === 0) {
-            hasMoreBatches = false;
-            break;
-          }
-
-          allBusinesses = allBusinesses.concat(batch);
-
-          // Update UI progressively after each batch
-          setBusinesses([...allBusinesses]);
-          setFilteredBusinesses([...allBusinesses]);
-          setTotalCount(allBusinesses.length);
-
-          console.log(`📊 CategoryBrowse - Loaded batch: ${batch.length} businesses, Total: ${allBusinesses.length}`);
-
-          // If we got less than batchSize, we've reached the end
-          if (batch.length < batchSize) {
-            hasMoreBatches = false;
-          }
+        if (subCategorySlug) {
+          query = query.eq('primary_sub_category_slug', subCategorySlug);
+        } else {
+          query = query.eq('main_category_id', mainCat.id);
         }
 
-        console.log('📊 CategoryBrowse - All businesses loaded:', allBusinesses.length);
-        setLoadingMore(false); // Done loading
+        const { data, error, count } = await query
+          .order('name')
+          .limit(10000);
+
+        if (error) {
+          console.error('Error loading businesses:', error);
+          setError('Erreur lors du chargement des entreprises');
+          setLoading(false);
+          return;
+        }
+
+        setBusinesses(data || []);
+        setFilteredBusinesses(data || []);
+        setTotalCount(count || 0);
+        setLoading(false);
+
+        console.log(`📊 CategoryBrowse - Loaded ${data?.length || 0} businesses for category`)
       } catch (err) {
         setError('Erreur lors du chargement des entreprises');
         console.error(err);
-        setLoadingMore(false);
-      } finally {
         setLoading(false);
       }
     };
@@ -312,13 +277,6 @@ const CategoryBrowse = () => {
           </div>
         )}
 
-        {/* Progressive loading indicator */}
-        {loadingMore && filteredBusinesses.length > 0 && (
-          <div className="loading-more-indicator">
-            <div className="spinner-small"></div>
-            <span>Chargement en cours... {filteredBusinesses.length} entreprises affichées</span>
-          </div>
-        )}
       </div>
     </>
   );
