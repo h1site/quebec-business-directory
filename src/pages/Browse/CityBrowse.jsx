@@ -12,7 +12,6 @@ const CityBrowse = () => {
   const [filteredBusinesses, setFilteredBusinesses] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [cityName, setCityName] = useState('');
   const [notFound, setNotFound] = useState(false);
@@ -62,66 +61,30 @@ const CityBrowse = () => {
 
         setCityName(city);
 
-        // Load ALL businesses using cursor-based batch loading (only needed fields for performance)
-        let allBusinesses = [];
-        const batchSize = 200; // Small batch size to avoid timeout on large cities like Montréal
-        let hasMoreBatches = true;
+        // Load businesses from city (only needed fields for performance)
+        const { data, error, count } = await supabase
+          .from('businesses_enriched')
+          .select('id, name, slug, city, main_category_slug', { count: 'exact' })
+          .eq('city', city)
+          .order('name')
+          .limit(10000);
 
-        // First, show loading state but continue loading in background
-        setLoading(false); // Show UI immediately
-        setLoadingMore(true); // Show progressive loading indicator
-
-        while (hasMoreBatches) {
-          // Use cursor-based pagination instead of offset to avoid timeout
-          let query = supabase
-            .from('businesses_enriched')
-            .select('id, name, slug, city, main_category_slug')
-            .eq('city', city);
-
-          // Add cursor for subsequent batches
-          if (allBusinesses.length > 0) {
-            const lastBusiness = allBusinesses[allBusinesses.length - 1];
-            query = query.gt('name', lastBusiness.name);
-          }
-
-          query = query.order('name').limit(batchSize);
-
-          const { data: batch, error: batchError } = await query;
-
-          if (batchError) {
-            console.error('Batch error:', batchError);
-            setError('Erreur lors du chargement des entreprises');
-            setLoadingMore(false);
-            return;
-          }
-
-          if (!batch || batch.length === 0) {
-            hasMoreBatches = false;
-            break;
-          }
-
-          allBusinesses = allBusinesses.concat(batch);
-
-          // Update UI progressively after each batch
-          setBusinesses([...allBusinesses]);
-          setFilteredBusinesses([...allBusinesses]);
-          setTotalCount(allBusinesses.length);
-
-          console.log(`📊 CityBrowse - Loaded batch: ${batch.length} businesses, Total: ${allBusinesses.length}`);
-
-          // If we got less than batchSize, we've reached the end
-          if (batch.length < batchSize) {
-            hasMoreBatches = false;
-          }
+        if (error) {
+          console.error('Error loading businesses:', error);
+          setError('Erreur lors du chargement des entreprises');
+          setLoading(false);
+          return;
         }
 
-        console.log('📊 CityBrowse - All businesses loaded:', allBusinesses.length);
-        setLoadingMore(false); // Done loading
+        setBusinesses(data || []);
+        setFilteredBusinesses(data || []);
+        setTotalCount(count || 0);
+        setLoading(false);
+
+        console.log(`📊 CityBrowse - Loaded ${data?.length || 0} businesses for ${city}`);
       } catch (err) {
         setError('Erreur lors du chargement des entreprises');
         console.error(err);
-        setLoadingMore(false);
-      } finally {
         setLoading(false);
       }
     };
@@ -293,13 +256,6 @@ const CityBrowse = () => {
           </div>
         )}
 
-        {/* Progressive loading indicator */}
-        {loadingMore && filteredBusinesses.length > 0 && (
-          <div className="loading-more-indicator">
-            <div className="spinner-small"></div>
-            <span>Chargement en cours... {filteredBusinesses.length} entreprises affichées</span>
-          </div>
-        )}
       </div>
     </>
   );
