@@ -1259,11 +1259,85 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
 
   html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
 
-  // Generate minimal SSR content for crawlers
+  // Generate SSR content with ALL business links for crawlers
   const displayName = subCategoryName || categoryName;
   const titlePrefix = subCategorySlug
     ? (isEnglish ? 'Businesses in' : 'Entreprises en')
     : (isEnglish ? 'Businesses of' : 'Entreprises de');
+
+  // Fetch ALL businesses for this category (for SEO internal linking)
+  // Load in batches since Supabase limits to 1000 per query
+  let allBusinesses = [];
+  let offset = 0;
+  const batchSize = 1000;
+  let hasMore = true;
+
+  while (hasMore) {
+    let businessQuery = supabase
+      .from('businesses')
+      .select('id, name, slug, city, main_category_slug');
+
+    if (subCategorySlug) {
+      businessQuery = businessQuery.eq('primary_sub_category_slug', subCategorySlug);
+    } else {
+      businessQuery = businessQuery.eq('main_category_id', mainCat.id);
+    }
+
+    const { data: batch, error: bizError } = await businessQuery
+      .not('slug', 'is', null)
+      .not('city', 'is', null)
+      .order('name')
+      .range(offset, offset + batchSize - 1);
+
+    if (bizError || !batch || batch.length === 0) {
+      hasMore = false;
+      break;
+    }
+
+    allBusinesses = allBusinesses.concat(batch);
+    offset += batchSize;
+
+    // If we got less than batchSize, we've reached the end
+    if (batch.length < batchSize) {
+      hasMore = false;
+    }
+  }
+
+  // Helper to generate slug for city
+  const generateSlug = (text) => {
+    if (!text) return '';
+    return text.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  };
+
+  // Generate business links HTML
+  let businessLinksHTML = '';
+  if (allBusinesses && allBusinesses.length > 0) {
+    businessLinksHTML = `
+    <div style="margin-top: 2rem;">
+      <p style="text-align: center; color: #718096; margin-bottom: 1.5rem;">
+        <strong>${allBusinesses.length}</strong> ${isEnglish ? 'business' : 'entreprise'}${allBusinesses.length > 1 ? 's' : ''} ${isEnglish ? 'found' : 'trouvée' + (allBusinesses.length > 1 ? 's' : '')}
+      </p>
+      <ul style="list-style: none; padding: 0; max-width: 800px; margin: 0 auto;">
+        ${allBusinesses.map(biz => {
+          const citySlug = generateSlug(biz.city);
+          const catSlug = biz.main_category_slug || 'entreprise';
+          const langPrefix = isEnglish ? '/en' : '';
+          const bizUrl = `${langPrefix}/${catSlug}/${citySlug}/${biz.slug}`;
+
+          return `
+        <li style="margin-bottom: 0.5rem;">
+          <a href="${bizUrl}" style="color: #0f4c81; text-decoration: none; display: block; padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">
+            ${escapeHtml(biz.name)}
+          </a>
+        </li>`;
+        }).join('')}
+      </ul>
+    </div>`;
+  }
 
   const ssrContent = `
   <div class="container browse-page" style="padding: 2rem 0;">
@@ -1271,8 +1345,9 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
       <h1 style="font-size: 2.5rem; font-weight: 700; color: #0f4c81; margin-bottom: 0.5rem;">${titlePrefix} ${escapeHtml(displayName)}</h1>
       <p style="font-size: 1.1rem; color: #718096;">${escapeHtml(description)}</p>
     </header>
+    ${businessLinksHTML}
     <noscript>
-      <p style="text-align: center; color: #718096;">${isEnglish ? 'Please enable JavaScript to view the full business directory.' : 'Veuillez activer JavaScript pour voir l\'annuaire complet des entreprises.'}</p>
+      <p style="text-align: center; color: #718096; margin-top: 2rem;">${isEnglish ? 'Please enable JavaScript to view the full business directory.' : 'Veuillez activer JavaScript pour voir l\'annuaire complet des entreprises.'}</p>
     </noscript>
   </div>`;
 

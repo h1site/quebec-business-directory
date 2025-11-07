@@ -233,7 +233,7 @@ const SearchHeroYelp = () => {
             {mainCategories.map((category) => (
               <LocalizedLink
                 key={category.id}
-                to={`/recherche?category=${category.slug}`}
+                to={`/categorie/${category.slug}`}
                 className="hero-yelp-category-card"
               >
                 {categoryIcons[category.slug] && (
