@@ -68,6 +68,24 @@ const Footer = () => {
               Sitemap
             </a>
             {' · '}
+            <a
+              href="/sitemap-fr.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link"
+            >
+              Sitemap FR
+            </a>
+            {' · '}
+            <a
+              href="/sitemap-en.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link"
+            >
+              Sitemap EN
+            </a>
+            {' · '}
             {t('footer.createdBy')}{' '}
             <a
               href="https://h1site.com"
