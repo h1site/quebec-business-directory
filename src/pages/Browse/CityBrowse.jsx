@@ -62,9 +62,8 @@ const CityBrowse = () => {
 
         setCityName(city);
 
-        // Load ALL businesses using batch loading (only needed fields for performance)
+        // Load ALL businesses using cursor-based batch loading (only needed fields for performance)
         let allBusinesses = [];
-        let offset = 0;
         const batchSize = 1000;
         let hasMoreBatches = true;
 
@@ -73,13 +72,21 @@ const CityBrowse = () => {
         setLoadingMore(true); // Show progressive loading indicator
 
         while (hasMoreBatches) {
-          const { data: batch, error: batchError } = await supabase
+          // Use cursor-based pagination instead of offset to avoid timeout
+          let query = supabase
             .from('businesses_enriched')
             .select('id, name, slug, city, main_category_slug')
             .eq('city', city)
             .order('name')
-            .limit(batchSize)
-            .range(offset, offset + batchSize - 1);
+            .limit(batchSize);
+
+          // Add cursor for subsequent batches
+          if (allBusinesses.length > 0) {
+            const lastBusiness = allBusinesses[allBusinesses.length - 1];
+            query = query.gt('name', lastBusiness.name);
+          }
+
+          const { data: batch, error: batchError } = await query;
 
           if (batchError) {
             console.error('Batch error:', batchError);
@@ -105,8 +112,6 @@ const CityBrowse = () => {
           // If we got less than batchSize, we've reached the end
           if (batch.length < batchSize) {
             hasMoreBatches = false;
-          } else {
-            offset += batchSize;
           }
         }
 
