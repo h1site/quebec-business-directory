@@ -64,7 +64,7 @@ const CityBrowse = () => {
 
         // Load ALL businesses using cursor-based batch loading (only needed fields for performance)
         let allBusinesses = [];
-        const batchSize = 1000;
+        const batchSize = 500; // Reduced from 1000 to avoid timeout on large cities
         let hasMoreBatches = true;
 
         // First, show loading state but continue loading in background
@@ -76,15 +76,15 @@ const CityBrowse = () => {
           let query = supabase
             .from('businesses_enriched')
             .select('id, name, slug, city, main_category_slug')
-            .eq('city', city)
-            .order('name')
-            .limit(batchSize);
+            .eq('city', city);
 
           // Add cursor for subsequent batches
           if (allBusinesses.length > 0) {
             const lastBusiness = allBusinesses[allBusinesses.length - 1];
             query = query.gt('name', lastBusiness.name);
           }
+
+          query = query.order('name').limit(batchSize);
 
           const { data: batch, error: batchError } = await query;
 

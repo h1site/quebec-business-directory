@@ -64,7 +64,7 @@ const CategoryBrowse = () => {
 
         // Load ALL businesses using cursor-based batch loading (only needed fields for performance)
         let allBusinesses = [];
-        const batchSize = 1000;
+        const batchSize = 500; // Reduced from 1000 to avoid timeout on large categories
         let hasMoreBatches = true;
 
         // First, show loading state but continue loading in background
