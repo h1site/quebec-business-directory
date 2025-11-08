@@ -74,10 +74,11 @@ const CategoryBrowse = () => {
 
         const { data, error, count } = await query
           .order('name')
-          .limit(1000);
+          .limit(500);
 
         if (error) {
           console.error('Error loading businesses:', error);
+          console.error('Error details:', JSON.stringify(error, null, 2));
           setError('Erreur lors du chargement des entreprises');
           setLoading(false);
           return;
