@@ -74,7 +74,7 @@ const CategoryBrowse = () => {
 
         const { data, error, count } = await query
           .order('name')
-          .limit(5000);
+          .limit(1000);
 
         if (error) {
           console.error('Error loading businesses:', error);
