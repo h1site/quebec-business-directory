@@ -21,7 +21,7 @@ const CategoryBrowse = () => {
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    const loadBusinesses = async () => {
+    const loadBusinesses = async (retryCount = 0) => {
       try {
         setLoading(true);
 
@@ -79,6 +79,14 @@ const CategoryBrowse = () => {
         if (error) {
           console.error('Error loading businesses:', error);
           console.error('Error details:', JSON.stringify(error, null, 2));
+
+          // Retry up to 2 times on error
+          if (retryCount < 2) {
+            console.log(`Retrying... (attempt ${retryCount + 1})`);
+            setTimeout(() => loadBusinesses(retryCount + 1), 1000);
+            return;
+          }
+
           setError('Erreur lors du chargement des entreprises');
           setLoading(false);
           return;
