@@ -423,8 +423,9 @@ const BusinessDetails = () => {
     <>
       {/* React Helmet updates meta tags for SPA navigation between pages
           SSR (api/seo.js) provides initial HTML for bots, Helmet updates for client-side navigation
-          IMPORTANT: Always render Helmet (even during loading) to clear previous page's meta tags */}
-      <Helmet>
+          IMPORTANT: Always render Helmet (even during loading) to clear previous page's meta tags
+          KEY: Using slug as key forces Helmet to recreate tags on navigation */}
+      <Helmet key={slug}>
         <title>
           {business
             ? `${business.name} - ${cityName} | ${isEnglish ? 'Quebec Business Registry' : 'Registre du Québec'}`
