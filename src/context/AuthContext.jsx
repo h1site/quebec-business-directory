@@ -17,6 +17,16 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
+      // Check if we're returning from OAuth provider
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const hasOAuthCallback = hashParams.has('access_token') || hashParams.has('error');
+
+      if (hasOAuthCallback) {
+        // Let Supabase handle the OAuth callback
+        // It will automatically parse the hash and set the session
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+
       const {
         data: { session }
       } = await supabase.auth.getSession();
