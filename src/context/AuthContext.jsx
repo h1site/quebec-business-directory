@@ -24,7 +24,14 @@ export const AuthProvider = ({ children }) => {
       if (hasOAuthCallback) {
         // Let Supabase handle the OAuth callback
         // It will automatically parse the hash and set the session
-        await new Promise(resolve => setTimeout(resolve, 100));
+        // Wait longer to ensure Supabase processes the token
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Clean up the URL hash after processing
+        if (window.history.replaceState) {
+          const cleanUrl = window.location.pathname + window.location.search;
+          window.history.replaceState({}, document.title, cleanUrl);
+        }
       }
 
       const {
