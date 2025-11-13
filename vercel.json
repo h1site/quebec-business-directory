@@ -146,6 +146,14 @@
       "destination": "/api/seo?slug=:businessSlug&categorySlug=entreprise"
     },
     {
+      "source": "/entreprise/(nouvelle|modifier|supprimer|admin|dashboard)",
+      "destination": "/spa.html"
+    },
+    {
+      "source": "/en/entreprise/(nouvelle|modifier|supprimer|admin|dashboard)",
+      "destination": "/spa.html"
+    },
+    {
       "source": "/en/entreprise/:citySlug/:businessSlug",
       "destination": "/api/seo?citySlug=:citySlug&slug=:businessSlug&lang=en"
     },
