@@ -43,11 +43,27 @@
     <!-- Canonical URL - Will be set by React Helmet -->
     <link rel="canonical" id="canonical-link" href="https://registreduquebec.com/" />
     <script>
-      // Update canonical to current URL immediately to prevent wrong canonical during initial load
+      // Update canonical and meta description to match current page immediately
       (function() {
+        // Update canonical
         const canonical = document.getElementById('canonical-link');
         if (canonical && window.location.href !== canonical.href) {
           canonical.href = window.location.origin + window.location.pathname;
+        }
+
+        // For business pages, fetch and update meta description from API
+        // React Helmet will update it properly after React loads, but this provides initial SEO value
+        const path = window.location.pathname;
+        if (path.includes('/entreprise/') && path.split('/').length >= 3) {
+          // This is a business page, React Helmet will handle it
+          // We just set a generic placeholder until React loads
+          const metaDesc = document.getElementById('meta-description');
+          if (metaDesc) {
+            const parts = path.split('/').filter(Boolean);
+            const businessName = parts[parts.length - 1].split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            const city = parts[parts.length - 2].split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            metaDesc.content = `${businessName} à ${city}, Québec. Coordonnées et informations détaillées.`;
+          }
         }
       })();
     </script>
