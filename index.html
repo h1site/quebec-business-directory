@@ -84,14 +84,10 @@
             // Generate SEO-optimized description (French or English)
             if (isEnglish) {
               // English template
-              metaDesc.content = category
-                ? `${businessName} in ${city}, Quebec. ${category} company with contact details, reviews, and complete business information. Find phone, address, and hours.`
-                : `${businessName} in ${city}, Quebec. Complete business information with contact details, customer reviews, and services. Find phone, address, and opening hours.`;
+              metaDesc.content = `Discover ${businessName} in ${city}: complete contact details, customer reviews, and practical info (phone, address, hours).`;
             } else {
               // French template
-              metaDesc.content = category
-                ? `${businessName} à ${city}, Québec. Entreprise de ${category.toLowerCase()} avec coordonnées complètes, avis clients et informations détaillées. Trouvez téléphone, adresse et horaires.`
-                : `${businessName} à ${city}, Québec. Informations complètes avec coordonnées, avis clients et services. Trouvez téléphone, adresse et heures d'ouverture.`;
+              metaDesc.content = `Découvrez ${businessName} à ${city} : coordonnées complètes, avis clients et infos pratiques (téléphone, adresse, horaires).`;
             }
           }
         }
