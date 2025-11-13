@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title id="page-title">Registre d'entreprise du Québec</title>
+    <title>Registre d'entreprise du Québec</title>
 
     <!-- SEO Meta Tags - Will be updated by React Helmet -->
-    <meta name="description" id="meta-description" content="Annuaire des entreprises du Québec. Plus de 600 000 entreprises avec coordonnées, avis et informations détaillées." />
+    <meta name="description" content="Annuaire des entreprises du Québec. Plus de 600 000 entreprises avec coordonnées, avis et informations détaillées." />
     <meta name="keywords" content="entreprises québec, annuaire entreprises, registre entreprises, NEQ, répertoire québec, entreprises locales, services québec" />
     <meta name="author" content="Registre du Québec" />
     <meta name="msvalidate.01" content="3BDF3C55AED4D0F84C471053DD0106CF" />
@@ -41,12 +41,13 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=2" />
 
     <!-- Canonical URL - Will be set by React Helmet -->
-    <link rel="canonical" id="canonical-link" href="https://registreduquebec.com/" />
+    <link rel="canonical" href="https://registreduquebec.com/" />
     <script>
       // Update canonical and meta description to match current page immediately
+      // This runs ONLY on initial page load, React Helmet handles client-side navigation
       (function() {
         // Update canonical
-        const canonical = document.getElementById('canonical-link');
+        const canonical = document.querySelector('link[rel="canonical"]');
         if (canonical && window.location.href !== canonical.href) {
           canonical.href = window.location.origin + window.location.pathname;
         }
@@ -63,7 +64,7 @@
             (path.split('/').filter(Boolean).length >= 3 && !isEnglish) ||
             (path.split('/').filter(Boolean).length >= 4 && isEnglish)) {
 
-          const metaDesc = document.getElementById('meta-description');
+          const metaDesc = document.querySelector('meta[name="description"]');
           if (metaDesc) {
             const parts = path.split('/').filter(Boolean);
 
