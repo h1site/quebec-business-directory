@@ -277,27 +277,6 @@ const BusinessDetails = () => {
     ? `${window.location.origin}${getBusinessUrl(business)}`
     : window.location.href;
 
-  // Force update canonical and meta description in DOM when business changes
-  // This ensures Elements inspector shows correct values immediately
-  useEffect(() => {
-    if (business) {
-      // Update canonical
-      const canonical = document.querySelector('link[rel="canonical"]');
-      if (canonical) {
-        canonical.href = canonicalUrl;
-      }
-
-      // Update meta description
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.content = metaDescription;
-      }
-
-      // Update title
-      document.title = `${business.name} - ${cityName} | ${isEnglish ? 'Quebec Business Registry' : 'Registre du Québec'}`;
-    }
-  }, [business, canonicalUrl, metaDescription, cityName, isEnglish]);
-
   if (error || !business) {
     return (
       <>
