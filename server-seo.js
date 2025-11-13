@@ -87,7 +87,14 @@ function escapeHtml(text) {
 // Route handler for business pages
 app.get('/:categorySlug/:citySlug/:businessSlug', async (req, res) => {
   try {
-    const { businessSlug } = req.params;
+    const { categorySlug, citySlug, businessSlug } = req.params;
+
+    // Skip SSR for protected/special routes - let React handle them
+    const skipSSRRoutes = ['nouvelle', 'modifier', 'supprimer', 'admin', 'dashboard', 'connexion', 'inscription'];
+    if (skipSSRRoutes.includes(citySlug) || skipSSRRoutes.includes(businessSlug)) {
+      // Serve the SPA for these routes
+      return res.send(htmlTemplate);
+    }
 
     // Fetch business from Supabase
     const { data: business, error } = await supabase

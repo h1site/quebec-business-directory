@@ -754,6 +754,14 @@ export default async function handler(req, res) {
 
 // Handle Business Detail Pages
 async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale, isBot, isGooglebot, isBingbot, logContext }) {
+  // Skip SSR for protected/special routes - let React handle them
+  const skipSSRRoutes = ['nouvelle', 'modifier', 'supprimer', 'admin', 'dashboard', 'connexion', 'inscription'];
+  if (skipSSRRoutes.includes(citySlug) || skipSSRRoutes.includes(slug)) {
+    // Serve the SPA for these routes
+    const template = setHtmlLang(await loadTemplate(), isEnglish);
+    return res.status(200).setHeader('Content-Type', 'text/html').send(template);
+  }
+
   // Fetch business from Supabase
   const { data: business, error } = await supabase
     .from('businesses')
