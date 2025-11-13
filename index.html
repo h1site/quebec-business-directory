@@ -51,18 +51,47 @@
           canonical.href = window.location.origin + window.location.pathname;
         }
 
-        // For business pages, fetch and update meta description from API
+        // For business pages, generate SEO-optimized meta description
         // React Helmet will update it properly after React loads, but this provides initial SEO value
         const path = window.location.pathname;
-        if (path.includes('/entreprise/') && path.split('/').length >= 3) {
-          // This is a business page, React Helmet will handle it
-          // We just set a generic placeholder until React loads
+        const isEnglish = path.startsWith('/en/');
+
+        // Handle both French and English business pages
+        // French: /category/city/business or /entreprise/city/business
+        // English: /en/category/city/business or /en/business/city/business
+        if (path.includes('/entreprise/') || path.includes('/business/') ||
+            (path.split('/').filter(Boolean).length >= 3 && !isEnglish) ||
+            (path.split('/').filter(Boolean).length >= 4 && isEnglish)) {
+
           const metaDesc = document.getElementById('meta-description');
           if (metaDesc) {
             const parts = path.split('/').filter(Boolean);
-            const businessName = parts[parts.length - 1].split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-            const city = parts[parts.length - 2].split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-            metaDesc.content = `${businessName} à ${city}, Québec. Coordonnées et informations détaillées.`;
+
+            // Remove 'en' prefix if present
+            const offset = isEnglish ? 1 : 0;
+
+            // Get business name and city from URL
+            const businessSlug = parts[parts.length - 1];
+            const citySlug = parts[parts.length - 2];
+            const categorySlug = parts.length > 2 + offset ? parts[parts.length - 3] : null;
+
+            // Convert slugs to readable names
+            const businessName = businessSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            const city = citySlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            const category = categorySlug ? categorySlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : null;
+
+            // Generate SEO-optimized description (French or English)
+            if (isEnglish) {
+              // English template
+              metaDesc.content = category
+                ? `${businessName} in ${city}, Quebec. ${category} company with contact details, reviews, and complete business information. Find phone, address, and hours.`
+                : `${businessName} in ${city}, Quebec. Complete business information with contact details, customer reviews, and services. Find phone, address, and opening hours.`;
+            } else {
+              // French template
+              metaDesc.content = category
+                ? `${businessName} à ${city}, Québec. Entreprise de ${category.toLowerCase()} avec coordonnées complètes, avis clients et informations détaillées. Trouvez téléphone, adresse et horaires.`
+                : `${businessName} à ${city}, Québec. Informations complètes avec coordonnées, avis clients et services. Trouvez téléphone, adresse et heures d'ouverture.`;
+            }
           }
         }
       })();
