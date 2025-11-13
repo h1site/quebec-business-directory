@@ -71,7 +71,7 @@
   "rewrites": [
     {
       "source": "/((?!api/|sitemaps/|sitemap).*)",
-      "destination": "/index.html"
+      "destination": "/spa.html"
     }
   ]
 }
