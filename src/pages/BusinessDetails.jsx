@@ -262,10 +262,16 @@ const BusinessDetails = () => {
     : null;
 
   const metaDescription = business
-    ? (businessDescription
-        ? businessDescription.substring(0, 160)
-        : `${business.name} - ${cityName}, QC`)
+    ? (businessDescription && businessDescription.trim()
+        ? businessDescription.trim().substring(0, 160)
+        : `${business.name} à ${cityName}, Québec. ${business.phone || ''} ${business.website || ''}`.substring(0, 160))
     : (isEnglish ? 'Loading business information...' : 'Chargement des informations...');
+
+  // Debug: Log meta description to verify it's correct
+  if (business && businessDescription) {
+    console.log('📝 Meta Description:', metaDescription);
+    console.log('📝 Full Description:', businessDescription);
+  }
 
   const canonicalUrl = business
     ? `${window.location.origin}${getBusinessUrl(business)}`
