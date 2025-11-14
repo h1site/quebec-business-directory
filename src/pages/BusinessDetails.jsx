@@ -150,6 +150,20 @@ const BusinessDetails = () => {
     loadBusiness();
   }, [slug, location.pathname, navigate]);
 
+  // Force update canonical URL directly in DOM to ensure it's always current
+  // React Helmet updates it, but this ensures immediate visibility in DevTools
+  useEffect(() => {
+    if (!business) return;
+
+    const canonicalUrl = `${window.location.origin}${getBusinessUrl(business)}`;
+    const canonical = document.querySelector('link[rel="canonical"]');
+
+    if (canonical && canonical.href !== canonicalUrl) {
+      canonical.href = canonicalUrl;
+      console.log('🔗 Updated canonical:', canonicalUrl);
+    }
+  }, [business?.id]); // Only re-run when business ID changes
+
   // Load related businesses from the same region
   useEffect(() => {
     const loadRelatedBusinesses = async () => {

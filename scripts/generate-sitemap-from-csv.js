@@ -49,22 +49,27 @@ async function generateFromCSV(csvPath) {
         quote: '"'
       }))
       .on('data', (row) => {
-        if (row.slug && row.city) {
+        // CRITICAL: Only include businesses with proper category (skip legacy /entreprise/ URLs)
+        if (row.slug && row.city && row.main_category_slug) {
           const citySlug = generateSlug(row.city);
-          const categoryPart = row.main_category_slug || 'entreprise';
-          const businessUrl = `${baseUrl}/${categoryPart}/${citySlug}/${row.slug}`;
+          // Use category-based URLs only
+          const businessUrl = `${baseUrl}/${row.main_category_slug}/${citySlug}/${row.slug}`;
 
-          let priority = 0.4;
-          if (row.description && row.description.trim().length > 20) priority += 0.1;
-          if (row.website && row.website.trim().length > 0) priority += 0.1;
-          if (row.google_reviews_count && parseInt(row.google_reviews_count) > 0) priority += 0.1;
-          if (row.google_rating && parseFloat(row.google_rating) >= 4.0) priority += 0.1;
+          // IMPROVED: Higher base priority (0.7) for better indexing
+          let priority = 0.7;
+          if (row.description && row.description.trim().length > 20) priority += 0.05;
+          if (row.website && row.website.trim().length > 0) priority += 0.05;
+          if (row.google_reviews_count && parseInt(row.google_reviews_count) > 0) priority += 0.05;
+          if (row.google_rating && parseFloat(row.google_rating) >= 4.0) priority += 0.05;
+
+          // Cap at 0.9 max
+          priority = Math.min(priority, 0.9);
 
           allUrls.push({
             loc: businessUrl,
             lastmod: row.updated_at ? row.updated_at.split('T')[0] : currentDate,
             changefreq: 'monthly',
-            priority: priority.toFixed(1)
+            priority: priority.toFixed(2)
           });
 
           if (allUrls.length % 10000 === 0) {
