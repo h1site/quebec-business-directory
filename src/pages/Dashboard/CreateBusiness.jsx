@@ -331,11 +331,39 @@ const CreateBusiness = () => {
     try {
       setSubmitting(true);
 
+      // Generate unique slug - check if slug exists and add suffix if needed
+      let baseSlug = generateSlug(form.name);
+      let slug = baseSlug;
+      let counter = 1;
+
+      // Check if slug already exists
+      let slugExists = true;
+      while (slugExists) {
+        const { data, error } = await supabase
+          .from('businesses')
+          .select('id')
+          .eq('slug', slug)
+          .limit(1);
+
+        if (error) {
+          console.error('Error checking slug:', error);
+          break; // Continue with current slug if check fails
+        }
+
+        if (!data || data.length === 0) {
+          slugExists = false;
+        } else {
+          // Slug exists, try with suffix
+          slug = `${baseSlug}-${counter}`;
+          counter++;
+        }
+      }
+
       // Prepare payload
       const payload = {
         owner_id: user.id,
         name: form.name,
-        slug: generateSlug(form.name),
+        slug: slug,
         description: form.description,
         mission_statement: form.mission_statement || null,
         core_values: form.core_values || null,
