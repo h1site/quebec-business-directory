@@ -9,6 +9,70 @@ const supabase = createClient(
   process.env.VITE_SUPABASE_ANON_KEY
 );
 
+// Category slug translations (French -> English)
+const frToEnCategorySlug = {
+  'services-professionnels': 'professional-services',
+  'finance-assurance-et-juridique': 'finance-insurance-and-legal',
+  'technologie': 'technology',
+  'education-et-formation': 'education-and-training',
+  'commerce-de-detail': 'retail',
+  'construction-et-renovation': 'construction-and-renovation',
+  'organismes-publics-et-communautaires': 'public-and-community-organizations',
+  'sante-et-bien-etre': 'health-and-wellness',
+  'automobile-et-transport': 'automobile-and-transportation',
+  'industrie-fabrication-et-logistique': 'manufacturing-and-logistics',
+  'construction': 'construction',
+  'agriculture-et-environnement': 'agriculture-and-environment',
+  'immobilier': 'real-estate',
+  'technologie-et-informatique': 'technology-and-it',
+  'restauration-et-alimentation': 'food-and-dining',
+  'sports-et-loisirs': 'sports-and-recreation',
+  'arts-medias-et-divertissement': 'arts-media-and-entertainment',
+  'restauration': 'restaurants',
+  'soins-a-domicile': 'home-care',
+  'transport-et-logistique': 'transportation-and-logistics',
+  'hebergement-et-tourisme': 'accommodation-and-tourism',
+  'services-aux-entreprises': 'business-services',
+  'services-personnels': 'personal-services',
+  'services-financiers': 'financial-services',
+  'energie-et-ressources-naturelles': 'energy-and-natural-resources',
+  'telecommunications': 'telecommunications',
+  'agence-web': 'web-agency',
+  'agence-immobiliere': 'real-estate-agency',
+  'clinique-medicale': 'medical-clinic',
+  'cabinet-dentaire': 'dental-office',
+  'salon-de-coiffure': 'hair-salon',
+  'garage-automobile': 'auto-garage',
+  'epicerie': 'grocery-store',
+  'pharmacie': 'pharmacy',
+  'quincaillerie': 'hardware-store',
+  'boutique-vetements': 'clothing-store',
+  'restaurant': 'restaurant',
+  'cafe': 'cafe',
+  'bar': 'bar',
+  'hotel': 'hotel',
+  'motel': 'motel',
+  'entreprise': 'business',
+};
+
+// Reverse mapping (English -> French)
+const enToFrCategorySlug = Object.fromEntries(
+  Object.entries(frToEnCategorySlug).map(([fr, en]) => [en, fr])
+);
+
+// Translate category slug to target language
+const getCategorySlugForLang = (frSlug, lang) => {
+  if (lang === 'en') {
+    return frToEnCategorySlug[frSlug] || frSlug;
+  }
+  return frSlug;
+};
+
+// Translate English slug back to French (for DB lookups)
+const translateToFrench = (slug) => {
+  return enToFrCategorySlug[slug] || slug;
+};
+
 // Bot visit logging function
 async function logBotVisit({
   botType,
@@ -816,18 +880,26 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
         .replace(/^-+|-+$/g, '')          // Remove leading/trailing hyphens
     : 'quebec';
 
-  const correctCategorySlug = business.main_category_slug || business.primary_main_category_slug || 'entreprise';
+  const correctCategorySlugFr = business.main_category_slug || business.primary_main_category_slug || 'entreprise';
+  // Get the correct category slug in the current language
+  const correctCategorySlug = getCategorySlugForLang(correctCategorySlugFr, isEnglish ? 'en' : 'fr');
+  // Also get the English version for comparison (in case URL uses English slug)
+  const correctCategorySlugEn = getCategorySlugForLang(correctCategorySlugFr, 'en');
 
   // CRITICAL FIX: Redirect if citySlug is missing OR category is incorrect
   // This handles:
   // 1. Short URLs: /entreprise/slug → 301 → /entreprise/ville/slug
   // 2. Wrong category: /wrong-category/ville/slug → 301 → /correct-category/ville/slug
+  // Now accepts both French AND English category slugs without redirect
+  const categoryMatches = !categorySlug ||
+                          categorySlug === correctCategorySlugFr ||
+                          categorySlug === correctCategorySlugEn;
   const needsRedirect = !citySlug ||
                         citySlug === slug ||
-                        (categorySlug && categorySlug !== correctCategorySlug);
+                        !categoryMatches;
 
   if (needsRedirect) {
-    // Build correct redirect URL
+    // Build correct redirect URL with language-appropriate category slug
     const langPrefix = isEnglish ? 'en' : '';
     const redirectUrl = '/' + buildPath(langPrefix, correctCategorySlug, correctCitySlug, slug);
 
@@ -1107,10 +1179,13 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
 
     // Add hreflang tags for bilingual support
     // IMPORTANT: Use correct slugs from business data (not URL params which might be wrong)
+    // Use French slug for FR pages and English slug for EN pages
+    const hreflangCategorySlugFr = correctCategorySlugFr; // French slug for hreflang fr-CA
+    const hreflangCategorySlugEn = getCategorySlugForLang(correctCategorySlugFr, 'en'); // English slug for hreflang en-CA
     const hreflangTags = `
-    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/${correctCategorySlug}/${correctCitySlug}/${slug}" />
-    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/${correctCategorySlug}/${correctCitySlug}/${slug}" />
-    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/${correctCategorySlug}/${correctCitySlug}/${slug}" />`;
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/${hreflangCategorySlugFr}/${correctCitySlug}/${slug}" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/${hreflangCategorySlugEn}/${correctCitySlug}/${slug}" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/${hreflangCategorySlugFr}/${correctCitySlug}/${slug}" />`;
 
     html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
 
