@@ -3,6 +3,8 @@
  * Fixes the issue where /anything/city/slug works even with invalid categories
  */
 
+import { getCategorySlugForLang, translateCategorySlugToFr, translateCategorySlugToEn } from './categoryTranslations';
+
 /**
  * Validate if a category slug is real
  * @param {string} categorySlug - Category slug to validate
@@ -78,9 +80,12 @@ export const validateBusinessUrl = (params, business, validCategories = []) => {
       };
     }
 
-    // Check if category is valid
-    const expectedCategorySlug = business.main_category_slug || 'entreprise';
-    if (categorySlug !== expectedCategorySlug) {
+    // Check if category is valid (support both FR and EN slugs)
+    const expectedCategorySlugFr = business.main_category_slug || 'entreprise';
+    const expectedCategorySlugEn = translateCategorySlugToEn(expectedCategorySlugFr);
+
+    // Accept either French or English category slug
+    if (categorySlug !== expectedCategorySlugFr && categorySlug !== expectedCategorySlugEn) {
       return {
         isValid: false,
         redirectNeeded: true,
@@ -125,7 +130,10 @@ export const validateBusinessUrl = (params, business, validCategories = []) => {
 export const getCorrectBusinessUrl = (business, lang = 'fr') => {
   if (!business) return '/';
 
-  const categorySlug = business.main_category_slug || 'entreprise';
+  const categorySlugFr = business.main_category_slug || 'entreprise';
+  // Translate category slug to target language
+  const categorySlug = getCategorySlugForLang(categorySlugFr, lang);
+
   const citySlug = business.city
     ? business.city.toLowerCase()
         .normalize('NFD')
@@ -158,16 +166,12 @@ export const checkUrlRedirect = (currentPath, business) => {
   const isEnglish = currentPath.startsWith('/en/');
   const lang = isEnglish ? 'en' : 'fr';
 
-  // Remove language prefix for comparison
-  const pathWithoutLang = isEnglish ? currentPath.substring(3) : currentPath;
-
-  // Get correct URL
+  // Get correct URL with language-specific category slug
   const correctUrl = getCorrectBusinessUrl(business, lang);
-  const correctPath = correctUrl;
 
   // Remove trailing slash for comparison
-  const normalizedCurrentPath = pathWithoutLang.replace(/\/$/, '');
-  const normalizedCorrectPath = correctPath.replace(/\/$/, '');
+  const normalizedCurrentPath = currentPath.replace(/\/$/, '');
+  const normalizedCorrectPath = correctUrl.replace(/\/$/, '');
 
   if (normalizedCurrentPath !== normalizedCorrectPath) {
     return {

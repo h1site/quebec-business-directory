@@ -5,6 +5,8 @@
  * Example: /agence-web/vaudreuil-dorion/h1site-web-design-agence-marketing
  */
 
+import { getCategorySlugForLang } from './categoryTranslations';
+
 /**
  * Generate a slug from text (lowercase, no accents, hyphens)
  */
@@ -36,18 +38,21 @@ export const getBusinessUrl = (business, lang = null) => {
   }
 
   // Get category slug (from main_category or first sub_category)
-  let categorySlug = 'entreprise'; // Default fallback
+  let categorySlugFr = 'entreprise'; // Default fallback (French)
 
   if (business.main_category_slug) {
     // CRITICAL: Ensure it's a valid slug (some old data has French names instead of slugs)
     // If it contains spaces or accents, slugify it
-    categorySlug = business.main_category_slug.includes(' ') || /[À-ÿ]/.test(business.main_category_slug)
+    categorySlugFr = business.main_category_slug.includes(' ') || /[À-ÿ]/.test(business.main_category_slug)
       ? generateSlug(business.main_category_slug)
       : business.main_category_slug;
   } else if (business.categories && business.categories.length > 0 && business.categories[0]) {
     // Use first category if available and not undefined
-    categorySlug = generateSlug(business.categories[0]);
+    categorySlugFr = generateSlug(business.categories[0]);
   }
+
+  // Translate category slug to target language
+  const categorySlug = getCategorySlugForLang(categorySlugFr, lang);
 
   // Get city slug
   const citySlug = generateSlug(business.city || 'quebec');
