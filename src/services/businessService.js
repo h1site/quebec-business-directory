@@ -30,18 +30,48 @@ const buildFilters = ({ query, city, region, mrc, category, phone, distance, coo
   }
 
   if (mrc) {
-    // Convert MRC slug to MRC name for exact matching
+    // MRC filter: match both slug format and name format
     const regionData = quebecMunicipalities[region];
     if (regionData && regionData.mrcs[mrc]) {
       const mrcName = regionData.mrcs[mrc].name;
-      filters.push({ column: 'mrc', operator: 'eq', value: mrcName });
+      // Use OR condition for both formats (slug or name)
+      filters.push({
+        column: 'mrc',
+        operator: 'mrc_or',
+        value: { slug: mrc, name: mrcName }
+      });
+    } else {
+      // Fallback: just search for the slug as-is
+      filters.push({ column: 'mrc', operator: 'ilike', value: `%${mrc}%` });
     }
   } else if (region) {
-    // Convert region slug to region name
+    // Region filter: match both slug format (01-bas-saint-laurent) and name format (Bas-Saint-Laurent)
     const regionData = quebecMunicipalities[region];
     if (regionData) {
-      // Search for region name in the region field (which contains "MRC, Region")
-      filters.push({ column: 'region', operator: 'ilike', value: `%${regionData.name}%` });
+      // Special handling for Montreal region: many records have region=null but city=Montréal
+      if (region === '06-montreal') {
+        filters.push({
+          column: 'region',
+          operator: 'montreal_region',
+          value: {
+            slug: region,
+            name: regionData.name
+          }
+        });
+      } else {
+        // Use OR condition for both formats
+        filters.push({
+          column: 'region',
+          operator: 'region_or',
+          value: {
+            slug: region, // e.g., "01-bas-saint-laurent"
+            name: regionData.name // e.g., "Bas-Saint-Laurent"
+          }
+        });
+      }
+    } else {
+      // Fallback: search for slug as-is
+      filters.push({ column: 'region', operator: 'ilike', value: `%${region}%` });
     }
   }
 
@@ -155,6 +185,16 @@ export const searchBusinesses = async ({
       // The city filter already normalizes spaces/hyphens to wildcards
       // This allows "CAP SANTE" to match "Cap-Santé", "Vaudreuil-Dorion" etc.
       request = request.ilike(filter.column, `%${filter.value}%`);
+    } else if (filter.operator === 'region_or') {
+      // Match region by either slug format (15-laurentides) or name format (Laurentides)
+      // Uses OR condition to handle inconsistent data
+      request = request.or(`region.ilike.%${filter.value.slug}%,region.ilike.%${filter.value.name}%`);
+    } else if (filter.operator === 'montreal_region') {
+      // Special case for Montreal: match region OR city containing Montreal (many records have null region)
+      request = request.or(`region.ilike.%${filter.value.slug}%,region.ilike.%${filter.value.name}%,city.ilike.%Montr%`);
+    } else if (filter.operator === 'mrc_or') {
+      // Match MRC by either slug format or name format
+      request = request.or(`mrc.ilike.%${filter.value.slug}%,mrc.ilike.%${filter.value.name}%`);
     } else if (filter.operator === 'cs') {
       request = request.contains(filter.column, filter.value);
     } else if (filter.operator === 'lte' && filter.column === 'location') {
