@@ -30,45 +30,22 @@ const buildFilters = ({ query, city, region, mrc, category, phone, distance, coo
   }
 
   if (mrc) {
-    // MRC filter: match both slug format and name format
+    // MRC filter: search for MRC name (more reliable than slug)
     const regionData = quebecMunicipalities[region];
     if (regionData && regionData.mrcs[mrc]) {
       const mrcName = regionData.mrcs[mrc].name;
-      // Use OR condition for both formats (slug or name)
-      filters.push({
-        column: 'mrc',
-        operator: 'mrc_or',
-        value: { slug: mrc, name: mrcName }
-      });
+      // Use exact match on MRC name for better performance
+      filters.push({ column: 'mrc', operator: 'eq', value: mrcName });
     } else {
-      // Fallback: just search for the slug as-is
+      // Fallback: search for the slug as-is with ilike
       filters.push({ column: 'mrc', operator: 'ilike', value: `%${mrc}%` });
     }
   } else if (region) {
-    // Region filter: match both slug format (01-bas-saint-laurent) and name format (Bas-Saint-Laurent)
+    // Region filter: use the region NAME for better performance (indexed)
     const regionData = quebecMunicipalities[region];
     if (regionData) {
-      // Special handling for Montreal region: many records have region=null but city=Montréal
-      if (region === '06-montreal') {
-        filters.push({
-          column: 'region',
-          operator: 'montreal_region',
-          value: {
-            slug: region,
-            name: regionData.name
-          }
-        });
-      } else {
-        // Use OR condition for both formats
-        filters.push({
-          column: 'region',
-          operator: 'region_or',
-          value: {
-            slug: region, // e.g., "01-bas-saint-laurent"
-            name: regionData.name // e.g., "Bas-Saint-Laurent"
-          }
-        });
-      }
+      // Search for region name - most reliable and indexed
+      filters.push({ column: 'region', operator: 'ilike', value: `%${regionData.name}%` });
     } else {
       // Fallback: search for slug as-is
       filters.push({ column: 'region', operator: 'ilike', value: `%${region}%` });
@@ -165,8 +142,9 @@ export const searchBusinesses = async ({
   }
 
   // Use businesses_enriched view for category slug filtering
-  // Only count on first page to improve performance (count is expensive)
-  const shouldCount = offset === 0;
+  // Only count on first page AND if no slow filters (region/mrc cause timeout with count)
+  const hasSlowFilters = !!(region || mrc);
+  const shouldCount = offset === 0 && !hasSlowFilters;
   let request = supabase
     .from('businesses_enriched')
     .select('*', shouldCount ? { count: 'exact' } : {})
@@ -185,16 +163,6 @@ export const searchBusinesses = async ({
       // The city filter already normalizes spaces/hyphens to wildcards
       // This allows "CAP SANTE" to match "Cap-Santé", "Vaudreuil-Dorion" etc.
       request = request.ilike(filter.column, `%${filter.value}%`);
-    } else if (filter.operator === 'region_or') {
-      // Match region by either slug format (15-laurentides) or name format (Laurentides)
-      // Uses OR condition to handle inconsistent data
-      request = request.or(`region.ilike.%${filter.value.slug}%,region.ilike.%${filter.value.name}%`);
-    } else if (filter.operator === 'montreal_region') {
-      // Special case for Montreal: match region OR city containing Montreal (many records have null region)
-      request = request.or(`region.ilike.%${filter.value.slug}%,region.ilike.%${filter.value.name}%,city.ilike.%Montr%`);
-    } else if (filter.operator === 'mrc_or') {
-      // Match MRC by either slug format or name format
-      request = request.or(`mrc.ilike.%${filter.value.slug}%,mrc.ilike.%${filter.value.name}%`);
     } else if (filter.operator === 'cs') {
       request = request.contains(filter.column, filter.value);
     } else if (filter.operator === 'lte' && filter.column === 'location') {
