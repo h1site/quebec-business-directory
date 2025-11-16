@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
@@ -13,6 +13,26 @@ const BlogArticleRenderer = ({ article }) => {
   const lang = i18n.language;
   const isEn = lang === 'en';
 
+  // Update canonical tag directly in DOM when article changes (for SPA navigation)
+  useEffect(() => {
+    if (!article) return;
+
+    const blogPath = isEn ? 'en/blog' : 'blogue';
+    const canonicalUrl = `https://registreduquebec.com/${blogPath}/${article.slug}`;
+    const canonical = document.querySelector('link[rel="canonical"]');
+
+    if (canonical && canonical.href !== canonicalUrl) {
+      canonical.href = canonicalUrl;
+      console.log('🔗 Updated blog canonical:', canonicalUrl);
+    }
+
+    // Also update og:url
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl && ogUrl.content !== canonicalUrl) {
+      ogUrl.content = canonicalUrl;
+    }
+  }, [article?.slug, isEn]);
+
   if (!article) {
     return null;
   }
@@ -23,6 +43,10 @@ const BlogArticleRenderer = ({ article }) => {
   const disclaimer = article.disclaimer ? article.disclaimer[lang] : null;
   const sections = article.sections || [];
   const cta = article.cta ? article.cta[lang] : null;
+
+  // Generate canonical URL based on current language
+  const blogPath = isEn ? 'en/blog' : 'blogue';
+  const canonicalUrl = `https://registreduquebec.com/${blogPath}/${article.slug}`;
 
   // Generate article schema
   const articleSchema = {
@@ -83,15 +107,15 @@ const BlogArticleRenderer = ({ article }) => {
         <title>{seo.title}</title>
         <meta name="description" content={seo.description} />
         <meta name="keywords" content={seo.keywords} />
-        {/* Use canonical from article SEO if available (allows .ca or .com), otherwise default to .com */}
-        <link rel="canonical" href={seo.canonical || `https://registreduquebec.com/${isEn ? 'en/' : ''}blogue/${article.slug}`} />
+        {/* Use dynamic canonical based on current language and article slug */}
+        <link rel="canonical" href={canonicalUrl} />
 
         {/* Open Graph */}
         <meta property="og:title" content={seo.title} />
         <meta property="og:description" content={seo.description} />
         <meta property="og:image" content={article.heroImage.url} />
         {/* Use canonical for og:url to ensure consistency */}
-        <meta property="og:url" content={seo.canonical || `https://registreduquebec.com/${isEn ? 'en/' : ''}blogue/${article.slug}`} />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="article" />
         <meta property="article:published_time" content={article.publishedDate} />
         <meta property="article:modified_time" content={article.lastUpdated || article.publishedDate} />
