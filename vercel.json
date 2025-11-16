@@ -70,6 +70,10 @@
   ],
   "rewrites": [
     {
+      "source": "/en/:categorySlug/:citySlug/:businessSlug",
+      "destination": "/api/seo?categorySlug=:categorySlug&citySlug=:citySlug&slug=:businessSlug&lang=en"
+    },
+    {
       "source": "/:categorySlug((?!entreprise|en|dashboard|connexion|inscription|admin|api|sitemaps|sitemap)[^/]+)/:citySlug/:businessSlug",
       "destination": "/api/seo?categorySlug=:categorySlug&citySlug=:citySlug&slug=:businessSlug"
     },
