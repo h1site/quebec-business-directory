@@ -70,11 +70,19 @@
   ],
   "rewrites": [
     {
+      "source": "/blogue/:blogSlug",
+      "destination": "/api/seo?blogSlug=:blogSlug"
+    },
+    {
+      "source": "/en/blog/:blogSlug",
+      "destination": "/api/seo?blogSlug=:blogSlug&lang=en"
+    },
+    {
       "source": "/en/:categorySlug/:citySlug/:businessSlug",
       "destination": "/api/seo?categorySlug=:categorySlug&citySlug=:citySlug&slug=:businessSlug&lang=en"
     },
     {
-      "source": "/:categorySlug((?!entreprise|en|dashboard|connexion|inscription|admin|api|sitemaps|sitemap)[^/]+)/:citySlug/:businessSlug",
+      "source": "/:categorySlug((?!entreprise|en|dashboard|connexion|inscription|admin|api|sitemaps|sitemap|blogue)[^/]+)/:citySlug/:businessSlug",
       "destination": "/api/seo?categorySlug=:categorySlug&citySlug=:citySlug&slug=:businessSlug"
     },
     {
