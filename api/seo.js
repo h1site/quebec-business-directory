@@ -144,7 +144,8 @@ async function loadTemplate() {
       !templateCacheTime ||
       (now - templateCacheTime) > TEMPLATE_CACHE_TTL) {
 
-    const templatePath = path.join(process.cwd(), 'dist/spa.html');
+    // On Vercel, API functions run from /api/ directory, so we need to go up one level
+    const templatePath = path.join(process.cwd(), '../dist/spa.html');
     htmlTemplateCache = await fs.readFile(templatePath, 'utf-8');
     templateCacheTime = now;
 
