@@ -1331,9 +1331,12 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
 
   // Add new SEO tags
   const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
+  const categorySlugEn = getCategorySlugForLang(categorySlug, 'en');
+  const subCategorySlugEn = subCategorySlug ? getCategorySlugForLang(subCategorySlug, 'en') : null;
+
   const hreflangTags = `
     <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/categorie/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />
-    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/category/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/category/${categorySlugEn}${subCategorySlugEn ? '/' + subCategorySlugEn : ''}" />
     <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/categorie/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />`;
 
   const seoTags = `
