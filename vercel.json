@@ -70,12 +70,36 @@
   ],
   "rewrites": [
     {
+      "source": "/",
+      "destination": "/api/seo"
+    },
+    {
+      "source": "/en",
+      "destination": "/api/seo?lang=en"
+    },
+    {
       "source": "/blogue/:blogSlug",
       "destination": "/api/seo?blogSlug=:blogSlug"
     },
     {
       "source": "/en/blog/:blogSlug",
       "destination": "/api/seo?blogSlug=:blogSlug&lang=en"
+    },
+    {
+      "source": "/ville/:slug",
+      "destination": "/api/seo?citySlug=:slug"
+    },
+    {
+      "source": "/en/city/:slug",
+      "destination": "/api/seo?citySlug=:slug&lang=en"
+    },
+    {
+      "source": "/categorie/:slug",
+      "destination": "/api/seo?categorySlug=:slug"
+    },
+    {
+      "source": "/en/category/:slug",
+      "destination": "/api/seo?categorySlug=:slug&lang=en"
     },
     {
       "source": "/en/:categorySlug/:citySlug/:businessSlug",
