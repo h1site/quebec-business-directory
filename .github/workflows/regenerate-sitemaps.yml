@@ -32,17 +32,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Régénérer sitemap français
+      - name: Régénérer les sitemaps via API
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-        run: node scripts/generate-sitemap-all-businesses.js
+          SITEMAP_REGENERATE_SECRET: ${{ secrets.SITEMAP_REGENERATE_SECRET }}
+          PORT: 8080
+        run: |
+          npm install
+          node server.js &
+          sleep 10
+          curl -X POST "http://localhost:8080/api/regenerate-sitemaps" \
+            -H "Content-Type: application/json" \
+            -d '{"secret": "${{ secrets.SITEMAP_REGENERATE_SECRET }}"}'
 
-      - name: Régénérer sitemap anglais
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-        run: node scripts/generate-sitemap-en-split.js
 
       - name: Commit et push les nouveaux sitemaps
         run: |
