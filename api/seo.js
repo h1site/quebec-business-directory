@@ -1,7 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { getArticleBySlug, getAllArticles } from './blog-data.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Initialize Supabase
 const supabase = createClient(
@@ -144,8 +148,10 @@ async function loadTemplate() {
       !templateCacheTime ||
       (now - templateCacheTime) > TEMPLATE_CACHE_TTL) {
 
-    // On Vercel, API functions run from /api/ directory, so we need to go up one level
-    const templatePath = path.join(process.cwd(), '../dist/spa.html');
+    // Use __dirname to navigate from api/ to dist/ folder
+    // In production (Vercel), api/seo.js is at /var/task/api/seo.js
+    // and dist/spa.html is at /var/task/dist/spa.html
+    const templatePath = path.join(__dirname, '../dist/spa.html');
     htmlTemplateCache = await fs.readFile(templatePath, 'utf-8');
     templateCacheTime = now;
 
