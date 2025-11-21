@@ -480,6 +480,7 @@ function generateSSRContent(business, isEnglish = false, relatedBusinesses = [])
   let html = `
   <article itemscope itemtype="https://schema.org/LocalBusiness" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
     <header style="margin-bottom: 2rem;">
+      ${business.logo_url ? `<img src="${escapeHtml(business.logo_url)}" alt="Logo de ${escapeHtml(business.name)}" itemprop="image" style="display: block; max-height: 120px; max-width: 250px; margin-bottom: 1.5rem; border-radius: 8px;">` : ''}
       <h1 itemprop="name" style="font-size: 2.5rem; margin-bottom: 0.5rem; color: #1a202c;">${escapeHtml(business.name)}</h1>
       ${category ? `<p style="font-size: 1.1rem; color: #4a5568; margin-bottom: 0.5rem;">${escapeHtml(category)}</p>` : ''}
       ${business.city ? `<p itemprop="addressLocality" style="font-size: 1rem; color: #718096;">${escapeHtml(business.city)}, Québec</p>` : ''}
@@ -1756,7 +1757,43 @@ async function handleBlogListingPage(req, res, { isEnglish, locale }) {
     <meta name="twitter:title" content="${escapeHtml(title)}">
     <meta name="twitter:description" content="${escapeHtml(description)}">`;
 
-  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
+  // Structured Data for Blog Listing Page
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": title,
+    "description": description,
+    "url": canonical,
+    "blogPost": articles.map(article => ({
+      "@type": "BlogPosting",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": article.seo[lang].canonical
+      },
+      "headline": article.title[lang],
+      "image": article.heroImage.url,
+      "datePublished": article.publishedDate,
+      "author": {
+        "@type": "Organization",
+        "name": article.author
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": siteName,
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://registreduquebec.com/images/logos/logoblue.webp"
+        }
+      }
+    }))
+  };
+
+  const schemaTag = `
+    <script type="application/ld+json">
+      ${JSON.stringify(blogSchema)}
+    </script>`;
+
+  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n${schemaTag}\n</head>`);
 
   // Generate SSR content with article list
   const articlesHtml = articles.map(article => `
