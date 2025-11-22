@@ -1260,8 +1260,14 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
 }
 
 // Handle Category Browse Pages
-async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isEnglish, locale }) {
+async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isEnglish, locale, logContext }) {
   const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
+
+  // --- START PAGINATION LOGIC ---
+  const page = parseInt(req.query.page || '1', 10);
+  const pageSize = 200;
+  const offset = (page - 1) * pageSize;
+  // --- END PAGINATION LOGIC ---
 
   // Fetch category info from Supabase
   const { data: mainCat, error: catError } = await supabase
@@ -1278,10 +1284,12 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
   const categoryName = isEnglish ? (mainCat.label_en || mainCat.label_fr) : mainCat.label_fr;
   let subCategoryName = '';
   let title, description, canonical;
+  let pageTitleSuffix = '';
+
+  const categoryPathBase = isEnglish ? '/en/category' : '/categorie';
+  let canonicalPath = `${categoryPathBase}/${categorySlug}`;
 
   // Handle subcategory if present
-  const categoryPathBase = isEnglish ? '/en/category' : '/categorie';
-
   if (subCategorySlug) {
     const { data: subCat } = await supabase
       .from('sub_categories')
@@ -1291,23 +1299,37 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
 
     if (subCat) {
       subCategoryName = isEnglish ? (subCat.label_en || subCat.label_fr) : subCat.label_fr;
-      const titlePrefix = isEnglish ? 'Businesses in' : 'Entreprises en';
-      title = `${titlePrefix} ${subCategoryName} | ${siteName}`;
-      description = isEnglish
-        ? `Find businesses in ${subCategoryName} in Quebec. Complete directory with contact information and reviews.`
-        : `Trouvez des entreprises en ${subCategoryName} au Québec. Annuaire complet avec coordonnées et avis.`;
-      canonical = `https://registreduquebec.com${categoryPathBase}/${categorySlug}/${subCategorySlug}`;
+      canonicalPath += `/${subCategorySlug}`;
     }
   }
 
-  if (!subCategorySlug) {
-    const titlePrefix = isEnglish ? 'Businesses of' : 'Entreprises de';
-    title = `${titlePrefix} ${categoryName} | ${siteName}`;
-    description = isEnglish
-      ? `Find all businesses in ${categoryName} category in Quebec. Complete directory with contact information.`
-      : `Trouvez toutes les entreprises de catégorie ${categoryName} au Québec. Annuaire complet avec coordonnées.`;
-    canonical = `https://registreduquebec.com${categoryPathBase}/${categorySlug}`;
+  // --- COUNT TOTAL BUSINESSES FOR PAGINATION ---
+  let countQuery = supabase.from('businesses').select('*', { count: 'exact', head: true });
+  if (subCategorySlug) {
+    countQuery = countQuery.eq('primary_sub_category_slug', subCategorySlug);
+  } else {
+    countQuery = countQuery.eq('main_category_id', mainCat.id);
   }
+  const { count: totalBusinesses, error: countError } = await countQuery;
+  const totalPages = totalBusinesses ? Math.ceil(totalBusinesses / pageSize) : 1;
+
+  if (page > 1) {
+    pageTitleSuffix = isEnglish ? ` (Page ${page} of ${totalPages})` : ` (Page ${page} sur ${totalPages})`;
+    canonicalPath += `?page=${page}`;
+  }
+  // --- END COUNT ---
+
+  const displayName = subCategoryName || categoryName;
+  const titlePrefix = subCategoryName
+    ? (isEnglish ? 'Businesses in' : 'Entreprises en')
+    : (isEnglish ? 'Businesses of' : 'Entreprises de');
+
+  title = `${titlePrefix} ${displayName}${pageTitleSuffix} | ${siteName}`;
+  description = isEnglish
+    ? `Find businesses in ${displayName} in Quebec. Complete directory with contact information and reviews. Page ${page} of ${totalPages}.`
+    : `Trouvez des entreprises en ${displayName} au Québec. Annuaire complet avec coordonnées et avis. Page ${page} sur ${totalPages}.`;
+  canonical = `https://registreduquebec.com${canonicalPath}`;
+
 
   // Load template and inject meta tags
   let html = setHtmlLang(await loadTemplate(), isEnglish);
@@ -1320,25 +1342,36 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
       `<meta name="description" content="${escapeHtml(description)}" />`
     );
 
-  // Remove default OG/Twitter/Geo tags
+  // Remove default tags before adding new ones
   html = html
     .replace(/<meta property="og:[^"]*"[^>]*>/gi, '')
     .replace(/<meta name="twitter:[^"]*"[^>]*>/gi, '')
-    .replace(/<meta name="geo\.[^"]*"[^>]*>/gi, '')
-    .replace(/<meta name="ICBM"[^>]*>/gi, '')
-    .replace(/<meta name="keywords"[^>]*>/gi, '')
     .replace(/<link rel="canonical"[^>]*>/gi, '')
-    .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '');
+    .replace(/<link rel="alternate" hreflang="[^"]*"[^>]*>/gi, '')
+    .replace(/<link rel="next"[^>]*>/gi, '')
+    .replace(/<link rel="prev"[^>]*>/gi, '');
 
-  // Add new SEO tags
+  // --- PAGINATION <head> LINKS ---
+  let paginationLinks = '';
+  const basePaginatedUrl = `https://registreduquebec.com${categoryPathBase}/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}`;
+
+  if (page > 1) {
+    paginationLinks += `\n    <link rel="prev" href="${basePaginatedUrl}?page=${page - 1}">`;
+  }
+  if (page < totalPages) {
+    paginationLinks += `\n    <link rel="next" href="${basePaginatedUrl}?page=${page + 1}">`;
+  }
+  // --- END PAGINATION <head> LINKS ---
+
   const canonicalTag = `    <link rel="canonical" href="${canonical}">`;
   const categorySlugEn = getCategorySlugForLang(categorySlug, 'en');
   const subCategorySlugEn = subCategorySlug ? getCategorySlugForLang(subCategorySlug, 'en') : null;
+  const enCategoryPath = `/en/category/${categorySlugEn}${subCategorySlugEn ? '/' + subCategorySlugEn : ''}`;
 
   const hreflangTags = `
-    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/categorie/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />
-    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com/en/category/${categorySlugEn}${subCategorySlugEn ? '/' + subCategorySlugEn : ''}" />
-    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com/categorie/${categorySlug}${subCategorySlug ? '/' + subCategorySlug : ''}" />`;
+    <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com${canonicalPath.replace('/en/category/', '/categorie/').replace(/\?page=\d+$/, '')}" />
+    <link rel="alternate" hreflang="en-CA" href="https://registreduquebec.com${enCategoryPath}" />
+    <link rel="alternate" hreflang="x-default" href="https://registreduquebec.com${canonicalPath.replace('/en/category/', '/categorie/').replace(/\?page=\d+$/, '')}" />`;
 
   const seoTags = `
     <meta property="og:title" content="${escapeHtml(title)}">
@@ -1351,51 +1384,25 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
     <meta name="twitter:title" content="${escapeHtml(title)}">
     <meta name="twitter:description" content="${escapeHtml(description)}">`;
 
-  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${seoTags}\n</head>`);
+  html = html.replace('</head>', `${canonicalTag}\n${hreflangTags}\n${paginationLinks}\n${seoTags}\n</head>`);
 
-  // Generate SSR content with ALL business links for crawlers
-  const displayName = subCategoryName || categoryName;
-  const titlePrefix = subCategorySlug
-    ? (isEnglish ? 'Businesses in' : 'Entreprises en')
-    : (isEnglish ? 'Businesses of' : 'Entreprises de');
+  // --- FETCH PAGINATED BUSINESSES ---
+  let businessQuery = supabase
+    .from('businesses')
+    .select('id, name, slug, city, main_category_slug');
 
-  // Fetch ALL businesses for this category (for SEO internal linking)
-  // Load in batches since Supabase limits to 1000 per query
-  let allBusinesses = [];
-  let offset = 0;
-  const batchSize = 1000;
-  let hasMore = true;
-
-  while (hasMore) {
-    let businessQuery = supabase
-      .from('businesses')
-      .select('id, name, slug, city, main_category_slug');
-
-    if (subCategorySlug) {
-      businessQuery = businessQuery.eq('primary_sub_category_slug', subCategorySlug);
-    } else {
-      businessQuery = businessQuery.eq('main_category_id', mainCat.id);
-    }
-
-    const { data: batch, error: bizError } = await businessQuery
-      .not('slug', 'is', null)
-      .not('city', 'is', null)
-      .order('name')
-      .range(offset, offset + batchSize - 1);
-
-    if (bizError || !batch || batch.length === 0) {
-      hasMore = false;
-      break;
-    }
-
-    allBusinesses = allBusinesses.concat(batch);
-    offset += batchSize;
-
-    // If we got less than batchSize, we've reached the end
-    if (batch.length < batchSize) {
-      hasMore = false;
-    }
+  if (subCategorySlug) {
+    businessQuery = businessQuery.eq('primary_sub_category_slug', subCategorySlug);
+  } else {
+    businessQuery = businessQuery.eq('main_category_id', mainCat.id);
   }
+
+  const { data: businesses, error: bizError } = await businessQuery
+    .not('slug', 'is', null)
+    .not('city', 'is', null)
+    .order('name')
+    .range(offset, offset + pageSize - 1);
+  // --- END FETCH ---
 
   // Helper to generate slug for city
   const generateSlug = (text) => {
@@ -1409,14 +1416,10 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
 
   // Generate business links HTML
   let businessLinksHTML = '';
-  if (allBusinesses && allBusinesses.length > 0) {
+  if (businesses && businesses.length > 0) {
     businessLinksHTML = `
-    <div style="margin-top: 2rem;">
-      <p style="text-align: center; color: #718096; margin-bottom: 1.5rem;">
-        <strong>${allBusinesses.length}</strong> ${isEnglish ? 'business' : 'entreprise'}${allBusinesses.length > 1 ? 's' : ''} ${isEnglish ? 'found' : 'trouvée' + (allBusinesses.length > 1 ? 's' : '')}
-      </p>
       <ul style="list-style: none; padding: 0; max-width: 800px; margin: 0 auto;">
-        ${allBusinesses.map(biz => {
+        ${businesses.map(biz => {
           const citySlug = generateSlug(biz.city);
           const catSlug = biz.main_category_slug || 'entreprise';
           const langPrefix = isEnglish ? '/en' : '';
@@ -1429,17 +1432,47 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
           </a>
         </li>`;
         }).join('')}
-      </ul>
-    </div>`;
+      </ul>`;
   }
+
+  // --- VISIBLE PAGINATION CONTROLS ---
+  let paginationControls = '';
+  if (totalPages > 1) {
+    const prevText = isEnglish ? 'Previous Page' : 'Page précédente';
+    const nextText = isEnglish ? 'Next Page' : 'Page suivante';
+    const pageText = isEnglish ? `Page ${page} of ${totalPages}` : `Page ${page} sur ${totalPages}`;
+
+    paginationControls = `
+    <nav style="display: flex; justify-content: space-between; align-items: center; max-width: 800px; margin: 2rem auto; padding: 1rem; border-top: 1px solid #e2e8f0;">`;
+
+    if (page > 1) {
+      paginationControls += `<a href="${basePaginatedUrl}?page=${page - 1}" style="color: #3182ce; text-decoration: none;">&larr; ${prevText}</a>`;
+    } else {
+      paginationControls += `<span></span>`; // Placeholder for spacing
+    }
+
+    paginationControls += `<span style="color: #718096;">${pageText}</span>`;
+
+    if (page < totalPages) {
+      paginationControls += `<a href="${basePaginatedUrl}?page=${page + 1}" style="color: #3182ce; text-decoration: none;">${nextText} &rarr;</a>`;
+    } else {
+      paginationControls += `<span></span>`; // Placeholder for spacing
+    }
+    paginationControls += `</nav>`;
+  }
+  // --- END VISIBLE PAGINATION CONTROLS ---
 
   const ssrContent = `
   <div class="container browse-page" style="padding: 2rem 0;">
     <header style="margin-bottom: 2rem; text-align: center;">
-      <h1 style="font-size: 2.5rem; font-weight: 700; color: #0f4c81; margin-bottom: 0.5rem;">${titlePrefix} ${escapeHtml(displayName)}</h1>
+      <h1 style="font-size: 2.5rem; font-weight: 700; color: #0f4c81; margin-bottom: 0.5rem;">${titlePrefix} ${escapeHtml(displayName)}${pageTitleSuffix}</h1>
       <p style="font-size: 1.1rem; color: #718096;">${escapeHtml(description)}</p>
     </header>
+    <p style="text-align: center; color: #718096; margin-bottom: 1.5rem;">
+      <strong>${totalBusinesses || 0}</strong> ${isEnglish ? 'business' : 'entreprise'}${totalBusinesses !== 1 ? 's' : ''} ${isEnglish ? 'found' : 'trouvée' + (totalBusinesses !== 1 ? 's' : '')}
+    </p>
     ${businessLinksHTML}
+    ${paginationControls}
     <noscript>
       <p style="text-align: center; color: #718096; margin-top: 2rem;">${isEnglish ? 'Please enable JavaScript to view the full business directory.' : 'Veuillez activer JavaScript pour voir l\'annuaire complet des entreprises.'}</p>
     </noscript>
