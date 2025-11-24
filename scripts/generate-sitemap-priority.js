@@ -1,6 +1,6 @@
 /**
- * Génère un sitemap spécifique pour les pages à haute performance (CSV)
- * avec des priorités basées sur le nombre de clics
+ * Génère plusieurs sitemaps pour les pages à haute performance (CSV)
+ * Divise en fichiers de 500 URLs maximum
  */
 
 import fs from 'fs';
@@ -10,12 +10,13 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log('🗺️  GÉNÉRATION SITEMAP DES PAGES À HAUTE PERFORMANCE');
+console.log('🗺️  GÉNÉRATION SITEMAPS DES PAGES À HAUTE PERFORMANCE');
 console.log('═'.repeat(60));
 
 const baseUrl = 'https://registreduquebec.com';
 const currentDate = '2025-11-24';
 const sitemapsDir = path.join(__dirname, '..', 'public', 'sitemaps');
+const MAX_URLS_PER_SITEMAP = 500;
 
 // Lire le fichier CSV
 const csvPath = path.join(__dirname, '..', 'Pages.csv');
@@ -66,13 +67,23 @@ const urlEntries = pages.map(page => ({
 // Trier par nombre de clics (décroissant)
 urlEntries.sort((a, b) => b.clicks - a.clicks);
 
-// Générer le XML
-const xml = `<?xml version="1.0" encoding="UTF-8"?>
+// Diviser en chunks de MAX_URLS_PER_SITEMAP
+const chunks = [];
+for (let i = 0; i < urlEntries.length; i += MAX_URLS_PER_SITEMAP) {
+  chunks.push(urlEntries.slice(i, i + MAX_URLS_PER_SITEMAP));
+}
+
+console.log(`📁 ${chunks.length} fichiers sitemap seront créés (${MAX_URLS_PER_SITEMAP} URLs max par fichier)`);
+
+// Générer chaque fichier sitemap
+chunks.forEach((chunk, index) => {
+  const fileNumber = index + 1;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Sitemap des pages à haute performance -->
+  <!-- Sitemap des pages à haute performance - Partie ${fileNumber}/${chunks.length} -->
   <!-- Généré le ${currentDate} -->
-  <!-- ${urlEntries.length} pages avec des données de clics -->
-${urlEntries.map(url => `  <url>
+  <!-- ${chunk.length} pages avec des données de clics -->
+${chunk.map(url => `  <url>
     <loc>${url.loc}</loc>
     <lastmod>${url.lastmod}</lastmod>
     <changefreq>${url.changefreq}</changefreq>
@@ -81,13 +92,12 @@ ${urlEntries.map(url => `  <url>
   </url>`).join('\n')}
 </urlset>`;
 
-// Écrire le fichier
-const filepath = path.join(sitemapsDir, 'sitemap-high-performance.xml');
-fs.writeFileSync(filepath, xml, 'utf-8');
+  const filepath = path.join(sitemapsDir, `sitemap-high-performance-${fileNumber}.xml`);
+  fs.writeFileSync(filepath, xml, 'utf-8');
+  console.log(`✅ sitemap-high-performance-${fileNumber}.xml créé (${chunk.length} URLs)`);
+});
 
-console.log(`\n✅ Sitemap créé: sitemap-high-performance.xml`);
-console.log(`📝 ${urlEntries.length} URLs avec priorités dynamiques`);
-console.log(`\n📊 Répartition des priorités:`);
+console.log(`\n📊 Répartition des priorités (total: ${urlEntries.length} URLs):`);
 
 const priorityGroups = {
   '0.95': urlEntries.filter(u => u.priority === '0.95').length,
@@ -106,6 +116,7 @@ Object.entries(priorityGroups).forEach(([priority, count]) => {
 });
 
 console.log('\n═'.repeat(60));
-console.log('✅ SITEMAP DES PAGES À HAUTE PERFORMANCE GÉNÉRÉ!');
+console.log(`✅ ${chunks.length} SITEMAPS DE HAUTE PERFORMANCE GÉNÉRÉS!`);
 console.log(`📅 Date: ${currentDate}`);
+console.log(`📊 Total: ${urlEntries.length} URLs`);
 console.log('═'.repeat(60));

@@ -26,7 +26,16 @@ const frFiles = fs.readdirSync(sitemapsDir)
     return numA - numB;
   });
 
-frFiles.unshift('sitemap-static.xml'); // Ajouter le sitemap statique en premier
+// Ajouter les sitemaps spéciaux
+frFiles.unshift('sitemap-static.xml'); // Sitemap statique
+const highPerfFiles = fs.readdirSync(sitemapsDir)
+  .filter(f => f.startsWith('sitemap-high-performance-') && f.endsWith('.xml'))
+  .sort((a, b) => {
+    const numA = parseInt(a.match(/\d+/)[0]);
+    const numB = parseInt(b.match(/\d+/)[0]);
+    return numA - numB;
+  });
+frFiles.push(...highPerfFiles); // Ajouter les sitemaps haute performance
 
 const frIndexXML = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
