@@ -1058,7 +1058,8 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
         {
           "@type": "ListItem",
           "position": 3,
-          "name": business.name
+          "name": business.name,
+          "item": canonical
         }
       ]
     };
