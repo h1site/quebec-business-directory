@@ -1,0 +1,118 @@
+.popular-cities {
+  padding: 4rem 0;
+  background: #ffffff;
+  /* CLS fix: reserve minimum height */
+  min-height: 400px;
+}
+
+.popular-cities-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.popular-cities-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 0.75rem 0;
+}
+
+.popular-cities-subtitle {
+  font-size: 1.1rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.popular-cities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.popular-city-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+.popular-city-card:hover {
+  background: #f1f5f9;
+  border-color: #0066cc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+}
+
+.popular-city-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.popular-city-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.popular-city-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.popular-city-count {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.popular-city-arrow {
+  font-size: 1.25rem;
+  color: #0066cc;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s ease;
+}
+
+.popular-city-card:hover .popular-city-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .popular-cities {
+    padding: 3rem 0;
+    min-height: 600px;
+  }
+
+  .popular-cities-title {
+    font-size: 1.5rem;
+  }
+
+  .popular-cities-subtitle {
+    font-size: 1rem;
+  }
+
+  .popular-cities-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .popular-city-card {
+    padding: 1rem;
+  }
+
+  .popular-city-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
