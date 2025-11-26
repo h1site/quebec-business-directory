@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import LocalizedLink from './LocalizedLink.jsx';
-import { supabase } from '../services/supabaseClient';
 import './PopularCities.css';
 
 // Top Quebec cities by population (aligned with SSR in api/seo.js)
@@ -21,54 +19,8 @@ const POPULAR_CITIES = [
 ];
 
 function PopularCities() {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const isEnglish = i18n.language === 'en';
-  const [cityCounts, setCityCounts] = useState({});
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadCityCounts();
-  }, []);
-
-  const loadCityCounts = async () => {
-    try {
-      // Get counts for each popular city
-      const cityNames = POPULAR_CITIES.map(c => c.name);
-
-      const { data, error } = await supabase
-        .from('businesses')
-        .select('city')
-        .in('city', cityNames);
-
-      if (error) {
-        console.error('Error loading city counts:', error);
-        setLoading(false);
-        return;
-      }
-
-      // Count businesses per city
-      const counts = {};
-      data.forEach(b => {
-        if (b.city) {
-          counts[b.city] = (counts[b.city] || 0) + 1;
-        }
-      });
-
-      setCityCounts(counts);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error loading city counts:', error);
-      setLoading(false);
-    }
-  };
-
-  const formatCount = (count) => {
-    if (!count) return '';
-    if (count >= 1000) {
-      return `${Math.floor(count / 1000)}k+`;
-    }
-    return count.toLocaleString();
-  };
 
   return (
     <section className="popular-cities">
@@ -92,14 +44,7 @@ function PopularCities() {
               className="popular-city-card"
             >
               <span className="popular-city-icon">🏙️</span>
-              <div className="popular-city-info">
-                <span className="popular-city-name">{isEnglish ? city.nameEn : city.name}</span>
-                {!loading && cityCounts[city.name] && (
-                  <span className="popular-city-count">
-                    {formatCount(cityCounts[city.name])} {isEnglish ? 'businesses' : 'entreprises'}
-                  </span>
-                )}
-              </div>
+              <span className="popular-city-name">{isEnglish ? city.nameEn : city.name}</span>
               <span className="popular-city-arrow">→</span>
             </LocalizedLink>
           ))}
