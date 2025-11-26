@@ -775,24 +775,9 @@ export default async function handler(req, res) {
       return handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEnglish, locale, isBot, isGooglebot, isBingbot, logContext });
     }
 
-    // ROUTE 5: Default - Homepage or other pages
-    const template = setHtmlLang(await loadTemplate(), isEnglish);
-
-    // Log for bots
-    if (isBot) {
-      await logBotVisit({
-        ...logContext,
-        statusCode: 200,
-        indexable: true,
-        pageType: 'default',
-        hasCanonical: false,
-        hasMetaTags: false,
-        hasSchemaOrg: false,
-        responseTimeMs: Date.now() - startTime
-      });
-    }
-
-    return res.status(200).setHeader('Content-Type', 'text/html').send(template);
+    // ROUTE 5: Default - Homepage with full SSR content
+    // CRITICAL FIX: Always use handleHomePage for the homepage to ensure Google sees content
+    return handleHomePage(req, res, { isEnglish, locale, logContext });
   } catch (error) {
     console.error('SEO function error:', error);
 
@@ -2094,7 +2079,7 @@ async function handleFAQPage(req, res, { isEnglish, locale }) {
 }
 
 // Handle Homepage
-async function handleHomePage(req, res, { isEnglish, locale }) {
+async function handleHomePage(req, res, { isEnglish, locale, logContext }) {
   const siteName = isEnglish ? 'Quebec Business Registry' : 'Registre du Québec';
 
   const title = isEnglish
