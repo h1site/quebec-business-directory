@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase } from '../../services/supabaseClient.js';
@@ -17,27 +17,52 @@ const CityBrowse = () => {
   const [hasMore, setHasMore] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
 
-  const ITEMS_PER_PAGE = 24; // Optimized for performance
+  const ITEMS_PER_PAGE = 24;
+
+  // Normalize city slug to name with proper capitalization
+  const normalizeCityName = useCallback((slug) => {
+    return slug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('-');
+  }, []);
 
   useEffect(() => {
     const loadBusinesses = async () => {
       try {
         setLoading(true);
-        // Convert slug to city name (vaudreuil-dorion -> Vaudreuil-Dorion)
-        const name = citySlug
-          .split('-')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join('-');
-
+        const name = normalizeCityName(citySlug);
         setCityName(name);
 
-        // Only select necessary columns for better performance
-        const { data, error: searchError, count } = await supabase
-          .from('businesses')
-          .select('id, name, slug, city, address, phone, email, description, main_category_slug, categories', { count: 'exact' })
-          .ilike('city', name)
-          .order('name')
-          .range(0, ITEMS_PER_PAGE - 1);
+        // Use RPC function for faster indexed query, fallback to ilike
+        let data, searchError, count;
+
+        // Try the fast RPC first (requires index on city)
+        const rpcResult = await supabase.rpc('get_businesses_by_city', {
+          city_name: name,
+          page_limit: ITEMS_PER_PAGE,
+          page_offset: 0
+        });
+
+        if (rpcResult.error) {
+          // Fallback to regular query if RPC doesn't exist
+          console.log('RPC not available, using fallback query');
+          const fallbackResult = await supabase
+            .from('businesses')
+            .select('id, name, slug, city, address, phone, email, description, main_category_slug, categories', { count: 'exact' })
+            .ilike('city', name)
+            .order('name')
+            .range(0, ITEMS_PER_PAGE - 1);
+
+          data = fallbackResult.data;
+          searchError = fallbackResult.error;
+          count = fallbackResult.count;
+        } else {
+          data = rpcResult.data;
+          // Get count using the fast RPC function
+          const countResult = await supabase.rpc('get_businesses_count_by_city', { city_name: name });
+          count = countResult.data || 0;
+        }
 
         if (searchError) {
           setError('Erreur lors du chargement des entreprises');
@@ -45,7 +70,6 @@ const CityBrowse = () => {
           return;
         }
 
-        // If no businesses found in this city, show 404
         if (!data || data.length === 0) {
           setNotFound(true);
           setLoading(false);
@@ -65,7 +89,7 @@ const CityBrowse = () => {
     };
 
     loadBusinesses();
-  }, [citySlug]);
+  }, [citySlug, normalizeCityName]);
 
   const handleLoadMore = async () => {
     if (loadingMore) return;
@@ -74,16 +98,29 @@ const CityBrowse = () => {
     try {
       const offset = businesses.length;
 
-      const { data, error: searchError } = await supabase
-        .from('businesses')
-        .select('id, name, slug, city, address, phone, email, description, main_category_slug, categories')
-        .ilike('city', cityName)
-        .order('name')
-        .range(offset, offset + ITEMS_PER_PAGE - 1);
+      // Try RPC first, fallback to regular query
+      const rpcResult = await supabase.rpc('get_businesses_by_city', {
+        city_name: cityName,
+        page_limit: ITEMS_PER_PAGE,
+        page_offset: offset
+      });
 
-      if (searchError) {
-        console.error('Error loading more:', searchError);
-        return;
+      let data;
+      if (rpcResult.error) {
+        const fallbackResult = await supabase
+          .from('businesses')
+          .select('id, name, slug, city, address, phone, email, description, main_category_slug, categories')
+          .ilike('city', cityName)
+          .order('name')
+          .range(offset, offset + ITEMS_PER_PAGE - 1);
+
+        if (fallbackResult.error) {
+          console.error('Error loading more:', fallbackResult.error);
+          return;
+        }
+        data = fallbackResult.data;
+      } else {
+        data = rpcResult.data;
       }
 
       console.log('📊 CityBrowse - Load more results:', data?.length || 0);
