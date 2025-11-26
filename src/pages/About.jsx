@@ -8,7 +8,7 @@ const About = () => {
     <div className="about-page">
       <div className="container">
         <div className="about-header">
-          <img src="/images/logos/logoblue.webp" alt="Registre du Québec" className="about-logo" />
+          <img src="/images/logos/logoblue.webp" alt="Registre du Québec" className="about-logo" width="120" height="120" />
           <h1>{i18n.language === 'fr' ? 'À propos du Registre du Québec' : 'About Quebec Business Directory'}</h1>
         </div>
 

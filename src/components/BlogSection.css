@@ -53,6 +53,9 @@
   position: relative;
   height: 220px;
   overflow: hidden;
+  /* CLS fix: reserve exact space for image */
+  aspect-ratio: 16 / 9;
+  background-color: #f0f0f0;
 }
 
 .blog-card-image img {
@@ -60,6 +63,8 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  /* CLS fix: prevent layout shift during load */
+  aspect-ratio: 16 / 9;
 }
 
 .blog-card:hover .blog-card-image img {

@@ -710,7 +710,7 @@ const BusinessDetails = () => {
                       className="btn btn-waze waze-address-button"
                       onClick={() => trackWazeClick(business.id)}
                     >
-                      <img src="/images/logos/waze.svg" alt="Waze" className="waze-icon" />
+                      <img src="/images/logos/waze.svg" alt="Waze" className="waze-icon" width="20" height="20" />
                       {t('business.openInWaze')}
                     </a>
                   ) : null}

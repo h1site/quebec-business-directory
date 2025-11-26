@@ -85,9 +85,9 @@ const Header = () => {
             {/* Menu hamburger pour mobile (colonne droite) */}
             <button className="hamburger" onClick={toggleMenu} aria-label="Toggle menu">
               {isMenuOpen ? (
-                <img src="/images/icons/close.svg" alt="Close" className="close-icon" />
+                <img src="/images/icons/close.svg" alt="Close" className="close-icon" width="28" height="28" />
               ) : (
-                <img src="/images/icons/menu.svg" alt="Menu" className="menu-icon" />
+                <img src="/images/icons/menu.svg" alt="Menu" className="menu-icon" width="28" height="28" />
               )}
             </button>
 
@@ -104,6 +104,8 @@ const Header = () => {
                       src={avatarUrl || '/default-avatar.svg'}
                       alt="Profil"
                       className="header-avatar"
+                      width="40"
+                      height="40"
                     />
                   </LocalizedNavLink>
                 </>

@@ -94,6 +94,9 @@ const CategoriesGrid = () => {
                       src={`/images/icons/${categoryIcons[category.slug]}`}
                       alt={getLabel(category)}
                       className="category-icon"
+                      width="24"
+                      height="24"
+                      loading="lazy"
                     />
                   )}
                   <span className="category-title">{getLabel(category)}</span>

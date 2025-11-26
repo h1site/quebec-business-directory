@@ -40,59 +40,8 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=2" />
 
-    <!-- Canonical URL - Will be set by React Helmet -->
-    <link rel="canonical" href="https://registreduquebec.com/" />
-    <script>
-      // Update canonical and meta description to match current page immediately
-      // This runs ONLY on initial page load, React Helmet handles client-side navigation
-      (function() {
-        // Update canonical
-        const canonical = document.querySelector('link[rel="canonical"]');
-        if (canonical && window.location.href !== canonical.href) {
-          canonical.href = window.location.origin + window.location.pathname;
-        }
-
-        // For business pages, generate SEO-optimized meta description
-        // React Helmet will update it properly after React loads, but this provides initial SEO value
-        const path = window.location.pathname;
-        const isEnglish = path.startsWith('/en/');
-
-        // Handle both French and English business pages
-        // French: /category/city/business or /entreprise/city/business
-        // English: /en/category/city/business or /en/business/city/business
-        if (path.includes('/entreprise/') || path.includes('/business/') ||
-            (path.split('/').filter(Boolean).length >= 3 && !isEnglish) ||
-            (path.split('/').filter(Boolean).length >= 4 && isEnglish)) {
-
-          const metaDesc = document.querySelector('meta[name="description"]');
-          if (metaDesc) {
-            const parts = path.split('/').filter(Boolean);
-
-            // Remove 'en' prefix if present
-            const offset = isEnglish ? 1 : 0;
-
-            // Get business name and city from URL
-            const businessSlug = parts[parts.length - 1];
-            const citySlug = parts[parts.length - 2];
-            const categorySlug = parts.length > 2 + offset ? parts[parts.length - 3] : null;
-
-            // Convert slugs to readable names
-            const businessName = businessSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-            const city = citySlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-            const category = categorySlug ? categorySlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : null;
-
-            // Generate SEO-optimized description (French or English)
-            if (isEnglish) {
-              // English template
-              metaDesc.content = `Discover ${businessName} in ${city}: complete contact details, customer reviews, and practical info (phone, address, hours).`;
-            } else {
-              // French template
-              metaDesc.content = `Découvrez ${businessName} à ${city} : coordonnées complètes, avis clients et infos pratiques (téléphone, adresse, horaires).`;
-            }
-          }
-        }
-      })();
-    </script>
+    <!-- Canonical URL - Managed exclusively by SSR (api/seo.js) and React Helmet -->
+    <!-- No default canonical here to avoid duplicates - SSR injects the correct one -->
 
     <!-- hreflang for bilingual SEO -->
     <link rel="alternate" hreflang="fr-CA" href="https://registreduquebec.com/" />

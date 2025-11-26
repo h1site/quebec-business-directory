@@ -326,7 +326,7 @@ function Blog() {
               >
                 {article.image && (
                   <div className="article-image">
-                    <img src={article.image} alt={article.title} />
+                    <img src={article.image} alt={article.title} width="400" height="225" loading="lazy" />
                   </div>
                 )}
                 <div className="article-content">

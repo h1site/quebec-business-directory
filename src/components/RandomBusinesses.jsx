@@ -68,7 +68,7 @@ const RandomBusinesses = () => {
             >
               {business.logo_url ? (
                 <div className="random-business-logo">
-                  <img src={business.logo_url} alt={business.name} />
+                  <img src={business.logo_url} alt={business.name} width="60" height="60" loading="lazy" />
                 </div>
               ) : (
                 <div className="random-business-logo random-business-logo-placeholder">

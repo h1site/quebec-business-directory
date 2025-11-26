@@ -827,22 +827,8 @@ async function handleBusinessPage(req, res, { slug, categorySlug, citySlug, isEn
     .single();
 
   if (error || !business) {
-    // Log 404 for bots
-    if (isBot) {
-      await logBotVisit({
-        ...logContext,
-        statusCode: 404,
-        indexable: false,
-        indexableReason: '404_not_found',
-        pageType: 'business',
-        businessSlug: slug,
-        categorySlug,
-        citySlug,
-        responseTimeMs: Date.now() - logContext.startTime
-      });
-    }
-
-    return res.status(404).send('Entreprise non trouvée');
+    // Return proper 404 SSR page
+    return handle404Page(req, res, { isEnglish, locale, logContext });
   }
 
   // Fetch 3 random businesses from the same region for "Discover" section
@@ -1263,8 +1249,7 @@ async function handleCategoryPage(req, res, { categorySlug, subCategorySlug, isE
     .single();
 
   if (catError || !mainCat) {
-    const template = setHtmlLang(await loadTemplate(), isEnglish);
-    return res.status(404).setHeader('Content-Type', 'text/html').send(template);
+    return handle404Page(req, res, { isEnglish, locale, logContext });
   }
 
   const categoryName = isEnglish ? (mainCat.label_en || mainCat.label_fr) : mainCat.label_fr;
@@ -1558,21 +1543,7 @@ async function handleBlogArticlePage(req, res, { blogSlug, isEnglish, locale, lo
   const article = getArticleBySlug(blogSlug);
 
   if (!article) {
-    // Log 404 for bots
-    if (logContext.isBot) {
-      await logBotVisit({
-        ...logContext,
-        statusCode: 404,
-        indexable: false,
-        indexableReason: '404_not_found',
-        pageType: 'blog',
-        blogSlug,
-        responseTimeMs: Date.now() - logContext.startTime
-      });
-    }
-
-    const template = setHtmlLang(await loadTemplate(), isEnglish);
-    return res.status(404).setHeader('Content-Type', 'text/html').send(template);
+    return handle404Page(req, res, { isEnglish, locale, logContext });
   }
 
   const lang = isEnglish ? 'en' : 'fr';
@@ -2530,4 +2501,73 @@ async function handleLegalPage(req, res, { isEnglish, locale }) {
   html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
 
   res.status(200).setHeader('Content-Type', 'text/html').send(html);
+}
+
+// =====================================================
+// 404 PAGE HANDLER - SEO-optimized 404 page
+// =====================================================
+async function handle404Page(req, res, { isEnglish, locale, logContext }) {
+  const template = setHtmlLang(await loadTemplate(), isEnglish);
+
+  const title = isEnglish
+    ? 'Page Not Found - 404 | Quebec Business Registry'
+    : 'Page Introuvable - 404 | Registre du Québec';
+
+  const description = isEnglish
+    ? 'The page you are looking for does not exist. Search for businesses in Quebec or return to the homepage.'
+    : 'La page que vous cherchez n\'existe pas. Recherchez des entreprises au Québec ou retournez à l\'accueil.';
+
+  const langPrefix = isEnglish ? '/en' : '';
+  const homeUrl = 'https://registreduquebec.com' + (isEnglish ? '/en' : '/');
+  const searchUrl = 'https://registreduquebec.com' + langPrefix + '/recherche';
+
+  const ssrContent404 = `
+    <div class="container not-found-page" style="min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; text-align: center;">
+      <div class="not-found-content" style="max-width: 600px; width: 100%;">
+        <div class="not-found-icon" style="font-size: 8rem; font-weight: 700; background: linear-gradient(135deg, #0066cc 0%, #004999 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; line-height: 1;">404</div>
+        <h1 style="font-size: 2rem; color: #333; margin-bottom: 1rem; font-weight: 600;">
+          ${isEnglish ? 'Page Not Found' : 'Page Introuvable'}
+        </h1>
+        <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem; line-height: 1.6;">
+          ${isEnglish ? 'The page you are looking for does not exist or has been moved.' : 'La page que vous cherchez n\'existe pas ou a été déplacée.'}
+        </p>
+        <div class="not-found-actions" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem;">
+          <a href="${homeUrl}" style="padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 6px; font-weight: 500; background: #0066cc; color: white;">
+            ${isEnglish ? 'Back to Homepage' : 'Retour à l\'accueil'}
+          </a>
+          <a href="${searchUrl}" style="padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 6px; font-weight: 500; background: #f5f5f5; color: #333; border: 1px solid #ddd;">
+            ${isEnglish ? 'Search Businesses' : 'Rechercher des entreprises'}
+          </a>
+        </div>
+        <div style="border-top: 1px solid #e0e0e0; padding-top: 2rem; margin-top: 2rem;">
+          <h2 style="font-size: 1.3rem; color: #333; margin-bottom: 1rem; font-weight: 600;">${isEnglish ? 'Quick Links' : 'Liens Rapides'}</h2>
+          <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem;">
+            <li><a href="${langPrefix}/categorie/commerce-de-detail" style="color: #0066cc;">→ ${isEnglish ? 'Retail Businesses' : 'Commerce de Détail'}</a></li>
+            <li><a href="${langPrefix}/categorie/services-professionnels" style="color: #0066cc;">→ ${isEnglish ? 'Professional Services' : 'Services Professionnels'}</a></li>
+            <li><a href="${langPrefix}/categorie/restauration-et-alimentation" style="color: #0066cc;">→ ${isEnglish ? 'Restaurants' : 'Restaurants'}</a></li>
+            <li><a href="${langPrefix}/categorie/sante-et-bien-etre" style="color: #0066cc;">→ ${isEnglish ? 'Health & Wellness' : 'Santé et Bien-être'}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  `;
+
+  let html = template
+    .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
+    .replace(/<meta name="description"[^>]*>/, `<meta name="description" content="${description}">`)
+    .replace('</head>', `<meta name="robots" content="noindex, nofollow">\n</head>`)
+    .replace('<div id="root"></div>', `<div id="root">${ssrContent404}</div>`);
+
+  if (logContext && logContext.isBot) {
+    await logBotVisit({
+      ...logContext,
+      statusCode: 404,
+      indexable: false,
+      indexableReason: '404_not_found',
+      pageType: '404',
+      responseTimeMs: Date.now() - logContext.startTime
+    });
+  }
+
+  res.status(404).setHeader('Content-Type', 'text/html').send(html);
 }
