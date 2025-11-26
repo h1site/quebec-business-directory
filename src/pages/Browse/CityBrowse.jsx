@@ -17,6 +17,8 @@ const CityBrowse = () => {
   const [hasMore, setHasMore] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
 
+  const ITEMS_PER_PAGE = 24; // Optimized for performance
+
   useEffect(() => {
     const loadBusinesses = async () => {
       try {
@@ -29,17 +31,13 @@ const CityBrowse = () => {
 
         setCityName(name);
 
-        // Load businesses in batches of 1000 (Supabase max per query)
-        // Normalize city name for matching (handle spaces/hyphens)
-        const normalizedCity = decodeURIComponent(name)
-          .replace(/[\s\-_+]/g, '%')
-          .trim();
-
+        // Only select necessary columns for better performance
         const { data, error: searchError, count } = await supabase
-          .from('businesses_enriched')
-          .select('*', { count: 'exact' })
-          .ilike('city', `%${normalizedCity}%`)
-          .range(0, 999);
+          .from('businesses')
+          .select('id, name, slug, city, address, phone, email, description, main_category_slug, categories', { count: 'exact' })
+          .ilike('city', name)
+          .order('name')
+          .range(0, ITEMS_PER_PAGE - 1);
 
         if (searchError) {
           setError('Erreur lors du chargement des entreprises');
@@ -57,7 +55,7 @@ const CityBrowse = () => {
         console.log('📊 CityBrowse - Results received:', data?.length || 0, 'Total count:', count);
         setBusinesses(data);
         setTotalCount(count || 0);
-        setHasMore((data?.length || 0) === 1000 && (count || 0) > 1000);
+        setHasMore((data?.length || 0) === ITEMS_PER_PAGE && (count || 0) > ITEMS_PER_PAGE);
       } catch (err) {
         setError('Erreur lors du chargement des entreprises');
         console.error(err);
@@ -76,16 +74,12 @@ const CityBrowse = () => {
     try {
       const offset = businesses.length;
 
-      // Normalize city name the same way as initial load
-      const normalizedCity = decodeURIComponent(cityName)
-        .replace(/[\s\-_+]/g, '%')
-        .trim();
-
       const { data, error: searchError } = await supabase
-        .from('businesses_enriched')
-        .select('*')
-        .ilike('city', `%${normalizedCity}%`)
-        .range(offset, offset + 999);
+        .from('businesses')
+        .select('id, name, slug, city, address, phone, email, description, main_category_slug, categories')
+        .ilike('city', cityName)
+        .order('name')
+        .range(offset, offset + ITEMS_PER_PAGE - 1);
 
       if (searchError) {
         console.error('Error loading more:', searchError);
@@ -94,7 +88,7 @@ const CityBrowse = () => {
 
       console.log('📊 CityBrowse - Load more results:', data?.length || 0);
       setBusinesses(prev => [...prev, ...(data || [])]);
-      setHasMore((data?.length || 0) === 1000 && businesses.length + (data?.length || 0) < totalCount);
+      setHasMore((data?.length || 0) === ITEMS_PER_PAGE && businesses.length + (data?.length || 0) < totalCount);
     } catch (err) {
       console.error('Error loading more:', err);
     } finally {
