@@ -15,6 +15,7 @@ import { AuthProvider } from './context/AuthContext.jsx';
 const Home = lazy(() => import('./pages/Home.jsx'));
 const Search = lazy(() => import('./pages/Search/Search.jsx'));
 const RegionBrowse = lazy(() => import('./pages/Browse/RegionBrowse.jsx'));
+const CityBrowse = lazy(() => import('./pages/Browse/CityBrowse.jsx'));
 const CategoryBrowse = lazy(() => import('./pages/Browse/CategoryBrowse.jsx'));
 const Login = lazy(() => import('./pages/Auth/Login.jsx'));
 const Register = lazy(() => import('./pages/Auth/Register.jsx'));
@@ -88,6 +89,7 @@ function App() {
 
               {/* Browse Pages */}
               <Route path="/region/:regionSlug" element={<RegionBrowse />} />
+              <Route path="/ville/:citySlug" element={<CityBrowse />} />
               <Route path="/categorie/:categorySlug" element={<CategoryBrowse />} />
               <Route path="/categorie/:categorySlug/:subCategorySlug" element={<CategoryBrowse />} />
 
@@ -225,6 +227,7 @@ function App() {
 
               {/* Browse Pages */}
               <Route path="/en/region/:regionSlug" element={<RegionBrowse />} />
+              <Route path="/en/city/:citySlug" element={<CityBrowse />} />
               <Route path="/en/category/:categorySlug" element={<CategoryBrowse />} />
               <Route path="/en/category/:categorySlug/:subCategorySlug" element={<CategoryBrowse />} />
 
