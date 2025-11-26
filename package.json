@@ -7,7 +7,7 @@
     "dev": "vite",
     "dev:server": "node --env-file=.env server.js",
     "dev:all": "concurrently \"npm run dev\" \"npm run dev:server\"",
-    "build": "vite build && cp dist/index.html dist/spa.html",
+    "build": "vite build && mv dist/index.html dist/spa.html",
     "start:seo": "node server-seo.js",
     "preview": "vite preview",
     "lint": "eslint src --ext jsx,js",
