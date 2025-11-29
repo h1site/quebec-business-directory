@@ -666,27 +666,64 @@ function generateSSRContent(business, isEnglish = false, relatedBusinesses = [])
 export default async function handler(req, res) {
   const startTime = Date.now();
 
-  // Detect bot traffic for logging and optimization
+  // Detect bot traffic for SSR optimization
   const userAgent = req.headers['user-agent'] || '';
-  const isGooglebot = userAgent.toLowerCase().includes('googlebot');
-  const isBingbot = userAgent.toLowerCase().includes('bingbot');
-  const isBot = isGooglebot || isBingbot;
-  const botType = isGooglebot ? 'googlebot' : isBingbot ? 'bingbot' : 'other';
+  const userAgentLower = userAgent.toLowerCase();
 
-  // Log bot visits for debugging
-  if (isBot) {
-    console.log(`[${isGooglebot ? 'GOOGLEBOT' : 'BINGBOT'}] ${req.method} ${req.url}`, {
-      timestamp: new Date().toISOString(),
-      query: req.query
-    });
+  // Known search engine bots that need SSR for proper indexing
+  const isGooglebot = userAgentLower.includes('googlebot');
+  const isBingbot = userAgentLower.includes('bingbot');
+  const isYandexBot = userAgentLower.includes('yandex');
+  const isBaiduBot = userAgentLower.includes('baiduspider');
+  const isDuckDuckBot = userAgentLower.includes('duckduckbot');
+  const isFacebookBot = userAgentLower.includes('facebookexternalhit') || userAgentLower.includes('facebot');
+  const isTwitterBot = userAgentLower.includes('twitterbot');
+  const isLinkedInBot = userAgentLower.includes('linkedinbot');
+  const isSlackBot = userAgentLower.includes('slackbot');
+  const isWhatsAppBot = userAgentLower.includes('whatsapp');
+  const isTelegramBot = userAgentLower.includes('telegrambot');
+  const isAppleBot = userAgentLower.includes('applebot');
+
+  // Check if it's any bot that needs SSR
+  const isBot = isGooglebot || isBingbot || isYandexBot || isBaiduBot ||
+                isDuckDuckBot || isFacebookBot || isTwitterBot || isLinkedInBot ||
+                isSlackBot || isWhatsAppBot || isTelegramBot || isAppleBot;
+
+  const botType = isGooglebot ? 'googlebot' : isBingbot ? 'bingbot' :
+                  isFacebookBot ? 'facebook' : isTwitterBot ? 'twitter' :
+                  isLinkedInBot ? 'linkedin' : isBot ? 'other-bot' : 'user';
+
+  // OPTIMIZATION: Serve SPA directly to regular users (no SSR needed)
+  // Only bots need the pre-rendered HTML for SEO
+  if (!isBot) {
+    // Serve the SPA shell - React will hydrate and fetch data client-side
+    try {
+      const spaPath = path.join(__dirname, '..', 'dist', 'spa.html');
+      const spaHtml = await fs.readFile(spaPath, 'utf-8');
+      res.setHeader('Cache-Control', 'public, max-age=300, stale-while-revalidate=600');
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      return res.status(200).send(spaHtml);
+    } catch (err) {
+      // Fallback to index.html if spa.html doesn't exist
+      const indexPath = path.join(__dirname, '..', 'dist', 'index.html');
+      const indexHtml = await fs.readFile(indexPath, 'utf-8');
+      res.setHeader('Cache-Control', 'public, max-age=300, stale-while-revalidate=600');
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      return res.status(200).send(indexHtml);
+    }
   }
 
-  // CRITICAL FIX: Cache for 1 hour with must-revalidate to prevent stale content
-  // Previous: s-maxage + stale-while-revalidate could serve 24h old content to bots
-  res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
+  // Log bot visits for debugging (only for actual bots now)
+  console.log(`[${botType.toUpperCase()}] ${req.method} ${req.url}`, {
+    timestamp: new Date().toISOString(),
+    query: req.query
+  });
 
-  // Vary on both encoding and language for proper cache segmentation
-  res.setHeader('Vary', 'Accept-Encoding, Accept-Language');
+  // Cache SSR responses for bots
+  res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800');
+
+  // Vary on both encoding and user-agent for proper cache segmentation
+  res.setHeader('Vary', 'Accept-Encoding, User-Agent');
 
   // Allow indexing by search engines with image preview
   res.setHeader('X-Robots-Tag', 'index, follow, max-image-preview:large');
