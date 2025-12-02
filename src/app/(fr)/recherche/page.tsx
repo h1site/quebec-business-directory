@@ -128,8 +128,17 @@ export default async function SearchPage({
 
       <main className="min-h-screen bg-gray-50 pt-16">
         {/* Search Header */}
-        <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-12">
-          <div className="max-w-4xl mx-auto px-4">
+        <section className="relative bg-gradient-to-br from-blue-900 to-blue-700 text-white py-12 overflow-hidden">
+          {/* Background Overlay */}
+          <div
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: 'url(/images/background/background-overlay.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+          <div className="relative z-10 max-w-4xl mx-auto px-4">
             <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">
               Rechercher une entreprise
             </h1>

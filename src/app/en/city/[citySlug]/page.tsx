@@ -128,8 +128,17 @@ export default async function CityPageEN({ params, searchParams }: Props) {
 
       <main className="min-h-screen bg-gray-50 pt-16">
         {/* Hero Header */}
-        <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-12">
-          <div className="max-w-6xl mx-auto px-4">
+        <section className="relative bg-gradient-to-br from-blue-900 to-blue-700 text-white py-12 overflow-hidden">
+          {/* Background Overlay */}
+          <div
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: 'url(/images/background/background-overlay.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+          <div className="relative z-10 max-w-6xl mx-auto px-4">
             {/* Breadcrumb */}
             <nav className="text-sm mb-4 flex items-center gap-2 text-blue-200">
               <Link href="/en" className="hover:text-white transition-colors">Home</Link>

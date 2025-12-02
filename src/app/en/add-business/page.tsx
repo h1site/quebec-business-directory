@@ -1496,13 +1496,13 @@ export default function AddBusinessPageEN() {
                 </div>
 
                 {/* Summary */}
-                <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                <div className="p-4 bg-white border border-gray-200 rounded-lg">
                   <h3 className="font-semibold text-gray-900 mb-3">Summary</h3>
-                  <div className="space-y-2 text-sm">
-                    <p><span className="text-gray-500">Name:</span> <span className="font-medium">{formData.name}</span></p>
-                    <p><span className="text-gray-500">Category:</span> <span className="font-medium">{categories.find(c => c.id === formData.main_category_id)?.label_en}</span></p>
-                    <p><span className="text-gray-500">City:</span> <span className="font-medium">{formData.city}, {formData.region}</span></p>
-                    <p><span className="text-gray-500">Contact:</span> <span className="font-medium">{formData.phone} | {formData.email}</span></p>
+                  <div className="space-y-2 text-sm text-gray-900">
+                    <p><span className="text-gray-500">Name:</span> <span className="font-medium text-gray-900">{formData.name}</span></p>
+                    <p><span className="text-gray-500">Category:</span> <span className="font-medium text-gray-900">{categories.find(c => c.id === formData.main_category_id)?.label_en}</span></p>
+                    <p><span className="text-gray-500">City:</span> <span className="font-medium text-gray-900">{formData.city}, {formData.region}</span></p>
+                    <p><span className="text-gray-500">Contact:</span> <span className="font-medium text-gray-900">{formData.phone} | {formData.email}</span></p>
                   </div>
                 </div>
 
