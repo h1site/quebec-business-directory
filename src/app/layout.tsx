@@ -89,20 +89,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-        {/* Google Analytics - G-67FQWQH0KL */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-67FQWQH0KL"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-67FQWQH0KL');
-          `}
-        </Script>
-        {/* Google Tag - G-NF84WEBS49 */}
+        {/* Google Tag (gtag.js) - Both IDs */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NF84WEBS49"
           strategy="afterInteractive"
@@ -113,6 +100,7 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-NF84WEBS49');
+            gtag('config', 'G-67FQWQH0KL');
           `}
         </Script>
       </head>
