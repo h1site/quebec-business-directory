@@ -1,0 +1,15 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="60" rx="8" fill="#667eea"/>
+
+  <!-- H1 -->
+  <text x="20" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white">H1</text>
+
+  <!-- Site -->
+  <text x="70" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="600" fill="white">site</text>
+
+  <!-- Dot accent -->
+  <circle cx="160" cy="25" r="4" fill="#fbbf24"/>
+  <circle cx="175" cy="25" r="4" fill="#fbbf24"/>
+  <circle cx="185" cy="25" r="4" fill="#fbbf24"/>
+</svg>
