@@ -31,11 +31,16 @@ async function searchBusinesses(query: string, page: number, category?: string, 
   const limit = 20
   const offset = (page - 1) * limit
 
+  // If no filters at all, don't run a query - show empty state
+  if (!query && !category && !city) {
+    return { businesses: [], total: 0, noQuery: true }
+  }
+
   // If we have a search query, use full-text search on search_vector
   if (query) {
     let queryBuilder = supabase
       .from('businesses')
-      .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'exact' })
+      .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'estimated' })
       .textSearch('search_vector', query, { type: 'websearch' })
       .not('slug', 'is', null)
       .not('city', 'is', null)
@@ -44,12 +49,11 @@ async function searchBusinesses(query: string, page: number, category?: string, 
       queryBuilder = queryBuilder.eq('main_category_slug', category)
     }
     if (city) {
-      // Format city name properly for exact match
       const citySearchTerm = city
         .split(' ')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
         .join(' ')
-      queryBuilder = queryBuilder.ilike('city', citySearchTerm)
+      queryBuilder = queryBuilder.ilike('city', `%${citySearchTerm}%`)
     }
 
     const { data, count, error } = await queryBuilder
@@ -64,10 +68,10 @@ async function searchBusinesses(query: string, page: number, category?: string, 
     return { businesses: data || [], total: count || 0 }
   }
 
-  // No search query - just apply filters
+  // No search query but has filters - apply them
   let queryBuilder = supabase
     .from('businesses')
-    .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'exact' })
+    .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'estimated' })
     .not('slug', 'is', null)
     .not('city', 'is', null)
 
@@ -75,12 +79,11 @@ async function searchBusinesses(query: string, page: number, category?: string, 
     queryBuilder = queryBuilder.eq('main_category_slug', category)
   }
   if (city) {
-    // Format city name properly for exact match
     const citySearchTerm = city
       .split(' ')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ')
-    queryBuilder = queryBuilder.ilike('city', citySearchTerm)
+    queryBuilder = queryBuilder.ilike('city', `%${citySearchTerm}%`)
   }
 
   const { data, count, error } = await queryBuilder
