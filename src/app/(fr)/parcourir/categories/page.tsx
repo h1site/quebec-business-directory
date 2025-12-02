@@ -4,6 +4,8 @@ import { createServiceClient } from '@/lib/supabase/server'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Toutes les catégories',
   description: 'Parcourez toutes les catégories d\'entreprises au Québec. Trouvez des restaurants, services professionnels, commerces et plus.',

@@ -4,6 +4,8 @@ import HeaderEN from '@/components/HeaderEN'
 import FooterEN from '@/components/FooterEN'
 import { toEnglishSlug, getCategoryIcon } from '@/lib/category-slugs'
 
+export const dynamic = 'force-dynamic'
+
 async function getStats() {
   const supabase = createServiceClient()
   const { count } = await supabase

@@ -5,6 +5,8 @@ import HeaderEN from '@/components/HeaderEN'
 import FooterEN from '@/components/FooterEN'
 import { toEnglishSlug, getCategoryIcon } from '@/lib/category-slugs'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'All Categories',
   description: 'Browse all business categories in Quebec. Find restaurants, professional services, retail stores, and more.',
