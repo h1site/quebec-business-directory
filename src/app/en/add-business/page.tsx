@@ -6,16 +6,18 @@ import { useRouter } from 'next/navigation'
 import { createBrowserClient } from '@supabase/ssr'
 
 interface Category {
-  id: number
+  id: string
   slug: string
+  label_fr?: string
   label_en: string
 }
 
 interface SubCategory {
-  id: number
+  id: string
   slug: string
+  label_fr?: string
   label_en: string
-  main_category_id: number
+  main_category_id: string
 }
 
 interface Region {
@@ -311,9 +313,9 @@ export default function AddBusinessPageEN() {
     show_address: true,
 
     // Step 5: Categories
-    main_category_id: null as number | null,
+    main_category_id: null as string | null,
     main_category_slug: '',
-    subcategory_id: null as number | null,
+    subcategory_id: null as string | null,
     subcategory_slug: '',
 
     // Step 5: Business Hours
@@ -359,19 +361,17 @@ export default function AddBusinessPageEN() {
     })
   }, [mounted, supabase])
 
-  // Fetch categories
+  // Fetch categories via API
   useEffect(() => {
     if (!mounted) return
 
     const fetchCategories = async () => {
       try {
-        const { data, error } = await supabase
-          .from('main_categories')
-          .select('id, slug, label_en')
-          .order('label_en')
+        const response = await fetch('/api/categories?lang=en')
+        const result = await response.json()
 
-        if (error) throw error
-        setCategories(data || [])
+        if (result.error) throw new Error(result.error)
+        setCategories(result.categories || [])
       } catch (error) {
         console.error('Error fetching categories:', error)
       } finally {
@@ -379,9 +379,9 @@ export default function AddBusinessPageEN() {
       }
     }
     fetchCategories()
-  }, [mounted, supabase])
+  }, [mounted])
 
-  // Fetch subcategories when category changes
+  // Fetch subcategories when category changes via API
   useEffect(() => {
     if (!mounted) return
 
@@ -392,21 +392,18 @@ export default function AddBusinessPageEN() {
       }
 
       try {
-        const { data, error } = await supabase
-          .from('sub_categories')
-          .select('id, slug, label_en, main_category_id')
-          .eq('main_category_id', formData.main_category_id)
-          .order('label_en')
+        const response = await fetch(`/api/categories?main_category_id=${formData.main_category_id}&lang=en`)
+        const result = await response.json()
 
-        if (error) throw error
-        setSubcategories(data || [])
+        if (result.error) throw new Error(result.error)
+        setSubcategories(result.subcategories || [])
       } catch (error) {
         console.error('Error fetching subcategories:', error)
         setSubcategories([])
       }
     }
     fetchSubcategories()
-  }, [mounted, formData.main_category_id, supabase])
+  }, [mounted, formData.main_category_id])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
@@ -432,12 +429,11 @@ export default function AddBusinessPageEN() {
       return
     }
 
-    const selectedId = parseInt(value)
-    const selectedCategory = categories.find(cat => cat.id === selectedId)
+    const selectedCategory = categories.find(cat => cat.id === value)
 
     setFormData(prev => ({
       ...prev,
-      main_category_id: selectedId,
+      main_category_id: value,
       main_category_slug: selectedCategory?.slug || '',
       subcategory_id: null,
       subcategory_slug: ''
@@ -445,12 +441,12 @@ export default function AddBusinessPageEN() {
   }
 
   const handleSubcategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedId = parseInt(e.target.value)
-    const selectedSub = subcategories.find(sub => sub.id === selectedId)
+    const value = e.target.value
+    const selectedSub = subcategories.find(sub => sub.id === value)
 
     setFormData(prev => ({
       ...prev,
-      subcategory_id: selectedId || null,
+      subcategory_id: value || null,
       subcategory_slug: selectedSub?.slug || ''
     }))
   }

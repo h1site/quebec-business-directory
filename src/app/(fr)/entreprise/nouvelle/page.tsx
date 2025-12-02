@@ -6,16 +6,18 @@ import { useRouter } from 'next/navigation'
 import { createBrowserClient } from '@supabase/ssr'
 
 interface Category {
-  id: number
+  id: string
   slug: string
   label_fr: string
+  label_en?: string
 }
 
 interface SubCategory {
-  id: number
+  id: string
   slug: string
   label_fr: string
-  main_category_id: number
+  label_en?: string
+  main_category_id: string
 }
 
 interface Region {
@@ -311,9 +313,9 @@ export default function AddBusinessPage() {
     show_address: true,
 
     // Step 5: Categories
-    main_category_id: null as number | null,
+    main_category_id: null as string | null,
     main_category_slug: '',
-    subcategory_id: null as number | null,
+    subcategory_id: null as string | null,
     subcategory_slug: '',
 
     // Step 5: Business Hours
@@ -359,22 +361,20 @@ export default function AddBusinessPage() {
     })
   }, [mounted, supabase])
 
-  // Fetch categories
+  // Fetch categories via API
   useEffect(() => {
     if (!mounted) return
 
     const fetchCategories = async () => {
       try {
-        console.log('📂 Fetching categories...')
-        const { data, error } = await supabase
-          .from('main_categories')
-          .select('id, slug, label_fr')
-          .order('label_fr')
+        console.log('📂 Fetching categories via API...')
+        const response = await fetch('/api/categories')
+        const result = await response.json()
 
-        console.log('📂 Categories result:', { data, error })
+        console.log('📂 Categories result:', result)
 
-        if (error) throw error
-        setCategories(data || [])
+        if (result.error) throw new Error(result.error)
+        setCategories(result.categories || [])
       } catch (error) {
         console.error('Error fetching categories:', error)
       } finally {
@@ -382,9 +382,9 @@ export default function AddBusinessPage() {
       }
     }
     fetchCategories()
-  }, [mounted, supabase])
+  }, [mounted])
 
-  // Fetch subcategories when category changes
+  // Fetch subcategories when category changes via API
   useEffect(() => {
     if (!mounted) return
 
@@ -397,23 +397,20 @@ export default function AddBusinessPage() {
       }
 
       try {
-        const { data, error } = await supabase
-          .from('sub_categories')
-          .select('id, slug, label_fr, main_category_id')
-          .eq('main_category_id', formData.main_category_id)
-          .order('label_fr')
+        const response = await fetch(`/api/categories?main_category_id=${formData.main_category_id}`)
+        const result = await response.json()
 
-        console.log('📦 Subcategories result:', { data, error })
+        console.log('📦 Subcategories result:', result)
 
-        if (error) throw error
-        setSubcategories(data || [])
+        if (result.error) throw new Error(result.error)
+        setSubcategories(result.subcategories || [])
       } catch (error) {
         console.error('Error fetching subcategories:', error)
         setSubcategories([])
       }
     }
     fetchSubcategories()
-  }, [mounted, formData.main_category_id, supabase])
+  }, [mounted, formData.main_category_id])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
@@ -439,14 +436,13 @@ export default function AddBusinessPage() {
       return
     }
 
-    const selectedId = parseInt(value)
-    const selectedCategory = categories.find(cat => cat.id === selectedId)
+    const selectedCategory = categories.find(cat => cat.id === value)
 
-    console.log('🏷️ Category change:', { value, selectedId, selectedCategory })
+    console.log('🏷️ Category change:', { value, selectedCategory })
 
     setFormData(prev => ({
       ...prev,
-      main_category_id: selectedId,
+      main_category_id: value,
       main_category_slug: selectedCategory?.slug || '',
       subcategory_id: null,
       subcategory_slug: ''
@@ -454,12 +450,12 @@ export default function AddBusinessPage() {
   }
 
   const handleSubcategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedId = parseInt(e.target.value)
-    const selectedSub = subcategories.find(sub => sub.id === selectedId)
+    const value = e.target.value
+    const selectedSub = subcategories.find(sub => sub.id === value)
 
     setFormData(prev => ({
       ...prev,
-      subcategory_id: selectedId || null,
+      subcategory_id: value || null,
       subcategory_slug: selectedSub?.slug || ''
     }))
   }
