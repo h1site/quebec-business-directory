@@ -5,22 +5,24 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { createBrowserClient } from '@supabase/ssr'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import HeaderEN from '@/components/HeaderEN'
+import FooterEN from '@/components/FooterEN'
 
-export default function LoginPage() {
+export default function RegisterPageEN() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleSignup = async () => {
     setLoading(true)
     setError('')
 
@@ -37,47 +39,63 @@ export default function LoginPage() {
         setLoading(false)
       }
     } catch (err) {
-      setError('Une erreur est survenue. Veuillez réessayer.')
+      setError('An error occurred. Please try again.')
       setLoading(false)
     }
   }
 
-  const handleEmailLogin = async (e: React.FormEvent) => {
+  const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
+    setSuccess('')
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.')
+      setLoading(false)
+      return
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.')
+      setLoading(false)
+      return
+    }
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
       })
 
       if (error) {
         setError(error.message)
         setLoading(false)
       } else {
-        router.push('/')
-        router.refresh()
+        setSuccess('Account created! Check your email to confirm your registration.')
+        setLoading(false)
       }
     } catch (err) {
-      setError('Une erreur est survenue. Veuillez réessayer.')
+      setError('An error occurred. Please try again.')
       setLoading(false)
     }
   }
 
   return (
     <>
-      <Header />
+      <HeaderEN />
 
       <main className="min-h-screen bg-gray-50 pt-16 flex items-center justify-center py-12">
         <div className="max-w-md w-full mx-4">
           {/* Logo */}
           <div className="text-center mb-8">
-            <Link href="/" className="inline-block">
+            <Link href="/en" className="inline-block">
               <Image
                 src="/images/logos/logo.webp"
-                alt="Registre du Québec"
+                alt="Quebec Business Registry"
                 width={180}
                 height={60}
                 className="mx-auto"
@@ -85,13 +103,13 @@ export default function LoginPage() {
             </Link>
           </div>
 
-          {/* Login Card */}
+          {/* Signup Card */}
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <h1 className="text-2xl font-bold text-gray-900 text-center mb-2">
-              Connexion
+              Create an account
             </h1>
-            <p className="text-gray-600 text-center mb-6">
-              Accédez à votre compte pour gérer vos fiches d&apos;entreprise
+            <p className="text-gray-600 text-center mb-8">
+              Join thousands of Quebec entrepreneurs
             </p>
 
             {error && (
@@ -100,10 +118,16 @@ export default function LoginPage() {
               </div>
             )}
 
-            {/* Google Login Button */}
+            {success && (
+              <div className="bg-green-50 text-green-700 px-4 py-3 rounded-lg mb-6 text-sm">
+                {success}
+              </div>
+            )}
+
+            {/* Google Signup Button */}
             <button
               type="button"
-              onClick={handleGoogleLogin}
+              onClick={handleGoogleSignup}
               disabled={loading}
               className="w-full py-3 px-4 border-2 border-gray-200 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 hover:border-gray-300 transition-all font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -117,7 +141,7 @@ export default function LoginPage() {
                   <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                 </svg>
               )}
-              Continuer avec Google
+              Continue with Google
             </button>
 
             <div className="relative my-6">
@@ -125,15 +149,15 @@ export default function LoginPage() {
                 <div className="w-full border-t border-gray-200"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-3 bg-white text-gray-500">ou avec email</span>
+                <span className="px-3 bg-white text-gray-500">or with email</span>
               </div>
             </div>
 
-            {/* Email Login Form */}
-            <form onSubmit={handleEmailLogin} className="space-y-4">
+            {/* Email Signup Form */}
+            <form onSubmit={handleEmailSignup} className="space-y-4">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Adresse courriel
+                  Email address
                 </label>
                 <input
                   type="email"
@@ -142,13 +166,13 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 bg-white"
-                  placeholder="votre@email.com"
+                  placeholder="your@email.com"
                 />
               </div>
 
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                  Mot de passe
+                  Password
                 </label>
                 <input
                   type="password"
@@ -156,6 +180,23 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  minLength={6}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 bg-white"
+                  placeholder="••••••••"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                  Confirm password
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  minLength={6}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 bg-white"
                   placeholder="••••••••"
                 />
@@ -166,44 +207,55 @@ export default function LoginPage() {
                 disabled={loading}
                 className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? 'Connexion...' : 'Se connecter'}
+                {loading ? 'Creating account...' : 'Create my account'}
               </button>
             </form>
 
+            <p className="mt-6 text-center text-sm text-gray-500">
+              By creating an account, you agree to our{' '}
+              <Link href="/en/terms-of-use" className="text-blue-600 hover:underline">
+                terms of use
+              </Link>{' '}
+              and our{' '}
+              <Link href="/en/privacy-policy" className="text-blue-600 hover:underline">
+                privacy policy
+              </Link>
+            </p>
+
             <p className="mt-6 text-center text-gray-600">
-              Pas encore de compte?{' '}
-              <Link href="/inscription" className="text-blue-600 hover:underline font-medium">
-                Créer un compte
+              Already have an account?{' '}
+              <Link href="/en/login" className="text-blue-600 hover:underline font-medium">
+                Log in
               </Link>
             </p>
           </div>
 
           {/* Benefits */}
-          <div className="mt-8 bg-blue-50 rounded-xl p-6">
-            <h2 className="font-semibold text-gray-900 mb-3">Avantages d&apos;un compte</h2>
+          <div className="mt-8 bg-green-50 rounded-xl p-6">
+            <h2 className="font-semibold text-gray-900 mb-3">100% free registration</h2>
             <ul className="space-y-2 text-sm text-gray-700">
               <li className="flex items-center gap-2">
                 <span className="text-green-600">✓</span>
-                Réclamez et gérez votre fiche d&apos;entreprise
+                Create your profile in seconds
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-600">✓</span>
-                Mettez à jour vos informations en temps réel
+                Add or claim your business
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-600">✓</span>
-                Ajoutez des photos et une description
+                No hidden fees or commitment
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-600">✓</span>
-                Répondez aux avis des clients
+                Email support included
               </li>
             </ul>
           </div>
         </div>
       </main>
 
-      <Footer />
+      <FooterEN />
     </>
   )
 }
