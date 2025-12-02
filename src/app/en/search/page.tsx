@@ -36,8 +36,9 @@ async function searchBusinesses(query: string, page: number, category?: string, 
     return { businesses: [], total: 0, noQuery: true }
   }
 
-  // If we have a search query, use full-text search on search_vector
+  // If we have a search query
   if (query) {
+    // First try full-text search
     let queryBuilder = supabase
       .from('businesses')
       .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'estimated' })
@@ -60,12 +61,40 @@ async function searchBusinesses(query: string, page: number, category?: string, 
       .order('google_rating', { ascending: false, nullsFirst: false })
       .range(offset, offset + limit - 1)
 
-    if (error) {
-      console.error('Search error:', error)
+    // If full-text search returns results, use them
+    if (!error && data && data.length > 0) {
+      return { businesses: data, total: count || 0 }
+    }
+
+    // Fallback: search by name, description, or category with ILIKE (partial match)
+    let fallbackBuilder = supabase
+      .from('businesses')
+      .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'estimated' })
+      .not('slug', 'is', null)
+      .not('city', 'is', null)
+      .or(`name.ilike.%${query}%,description.ilike.%${query}%,main_category_slug.ilike.%${query}%`)
+
+    if (category) {
+      fallbackBuilder = fallbackBuilder.eq('main_category_slug', category)
+    }
+    if (city) {
+      const citySearchTerm = city
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ')
+      fallbackBuilder = fallbackBuilder.ilike('city', `%${citySearchTerm}%`)
+    }
+
+    const fallbackResult = await fallbackBuilder
+      .order('google_rating', { ascending: false, nullsFirst: false })
+      .range(offset, offset + limit - 1)
+
+    if (fallbackResult.error) {
+      console.error('Fallback search error:', fallbackResult.error)
       return { businesses: [], total: 0 }
     }
 
-    return { businesses: data || [], total: count || 0 }
+    return { businesses: fallbackResult.data || [], total: fallbackResult.count || 0 }
   }
 
   // No search query but has filters - apply them
