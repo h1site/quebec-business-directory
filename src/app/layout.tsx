@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 
 const inter = Inter({
@@ -88,6 +89,32 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        {/* Google Analytics - G-67FQWQH0KL */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-67FQWQH0KL"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-67FQWQH0KL');
+          `}
+        </Script>
+        {/* Google Tag - G-NF84WEBS49 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-NF84WEBS49"
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-NF84WEBS49');
+          `}
+        </Script>
       </head>
       <body className={`${inter.variable} font-sans antialiased bg-gray-50 text-gray-900`}>
         {children}
