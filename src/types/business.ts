@@ -71,6 +71,13 @@ export interface Business {
   show_address: boolean
   opening_hours: Record<string, { open: string; close: string; closed?: boolean }> | null
   google_place_url: string | null
+  // AI enrichment fields
+  ai_description: string | null
+  ai_description_en: string | null
+  ai_services: string[] | null
+  ai_services_en: string[] | null
+  ai_faq: Array<{ q: string; a: string; q_en: string; a_en: string }> | null
+  ai_enriched_at: string | null
 }
 
 export interface Category {
