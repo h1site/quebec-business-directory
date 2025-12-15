@@ -101,19 +101,104 @@ async function callOllama(prompt: string): Promise<string> {
   return data.response
 }
 
+// Detect business type from name keywords
+function detectBusinessType(name: string): { typeFr: string; typeEn: string } | null {
+  const nameUpper = name.toUpperCase()
+
+  const keywords: Array<{ patterns: string[]; typeFr: string; typeEn: string }> = [
+    // Manufacturing / Industrial
+    { patterns: ['PLASTIQUE', 'PLASTIC', 'MOULE', 'MOLD', 'INJECTION'], typeFr: 'fabrication de plastiques et moules', typeEn: 'plastics and mold manufacturing' },
+    { patterns: ['METAL', 'ACIER', 'STEEL', 'ALUMINIUM', 'ALUMINUM', 'SOUDURE', 'WELDING'], typeFr: 'métallurgie et fabrication métallique', typeEn: 'metal fabrication and metalworking' },
+    { patterns: ['USINAGE', 'MACHINING', 'CNC', 'TOURNAGE'], typeFr: 'usinage et fabrication de pièces', typeEn: 'machining and parts manufacturing' },
+    { patterns: ['BETON', 'CONCRETE', 'CIMENT', 'CEMENT'], typeFr: 'fabrication de béton et ciment', typeEn: 'concrete and cement manufacturing' },
+    { patterns: ['BOIS', 'WOOD', 'LUMBER', 'SCIERIE', 'SAWMILL', 'MENUISERIE'], typeFr: 'transformation du bois et menuiserie', typeEn: 'woodworking and lumber' },
+    { patterns: ['PEINTURE', 'PAINT', 'COATING', 'REVETEMENT'], typeFr: 'peinture et revêtements', typeEn: 'painting and coatings' },
+    { patterns: ['EMBALLAGE', 'PACKAGING', 'CARTON', 'CARDBOARD'], typeFr: 'emballage et conditionnement', typeEn: 'packaging' },
+
+    // Construction
+    { patterns: ['CONSTRUCTION', 'BATIMENT', 'BUILDING'], typeFr: 'construction et bâtiment', typeEn: 'construction and building' },
+    { patterns: ['PLOMBERIE', 'PLUMBING', 'PLOMBIER'], typeFr: 'plomberie', typeEn: 'plumbing' },
+    { patterns: ['ELECTRIQUE', 'ELECTRIC', 'ELECTRICIEN'], typeFr: 'électricité', typeEn: 'electrical services' },
+    { patterns: ['EXCAVATION', 'TERRASSEMENT', 'EARTHWORK'], typeFr: 'excavation et terrassement', typeEn: 'excavation and earthwork' },
+    { patterns: ['TOITURE', 'ROOFING', 'COUVREUR'], typeFr: 'toiture et couverture', typeEn: 'roofing' },
+    { patterns: ['PAYSAGEMENT', 'LANDSCAPING', 'PAYSAGISTE'], typeFr: 'paysagement et aménagement', typeEn: 'landscaping' },
+
+    // Transport
+    { patterns: ['TRANSPORT', 'CAMIONNAGE', 'TRUCKING', 'LOGISTIQUE', 'LOGISTICS'], typeFr: 'transport et logistique', typeEn: 'transport and logistics' },
+    { patterns: ['DEMENAGEMENT', 'MOVING'], typeFr: 'déménagement', typeEn: 'moving services' },
+
+    // Food
+    { patterns: ['BOULANGERIE', 'BAKERY', 'PATISSERIE'], typeFr: 'boulangerie-pâtisserie', typeEn: 'bakery' },
+    { patterns: ['RESTAURANT', 'RESTO', 'CAFE', 'BISTRO', 'PIZZERIA', 'TRAITEUR', 'CATERING'], typeFr: 'restauration', typeEn: 'restaurant and food service' },
+    { patterns: ['EPICERIE', 'GROCERY', 'MARCHE', 'MARKET', 'ALIMENTATION'], typeFr: 'alimentation et épicerie', typeEn: 'grocery and food retail' },
+    { patterns: ['BOUCHERIE', 'BUTCHER', 'VIANDE', 'MEAT'], typeFr: 'boucherie', typeEn: 'butcher shop' },
+
+    // Auto
+    { patterns: ['AUTO', 'GARAGE', 'MECANIQUE', 'MECHANIC', 'CARROSSERIE', 'BODY SHOP'], typeFr: 'automobile et mécanique', typeEn: 'automotive and mechanics' },
+    { patterns: ['PNEU', 'TIRE'], typeFr: 'pneus et automobile', typeEn: 'tires and automotive' },
+
+    // Health
+    { patterns: ['DENTAIRE', 'DENTAL', 'DENTISTE', 'DENTIST'], typeFr: 'soins dentaires', typeEn: 'dental care' },
+    { patterns: ['CLINIQUE', 'CLINIC', 'MEDICAL', 'SANTE', 'HEALTH'], typeFr: 'services de santé', typeEn: 'health services' },
+    { patterns: ['PHARMACIE', 'PHARMACY'], typeFr: 'pharmacie', typeEn: 'pharmacy' },
+    { patterns: ['OPTIQUE', 'OPTICAL', 'LUNETTE', 'EYEWEAR'], typeFr: 'optique et lunetterie', typeEn: 'optical and eyewear' },
+
+    // Professional
+    { patterns: ['AVOCAT', 'LAWYER', 'JURIDIQUE', 'LEGAL', 'NOTAIRE', 'NOTARY'], typeFr: 'services juridiques', typeEn: 'legal services' },
+    { patterns: ['COMPTABLE', 'ACCOUNTING', 'CPA', 'FISCALITE'], typeFr: 'comptabilité et fiscalité', typeEn: 'accounting and tax services' },
+    { patterns: ['INGENIEUR', 'ENGINEER', 'ENGINEERING'], typeFr: 'services d\'ingénierie', typeEn: 'engineering services' },
+    { patterns: ['ARCHITECTE', 'ARCHITECT'], typeFr: 'architecture', typeEn: 'architecture' },
+
+    // Tech (real tech)
+    { patterns: ['INFORMATIQUE', 'SOFTWARE', 'LOGICIEL', 'DIGITAL', 'NUMERIQUE', 'WEB', 'TECH'], typeFr: 'services informatiques', typeEn: 'IT services' },
+
+    // Retail
+    { patterns: ['QUINCAILLERIE', 'HARDWARE'], typeFr: 'quincaillerie', typeEn: 'hardware store' },
+    { patterns: ['MEUBLE', 'FURNITURE'], typeFr: 'meubles et ameublement', typeEn: 'furniture' },
+    { patterns: ['VETEMENT', 'CLOTHING', 'MODE', 'FASHION', 'BOUTIQUE'], typeFr: 'vêtements et mode', typeEn: 'clothing and fashion' },
+
+    // Services
+    { patterns: ['NETTOYAGE', 'CLEANING', 'ENTRETIEN', 'MAINTENANCE'], typeFr: 'nettoyage et entretien', typeEn: 'cleaning and maintenance' },
+    { patterns: ['SECURITE', 'SECURITY'], typeFr: 'services de sécurité', typeEn: 'security services' },
+    { patterns: ['GARDERIE', 'DAYCARE', 'CPE'], typeFr: 'services de garde', typeEn: 'childcare services' },
+    { patterns: ['SALON', 'COIFFURE', 'HAIR', 'ESTHETIQUE', 'SPA', 'BEAUTE'], typeFr: 'beauté et soins personnels', typeEn: 'beauty and personal care' },
+
+    // Agriculture
+    { patterns: ['FERME', 'FARM', 'AGRICOLE', 'AGRICULTURAL', 'ELEVAGE'], typeFr: 'agriculture et élevage', typeEn: 'agriculture and farming' },
+  ]
+
+  for (const { patterns, typeFr, typeEn } of keywords) {
+    if (patterns.some(p => nameUpper.includes(p))) {
+      return { typeFr, typeEn }
+    }
+  }
+
+  return null
+}
+
 // Generate enrichment prompt
 function createEnrichmentPrompt(business: Business): string {
+  // PRIORITY 1: Detect business type from name
+  const detectedType = detectBusinessType(business.name)
+
+  // PRIORITY 2: Use category as fallback
   const categoryEn = business.main_category_slug
     ? CATEGORY_TRANSLATIONS[business.main_category_slug] || business.main_category_slug
     : 'Business'
 
   const categoryFr = business.main_category_slug?.replace(/-/g, ' ') || 'entreprise'
 
+  // Use detected type if found, otherwise use category
+  const businessTypeFr = detectedType?.typeFr || categoryFr
+  const businessTypeEn = detectedType?.typeEn || categoryEn
+
   return `Tu es un rédacteur SEO expert pour un annuaire d'entreprises au Québec. Génère du contenu unique et informatif pour cette entreprise.
+
+TRÈS IMPORTANT: Analyse le NOM de l'entreprise pour déterminer son activité réelle. Le nom contient souvent des indices sur le secteur d'activité.
 
 ENTREPRISE:
 - Nom: ${business.name}
-- Catégorie: ${categoryFr} (${categoryEn})
+- Type d'activité détecté: ${businessTypeFr} (${businessTypeEn})
 - Ville: ${business.city || 'Québec'}
 - Région: ${business.region || 'Québec'}
 ${business.description ? `- Description existante: ${business.description}` : ''}
@@ -122,24 +207,23 @@ ${business.products_services ? `- Produits/Services: ${business.products_service
 
 GÉNÈRE EN FORMAT JSON STRICT (pas de texte avant ou après):
 {
-  "description_fr": "Description détaillée de 150-200 mots en français, mentionnant l'entreprise, ses services, sa localisation et sa valeur ajoutée pour les clients québécois",
+  "description_fr": "Description détaillée de 150-200 mots en français. ANALYSE LE NOM pour comprendre l'activité réelle. Par exemple 'PLASTIQUES XYZ' = fabricant de plastiques, 'BOULANGERIE ABC' = boulangerie, etc.",
   "description_en": "English translation of the description, 150-200 words",
-  "services_fr": ["service 1", "service 2", "service 3", "service 4", "service 5"],
-  "services_en": ["service 1 EN", "service 2 EN", "service 3 EN", "service 4 EN", "service 5 EN"],
+  "services_fr": ["5 services SPÉCIFIQUES et RÉALISTES pour ce type d'entreprise basés sur le NOM"],
+  "services_en": ["5 services in English matching the French ones"],
   "faq": [
-    {"q": "Question fréquente 1 en français?", "a": "Réponse en français", "q_en": "FAQ 1 in English?", "a_en": "Answer in English"},
-    {"q": "Question fréquente 2 en français?", "a": "Réponse en français", "q_en": "FAQ 2 in English?", "a_en": "Answer in English"},
-    {"q": "Question fréquente 3 en français?", "a": "Réponse en français", "q_en": "FAQ 3 in English?", "a_en": "Answer in English"}
+    {"q": "Question fréquente 1?", "a": "Réponse", "q_en": "FAQ 1?", "a_en": "Answer"},
+    {"q": "Question fréquente 2?", "a": "Réponse", "q_en": "FAQ 2?", "a_en": "Answer"},
+    {"q": "Question fréquente 3?", "a": "Réponse", "q_en": "FAQ 3?", "a_en": "Answer"}
   ]
 }
 
-IMPORTANT:
-- Le contenu doit être UNIQUE et spécifique à cette entreprise
-- Utilise un ton professionnel mais accessible
-- Inclus des mots-clés SEO naturellement
-- Les services doivent être réalistes pour ce type d'entreprise
-- Les FAQ doivent répondre aux vraies questions des clients
-- Retourne SEULEMENT le JSON, rien d'autre`
+RÈGLES CRITIQUES:
+1. ANALYSE LE NOM DE L'ENTREPRISE pour déterminer son activité (ex: "PLASTIQUES" = plastiques, "TOITURE" = toiture)
+2. IGNORE la catégorie si elle ne correspond pas au nom
+3. Les services doivent correspondre à l'activité RÉELLE déduite du nom
+4. Par exemple "PLASTIQUES LR INC" devrait avoir des services comme: "Moulage par injection", "Fabrication de pièces plastiques", etc.
+5. Retourne SEULEMENT le JSON, rien d'autre`
 }
 
 // Parse Ollama response

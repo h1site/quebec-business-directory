@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createServiceClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 import { generateSlug } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
@@ -8,7 +8,14 @@ export const revalidate = 3600 // Revalidate every hour
 export async function GET() {
   const baseUrl = 'https://registreduquebec.com'
 
-  const supabase = createServiceClient()
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseKey) {
+    return new NextResponse('Missing Supabase config', { status: 500 })
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseKey)
 
   // Get all businesses with AI enrichment
   const { data: businesses, error } = await supabase
