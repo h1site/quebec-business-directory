@@ -44,6 +44,8 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: [
+      'https://registreduquebec.com/sitemap-reviews.xml',
+      'https://registreduquebec.com/sitemap-enrichi.xml',
       'https://registreduquebec.com/sitemapindex.xml',
       'https://registreduquebec.com/sitemap-static.xml',
       'https://registreduquebec.com/sitemap-categories.xml',
