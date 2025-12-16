@@ -60,9 +60,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const title = `${business.name} - ${business.city}`
-  const description =
-    business.description?.slice(0, 160) ||
-    `${business.name} à ${business.city}. Trouvez les coordonnées, avis et informations complètes.`
+
+  // Truncate description properly (at word boundary, max 155 chars + "...")
+  const truncateDescription = (text: string, maxLen = 155): string => {
+    if (text.length <= maxLen) return text
+    const truncated = text.slice(0, maxLen)
+    const lastSpace = truncated.lastIndexOf(' ')
+    return (lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated) + '...'
+  }
+
+  const description = business.ai_description
+    ? truncateDescription(business.ai_description)
+    : business.description
+      ? truncateDescription(business.description)
+      : `${business.name} à ${business.city}. Trouvez les coordonnées, avis et informations complètes.`
 
   const canonical = `https://registreduquebec.com/${categorySlug}/${citySlug}/${businessSlug}`
   const enCategorySlug = getCategorySlug(categorySlug, 'en')
