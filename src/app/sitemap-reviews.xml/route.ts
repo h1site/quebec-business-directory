@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { generateSlug } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600 // Revalidate every hour
@@ -21,11 +20,10 @@ export async function GET() {
   // Limit to 50,000 (sitemap limit) - prioritize businesses with most reviews
   const { data: businesses, error } = await supabase
     .from('businesses')
-    .select('slug, city, main_category_slug, google_rating, google_reviews_count, updated_at')
+    .select('slug, google_rating, google_reviews_count, updated_at')
     .not('google_rating', 'is', null)
     .gt('google_reviews_count', 0)
     .not('slug', 'is', null)
-    .not('city', 'is', null)
     .order('google_reviews_count', { ascending: false })
     .limit(50000)
 
@@ -34,8 +32,6 @@ export async function GET() {
   }
 
   const urls = businesses.map((business) => {
-    const citySlug = generateSlug(business.city || '')
-    const categorySlug = business.main_category_slug || 'entreprise'
     const lastmod = business.updated_at?.split('T')[0] || new Date().toISOString().split('T')[0]
 
     // Higher priority for businesses with more reviews
@@ -47,8 +43,9 @@ export async function GET() {
     else if (reviewCount >= 10) priority = 0.75
     else if (reviewCount >= 5) priority = 0.7
 
+    // Simplified URL: /entreprise/{slug}
     return `  <url>
-    <loc>${baseUrl}/${categorySlug}/${citySlug}/${business.slug}</loc>
+    <loc>${baseUrl}/entreprise/${business.slug}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>${priority}</priority>

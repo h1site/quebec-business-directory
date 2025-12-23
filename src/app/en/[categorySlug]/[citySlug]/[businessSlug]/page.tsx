@@ -1,10 +1,5 @@
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { createServiceClient } from '@/lib/supabase/server'
-import { generateSlug, getCategorySlug } from '@/lib/utils'
-import { generateBusinessSchema, generateFAQSchema, generateBreadcrumbSchema } from '@/lib/schema'
-import type { Business } from '@/types/business'
-import BusinessDetailsEN from '@/components/BusinessDetailsEN'
 
 interface Props {
   params: Promise<{
@@ -14,122 +9,24 @@ interface Props {
   }>
 }
 
-export const revalidate = 86400
+// Redirect old URLs to new simplified structure
+export default async function BusinessPageRedirectEN({ params }: Props) {
+  const { businessSlug } = await params
 
-async function getBusiness(slug: string): Promise<Business | null> {
-  const supabase = createServiceClient()
-  const { data, error } = await supabase
-    .from('businesses')
-    .select('*')
-    .eq('slug', slug)
-    .single()
-
-  if (error || !data) return null
-  return data as Business
-}
-
-async function getRelatedBusinesses(business: Business): Promise<Business[]> {
-  if (!business.region) return []
-
+  // Verify business exists before redirecting
   const supabase = createServiceClient()
   const { data } = await supabase
     .from('businesses')
-    .select('id, slug, name, city, region, main_category_slug, google_rating, description')
-    .eq('region', business.region)
-    .neq('id', business.id)
-    .not('slug', 'is', null)
-    .not('city', 'is', null)
-    .limit(50)
+    .select('slug')
+    .eq('slug', businessSlug)
+    .single()
 
-  if (!data) return []
-
-  const shuffled = data.sort(() => 0.5 - Math.random())
-  return shuffled.slice(0, 3) as Business[]
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { businessSlug, categorySlug, citySlug } = await params
-  const business = await getBusiness(businessSlug)
-
-  if (!business) {
-    return {
-      title: 'Business Not Found',
-    }
-  }
-
-  const title = `${business.name} - ${business.city}`
-
-  // Truncate description properly (at word boundary, max 155 chars + "...")
-  const truncateDescription = (text: string, maxLen = 155): string => {
-    if (text.length <= maxLen) return text
-    const truncated = text.slice(0, maxLen)
-    const lastSpace = truncated.lastIndexOf(' ')
-    return (lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated) + '...'
-  }
-
-  const description = business.ai_description_en
-    ? truncateDescription(business.ai_description_en)
-    : business.description
-      ? truncateDescription(business.description)
-      : `${business.name} in ${business.city}. Find contact info, reviews and complete information.`
-
-  const canonical = `https://registreduquebec.com/en/${categorySlug}/${citySlug}/${businessSlug}`
-  const frCategorySlug = getCategorySlug(categorySlug, 'fr')
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title: `${business.name} - ${business.city} | Quebec Registry`,
-      description,
-      type: 'website',
-      locale: 'en_CA',
-      url: canonical,
-      images: business.logo_url
-        ? [{ url: business.logo_url, alt: `${business.name} logo` }]
-        : undefined,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-    alternates: {
-      canonical,
-      languages: {
-        'fr-CA': `/${frCategorySlug}/${citySlug}/${businessSlug}`,
-        'en-CA': `/en/${categorySlug}/${citySlug}/${businessSlug}`,
-      },
-    },
-  }
-}
-
-export default async function BusinessPageEN({ params }: Props) {
-  const { businessSlug, categorySlug, citySlug } = await params
-  const business = await getBusiness(businessSlug)
-
-  if (!business) {
+  if (!data) {
+    // Business not found, let Next.js handle 404
+    const { notFound } = await import('next/navigation')
     notFound()
   }
 
-  const relatedBusinesses = await getRelatedBusinesses(business)
-
-  const businessSchema = generateBusinessSchema(business, true)
-  const faqSchema = generateFAQSchema(business, true)
-  const breadcrumbSchema = generateBreadcrumbSchema(business, categorySlug, citySlug, true)
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [businessSchema, faqSchema, breadcrumbSchema],
-  }
-
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <BusinessDetailsEN business={business} relatedBusinesses={relatedBusinesses} />
-    </>
-  )
+  // 301 redirect to new simplified URL
+  redirect(`/company/${businessSlug}`)
 }

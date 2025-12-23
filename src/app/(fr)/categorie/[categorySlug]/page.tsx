@@ -183,14 +183,12 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             {businesses.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {businesses.map((biz) => {
-                  const citySlug = generateSlug(biz.city || '')
-                  const catSlug = biz.main_category_slug || 'entreprise'
                   const hasContact = biz.phone || biz.website
 
                   return (
                     <Link
                       key={biz.id}
-                      href={`/${catSlug}/${citySlug}/${biz.slug}`}
+                      href={`/entreprise/${biz.slug}`}
                       className="bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 transition-all group overflow-hidden"
                     >
                       <div className="p-6">

@@ -113,9 +113,7 @@ export default function MyReviewsPage() {
         <div className="space-y-4">
           {reviews.map((review) => {
             const business = review.businesses
-            const citySlug = generateSlug(business?.city || '')
-            const catSlug = business?.main_category_slug || 'entreprise'
-            const businessUrl = business ? `/${catSlug}/${citySlug}/${business.slug}` : '#'
+            const businessUrl = business ? `/entreprise/${business.slug}` : '#'
 
             return (
               <div

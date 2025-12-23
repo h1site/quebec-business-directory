@@ -417,7 +417,7 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                   <h3 className="text-lg font-bold text-gray-900 mb-4">Share</h3>
                   <div className="flex gap-3">
                     <a
-                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://registreduquebec.com/en/${categorySlug}/${citySlug}/${business.slug}`)}`}
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://registreduquebec.com/company/${business.slug}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 py-2 bg-[#1877f2] text-white rounded-lg text-center text-sm font-medium hover:opacity-90 transition-opacity"
@@ -425,7 +425,7 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                       Facebook
                     </a>
                     <a
-                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://registreduquebec.com/en/${categorySlug}/${citySlug}/${business.slug}`)}&text=${encodeURIComponent(`Discover ${business.name} in ${business.city}`)}`}
+                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://registreduquebec.com/company/${business.slug}`)}&text=${encodeURIComponent(`Discover ${business.name} in ${business.city}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 py-2 bg-black text-white rounded-lg text-center text-sm font-medium hover:opacity-90 transition-opacity"
@@ -448,12 +448,10 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {relatedBusinesses.map((biz) => {
-                  const bizCitySlug = generateSlug(biz.city || '')
-                  const bizCatSlug = biz.main_category_slug || 'business'
                   return (
                     <Link
                       key={biz.id}
-                      href={`/en/${bizCatSlug}/${bizCitySlug}/${biz.slug}`}
+                      href={`/company/${biz.slug}`}
                       className="bg-white rounded-xl p-6 shadow-sm hover:shadow-lg transition-shadow"
                     >
                       <h3 className="font-bold text-gray-900 mb-2 line-clamp-2">{biz.name}</h3>

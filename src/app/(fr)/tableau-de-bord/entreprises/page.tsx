@@ -112,9 +112,7 @@ export default function MyBusinessesPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {businesses.map((biz) => {
-                  const citySlug = generateSlug(biz.city)
-                  const catSlug = biz.main_category_slug || 'entreprise'
-                  const businessUrl = `/${catSlug}/${citySlug}/${biz.slug}`
+                  const businessUrl = `/entreprise/${biz.slug}`
 
                   return (
                     <tr key={biz.id} className="hover:bg-gray-50">

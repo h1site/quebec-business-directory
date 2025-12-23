@@ -1,5 +1,4 @@
 import { createServiceClient } from '@/lib/supabase/server'
-import { categorySlugsFrToEn } from '@/lib/category-slugs'
 
 export function generateSlug(text: string): string {
   if (!text) return ''
@@ -22,9 +21,8 @@ export async function getBusinessesSitemapXml(
 
   let query = supabase
     .from('businesses')
-    .select('slug, city, main_category_slug, updated_at')
+    .select('slug, updated_at')
     .not('slug', 'is', null)
-    .not('city', 'is', null)
 
   if (maxRating < 5) {
     query = query.gte('google_rating', minRating).lt('google_rating', maxRating)
@@ -39,13 +37,11 @@ export async function getBusinessesSitemapXml(
   const urls: string[] = []
 
   for (const biz of businesses || []) {
-    const citySlug = generateSlug(biz.city || '')
-    const catSlug = biz.main_category_slug || 'entreprise'
-    const enCatSlug = categorySlugsFrToEn[catSlug] || catSlug
     const lastMod = biz.updated_at ? new Date(biz.updated_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]
 
+    // Simplified URL: /entreprise/{slug}
     urls.push(`  <url>
-    <loc>${baseUrl}/${catSlug}/${citySlug}/${biz.slug}</loc>
+    <loc>${baseUrl}/entreprise/${biz.slug}</loc>
     <lastmod>${lastMod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

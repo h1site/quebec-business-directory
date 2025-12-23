@@ -46,14 +46,7 @@ export const metadata: Metadata = {
     siteName: 'Registre du Québec',
     title: 'Registre des entreprises du Québec - Plus de 600 000 entreprises',
     description: 'L\'annuaire le plus complet des entreprises québécoises. Trouvez coordonnées, avis et informations pour toutes les régions.',
-    images: [
-      {
-        url: '/og-default.svg',
-        width: 1200,
-        height: 630,
-        alt: 'Registre des entreprises du Québec - Annuaire complet',
-      },
-    ],
+    // Image OG générée dynamiquement via opengraph-image.tsx (format PNG)
   },
   twitter: {
     card: 'summary_large_image',
@@ -72,6 +65,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
+    google: '', // TODO: Add Google Search Console verification code
     other: {
       'msvalidate.01': '3BDF3C55AED4D0F84C471053DD0106CF',
     },

@@ -172,7 +172,6 @@ export default async function CityPageEN({ params, searchParams }: Props) {
             {(businesses || []).length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {(businesses || []).map((biz) => {
-                  const bizCitySlug = generateSlug(biz.city || '')
                   const catSlug = biz.main_category_slug || 'business'
                   const icon = categoryIcons[catSlug] || '📁'
                   const hasContact = biz.phone || biz.website
@@ -180,7 +179,7 @@ export default async function CityPageEN({ params, searchParams }: Props) {
                   return (
                     <Link
                       key={biz.id}
-                      href={`/en/${catSlug}/${bizCitySlug}/${biz.slug}`}
+                      href={`/company/${biz.slug}`}
                       className="bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 transition-all group overflow-hidden"
                     >
                       <div className="p-6">

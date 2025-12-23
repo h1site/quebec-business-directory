@@ -278,14 +278,12 @@ export default async function SearchPage({
             {businesses.length > 0 ? (
               <div className="space-y-4">
                 {businesses.map((biz) => {
-                  const citySlug = generateSlug(biz.city || '')
-                  const catSlug = biz.main_category_slug || 'entreprise'
                   const hasContact = biz.phone || biz.website
 
                   return (
                     <Link
                       key={biz.id}
-                      href={`/${catSlug}/${citySlug}/${biz.slug}`}
+                      href={`/entreprise/${biz.slug}`}
                       className="block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all border border-gray-100 overflow-hidden group"
                     >
                       <div className="p-6">
