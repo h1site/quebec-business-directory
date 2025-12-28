@@ -1,5 +1,3 @@
-'use client'
-
 import type { Business } from '@/types/business'
 import Link from 'next/link'
 import Image from 'next/image'
