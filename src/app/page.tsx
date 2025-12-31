@@ -7,6 +7,7 @@ import {
   CitiesSection,
   StatsSection,
   AboutSection,
+  FeaturedBusinessesSection,
 } from '@/components/home'
 
 export const dynamic = 'force-dynamic'
@@ -28,10 +29,24 @@ async function getCategories() {
   return data || []
 }
 
+async function getFeaturedBusinesses() {
+  const supabase = createServiceClient()
+  const { data } = await supabase
+    .from('businesses')
+    .select('id, name, slug, city, google_rating, google_reviews_count, ai_description, main_category_slug')
+    .not('ai_description', 'is', null)
+    .not('google_rating', 'is', null)
+    .gte('google_rating', 4.0)
+    .order('google_reviews_count', { ascending: false })
+    .limit(9)
+  return data || []
+}
+
 export default async function HomePage() {
-  const [stats, categories] = await Promise.all([
+  const [stats, categories, featuredBusinesses] = await Promise.all([
     getStats(),
     getCategories(),
+    getFeaturedBusinesses(),
   ])
 
   const jsonLd = {
@@ -58,6 +73,7 @@ export default async function HomePage() {
 
       <main>
         <HeroSection totalBusinesses={stats.totalBusinesses} />
+        <FeaturedBusinessesSection businesses={featuredBusinesses} />
         <CategoriesSection categories={categories} />
         <CitiesSection />
         <StatsSection />
