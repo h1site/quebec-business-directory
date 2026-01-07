@@ -16,13 +16,13 @@ export async function GET() {
 
   const supabase = createClient(supabaseUrl, supabaseKey)
 
-  // Get all businesses with AI enrichment
+  // Get all businesses with AI enrichment (check ai_description OR ai_enriched_at)
   const { data: businesses, error } = await supabase
     .from('businesses')
-    .select('slug, ai_enriched_at, updated_at')
-    .not('ai_enriched_at', 'is', null)
+    .select('slug, ai_enriched_at, ai_description, updated_at')
     .not('slug', 'is', null)
-    .order('ai_enriched_at', { ascending: false })
+    .or('ai_enriched_at.not.is.null,ai_description.not.is.null')
+    .order('updated_at', { ascending: false })
 
   if (error || !businesses) {
     return new NextResponse('Error fetching businesses', { status: 500 })

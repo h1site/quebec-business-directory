@@ -14,7 +14,8 @@ export async function getBusinessesSitemapXml(
   minRating: number,
   maxRating: number,
   limit: number = 10000,
-  offset: number = 0
+  offset: number = 0,
+  includeNull: boolean = false
 ): Promise<string> {
   const baseUrl = 'https://registreduquebec.com'
   const supabase = createServiceClient()
@@ -24,7 +25,15 @@ export async function getBusinessesSitemapXml(
     .select('slug, updated_at')
     .not('slug', 'is', null)
 
-  if (maxRating < 5) {
+  if (minRating === -1) {
+    query = query.is('google_rating', null)
+  } else if (includeNull) {
+    if (maxRating < 5) {
+      query = query.or(`google_rating.is.null,google_rating.gte.${minRating},google_rating.lt.${maxRating}`)
+    } else {
+      query = query.or(`google_rating.is.null,google_rating.gte.${minRating},google_rating.lte.${maxRating}`)
+    }
+  } else if (maxRating < 5) {
     query = query.gte('google_rating', minRating).lt('google_rating', maxRating)
   } else {
     query = query.gte('google_rating', minRating).lte('google_rating', maxRating)

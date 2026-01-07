@@ -31,7 +31,7 @@ const categoryToSchemaType: Record<string, string> = {
 }
 
 export function generateBusinessSchema(business: Business, isEnglish = false) {
-  const description = isEnglish ? business.description_en : business.description
+  const description = isEnglish ? business.ai_description_en || business.description_en : business.ai_description || business.description
   const defaultDesc = isEnglish
     ? `${business.name} in ${business.city}`
     : `${business.name} à ${business.city}`
@@ -174,16 +174,6 @@ export function generateBusinessSchema(business: Business, isEnglish = false) {
     }
   }
 
-  // Add keywords from category
-  if (business.main_category_slug) {
-    schema.keywords = business.main_category_slug.replace(/-/g, ', ')
-  }
-
-  // Add foundingDate if available (from NEQ registration)
-  if (business.created_at) {
-    schema.foundingDate = new Date(business.created_at).toISOString().split('T')[0]
-  }
-
   return schema
 }
 
@@ -305,7 +295,7 @@ export function generateBreadcrumbSchema(
 // ============================================
 
 export function generateBusinessSchemaSimple(business: Business, isEnglish = false) {
-  const description = isEnglish ? business.description_en : business.description
+  const description = isEnglish ? business.ai_description_en || business.description_en : business.ai_description || business.description
   const defaultDesc = isEnglish
     ? `${business.name} in ${business.city}`
     : `${business.name} à ${business.city}`
@@ -438,14 +428,6 @@ export function generateBusinessSchemaSimple(business: Business, isEnglish = fal
         })),
       }
     }
-  }
-
-  if (business.main_category_slug) {
-    schema.keywords = business.main_category_slug.replace(/-/g, ', ')
-  }
-
-  if (business.created_at) {
-    schema.foundingDate = new Date(business.created_at).toISOString().split('T')[0]
   }
 
   return schema

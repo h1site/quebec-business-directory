@@ -43,19 +43,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: '/',
       },
     ],
-    sitemap: [
-      'https://registreduquebec.com/sitemap-reviews.xml',
-      'https://registreduquebec.com/sitemap-enrichi.xml',
-      'https://registreduquebec.com/sitemapindex.xml',
-      'https://registreduquebec.com/sitemap-static.xml',
-      'https://registreduquebec.com/sitemap-categories.xml',
-      'https://registreduquebec.com/sitemap-cities.xml',
-      'https://registreduquebec.com/sitemap-businesses-premium.xml',
-      'https://registreduquebec.com/sitemap-businesses-1.xml',
-      'https://registreduquebec.com/sitemap-businesses-2.xml',
-      'https://registreduquebec.com/sitemap-businesses-3.xml',
-      'https://registreduquebec.com/sitemap-businesses-4.xml',
-      'https://registreduquebec.com/sitemap-businesses-5.xml',
-    ],
+    sitemap: 'https://registreduquebec.com/sitemap.xml',
   }
 }

@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 
 export async function GET() {
   // Businesses with rating 0-2.0 or no rating (first 10k)
-  const xml = await getBusinessesSitemapXml(0, 2.0, 10000, 0)
+  const xml = await getBusinessesSitemapXml(0, 2.0, 10000, 0, true)
 
   return new NextResponse(xml, {
     headers: {

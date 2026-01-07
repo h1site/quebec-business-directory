@@ -3,6 +3,11 @@ import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 
+const googleVerification =
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+  process.env.GOOGLE_SITE_VERIFICATION ||
+  ''
+
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
@@ -65,7 +70,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: '', // TODO: Add Google Search Console verification code
+    google: googleVerification,
     other: {
       'msvalidate.01': '3BDF3C55AED4D0F84C471053DD0106CF',
     },

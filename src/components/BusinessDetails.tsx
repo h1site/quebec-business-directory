@@ -353,14 +353,12 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                 {(business.latitude && business.longitude) && (
                   <div className="bg-white rounded-xl shadow-sm p-6">
                     <h3 className="text-lg font-bold text-gray-900 mb-4">Localisation</h3>
-                    <div className="rounded-lg overflow-hidden">
-                      <iframe
-                        width="100%"
-                        height="250"
-                        style={{ border: 0 }}
+                    <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-200">
+                      <img
+                        src="/images/map-placeholder.svg"
+                        alt={`Carte de localisation pour ${business.name}`}
+                        className="w-full h-[250px] object-cover"
                         loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        src={`https://www.openstreetmap.org/export/embed.html?bbox=${Number(business.longitude) - 0.01}%2C${Number(business.latitude) - 0.01}%2C${Number(business.longitude) + 0.01}%2C${Number(business.latitude) + 0.01}&layer=mapnik&marker=${business.latitude}%2C${business.longitude}`}
                       />
                     </div>
                     <a
@@ -374,6 +372,22 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                     </a>
                   </div>
                 )}
+
+                {/* Official Source */}
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">Source officielle</h3>
+                  <p className="text-sm text-gray-600">
+                    Cette fiche est basée sur les informations du Registre des entreprises du Quebec.
+                  </p>
+                  <a
+                    href="https://www.registreentreprises.gouv.qc.ca/reqna/gr/gr03/gr03a71.rechercheregistre.mvc/gr03a71?choixdomaine=RegistreEntreprisesQuebec"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                  >
+                    Consulter le registre
+                  </a>
+                </div>
 
                 {/* Opening Hours */}
                 {hasOpeningHours && (

@@ -154,7 +154,15 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                 {/* About Section */}
                 <div className="bg-white rounded-xl shadow-sm p-6">
                   <h2 className="text-xl font-bold text-gray-900 mb-4">About</h2>
-                  {business.description ? (
+                  {business.ai_description_en ? (
+                    <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                      {business.ai_description_en}
+                    </p>
+                  ) : business.description_en ? (
+                    <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                      {business.description_en}
+                    </p>
+                  ) : business.description ? (
                     <p className="text-gray-600 leading-relaxed whitespace-pre-line">
                       {business.description}
                     </p>
@@ -164,7 +172,21 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                     </p>
                   )}
 
-                  {business.products_services && (
+                  {business.ai_services_en && business.ai_services_en.length > 0 && (
+                    <div className="mt-6 pt-6 border-t border-gray-100">
+                      <h3 className="font-semibold text-gray-900 mb-3">Services</h3>
+                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        {business.ai_services_en.map((service, i) => (
+                          <li key={i} className="flex items-center gap-2 text-gray-600">
+                            <span className="text-green-500">✓</span>
+                            {service}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {!business.ai_services_en && business.products_services && (
                     <div className="mt-6 pt-6 border-t border-gray-100">
                       <h3 className="font-semibold text-gray-900 mb-3">Products and Services</h3>
                       <ul className="list-disc list-inside text-gray-600 space-y-1">
@@ -318,14 +340,12 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                 {(business.latitude && business.longitude) && (
                   <div className="bg-white rounded-xl shadow-sm p-6">
                     <h3 className="text-lg font-bold text-gray-900 mb-4">Location</h3>
-                    <div className="rounded-lg overflow-hidden">
-                      <iframe
-                        width="100%"
-                        height="250"
-                        style={{ border: 0 }}
+                    <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-200">
+                      <img
+                        src="/images/map-placeholder.svg"
+                        alt={`Location map for ${business.name}`}
+                        className="w-full h-[250px] object-cover"
                         loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        src={`https://www.openstreetmap.org/export/embed.html?bbox=${Number(business.longitude) - 0.01}%2C${Number(business.latitude) - 0.01}%2C${Number(business.longitude) + 0.01}%2C${Number(business.latitude) + 0.01}&layer=mapnik&marker=${business.latitude}%2C${business.longitude}`}
                       />
                     </div>
                     <a
@@ -339,6 +359,22 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                     </a>
                   </div>
                 )}
+
+                {/* Official Source */}
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">Official source</h3>
+                  <p className="text-sm text-gray-600">
+                    This listing is based on information from the Quebec Enterprise Register.
+                  </p>
+                  <a
+                    href="https://www.registreentreprises.gouv.qc.ca/reqna/gr/gr03/gr03a71.rechercheregistre.mvc/gr03a71?choixdomaine=RegistreEntreprisesQuebec"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                  >
+                    Open the register
+                  </a>
+                </div>
 
                 {/* Opening Hours */}
                 {hasOpeningHours && (

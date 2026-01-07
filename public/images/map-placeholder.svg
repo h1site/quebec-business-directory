@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-label="Map preview">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="#f8fafc"/>
+  <rect width="800" height="500" fill="url(#grid)"/>
+  <circle cx="400" cy="230" r="24" fill="#1d4ed8"/>
+  <path d="M400 110c-52 0-94 42-94 94 0 69 94 186 94 186s94-117 94-186c0-52-42-94-94-94z" fill="#2563eb" opacity="0.9"/>
+  <circle cx="400" cy="204" r="32" fill="#ffffff"/>
+  <circle cx="400" cy="204" r="18" fill="#2563eb"/>
+  <text x="400" y="440" font-family="Arial, sans-serif" font-size="20" fill="#6b7280" text-anchor="middle">
+    Map preview
+  </text>
+</svg>
