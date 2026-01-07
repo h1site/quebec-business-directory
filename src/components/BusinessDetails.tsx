@@ -353,12 +353,14 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                 {(business.latitude && business.longitude) && (
                   <div className="bg-white rounded-xl shadow-sm p-6">
                     <h3 className="text-lg font-bold text-gray-900 mb-4">Localisation</h3>
-                    <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-200">
-                      <img
-                        src="/images/map-placeholder.svg"
-                        alt={`Carte de localisation pour ${business.name}`}
-                        className="w-full h-[250px] object-cover"
+                    <div className="rounded-lg overflow-hidden">
+                      <iframe
+                        width="100%"
+                        height="250"
+                        style={{ border: 0 }}
                         loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        src={`https://www.openstreetmap.org/export/embed.html?bbox=${Number(business.longitude) - 0.01}%2C${Number(business.latitude) - 0.01}%2C${Number(business.longitude) + 0.01}%2C${Number(business.latitude) + 0.01}&layer=mapnik&marker=${business.latitude}%2C${business.longitude}`}
                       />
                     </div>
                     <a
