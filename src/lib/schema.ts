@@ -1,37 +1,8 @@
 import type { Business } from '@/types/business'
 import { generateSlug } from '@/lib/utils'
 
-// Map category slugs to Schema.org business types
-const categoryToSchemaType: Record<string, string> = {
-  'restauration-et-alimentation': 'Restaurant',
-  'restaurant': 'Restaurant',
-  'food-and-dining': 'Restaurant',
-  'sante-et-bien-etre': 'HealthAndBeautyBusiness',
-  'health-and-wellness': 'HealthAndBeautyBusiness',
-  'automobile-et-transport': 'AutomotiveBusiness',
-  'automotive-and-transportation': 'AutomotiveBusiness',
-  'immobilier': 'RealEstateAgent',
-  'real-estate': 'RealEstateAgent',
-  'finance-assurance-et-juridique': 'FinancialService',
-  'finance-insurance-and-legal': 'FinancialService',
-  'education-et-formation': 'EducationalOrganization',
-  'education-and-training': 'EducationalOrganization',
-  'tourisme-et-hebergement': 'LodgingBusiness',
-  'tourism-and-accommodation': 'LodgingBusiness',
-  'construction-et-renovation': 'HomeAndConstructionBusiness',
-  'construction-and-renovation': 'HomeAndConstructionBusiness',
-  'commerce-de-detail': 'Store',
-  'retail': 'Store',
-  'services-professionnels': 'ProfessionalService',
-  'professional-services': 'ProfessionalService',
-  'technologie-et-informatique': 'ProfessionalService',
-  'technology-and-it': 'ProfessionalService',
-  'sports-et-loisirs': 'SportsActivityLocation',
-  'sports-and-recreation': 'SportsActivityLocation',
-}
-
 export function generateBusinessSchema(business: Business, isEnglish = false) {
-  const description = isEnglish ? business.ai_description_en || business.description_en : business.ai_description || business.description
+  const description = isEnglish ? business.description_en : business.description
   const defaultDesc = isEnglish
     ? `${business.name} in ${business.city}`
     : `${business.name} à ${business.city}`
@@ -39,15 +10,12 @@ export function generateBusinessSchema(business: Business, isEnglish = false) {
   const baseUrl = 'https://registreduquebec.com'
   const langPrefix = isEnglish ? '/en' : ''
   const citySlug = generateSlug(business.city || '')
-  const categorySlug = business.main_category_slug || 'entreprise'
+  const categorySlug = isEnglish ? 'business' : 'entreprise'
   const businessUrl = `${baseUrl}${langPrefix}/${categorySlug}/${citySlug}/${business.slug}`
-
-  // Get more specific Schema.org type based on category
-  const schemaType = categoryToSchemaType[categorySlug] || 'LocalBusiness'
 
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
-    '@type': schemaType,
+    '@type': 'LocalBusiness',
     '@id': businessUrl,
     name: business.name,
     description: description || defaultDesc,
@@ -295,7 +263,7 @@ export function generateBreadcrumbSchema(
 // ============================================
 
 export function generateBusinessSchemaSimple(business: Business, isEnglish = false) {
-  const description = isEnglish ? business.ai_description_en || business.description_en : business.ai_description || business.description
+  const description = isEnglish ? business.description_en : business.description
   const defaultDesc = isEnglish
     ? `${business.name} in ${business.city}`
     : `${business.name} à ${business.city}`
@@ -305,12 +273,9 @@ export function generateBusinessSchemaSimple(business: Business, isEnglish = fal
     ? `${baseUrl}/company/${business.slug}`
     : `${baseUrl}/entreprise/${business.slug}`
 
-  const categorySlug = business.main_category_slug || 'entreprise'
-  const schemaType = categoryToSchemaType[categorySlug] || 'LocalBusiness'
-
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
-    '@type': schemaType,
+    '@type': 'LocalBusiness',
     '@id': businessUrl,
     name: business.name,
     description: description || defaultDesc,

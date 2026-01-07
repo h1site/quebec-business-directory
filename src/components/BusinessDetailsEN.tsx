@@ -21,7 +21,6 @@ const dayNames: Record<string, string> = {
 }
 
 export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: Props) {
-  const categorySlug = business.main_category_slug || 'business'
   const citySlug = generateSlug(business.city || '')
 
   const hasContactInfo = business.phone || business.email || business.website
@@ -49,8 +48,8 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
             <nav className="text-sm mb-6 flex items-center gap-2 text-blue-200 flex-wrap">
               <Link href="/en" className="hover:text-white transition-colors">Home</Link>
               <span>›</span>
-              <Link href={`/en/category/${categorySlug}`} className="hover:text-white transition-colors capitalize">
-                {categorySlug.replace(/-/g, ' ')}
+              <Link href="/en/search" className="hover:text-white transition-colors">
+                Businesses
               </Link>
               <span>›</span>
               <Link href={`/en/city/${citySlug}`} className="hover:text-white transition-colors">
@@ -154,11 +153,7 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                 {/* About Section */}
                 <div className="bg-white rounded-xl shadow-sm p-6">
                   <h2 className="text-xl font-bold text-gray-900 mb-4">About</h2>
-                  {business.ai_description_en ? (
-                    <p className="text-gray-600 leading-relaxed whitespace-pre-line">
-                      {business.ai_description_en}
-                    </p>
-                  ) : business.description_en ? (
+                  {business.description_en ? (
                     <p className="text-gray-600 leading-relaxed whitespace-pre-line">
                       {business.description_en}
                     </p>
@@ -172,21 +167,7 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                     </p>
                   )}
 
-                  {business.ai_services_en && business.ai_services_en.length > 0 && (
-                    <div className="mt-6 pt-6 border-t border-gray-100">
-                      <h3 className="font-semibold text-gray-900 mb-3">Services</h3>
-                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        {business.ai_services_en.map((service, i) => (
-                          <li key={i} className="flex items-center gap-2 text-gray-600">
-                            <span className="text-green-500">✓</span>
-                            {service}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {!business.ai_services_en && business.products_services && (
+                  {business.products_services && (
                     <div className="mt-6 pt-6 border-t border-gray-100">
                       <h3 className="font-semibold text-gray-900 mb-3">Products and Services</h3>
                       <ul className="list-disc list-inside text-gray-600 space-y-1">

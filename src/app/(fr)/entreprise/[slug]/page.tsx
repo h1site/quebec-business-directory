@@ -66,11 +66,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return (lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated) + '...'
   }
 
-  const description = business.ai_description
-    ? truncateDescription(business.ai_description)
-    : business.description
-      ? truncateDescription(business.description)
-      : `${business.name} à ${business.city}. Trouvez les coordonnées, avis et informations complètes.`
+  const description = business.description
+    ? truncateDescription(business.description)
+    : `${business.name} à ${business.city}. Trouvez les coordonnées, avis et informations complètes.`
 
   const canonical = `https://registreduquebec.com/entreprise/${slug}`
 

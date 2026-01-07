@@ -21,7 +21,6 @@ const dayNames: Record<string, string> = {
 }
 
 export default function BusinessDetails({ business, relatedBusinesses = [] }: Props) {
-  const categorySlug = business.main_category_slug || 'entreprise'
   const citySlug = generateSlug(business.city || '')
 
   const hasContactInfo = business.phone || business.email || business.website
@@ -49,8 +48,8 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
             <nav className="text-sm mb-6 flex items-center gap-2 text-blue-200 flex-wrap">
               <Link href="/" className="hover:text-white transition-colors">Accueil</Link>
               <span>›</span>
-              <Link href={`/categorie/${categorySlug}`} className="hover:text-white transition-colors capitalize">
-                {categorySlug.replace(/-/g, ' ')}
+              <Link href="/recherche" className="hover:text-white transition-colors">
+                Entreprises
               </Link>
               <span>›</span>
               <Link href={`/ville/${citySlug}`} className="hover:text-white transition-colors">
@@ -154,12 +153,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                 {/* About Section */}
                 <div className="bg-white rounded-xl shadow-sm p-6">
                   <h2 className="text-xl font-bold text-gray-900 mb-4">À propos</h2>
-                  {/* Prioritize AI description, fallback to original */}
-                  {business.ai_description ? (
-                    <p className="text-gray-600 leading-relaxed whitespace-pre-line">
-                      {business.ai_description}
-                    </p>
-                  ) : business.description ? (
+                  {business.description ? (
                     <p className="text-gray-600 leading-relaxed whitespace-pre-line">
                       {business.description}
                     </p>
@@ -169,23 +163,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                     </p>
                   )}
 
-                  {/* AI Services */}
-                  {business.ai_services && business.ai_services.length > 0 && (
-                    <div className="mt-6 pt-6 border-t border-gray-100">
-                      <h3 className="font-semibold text-gray-900 mb-3">Services offerts</h3>
-                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        {business.ai_services.map((service, i) => (
-                          <li key={i} className="flex items-center gap-2 text-gray-600">
-                            <span className="text-green-500">✓</span>
-                            {service}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* Fallback to original products_services if no AI services */}
-                  {(!business.ai_services || business.ai_services.length === 0) && business.products_services && (
+                  {business.products_services && (
                     <div className="mt-6 pt-6 border-t border-gray-100">
                       <h3 className="font-semibold text-gray-900 mb-3">Produits et services</h3>
                       <ul className="list-disc list-inside text-gray-600 space-y-1">
@@ -219,19 +197,6 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                 <div className="bg-white rounded-xl shadow-sm p-6">
                   <h2 className="text-xl font-bold text-gray-900 mb-4">Questions fréquentes</h2>
                   <div className="space-y-3">
-                    {/* AI-generated FAQs */}
-                    {business.ai_faq && business.ai_faq.length > 0 && business.ai_faq.map((faq, i) => (
-                      <details key={`ai-faq-${i}`} className="group bg-gray-50 rounded-lg">
-                        <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-gray-900">
-                          {faq.q}
-                          <span className="transform transition-transform group-open:rotate-180 text-gray-500">▼</span>
-                        </summary>
-                        <p className="px-4 pb-4 text-gray-600">
-                          {faq.a}
-                        </p>
-                      </details>
-                    ))}
-
                     {/* Default FAQs */}
                     <details className="group bg-gray-50 rounded-lg">
                       <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-gray-900">

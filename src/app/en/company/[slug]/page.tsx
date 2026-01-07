@@ -65,8 +65,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return (lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated) + '...'
   }
 
-  const description = business.ai_description_en
-    ? truncateDescription(business.ai_description_en)
+  const description = business.description_en
+    ? truncateDescription(business.description_en)
     : business.description
       ? truncateDescription(business.description)
       : `${business.name} in ${business.city}. Find contact info, reviews and complete information.`
