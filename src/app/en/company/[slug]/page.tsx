@@ -13,6 +13,8 @@ interface Props {
 
 // ISR: Revalidate every 24 hours
 export const revalidate = 86400
+export const dynamic = 'force-static'
+export const dynamicParams = true
 
 async function getBusiness(slug: string): Promise<Business | null> {
   const supabase = createServiceClient()
