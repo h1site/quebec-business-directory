@@ -153,7 +153,11 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                 {/* About Section */}
                 <div className="bg-white rounded-xl shadow-sm p-6">
                   <h2 className="text-xl font-bold text-gray-900 mb-4">À propos</h2>
-                  {business.description ? (
+                  {business.ai_description ? (
+                    <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                      {business.ai_description}
+                    </p>
+                  ) : business.description ? (
                     <p className="text-gray-600 leading-relaxed whitespace-pre-line">
                       {business.description}
                     </p>
@@ -163,7 +167,21 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                     </p>
                   )}
 
-                  {business.products_services && (
+                  {business.ai_services && business.ai_services.length > 0 && (
+                    <div className="mt-6 pt-6 border-t border-gray-100">
+                      <h3 className="font-semibold text-gray-900 mb-3">Services</h3>
+                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        {business.ai_services.map((service, i) => (
+                          <li key={i} className="flex items-center gap-2 text-gray-600">
+                            <span className="text-green-500">✓</span>
+                            {service}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {!business.ai_services && business.products_services && (
                     <div className="mt-6 pt-6 border-t border-gray-100">
                       <h3 className="font-semibold text-gray-900 mb-3">Produits et services</h3>
                       <ul className="list-disc list-inside text-gray-600 space-y-1">
