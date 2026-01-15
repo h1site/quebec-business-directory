@@ -88,6 +88,12 @@ export default function RootLayout({
             gtag('config', 'G-NF84WEBS49');
           `}
         </Script>
+        {/* Google AdSense */}
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8781698761921917"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={`${inter.variable} font-sans antialiased bg-gray-50 text-gray-900`}>
         {children}
