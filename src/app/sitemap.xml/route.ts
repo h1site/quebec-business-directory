@@ -6,6 +6,7 @@ export async function GET() {
 
   const sitemaps = [
     'sitemap-enrichi.xml',
+    'sitemap-websites.xml',
     'sitemap-static.xml',
     'sitemap-categories.xml',
     'sitemap-cities.xml',
