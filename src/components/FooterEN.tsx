@@ -92,6 +92,11 @@ export default function FooterEN() {
                 </Link>
               </li>
               <li>
+                <Link href="/en/contact" className="hover:text-white transition-colors">
+                  Contact
+                </Link>
+              </li>
+              <li>
                 <Link href="/en/faq" className="hover:text-white transition-colors">
                   FAQ
                 </Link>

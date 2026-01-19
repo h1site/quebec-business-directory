@@ -1,0 +1,35 @@
+{
+  "processed": [
+    "larc-en-ciel-du-store",
+    "st-come-un-coeur-qui-bat",
+    "arisq-association-regroupent-les-installateurs-et--2",
+    "cpac-commerciale-ic-pacifique-agri-canada-inc",
+    "souvlaki-7-2",
+    "bcg-2",
+    "vizo-agence-web-marketing",
+    "vous",
+    "arthri-plus-inc",
+    "fleurs-pinkerton-mckenna-les-serres-longue-pointe-",
+    "1-ou-2-cocktails-inc-3",
+    "1-solution-logistics-inc",
+    "10-etoiles-demenagement-2",
+    "101-design-inc",
+    "101-immobiliers-et-commerce-inc",
+    "1030-saint-antoine-inc-1174324021"
+  ],
+  "failed": [
+    {
+      "slug": "au-marche-par-le-jardin-de-mathilde-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "abf-alexandre-baril-financement-1173730921",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "0-100k-construction-inc-1173770083",
+      "reason": "fetch_failed"
+    }
+  ],
+  "lastIndex": 0
+}
