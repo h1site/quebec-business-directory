@@ -124,8 +124,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/plan-du-site" className="hover:text-white transition-colors">
+                  Plan du site
+                </Link>
+              </li>
+              <li>
                 <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  Sitemap
+                  Sitemap XML
                 </a>
               </li>
             </ul>

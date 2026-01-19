@@ -15,7 +15,14 @@
     "10-etoiles-demenagement-2",
     "101-design-inc",
     "101-immobiliers-et-commerce-inc",
-    "1030-saint-antoine-inc-1174324021"
+    "1030-saint-antoine-inc-1174324021",
+    "106-wright-inc-2",
+    "1133-la-magnifique-inc-1173773954",
+    "1165054-ontario-2",
+    "11h11-media-inc",
+    "123media",
+    "132-136-avenue-lepine-1171344550",
+    "144908-canada"
   ],
   "failed": [
     {
@@ -28,6 +35,10 @@
     },
     {
       "slug": "0-100k-construction-inc-1173770083",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "11015192-canada",
       "reason": "fetch_failed"
     }
   ],
