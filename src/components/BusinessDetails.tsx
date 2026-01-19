@@ -61,19 +61,15 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
 
             <div className="flex flex-col md:flex-row gap-6 items-start">
               {/* Logo */}
-              {business.logo_url ? (
-                <div className="w-32 h-32 rounded-xl bg-white p-2 shrink-0">
-                  <img
-                    src={business.logo_url}
-                    alt={`Logo de ${business.name}`}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              ) : (
-                <div className="w-32 h-32 rounded-full bg-white/10 border-2 border-white/30 flex items-center justify-center shrink-0">
-                  <span className="text-white/70 text-sm font-medium text-center px-2">Pas de logo</span>
-                </div>
-              )}
+              <div className="w-32 h-32 rounded-xl bg-white p-2 shrink-0">
+                <img
+                  src={business.logo_url || '/images/logos/registre-placeholder.svg'}
+                  alt={business.logo_url
+                    ? `Logo de ${business.name}`
+                    : `${business.name} - Entreprise enregistrée au Registre du Québec à ${business.city || 'Québec'}`}
+                  className="w-full h-full object-contain"
+                />
+              </div>
 
               <div className="flex-1">
                 <h1 className="text-3xl md:text-4xl font-bold mb-2">

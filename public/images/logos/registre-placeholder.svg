@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <circle cx="60" cy="60" r="58" fill="#1e40af" stroke="#3b82f6" stroke-width="4"/>
+  <path d="M35 45h50v30H35z" fill="#3b82f6" rx="4"/>
+  <path d="M40 50h15v8H40z" fill="#fff"/>
+  <path d="M40 62h40v3H40z" fill="#fff" opacity="0.8"/>
+  <path d="M40 68h35v3H40z" fill="#fff" opacity="0.6"/>
+  <circle cx="75" cy="54" r="8" fill="#fff"/>
+  <path d="M73 52l2 2 4-4" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="60" y="95" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="10" font-weight="bold">REGISTRE QC</text>
+</svg>
