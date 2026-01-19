@@ -38,11 +38,41 @@ async function searchBusinesses(query: string, page: number, category?: string, 
 
   // If we have a search query
   if (query) {
-    // First try full-text search
+    // Clean up query for better matching
+    const cleanQuery = query.trim()
+
+    // Try exact name match first (for full company names like "1 SOLUTION LOGISTICS INC.")
+    let exactBuilder = supabase
+      .from('businesses')
+      .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'estimated' })
+      .ilike('name', cleanQuery)
+      .not('slug', 'is', null)
+      .not('city', 'is', null)
+
+    if (category) {
+      exactBuilder = exactBuilder.eq('main_category_slug', category)
+    }
+    if (city) {
+      const citySearchTerm = city
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ')
+      exactBuilder = exactBuilder.ilike('city', `%${citySearchTerm}%`)
+    }
+
+    const exactResult = await exactBuilder
+      .order('google_rating', { ascending: false, nullsFirst: false })
+      .range(offset, offset + limit - 1)
+
+    if (!exactResult.error && exactResult.data && exactResult.data.length > 0) {
+      return { businesses: exactResult.data, total: exactResult.count || 0 }
+    }
+
+    // Try full-text search
     let queryBuilder = supabase
       .from('businesses')
       .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'estimated' })
-      .textSearch('search_vector', query, { type: 'websearch' })
+      .textSearch('search_vector', cleanQuery, { type: 'websearch' })
       .not('slug', 'is', null)
       .not('city', 'is', null)
 
@@ -72,7 +102,7 @@ async function searchBusinesses(query: string, page: number, category?: string, 
       .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'estimated' })
       .not('slug', 'is', null)
       .not('city', 'is', null)
-      .or(`name.ilike.%${query}%,description.ilike.%${query}%,main_category_slug.ilike.%${query}%`)
+      .or(`name.ilike.%${cleanQuery}%,description.ilike.%${cleanQuery}%,main_category_slug.ilike.%${cleanQuery}%`)
 
     if (category) {
       fallbackBuilder = fallbackBuilder.eq('main_category_slug', category)

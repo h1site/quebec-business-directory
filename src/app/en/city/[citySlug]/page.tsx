@@ -179,7 +179,7 @@ export default async function CityPageEN({ params, searchParams }: Props) {
                   return (
                     <Link
                       key={biz.id}
-                      href={`/company/${biz.slug}`}
+                      href={`/en/company/${biz.slug}`}
                       className="bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 transition-all group overflow-hidden"
                     >
                       <div className="p-6">

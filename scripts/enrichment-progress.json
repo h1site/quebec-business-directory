@@ -22,7 +22,21 @@
     "11h11-media-inc",
     "123media",
     "132-136-avenue-lepine-1171344550",
-    "144908-canada"
+    "144908-canada",
+    "147188-canada",
+    "1510-michelin-inc-2",
+    "1637-6931-quebec-inc",
+    "1642-assurances-inc",
+    "1867-nouvelle-autoroute-30-inc-2",
+    "19224-du-chateau-pierrefonds-avenue-inc-1171344832",
+    "2-freres-distribution-1171211684",
+    "200-bouchard-portfolio-inc",
+    "21-grammes-inc",
+    "2169-1290-quebec-inc",
+    "2220-2500-boulevard-des-laurentides-1171344733",
+    "2427-2700-quebec-inc",
+    "2433-0128-quebec-inc",
+    "244717"
   ],
   "failed": [
     {
@@ -40,6 +54,18 @@
     {
       "slug": "11015192-canada",
       "reason": "fetch_failed"
+    },
+    {
+      "slug": "1805-cgm-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "2-jr-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "2161159-alberta-1166548058-1",
+      "reason": "no_content"
     }
   ],
   "lastIndex": 0
