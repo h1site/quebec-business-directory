@@ -63,7 +63,7 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
               {/* Logo */}
               <div className="w-32 h-32 rounded-xl bg-white p-2 shrink-0">
                 <img
-                  src={business.logo_url || '/images/logos/registre-placeholder.svg'}
+                  src={business.logo_url || '/images/logos/logo.webp'}
                   alt={business.logo_url
                     ? `${business.name} logo`
                     : `${business.name} - Business registered in Quebec Registry in ${business.city || 'Quebec'}`}
