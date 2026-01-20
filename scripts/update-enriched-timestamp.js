@@ -10,7 +10,8 @@ if (!SUPABASE_KEY) {
   process.exit(1);
 }
 
-const results = JSON.parse(fs.readFileSync('./scripts/enrichment-results-batch-1.json', 'utf8'));
+const batchNum = process.argv[2] || '1';
+const results = JSON.parse(fs.readFileSync(`./scripts/enrichment-results-batch-${batchNum}.json`, 'utf8'));
 console.log(`Updating ${results.length} businesses with ai_enriched_at timestamp...`);
 
 let updated = 0;

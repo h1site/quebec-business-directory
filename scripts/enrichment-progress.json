@@ -866,7 +866,853 @@
     "alexandre-goyette-avocat-inc-3",
     "alexandre-grenier-avocat-inc",
     "alexandre-lainesse-inc-2",
-    "alexandre-longpre-courtier-immobilier-inc-1173744047"
+    "alexandre-longpre-courtier-immobilier-inc-1173744047",
+    "alexandre-marceau-md-inc",
+    "alexandre-perreault-courtier-immobilier-inc-2",
+    "alexandre-sirois-trahan-avocat-inc",
+    "alexandru-demetrescu-inc-1168312578-1",
+    "alexart-inc-2",
+    "alexdirecte",
+    "alexi-services-inc-2",
+    "alexis-boulerice-turcotte-md-inc",
+    "alfapur-technologies",
+    "alfatech2017-inc",
+    "alfred-vip",
+    "algest-inc",
+    "algoma-central-corporation-2",
+    "algonquair-inc",
+    "algorithme-pharma-tm",
+    "algorithmie-inc",
+    "ali-gerba-inc",
+    "ali-izadpanah-md-inc-2",
+    "ali-saad-courtier-immobilier-inc",
+    "ali-souini-inc",
+    "ali-youssef-md-inc",
+    "alia-seffar-inc-1180914070",
+    "alibi-ebenisterie-1171215412",
+    "alice-abou-khalil-inc",
+    "aliceambre-inc",
+    "alida",
+    "alidrissi-immigration-inc-2",
+    "alien-informatique-inc-2",
+    "aligat-production-inc",
+    "alignement-laurent-tardif-inc-3",
+    "alignement-mauricie-inc",
+    "alignement-patenaude-inc-2",
+    "aliment-racim-3",
+    "alimentation-alexandra-cloutier-inc",
+    "alimentation-america-inc",
+    "alimentation-andre-barrette-inc-2",
+    "alimentation-andre-fortin-inc",
+    "alimentation-bruno-julien-inc",
+    "alimentation-couche-tard-inc",
+    "alimentation-daniel-houle-inc-2",
+    "alimentation-dareno-inc",
+    "alimentation-elizabeth-menard-inc",
+    "alimentation-enza-ferraro-inc-2",
+    "alimentation-eric-lambert-inc",
+    "alimentation-escompte-l-impact-1177286029-1",
+    "alimentation-fsm",
+    "alimentation-gd-inc",
+    "alimentation-go-ltee",
+    "alimentation-katy-lapierre-inc",
+    "alimentation-ketoclub-2",
+    "alimentation-les-breault",
+    "alimentation-marcel-picard-inc-2",
+    "alimentation-mathieu-roy-2",
+    "alimentation-naturelle-2017-inc",
+    "alimentation-patrick-lemay-inc-2",
+    "alimentation-pierre-damour-inc-1171367890",
+    "alimentation-pld",
+    "alimentation-premiere-inc-1175768176",
+    "alimentation-rema-inc-2",
+    "alimentation-richard-dube-delisle-inc-2",
+    "alimentation-sebastien-ladouceur-inc-1171368567",
+    "alimentation-serge-filteau-inc-3",
+    "alimentation-yummy-baobao-inc",
+    "alimentomocom-1174675596",
+    "alimentra",
+    "aliments-agm-inc",
+    "aliments-adelina-inc-1174573510",
+    "aliments-akagni-inc",
+    "aliments-amelya-impex-inc",
+    "aliments-asta-inc",
+    "aliments-best-nuts-inc-3",
+    "aliments-cliche-inc",
+    "aliments-culina-domus-inc-1178059904",
+    "aliments-de-la-mer-fansea-inc-2",
+    "aliments-eg",
+    "aliments-entiers-biologiques-ivolution-inc",
+    "aliments-goodz-inc",
+    "aliments-hysa-inc",
+    "aliments-lightlife",
+    "aliments-lucas-2",
+    "aliments-marche-mtl",
+    "aliments-naturello-inc-2",
+    "aliments-nawa",
+    "aliments-noizelle-1165325144-1",
+    "aliments-pasta-romana-inc",
+    "aliments-pole-nord-inc-2",
+    "aliments-pp-2",
+    "aliments-pragma",
+    "aliments-sannine",
+    "aliments-terra-boa",
+    "aline-richard-avocate-inc-2",
+    "alinea-gestion-conseils-inc-2",
+    "alinova-inc-2",
+    "alio-isolation-inc",
+    "alissar-dib-inc",
+    "alivin-canada-inc-1163426407",
+    "alix-turmel-consultante-equestre-inc",
+    "alize-services-financiers-enr",
+    "alkanof-inc-2",
+    "all-time-media-inc",
+    "allanco-avantage",
+    "allb-international-inc-3",
+    "allbirds-canada-ulc",
+    "allco-conception-construction",
+    "allcom-communications-1992-inc-1142150953",
+    "allegeance-energie-vert-inc-3",
+    "allegro-investissements-inc",
+    "allen-marcoux-inc-2",
+    "aller-a-montreal-2",
+    "allervol-digital-inc-3",
+    "allez-commencer-inc-3",
+    "allez-up-financial-corporation",
+    "allez360",
+    "allia-expertise-inc",
+    "alliance-autochtone-communaute-anagocag-mahigan-01-2",
+    "alliance-axe-coaching-3",
+    "alliance-boivin-et-st-pierre-inc",
+    "alliance-canada-chine-pour-la-reunification-de-chi",
+    "alliance-credit",
+    "alliance-de-lindustrie-touristique-du-quebec",
+    "alliance-des-intervenantes-en-milieu-familial-cent-2",
+    "alliance-des-proprietaires-developpeurs-dhabitatio",
+    "alliance-des-proprietaires-du-lac-sainte-marie",
+    "alliance-donne-femmes-italiennes-du-quebec",
+    "alliance-gestion-design-inc",
+    "alliance-gplc-blondeau-inc",
+    "alliance-immo-rl-inc",
+    "alliance-interglobe",
+    "alliance-lambert-inc",
+    "alliance-marmeladaise-dentraide-nationale-amen-1174556952",
+    "alliance-mercantile-inc",
+    "alliance-nav-inc",
+    "alliance-occidentale-logistiques-inc",
+    "alliance-parc-deschenes",
+    "alliance-pour-lest-de-montreal-2",
+    "alliance-prestige-inc",
+    "alliance-quebecoise-des-professionnels-en-sante-et",
+    "alliance-quebecoise-pour-la-construction-et-la-ren",
+    "alliance-ressources-humaines-inc",
+    "alliance-taxi-laurentides-1174358797",
+    "alliance-touristique-et-culture-sino-quebec-1174550948",
+    "allies-montmagny-lislet-2",
+    "allison-transmission-canada-ulc-2",
+    "allo-destinations-inc",
+    "allo-mon-coco-10",
+    "allo-mon-coco-5",
+    "allo-mon-coco-13",
+    "allo-mon-coco-longueuil",
+    "allo-mon-coco-saint-sauveur",
+    "allo-mon-coco-kirkland",
+    "allomia-inc",
+    "allons-shawarma",
+    "allroc-md-3",
+    "almar-paysagiste-2",
+    "almll",
+    "alnylam-canada-ulc-1174678376",
+    "alo-richelieu",
+    "alongi-ebenisterie-architecturale-et-contracteur-g-3",
+    "alpen-partners-ag",
+    "alpha-assurances-et-placements-inc",
+    "alpha-diffusion-inc-2",
+    "alpha-t-inc",
+    "alphasoft-inc-1149605173",
+    "alphazuri-solutions-inc",
+    "alphonse-conseils-inc-2",
+    "alpin-canada-1171478085",
+    "alpine-aluminium-inc-4",
+    "alpine-estates-homeowners-association-inc",
+    "als-canada-ltee-2",
+    "also-recrutement-inc-1174632936",
+    "alstef-canada-inc-1164426042-3",
+    "alt-agence-alternative",
+    "alt-capital-inc-3",
+    "alt-conseils-inc",
+    "alt254",
+    "alta-strategies-financieres-inc",
+    "altafina-gestion-de-patrimoine",
+    "altair-engineering-canada-ltd-2",
+    "alterinno-conseil",
+    "alterimmo-capital-inc",
+    "alternatif-electrique-inc-2",
+    "alternative-mediation-inc-1173733800",
+    "altex-inc-1172596398",
+    "altiplex-immobilier-inc",
+    "altitude-aeronautique-inc-2",
+    "altitude-capital-inc-1174564972",
+    "altitude-developments-inc-2",
+    "alto-aluminium-2",
+    "alto-expert-inc",
+    "altovision-inc",
+    "altravest-inc",
+    "altruisme-efficace-quebec",
+    "altrum-international-inc",
+    "alu-mec-2",
+    "alucria-consultant-inc",
+    "alumilex-canada-inc",
+    "aluminerie-alouette-inc-2",
+    "aluminium-renovation-ag-inc-1174407172",
+    "aluminium-perron-2",
+    "aluminium-precision-inc",
+    "aluminium-rb-2",
+    "alvarez-marsal-canada-ulc",
+    "alviexa-transport-inc-2",
+    "alxco-inc-3",
+    "am-export-import",
+    "ama-maintenance-inc",
+    "amabec-liquidation",
+    "amaleila-inc-1174563651",
+    "amalsprint-inc",
+    "amanda-angelus-md-inc",
+    "amani-ri-inc",
+    "amar-transport-inc",
+    "amarycar-inc",
+    "amazone",
+    "amb-analyse-et-maintien-des-batiments-inc-2",
+    "amb-electrique-inc",
+    "ambiance-capital-1173402810",
+    "ambiance-capital",
+    "ambiance-de-style",
+    "ambri-assurances-inc-1146524302-2",
+    "ambulance-chicoutimi-inc",
+    "ambulances-cote-nord",
+    "amc-legal-inc-1178057924",
+    "amcon-inc-1171134639",
+    "amcor-inc",
+    "amd-auto",
+    "amecpro-inc",
+    "amedaka",
+    "amelie-blanchette-md-inc-2",
+    "amelie-dubois-inc",
+    "amelie-dubois-developpement-daffaire",
+    "amelie-ann-pellerin-leblanc-pediatre-inc-1174684085",
+    "amelio-inc",
+    "amelioraction-inc",
+    "amenagement-arga-inc-2",
+    "amenagement-bjjm-inc-1172586290",
+    "amenagement-des-appalaches-inc-2",
+    "amenagement-distingue",
+    "amenagement-forestier-cooperatif-des-appalaches",
+    "amenagement-forestier-dominic-richard",
+    "amenagement-forestier-jmp-inc",
+    "amenagement-forestier-simon-gagne-2",
+    "amenagement-godel-inc",
+    "amenagement-hr-inc",
+    "amenagement-kawesa-inc",
+    "amenagement-la-rose-inc",
+    "amenagement-nouvellere-inc",
+    "amenagement-paysager-bel-vue-1165119570-1",
+    "amenagement-paysager-carlos-leblanc-inc-2",
+    "amenagement-paysager-pyrus-inc",
+    "amenagement-soleil-gpk-2",
+    "amenagements-forestiers-sl-inc-2",
+    "amenagements-swe-inc-2",
+    "amenagex-construction",
+    "amer-consultations-2",
+    "amerella-canada-ltee-3",
+    "american-express-voyages-daffaires-3",
+    "amerique-film",
+    "ametis-peinture-inc",
+    "ameublement-ls",
+    "ameublement-setlakwe",
+    "ameublements-conrad-clavel-inc",
+    "ameublements-fl",
+    "ameublements-maman",
+    "ameublements-thomasville-2",
+    "ameur-mohamed-4",
+    "amg-conseil-global-inc-2",
+    "amh-canada-ltee-1145274271",
+    "amh-entretien-inc",
+    "ami-du-bucheron-3",
+    "amicale-2000-et-2111-berri",
+    "amicale-des-algeriens-au-canada-2",
+    "amicale-guineenne-daide-mutuelle-agam",
+    "amicus-therapeutique-canada-inc",
+    "amimoc-1168308659-1",
+    "amine-laabi-inc",
+    "amir-6",
+    "amir-5",
+    "amir-30",
+    "amir-27",
+    "amir-1180184229",
+    "amir-granby",
+    "amir-mont-tremblant",
+    "amir-rawdon-1176912179",
+    "amir-st-basile",
+    "amir-st-bruno-2",
+    "amira-auto-inc",
+    "amireault-md-inc-2",
+    "amis-canadiens-de-la-fiducie-fonciere-de-stowe",
+    "amis-de-la-colline-du-chene-2",
+    "amis-du-pavillon-de-la-coree-de-lexpo-67",
+    "amiskou-groupe-conseil-3",
+    "amj-groupe-inc",
+    "amj-media-inc-2",
+    "ammega-canada-inc",
+    "amopharm-inc-2",
+    "amour-paix-harmonie-quebec",
+    "amouraska-inc",
+    "amp-3-inc",
+    "amp-agent-manufacturier-inc-2",
+    "amp-digital-inc",
+    "amp-me-inc-1171137616",
+    "ampere-capital-inc",
+    "ampesa-inc-1172594583",
+    "amplification-solidgold-2",
+    "amplify-capital-iii-gp-inc",
+    "amrock-services-conseils-inc-2",
+    "amsoil-lubrifiantsynthetiquecom",
+    "amt-2",
+    "amt-secretariat-2247377650-4",
+    "amtec-technology-inc",
+    "amtwiga-inc-1163435291",
+    "amur-capital-conservative-income-fund-inc-2",
+    "amusement-jacques-cartier",
+    "amusements-classique-inc",
+    "amusements-du-boulevard-inc-1174324831",
+    "amuz-distribution-2",
+    "amuza-parc-inc-2",
+    "amvic",
+    "amx-medias-ltee-1164439599-1",
+    "amys-dejeuner-brunch-gateries",
+    "amyotte-elissa-3",
+    "an-mclair-electro-marine-r-d-inc-1160020245",
+    "an-au-construction-inc",
+    "ana-lebear-mentorat-au-coeur-du-succes",
+    "anabel-thibert-dmd-inc-2",
+    "anacolor-inc",
+    "anaconda-2",
+    "anais-lauzon-laurin-md-inc-3",
+    "analys-psychologie-organisationnelle-2011-1167362269",
+    "analyse-et-gestion-sigma-2",
+    "analyses-tovanah-2",
+    "analyste-maverick-inc",
+    "analytico-services-conseils-inc-2",
+    "ananas-elite-inc",
+    "anaplan-tm-1173738049",
+    "anatis-bioprotection-2",
+    "anavic-inc-2",
+    "anaya-transport-2",
+    "anb-carriers",
+    "anchor-danly-inc-2",
+    "ancia-personnel-inc-2",
+    "ancienhub-inc",
+    "anciennexbc-2",
+    "anciens-de-lasalle",
+    "anciens-etudiants-de-luniversite-de-nanjing-a-mont",
+    "andie-emerson-2",
+    "andre-blackburn-inc",
+    "andre-boulais-fiscaliste-conseil-inc",
+    "andre-choquette-md-inc-2",
+    "andre-duquette-pharmaciens-inc",
+    "andre-gagne-architecte",
+    "andre-gilbert-notaire-inc-2",
+    "andre-petit-courtier-hypothecaire",
+    "andre-philippe-st-germain-courtier-inc-1178054145",
+    "andre-potvin-cuisinesalle-de-bain-inc-4",
+    "andre-roy-electrique-inc",
+    "andre-roy-et-sylvain-roy-boisselle-pharmaciens-inc",
+    "andre-seguin-design-inc-2",
+    "andreanne-brazeau-md-inc-2",
+    "andreanne-dussault-m-d-inc-1168908599-4",
+    "andree-raymond-optometriste-inc-2",
+    "andres-saldarriaga-md-inc",
+    "andson-finance-inc",
+    "andy-entreposage-et-distribution-inc",
+    "anemone-47-2",
+    "anesthesiologie-zm-inc-3",
+    "anex-media-inc",
+    "ang-automation-inc",
+    "ange-72-film-2",
+    "angel-host-inc-2",
+    "angela-langtry-inc-2",
+    "angelina-mallozzi-medical-services-ulc-1171128987",
+    "angellist-advisors-llc",
+    "angie-lemieux-avocate-inc-2",
+    "angio-bi-inc",
+    "anibec",
+    "anichka",
+    "anik-desgroseilliers-md-inc",
+    "animal-expert-beloeil-inc",
+    "animal-expert-maisonneuve-inc",
+    "animalerie-chez-miawoof-2",
+    "animalerie-gi-gi-2",
+    "animalerie-jonas-1994-inc",
+    "animalerie-la-jungle-urbaine-inc-4",
+    "animalerie-lanaudiere-1172341027",
+    "animalerie-regne-animal-bromont-inc",
+    "animation-ctrlpix-3",
+    "animation-ella-inc",
+    "animation-happy-camper-inc-2",
+    "animation-toondraw-idg-inc-2",
+    "animaux-en-ligne",
+    "animo-etc",
+    "animo-etc-ste-julie",
+    "animo-etc-boucherville",
+    "anjali-saxena-md-inc",
+    "anjodan-inc-2",
+    "ankd-inc-1178795523",
+    "anlac-md-inc",
+    "ann-sarah-drouin-md-inc",
+    "ann-sophie-allard-md-inc-3",
+    "annsofia-boutique-inc",
+    "anna-estephan-agence-immobiliere-inc-1171345953",
+    "anna-klos-services-conseils-inc",
+    "anne-benguira-pharmacienne-inc",
+    "anne-genevieve-robert-avocate-inc",
+    "anne-julie-laperriere-psychologue-inc",
+    "anne-laurence-nantais-dentiste-inc",
+    "anne-marie-cloutier-medecin-inc",
+    "anne-marie-cossette-md-inc",
+    "anne-marie-dargis-brousseau-od-inc-2",
+    "anne-marie-sofio-cpa-inc-2",
+    "anne-shirley-nadeau-dentiste-inc",
+    "annees-lumiere-films-inc-2",
+    "annex-pro-inc-2",
+    "annick-brouillard",
+    "annie-bellefeuille-consultation-inc",
+    "annie-bergeron-pharmacienne-inc-3",
+    "annie-dumas-dmd-inc",
+    "annie-hudon-management-consultante-2",
+    "annie-lachapelle-isabelle-tondreau-pharmaciennes-i",
+    "annie-lefebvre-4",
+    "annie-lupien-dd-inc",
+    "annie-nadeau-investissements-inc-1174191057",
+    "annie-payant-courtier-immobilier-inc",
+    "annie-rivest-md-inc",
+    "annie-simard-inc",
+    "annie-thibault-md-inc-3",
+    "annik-vlachos-courtier-hypothecaire",
+    "annuaire-commercial-inc",
+    "anodisation-quebec-inc",
+    "anoriel-sa-2",
+    "anormalt-ltee-2",
+    "answerplus-inc",
+    "antabli",
+    "antagon-construction-inc",
+    "anten-immo-inc-3",
+    "antenne-telecom-2",
+    "anthony-desautels-inc",
+    "anthony-soliman",
+    "antidynamique-inc-2",
+    "antiquites-oeuvres-dart-vi-inc",
+    "antiquites-jean-deshaies-2",
+    "antirouille-champlain-trois-rivieres-inc-2",
+    "antirouille-provincial-inc-2",
+    "antirouille-valleyfield-inc-1174571399",
+    "antoine-gagne-investissements-inc",
+    "antoine-khouri-pour-limmobilier-2",
+    "antoine-lapointe-md-inc",
+    "antoine-mailloux-avocat-inc",
+    "antoine-thibault-talents-inc-1178881380",
+    "antoinico-holdings-inc",
+    "antonico-immobilier-sa",
+    "antophil",
+    "aom-investissements-inc",
+    "aomgmr-1146523619-3",
+    "aoudia-karim",
+    "ap-investissement-inc-1173737561",
+    "ap-seating-inc",
+    "ap-trac-equipement-2",
+    "apache-logistics-inc",
+    "aparc",
+    "aparte-arts-vivants-2",
+    "aparts-uqtr",
+    "apasq-2",
+    "apeais-csq",
+    "apero-a-zero-3",
+    "apero-cuisines-et-salles-de-bain-inc-2",
+    "apery-inc",
+    "apex-calfeutrage-montreal",
+    "apex-expert-conseil-inc-2",
+    "apex-paragon-ltd",
+    "apex-reno-inc",
+    "apex-soudure-haute-pression-inc",
+    "apex-toiture-inc",
+    "apiculture-patenaude",
+    "apo-media-inc-2",
+    "apogee-groupe-financier-360-inc-2",
+    "apothico-gest-inc",
+    "app-roy-construction-inc-3",
+    "appalaches-excavation-inc-2",
+    "appalaches-nature-inc-1164420342-3",
+    "appalaches-performance-inc-2",
+    "appareil-atelier-inc",
+    "appareil-electrotech-laval-inc",
+    "appareil-formidable-pour-bebe",
+    "appareillages-mitchies-inc-2",
+    "appartementhotel-chez-montagner",
+    "appartements-apollo-inc",
+    "appartements-rimouski-1171323638",
+    "application-dflunk-1171136162",
+    "application-taxi-universelle-inc",
+    "applications-de-coiffure-one-inc",
+    "applications-galaxup-inc",
+    "appmed-inc-2",
+    "appnexus-canada",
+    "apprendre-lalpha-1171121917",
+    "apprends-entreprends-inc",
+    "apprenti-conseil-inc-1174372475",
+    "apprentissage-macmillan-1174681289",
+    "apprentx-inc-2",
+    "approche01-inc-1173769721",
+    "approvisionnement-de-navires-clipper-inc",
+    "appui-services-de-consultation-en-immigration-inc",
+    "apq-3",
+    "apr-72-du-tremblay-inc",
+    "aprcjm-2",
+    "aprea-construction-inc",
+    "apres-la-pluie-inc-1174403296",
+    "apres-six-inc",
+    "april-cornell-ltee-2",
+    "april-pharma-inc-1171374995",
+    "aps-aviation-inc-1171364699",
+    "apte-fitness-inc",
+    "apte-fitness-laval-4",
+    "aptim-services-canada-corp",
+    "aptlogix-incorporated",
+    "apto-services-conseils-inc-2",
+    "aqpac-estrie",
+    "aqprde",
+    "aqrp-2",
+    "aqua-fibre-innovation-inc-3",
+    "aqua-pro-jet-3",
+    "aqua-zach-inc",
+    "aqua-aid-appliance-inc-2",
+    "aqua-gestion-inc",
+    "aqua-performance",
+    "aqua-sport-adapte-estrie-3",
+    "aquabac-2",
+    "aquaculture-lt-3",
+    "aquamation-aquanimaux-inc",
+    "aquapelca",
+    "aquapro-ecole-de-natation-inc",
+    "aquariophilie-chaudiere-appalaches",
+    "aquarium-recifal-raging-reef-inc-2",
+    "aquarium-fondation-psychanalytique-pour-le-bien-et",
+    "aquavilla-2",
+    "aquazen-inc-1178059318",
+    "ar-consultation-fit-inc",
+    "arachides-depot-et-plus-2",
+    "arai",
+    "aramark-quebec-inc-139",
+    "aramark-quebec-inc-135",
+    "aramark-quebec-inc-132",
+    "aramark-quebec-inc-120",
+    "aramark-quebec-inc-150",
+    "aramark-quebec-inc-178",
+    "arash-shakour-inc-2",
+    "arbitrage-denis-tremblay-inc-2",
+    "arbitrage-jp-lussier-inc",
+    "arbo-mtl-inc-2",
+    "arbo-sylvo-inc-1141993239",
+    "arbo-vizion",
+    "arboclinique-inc-2",
+    "arborescence-bromont-2",
+    "arborex-inc",
+    "arborinove-inc",
+    "arboritek-ma-inc",
+    "arboriterre-inc-2",
+    "arborivert-2",
+    "arbres-experts-plus-inc-2",
+    "arbres-nature-3",
+    "arc-plus-inc",
+    "arc-technologies-de-la-paie-inc-2",
+    "arc-en-ciel-numerique",
+    "arca-investments-inc-2",
+    "arcadia-immobilier-inc",
+    "arcadis-canada-inc",
+    "arcand-immobilier-inc",
+    "arcand-paradis-inc",
+    "arcanic-2",
+    "arcaro-capital-inc-2",
+    "arcc-20",
+    "archer-2",
+    "archeveche-de-quebec",
+    "archidez-inc-3",
+    "archimat-inc",
+    "archipel-cabinet-en-courtage-hypothecaire-1171469407",
+    "architeca-inc",
+    "architectes-hypothecaires-ma-2",
+    "architecto-informatique-inc",
+    "architectural-ovvio-2",
+    "architecture-6e-sens-inc",
+    "architecture-acoustique",
+    "architecture-bad-inc-1174325762",
+    "architecture-baccanale-2",
+    "architecture-de-solutions-et-integration-de-system",
+    "architecture-evoq-inc",
+    "architecture-girard-et-associes-inc",
+    "architecture-jl-inc",
+    "architecture-orleans",
+    "architecture-stantec-quebec-ltee-1171346605",
+    "architecture-tutree-inc",
+    "archl-dep-inc-3",
+    "archspec-inspection-en-batiment-inc-2",
+    "arcopel-acoustique-ltee",
+    "arctic-circle-construction-ltd-1172593064",
+    "arctic-fox-logistics-ltd",
+    "ard-transport-inc",
+    "ardene-5",
+    "ardoise-55-inc",
+    "ardoise-solution",
+    "arega-inc",
+    "arena-cartier",
+    "arena-de-barraute",
+    "arena-de-bedford",
+    "arena-de-bromont",
+    "arena-de-clermont-1165484552-1",
+    "arena-guy-carbonneau-2",
+    "arena-lucerne",
+    "arena-memphremagog-inc",
+    "arf-express-inc",
+    "arfaoui-mohamed-hedi",
+    "argentia-investissements-prives-1167001164",
+    "argile-eau-mer-2",
+    "argousiers-nordiques-3",
+    "argousiers-nordiques-inc",
+    "arhoma-boulangerie-fromagerie-inc",
+    "ariane-martel-optometriste-inc-1170223284-2",
+    "arianne-gingras-immobilier-inc",
+    "arianne-phosphate-2",
+    "arij-importexport-inc-2",
+    "arimas-internationale-inc",
+    "aristide-koudiatou-inc-1173770075",
+    "arkeo-immobilier-inc",
+    "arkoca-1149530892",
+    "arlequino-pizzeria-inc-1165100489-1",
+    "arlsc-3",
+    "arm-transport-inc",
+    "arma-feu-inc",
+    "armada-transportation-solutions-llc",
+    "armand-musique-inc",
+    "armandimmo-inc-3",
+    "armeninvest-inc-2",
+    "armetek-services-1174405895",
+    "armoires-design-nic-star",
+    "armoires-design-yp-inc",
+    "armoires-dmf-inc-2",
+    "armoires-stm",
+    "armor-manoir-sherbrooke",
+    "armorteck-inc",
+    "armour-insurance-brokers-ltd-1173764896",
+    "armurerie-phoenix-inc",
+    "arnaldo-di-loreto-inc",
+    "arnault-avocats-sa",
+    "arnold-radu-md-inc-2",
+    "arnould-gateaux-services-ti-inc",
+    "aro-artiste-peintre",
+    "arobas-laser",
+    "arone-inc-1171345656",
+    "aropal-strategie-et-conseils",
+    "arpent-films-inc-2",
+    "arpentage-construc-intermedia-inc",
+    "arpentage-cote-du-sud-inc",
+    "arpentage-et-volumetrie-plb",
+    "arpentage-jm-inc",
+    "arpentage-parleciel-inc-3",
+    "arpentage-topoflex-inc",
+    "arpl-ebenisterie",
+    "arpo-groupe-conseil",
+    "arpo-groupe-conseil-levis",
+    "arriere-boutique-2",
+    "arro-1174565169",
+    "arrosage-eco-responsable-1178066255",
+    "ars-agence-de-recouvrement-canada-1146390365",
+    "arsenal-cazama",
+    "arsenal-conseils-inc",
+    "arsenal-peinture-inc",
+    "arshana-capital",
+    "art-essai-2",
+    "art-boreal",
+    "art-brut-cafe-2",
+    "art-dy-voir",
+    "art-deco-cuisine-inc",
+    "art-dentaire-familial-1175102319-108",
+    "art-des-ongles",
+    "art-evolution-inc-1174450156",
+    "art-inox-1173773442",
+    "art-kato-inc",
+    "art-rubis-inc-1174451345",
+    "art-session-mtl",
+    "art-tobgi",
+    "artchitecture",
+    "arta-arts-de-la-table-inc",
+    "artcan-construction-chanvre-1171367858",
+    "artch-art-contemporain-emergent-2",
+    "artdeslivres-inc-2",
+    "artefac-architecture-inc-2",
+    "artefact-decor",
+    "artefact-productions-4",
+    "artem-luhovy-medicine-professional-corporation",
+    "arteq",
+    "artex-granite",
+    "artfcl-1171354146",
+    "artfusion-2",
+    "arthur-blumer-associes-inc-3",
+    "arthur-collections-2",
+    "arthur-z-rubin-holdings-inc",
+    "article-23-ecole-dautodefense-legale",
+    "articles-promotionnels-daniel-dupuis-et-caroline-g-2",
+    "artifice-holding-inc",
+    "artil-transport-ltee-3",
+    "artisan-torrefacteur-bean-et-bonheur-inc-1174630922",
+    "artisanat-et-creations-alexe-2",
+    "artisanat-special-universel-inc",
+    "artist-in-residence-distillerie-2",
+    "artista-esthetique-elle-et-lui",
+    "artiste-en-voie-de-developpement-2",
+    "artjam",
+    "artkarmi-inc-1171467435",
+    "artlequin-atelier-de-peinture-inc-2",
+    "artpublicca",
+    "arts-hudson-2",
+    "arts-martiaux-365-top-fit-inc-2",
+    "arts-martiaux-btt-canada-ouest-de-lile",
+    "arts-martiaux-efficaces-3",
+    "arts-martiaux-kaizen-inc-1173769200",
+    "arts-zentao",
+    "artsenic-inc-1174358847",
+    "artzilla-inc-2",
+    "arundel-capital-corporation",
+    "ary-pimienta-cpa-inc",
+    "arys-mtl",
+    "arzelie",
+    "as-holdings",
+    "as-solutions-zorai-inc",
+    "as2m-import-export-agroalimentaires",
+    "asa-renovation",
+    "asana-coaching-inc-3",
+    "asap-demolition-1180911126",
+    "asc-expert-ti",
+    "ascenseurs-sgs-2",
+    "ascenseurs-tk-canada-limitee-2",
+    "ascension-velo-inc",
+    "ascensionx",
+    "ascentica-2",
+    "asco-restoration-services-inc-1178057916",
+    "asg-immobiliers-inc",
+    "asgard-alliance-inc",
+    "asgardia-canada-1174389172",
+    "asham-premiere-nation",
+    "asher-finance-inc-1174685694",
+    "ashley-carter-tree-care-limited-2",
+    "asi-2",
+    "asi-energie-2",
+    "asinii-fournier-inc",
+    "askal-construction",
+    "asl-service-de-comptabilite-inc",
+    "asm-assurance-inc",
+    "asm-informatique-inc-2",
+    "asmi-construction-inc-2",
+    "asmodee-canada-inc",
+    "asn-machinerie-inc",
+    "asolutions-inc-1171327845",
+    "asp-2",
+    "aspects-logiciels-inc-2",
+    "asphalte-100-fissures",
+    "asphalte-cloutier-inc-3",
+    "asphalte-diffusion",
+    "asphalte-fournier",
+    "asphalte-gilles-bibeau-inc-1141998055",
+    "asphalte-major-et-fils-inc",
+    "asphalte-protect-inc-1174372608",
+    "asphalte-valade-2",
+    "asphalte14-inc",
+    "aspirasia-marque-de-commerce-2",
+    "aspirateur-asm",
+    "aspirateur-dorion-inc",
+    "aspirateur-pierre-martel-2",
+    "aspirateur-sherbrooke-2",
+    "aspirateurs-lasalle-plus-inc-1175522540",
+    "asplundh-canada-ulc",
+    "aspm",
+    "asselin-desorcy-avocats-inc",
+    "assemblage-2k-inc",
+    "assemblage-express-zilberstar",
+    "assemblee-chretienne-dargenteuil-la-bible-parle",
+    "assemblee-chretienne-explosion-de-gloire-de-quebec",
+    "assemblee-chretienne-mission-deschaillons-2",
+    "assemblee-de-dieu-des-fleuves-deau-vive-1174561226",
+    "assemblee-des-aigles-de-dieu-1173762056",
+    "assemblee-des-mrc-de-la-cote-nord",
+    "assemblee-du-coin",
+    "assif-nettoyage-inc-2",
+    "assistance-et-soins-a-domicile-montreal-inc-1164417991-1",
+    "association-albanaise-kosova-a-montreal",
+    "association-aleximontoise-des-proprietaires-du-lac",
+    "association-ameliorant-la-vie-avec-alorica-canada",
+    "association-canadienne-darticles-de-sport",
+    "association-canadienne-de-lhydrogene-et-des-piles-",
+    "association-canadienne-des-entreprises-et-des-prof",
+    "association-canadienne-des-sports-intellectuels-2",
+    "association-caraibes-de-montreal",
+    "association-centres-butactik-04",
+    "association-chasse-et-peche-des-cerfs-de-lotbinier-1142182451",
+    "association-chemin-du-lac-sewell",
+    "association-citoyenne-de-pointe-gatineau",
+    "association-cur-de-lesperance",
+    "association-coeurs-clements-du-monde",
+    "association-communautaire-de-georgeville-2",
+    "association-communautaire-emile-zola",
+    "association-condos-5205-5215",
+    "association-culturelle-asanteman-du-quebec-3",
+    "association-culturelle-bangoulap-au-canada-acbac",
+    "association-culturelle-burundaise-de-quebec-akiwac",
+    "association-culturelle-et-historique-vietnamienne-",
+    "association-culturelle-mongole-nouveaux-nomades-3",
+    "association-daide-au-rapatriement",
+    "association-deducation-de-jalon-2",
+    "association-deducation-professionnelle-du-quebec",
+    "association-de-baseball-amateur-de-chambly-inc-1142187658",
+    "association-de-baseball-beauce-nord-abbn",
+    "association-de-baseball-mineur-de-drummondville",
+    "association-de-bienfaisance-et-de-retraite-des-pol",
+    "association-de-cadres-de-la-ville-de-contrecoeur",
+    "association-de-chasse-et-peche-st-basile-de-portne",
+    "association-de-chasse-peche-et-villegiature-du-taw-3",
+    "association-de-handball-regionale-centre-du-quebec-2",
+    "association-de-jeux-de-role-en-abitibi-temiscaming-3",
+    "association-de-judo-de-blainville-2",
+    "association-de-laluminium-du-canada-aac",
+    "association-de-l-ecole-de-leadership-et-de-recrues-1171522478-1",
+    "association-de-lhyperchylomicronemie-1172585839",
+    "association-de-la-communaute-etudiante-de-ripon-de",
+    "association-de-la-construction-du-quebec-region-ba-4",
+    "association-de-la-construction-sorel-tracy-1145846508",
+    "association-de-la-piscine-du-mont-belvedere-inc-2",
+    "association-de-loisirs-du-lot-45-de-bicolline",
+    "association-de-ringuette-de-ste-julie-inc",
+    "association-de-soccer-de-chateauguay-2",
+    "association-de-soccer-de-saint-hyacinthe-2",
+    "association-de-soccer-les-seigneuries",
+    "association-de-soccer-spectra-united-2",
+    "association-de-soccer-varennes-saint-amable",
+    "association-de-travailleurs-agricoles-saisonniers--1173876229",
+    "association-des-5-quilles-du-quebec",
+    "association-des-7801-et-7821-salomon-marion",
+    "association-des-accidentes-de-la-route-en-litige-a-2",
+    "association-des-amis-de-serra-de-santo-antonio",
+    "association-des-amis-du-lac-trousers",
+    "association-des-amis-villegiateurs-du-lac-du-bleue-1174565086",
+    "association-des-anciennes-et-anciens-ecole-seconda",
+    "association-des-anciens-de-la-haute-gaspesie-1173733610",
+    "association-des-anciens-de-whu-au-canada",
+    "association-des-anciens-employes-du-college-jean-d-2",
+    "association-des-anciens-et-anciennes-du-patro-lava"
   ],
   "failed": [
     {
@@ -4660,6 +5506,622 @@
     {
       "slug": "alex-plus-vrac-inc-1174359928",
       "reason": "no_content"
+    },
+    {
+      "slug": "alexrtz-developpement-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "ali-mroue-courtier-immobilier-inc-3",
+      "reason": "no_content"
+    },
+    {
+      "slug": "alice-balabanian-inc-1174563263",
+      "reason": "no_content"
+    },
+    {
+      "slug": "alimentation-clement-pare-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alimentation-efy-caron-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alimentation-frederic-leblanc-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alimentations-homers-pierre-caisse-inc-1180909229",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aliments-bessons-inc-3",
+      "reason": "no_content"
+    },
+    {
+      "slug": "aliments-crus-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "aliments-top-1174550708",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alireza-hoda-inc-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "allard-poirier-cpa-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "allexmetal-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "allez-interactif-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "allezcuisine",
+      "reason": "no_content"
+    },
+    {
+      "slug": "alliance-societe-immobiliere-inc-1174630369",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "alliance-forma-plus-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alloin-julie",
+      "reason": "no_content"
+    },
+    {
+      "slug": "allsaints",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "allunac-inc-1173768814",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alpaga-logistique-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "alplast-g-k-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "altan-construction-industrielle-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "altium360",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "ampm-service",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "amalgame-nord-ouest-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "amandeep-singh-dhillon-cpa-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "amardaya-software-inc-1176911734",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "amarel-medical-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "amazon-web-services-canada-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "amca-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "amec",
+      "reason": "no_content"
+    },
+    {
+      "slug": "ameublement-petite-panthere",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "amex-exploration-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ami-alibay-investissement-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aminata-adama-ndour-md-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "amm-mecanique-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "amn-consultants-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "amusements-henry-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "anasphore-lc-inc-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "anatum-technologie-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "anctil-automobiles-inc-3",
+      "reason": "no_content"
+    },
+    {
+      "slug": "andre-bolduc-reparation-enr-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "andreanne-longpre-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "andree-talbot-avocate-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "andree-anne-roy-optometriste-inc-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "andrew-j-dixon-professional-corporation",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "andy-deblois-constructions-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "angela-carciero-immobilier-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "anglais-des-affaires-en-ligne-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "anicau-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "aniceto-solutions-financieres-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "animalerie-aqua-zoo-2022-ltee-1177135036-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "animalerie-roufi-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "animo-etc-mirabel",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "anizoo-2008-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ann-sophie-del-vecchio-avocate-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "annaelle-couture-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "anne-berube-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "annie-giguere-cpa-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "anouck-latremouille-md-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "anthom-construction-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "anthony-baron-courtier-immobilier-inc-1173733594",
+      "reason": "no_content"
+    },
+    {
+      "slug": "anytime-fitness-tm-10",
+      "reason": "no_content"
+    },
+    {
+      "slug": "anytime-fitness-tm-1171808885",
+      "reason": "no_content"
+    },
+    {
+      "slug": "anytime-fitness-tm-1178058401",
+      "reason": "no_content"
+    },
+    {
+      "slug": "aon-parizeau-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "aon-parizeau-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "apdi-recrutement-international-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "apero-films-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "apothicum-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "applications-jay",
+      "reason": "no_content"
+    },
+    {
+      "slug": "applications-mobiles-overview-inc-3",
+      "reason": "no_content"
+    },
+    {
+      "slug": "approvisionnement-mondial-sobeys",
+      "reason": "no_content"
+    },
+    {
+      "slug": "apricitas-capital-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aprq",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "apscpa-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aq-qualite-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "aqua-consilium-experts-conseils-inc-1174357179",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aquanor-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "arag-tm-1173748840",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aramark-quebec-inc-183",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aramark-quebec-inc-148",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aramark-quebec-inc-131",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aramark-quebec-inc-147",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aramark-quebec-inc-177",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "arbraska-immobilier-inc-4",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "archambault-daoust-alexia-2276407113-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "architecture-gnh-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "architecture-nathalie-st-martin-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-6",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-1160584208-108",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-25",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-1160584208-98",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-1160584208-109",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-1160584208-119",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-7",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-1160584208-93",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-17",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-14",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-1160584208-120",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-13",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-1160584208-118",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-1160584208-111",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-9",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-10",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-8",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-1160584208-92",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-1160584208-96",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-1160584208-103",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ardene-ardene-styles-1160584208-112",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "arena-de-riviere-au-renard",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "arena-de-st-gilles",
+      "reason": "no_content"
+    },
+    {
+      "slug": "arena-joannie-rochette",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "arine-nazirganian-notaire-inc-1174677394",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "arirens-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "arius-consultants",
+      "reason": "no_content"
+    },
+    {
+      "slug": "armoires-berthiaume",
+      "reason": "no_content"
+    },
+    {
+      "slug": "armoires-de-cuisine-bernier-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "armoires-rm-inc",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "arnonra-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aromes-des-tropiques-1174674938",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "arrondissement-de-la-colline-1166341066",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "arsodora-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "art-montessori-1174559931",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "artfil-creations-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "artflo-inc-1174189473",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "arthos-construction-inc-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "arthur-barbier-boutique-1175521781",
+      "reason": "no_content"
+    },
+    {
+      "slug": "arton-holding-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "arts-network-canada-asia-pacific",
+      "reason": "no_content"
+    },
+    {
+      "slug": "ascenseurs-vertec-inc-5",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "asendia",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aspro-construction",
+      "reason": "no_content"
+    },
+    {
+      "slug": "assa-md-inc-1180184328",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "assemblee-chretienne-de-montreal-pour-letude-de-la",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "assemblee-chretienne-evangelique-dalma-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "assetar-cafe-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "assetlead-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "assistance-canine",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "assistech-3",
+      "reason": "no_content"
+    },
+    {
+      "slug": "association-armenien-de-hockey-balle-international",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-automobile-dominion-2004-limitee-1166339003-1",
+      "reason": "no_content"
+    },
+    {
+      "slug": "association-canadienne-des-massotherapeutes-du-spo",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "association-canadienne-pour-la-sante-mentale-divis",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-chemins-vik",
+      "reason": "no_content"
+    },
+    {
+      "slug": "association-communautaire-de-la-croisee",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-culturelle-symbiose-1171207955",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-dultimate-du-grand-montreal-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-de-chasse-et-peche-de-ste-agathe-des-m",
+      "reason": "no_content"
+    },
+    {
+      "slug": "association-de-la-communaute-noire-de-cote-des-nei-1142166710",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-de-sport-academie-de-trois-rivieres-as",
+      "reason": "fetch_failed"
     }
   ],
   "lastIndex": 0
