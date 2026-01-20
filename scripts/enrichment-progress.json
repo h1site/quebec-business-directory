@@ -36,7 +36,837 @@
     "2220-2500-boulevard-des-laurentides-1171344733",
     "2427-2700-quebec-inc",
     "2433-0128-quebec-inc",
-    "244717"
+    "244717",
+    "2503172-alberta-ulc",
+    "261-st-ursule-inc-2",
+    "2632-6603-quebec-inc-2",
+    "2660-theodore",
+    "2736-5410-quebec-inc-5",
+    "2848-9144-quebec-inc-2",
+    "2860-8594-quebec-inc",
+    "2866-3375-quebec-inc-2",
+    "292-298-king-o",
+    "2967-3142-quebec-inc",
+    "2967-4827-quebec-inc",
+    "2971-8186-quebec-inc-2",
+    "2995-rue-abenaquis-holdings-inc",
+    "2b-avocats-3",
+    "2d-prestige-inc",
+    "4-20-cannada-1173767923",
+    "418avocate-2",
+    "4244-bellechasse-inc-1171374789",
+    "44productions-inc",
+    "4horizons-immobilier",
+    "4l-construction-inc-1173777369",
+    "4p-informatique-3",
+    "5-continents",
+    "5-points-cannabis-inc-2",
+    "5-points-gestion-inc-2",
+    "5-s-metal-inc",
+    "522-university-avenue-holding-inc",
+    "5369-auto-2",
+    "5600k-productions-inc-1170210919-1",
+    "5600k-productions-inc-1170210919-2",
+    "5700-place-maurice-cullen-laval-inc-2",
+    "597-kennedy-inc-2",
+    "5tella-inc",
+    "673100-nouveau-brunswick",
+    "683026-nb",
+    "684655-nb-ltd-1171213375",
+    "686431-nb-inc-5",
+    "7-h-international-impex-inc-2",
+    "703126-nb-ltd-1173773400",
+    "7k-logistique-inc-1178061074",
+    "8000-decarie-inc-1171371140",
+    "80598-canada-ltd",
+    "8260-baillarge-inc-2",
+    "88824-canada-limitee",
+    "8888-immobilier-1171363154",
+    "8e-avenue-st-jean-inc",
+    "8x8-international-ulc-4",
+    "9001-9530-quebec-inc-2",
+    "9002-3698-quebec-inc",
+    "9002-8135-quebec-inc-2",
+    "9017-0911-quebec-inc",
+    "9017-8674-quebec-inc-2",
+    "9045-8811-quebec-inc-2",
+    "9046-1971-quebec-inc-2",
+    "9046-5683-quebec-inc-2",
+    "9046-5691-quebec-inc-2",
+    "9046-7960-quebec-inc-2",
+    "9047-1053-quebec-inc-2",
+    "9090-7809-quebec-inc-2",
+    "9091-0647-quebec-inc-2",
+    "9521-1843-quebec-inc",
+    "9532-1477-quebec-inc",
+    "9536-1721-quebec-inc-1171207716",
+    "9538-6041-quebec-inc",
+    "a-a-rose-inc",
+    "a-b-auto",
+    "a-g-group-your-caps",
+    "a-m-services-2",
+    "a-r-choquette-inc-3",
+    "a-r-transport-et-demenagement",
+    "a-v-international-inc",
+    "a-a-z-vios-renovations-2002-inc",
+    "a-chacun-son-histoire-delson-inc",
+    "a-chacun-son-histoire-innoparc-levis-inc-2",
+    "a-chacun-son-histoire-la-prairie-inc-2",
+    "a-chacun-son-histoire-vieux-longueuil-inc-2",
+    "a-d-distribution",
+    "a-d-f-exca-for-inc",
+    "a-demers-2",
+    "a-deux-cheveux",
+    "a-e-l-m-2",
+    "a-g-e-a-u-t-a-m",
+    "a-gauche-toute-inc",
+    "a-labrit-du-loup-inc",
+    "a-lequerre",
+    "a-lextreme-cablages-inc",
+    "a-loree-des-champs-1149617327",
+    "a-la-table-des-lions",
+    "a-maree-basse-inc-1172595259",
+    "a-p-l",
+    "a-pied-doeuvre-soins-de-pieds-inc",
+    "a-portee-de-mains-1171210686",
+    "a-tic-inc-2",
+    "a-tout-petits-pas-inc-2",
+    "a-voix-haute-1164440506-1",
+    "a-mag-developments-inc-2",
+    "a-oa-ldentaire-inc-2",
+    "a-bissonnette-md-inc",
+    "a-blanchette-maconnerie-inc",
+    "a-lacroix-fils-granit-ltee-2",
+    "a-leboeuf-md-inc",
+    "a-martino-associes-inc-2",
+    "a-namiranian-corporation-de-dentisterie-profession-1174357294",
+    "a-pellerin-2006-inc-2",
+    "a-tremblay-electrique-inc",
+    "a-m-dion-avocats",
+    "ab-comptabilite-et-finances-inc-1180909831",
+    "abl-investissement-inc-2",
+    "abio-construction-inc",
+    "ac-aide-inc-1171355259",
+    "ac-levesque-inc",
+    "ace-electronique-inc-2",
+    "acl-climatisation-inc-2",
+    "acns-remorques-inc-1171116677",
+    "ad-portes-fenetres-inc",
+    "adj",
+    "ae-environnement-inc-1174570052",
+    "ag-forestier-inc-2",
+    "agc-art-public-2",
+    "aiigm-inc-2",
+    "a-i-m-applications-informatisees-en-medecine-inc-1166580952-2",
+    "aj-beke-technologies-inc",
+    "aj-ventes-dauto-inc",
+    "ak-groupe-immobilier-inc",
+    "akr-electrique",
+    "al-ciment-inc",
+    "am-dejeuner-et-diner",
+    "am-demolition-inc",
+    "am-viens-entreprises-ltee-3",
+    "amel-diesel-inc-2",
+    "amg-1174359472",
+    "amq-2",
+    "ams-enterprises-1149540099",
+    "amta",
+    "ancv-3",
+    "and-media-2",
+    "ap-transport",
+    "arcan",
+    "arj-transport-inc",
+    "arm-electrique-1177050714",
+    "art-fermentation-inc-3",
+    "art-recherche-technologique-de-lair-3",
+    "asbd-canada-inc-2",
+    "asc-1968-inc",
+    "at-fabrication-inc",
+    "atcq",
+    "av-electrique",
+    "axc-construction-inc",
+    "5e-rang-saison-2-inc-2",
+    "96660-canada-ltd",
+    "a-ma-maison-2",
+    "a-plus-peintures-et-vernis-inc-1174369422",
+    "ae-grondin-inc",
+    "ayc",
+    "as-logistiques",
+    "ac-mobile-rive-nord-inc",
+    "ag-thiant-services-inc-2",
+    "am-st-construction-inc",
+    "aw-saint-esprit-4",
+    "a1-css-remorquage-2263329544-2",
+    "a1-mini-conteneur-inc",
+    "a2-design-amenagement",
+    "a2b-sys-inc",
+    "a2gc-andrieux-et-associes-consultation-geomecaniqu-1171326797",
+    "a2z-expositions-inc-3",
+    "a2z-turnkey-inc",
+    "a4-architecture-design-inc",
+    "a7-integration-inc-1175282046",
+    "aaa-amenagement-et-deneigement",
+    "aaa-canada-inc-1165608887-1",
+    "aaa-charlevoix-construction-1164783509-2",
+    "aaa-sciences-inc",
+    "aaadcq",
+    "aablais-communications",
+    "aah-services-multiples-inc",
+    "aajk-investments-inc",
+    "aalligator-inc",
+    "aatoaa-inc-2",
+    "ab-implants-inc-2",
+    "ab-industriel-inc-1171138432",
+    "ab-promo",
+    "ab2c-energie-inc",
+    "ab2c-inc",
+    "abapro-2000-2",
+    "abattage-emondage-specialise",
+    "abattage-ferland-3",
+    "abattoir-transbec",
+    "abbruzzese-gina",
+    "abc-f-belisle-inc",
+    "abc-clinique-sante-7",
+    "abc-consultant-inc",
+    "abc-du-cafe-3",
+    "abc-imaging-canada-ltd-1171117865",
+    "abc-multivision-l932-4",
+    "abc-structure-inc",
+    "abcf-tech-inc",
+    "abcl-immobilier-inc-2",
+    "abco-fret-international-3",
+    "abconstruction-krtb-inc",
+    "abcz-services-conseils-inc",
+    "abe-climatisation-inc",
+    "abeausir-inc",
+    "abeilles-tech",
+    "abg-systemes-amerique-du-nord-inc",
+    "abm-precision-inc-3",
+    "abmobile-max-1176914068",
+    "abn-animal-biotechnologie-nutrition-corporation",
+    "abnc",
+    "abo-technologie-inc-1171371108",
+    "abondance-groupe-inc",
+    "abou-assi-christopher",
+    "abp-consultants-en-personnel-inc",
+    "abp-sooke-timber-holdings-inc",
+    "abramova-kristina",
+    "abrartech",
+    "abriart-inc",
+    "abrim-36-inc",
+    "abrim-37-inc",
+    "abrim-38-inc-2",
+    "abriplex-inc",
+    "abris-damour-4",
+    "abritek-2",
+    "abss-electrique-inc-1174627944",
+    "abt-express-inc",
+    "abtech-atl-inc",
+    "abundant-life-wealth-management-inc-3",
+    "abyave-poincons-et-matrices-1164431638-1",
+    "ac-gestion-mignon-inc-2",
+    "ac-services-juridiques-inc",
+    "ac780-inc",
+    "acacp-association-commerciale-affiliee-au-canada-p",
+    "academie-ab",
+    "academie-baseball-diamond-inc",
+    "academie-blua-2",
+    "academie-catherine-cote",
+    "academie-cycliste-du-quebec-inc-2",
+    "academie-darts-martiaux-mixtes-gsc-inc-3",
+    "academie-de-bonsai-andolfo-du-canada",
+    "academie-de-coiffure-de-la-monteregie",
+    "academie-de-danse-scream-inc-1174679473",
+    "academie-de-finance-canadienne-inc-1180907694",
+    "academie-de-laviation-de-montreal-2",
+    "academie-de-laviation-de-saint-hyacinthe-inc-2",
+    "academie-de-la-construction-1173746620",
+    "academie-de-medecine-chinoise-soins-de-sante-2",
+    "academie-de-musique-du-canada-2",
+    "academie-de-musique-la-prairie-inc-1173775223",
+    "academie-de-nutrimedicine-1176912112",
+    "academie-de-soccer-pro-foot-inc",
+    "academie-de-tae-kwon-do-de-chicoutimi-2247432539-1",
+    "academie-divalook",
+    "academie-dorval-inc-4",
+    "academie-dre-nadia-gagnier-psychologue-conferencie",
+    "academie-du-centre-eden-1177042307",
+    "academie-educative-les-lutins-joyeux-inc",
+    "academie-erudit-inc-1171366827",
+    "academie-eureka-inc",
+    "academie-financiere-vergara-inc-1175288860",
+    "academie-gca-4",
+    "academie-hockey-rive-sud-game-changer-1173734204",
+    "academie-imagine-arts-inc-1173745325",
+    "academie-impact-inc",
+    "academie-imperial-ffc-2",
+    "academie-ivanabe-inc",
+    "academie-jb-beaute-inc",
+    "academie-kells",
+    "academie-lavalloise",
+    "academie-les-aigles",
+    "academie-les-fondatrices",
+    "academie-line-up-inc",
+    "academie-medico-esthetique-2",
+    "academie-milala-2",
+    "academie-numerique-en-tourisme-ant-inc",
+    "academie-oxford",
+    "academie-performart-josee-bonneau",
+    "academie-performance",
+    "academie-prescolaire-petite-patrie-inc-2",
+    "academie-quebecoise-dart-du-deplacement",
+    "academie-rba",
+    "academie-reetu-inc",
+    "academie-robotique-canadienne-inc",
+    "academie-scrimicie-1174189275",
+    "academie-scrimicie-campus-de-gatineau-1180186455",
+    "academie-scrimicie-campus-de-montreal-1180186646",
+    "academie-scrimicie-campus-de-saint-nazaire-1180186273",
+    "academie-scrimicie-campus-de-saint-hyacinthe",
+    "academie-seirios-k9",
+    "academie-superieure-de-home-staging-limoges-inc",
+    "academie-transforma",
+    "acadia-brique-beton-2",
+    "acadia-pharmaceutical-canada-inc",
+    "acanthus-invesco-inc",
+    "accebas-igor",
+    "accelerateur-innovation-inc-2",
+    "acceleration-vtt-quebec-2",
+    "accent-architectural-4",
+    "accentiv-inc",
+    "acces-global-capital-inc-3",
+    "acces-grimpe-2",
+    "acces-orthophonie-inc",
+    "acces-ouvert",
+    "acces-propriete-lesperance-inc-2",
+    "acces-psy-2",
+    "acces-recherche-clinique-ogs-inc-2",
+    "acces-ressources-lanaudiere-arl-1174560707",
+    "acces-credit-2",
+    "acces-nature-laurentides",
+    "accessoires-de-camping-belco",
+    "accessoires-smartmat-2",
+    "accident-direct",
+    "acclaim-ability-management-inc",
+    "accommodation-danny",
+    "accompagnateur-pratique",
+    "accompagnement-des-femmes-immigrantes-de-loutaouai",
+    "accompagnement-express",
+    "accompagnement-manala-inc",
+    "accro-o-sport",
+    "accroche-cur-centre-de-pediatrie-sociale-en-commun",
+    "accros-mineraux-2281004269-1",
+    "accu-brite-tm-2",
+    "accueil-tiberiade-4",
+    "acd-renovation-4",
+    "acda-inc-2",
+    "acdp-ebenisterie-inc-2",
+    "ace-amenagement-inc",
+    "aceco-planchers-1174407669",
+    "acelul-association-de-creation-et-detudes-litterai",
+    "acensa-inc",
+    "acer-immobilier-sainte-agathe-inc-5",
+    "acetech-inc",
+    "acf-immobilier-inc-1171364541",
+    "acg-americ-2",
+    "achaia-select-jean-talon-inc-3",
+    "achat-dautos-shermart-inc-3",
+    "achigans-pour-etangs",
+    "aci-air-cargo-inc-1174390030",
+    "acier-darmature-de-beauce-1171376834",
+    "acier-darmature-de-beauce-2015-1171375513",
+    "acier-darmature-g-pro-inc-2",
+    "acier-des-cedres-inc",
+    "acier-dlp",
+    "acier-gauthier-1171347439",
+    "acier-gendron-ltee",
+    "acier-jaffna",
+    "acier-larocque-inc",
+    "acier-mg-inc-1174573106",
+    "acier-robel-inc",
+    "acier-roger",
+    "acierbec-inc-1149521800",
+    "aciertek",
+    "acl-cpa-4",
+    "acl-securite-inc-3",
+    "acl-valleyfield",
+    "acm-gouttieres-1172339799",
+    "acme-metal-vaisseaux-canada-ltee-1143094341-1",
+    "acnb-inc-2",
+    "aco-systemes-ltee",
+    "acoca-notaires-inc-2",
+    "acosta-solutions-inc",
+    "acq-capital-inc-2",
+    "acquisio-webcom-ulc-2",
+    "acquisition-cl-inc-2",
+    "acquisitions-mm-inc-2",
+    "acquisitions-raymond-allard-inc",
+    "acry",
+    "acry-lec-inc-4",
+    "acrylique-deco-art",
+    "act-commodities-inc",
+    "act-energy-technologies-ltd-1166339482",
+    "act-md-inc-1174626987",
+    "actelcominc",
+    "acti-serv-inc",
+    "acti-sport-marieville-inc-1171135982",
+    "actif-deau-globale",
+    "actif-rawdon-inc",
+    "actifs-miniers-amalgames",
+    "actifs-tremblay-inc-2",
+    "actimmo-inc",
+    "actiom-inc",
+    "action-brio",
+    "action-conservation-gorille-2",
+    "action-cp-inc-1164565138-4",
+    "action-des-citoyens-volontaires-pour-le-bien-etre-",
+    "action-immobilier-2",
+    "action-loisirs-2",
+    "action-placement-inc-1172344500",
+    "action-rl-electrique-inc-2",
+    "action-soins-infirmiers-2276401488-1",
+    "action-solutions-dba-1172594963",
+    "action-souffle-de-vie-de-lestrie",
+    "action-vallee-inc-2",
+    "action-sante-plein-air-chute-saint-philippe-2",
+    "actions-exponentielles-mc-inc-1172586613",
+    "actions-jt-plus-inc",
+    "actionsports50pluscom-3",
+    "activar-inc-2",
+    "activation-dg-inc-1172339856",
+    "acto-strategy-marketing-2",
+    "actoran-conseils-inc-2",
+    "actuel-logistiques-inc",
+    "acupuncture-sean-laflamme-2",
+    "ad-acoustique-inc",
+    "ad-astra-canada-inc",
+    "ad-electronique-express-plus-inc",
+    "ad-optimum-croissance-2",
+    "ad-traduction",
+    "adam-et-eve",
+    "adam-houtekamer-professional-corporation",
+    "adam-koubi-ltee-1174563990",
+    "adamax-immobilier-inc-4",
+    "adams-avocat-inc-3",
+    "adanis-transports-inc-2",
+    "adaptations-architectures",
+    "adapte",
+    "adb-excavation",
+    "adc-dao-inc-1164418346-1",
+    "adcss-2",
+    "ade-creations-inc",
+    "adel-fawal-pharmacien-inc",
+    "adenops-consultants-informatique-inc-1171475388",
+    "adezen-conseils-inc",
+    "adfit-inc",
+    "adhera-inc-2",
+    "adhesifs-wepack-custom-inc",
+    "adhetec-canada-inc-1173773939",
+    "adi-mc-2",
+    "adil-baamar-inc",
+    "adincos",
+    "adis-maconnerie-et-restauration-inc",
+    "adl-entrepreneur-electricien-inc",
+    "adlans-cuisine-inc",
+    "adm-villeneuve-inc",
+    "admeduccom",
+    "administration-axis-inc-2",
+    "administration-brb-inc-1141983974",
+    "administration-bel-rive-inc-1149558794",
+    "administration-des-soins-actifs-2018-inc",
+    "administration-g-perreault-inc",
+    "administration-leroux-delorme-inc",
+    "administration-maska-inc",
+    "administration-pmt-inc",
+    "administration-portuaire-de-baie-trinite",
+    "administration-portuaire-de-bonaventure-1174381922",
+    "administration-portuaire-de-lile-dentree-2",
+    "administration-portuaire-de-les-escoumins",
+    "administration-portuaire-de-ste-therese-de-gaspe-2",
+    "administration-sg",
+    "administration-saj-inc-3",
+    "adn-design-inc-2",
+    "adn-novamax-distribution-inc",
+    "adn-sante-1171124325",
+    "adolphe-construction-inc",
+    "adomo-inc",
+    "adoption-lapins-sans-abri-2",
+    "adpl-construction-inc",
+    "adrenaline-7",
+    "adrenaline-3",
+    "adrenaline-paintball-3",
+    "adriana-decker-medical-services-inc",
+    "adtech-1166005620-1",
+    "advanced-naturopathy-institute-of-montreal-inc",
+    "advanced-sterilization-products-canada-ulc",
+    "aecsi-uqam",
+    "aedcg-2",
+    "aeer",
+    "aegaia-inc-2",
+    "aeko-securite",
+    "aepdcc-uqam",
+    "aer-scientia-canada-inc",
+    "aero-canada-3",
+    "aero-concept-inc",
+    "aero-fixe-2",
+    "aero-innovation-inc",
+    "aero-logistique",
+    "aero-nouvelle-3",
+    "aero-nor",
+    "aerobaie-canada-inc-1174631649",
+    "aerodev-inc-3",
+    "aerodonia-inc",
+    "aeroemergence-inc-3",
+    "aerofeel",
+    "aerolaire-inc-1180909799",
+    "aeronefs-sportifs-ballard-ltee-2",
+    "aeroport-mont-tremblant-inc",
+    "aeroprestige-inc",
+    "aerospatiale-kaycee-inc",
+    "aerrianta-international-amerique-du-nord-inc-6",
+    "aesimtech-2",
+    "af-immo-inc",
+    "af-mckay-investissements-2",
+    "afac",
+    "afaire-association-des-francophones-en-affaires-po",
+    "afar-consultation-inc",
+    "afeas-mascouche",
+    "afeas-notre-dame-des-bois-1178055928",
+    "afeas-ste-therese",
+    "afentix-inc-2",
+    "affacturage-global-inc-2",
+    "affaires-quebec",
+    "affichage-impression-20-inc",
+    "affiche-en-tete",
+    "affiches-monstre-inc-2",
+    "affirme-design",
+    "afl-capital-3",
+    "afm-luna-services-generaux-inc",
+    "afmerica-technologie-inc-2",
+    "afpg-conseil-inc-2",
+    "afromusee-2",
+    "afterpay",
+    "ag-43",
+    "ag-comptabilite-tenue-de-livre",
+    "ag-growth-international-inc-2",
+    "ag-immobilier-1174411216",
+    "agadouce-saint-hubert",
+    "agave-intl-ltee",
+    "agd-formation-inc-1142175364",
+    "agecgi-2",
+    "agence-3-mars-1174369729",
+    "agence-360-inc",
+    "agence-atf-inc",
+    "agence-agora-inc-2",
+    "agence-artistique-alias-2",
+    "agence-artistique-corinne-giguere-inc-1173748071",
+    "agence-artistique-h-m-1178061421",
+    "agence-boom-inc-2",
+    "agence-brand-new-way-3",
+    "agence-brands-and-roses-inc",
+    "agence-canadienne-dinvestigation-conseil-assistanc-3",
+    "agence-cherry-river-co-2",
+    "agence-creative-winifred-inc",
+    "agence-cvim-inc",
+    "agence-dassurances-league",
+    "agence-demploi-mains-dor",
+    "agence-demploi-multi-services-ss-2",
+    "agence-de-creation-web-boreale",
+    "agence-de-developpement-de-saint-donat",
+    "agence-de-petroliers-oceaniques-ltee",
+    "agence-de-placement-aa-inc-1174449505",
+    "agence-de-placement-de-personnel-dappui-inc-2",
+    "agence-de-placement-de-securite-grace-inc-2",
+    "agence-de-placement-del-inc-2",
+    "agence-de-placement-education-professionnelle-2",
+    "agence-de-placement-jm-sante-inc",
+    "agence-de-placement-la-perle-rare-inc",
+    "agence-de-placement-soins-precieux-maya-inc",
+    "agence-de-recouvrement-lsc",
+    "agence-de-recouvrement-senibor-2",
+    "agence-de-recouvrement-veritas-alliance",
+    "agence-de-recrutement-educatif-marvel-inc-4",
+    "agence-de-representation-vitis-inc",
+    "agence-de-securite-a2a-inc",
+    "agence-de-services-et-de-placement-du-personnel-in-1174326133",
+    "agence-de-sport-jova-inc-2",
+    "agence-de-talent-cloudnine",
+    "agence-de-transport-de-beton-de-la-metropole-2",
+    "agence-de-vente-sp-inc-2",
+    "agence-de-ventes-magrep-inc",
+    "agence-de-voile-ez",
+    "agence-de-voyages-fontainebleau-2",
+    "agence-de-voyages-mercedes-inc",
+    "agence-design-yummy",
+    "agence-directe-td-assurance-inc",
+    "agence-dorage-inc-2",
+    "agence-double-shot-inc-2",
+    "agence-empire-mtl-1177042059",
+    "agence-ex-p-inc-2",
+    "agence-expedition-tormar-2",
+    "agence-exptravers-4",
+    "agence-fan-club-inc-2",
+    "agence-faro-immigration",
+    "agence-figure-de-proulx-inc",
+    "agence-forget-inc-1174191016",
+    "agence-genevieve-champagne-2",
+    "agence-giraldeau-casting-inc-2",
+    "agence-hyperclics-marketing-inc-3",
+    "agence-idmc-inc",
+    "agence-iel-inc-2",
+    "agence-immobiliere-canora-inc",
+    "agence-immobiliere-century-21-pro-solution-inc",
+    "agence-immobiliere-ir-2",
+    "agence-intervalle-inc",
+    "agence-je-sports-inc",
+    "agence-jobloot-inc-1178061728",
+    "agence-julie-draper-inc",
+    "agence-lenveloppe-inc-3",
+    "agence-labour-1176915644",
+    "agence-lead-lion-inc",
+    "agence-logishop-inc",
+    "agence-luxorbit-inc-1174408519",
+    "agence-lyghts-inc-1173775637",
+    "agence-mdr-inc-2",
+    "agence-marinade",
+    "agence-maritime-navitrans-est-inc-1166487463",
+    "agence-marketing-gipsyxm-inc-2",
+    "agence-martine-guerin-2",
+    "agence-medinject-inc",
+    "agence-melia-3",
+    "agence-monastudio-inc",
+    "agence-nous",
+    "agence-oceanique-du-bas-st-laurent-inc-3",
+    "agence-orange-21-inc-1171206965",
+    "agence-patrick-chandonnet",
+    "agence-podiummarketing-inc",
+    "agence-reaction-1173775520",
+    "agence-renom-cd-inc-1174676503",
+    "agence-renovation",
+    "agence-robin-immobiliere-inc-2",
+    "agence-robopolis-inc-3",
+    "agence-roch-jeaurond-inc",
+    "agence-smac-distribution-2",
+    "agence-smarkt-inc-2",
+    "agence-soluti-2",
+    "agence-st-marseille-inc",
+    "agence-status-inc",
+    "agence-stokt-1174883224",
+    "agence-super-medica-inc-1178055670",
+    "agence-sz-de-services-de-l-avenir-inc",
+    "agence-tamark-inc",
+    "agence-tassou-inc",
+    "agence-tom-leo",
+    "agence-top-notch-inc-2",
+    "agence-unanim-2",
+    "agence-une-inc",
+    "agence-vm-1178061280",
+    "agence-vrm",
+    "agence-web-conception-2",
+    "agence-web-sparkup-2",
+    "agence-well-inc",
+    "agence-wow-healthy-personnel-inc",
+    "agence-zoombiz",
+    "agendassist-3",
+    "agendi-associes-inc",
+    "agent-dynamo-inc-2",
+    "agents-dassurance-patrimoine-integral",
+    "agievo-solutions-inc-3",
+    "agile-response-consulting-limited",
+    "agilitepac",
+    "agilityum-services-conseils-inc-3",
+    "agilus",
+    "agimini-inc",
+    "agir-ensemble-pour-le-developpement-des-enfants-1174566274",
+    "agneaux-mitis-3",
+    "agoga-inc-1171354724",
+    "agora-international-quebec-inc-1171131973",
+    "agora-services-intermediaires-corp",
+    "agr-notaire-inc",
+    "agrandacpaca",
+    "agrasoy-gestion-immobiliere-et-location",
+    "agrecoles",
+    "agregats-rive-sud-inc",
+    "agri-perfo-romance-inc-2",
+    "agri-expert-3000-inc-2",
+    "agri-marche-2",
+    "agri-select-inc",
+    "agri-services-leroux-inc-2",
+    "agri-viens-inc-2",
+    "agriculture-singh-cabane-a-sucre-vaudreuil-dorion-4",
+    "agridepotca-inc",
+    "agrigesco-inc-1149524945",
+    "agrilog-2",
+    "agrimetrie",
+    "agrinovation-urbaine-1177041846",
+    "agripem-inc-3",
+    "agritex-motosport-inc-2",
+    "agrivision-inc-2",
+    "agro-msr-inc",
+    "agrocan-international-inc-2",
+    "agrocentre-st-pie",
+    "agrohall-ltee-2",
+    "agrolav-inc",
+    "agromex-inc-1174561960",
+    "agropole-lassomption-inc",
+    "agrotours-charlevoix-inc-2",
+    "agrumes-ed-rec-3",
+    "agur-galerie",
+    "ahasy-inc",
+    "ahb-service-et-gestion-inc-2",
+    "ahc-construction-developpement",
+    "ahead-solutions-de-fortune",
+    "ahmed-aly",
+    "ahmed-badreldin-pharmacien-inc",
+    "ahmed-benouif-inc-2",
+    "ahmed-khondoker-talha",
+    "ai-global-pros-inc",
+    "ai-sushi-comptoir-a-sushi-et-soupe-2",
+    "ai-automation",
+    "ai-media-canada-inc-3",
+    "aica-universelle",
+    "aide-aux-etudiants-maghrebins",
+    "aide-construction",
+    "aidersonenfant-com-1174243692-1",
+    "aidexpress-inc",
+    "aidned-foundation-2",
+    "aiesl",
+    "aiftq-la-capitale",
+    "aig-united-guaranty-mortgage-insurance-company-can",
+    "aiguisage-groleau-inc",
+    "aiia-2",
+    "aikibudo-trois-rivieres",
+    "aiko-sushi-inc-1165484370-1",
+    "aim-recyclage-desgagne",
+    "aim-services-corporatifs-inc",
+    "aimable-inc-2",
+    "aime-productions-inc-1175768580",
+    "aime-crois-sois-inc-1178054319",
+    "aimportation-inc-3",
+    "ainees-jecoute-en-actions-ajea-2",
+    "aines-actifs-de-shefford",
+    "aines-sans-frontiere-3",
+    "aipa-electronique-1173767972",
+    "air-ameublement-inc",
+    "air-cascades-inc",
+    "air-climatise-pat-rick-inc",
+    "air-ground-xpress-inc",
+    "air-liaison-inc",
+    "air-littoral-ltee-2",
+    "air-mg-et-associe-inc",
+    "air-metropolitain-2000-1164437361-1",
+    "air-sports-voyage-2",
+    "air-vision-2",
+    "air-wemindji-inc-2",
+    "air-ventek-inc",
+    "airablo-immeubles-inc",
+    "aire-commune-1171211346",
+    "airex-brevets-inc-3",
+    "airex-industries-inc-1162243167-1",
+    "airgo-technologie-inc-2",
+    "airnitos-solutions-inc",
+    "airtox-deneigement-2",
+    "airudi-inc-2",
+    "ajara-2",
+    "ajkc3536-inc-2",
+    "ajm-habitation-inc-1174629569",
+    "ajm-hockey-inc-2",
+    "ak-renovation-du-suroit-inc-3",
+    "akama-30-inc",
+    "aki-epicerie-zero-dechet-inc",
+    "aki-sushi-9",
+    "aki-sushi-8",
+    "aki-sushi-ancienne-lorette",
+    "aki-sushi-laurier-1168309046-9",
+    "aki-sushi-laurier-station-2",
+    "aki-sushi-prevost",
+    "akiba-mode-beaute-decors",
+    "aking-ressources-2",
+    "akobex-inc-1175284398",
+    "akomptabilite-inc",
+    "akro-chant-1174566662",
+    "aktionreaktion-2",
+    "aktiv-performance-chiropratique-inc",
+    "akuafoil",
+    "akvo-spiralift-marque-de-commerce-1171357453",
+    "al-systemes-inc-2",
+    "al-13-fusion-inc",
+    "al-aydi-capital-construction-inc",
+    "al-doucet-portes-et-fenetres-inc-3",
+    "ala-md-inc",
+    "alain-assedo-opticien-inc-2",
+    "alain-baron-inc-2",
+    "alain-carle-architecte",
+    "alain-foisy-2",
+    "alain-leblond-inc-2",
+    "alain-masse-cpa-inc",
+    "alain-nault-inc",
+    "alain-ouellette-cpa-inc-1174683590",
+    "alain-piche-transport-inc-2",
+    "alain-proulx-capital-inc-2",
+    "alain-tardif-photographie-inc",
+    "alain-veilleux-architecte-inc",
+    "alamos-or",
+    "alan-ovadia-avocat-inc-1174191321",
+    "alanac-inc-3",
+    "alarick-service-conseil-inc",
+    "alarme-excellence-inc-2",
+    "alarme-gs-inc-2",
+    "alarme-komtek-securite-inc-1171363550",
+    "alarme-r-s-1178054111",
+    "alarme-zacon-inc-1174375726",
+    "alarme-zone-tech-inc",
+    "alarmeroute-2",
+    "alarmes-caron",
+    "alarmes-fs-secure",
+    "alarmes-lp-inc",
+    "alarmes-omnitron",
+    "alarmes-pro-intec-inc-5",
+    "alarmes-vec-2013-inc",
+    "alarmesecuremr-inc",
+    "alarocquedesign-inc",
+    "alaroy-inc",
+    "alb-productions-inc-1178476660",
+    "albatros-bois-francserable",
+    "albatros-drummondville-2",
+    "albert-baker-professional-corporation",
+    "albert-brandt-courtier-immobilier-inc-3",
+    "albert-camion-reparations-inc-4",
+    "albert-castonguay-fils-inc",
+    "albert-donald",
+    "albi-le-geant-mazda-1140818650-9",
+    "albi-occasioncom",
+    "albi-nissan-de-vaudreuil-2",
+    "alca-service",
+    "alcemat-construction-inc-2",
+    "alchemix-4",
+    "alchimiste-microbrasserie-1174676081",
+    "aldim-forward-service-inc-1173754509",
+    "ale",
+    "aleand-pro",
+    "aleas-films-inc-2",
+    "aleia-2",
+    "alesab-pharma",
+    "alessa-trattoria-inc",
+    "alessi-consultant",
+    "alex-aquilino-vigneault-isabelle-cere-pharmaciens-",
+    "alex-artiste-peintre-inc-5",
+    "alex-coulombe-ltee-2",
+    "alex-davis-associes",
+    "alex-moore-md-inc",
+    "alex-pneu-et-mecanique-5500-inc-2",
+    "alex-tag-groupe-inc",
+    "alex-transit-demenagement-2",
+    "alexandra-barrette-md-inc-2",
+    "alexandra-esthetique",
+    "alexandre-amyot-2",
+    "alexandre-centazzo-marketing-inc",
+    "alexandre-dumas-md-inc",
+    "alexandre-duplantie-inc-3",
+    "alexandre-goyette-avocat-inc-3",
+    "alexandre-grenier-avocat-inc",
+    "alexandre-lainesse-inc-2",
+    "alexandre-longpre-courtier-immobilier-inc-1173744047"
   ],
   "failed": [
     {
@@ -65,6 +895,3770 @@
     },
     {
       "slug": "2161159-alberta-1166548058-1",
+      "reason": "no_content"
+    },
+    {
+      "slug": "2636-9843-quebec-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "2p-immobilier",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "4-seasons-plus-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "5e-rang-saison-2-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "9026-5893-quebec-inc-3",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "9046-2409-quebec-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "96660-canada-ltd",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "a-w-tm-3",
+      "reason": "no_content"
+    },
+    {
+      "slug": "a-leau-pression",
+      "reason": "no_content"
+    },
+    {
+      "slug": "a-ma-maison-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a-plats-ventes-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "a-plus-peintures-et-vernis-inc-1174369422",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a-votre-service-transport-et-livraison-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a-belair-excavation-1175284752",
+      "reason": "no_content"
+    },
+    {
+      "slug": "a-dion-md-inc-1176914738",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aast-services-comptable-et-fiscaux-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "ac-liquidation-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "ac-services-entretien-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ae-grondin-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "amf-asset-management-inc-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "apq-association-des-physiques-quebecois-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ayc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "as-logistiques",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ac-mobile-rive-nord-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aa-entretien-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ag-thiant-services-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "am-st-construction-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a-w-5736-1168915792-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a-w-carignan-1168915321-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aw-lasalle-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aw-saint-esprit-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a1-css-remorquage-2263329544-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a1-geoservices-ltee-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a1-mini-conteneur-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a2-design-amenagement",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a2b-sys-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a2gc-andrieux-et-associes-consultation-geomecaniqu-1171326797",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a2z-expositions-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a2z-services-pro-compte",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a2z-turnkey-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a4-architecture-design-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a7-integration-inc-1175282046",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aaa-amenagement-et-deneigement",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aaa-canada-inc-1165608887-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aaa-charlevoix-construction-1164783509-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aaa-sciences-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aaadcq",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aablais-communications",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aac-transport-llc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aah-services-multiples-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aajk-investments-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aalligator-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aatoaa-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ab-implants-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ab-industriel-inc-1171138432",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ab-md-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ab-promo",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ab-vision-construction-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ab2c-energie-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ab2c-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abapro-2000-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abattage-emondage-specialise",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abattage-ferland-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abattoir-transbec",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abbruzzese-gina",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abc-f-belisle-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abc-clinique-sante-7",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abc-clinique-sante-1174621533",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abc-consultant-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abc-du-cafe-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abc-imaging-canada-ltd-1171117865",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abc-multivision-l932-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abc-structure-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abcf-tech-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abcl-immobilier-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abco-fret-international-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abconstruction-krtb-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abcz-services-conseils-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abdi-ramy-consultant-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abe-climatisation-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abeausir-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abeilles-tech",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aberdeen-lewis-proprietes-canada-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abg-systemes-amerique-du-nord-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abinord-ltee-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abitibi-biochar-diesel-ltee-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abm-precision-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abmobile-max-1176914068",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abn-animal-biotechnologie-nutrition-corporation",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abnc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abo-technologie-inc-1171371108",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abondance-groupe-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abou-assi-christopher",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abp-consultants-en-personnel-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abp-sooke-timber-holdings-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abracadabra-1173730558",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abramova-kristina",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abrartech",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abriart-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abrim-36-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abrim-37-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abrim-38-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abriplex-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abris-damour-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abritek-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abss-electrique-inc-1174627944",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abt-express-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abtech-atl-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abundant-life-wealth-management-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abyave-poincons-et-matrices-1164431638-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ac-gestion-mignon-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ac-services-juridiques-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ac780-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acacp-association-commerciale-affiliee-au-canada-p",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-ab",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-baseball-diamond-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-blua-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-catherine-cote",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-cycliste-du-quebec-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-dapnee-aquarius",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-darts-martiaux-mixtes-gsc-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-bonsai-andolfo-du-canada",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-coiffure-de-la-monteregie",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-danse-scream-inc-1174679473",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-finance-canadienne-inc-1180907694",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-laviation-de-montreal-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-laviation-de-saint-hyacinthe-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-la-construction-1173746620",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-medecine-chinoise-soins-de-sante-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-musique-du-canada-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-musique-la-prairie-inc-1173775223",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-nutrimedicine-1176912112",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-soccer-pro-foot-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-de-tae-kwon-do-de-chicoutimi-2247432539-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-des-corsaires",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-des-jeunes-artistes-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-divalook",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-dorval-inc-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-dre-nadia-gagnier-psychologue-conferencie",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-du-centre-eden-1177042307",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-eb-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-educative-les-lutins-joyeux-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-energie-agape-inc-1176916378",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-erudit-inc-1171366827",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-eureka-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-financiere-vergara-inc-1175288860",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-gca-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-hockey-rive-sud-game-changer-1173734204",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-imagine-arts-inc-1173745325",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-impact-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-imperial-ffc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-ivanabe-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-jb-beaute-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-kells",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-lavalloise",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-les-aigles",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-les-fondatrices",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-line-up-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-medico-esthetique-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-milala-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-numerique-en-tourisme-ant-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-oxford",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-performart-josee-bonneau",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-performance",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-prescolaire-petite-patrie-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-quebecoise-dart-du-deplacement",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-rba",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-reetu-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-robotique-canadienne-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-scrimicie-1174189275",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-scrimicie-campus-de-gatineau-1180186455",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-scrimicie-campus-de-montreal-1180186646",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-scrimicie-campus-de-saint-nazaire-1180186273",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-scrimicie-campus-de-saint-hyacinthe",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-seirios-k9",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-superieure-de-home-staging-limoges-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-tonic-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-transforma",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acadia-atlantique-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acadia-brique-beton-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acadia-pharmaceutical-canada-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acanthus-invesco-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accebas-igor",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accelerateur-innovation-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acceleration-vtt-quebec-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accent-architectural-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accent-legal-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accentiv-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-global-capital-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-grimpe-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-mondial-immigration-inc-1173747792",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-orthophonie-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-ouvert",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-propriete-lesperance-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-psy-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-recherche-clinique-ogs-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-ressources-lanaudiere-arl-1174560707",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-credit-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-nature-laurentides",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accessoires-de-camping-belco",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accessoires-smartmat-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accident-direct",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acclaim-ability-management-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accommodation-danny",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accomodation-ste-ursule-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accompagnateur-pratique",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accompagnement-des-femmes-immigrantes-de-loutaouai",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accompagnement-express",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accompagnement-manala-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accro-o-sport",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accro-ongles-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accroche-cur-centre-de-pediatrie-sociale-en-commun",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accros-mineraux-2281004269-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accu-brite-tm-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "accueil-tiberiade-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acd-renovation-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acda-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acdp-ebenisterie-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ace-amenagement-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aceco-planchers-1174407669",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acelul-association-de-creation-et-detudes-litterai",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acensa-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acer-immobilier-sainte-agathe-inc-5",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acetech-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acf-immobilier-inc-1171364541",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acg-americ-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "achaia-select-jean-talon-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "achat-dautos-shermart-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "achetons-vendons-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "achigans-pour-etangs",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aci-air-cargo-inc-1174390030",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-darmature-de-beauce-1171376834",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-darmature-de-beauce-2015-1171375513",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-darmature-g-pro-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-des-cedres-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-dlp",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-gauthier-1171347439",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-gendron-ltee",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-jaffna",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-larocque-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-mg-inc-1174573106",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-robel-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acier-roger",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acierbec-inc-1149521800",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aciertek",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acl-cpa-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acl-securite-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acl-valleyfield",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aclace",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acm-gouttieres-1172339799",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acme-metal-vaisseaux-canada-ltee-1143094341-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acnb-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aco-systemes-ltee",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acoca-notaires-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acosta-solutions-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acostad-transport-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acptech-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acq-capital-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acquisio-webcom-ulc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acquisition-cl-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acquisition-rs-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acquisition-vc-epr",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acquisitions-mm-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acquisitions-raymond-allard-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acry",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acry-lec-inc-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acrylique-deco-art",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "act-commodities-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "act-energy-technologies-ltd-1166339482",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "act-md-inc-1174626987",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actelcominc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acti-serv-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acti-sport-marieville-inc-1171135982",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actif-deau-globale",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actif-rawdon-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actifs-lfsc-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actifs-miniers-amalgames",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actifs-tremblay-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actimmo-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actiom-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-billon-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-brio",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-conservation-gorille-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-cp-inc-1164565138-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-des-citoyens-volontaires-pour-le-bien-etre-",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-immobilier-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-loisirs-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-marketing-ag",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-placement-inc-1172344500",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-rl-electrique-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-soins-infirmiers-2276401488-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-solutions-dba-1172594963",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-souffle-de-vie-de-lestrie",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-vallee-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-gardien-corporation-de-developpement-commun-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-sante-plein-air-chute-saint-philippe-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actions-exponentielles-mc-inc-1172586613",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actions-jt-plus-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actions-tcr-2008-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actionsports50pluscom-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actionstep-operations-canada-ltee-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "activar-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "activation-dg-inc-1172339856",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acto-strategy-marketing-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acton-bbq-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actoran-conseils-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actuel-logistiques-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acuite360-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acupuncture-sean-laflamme-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ad-acoustique-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ad-astra-canada-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ad-electronique-express-plus-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ad-extermination",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ad-optimum-croissance-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ad-traduction",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ad2ca",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ada-livre-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adam-et-eve",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adam-houtekamer-professional-corporation",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adam-koubi-ltee-1174563990",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adamax-immobilier-inc-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adams-avocat-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adanis-transports-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adaptations-architectures",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adapte",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adb-excavation",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adc-dao-inc-1164418346-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adcss-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ade-creations-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adel-fawal-pharmacien-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adenops-consultants-informatique-inc-1171475388",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adezen-conseils-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adfit-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adhera-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adhesifs-wepack-custom-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adhetec-canada-inc-1173773939",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adi-mc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adil-baamar-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adincos",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adis-maconnerie-et-restauration-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adista-canada-1173774820",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adl-entrepreneur-electricien-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adlans-cuisine-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adm-villeneuve-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "admeduccom",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administrateurs-rue-sherbrooke-ouest-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-axis-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-brb-inc-1141983974",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-bel-rive-inc-1149558794",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-des-soins-actifs-2018-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-g-perreault-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-leroux-delorme-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-maska-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-pmt-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-portuaire-de-baie-trinite",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-portuaire-de-bonaventure-1174381922",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-portuaire-de-lile-dentree-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-portuaire-de-les-escoumins",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-portuaire-de-ste-therese-de-gaspe-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-sbgb-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-sg",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-saj-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adn-design-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adn-novamax-distribution-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adn-sante-1171124325",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adne-inc-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adolphe-construction-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adomo-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adoption-lapins-sans-abri-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adore-qc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adp-credit",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adpl-construction-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adrenaline-7",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adrenaline-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adrenaline-paintball-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adriana-decker-medical-services-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adtech-1166005620-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "advanced-naturopathy-institute-of-montreal-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "advanced-sterilization-products-canada-ulc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aecsi-uqam",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aedcg-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aeea-association-des-etudiantes-et-etudiants-en-an",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aeer",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aegaia-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aeko-securite",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aepdcc-uqam",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aer-scientia-canada-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aero-canada-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aero-concept-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aero-fixe-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aero-innovation-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aero-logistique",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aero-nouvelle-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aero-marine-industries-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aero-nor",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aerobaie-canada-inc-1174631649",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aerocycle-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aerodev-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aerodonia-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aeroemergence-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aerofeel",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aerolaire-inc-1180909799",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aerolineas-argentinas-sociedad-anonima-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aeronefs-sportifs-ballard-ltee-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aeroport-mont-tremblant-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aeroports-de-montreal",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aeroprestige-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aerospatiale-kaycee-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aerrianta-international-amerique-du-nord-inc-6",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aesimtech-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "af-immo-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "af-mckay-investissements-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afa-montreal-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afac",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afaire-association-des-francophones-en-affaires-po",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afar-consultation-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afeas-mascouche",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afeas-notre-dame-des-bois-1178055928",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afeas-ste-therese",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afentix-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "affacturage-global-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "affaires-quebec",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "affichage-impression-20-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "affiche-en-tete",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "affiches-monstre-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "affirme-design",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "affutage-doutils-gd-inc-1142162396",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afg-autos-1178066545",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afl-capital-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afm-luna-services-generaux-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afmerica-technologie-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afpg-conseil-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afromusee-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afterpay",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ag-43",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ag-comptabilite-tenue-de-livre",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ag-gestion-financiere",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ag-growth-international-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ag-immobilier-1174411216",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ag-md-inc-1173761827",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agadouce-saint-hubert",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agat-construction-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agave-intl-ltee",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agd-ceramique-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agd-formation-inc-1142175364",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agecgi-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-3-mars-1174369729",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-360-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-atf-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-agora-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-anf",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-artistique-alias-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-artistique-corinne-giguere-inc-1173748071",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-artistique-diane-riel-inc-1171207401",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-artistique-forever-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-artistique-h-m-1178061421",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-boom-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-brand-new-way-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-brands-and-roses-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-bse-media-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-canadienne-dinvestigation-conseil-assistanc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-canard-noir-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-cherry-river-co-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-creative-winifred-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-cvim-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-dassurances-league",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-demploi-mains-dor",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-demploi-multi-services-ss-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-creation-web-boreale",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-developpement-de-saint-donat",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-figuration-2b-scene-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-marketing-acquilead",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-marketing-ducatflow",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-petroliers-oceaniques-ltee",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-placement-aa-inc-1174449505",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-placement-de-personnel-dappui-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-placement-de-securite-grace-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-placement-del-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-placement-education-professionnelle-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-placement-jm-sante-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-placement-la-perle-rare-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-placement-premier-repondant",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-placement-soins-precieux-maya-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-recouvrement-lsc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-recouvrement-senibor-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-recouvrement-veritas-alliance",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-recrutement-educatif-marvel-inc-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-representation-vitis-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-securite-a2a-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-services-et-de-placement-du-personnel-in-1174326133",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-sport-jova-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-talent-cloudnine",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-transport-de-beton-de-la-metropole-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-vente-sp-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-ventes-magrep-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-voile-ez",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-voyage-tourisme-loisir-alfa-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-voyages-fontainebleau-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-voyages-mercedes-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-design-yummy",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-directe-td-assurance-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-divine-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-dorage-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-double-shot-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-empire-mtl-1177042059",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-ex-p-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-expedition-tormar-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-exptravers-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-fan-club-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-faro-immigration",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-fednav-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-figure-de-proulx-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-forget-inc-1174191016",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-gcs-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-genevieve-champagne-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-giocast-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-giraldeau-casting-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-hyperclics-marketing-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-idmc-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-iel-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-immobiliere-canora-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-immobiliere-century-21-pro-solution-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-immobiliere-ir-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-intervalle-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-je-sports-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-jobloot-inc-1178061728",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-julie-draper-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-keopz-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-lenveloppe-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-labour-1176915644",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-lead-lion-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-logishop-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-luxorbit-inc-1174408519",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-lyghts-inc-1173775637",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-m-one-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-mdr-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-majeskeys-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-marinade",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-maritime-navitrans-est-inc-1166487463",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-marketing-gipsyxm-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-martine-guerin-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-marvin-small-enrg",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-media-premium",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-medinject-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-mel-ange-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-melia-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-monastudio-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-nbotw-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-nous",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-oceanique-du-bas-st-laurent-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-orange-21-inc-1171206965",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-patrick-chandonnet",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-podiummarketing-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-reaction-1173775520",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-renom-cd-inc-1174676503",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-renovation",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-robert-allard-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-robin-immobiliere-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-robopolis-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-roch-jeaurond-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-sante-prio",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-smac-distribution-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-smarkt-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-solsya-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-soluti-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-sp",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-st-laurent-roger-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-st-marseille-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-status-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-stokt-1174883224",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-super-medica-inc-1178055670",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-sz-de-services-de-l-avenir-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-tamark-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-tassou-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-tom-leo",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-top-notch-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-unanim-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-une-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-vm-1178061280",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-vrm",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-web-conception-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-web-sparkup-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-well-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-wow-healthy-personnel-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-zoombiz",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agences-peter-mielzynski",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agendassist-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agendi-associes-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agent-dynamo-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agents-dassurance-patrimoine-integral",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agievo-solutions-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agile-response-consulting-limited",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agilitepac",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agilityum-services-conseils-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agilus",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agimini-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aginsoft-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aginsol-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agir-ensemble-pour-le-developpement-des-enfants-1174566274",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agm-performance-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agneaux-mitis-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agoga-inc-1171354724",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agora-international-quebec-inc-1171131973",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agora-services-intermediaires-corp",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agr-notaire-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrandacpaca",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrasoy-gestion-immobiliere-et-location",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrecoles",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agregats-rive-sud-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agri-perfo-romance-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agri-expert-3000-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agri-marche-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agri-select-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agri-services-leroux-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agri-viens-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agriculture-nufarm",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agriculture-singh-cabane-a-sucre-vaudreuil-dorion-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agriculture-urbaine-cbio-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agridepotca-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrigesco-inc-1149524945",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrilog-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrimetrie",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrinovation-urbaine-1177041846",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agripem-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agritex-motosport-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrivision-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agro-msr-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrocan-international-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrocentre-st-pie",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrohall-ltee-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrolav-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agromex-inc-1174561960",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agropole-lassomption-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrotours-charlevoix-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agrumes-ed-rec-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agur-galerie",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ah-electrique-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aharon-langevin-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ahasy-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ahb-service-et-gestion-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ahc-construction-developpement",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ahead-solutions-de-fortune",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ahmed-aly",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ahmed-badreldin-pharmacien-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ahmed-benouif-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ahmed-khondoker-talha",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ai-global-pros-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ai-sushi-comptoir-a-sushi-et-soupe-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ai-automation",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ai-media-canada-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aica-universelle",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aide-a-domicile-le-halo-1168313931-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aide-aux-etudiants-maghrebins",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aide-construction",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aidersonenfant-com-1174243692-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aidexpress-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aidned-foundation-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aiesl",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aiftq-la-capitale",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aig-united-guaranty-mortgage-insurance-company-can",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aiguisage-groleau-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aiia-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aikibudo-trois-rivieres",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aiko-sushi-inc-1165484370-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aim-recyclage-desgagne",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aim-services-corporatifs-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aimable-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aime-productions-inc-1175768580",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aime-crois-sois-inc-1178054319",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aimportation-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ainees-jecoute-en-actions-ajea-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aines-actifs-de-shefford",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aines-sans-frontiere-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aip2-canada-association-internationale-pour-la-par",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aipa-electronique-1173767972",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-ameublement-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-cascades-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-climatise-pat-rick-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-ground-xpress-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-liaison-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-littoral-ltee-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-mg-et-associe-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-metropolitain-2000-1164437361-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-sports-voyage-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-vision-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-wemindji-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "air-ventek-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "airablo-immeubles-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "airbnb-canada-insurance-services-inc-1173879744",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aire-commune-1171211346",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "airex-brevets-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "airex-industries-inc-1162243167-1",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "airgo-technologie-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "airnitos-solutions-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "airtox-deneigement-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "airudi-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ait-belkacem",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ajara-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ajd-centre-de-formation-de-prepose-aux-beneficiair",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ajkc3536-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ajm-habitation-inc-1174629569",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ajm-hockey-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ak-renovation-du-suroit-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "akama-30-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "akamai-technologies-canada-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aki-epicerie-zero-dechet-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aki-sushi-9",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aki-sushi-8",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aki-sushi-ancienne-lorette",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aki-sushi-laurier-1168309046-9",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aki-sushi-laurier-station-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aki-sushi-prevost",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "akiba-mode-beaute-decors",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aking-ressources-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "akobex-inc-1175284398",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "akomptabilite-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "akro-chant-1174566662",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aktionreaktion-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aktiv-performance-chiropratique-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "akuafoil",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "akvo-spiralift-marque-de-commerce-1171357453",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "al-systemes-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "al-13-fusion-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "al-aydi-capital-construction-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "al-madinah-super-marche",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "al-doucet-portes-et-fenetres-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "al-inspection-abitibi-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ala-md-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-assedo-opticien-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-baron-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-carle-architecte",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-foisy-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-gravel-courtier-immobilier-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-laplante-lumber-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-leblond-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-masse-cpa-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-nault-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-ouellette-cpa-inc-1174683590",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-piche-transport-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-proulx-capital-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-tardif-photographie-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-veilleux-architecte-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alamos-or",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alan-ovadia-avocat-inc-1174191321",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alanac-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarick-service-conseil-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarme-excellence-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarme-gs-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarme-komtek-securite-inc-1171363550",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarme-r-s-1178054111",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarme-zacon-inc-1174375726",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarme-zone-tech-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarmeroute-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarmes-caron",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarmes-fs-secure",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarmes-lp-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarmes-omnitron",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarmes-pro-intec-inc-5",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarmes-vec-2013-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarmesecuremr-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alarocquedesign-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alaroy-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alb-productions-inc-1178476660",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albatros-bois-francserable",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albatros-drummondville-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albatros-thetford",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albert-baker-professional-corporation",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albert-brandt-courtier-immobilier-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albert-camion-reparations-inc-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albert-castonguay-fils-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albert-donald",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albi-le-geant-mazda-1140818650-9",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albi-occasioncom",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albi-nissan-de-vaudreuil-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albotec-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alca-service",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alcemat-construction-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alchemix-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alchimiste-microbrasserie-1174676081",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aldim-forward-service-inc-1173754509",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ale",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aleand-pro",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aleas-films-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aleia-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alek-auger-service-mecanique",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alesab-pharma",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alessa-trattoria-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alessi-consultant",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alevia-aero-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alex-aquilino-vigneault-isabelle-cere-pharmaciens-",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alex-artiste-peintre-inc-5",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alex-coulombe-ltee-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alex-davis-associes",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alex-moore-md-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alex-plus-vrac-inc-1174359928",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alex-pneu-et-mecanique-5500-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alex-tag-groupe-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alex-transit-demenagement-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alexandra-barrette-md-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alexandra-esthetique",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alexandre-amyot-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alexandre-centazzo-marketing-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alexandre-dumas-md-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alexandre-duplantie-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alexandre-goyette-avocat-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alexandre-grenier-avocat-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alexandre-lainesse-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alexandre-longpre-courtier-immobilier-inc-1173744047",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "au-marche-par-le-jardin-de-mathilde-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "abf-alexandre-baril-financement-1173730921",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "0-100k-construction-inc-1173770083",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "11015192-canada",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "1805-cgm-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "2-jr-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "2161159-alberta-1166548058-1",
+      "reason": "no_content"
+    },
+    {
+      "slug": "2636-9843-quebec-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "2p-immobilier",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "4-seasons-plus-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "9026-5893-quebec-inc-3",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "9046-2409-quebec-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "a-w-tm-3",
+      "reason": "no_content"
+    },
+    {
+      "slug": "a-leau-pression",
+      "reason": "no_content"
+    },
+    {
+      "slug": "a-plats-ventes-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "a-votre-service-transport-et-livraison-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a-belair-excavation-1175284752",
+      "reason": "no_content"
+    },
+    {
+      "slug": "a-dion-md-inc-1176914738",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aast-services-comptable-et-fiscaux-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "ac-liquidation-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "ac-services-entretien-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "amf-asset-management-inc-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "apq-association-des-physiques-quebecois-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aa-entretien-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a-w-5736-1168915792-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "a-w-carignan-1168915321-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "aw-lasalle-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "a1-geoservices-ltee-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "a2z-services-pro-compte",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aac-transport-llc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "ab-md-inc",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "ab-vision-construction-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "abc-clinique-sante-1174621533",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "abdi-ramy-consultant-inc",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "aberdeen-lewis-proprietes-canada-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abinord-ltee-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "abitibi-biochar-diesel-ltee-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "abracadabra-1173730558",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-dapnee-aquarius",
+      "reason": "no_content"
+    },
+    {
+      "slug": "academie-des-corsaires",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "academie-des-jeunes-artistes-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-eb-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "academie-energie-agape-inc-1176916378",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "academie-tonic-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acadia-atlantique-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "accent-legal-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acces-mondial-immigration-inc-1173747792",
+      "reason": "no_content"
+    },
+    {
+      "slug": "accomodation-ste-ursule-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "accro-ongles-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "achetons-vendons-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aclace",
+      "reason": "no_content"
+    },
+    {
+      "slug": "acostad-transport-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "acptech-inc",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "acquisition-rs-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acquisition-vc-epr",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actifs-lfsc-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-billon-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "action-marketing-ag",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "action-gardien-corporation-de-developpement-commun-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "actions-tcr-2008-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "actionstep-operations-canada-ltee-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acton-bbq-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "acuite360-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ad-extermination",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ad2ca",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "ada-livre-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "adista-canada-1173774820",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "administrateurs-rue-sherbrooke-ouest-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "administration-sbgb-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adne-inc-4",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "adore-qc-3",
+      "reason": "no_content"
+    },
+    {
+      "slug": "adp-credit",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aeea-association-des-etudiantes-et-etudiants-en-an",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aero-marine-industries-inc",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "aerocycle-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "aerolineas-argentinas-sociedad-anonima-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "aeroports-de-montreal",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "afa-montreal-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "affutage-doutils-gd-inc-1142162396",
+      "reason": "no_content"
+    },
+    {
+      "slug": "afg-autos-1178066545",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ag-gestion-financiere",
+      "reason": "no_content"
+    },
+    {
+      "slug": "ag-md-inc-1173761827",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agat-construction-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agd-ceramique-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-anf",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-artistique-diane-riel-inc-1171207401",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "agence-artistique-forever-inc-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "agence-bse-media-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-canard-noir-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "agence-de-figuration-2b-scene-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-de-marketing-acquilead",
+      "reason": "no_content"
+    },
+    {
+      "slug": "agence-de-marketing-ducatflow",
+      "reason": "no_content"
+    },
+    {
+      "slug": "agence-de-placement-premier-repondant",
+      "reason": "no_content"
+    },
+    {
+      "slug": "agence-de-voyage-tourisme-loisir-alfa-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-divine-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "agence-fednav-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-gcs-inc-3",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "agence-giocast-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "agence-keopz-inc",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "agence-m-one-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-majeskeys-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-marvin-small-enrg",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-media-premium",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "agence-mel-ange-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "agence-nbotw-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-robert-allard-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-sante-prio",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-solsya-inc",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "agence-sp",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agence-st-laurent-roger-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "agences-peter-mielzynski",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "aginsoft-inc-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "aginsol-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "agm-performance-inc",
+      "reason": "no_content"
+    },
+    {
+      "slug": "agriculture-nufarm",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "agriculture-urbaine-cbio-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "ah-electrique-inc",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "aharon-langevin-inc",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "aide-a-domicile-le-halo-1168313931-2",
+      "reason": "no_content"
+    },
+    {
+      "slug": "aip2-canada-association-internationale-pour-la-par",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "airbnb-canada-insurance-services-inc-1173879744",
+      "reason": "no_content"
+    },
+    {
+      "slug": "ait-belkacem",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "ajd-centre-de-formation-de-prepose-aux-beneficiair",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "akamai-technologies-canada-inc-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "al-madinah-super-marche",
+      "reason": "no_content"
+    },
+    {
+      "slug": "al-inspection-abitibi-inc",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "alain-gravel-courtier-immobilier-inc",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alain-laplante-lumber-inc",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "albatros-thetford",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "albotec-inc-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alek-auger-service-mecanique",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alevia-aero-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "alex-plus-vrac-inc-1174359928",
       "reason": "no_content"
     }
   ],

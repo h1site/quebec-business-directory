@@ -184,7 +184,8 @@ async function updateSupabase(slug, data) {
       ai_description: data.description,
       ai_services: data.services,
       ai_description_en: data.description_en,
-      ai_services_en: data.services_en
+      ai_services_en: data.services_en,
+      ai_enriched_at: new Date().toISOString()
     });
 
     const req = https.request({
