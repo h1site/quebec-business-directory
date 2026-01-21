@@ -298,23 +298,13 @@ export default async function SitemapPage() {
                   </a>
                 </li>
                 <li>
-                  <a href="/sitemap-enrichi.xml" target="_blank" rel="noopener" className="text-gray-700 hover:text-blue-600 transition-colors">
-                    Entreprises enrichies
+                  <a href="/sitemap-static.xml" target="_blank" rel="noopener" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    Pages statiques
                   </a>
                 </li>
                 <li>
                   <a href="/sitemap-websites.xml" target="_blank" rel="noopener" className="text-gray-700 hover:text-blue-600 transition-colors">
-                    Entreprises avec site web
-                  </a>
-                </li>
-                <li>
-                  <a href="/sitemap-categories.xml" target="_blank" rel="noopener" className="text-gray-700 hover:text-blue-600 transition-colors">
-                    Catégories
-                  </a>
-                </li>
-                <li>
-                  <a href="/sitemap-cities.xml" target="_blank" rel="noopener" className="text-gray-700 hover:text-blue-600 transition-colors">
-                    Villes
+                    Entreprises
                   </a>
                 </li>
               </ul>
