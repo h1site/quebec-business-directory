@@ -55,6 +55,7 @@ interface Business {
   main_category_slug: string | null
   scian_description: string | null
   products_services: string | null
+  website: string | null
 }
 
 interface EnrichmentResult {
@@ -63,6 +64,106 @@ interface EnrichmentResult {
   ai_services: string[]
   ai_services_en: string[]
   ai_faq: Array<{ q: string; a: string; q_en: string; a_en: string }>
+}
+
+interface VerifiedContact {
+  address: string | null
+  phone: string | null
+  email: string | null
+  city: string | null
+  postal_code: string | null
+  confidence: 'high' | 'medium' | 'low' | 'none'
+}
+
+// Fetch website content for contact verification
+async function fetchWebsiteContent(url: string): Promise<string | null> {
+  try {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 8000)
+
+    // Try contact pages first
+    const contactUrls = [
+      url.replace(/\/$/, '') + '/contact',
+      url.replace(/\/$/, '') + '/contactez-nous',
+      url.replace(/\/$/, '') + '/nous-joindre',
+      url, // Fallback to homepage
+    ]
+
+    for (const contactUrl of contactUrls) {
+      try {
+        const response = await fetch(contactUrl, {
+          signal: controller.signal,
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (compatible; QuebecBusinessBot/1.0)',
+            'Accept': 'text/html',
+          },
+        })
+
+        if (response.ok) {
+          clearTimeout(timeoutId)
+          const html = await response.text()
+          // Extract text content
+          const textContent = html
+            .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+            .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+            .replace(/<[^>]+>/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim()
+            .slice(0, 6000) // Limit content
+          return textContent
+        }
+      } catch {
+        continue
+      }
+    }
+    clearTimeout(timeoutId)
+    return null
+  } catch {
+    return null
+  }
+}
+
+// Create contact verification prompt for Ollama
+function createContactPrompt(business: Business, websiteContent: string): string {
+  return `Analyse ce contenu de site web et extrait les informations de contact pour "${business.name}".
+
+CONTENU DU SITE:
+${websiteContent}
+
+ENTREPRISE: ${business.name}
+VILLE CONNUE: ${business.city || 'Québec'}
+
+Retourne UNIQUEMENT un JSON valide avec les coordonnées trouvées. Si une info n'est pas trouvée, mets null.
+
+{
+  "address": "adresse complète ou null",
+  "phone": "numéro de téléphone formaté ou null",
+  "email": "email ou null",
+  "city": "ville ou null",
+  "postal_code": "code postal ou null",
+  "confidence": "high si toutes les infos sont claires, medium si partielles, low si incertain, none si rien trouvé"
+}
+
+IMPORTANT: Retourne SEULEMENT le JSON, rien d'autre.`
+}
+
+// Parse contact verification response
+function parseContactResponse(response: string): VerifiedContact | null {
+  try {
+    const jsonMatch = response.match(/\{[\s\S]*\}/)
+    if (!jsonMatch) return null
+    const data = JSON.parse(jsonMatch[0])
+    return {
+      address: data.address || null,
+      phone: data.phone || null,
+      email: data.email || null,
+      city: data.city || null,
+      postal_code: data.postal_code || null,
+      confidence: data.confidence || 'none',
+    }
+  } catch {
+    return null
+  }
 }
 
 // Initialize Supabase client
@@ -277,7 +378,7 @@ async function enrichBusinesses() {
   console.log('\n📊 Fetching businesses to enrich...')
   const { data: businesses, error } = await supabase
     .from('businesses')
-    .select('id, name, description, city, region, main_category_slug, scian_description, products_services')
+    .select('id, name, description, city, region, main_category_slug, scian_description, products_services, website')
     .is('ai_enriched_at', null)
     .not('name', 'is', null)
     .not('city', 'is', null)
@@ -321,17 +422,41 @@ async function enrichBusinesses() {
         continue
       }
 
+      // Prepare update data
+      const updateData: Record<string, unknown> = {
+        ai_description: enrichment.ai_description,
+        ai_description_en: enrichment.ai_description_en,
+        ai_services: enrichment.ai_services,
+        ai_services_en: enrichment.ai_services_en,
+        ai_faq: enrichment.ai_faq,
+        ai_enriched_at: new Date().toISOString(),
+      }
+
+      // If business has website, verify contact info
+      if (business.website) {
+        const websiteContent = await fetchWebsiteContent(business.website)
+        if (websiteContent) {
+          const contactPrompt = createContactPrompt(business, websiteContent)
+          const contactResponse = await callOllama(contactPrompt)
+          const verified = parseContactResponse(contactResponse)
+
+          if (verified && (verified.confidence === 'high' || verified.confidence === 'medium')) {
+            if (verified.address) updateData.verified_address = verified.address
+            if (verified.phone) updateData.verified_phone = verified.phone
+            if (verified.email) updateData.verified_email = verified.email
+            if (verified.city) updateData.verified_city = verified.city
+            if (verified.postal_code) updateData.verified_postal_code = verified.postal_code
+            updateData.verified_at = new Date().toISOString()
+            updateData.verification_confidence = verified.confidence
+            console.log(`   📞 Contact verified (${verified.confidence}): ${verified.phone || 'no phone'}, ${verified.address ? 'has address' : 'no address'}`)
+          }
+        }
+      }
+
       // Update database
       const { error: updateError } = await supabase
         .from('businesses')
-        .update({
-          ai_description: enrichment.ai_description,
-          ai_description_en: enrichment.ai_description_en,
-          ai_services: enrichment.ai_services,
-          ai_services_en: enrichment.ai_services_en,
-          ai_faq: enrichment.ai_faq,
-          ai_enriched_at: new Date().toISOString(),
-        })
+        .update(updateData)
         .eq('id', business.id)
 
       if (updateError) {

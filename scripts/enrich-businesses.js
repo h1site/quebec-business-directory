@@ -34,31 +34,62 @@ function saveProgress(progress) {
   fs.writeFileSync(PROGRESS_FILE, JSON.stringify(progress, null, 2));
 }
 
+// Check if URL is a social media page (skip these)
+function isSocialMediaUrl(url) {
+  const socialDomains = ['facebook.com', 'fb.com', 'instagram.com', 'twitter.com', 'linkedin.com', 'tiktok.com', 'youtube.com', 'wa.me', 'whatsapp.com'];
+  try {
+    const urlObj = new URL(url);
+    return socialDomains.some(domain => urlObj.hostname.includes(domain));
+  } catch {
+    return false;
+  }
+}
+
 // Fetch website content
-function fetchWebsite(url, timeout = 10000) {
+function fetchWebsite(url, timeout = 15000, retryCount = 0) {
   return new Promise((resolve) => {
     try {
+      // Skip social media URLs
+      if (isSocialMediaUrl(url)) {
+        resolve(null);
+        return;
+      }
+
       const urlObj = new URL(url);
       const client = urlObj.protocol === 'https:' ? https : http;
 
       const req = client.get(url, {
         timeout,
         headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; BusinessBot/1.0)',
-          'Accept': 'text/html,application/xhtml+xml',
-          'Accept-Language': 'fr-CA,fr;q=0.9,en;q=0.8'
-        }
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'fr-CA,fr;q=0.9,en-CA;q=0.8,en;q=0.7',
+          'Accept-Encoding': 'identity',
+          'Connection': 'keep-alive'
+        },
+        rejectUnauthorized: false // Accept self-signed certs
       }, (res) => {
         // Handle redirects
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
           let redirectUrl = res.headers.location;
           if (redirectUrl.startsWith('/')) {
             redirectUrl = `${urlObj.protocol}//${urlObj.host}${redirectUrl}`;
+          } else if (!redirectUrl.startsWith('http')) {
+            redirectUrl = `${urlObj.protocol}//${urlObj.host}/${redirectUrl}`;
           }
-          return fetchWebsite(redirectUrl, timeout).then(resolve);
+          if (retryCount < 3) {
+            return fetchWebsite(redirectUrl, timeout, retryCount + 1).then(resolve);
+          }
+          resolve(null);
+          return;
         }
 
         if (res.statusCode !== 200) {
+          // Try with www prefix if not present
+          if (retryCount === 0 && !urlObj.hostname.startsWith('www.')) {
+            const wwwUrl = url.replace('://', '://www.');
+            return fetchWebsite(wwwUrl, timeout, retryCount + 1).then(resolve);
+          }
           resolve(null);
           return;
         }
@@ -68,7 +99,19 @@ function fetchWebsite(url, timeout = 10000) {
         res.on('end', () => resolve(data));
       });
 
-      req.on('error', () => resolve(null));
+      req.on('error', (err) => {
+        // On SSL error, try http instead of https
+        if (err.code === 'UNABLE_TO_VERIFY_LEAF_SIGNATURE' || err.code === 'CERT_HAS_EXPIRED') {
+          if (url.startsWith('https://') && retryCount === 0) {
+            return fetchWebsite(url.replace('https://', 'http://'), timeout, retryCount + 1).then(resolve);
+          }
+        }
+        // Try with www prefix
+        if (retryCount === 0 && !urlObj.hostname.startsWith('www.')) {
+          return fetchWebsite(url.replace('://', '://www.'), timeout, retryCount + 1).then(resolve);
+        }
+        resolve(null);
+      });
       req.on('timeout', () => {
         req.destroy();
         resolve(null);
@@ -119,6 +162,13 @@ Génère une réponse JSON avec:
 2. "services": Un tableau de 5-10 services/produits offerts par l'entreprise (en français).
 3. "description_en": La même description traduite en anglais.
 4. "services_en": Les mêmes services traduits en anglais.
+5. "contact": Extrais les coordonnées EXACTES trouvées sur le site:
+   - "address": L'adresse complète (numéro, rue, ville, code postal) ou null si non trouvée
+   - "phone": Le numéro de téléphone principal formaté ou null
+   - "email": L'email de contact ou null
+   - "city": La ville ou null
+   - "postal_code": Le code postal ou null
+   - "confidence": "high" si coordonnées clairement visibles, "medium" si partielles, "low" si incertain
 
 Si le contenu du site ne permet pas d'extraire ces informations, retourne null pour les champs manquants.
 
@@ -180,13 +230,26 @@ Réponds UNIQUEMENT avec le JSON, sans markdown ni explication.`;
 // Update Supabase
 async function updateSupabase(slug, data) {
   return new Promise((resolve) => {
-    const postData = JSON.stringify({
+    const updateObj = {
       ai_description: data.description,
       ai_services: data.services,
       ai_description_en: data.description_en,
       ai_services_en: data.services_en,
       ai_enriched_at: new Date().toISOString()
-    });
+    };
+
+    // Add verified contact info if available and confidence is good
+    if (data.contact && (data.contact.confidence === 'high' || data.contact.confidence === 'medium')) {
+      if (data.contact.address) updateObj.verified_address = data.contact.address;
+      if (data.contact.phone) updateObj.verified_phone = data.contact.phone;
+      if (data.contact.email) updateObj.verified_email = data.contact.email;
+      if (data.contact.city) updateObj.verified_city = data.contact.city;
+      if (data.contact.postal_code) updateObj.verified_postal_code = data.contact.postal_code;
+      updateObj.verified_at = new Date().toISOString();
+      updateObj.verification_confidence = data.contact.confidence;
+    }
+
+    const postData = JSON.stringify(updateObj);
 
     const req = https.request({
       hostname: 'tiaofyawimkckjgxdnbd.supabase.co',
@@ -285,6 +348,12 @@ async function main() {
     }
 
     console.log('  ✓ Generated description and services');
+
+    // Log contact info if found
+    if (enrichedData.contact && enrichedData.contact.confidence !== 'low') {
+      const c = enrichedData.contact;
+      console.log(`  📞 Contact (${c.confidence}): ${c.phone || 'no phone'}, ${c.address ? 'has address' : 'no address'}`);
+    }
 
     // 4. Update Supabase
     console.log('  Updating Supabase...');

@@ -14,12 +14,12 @@ export const dynamic = 'force-dynamic'
 
 async function getStats() {
   const supabase = createServiceClient()
-  // Only count businesses with website (quality pages)
+  // Only count enriched businesses (quality pages)
   const { count } = await supabase
     .from('businesses')
     .select('*', { count: 'exact', head: true })
-    .not('website', 'is', null)
-  return { totalBusinesses: count || 46000 }
+    .not('ai_enriched_at', 'is', null)
+  return { totalBusinesses: count || 2000 }
 }
 
 async function getCategories() {

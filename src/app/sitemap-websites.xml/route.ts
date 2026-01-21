@@ -21,14 +21,15 @@ export async function GET() {
 
   const supabase = createClient(supabaseUrl, supabaseKey)
 
-  // Get all businesses with website
+  // Get only enriched businesses with website
   const { data: websiteBusinesses, error: websiteError } = await supabase
     .from('businesses')
-    .select('slug, updated_at, ai_description')
+    .select('slug, updated_at, ai_enriched_at')
     .not('slug', 'is', null)
     .not('website', 'is', null)
+    .not('ai_enriched_at', 'is', null)
     .neq('website', '')
-    .order('ai_description', { ascending: false, nullsFirst: false })
+    .order('ai_enriched_at', { ascending: false })
     .order('updated_at', { ascending: false })
     .limit(50000)
 
@@ -36,27 +37,27 @@ export async function GET() {
     return new NextResponse('Error fetching businesses', { status: 500 })
   }
 
-  // Get traffic slugs that don't have website (to add them too)
+  // Get enriched traffic slugs that don't have website (to add them too)
   const websiteSlugs = new Set(websiteBusinesses.map(b => b.slug))
   const trafficOnlySlugs = Array.from(trafficSlugSet).filter(slug => !websiteSlugs.has(slug))
 
-  // Fetch traffic-only businesses from DB
+  // Fetch traffic-only businesses from DB (only if enriched)
   let trafficOnlyBusinesses: typeof websiteBusinesses = []
   if (trafficOnlySlugs.length > 0) {
     const { data } = await supabase
       .from('businesses')
-      .select('slug, updated_at, ai_description')
+      .select('slug, updated_at, ai_enriched_at')
       .in('slug', trafficOnlySlugs)
+      .not('ai_enriched_at', 'is', null)
     trafficOnlyBusinesses = data || []
   }
 
-  // Combine all businesses
+  // Combine all enriched businesses
   const allBusinesses = [...websiteBusinesses, ...trafficOnlyBusinesses]
 
   const urls = allBusinesses.map((business) => {
-    const lastmod = business.updated_at?.split('T')[0] || today
-    // Higher priority for enriched businesses
-    const priority = business.ai_description ? '0.9' : '0.7'
+    const lastmod = business.ai_enriched_at?.split('T')[0] || business.updated_at?.split('T')[0] || today
+    const priority = '0.9' // All are enriched now
 
     return `  <url>
     <loc>${baseUrl}/entreprise/${business.slug}</loc>

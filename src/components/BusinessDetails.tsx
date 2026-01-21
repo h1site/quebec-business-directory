@@ -23,7 +23,13 @@ const dayNames: Record<string, string> = {
 export default function BusinessDetails({ business, relatedBusinesses = [] }: Props) {
   const citySlug = generateSlug(business.city || '')
 
-  const hasContactInfo = business.phone || business.email || business.website
+  // Use verified data if available, otherwise fall back to original (but only for phone in hero buttons)
+  const displayAddress = business.verified_address || null // Only show verified address
+  const displayPhone = business.verified_phone || null // Only show verified phone
+  const displayCity = business.verified_city || business.city
+  const displayPostalCode = business.verified_postal_code || business.postal_code
+
+  const hasContactInfo = displayPhone || business.website || displayAddress
   const hasSocialMedia = business.facebook_url || business.instagram_url || business.linkedin_url
   const hasOpeningHours = business.opening_hours && Object.keys(business.opening_hours).length > 0
 
@@ -95,9 +101,9 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
 
                 {/* Quick Action Buttons */}
                 <div className="flex flex-wrap gap-3 mt-4">
-                  {business.phone && (
+                  {displayPhone && (
                     <a
-                      href={`tel:${business.phone}`}
+                      href={`tel:${displayPhone}`}
                       className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg font-medium transition-colors"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -229,8 +235,8 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                         <span className="transform transition-transform group-open:rotate-180 text-gray-500">▼</span>
                       </summary>
                       <p className="px-4 pb-4 text-gray-600">
-                        {business.phone
-                          ? `Oui, vous pouvez contacter ${business.name} au ${business.phone}.`
+                        {displayPhone
+                          ? `Oui, vous pouvez contacter ${business.name} au ${displayPhone}.`
                           : `Les informations de téléphone pour ${business.name} ne sont pas disponibles.`}
                       </p>
                     </details>
@@ -269,34 +275,25 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                   <div className="bg-white rounded-xl shadow-sm p-6">
                     <h3 className="text-lg font-bold text-gray-900 mb-4">Coordonnées</h3>
                     <div className="space-y-4">
-                      {business.address && (
+                      {displayAddress && (
                         <div className="flex items-start gap-3">
                           <span className="text-gray-400 mt-0.5">📍</span>
                           <div>
-                            <p className="text-gray-900">{business.address}</p>
-                            {business.city && (
+                            <p className="text-gray-900">{displayAddress}</p>
+                            {displayCity && (
                               <p className="text-gray-600">
-                                {business.city}, {business.postal_code}
+                                {displayCity}{displayPostalCode && `, ${displayPostalCode}`}
                               </p>
                             )}
                           </div>
                         </div>
                       )}
 
-                      {business.phone && (
+                      {displayPhone && (
                         <div className="flex items-center gap-3">
                           <span className="text-gray-400">📞</span>
-                          <a href={`tel:${business.phone}`} className="text-blue-600 hover:underline">
-                            {business.phone}
-                          </a>
-                        </div>
-                      )}
-
-                      {business.email && business.show_email && (
-                        <div className="flex items-center gap-3">
-                          <span className="text-gray-400">✉️</span>
-                          <a href={`mailto:${business.email}`} className="text-blue-600 hover:underline">
-                            {business.email}
+                          <a href={`tel:${displayPhone}`} className="text-blue-600 hover:underline">
+                            {displayPhone}
                           </a>
                         </div>
                       )}

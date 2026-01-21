@@ -54,6 +54,7 @@ async function getPopularBusinesses() {
     .from('businesses')
     .select('name, slug, city')
     .not('slug', 'is', null)
+    .not('ai_enriched_at', 'is', null)
     .not('google_rating', 'is', null)
     .gte('google_rating', 4.5)
     .order('google_reviews_count', { ascending: false })

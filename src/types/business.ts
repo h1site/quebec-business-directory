@@ -78,6 +78,14 @@ export interface Business {
   ai_services_en: string[] | null
   ai_faq: Array<{ q: string; a: string; q_en: string; a_en: string }> | null
   ai_enriched_at: string | null
+  // Verified contact info (from website scraping)
+  verified_address: string | null
+  verified_phone: string | null
+  verified_email: string | null
+  verified_city: string | null
+  verified_postal_code: string | null
+  verified_at: string | null
+  verification_confidence: 'high' | 'medium' | 'low' | 'none' | null
 }
 
 export interface Category {

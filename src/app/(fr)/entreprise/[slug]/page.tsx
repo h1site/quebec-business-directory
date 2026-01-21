@@ -43,6 +43,7 @@ async function getRelatedBusinesses(business: Business): Promise<Business[]> {
     .neq('id', business.id)
     .not('slug', 'is', null)
     .not('city', 'is', null)
+    .not('ai_enriched_at', 'is', null)
     .limit(50)
 
   if (!data) return []
@@ -86,8 +87,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const canonical = `https://registreduquebec.com/entreprise/${slug}`
 
-  // Only index pages with website (quality content potential)
-  const shouldIndex = !!business.website
+  // Only index enriched pages with website
+  const shouldIndex = !!business.website && !!business.ai_enriched_at
 
   return {
     title,
@@ -126,7 +127,10 @@ export default async function BusinessPage({ params }: Props) {
     notFound()
   }
 
-  // 404 if no website AND not in traffic list
+  // 404 if not enriched OR (no website AND not in traffic list)
+  if (!business.ai_enriched_at) {
+    notFound()
+  }
   if (!business.website && !trafficSlugSet.has(slug)) {
     notFound()
   }

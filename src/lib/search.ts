@@ -24,8 +24,11 @@ export interface SearchResult {
   noQuery?: boolean
 }
 
-// Check if a business should be visible (has website OR has traffic)
-export function isValidBusiness(business: { slug: string; website: string | null }): boolean {
+// Check if a business should be visible (must be enriched AND have website OR traffic)
+export function isValidBusiness(business: { slug: string; website: string | null; ai_description: string | null }): boolean {
+  // Must be enriched (has AI description)
+  if (!business.ai_description) return false
+  // Must have website OR be in traffic list
   return !!business.website || trafficSlugSet.has(business.slug)
 }
 
@@ -101,6 +104,9 @@ export async function searchBusinesses(
     }
   }
 
+  // Only show enriched businesses
+  queryBuilder = queryBuilder.not('ai_enriched_at', 'is', null)
+
   // For filter-only queries (no text search), we need to also filter by valid businesses
   // Add website filter at DB level for better performance when no text query
   if (!cleanQuery) {
@@ -158,6 +164,7 @@ async function fallbackSearch(
       { count: 'estimated' }
     )
     .not('slug', 'is', null)
+    .not('ai_enriched_at', 'is', null)
     .or(`name.ilike.%${cleanQuery}%,description.ilike.%${cleanQuery}%,ai_description.ilike.%${cleanQuery}%`)
 
   if (category) {
@@ -224,6 +231,7 @@ export async function quickSearch(query: string): Promise<Business[]> {
     .from('businesses')
     .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, ai_description, phone, website')
     .not('slug', 'is', null)
+    .not('ai_enriched_at', 'is', null)
     .ilike('name', `%${cleanQuery}%`)
     .order('google_rating', { ascending: false, nullsFirst: false })
     .limit(15)
