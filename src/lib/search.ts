@@ -61,10 +61,8 @@ export async function searchBusinesses(
   const limit = 20
   const offset = (page - 1) * limit
 
-  // If no filters at all, return empty state
-  if (!query && !category && !city) {
-    return { businesses: [], total: 0, noQuery: true }
-  }
+  // If no filters at all, show top businesses (browsing mode)
+  const hasFilters = query || category || city
 
   const cleanQuery = query?.trim() || ''
 

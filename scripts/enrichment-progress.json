@@ -1908,7 +1908,31 @@
     "association-pour-la-musique-personnalisee-comme-le-1171328785",
     "association-pour-la-promotion-de-lindustrie-de-lau",
     "association-pour-la-promotion-des-arts-sur-le-plat",
-    "association-pour-la-protection-de-lenvironnement-d-1173274177"
+    "association-pour-la-protection-de-lenvironnement-d-1173274177",
+    "association-pour-la-protection-du-boise-sainte-dor",
+    "association-professionnelle-des-officiers-de-direc",
+    "association-quebec-france-rive-droite-de-quebec",
+    "association-quebec-france-haute-yamaska-1171376768",
+    "association-quebec-france-saguenay-lac-saint-jean",
+    "association-quebec-france-vallee-du-richelieu",
+    "association-quebec-france-quebec",
+    "association-quebecoise-de-la-physiotherapie-2",
+    "association-quebecoise-de-xiangqi-3",
+    "association-quebecoise-des-anciennes-elues-et-des-",
+    "association-quebecoise-des-centres-dintervention-e-1174450636",
+    "association-quebecoise-des-entrepreneurs-en-fabric-1161139366",
+    "association-quebecoise-des-fauconniers-et-autoursi",
+    "association-quebecoise-des-intervenants-en-cannabi-2",
+    "association-quebecoise-des-loisirs-folkloriques-re-3",
+    "association-quebecoise-pour-lanalyse-du-comporteme",
+    "association-quebecoise-pour-lavancement-de-leffica",
+    "association-quebecoise-pour-la-defense-des-droits--4",
+    "association-recreative-du-mont-citadelle",
+    "association-recreative-du-parc-pierrefonds-2",
+    "association-regionale-de-baseball-amateur-de-riche-2",
+    "association-regionale-de-curling-de-la-cote-nord",
+    "association-regionale-de-golf-de-labitibi-temiscam-2",
+    "association-regionale-de-golf-des-cantons-de-lest-2"
   ],
   "failed": [
     {
@@ -6466,6 +6490,18 @@
     {
       "slug": "association-pour-la-conservation-des-petits-abatto",
       "reason": "no_content"
+    },
+    {
+      "slug": "association-quebecoise-des-acteurs-du-commerce-equ-2",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "association-recreative-du-bord-de-leau-montee-des--2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-regionale-dultimate-est-du-quebec",
+      "reason": "fetch_failed"
     }
   ],
   "lastIndex": 0
