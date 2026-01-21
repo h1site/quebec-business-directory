@@ -103,12 +103,19 @@ export async function searchBusinesses(
     }
   }
 
+  // For filter-only queries (no text search), we need to also filter by valid businesses
+  // Add website filter at DB level for better performance when no text query
+  if (!cleanQuery) {
+    // When browsing by category/city only, show businesses with website
+    queryBuilder = queryBuilder.not('website', 'is', null)
+  }
+
   // Order by: enriched first, then rating, then reviews
   const { data, count, error } = await queryBuilder
     .order('ai_description', { ascending: false, nullsFirst: false })
     .order('google_rating', { ascending: false, nullsFirst: false })
     .order('google_reviews_count', { ascending: false, nullsFirst: false })
-    .range(offset, offset + limit * 3 - 1) // Fetch 3x to account for filtering
+    .range(offset, offset + limit - 1)
 
   if (error) {
     console.error('Search error:', error)
@@ -120,18 +127,16 @@ export async function searchBusinesses(
     return { businesses: [], total: 0 }
   }
 
-  // Filter to only valid businesses (with website OR traffic)
-  const validBusinesses = (data || []).filter(isValidBusiness)
-
-  // Take only the page we need
-  const pageBusinesses = validBusinesses.slice(0, limit)
-
-  // Estimate total (rough since we're filtering client-side)
-  const estimatedTotal = count ? Math.floor(count * (validBusinesses.length / Math.max(data?.length || 1, 1))) : validBusinesses.length
+  // For text searches, filter to valid businesses (website OR traffic slug)
+  // For filter-only, we already filtered at DB level
+  let validBusinesses = data || []
+  if (cleanQuery) {
+    validBusinesses = validBusinesses.filter(isValidBusiness)
+  }
 
   return {
-    businesses: pageBusinesses,
-    total: estimatedTotal
+    businesses: validBusinesses,
+    total: count || validBusinesses.length
   }
 }
 
