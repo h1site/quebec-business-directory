@@ -1,12 +1,12 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { createServiceClient } from '@/lib/supabase/server'
 import HeaderEN from '@/components/HeaderEN'
 import FooterEN from '@/components/FooterEN'
+import { searchBusinesses, getCategories, type Business, type Category } from '@/lib/search'
 
 export const metadata: Metadata = {
   title: 'Search for a Business in Quebec',
-  description: 'Search among over 46,000 Quebec businesses. Find shops, services and professionals near you.',
+  description: 'Search among over 46,000 quality Quebec businesses. Find shops, services and professionals near you.',
 }
 
 interface SearchParams {
@@ -16,154 +16,169 @@ interface SearchParams {
   city?: string
 }
 
-function generateSlug(text: string): string {
-  if (!text) return ''
-  return text
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
+function BusinessCard({ business }: { business: Business }) {
+  const hasContact = business.phone || business.website
+
+  return (
+    <Link
+      href={`/en/company/${business.slug}`}
+      className="block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all border border-gray-100 overflow-hidden group"
+    >
+      <div className="p-6">
+        <div className="flex justify-between items-start gap-4">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
+                {business.name}
+              </h3>
+              {business.ai_description && (
+                <span className="shrink-0 inline-flex items-center px-2 py-0.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white text-xs font-medium rounded-full">
+                  Featured
+                </span>
+              )}
+            </div>
+            {business.city && (
+              <p className="text-gray-600 mt-1 flex items-center gap-2">
+                <span>📍</span>
+                {business.city}
+              </p>
+            )}
+            {(business.ai_description || business.description) && (
+              <p className="text-gray-500 mt-2 text-sm line-clamp-2">
+                {business.ai_description || business.description}
+              </p>
+            )}
+
+            {hasContact && (
+              <div className="flex flex-wrap gap-2 mt-3">
+                {business.phone && (
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full">
+                    📞 Phone
+                  </span>
+                )}
+                {business.website && (
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full">
+                    🌐 Website
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+
+          {business.google_rating && (
+            <div className="flex flex-col items-end shrink-0">
+              <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1.5 rounded-lg">
+                <span className="text-yellow-500 text-lg">★</span>
+                <span className="font-bold text-gray-900">
+                  {business.google_rating}
+                </span>
+              </div>
+              {business.google_reviews_count && (
+                <span className="text-xs text-gray-500 mt-1">
+                  {business.google_reviews_count} reviews
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </Link>
+  )
 }
 
-async function searchBusinesses(query: string, page: number, category?: string, city?: string) {
-  const supabase = createServiceClient()
-  const limit = 20
-  const offset = (page - 1) * limit
+function Pagination({
+  currentPage,
+  totalPages,
+  query,
+  category,
+  city,
+}: {
+  currentPage: number
+  totalPages: number
+  query: string
+  category?: string
+  city?: string
+}) {
+  if (totalPages <= 1) return null
 
-  // If no filters at all, don't run a query - show empty state
-  if (!query && !category && !city) {
-    return { businesses: [], total: 0, noQuery: true }
+  const buildUrl = (page: number) => {
+    const params = new URLSearchParams()
+    if (query) params.set('q', query)
+    if (page > 1) params.set('page', String(page))
+    if (category) params.set('category', category)
+    if (city) params.set('city', city)
+    const qs = params.toString()
+    return qs ? `/en/search?${qs}` : '/en/search'
   }
 
-  // If we have a search query
-  if (query) {
-    // Clean up query for better matching
-    const cleanQuery = query.trim()
+  const maxVisible = 5
+  let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2))
+  const endPage = Math.min(totalPages, startPage + maxVisible - 1)
+  startPage = Math.max(1, endPage - maxVisible + 1)
 
-    // Try exact name match first (for full company names like "1 SOLUTION LOGISTICS INC.")
-    let exactBuilder = supabase
-      .from('businesses')
-      .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'estimated' })
-      .ilike('name', cleanQuery)
-      .not('slug', 'is', null)
-      .not('city', 'is', null)
+  const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i)
 
-    if (category) {
-      exactBuilder = exactBuilder.eq('main_category_slug', category)
-    }
-    if (city) {
-      const citySearchTerm = city
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ')
-      exactBuilder = exactBuilder.ilike('city', `%${citySearchTerm}%`)
-    }
+  return (
+    <div className="flex justify-center items-center gap-2 mt-8">
+      {currentPage > 1 && (
+        <Link
+          href={buildUrl(currentPage - 1)}
+          className="px-4 py-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 font-medium text-gray-700 border border-gray-200"
+        >
+          ← Previous
+        </Link>
+      )}
 
-    const exactResult = await exactBuilder
-      .order('google_rating', { ascending: false, nullsFirst: false })
-      .range(offset, offset + limit - 1)
+      <div className="flex items-center gap-1">
+        {startPage > 1 && (
+          <>
+            <Link
+              href={buildUrl(1)}
+              className="w-10 h-10 flex items-center justify-center rounded-lg bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 font-medium"
+            >
+              1
+            </Link>
+            {startPage > 2 && <span className="px-2 text-gray-400">...</span>}
+          </>
+        )}
 
-    if (!exactResult.error && exactResult.data && exactResult.data.length > 0) {
-      return { businesses: exactResult.data, total: exactResult.count || 0 }
-    }
+        {pages.map((pageNum) => (
+          <Link
+            key={pageNum}
+            href={buildUrl(pageNum)}
+            className={`w-10 h-10 flex items-center justify-center rounded-lg font-medium transition-colors ${
+              currentPage === pageNum
+                ? 'bg-blue-600 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+            }`}
+          >
+            {pageNum}
+          </Link>
+        ))}
 
-    // Try full-text search
-    let queryBuilder = supabase
-      .from('businesses')
-      .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'estimated' })
-      .textSearch('search_vector', cleanQuery, { type: 'websearch' })
-      .not('slug', 'is', null)
-      .not('city', 'is', null)
+        {endPage < totalPages && (
+          <>
+            {endPage < totalPages - 1 && <span className="px-2 text-gray-400">...</span>}
+            <Link
+              href={buildUrl(totalPages)}
+              className="w-10 h-10 flex items-center justify-center rounded-lg bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 font-medium"
+            >
+              {totalPages}
+            </Link>
+          </>
+        )}
+      </div>
 
-    if (category) {
-      queryBuilder = queryBuilder.eq('main_category_slug', category)
-    }
-    if (city) {
-      const citySearchTerm = city
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ')
-      queryBuilder = queryBuilder.ilike('city', `%${citySearchTerm}%`)
-    }
-
-    const { data, count, error } = await queryBuilder
-      .order('google_rating', { ascending: false, nullsFirst: false })
-      .range(offset, offset + limit - 1)
-
-    // If full-text search returns results, use them
-    if (!error && data && data.length > 0) {
-      return { businesses: data, total: count || 0 }
-    }
-
-    // Fallback: search by name, description, or category with ILIKE (partial match)
-    let fallbackBuilder = supabase
-      .from('businesses')
-      .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'estimated' })
-      .not('slug', 'is', null)
-      .not('city', 'is', null)
-      .or(`name.ilike.%${cleanQuery}%,description.ilike.%${cleanQuery}%,main_category_slug.ilike.%${cleanQuery}%`)
-
-    if (category) {
-      fallbackBuilder = fallbackBuilder.eq('main_category_slug', category)
-    }
-    if (city) {
-      const citySearchTerm = city
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ')
-      fallbackBuilder = fallbackBuilder.ilike('city', `%${citySearchTerm}%`)
-    }
-
-    const fallbackResult = await fallbackBuilder
-      .order('google_rating', { ascending: false, nullsFirst: false })
-      .range(offset, offset + limit - 1)
-
-    if (fallbackResult.error) {
-      console.error('Fallback search error:', fallbackResult.error)
-      return { businesses: [], total: 0 }
-    }
-
-    return { businesses: fallbackResult.data || [], total: fallbackResult.count || 0 }
-  }
-
-  // No search query but has filters - apply them
-  let queryBuilder = supabase
-    .from('businesses')
-    .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, phone, website', { count: 'estimated' })
-    .not('slug', 'is', null)
-    .not('city', 'is', null)
-
-  if (category) {
-    queryBuilder = queryBuilder.eq('main_category_slug', category)
-  }
-  if (city) {
-    const citySearchTerm = city
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ')
-    queryBuilder = queryBuilder.ilike('city', `%${citySearchTerm}%`)
-  }
-
-  const { data, count, error } = await queryBuilder
-    .order('google_rating', { ascending: false, nullsFirst: false })
-    .range(offset, offset + limit - 1)
-
-  if (error) {
-    console.error('Search error:', error)
-    return { businesses: [], total: 0 }
-  }
-
-  return { businesses: data || [], total: count || 0 }
-}
-
-async function getCategories() {
-  const supabase = createServiceClient()
-  const { data } = await supabase
-    .from('main_categories')
-    .select('id, slug, label_en')
-    .order('label_en')
-  return data || []
+      {currentPage < totalPages && (
+        <Link
+          href={buildUrl(currentPage + 1)}
+          className="px-4 py-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 font-medium text-gray-700 border border-gray-200"
+        >
+          Next →
+        </Link>
+      )}
+    </div>
+  )
 }
 
 export default async function SearchPageEN({
@@ -173,16 +188,18 @@ export default async function SearchPageEN({
 }) {
   const params = await searchParams
   const query = params.q || ''
-  const page = parseInt(params.page || '1', 10)
+  const page = Math.max(1, parseInt(params.page || '1', 10))
   const category = params.category
   const city = params.city
 
-  const [{ businesses, total }, categories] = await Promise.all([
+  const [searchResult, categories] = await Promise.all([
     searchBusinesses(query, page, category, city),
-    getCategories(),
+    getCategories('en'),
   ])
 
+  const { businesses, total } = searchResult
   const totalPages = Math.ceil(total / 20)
+  const hasFilters = query || category || city
 
   return (
     <>
@@ -191,7 +208,6 @@ export default async function SearchPageEN({
       <main className="min-h-screen bg-gray-50 pt-16">
         {/* Search Header */}
         <section className="relative bg-gradient-to-br from-blue-900 to-blue-700 text-white py-12 overflow-hidden">
-          {/* Background Overlay */}
           <div
             className="absolute inset-0 opacity-10"
             style={{
@@ -205,7 +221,7 @@ export default async function SearchPageEN({
               Search for a Business
             </h1>
             <p className="text-blue-200 text-center mb-8">
-              Over 46,000 Quebec businesses to discover
+              Over 46,000 quality Quebec businesses to discover
             </p>
 
             {/* Search Form */}
@@ -221,6 +237,7 @@ export default async function SearchPageEN({
                     defaultValue={query}
                     placeholder="Restaurant, plumber, lawyer..."
                     className="w-full text-gray-900 placeholder-gray-400 outline-none text-base"
+                    autoComplete="off"
                   />
                 </div>
                 <div className="flex-1 p-4 border-b md:border-b-0 md:border-r border-gray-200">
@@ -233,6 +250,7 @@ export default async function SearchPageEN({
                     defaultValue={city || ''}
                     placeholder="Montreal, Quebec City, Laval..."
                     className="w-full text-gray-900 placeholder-gray-400 outline-none text-base"
+                    autoComplete="off"
                   />
                 </div>
                 <div className="flex-1 p-4 border-b md:border-b-0 md:border-r border-gray-200">
@@ -272,7 +290,7 @@ export default async function SearchPageEN({
           <div className="max-w-6xl mx-auto px-4">
             {/* Results Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-              {query || category || city ? (
+              {hasFilters ? (
                 <div>
                   <h2 className="text-xl font-bold text-gray-900">
                     {total.toLocaleString('en-CA')} result{total !== 1 ? 's' : ''}
@@ -280,7 +298,7 @@ export default async function SearchPageEN({
                   <p className="text-gray-600 text-sm">
                     {query && `for "${query}"`}
                     {city && ` in ${city}`}
-                    {category && ` in ${category}`}
+                    {category && ` in ${categories.find(c => c.slug === category)?.label_en || category}`}
                   </p>
                 </div>
               ) : (
@@ -294,12 +312,12 @@ export default async function SearchPageEN({
                 </div>
               )}
 
-              {(query || category || city) && (
+              {hasFilters && (
                 <Link
                   href="/en/search"
-                  className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                  className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1"
                 >
-                  ✕ Reset
+                  <span>✕</span> Reset
                 </Link>
               )}
             </div>
@@ -307,78 +325,18 @@ export default async function SearchPageEN({
             {/* Results List */}
             {businesses.length > 0 ? (
               <div className="space-y-4">
-                {businesses.map((biz) => {
-                  const hasContact = biz.phone || biz.website
-
-                  return (
-                    <Link
-                      key={biz.id}
-                      href={`/en/company/${biz.slug}`}
-                      className="block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all border border-gray-100 overflow-hidden group"
-                    >
-                      <div className="p-6">
-                        <div className="flex justify-between items-start gap-4">
-                          <div className="flex-1 min-w-0">
-                            <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
-                              {biz.name}
-                            </h3>
-                            <p className="text-gray-600 mt-1 flex items-center gap-2">
-                              <span>📍</span>
-                              {biz.city}
-                            </p>
-                            {biz.description && (
-                              <p className="text-gray-500 mt-2 text-sm line-clamp-2">
-                                {biz.description}
-                              </p>
-                            )}
-
-                            {/* Contact badges */}
-                            {hasContact && (
-                              <div className="flex flex-wrap gap-2 mt-3">
-                                {biz.phone && (
-                                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full">
-                                    📞 Phone
-                                  </span>
-                                )}
-                                {biz.website && (
-                                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full">
-                                    🌐 Website
-                                  </span>
-                                )}
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Rating */}
-                          {biz.google_rating && (
-                            <div className="flex flex-col items-end shrink-0">
-                              <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1.5 rounded-lg">
-                                <span className="text-yellow-500 text-lg">★</span>
-                                <span className="font-bold text-gray-900">
-                                  {biz.google_rating}
-                                </span>
-                              </div>
-                              {biz.google_reviews_count && (
-                                <span className="text-xs text-gray-500 mt-1">
-                                  {biz.google_reviews_count} reviews
-                                </span>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </Link>
-                  )
-                })}
+                {businesses.map((biz) => (
+                  <BusinessCard key={biz.id} business={biz} />
+                ))}
               </div>
-            ) : query || category || city ? (
+            ) : hasFilters ? (
               <div className="text-center py-16 bg-white rounded-xl">
                 <div className="text-6xl mb-4">🔍</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   No results found
                 </h3>
                 <p className="text-gray-500 mb-6">
-                  Try with different search terms
+                  Try with different search terms or fewer filters
                 </p>
                 <Link
                   href="/en/search"
@@ -394,63 +352,19 @@ export default async function SearchPageEN({
                   Find the perfect business
                 </h3>
                 <p className="text-gray-500">
-                  Use the form above to search among over 46,000 businesses
+                  Use the form above to search among over 46,000 quality businesses
                 </p>
               </div>
             )}
 
             {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="flex justify-center items-center gap-2 mt-8">
-                {page > 1 && (
-                  <Link
-                    href={`/en/search?q=${query}&page=${page - 1}${category ? `&category=${category}` : ''}${city ? `&city=${city}` : ''}`}
-                    className="px-4 py-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 font-medium text-gray-700 border border-gray-200"
-                  >
-                    ← Previous
-                  </Link>
-                )}
-
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                    const pageNum = i + 1
-                    return (
-                      <Link
-                        key={pageNum}
-                        href={`/en/search?q=${query}&page=${pageNum}${category ? `&category=${category}` : ''}${city ? `&city=${city}` : ''}`}
-                        className={`w-10 h-10 flex items-center justify-center rounded-lg font-medium transition-colors ${
-                          page === pageNum
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-                        }`}
-                      >
-                        {pageNum}
-                      </Link>
-                    )
-                  })}
-                  {totalPages > 5 && (
-                    <>
-                      <span className="px-2 text-gray-400">...</span>
-                      <Link
-                        href={`/en/search?q=${query}&page=${totalPages}${category ? `&category=${category}` : ''}${city ? `&city=${city}` : ''}`}
-                        className="w-10 h-10 flex items-center justify-center rounded-lg bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 font-medium"
-                      >
-                        {totalPages}
-                      </Link>
-                    </>
-                  )}
-                </div>
-
-                {page < totalPages && (
-                  <Link
-                    href={`/en/search?q=${query}&page=${page + 1}${category ? `&category=${category}` : ''}${city ? `&city=${city}` : ''}`}
-                    className="px-4 py-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 font-medium text-gray-700 border border-gray-200"
-                  >
-                    Next →
-                  </Link>
-                )}
-              </div>
-            )}
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              query={query}
+              category={category}
+              city={city}
+            />
           </div>
         </section>
       </main>
