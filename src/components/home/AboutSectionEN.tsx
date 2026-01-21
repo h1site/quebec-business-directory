@@ -9,7 +9,7 @@ export default function AboutSectionEN() {
           The Quebec Business Registry is the most comprehensive directory of
           Quebec businesses. Whether you&apos;re looking for a restaurant in Montreal, a
           plumber in Quebec City, or a notary in Laval, our directory helps you
-          quickly find contact information for over 600,000 businesses.
+          quickly find contact information for over 46,000 quality businesses.
         </p>
       </div>
     </section>

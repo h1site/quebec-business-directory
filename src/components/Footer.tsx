@@ -51,7 +51,7 @@ export default function Footer() {
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               L&apos;annuaire le plus complet des entreprises québécoises.
-              Plus de 600 000 entreprises répertoriées.
+              Plus de 46 000 entreprises de qualité.
             </p>
           </div>
 

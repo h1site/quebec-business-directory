@@ -5,7 +5,7 @@ import FooterEN from '@/components/FooterEN'
 
 export const metadata: Metadata = {
   title: 'About Us',
-  description: 'Discover the Quebec Business Registry, the most comprehensive directory of Quebec businesses with over 600,000 listings.',
+  description: 'Discover the Quebec Business Registry, the most comprehensive directory of Quebec businesses with over 46,000 listings.',
 }
 
 export default function AboutPageEN() {
@@ -42,7 +42,7 @@ export default function AboutPageEN() {
             <section className="mb-12">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-blue-50 rounded-xl p-6 text-center">
-                  <div className="text-4xl font-bold text-blue-600 mb-2">600,000+</div>
+                  <div className="text-4xl font-bold text-blue-600 mb-2">46,000+</div>
                   <div className="text-gray-600">Businesses listed</div>
                 </div>
                 <div className="bg-green-50 rounded-xl p-6 text-center">

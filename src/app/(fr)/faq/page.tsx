@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     question: 'Qu\'est-ce que le Registre d\'entreprises du Québec?',
-    answer: 'Le Registre d\'entreprises du Québec est un annuaire en ligne gratuit qui répertorie plus de 600 000 entreprises québécoises. Notre mission est de faciliter la recherche d\'entreprises locales en offrant des informations complètes et à jour.'
+    answer: 'Le Registre d\'entreprises du Québec est un annuaire en ligne gratuit qui répertorie plus de 46 000 entreprises québécoises. Notre mission est de faciliter la recherche d\'entreprises locales en offrant des informations complètes et à jour.'
   },
   {
     question: 'Comment ajouter mon entreprise au registre?',

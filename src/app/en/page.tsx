@@ -14,10 +14,12 @@ export const dynamic = 'force-dynamic'
 
 async function getStats() {
   const supabase = createServiceClient()
+  // Only count businesses with website (quality pages)
   const { count } = await supabase
     .from('businesses')
     .select('*', { count: 'exact', head: true })
-  return { totalBusinesses: count || 600000 }
+    .not('website', 'is', null)
+  return { totalBusinesses: count || 46000 }
 }
 
 async function getCategories() {
@@ -54,7 +56,7 @@ export default async function HomePageEN() {
     '@type': 'WebSite',
     name: 'Quebec Business Registry',
     url: 'https://registreduquebec.com/en',
-    description: 'Easily find over 600,000 Quebec businesses.',
+    description: 'Easily find over 46,000 quality Quebec businesses.',
     potentialAction: {
       '@type': 'SearchAction',
       target: 'https://registreduquebec.com/en/search?q={search_term_string}',

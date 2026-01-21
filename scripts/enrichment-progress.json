@@ -1712,7 +1712,90 @@
     "association-des-anciens-de-la-haute-gaspesie-1173733610",
     "association-des-anciens-de-whu-au-canada",
     "association-des-anciens-employes-du-college-jean-d-2",
-    "association-des-anciens-et-anciennes-du-patro-lava"
+    "association-des-anciens-et-anciennes-du-patro-lava",
+    "association-des-artistes-de-la-rive-sud-1160278892-1",
+    "association-des-benevoles-du-chsld-de-saint-michel",
+    "association-des-cadres-superieurs-et-intermediaire",
+    "association-des-chasseurs-et-tireurs-sportifs-du-q",
+    "association-des-chauffeurs-de-taxi-accessible-du-q-3",
+    "association-des-colibris-1174635566",
+    "association-des-commercants-de-yunnan-du-quebec-2",
+    "association-des-conseillers-en-management-du-quebe-1149531361",
+    "association-des-conseillers-et-professionnels-du-q-2",
+    "association-des-coproprietaires-12470-a-12482-de-r",
+    "association-des-coproprietaires-des-jardins-de-la-",
+    "association-des-coproprietaires-du-1020-1022-et-10-2",
+    "association-des-coproprietaires-du-4024-26-28-de-b",
+    "association-des-coproprietaires-du-4224-au-4234-pl",
+    "association-des-coproprietaires-du-4407-et-4409-sa",
+    "association-des-coproprietaires-du-5214-et-5216-ca",
+    "association-des-coproprietaires-du-manoir-des-trem-1171471239",
+    "association-des-coproprietaires-le-cent-12-2",
+    "association-des-coproprietaires-pearson-phase-1",
+    "association-des-coproprietes-3745",
+    "association-des-coproprietes-le-laureat-2",
+    "association-des-cousins-et-cousines-rousseau",
+    "association-des-deseaulais-a-letranger-ade",
+    "association-des-diplomes-de-luniversite-de-pekin-d",
+    "association-des-directeurs-doffices-dhabitation-du",
+    "association-des-directions-detablissement-denseign",
+    "association-des-directions-generales-scolaires-du--2",
+    "association-des-ecoles-chinoises-du-quebec-2",
+    "association-des-educateurs-et-educatrices-physique-3",
+    "association-des-eglises-et-ministeres-de-la-foi-1146510566-2",
+    "association-des-eleveurs-de-wapitis-du-quebec",
+    "association-des-employes-retraites-de-la-ville-de--2",
+    "association-des-enqueteurs-du-bureau-des-enquetes-",
+    "association-des-entraineurs-de-natation-du-quebec",
+    "association-des-entreprises-de-service-de-location-1171370167",
+    "association-des-etudiant-e-s-en-sciences-biomedica",
+    "association-des-etudiantes-et-des-etudiants-au-bac",
+    "association-des-etudiants-a-la-maitrise-et-au-doct-1165999385-3",
+    "association-des-etudiants-deducation-permanente-de-2",
+    "association-des-etudiants-en-pharmacie-de-lunivers-2",
+    "association-des-etudiants-en-recreologie",
+    "association-des-etudiants-et-etudiantes-de-cycles--2",
+    "association-des-familles-champagne-inc",
+    "association-des-femmes-autochtones-de-mistissini-i-1174406786",
+    "association-des-femmes-inuit-du-nunavik-saturviit",
+    "association-des-femmes-pionnieres",
+    "association-des-festivals-de-cinema-de-quebec",
+    "association-des-garderies-non-subventionnees-en-in-2",
+    "association-des-gauthier-damerique",
+    "association-des-gens-daffaires-de-riviere-des-prai",
+    "association-des-gens-daffaires-de-sainte-sophie-1173877698",
+    "association-des-gens-de-laviation-de-gatineau-1171134175",
+    "association-des-gestionnaires-dimmeubles-1173756629",
+    "association-des-gestionnaires-des-terres-des-premi-1175281980",
+    "association-des-gestionnaires-en-ressources-humain-1142176164",
+    "association-des-guineens-de-lestrie",
+    "association-des-haltes-garderies-communautaires-du-2",
+    "association-des-immigrants-de-timizart-nat-jennad-",
+    "association-des-jeunes-latino-americains-du-quebec-4",
+    "association-des-jeux-devasion-du-quebec-1175519157",
+    "association-des-joueurs-de-hockey-marocains-2",
+    "association-des-lapins-du-quebec",
+    "association-des-locataires-des-habitations-saint-t-3",
+    "association-des-locataires-du-hlm-r-p-1174363524",
+    "association-des-locataires-les-etincelles",
+    "association-des-mages-de-diedne-2",
+    "association-des-manoirs-jerobelle-2",
+    "association-des-medias-ecrits-communautaires-du-qu-1142150797",
+    "association-des-membres-du-golf-malartic",
+    "association-des-micro-preteurs-du-canada-chapitre--2",
+    "association-des-numismates-francophones-du-canada-1175286476",
+    "association-des-parents-denfants-diabetiques-2",
+    "association-des-parents-du-college-sainte-marcelli-3",
+    "association-des-pecheurs",
+    "association-des-pecheurs-de-crabe-de-la-zone-17",
+    "association-des-podologues-diplomes-2",
+    "association-des-pompiers-de-la-regie-incendie-de-l",
+    "association-des-pompiers-de-shefford",
+    "association-des-pompiers-et-pompieres-de-gatineau",
+    "association-des-presidents-presidentes-vice-presid",
+    "association-des-professionels-de-dawson",
+    "association-des-professionnel-les-en-mediation-int",
+    "association-des-professionnelles-et-professionnels"
   ],
   "failed": [
     {
@@ -6121,6 +6204,50 @@
     },
     {
       "slug": "association-de-sport-academie-de-trois-rivieres-as",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-des-cloutier-damerique",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-des-commercants-de-la-rue-de-charleroi",
+      "reason": "no_content"
+    },
+    {
+      "slug": "association-des-entrepreneurs-en-coffrage-structur-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-des-etudiants-en-mathematiques-premier-1163435648",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-des-etudiants-en-neurosciences-de-luni",
+      "reason": "no_content"
+    },
+    {
+      "slug": "association-des-jardiniers-de-mont-saint-hilaire-2",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-des-locataires-habitation-st-roch",
+      "reason": "openai_failed"
+    },
+    {
+      "slug": "association-des-pecheurs-du-lac-rene",
+      "reason": "no_content"
+    },
+    {
+      "slug": "association-des-policiers-et-policieres-de-sherbro-3",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-des-pompiers-de-saint-remi-1171370274",
+      "reason": "fetch_failed"
+    },
+    {
+      "slug": "association-des-pompiers-volontaires-de-la-caserne-2",
       "reason": "fetch_failed"
     }
   ],

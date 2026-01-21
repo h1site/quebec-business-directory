@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     question: 'What is the Quebec Business Registry?',
-    answer: 'The Quebec Business Registry is a free online directory that lists over 600,000 Quebec businesses. Our mission is to make it easy to find local businesses by providing complete and up-to-date information.'
+    answer: 'The Quebec Business Registry is a free online directory that lists over 46,000 Quebec businesses. Our mission is to make it easy to find local businesses by providing complete and up-to-date information.'
   },
   {
     question: 'How do I add my business to the registry?',

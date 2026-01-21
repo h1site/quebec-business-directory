@@ -9,8 +9,8 @@ export default function AboutSection() {
           Le Registre des entreprises du Québec est l&apos;annuaire le plus complet des
           entreprises québécoises. Que vous cherchiez un restaurant à Montréal, un
           plombier à Québec, ou un notaire à Laval, notre répertoire vous permet de
-          trouver rapidement les coordonnées et informations de plus de 600 000
-          entreprises.
+          trouver rapidement les coordonnées et informations de plus de 46 000
+          entreprises de qualité.
         </p>
       </div>
     </section>

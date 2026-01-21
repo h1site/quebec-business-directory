@@ -6,7 +6,7 @@ import FooterEN from '@/components/FooterEN'
 
 export const metadata: Metadata = {
   title: 'Search for a Business in Quebec',
-  description: 'Search among over 600,000 Quebec businesses. Find shops, services and professionals near you.',
+  description: 'Search among over 46,000 Quebec businesses. Find shops, services and professionals near you.',
 }
 
 interface SearchParams {
@@ -205,7 +205,7 @@ export default async function SearchPageEN({
               Search for a Business
             </h1>
             <p className="text-blue-200 text-center mb-8">
-              Over 600,000 Quebec businesses to discover
+              Over 46,000 Quebec businesses to discover
             </p>
 
             {/* Search Form */}
@@ -394,7 +394,7 @@ export default async function SearchPageEN({
                   Find the perfect business
                 </h3>
                 <p className="text-gray-500">
-                  Use the form above to search among over 600,000 businesses
+                  Use the form above to search among over 46,000 businesses
                 </p>
               </div>
             )}

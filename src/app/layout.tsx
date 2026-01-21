@@ -16,11 +16,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://registreduquebec.com'),
   title: {
-    default: 'Registre des entreprises du Québec - Annuaire de plus de 600 000 entreprises',
+    default: 'Registre des entreprises du Québec - Annuaire de plus de 46 000 entreprises',
     template: '%s | Registre du Québec',
   },
   description:
-    'Trouvez facilement parmi plus de 600 000 entreprises québécoises. Annuaire complet avec coordonnées, avis Google et informations détaillées pour Montréal, Québec, Laval et toutes les régions du Québec.',
+    'Trouvez facilement parmi plus de 46 000 entreprises québécoises. Annuaire complet avec coordonnées, avis Google et informations détaillées pour Montréal, Québec, Laval et toutes les régions du Québec.',
   authors: [{ name: 'Registre du Québec' }],
   creator: 'Registre du Québec',
   publisher: 'Registre du Québec',
@@ -36,14 +36,14 @@ export const metadata: Metadata = {
     locale: 'fr_CA',
     alternateLocale: 'en_CA',
     siteName: 'Registre du Québec',
-    title: 'Registre des entreprises du Québec - Plus de 600 000 entreprises',
+    title: 'Registre des entreprises du Québec - Plus de 46 000 entreprises',
     description: 'L\'annuaire le plus complet des entreprises québécoises. Trouvez coordonnées, avis et informations pour toutes les régions.',
     // Image OG générée dynamiquement via opengraph-image.tsx (format PNG)
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Registre des entreprises du Québec',
-    description: 'Plus de 600 000 entreprises québécoises à découvrir',
+    description: 'Plus de 46 000 entreprises québécoises à découvrir',
   },
   robots: {
     index: true,

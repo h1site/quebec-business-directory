@@ -14,10 +14,12 @@ export const dynamic = 'force-dynamic'
 
 async function getStats() {
   const supabase = createServiceClient()
+  // Only count businesses with website (quality pages)
   const { count } = await supabase
     .from('businesses')
     .select('*', { count: 'exact', head: true })
-  return { totalBusinesses: count || 600000 }
+    .not('website', 'is', null)
+  return { totalBusinesses: count || 46000 }
 }
 
 async function getCategories() {
@@ -54,7 +56,7 @@ export default async function HomePage() {
     '@type': 'WebSite',
     name: 'Registre des entreprises du Québec',
     url: 'https://registreduquebec.com',
-    description: 'Trouvez facilement parmi plus de 600 000 entreprises québécoises.',
+    description: 'Trouvez facilement parmi plus de 46 000 entreprises québécoises de qualité.',
     potentialAction: {
       '@type': 'SearchAction',
       target: 'https://registreduquebec.com/recherche?q={search_term_string}',

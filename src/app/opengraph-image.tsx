@@ -122,7 +122,7 @@ export default async function Image() {
                 borderRadius: 16,
               }}
             >
-              <span style={{ fontSize: 48, fontWeight: 'bold', color: '#4ade80' }}>600 000+</span>
+              <span style={{ fontSize: 48, fontWeight: 'bold', color: '#4ade80' }}>46 000+</span>
               <span style={{ fontSize: 20, color: 'rgba(255,255,255,0.8)' }}>Entreprises</span>
             </div>
             <div

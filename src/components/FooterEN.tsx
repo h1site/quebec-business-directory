@@ -51,7 +51,7 @@ export default function FooterEN() {
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               The most complete directory of Quebec businesses.
-              Over 600,000 businesses listed.
+              Over 46,000 quality businesses.
             </p>
           </div>
 

@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Quebec Business Registry - Directory of 600,000+ Businesses',
+    default: 'Quebec Business Registry - Directory of 46,000+ Businesses',
     template: '%s | Quebec Business Registry',
   },
   description:
-    'Find over 600,000 Quebec businesses. Complete directory with contact info, Google reviews, and detailed information for Montreal, Quebec City, Laval, and all regions of Quebec.',
+    'Find over 46,000 Quebec businesses. Complete directory with contact info, Google reviews, and detailed information for Montreal, Quebec City, Laval, and all regions of Quebec.',
   keywords: [
     'quebec businesses',
     'quebec business directory',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     locale: 'en_CA',
     alternateLocale: 'fr_CA',
     siteName: 'Quebec Business Registry',
-    title: 'Quebec Business Registry - 600,000+ Businesses',
+    title: 'Quebec Business Registry - 46,000+ Businesses',
     description: 'The most comprehensive directory of Quebec businesses. Find contact info, reviews, and detailed information for all regions.',
     images: [
       {
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Quebec Business Registry',
-    description: 'Over 600,000 Quebec businesses to discover',
+    description: 'Over 46,000 Quebec businesses to discover',
   },
 }
 

@@ -19,7 +19,7 @@ export default function StatsSection() {
     <section className="py-16 bg-blue-900 text-white overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <StatItem value="600 000+" label="Entreprises répertoriées" />
+          <StatItem value="46 000+" label="Entreprises de qualité" />
           <StatItem value="17" label="Régions du Québec" />
           <StatItem value="100%" label="Gratuit" />
         </div>

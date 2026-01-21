@@ -360,7 +360,7 @@ export default async function SitemapPage() {
             <h2 className="text-2xl font-bold text-blue-900 mb-4">Le Registre en chiffres</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div>
-                <div className="text-3xl font-bold text-blue-600">600 000+</div>
+                <div className="text-3xl font-bold text-blue-600">46 000+</div>
                 <div className="text-blue-800">Entreprises</div>
               </div>
               <div>
