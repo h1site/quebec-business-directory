@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import trafficSlugs from '@/data/traffic-slugs.json'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600
+
+// Set of slugs with traffic (to include even without website)
+const trafficSlugSet = new Set(trafficSlugs.slugs)
 
 export async function GET() {
   const baseUrl = 'https://registreduquebec.com'
@@ -17,8 +21,8 @@ export async function GET() {
 
   const supabase = createClient(supabaseUrl, supabaseKey)
 
-  // Get all businesses with website (prioritized for enrichment)
-  const { data: businesses, error } = await supabase
+  // Get all businesses with website
+  const { data: websiteBusinesses, error: websiteError } = await supabase
     .from('businesses')
     .select('slug, updated_at, ai_description')
     .not('slug', 'is', null)
@@ -28,11 +32,28 @@ export async function GET() {
     .order('updated_at', { ascending: false })
     .limit(50000)
 
-  if (error || !businesses) {
+  if (websiteError || !websiteBusinesses) {
     return new NextResponse('Error fetching businesses', { status: 500 })
   }
 
-  const urls = businesses.map((business) => {
+  // Get traffic slugs that don't have website (to add them too)
+  const websiteSlugs = new Set(websiteBusinesses.map(b => b.slug))
+  const trafficOnlySlugs = Array.from(trafficSlugSet).filter(slug => !websiteSlugs.has(slug))
+
+  // Fetch traffic-only businesses from DB
+  let trafficOnlyBusinesses: typeof websiteBusinesses = []
+  if (trafficOnlySlugs.length > 0) {
+    const { data } = await supabase
+      .from('businesses')
+      .select('slug, updated_at, ai_description')
+      .in('slug', trafficOnlySlugs)
+    trafficOnlyBusinesses = data || []
+  }
+
+  // Combine all businesses
+  const allBusinesses = [...websiteBusinesses, ...trafficOnlyBusinesses]
+
+  const urls = allBusinesses.map((business) => {
     const lastmod = business.updated_at?.split('T')[0] || today
     // Higher priority for enriched businesses
     const priority = business.ai_description ? '0.9' : '0.7'

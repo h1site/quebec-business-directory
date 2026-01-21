@@ -4,6 +4,10 @@ import { createServiceClient } from '@/lib/supabase/server'
 import { generateBusinessSchemaSimple, generateFAQSchemaSimple, generateBreadcrumbSchemaSimple } from '@/lib/schema'
 import type { Business } from '@/types/business'
 import BusinessDetails from '@/components/BusinessDetails'
+import trafficSlugs from '@/data/traffic-slugs.json'
+
+// Set of slugs that have traffic (keep even without website)
+const trafficSlugSet = new Set(trafficSlugs.slugs)
 
 interface Props {
   params: Promise<{
@@ -68,14 +72,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return (lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated) + '...'
   }
 
-  const description = `Fiche d'entreprise ${business.name} située à ${business.city}, dans la province de Québec.`
+  // Use AI description if available, otherwise build a rich description
+  let description: string
+  if (business.ai_description) {
+    description = truncateDescription(business.ai_description)
+  } else if (business.google_rating && business.google_reviews_count) {
+    description = `${business.name} à ${business.city}. Note: ${business.google_rating}/5 (${business.google_reviews_count} avis). Coordonnées, horaires et informations.`
+  } else if (business.description) {
+    description = truncateDescription(business.description)
+  } else {
+    description = `${business.name} à ${business.city}, Québec. Trouvez les coordonnées, avis et informations complètes.`
+  }
 
   const canonical = `https://registreduquebec.com/entreprise/${slug}`
+
+  // Only index pages with website (quality content potential)
+  const shouldIndex = !!business.website
 
   return {
     title,
     description,
-    robots: { index: true, follow: true },
+    robots: { index: shouldIndex, follow: true },
     openGraph: {
       title: `${business.name} - ${business.city} | Registre du Québec`,
       description,
@@ -106,6 +123,11 @@ export default async function BusinessPage({ params }: Props) {
   const business = await getBusiness(slug)
 
   if (!business) {
+    notFound()
+  }
+
+  // 404 if no website AND not in traffic list
+  if (!business.website && !trafficSlugSet.has(slug)) {
     notFound()
   }
 

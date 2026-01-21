@@ -4,18 +4,10 @@ export async function GET() {
   const baseUrl = 'https://registreduquebec.com'
   const today = new Date().toISOString().split('T')[0]
 
+  // Only include quality sitemaps (businesses with website or traffic)
   const sitemaps = [
-    'sitemap-enrichi.xml',
-    'sitemap-websites.xml',
     'sitemap-static.xml',
-    'sitemap-categories.xml',
-    'sitemap-cities.xml',
-    'sitemap-businesses-premium.xml',
-    'sitemap-businesses-1.xml',
-    'sitemap-businesses-2.xml',
-    'sitemap-businesses-3.xml',
-    'sitemap-businesses-4.xml',
-    'sitemap-businesses-5.xml',
+    'sitemap-websites.xml', // All businesses with website + traffic slugs
   ]
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
