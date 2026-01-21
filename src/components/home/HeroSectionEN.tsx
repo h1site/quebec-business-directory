@@ -13,10 +13,16 @@ const quickSearches = [
 
 export default function HeroSectionEN({ totalBusinesses }: HeroSectionENProps) {
   return (
-    <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-slate-950">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900 to-sky-900/30" />
+    <section
+      className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-slate-950 bg-cover bg-center"
+      style={{
+        backgroundImage: 'url(https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80)',
+      }}
+    >
+      {/* Dark Overlay with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-sky-900/80" />
+      {/* Animated orbs */}
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
