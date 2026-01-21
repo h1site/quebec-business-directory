@@ -17,13 +17,13 @@ const popularCities = [
 
 export default function CitiesSection() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-10 animate-fade-in">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="text-center mb-12 animate-fade-in">
+          <h2 className="text-3xl font-bold text-white mb-3">
             Villes populaires
           </h2>
-          <p className="text-gray-600">
+          <p className="text-slate-400">
             Trouvez des entreprises dans les plus grandes villes du Québec
           </p>
         </div>
@@ -33,17 +33,19 @@ export default function CitiesSection() {
             <Link
               key={city.slug}
               href={`/ville/${city.slug}`}
-              className="flex items-center justify-between bg-gray-50 hover:bg-blue-50 p-4 rounded-lg transition-all group hover:shadow-md animate-fade-in-up"
+              className="group flex items-center justify-between bg-slate-800/50 hover:bg-slate-800 p-4 rounded-xl border border-slate-700/50 hover:border-sky-500/50 transition-all hover:-translate-y-0.5 animate-fade-in-up"
             >
               <div className="flex items-center gap-3">
                 <span className="text-2xl group-hover:scale-110 transition-transform">
                   🏙️
                 </span>
-                <span className="font-medium text-gray-900">{city.name}</span>
+                <span className="font-medium text-slate-200 group-hover:text-sky-400 transition-colors">
+                  {city.name}
+                </span>
               </div>
-              <span className="text-blue-600 group-hover:translate-x-1 transition-transform">
-                →
-              </span>
+              <svg className="w-5 h-5 text-slate-500 group-hover:text-sky-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </Link>
           ))}
         </div>

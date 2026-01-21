@@ -37,28 +37,24 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
     <>
       <Header />
 
-      <main className="min-h-screen bg-gray-50 pt-16">
+      <main className="min-h-screen bg-slate-950 pt-16">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-blue-900 to-blue-700 text-white py-8 overflow-hidden">
-          {/* Background Overlay */}
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage: 'url(/images/background/background-overlay.png)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          />
+        <section className="relative bg-slate-900 py-8 overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute inset-0">
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
+          </div>
           <div className="relative z-10 max-w-6xl mx-auto px-4">
             {/* Breadcrumb */}
-            <nav className="text-sm mb-6 flex items-center gap-2 text-blue-200 flex-wrap">
-              <Link href="/" className="hover:text-white transition-colors">Accueil</Link>
+            <nav className="text-sm mb-6 flex items-center gap-2 text-slate-400 flex-wrap">
+              <Link href="/" className="hover:text-sky-400 transition-colors">Accueil</Link>
               <span>›</span>
-              <Link href="/recherche" className="hover:text-white transition-colors">
+              <Link href="/recherche" className="hover:text-sky-400 transition-colors">
                 Entreprises
               </Link>
               <span>›</span>
-              <Link href={`/ville/${citySlug}`} className="hover:text-white transition-colors">
+              <Link href={`/ville/${citySlug}`} className="hover:text-sky-400 transition-colors">
                 {business.city}
               </Link>
               <span>›</span>
@@ -67,7 +63,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
 
             <div className="flex flex-col md:flex-row gap-6 items-start">
               {/* Logo */}
-              <div className="w-32 h-32 rounded-xl bg-white p-2 shrink-0">
+              <div className="w-32 h-32 rounded-xl bg-white/10 backdrop-blur-sm p-2 shrink-0 border border-white/10">
                 <img
                   src={business.logo_url || '/images/logos/logo.webp'}
                   alt={business.logo_url
@@ -78,22 +74,22 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
               </div>
 
               <div className="flex-1">
-                <h1 className="text-3xl md:text-4xl font-bold mb-2">
+                <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">
                   {business.name}
                 </h1>
 
-                <div className="flex flex-wrap items-center gap-3 text-blue-100">
+                <div className="flex flex-wrap items-center gap-3 text-slate-300">
                   <span className="flex items-center gap-1">
                     <span>📍</span>
                     {business.city}, {business.region || 'Québec'}
                   </span>
 
                   {business.google_rating && (
-                    <span className="flex items-center gap-1 bg-yellow-500/20 px-3 py-1 rounded-full">
-                      <span className="text-yellow-400">★</span>
+                    <span className="flex items-center gap-1 bg-amber-500/20 px-3 py-1 rounded-full">
+                      <span className="text-amber-400">★</span>
                       <span className="font-bold text-white">{business.google_rating}</span>
                       {business.google_reviews_count && (
-                        <span className="text-sm">({business.google_reviews_count} avis)</span>
+                        <span className="text-sm text-slate-400">({business.google_reviews_count} avis)</span>
                       )}
                     </span>
                   )}
@@ -104,7 +100,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                   {displayPhone && (
                     <a
                       href={`tel:${displayPhone}`}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg font-medium transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 rounded-xl font-medium transition-colors text-white"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
@@ -118,7 +114,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                       href={business.website}
                       target="_blank"
                       rel="noopener noreferrer nofollow"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg font-medium transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-500 rounded-xl font-medium transition-colors text-white"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10" />
@@ -134,7 +130,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                       href={`https://waze.com/ul?ll=${business.latitude},${business.longitude}&navigate=yes`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#33ccff] hover:bg-[#00b8f5] text-black rounded-lg font-medium transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#33ccff] hover:bg-[#00b8f5] text-black rounded-xl font-medium transition-colors"
                     >
                       <Image src="/images/logos/waze.svg" alt="Waze" width={20} height={20} />
                       Itinéraire
@@ -153,29 +149,29 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
               {/* Left Column - Main Content */}
               <div className="lg:col-span-2 space-y-6">
                 {/* About Section */}
-                <div className="bg-white rounded-xl shadow-sm p-6">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4">À propos</h2>
+                <div className="glass rounded-xl p-6">
+                  <h2 className="text-xl font-bold text-white mb-4">À propos</h2>
                   {business.ai_description ? (
-                    <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                    <p className="text-slate-300 leading-relaxed whitespace-pre-line">
                       {business.ai_description}
                     </p>
                   ) : business.description ? (
-                    <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                    <p className="text-slate-300 leading-relaxed whitespace-pre-line">
                       {business.description}
                     </p>
                   ) : (
-                    <p className="text-gray-500 italic">
+                    <p className="text-slate-500 italic">
                       Aucune description disponible pour cette entreprise.
                     </p>
                   )}
 
                   {business.ai_services && business.ai_services.length > 0 && (
-                    <div className="mt-6 pt-6 border-t border-gray-100">
-                      <h3 className="font-semibold text-gray-900 mb-3">Services</h3>
+                    <div className="mt-6 pt-6 border-t border-white/10">
+                      <h3 className="font-semibold text-white mb-3">Services</h3>
                       <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {business.ai_services.map((service, i) => (
-                          <li key={i} className="flex items-center gap-2 text-gray-600">
-                            <span className="text-green-500">✓</span>
+                          <li key={i} className="flex items-center gap-2 text-slate-300">
+                            <span className="text-green-400">✓</span>
                             {service}
                           </li>
                         ))}
@@ -184,9 +180,9 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                   )}
 
                   {!business.ai_services && business.products_services && (
-                    <div className="mt-6 pt-6 border-t border-gray-100">
-                      <h3 className="font-semibold text-gray-900 mb-3">Produits et services</h3>
-                      <ul className="list-disc list-inside text-gray-600 space-y-1">
+                    <div className="mt-6 pt-6 border-t border-white/10">
+                      <h3 className="font-semibold text-white mb-3">Produits et services</h3>
+                      <ul className="list-disc list-inside text-slate-300 space-y-1">
                         {business.products_services.split('\n').filter(Boolean).map((service, i) => (
                           <li key={i}>{service.trim()}</li>
                         ))}
@@ -197,8 +193,8 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
 
                 {/* Gallery */}
                 {business.gallery_images && business.gallery_images.length > 0 && (
-                  <div className="bg-white rounded-xl shadow-sm p-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-4">Photos</h2>
+                  <div className="glass rounded-xl p-6">
+                    <h2 className="text-xl font-bold text-white mb-4">Photos</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       {business.gallery_images.map((img, i) => (
                         <div key={i} className="aspect-square rounded-lg overflow-hidden">
@@ -214,39 +210,39 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                 )}
 
                 {/* FAQ Section */}
-                <div className="bg-white rounded-xl shadow-sm p-6">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4">Questions fréquentes</h2>
+                <div className="glass rounded-xl p-6">
+                  <h2 className="text-xl font-bold text-white mb-4">Questions fréquentes</h2>
                   <div className="space-y-3">
                     {/* Default FAQs */}
-                    <details className="group bg-gray-50 rounded-lg">
-                      <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-gray-900">
+                    <details className="group bg-slate-800/50 rounded-lg">
+                      <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
                         Dans quelle ville se situe {business.name} ?
-                        <span className="transform transition-transform group-open:rotate-180 text-gray-500">▼</span>
+                        <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
                       </summary>
-                      <p className="px-4 pb-4 text-gray-600">
+                      <p className="px-4 pb-4 text-slate-300">
                         {business.name} se situe à {business.city || 'Québec'}
                         {business.region && `, dans la région de ${business.region}`}.
                       </p>
                     </details>
 
-                    <details className="group bg-gray-50 rounded-lg">
-                      <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-gray-900">
+                    <details className="group bg-slate-800/50 rounded-lg">
+                      <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
                         Est-ce que {business.name} a un numéro de téléphone ?
-                        <span className="transform transition-transform group-open:rotate-180 text-gray-500">▼</span>
+                        <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
                       </summary>
-                      <p className="px-4 pb-4 text-gray-600">
+                      <p className="px-4 pb-4 text-slate-300">
                         {displayPhone
                           ? `Oui, vous pouvez contacter ${business.name} au ${displayPhone}.`
                           : `Les informations de téléphone pour ${business.name} ne sont pas disponibles.`}
                       </p>
                     </details>
 
-                    <details className="group bg-gray-50 rounded-lg">
-                      <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-gray-900">
+                    <details className="group bg-slate-800/50 rounded-lg">
+                      <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
                         {business.name} a-t-il un site internet ?
-                        <span className="transform transition-transform group-open:rotate-180 text-gray-500">▼</span>
+                        <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
                       </summary>
-                      <p className="px-4 pb-4 text-gray-600">
+                      <p className="px-4 pb-4 text-slate-300">
                         {business.website
                           ? `Oui, ${business.name} a un site internet accessible à ${business.website}.`
                           : `Les informations de site internet pour ${business.name} ne sont pas disponibles.`}
@@ -254,12 +250,12 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                     </details>
 
                     {hasOpeningHours && (
-                      <details className="group bg-gray-50 rounded-lg">
-                        <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-gray-900">
+                      <details className="group bg-slate-800/50 rounded-lg">
+                        <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
                           Quelles sont les heures d&apos;ouverture de {business.name} ?
-                          <span className="transform transition-transform group-open:rotate-180 text-gray-500">▼</span>
+                          <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
                         </summary>
-                        <p className="px-4 pb-4 text-gray-600">
+                        <p className="px-4 pb-4 text-slate-300">
                           Consultez les heures d&apos;ouverture dans la section &quot;Heures d&apos;ouverture&quot; sur cette page.
                         </p>
                       </details>
@@ -272,16 +268,16 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
               <div className="space-y-6">
                 {/* Contact Card */}
                 {hasContactInfo && (
-                  <div className="bg-white rounded-xl shadow-sm p-6">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Coordonnées</h3>
+                  <div className="glass rounded-xl p-6">
+                    <h3 className="text-lg font-bold text-white mb-4">Coordonnées</h3>
                     <div className="space-y-4">
                       {displayAddress && (
                         <div className="flex items-start gap-3">
-                          <span className="text-gray-400 mt-0.5">📍</span>
+                          <span className="text-slate-500 mt-0.5">📍</span>
                           <div>
-                            <p className="text-gray-900">{displayAddress}</p>
+                            <p className="text-white">{displayAddress}</p>
                             {displayCity && (
-                              <p className="text-gray-600">
+                              <p className="text-slate-400">
                                 {displayCity}{displayPostalCode && `, ${displayPostalCode}`}
                               </p>
                             )}
@@ -291,8 +287,8 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
 
                       {displayPhone && (
                         <div className="flex items-center gap-3">
-                          <span className="text-gray-400">📞</span>
-                          <a href={`tel:${displayPhone}`} className="text-blue-600 hover:underline">
+                          <span className="text-slate-500">📞</span>
+                          <a href={`tel:${displayPhone}`} className="text-sky-400 hover:text-sky-300">
                             {displayPhone}
                           </a>
                         </div>
@@ -300,12 +296,12 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
 
                       {business.website && (
                         <div className="flex items-center gap-3">
-                          <span className="text-gray-400">🌐</span>
+                          <span className="text-slate-500">🌐</span>
                           <a
                             href={business.website}
                             target="_blank"
                             rel="noopener noreferrer nofollow"
-                            className="text-blue-600 hover:underline truncate"
+                            className="text-sky-400 hover:text-sky-300 truncate"
                           >
                             {business.website.replace(/^https?:\/\//, '')}
                           </a>
@@ -313,11 +309,11 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                       )}
 
                       {business.neq && (
-                        <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
-                          <span className="text-gray-400">🏛️</span>
+                        <div className="flex items-center gap-3 pt-3 border-t border-white/10">
+                          <span className="text-slate-500">🏛️</span>
                           <div>
-                            <span className="text-sm text-gray-500">NEQ: </span>
-                            <span className="text-gray-900">{business.neq}</span>
+                            <span className="text-sm text-slate-500">NEQ: </span>
+                            <span className="text-white">{business.neq}</span>
                           </div>
                         </div>
                       )}
@@ -327,8 +323,8 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
 
                 {/* Map */}
                 {(business.latitude && business.longitude) && (
-                  <div className="bg-white rounded-xl shadow-sm p-6">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Localisation</h3>
+                  <div className="glass rounded-xl p-6">
+                    <h3 className="text-lg font-bold text-white mb-4">Localisation</h3>
                     <div className="rounded-lg overflow-hidden">
                       <iframe
                         width="100%"
@@ -343,7 +339,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                       href={`https://www.openstreetmap.org/?mlat=${business.latitude}&mlon=${business.longitude}#map=16/${business.latitude}/${business.longitude}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-3 inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                      className="mt-3 inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 text-sm font-medium"
                     >
                       <span>🗺️</span>
                       Voir sur OpenStreetMap
@@ -352,16 +348,16 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                 )}
 
                 {/* Official Source */}
-                <div className="bg-white rounded-xl shadow-sm p-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">Source officielle</h3>
-                  <p className="text-sm text-gray-600">
+                <div className="glass rounded-xl p-6">
+                  <h3 className="text-lg font-bold text-white mb-4">Source officielle</h3>
+                  <p className="text-sm text-slate-400">
                     Cette fiche est basée sur les informations du Registre des entreprises du Quebec.
                   </p>
                   <a
                     href="https://www.registreentreprises.gouv.qc.ca/reqna/gr/gr03/gr03a71.rechercheregistre.mvc/gr03a71?choixdomaine=RegistreEntreprisesQuebec"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                    className="mt-3 inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 text-sm font-medium"
                   >
                     Consulter le registre
                   </a>
@@ -369,17 +365,17 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
 
                 {/* Opening Hours */}
                 {hasOpeningHours && (
-                  <div className="bg-white rounded-xl shadow-sm p-6">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Heures d&apos;ouverture</h3>
+                  <div className="glass rounded-xl p-6">
+                    <h3 className="text-lg font-bold text-white mb-4">Heures d&apos;ouverture</h3>
                     <div className="space-y-2">
                       {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => {
                         const hours = business.opening_hours?.[day]
                         if (!hours) return null
 
                         return (
-                          <div key={day} className="flex justify-between py-1.5 border-b border-gray-100 last:border-0">
-                            <span className="font-medium text-gray-700">{dayNames[day]}</span>
-                            <span className="text-gray-600">
+                          <div key={day} className="flex justify-between py-1.5 border-b border-white/10 last:border-0">
+                            <span className="font-medium text-slate-300">{dayNames[day]}</span>
+                            <span className="text-slate-400">
                               {hours.closed ? 'Fermé' : `${hours.open} - ${hours.close}`}
                             </span>
                           </div>
@@ -391,8 +387,8 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
 
                 {/* Social Media */}
                 {hasSocialMedia && (
-                  <div className="bg-white rounded-xl shadow-sm p-6">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Réseaux sociaux</h3>
+                  <div className="glass rounded-xl p-6">
+                    <h3 className="text-lg font-bold text-white mb-4">Réseaux sociaux</h3>
                     <div className="flex flex-wrap gap-3">
                       {business.facebook_url && (
                         <a
@@ -438,8 +434,8 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                 )}
 
                 {/* Share Card */}
-                <div className="bg-white rounded-xl shadow-sm p-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">Partager</h3>
+                <div className="glass rounded-xl p-6">
+                  <h3 className="text-lg font-bold text-white mb-4">Partager</h3>
                   <div className="flex gap-3">
                     <a
                       href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://registreduquebec.com/entreprise/${business.slug}`)}`}
@@ -466,9 +462,9 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
 
         {/* Related Businesses */}
         {relatedBusinesses.length > 0 && (
-          <section className="py-8 bg-gray-100">
+          <section className="py-8 bg-slate-900">
             <div className="max-w-6xl mx-auto px-4">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              <h2 className="text-2xl font-bold text-white mb-6">
                 Entreprises à découvrir dans la région
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -477,16 +473,16 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                     <Link
                       key={biz.id}
                       href={`/entreprise/${biz.slug}`}
-                      className="bg-white rounded-xl p-6 shadow-sm hover:shadow-lg transition-shadow"
+                      className="glass rounded-xl p-6 hover:bg-white/10 transition-all"
                     >
-                      <h3 className="font-bold text-gray-900 mb-2 line-clamp-2">{biz.name}</h3>
-                      <p className="text-gray-600 text-sm flex items-center gap-1">
+                      <h3 className="font-bold text-white mb-2 line-clamp-2">{biz.name}</h3>
+                      <p className="text-slate-400 text-sm flex items-center gap-1">
                         <span>📍</span> {biz.city}
                       </p>
                       {biz.google_rating && (
                         <div className="flex items-center gap-1 mt-2">
-                          <span className="text-yellow-500">★</span>
-                          <span className="font-medium">{biz.google_rating}</span>
+                          <span className="text-amber-400">★</span>
+                          <span className="font-medium text-white">{biz.google_rating}</span>
                         </div>
                       )}
                     </Link>
@@ -499,17 +495,17 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
 
         {/* CTA Section - Only show if business is not claimed */}
         {!business.owner_id && (
-          <section className="py-12 bg-blue-900 text-white">
+          <section className="py-12 bg-gradient-to-r from-sky-900/50 to-blue-900/50 border-t border-sky-500/20">
             <div className="max-w-4xl mx-auto px-4 text-center">
-              <h2 className="text-2xl font-bold mb-4">
+              <h2 className="text-2xl font-bold mb-4 text-white">
                 C&apos;est votre entreprise ?
               </h2>
-              <p className="text-blue-200 mb-6">
+              <p className="text-slate-300 mb-6">
                 Réclamez votre fiche gratuitement pour mettre à jour vos informations et gérer votre présence en ligne.
               </p>
               <Link
                 href="/connexion"
-                className="inline-block px-6 py-3 bg-white text-blue-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+                className="inline-block px-6 py-3 bg-white text-slate-900 font-semibold rounded-xl hover:bg-slate-100 transition-colors"
               >
                 Réclamer cette fiche
               </Link>

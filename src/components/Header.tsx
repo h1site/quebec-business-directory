@@ -26,13 +26,11 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
-    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
       setLoading(false)
     })
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
     })
@@ -50,91 +48,91 @@ export default function Header() {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white shadow-md' : 'bg-white/90 backdrop-blur-sm'
+      isScrolled
+        ? 'bg-slate-900/95 backdrop-blur-md shadow-lg shadow-black/20'
+        : 'bg-transparent'
     }`}>
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <nav className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-3 group">
             <Image
               src="/images/logos/logo.webp"
-              alt="Registre d'entreprises du Québec"
-              width={36}
-              height={36}
-              className="rounded-lg"
+              alt="Registre du Québec"
+              width={40}
+              height={40}
+              className="rounded-xl drop-shadow-lg group-hover:scale-105 transition-transform"
             />
-            <span className="font-bold text-xs xl:text-sm hidden lg:block text-gray-900 whitespace-nowrap">
-              Registre d'entreprises du Québec
-            </span>
-            <span className="px-1.5 py-0.5 bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 text-[10px] font-bold rounded-full uppercase tracking-wide">
-              Bêta
-            </span>
+            <div className="hidden sm:block">
+              <span className="font-bold text-white text-sm">Registre du Québec</span>
+              <span className="ml-2 px-2 py-0.5 bg-sky-500/20 text-sky-400 text-[10px] font-semibold rounded-full uppercase tracking-wide">
+                Bêta
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-0.5">
+          <div className="hidden lg:flex items-center gap-1">
             <Link
               href="/"
-              className="px-3 py-2 rounded-lg font-medium text-sm transition-colors text-gray-700 hover:bg-gray-100"
+              className="px-4 py-2 rounded-lg font-medium text-sm text-slate-300 hover:text-white hover:bg-white/10 transition-all"
             >
               Accueil
             </Link>
             <Link
               href="/recherche"
-              className="px-3 py-2 rounded-lg font-medium text-sm transition-colors text-gray-700 hover:bg-gray-100"
+              className="px-4 py-2 rounded-lg font-medium text-sm text-slate-300 hover:text-white hover:bg-white/10 transition-all"
             >
               Recherche
             </Link>
             <Link
               href="/entreprise/nouvelle"
-              className="px-3 py-2 rounded-lg font-medium text-sm transition-colors text-gray-700 hover:bg-gray-100 whitespace-nowrap"
+              className="px-4 py-2 rounded-lg font-medium text-sm text-slate-300 hover:text-white hover:bg-white/10 transition-all"
             >
               Ajouter
             </Link>
 
-            <div className="w-px h-5 mx-1 bg-gray-300" />
+            <div className="w-px h-5 mx-2 bg-slate-700" />
 
             {!loading && (
               <>
                 {user ? (
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-2">
                     <Link
                       href="/tableau-de-bord"
-                      className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg transition-colors bg-gray-100 hover:bg-gray-200"
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all bg-white/10 hover:bg-white/20 border border-white/10"
                     >
                       {user.user_metadata?.avatar_url ? (
                         <Image
                           src={user.user_metadata.avatar_url}
                           alt=""
-                          width={22}
-                          height={22}
+                          width={24}
+                          height={24}
                           className="rounded-full"
                         />
                       ) : (
-                        <div className="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                        <div className="w-6 h-6 bg-sky-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
                           {user.email?.charAt(0).toUpperCase()}
                         </div>
                       )}
-                      <span className="text-xs font-medium max-w-[80px] truncate text-gray-700 hidden xl:block">
+                      <span className="text-sm font-medium text-white hidden xl:block">
                         {user.user_metadata?.full_name || user.email?.split('@')[0]}
                       </span>
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="px-2 py-1.5 rounded-lg font-medium text-xs transition-colors text-gray-600 hover:bg-gray-100"
+                      className="px-3 py-1.5 rounded-lg font-medium text-sm text-slate-400 hover:text-white hover:bg-white/10 transition-all"
                     >
                       Déconnexion
                     </button>
                   </div>
                 ) : (
-                  <>
-                    <Link
-                      href="/connexion"
-                      className="px-3 py-1.5 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 transition-colors"
-                    >
-                      Connexion
-                    </Link>
-                  </>
+                  <Link
+                    href="/connexion"
+                    className="px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white rounded-lg font-semibold text-sm transition-all btn-glow"
+                  >
+                    Connexion
+                  </Link>
                 )}
               </>
             )}
@@ -143,38 +141,41 @@ export default function Header() {
               href="https://www.paypal.com/donate/?hosted_button_id=GUPL4K5WR3ZG4"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-1 px-2 py-1.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-lg font-medium text-sm hover:from-pink-600 hover:to-rose-600 transition-all flex items-center gap-1"
+              className="ml-2 px-3 py-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white rounded-lg font-semibold text-sm transition-all flex items-center gap-1.5"
             >
               <span>❤️</span>
               <span className="hidden xl:inline">Don</span>
             </a>
 
-            {/* Language Toggle */}
             <Link
               href="/en"
-              className="ml-1 px-2 py-1.5 rounded-lg font-medium text-sm transition-colors text-gray-600 hover:bg-gray-100"
+              className="ml-2 px-3 py-2 rounded-lg font-medium text-sm text-slate-400 hover:text-white hover:bg-white/10 transition-all"
             >
               EN
             </Link>
           </div>
 
           {/* Mobile: Language + Menu */}
-          <div className="flex lg:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-3">
             <Link
               href="/en"
-              className="px-2 py-1 rounded text-sm font-medium text-gray-600"
+              className="px-2 py-1 rounded text-sm font-medium text-slate-400 hover:text-white"
             >
               EN
             </Link>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2"
+              className="p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
               aria-label="Menu"
             >
               {isMenuOpen ? (
-                <Image src="/images/icons/close.svg" alt="Fermer" width={28} height={28} />
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               ) : (
-                <Image src="/images/icons/menu.svg" alt="Menu" width={28} height={28} />
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
               )}
             </button>
           </div>
@@ -182,32 +183,32 @@ export default function Header() {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="lg:hidden bg-white rounded-xl shadow-xl p-4 mb-4 border border-gray-100">
+          <div className="lg:hidden glass-dark rounded-2xl p-4 mb-4 animate-fade-in">
             <div className="flex flex-col gap-1">
               {user && (
                 <Link
                   href="/tableau-de-bord"
                   onClick={closeMenu}
-                  className="flex items-center gap-3 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg mb-2 transition-colors"
+                  className="flex items-center gap-3 p-3 bg-white/5 hover:bg-white/10 rounded-xl mb-2 transition-colors"
                 >
                   {user.user_metadata?.avatar_url ? (
                     <Image
                       src={user.user_metadata.avatar_url}
                       alt=""
-                      width={32}
-                      height={32}
+                      width={36}
+                      height={36}
                       className="rounded-full"
                     />
                   ) : (
-                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                    <div className="w-9 h-9 bg-sky-500 rounded-full flex items-center justify-center text-white font-bold">
                       {user.email?.charAt(0).toUpperCase()}
                     </div>
                   )}
                   <div>
-                    <span className="font-medium text-gray-900 block">
+                    <span className="font-medium text-white block">
                       {user.user_metadata?.full_name || user.email?.split('@')[0]}
                     </span>
-                    <span className="text-xs text-gray-500">Tableau de bord</span>
+                    <span className="text-xs text-slate-400">Tableau de bord</span>
                   </div>
                 </Link>
               )}
@@ -215,26 +216,26 @@ export default function Header() {
               <Link
                 href="/"
                 onClick={closeMenu}
-                className="text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
+                className="text-slate-300 font-medium py-3 px-4 rounded-xl hover:bg-white/10 hover:text-white transition-colors"
               >
-                🏠 Accueil
+                Accueil
               </Link>
               <Link
                 href="/recherche"
                 onClick={closeMenu}
-                className="text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
+                className="text-slate-300 font-medium py-3 px-4 rounded-xl hover:bg-white/10 hover:text-white transition-colors"
               >
-                🔍 Recherche
+                Recherche
               </Link>
               <Link
                 href="/entreprise/nouvelle"
                 onClick={closeMenu}
-                className="text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
+                className="text-slate-300 font-medium py-3 px-4 rounded-xl hover:bg-white/10 hover:text-white transition-colors"
               >
-                ➕ Ajouter une entreprise
+                Ajouter une entreprise
               </Link>
 
-              <hr className="my-2 border-gray-200" />
+              <hr className="my-3 border-slate-700" />
 
               {user ? (
                 <button
@@ -242,7 +243,7 @@ export default function Header() {
                     handleLogout()
                     closeMenu()
                   }}
-                  className="text-red-600 font-medium py-3 px-4 rounded-lg hover:bg-red-50 transition-colors text-left"
+                  className="text-red-400 font-medium py-3 px-4 rounded-xl hover:bg-red-500/10 transition-colors text-left"
                 >
                   Déconnexion
                 </button>
@@ -250,7 +251,7 @@ export default function Header() {
                 <Link
                   href="/connexion"
                   onClick={closeMenu}
-                  className="bg-blue-600 text-white text-center py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  className="bg-sky-500 hover:bg-sky-600 text-white text-center py-3 px-4 rounded-xl font-semibold transition-colors"
                 >
                   Connexion avec Google
                 </Link>
@@ -261,7 +262,7 @@ export default function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeMenu}
-                className="mt-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-center py-3 px-4 rounded-lg font-medium flex items-center justify-center gap-2"
+                className="mt-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-center py-3 px-4 rounded-xl font-semibold flex items-center justify-center gap-2"
               >
                 <span>❤️</span>
                 Faire un don

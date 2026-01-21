@@ -5,17 +5,19 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-gray-900">
+    <footer className="bg-slate-950">
       {/* Facebook Community Banner */}
-      <div className="bg-[#1e3a5f] border-t-4 border-[#1877f2]">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-sky-900/50 to-blue-900/50 border-t border-sky-500/20">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              <div className="text-4xl">👥</div>
-              <div className="text-white text-center md:text-left">
-                <strong className="block text-lg">Rejoignez notre communauté Facebook!</strong>
-                <span className="text-white/80 text-sm">
-                  Partagez, échangez et découvrez les meilleures entreprises du Québec
+              <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center text-3xl">
+                👥
+              </div>
+              <div className="text-center md:text-left">
+                <strong className="block text-lg text-white">Rejoignez notre communauté!</strong>
+                <span className="text-slate-300 text-sm">
+                  Partagez et découvrez les meilleures entreprises du Québec
                 </span>
               </div>
             </div>
@@ -23,7 +25,7 @@ export default function Footer() {
               href="https://www.facebook.com/groups/registreduquebec"
               target="_blank"
               rel="nofollow noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-white text-[#1877f2] px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-all hover:-translate-y-0.5 shadow-lg"
+              className="inline-flex items-center gap-3 bg-white text-slate-900 px-6 py-3 rounded-xl font-bold hover:bg-slate-100 transition-all hover:-translate-y-0.5 shadow-lg"
             >
               <span className="w-6 h-6 bg-[#1877f2] text-white rounded-full flex items-center justify-center text-sm font-bold">
                 f
@@ -35,47 +37,59 @@ export default function Footer() {
       </div>
 
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
+          <div className="lg:col-span-1">
+            <div className="flex items-center gap-3 mb-6">
               <Image
                 src="/images/logos/logo.webp"
-                alt="Registre d'entreprises du Québec"
-                width={40}
-                height={40}
-                className="rounded-lg"
+                alt="Registre du Québec"
+                width={48}
+                height={48}
+                className="rounded-xl drop-shadow-lg"
               />
-              <span className="font-bold text-lg text-white">Registre d'entreprises du Québec</span>
+              <span className="font-bold text-xl text-white">Registre du Québec</span>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">
               L&apos;annuaire le plus complet des entreprises québécoises.
-              Plus de 46 000 entreprises de qualité.
+              Trouvez facilement les meilleures entreprises près de chez vous.
             </p>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://www.facebook.com/groups/registreduquebec"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+            </div>
           </div>
 
           {/* Navigation */}
           <div>
-            <h4 className="font-semibold mb-4 text-white">Navigation</h4>
-            <ul className="space-y-2 text-gray-400 text-sm">
+            <h4 className="font-bold text-white mb-6">Navigation</h4>
+            <ul className="space-y-3">
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
+                <Link href="/" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Accueil
                 </Link>
               </li>
               <li>
-                <Link href="/recherche" className="hover:text-white transition-colors">
+                <Link href="/recherche" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Recherche
                 </Link>
               </li>
               <li>
-                <Link href="/parcourir/categories" className="hover:text-white transition-colors">
+                <Link href="/parcourir/categories" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Catégories
                 </Link>
               </li>
               <li>
-                <Link href="/blogue" className="hover:text-white transition-colors">
+                <Link href="/blogue" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Blogue
                 </Link>
               </li>
@@ -84,25 +98,25 @@ export default function Footer() {
 
           {/* Information */}
           <div>
-            <h4 className="font-semibold mb-4 text-white">Informations</h4>
-            <ul className="space-y-2 text-gray-400 text-sm">
+            <h4 className="font-bold text-white mb-6">Informations</h4>
+            <ul className="space-y-3">
               <li>
-                <Link href="/a-propos" className="hover:text-white transition-colors">
+                <Link href="/a-propos" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   À propos
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-white transition-colors">
+                <Link href="/contact" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-white transition-colors">
+                <Link href="/faq" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link href="/entreprise/nouvelle" className="hover:text-white transition-colors">
+                <Link href="/entreprise/nouvelle" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Ajouter une entreprise
                 </Link>
               </li>
@@ -111,62 +125,54 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="font-semibold mb-4 text-white">Légal</h4>
-            <ul className="space-y-2 text-gray-400 text-sm">
+            <h4 className="font-bold text-white mb-6">Légal</h4>
+            <ul className="space-y-3">
               <li>
-                <Link href="/mentions-legales" className="hover:text-white transition-colors">
+                <Link href="/mentions-legales" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Mentions légales
                 </Link>
               </li>
               <li>
-                <Link href="/politique-confidentialite" className="hover:text-white transition-colors">
+                <Link href="/politique-confidentialite" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Politique de confidentialité
                 </Link>
               </li>
               <li>
-                <Link href="/plan-du-site" className="hover:text-white transition-colors">
+                <Link href="/plan-du-site" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Plan du site
                 </Link>
               </li>
               <li>
-                <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Sitemap XML
                 </a>
               </li>
             </ul>
           </div>
         </div>
+      </div>
 
-        {/* Bottom */}
-        <div className="border-t border-gray-800 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-            <p className="text-gray-500 text-sm">
-              © {currentYear} Registre d'entreprises du Québec. Tous droits réservés.
+      {/* Bottom Bar */}
+      <div className="border-t border-slate-800">
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-slate-500 text-sm">
+              © {currentYear} Registre du Québec. Tous droits réservés.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
-              <Link href="/politique-confidentialite" className="text-yellow-500 hover:text-yellow-400 font-medium transition-colors">
-                Confidentialité
-              </Link>
-              <span className="text-gray-600">·</span>
-              <Link href="/mentions-legales" className="text-yellow-500 hover:text-yellow-400 font-medium transition-colors">
-                Mentions légales
-              </Link>
-              <span className="text-gray-600">·</span>
-              <span className="text-gray-500">
+            <div className="flex items-center gap-4 text-sm">
+              <span className="text-slate-500">
                 Créé par{' '}
                 <a
                   href="https://h1site.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-yellow-500 hover:text-yellow-400 font-medium transition-colors"
+                  className="text-sky-400 hover:text-sky-300 font-medium transition-colors"
                 >
                   H1Site.com
                 </a>
               </span>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link href="/en" className="text-gray-400 hover:text-white text-sm font-medium transition-colors">
-                🌐 English
+              <Link href="/en" className="text-slate-400 hover:text-white font-medium transition-colors flex items-center gap-1.5">
+                <span>🌐</span> English
               </Link>
             </div>
           </div>

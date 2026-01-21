@@ -22,29 +22,29 @@ function BusinessCard({ business }: { business: Business }) {
   return (
     <Link
       href={`/entreprise/${business.slug}`}
-      className="block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all border border-gray-100 overflow-hidden group"
+      className="block glass rounded-xl hover:bg-white/10 transition-all overflow-hidden group"
     >
       <div className="p-6">
         <div className="flex justify-between items-start gap-4">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
+              <h3 className="text-xl font-semibold text-white group-hover:text-sky-400 transition-colors truncate">
                 {business.name}
               </h3>
               {business.ai_description && (
-                <span className="shrink-0 inline-flex items-center px-2 py-0.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white text-xs font-medium rounded-full">
+                <span className="shrink-0 inline-flex items-center px-2 py-0.5 bg-gradient-to-r from-sky-500 to-cyan-500 text-white text-xs font-medium rounded-full">
                   Enrichie
                 </span>
               )}
             </div>
             {business.city && (
-              <p className="text-gray-600 mt-1 flex items-center gap-2">
+              <p className="text-slate-400 mt-1 flex items-center gap-2">
                 <span>📍</span>
                 {business.city}
               </p>
             )}
             {(business.ai_description || business.description) && (
-              <p className="text-gray-500 mt-2 text-sm line-clamp-2">
+              <p className="text-slate-500 mt-2 text-sm line-clamp-2">
                 {business.ai_description || business.description}
               </p>
             )}
@@ -52,12 +52,12 @@ function BusinessCard({ business }: { business: Business }) {
             {hasContact && (
               <div className="flex flex-wrap gap-2 mt-3">
                 {business.phone && (
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 text-green-400 text-xs font-medium rounded-full">
                     📞 Téléphone
                   </span>
                 )}
                 {business.website && (
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-sky-500/20 text-sky-400 text-xs font-medium rounded-full">
                     🌐 Site web
                   </span>
                 )}
@@ -67,14 +67,14 @@ function BusinessCard({ business }: { business: Business }) {
 
           {business.google_rating && (
             <div className="flex flex-col items-end shrink-0">
-              <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1.5 rounded-lg">
-                <span className="text-yellow-500 text-lg">★</span>
-                <span className="font-bold text-gray-900">
+              <div className="flex items-center gap-1 bg-amber-500/20 px-3 py-1.5 rounded-lg">
+                <span className="text-amber-400 text-lg">★</span>
+                <span className="font-bold text-white">
                   {business.google_rating}
                 </span>
               </div>
               {business.google_reviews_count && (
-                <span className="text-xs text-gray-500 mt-1">
+                <span className="text-xs text-slate-500 mt-1">
                   {business.google_reviews_count} avis
                 </span>
               )}
@@ -123,7 +123,7 @@ function Pagination({
       {currentPage > 1 && (
         <Link
           href={buildUrl(currentPage - 1)}
-          className="px-4 py-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 font-medium text-gray-700 border border-gray-200"
+          className="px-4 py-2 bg-slate-800 rounded-lg hover:bg-slate-700 font-medium text-white border border-slate-700"
         >
           ← Précédent
         </Link>
@@ -134,11 +134,11 @@ function Pagination({
           <>
             <Link
               href={buildUrl(1)}
-              className="w-10 h-10 flex items-center justify-center rounded-lg bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 font-medium"
+              className="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-800 text-white hover:bg-slate-700 border border-slate-700 font-medium"
             >
               1
             </Link>
-            {startPage > 2 && <span className="px-2 text-gray-400">...</span>}
+            {startPage > 2 && <span className="px-2 text-slate-500">...</span>}
           </>
         )}
 
@@ -148,8 +148,8 @@ function Pagination({
             href={buildUrl(pageNum)}
             className={`w-10 h-10 flex items-center justify-center rounded-lg font-medium transition-colors ${
               currentPage === pageNum
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+                ? 'bg-sky-500 text-white'
+                : 'bg-slate-800 text-white hover:bg-slate-700 border border-slate-700'
             }`}
           >
             {pageNum}
@@ -158,10 +158,10 @@ function Pagination({
 
         {endPage < totalPages && (
           <>
-            {endPage < totalPages - 1 && <span className="px-2 text-gray-400">...</span>}
+            {endPage < totalPages - 1 && <span className="px-2 text-slate-500">...</span>}
             <Link
               href={buildUrl(totalPages)}
-              className="w-10 h-10 flex items-center justify-center rounded-lg bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 font-medium"
+              className="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-800 text-white hover:bg-slate-700 border border-slate-700 font-medium"
             >
               {totalPages}
             </Link>
@@ -172,7 +172,7 @@ function Pagination({
       {currentPage < totalPages && (
         <Link
           href={buildUrl(currentPage + 1)}
-          className="px-4 py-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 font-medium text-gray-700 border border-gray-200"
+          className="px-4 py-2 bg-slate-800 rounded-lg hover:bg-slate-700 font-medium text-white border border-slate-700"
         >
           Suivant →
         </Link>
@@ -205,30 +205,26 @@ export default async function SearchPage({
     <>
       <Header />
 
-      <main className="min-h-screen bg-gray-50 pt-16">
+      <main className="min-h-screen bg-slate-950 pt-16">
         {/* Search Header */}
-        <section className="relative bg-gradient-to-br from-blue-900 to-blue-700 text-white py-12 overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage: 'url(/images/background/background-overlay.png)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          />
+        <section className="relative bg-slate-900 py-12 overflow-hidden">
+          <div className="absolute inset-0">
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
+          </div>
           <div className="relative z-10 max-w-4xl mx-auto px-4">
-            <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">
+            <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center text-white">
               Rechercher une entreprise
             </h1>
-            <p className="text-blue-200 text-center mb-8">
+            <p className="text-slate-400 text-center mb-8">
               Plus de 46 000 entreprises québécoises de qualité
             </p>
 
             {/* Search Form */}
-            <form action="/recherche" method="GET" className="bg-white rounded-xl shadow-2xl overflow-hidden">
+            <form action="/recherche" method="GET" className="glass rounded-2xl overflow-hidden">
               <div className="flex flex-col md:flex-row">
-                <div className="flex-1 p-4 border-b md:border-b-0 md:border-r border-gray-200">
-                  <label className="block text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">
+                <div className="flex-1 p-5 border-b md:border-b-0 md:border-r border-white/10">
+                  <label className="block text-xs font-bold text-sky-400 uppercase tracking-wide mb-2">
                     Quoi?
                   </label>
                   <input
@@ -236,12 +232,12 @@ export default async function SearchPage({
                     name="q"
                     defaultValue={query}
                     placeholder="Restaurant, plombier, avocat..."
-                    className="w-full text-gray-900 placeholder-gray-400 outline-none text-base"
+                    className="w-full bg-transparent text-white placeholder-slate-500 outline-none text-base"
                     autoComplete="off"
                   />
                 </div>
-                <div className="flex-1 p-4 border-b md:border-b-0 md:border-r border-gray-200">
-                  <label className="block text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">
+                <div className="flex-1 p-5 border-b md:border-b-0 md:border-r border-white/10">
+                  <label className="block text-xs font-bold text-sky-400 uppercase tracking-wide mb-2">
                     Où?
                   </label>
                   <input
@@ -249,22 +245,22 @@ export default async function SearchPage({
                     name="ville"
                     defaultValue={city || ''}
                     placeholder="Montréal, Québec, Laval..."
-                    className="w-full text-gray-900 placeholder-gray-400 outline-none text-base"
+                    className="w-full bg-transparent text-white placeholder-slate-500 outline-none text-base"
                     autoComplete="off"
                   />
                 </div>
-                <div className="flex-1 p-4 border-b md:border-b-0 md:border-r border-gray-200">
-                  <label className="block text-xs font-bold text-gray-900 uppercase tracking-wide mb-1">
+                <div className="flex-1 p-5 border-b md:border-b-0 md:border-r border-white/10">
+                  <label className="block text-xs font-bold text-sky-400 uppercase tracking-wide mb-2">
                     Catégorie
                   </label>
                   <select
                     name="categorie"
                     defaultValue={category || ''}
-                    className="w-full text-gray-900 outline-none text-base bg-transparent"
+                    className="w-full bg-transparent text-white outline-none text-base"
                   >
-                    <option value="">Toutes les catégories</option>
+                    <option value="" className="bg-slate-900">Toutes les catégories</option>
                     {categories.map((cat) => (
-                      <option key={cat.id} value={cat.slug}>
+                      <option key={cat.id} value={cat.slug} className="bg-slate-900">
                         {cat.label_fr}
                       </option>
                     ))}
@@ -272,7 +268,7 @@ export default async function SearchPage({
                 </div>
                 <button
                   type="submit"
-                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-4 flex items-center justify-center gap-2 transition-all font-semibold"
+                  className="bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-white px-8 py-5 flex items-center justify-center gap-2 transition-all font-semibold"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                     <circle cx="11" cy="11" r="8" />
@@ -292,10 +288,10 @@ export default async function SearchPage({
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
               {hasFilters ? (
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">
+                  <h2 className="text-xl font-bold text-white">
                     {total.toLocaleString('fr-CA')} résultat{total !== 1 ? 's' : ''}
                   </h2>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-slate-400 text-sm">
                     {query && `pour « ${query} »`}
                     {city && ` à ${city}`}
                     {category && ` dans ${categories.find(c => c.slug === category)?.label_fr || category}`}
@@ -303,10 +299,10 @@ export default async function SearchPage({
                 </div>
               ) : (
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">
+                  <h2 className="text-xl font-bold text-white">
                     Recherchez une entreprise
                   </h2>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-slate-400 text-sm">
                     Entrez un terme de recherche pour trouver des entreprises
                   </p>
                 </div>
@@ -315,7 +311,7 @@ export default async function SearchPage({
               {hasFilters && (
                 <Link
                   href="/recherche"
-                  className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1"
+                  className="text-sky-400 hover:text-sky-300 text-sm font-medium flex items-center gap-1"
                 >
                   <span>✕</span> Réinitialiser
                 </Link>
@@ -330,28 +326,28 @@ export default async function SearchPage({
                 ))}
               </div>
             ) : hasFilters ? (
-              <div className="text-center py-16 bg-white rounded-xl">
+              <div className="text-center py-16 glass rounded-xl">
                 <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-semibold text-white mb-2">
                   Aucun résultat trouvé
                 </h3>
-                <p className="text-gray-500 mb-6">
+                <p className="text-slate-400 mb-6">
                   Essayez avec d&apos;autres termes de recherche ou moins de filtres
                 </p>
                 <Link
                   href="/recherche"
-                  className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  className="inline-block px-6 py-3 bg-sky-500 text-white rounded-lg font-medium hover:bg-sky-400 transition-colors"
                 >
                   Nouvelle recherche
                 </Link>
               </div>
             ) : (
-              <div className="text-center py-16 bg-white rounded-xl">
+              <div className="text-center py-16 glass rounded-xl">
                 <div className="text-6xl mb-4">🏢</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-semibold text-white mb-2">
                   Trouvez l&apos;entreprise parfaite
                 </h3>
-                <p className="text-gray-500">
+                <p className="text-slate-400">
                   Utilisez le formulaire ci-dessus pour rechercher parmi plus de 46 000 entreprises de qualité
                 </p>
               </div>
