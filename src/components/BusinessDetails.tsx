@@ -111,7 +111,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                     <a
                       href={business.website}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="noopener noreferrer nofollow"
                       className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg font-medium transition-colors"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -307,7 +307,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                           <a
                             href={business.website}
                             target="_blank"
-                            rel="noopener noreferrer"
+                            rel="noopener noreferrer nofollow"
                             className="text-blue-600 hover:underline truncate"
                           >
                             {business.website.replace(/^https?:\/\//, '')}
