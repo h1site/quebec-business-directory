@@ -6,43 +6,37 @@ import {
   CitiesSection,
   StatsSection,
   AboutSection,
-  FeaturedBusinessesSection,
 } from '@/components/home'
-import { createServiceClient } from '@/lib/supabase/server'
 
-// Cache page for 1 hour
-export const revalidate = 3600
+// Fully static page - no server calls
+export const dynamic = 'force-static'
 
-// Static stats - update periodically instead of counting every request
 const TOTAL_BUSINESSES = 48000
 
-async function getCategories() {
-  const supabase = createServiceClient()
-  const { data } = await supabase
-    .from('main_categories')
-    .select('id, slug, label_fr')
-    .order('label_fr')
-  return data || []
-}
+// Static categories - update when categories change
+const CATEGORIES = [
+  { id: '1', slug: 'agriculture-et-environnement', label_fr: 'Agriculture et environnement' },
+  { id: '2', slug: 'arts-medias-et-divertissement', label_fr: 'Arts, médias et divertissement' },
+  { id: '3', slug: 'automobile-et-transport', label_fr: 'Automobile et transport' },
+  { id: '4', slug: 'commerce-de-detail', label_fr: 'Commerce de détail' },
+  { id: '5', slug: 'construction-et-renovation', label_fr: 'Construction et rénovation' },
+  { id: '6', slug: 'education-et-formation', label_fr: 'Éducation et formation' },
+  { id: '7', slug: 'finance-assurance-et-juridique', label_fr: 'Finance, assurance et juridique' },
+  { id: '8', slug: 'immobilier', label_fr: 'Immobilier' },
+  { id: '9', slug: 'industrie-fabrication-et-logistique', label_fr: 'Industrie, fabrication et logistique' },
+  { id: '10', slug: 'maison-et-services-domestiques', label_fr: 'Maison et services domestiques' },
+  { id: '11', slug: 'organismes-publics-et-communautaires', label_fr: 'Organismes publics et communautaires' },
+  { id: '12', slug: 'restauration-et-alimentation', label_fr: 'Restauration et alimentation' },
+  { id: '13', slug: 'sante-et-bien-etre', label_fr: 'Santé et bien-être' },
+  { id: '14', slug: 'services-funeraires', label_fr: 'Services funéraires' },
+  { id: '15', slug: 'services-professionnels', label_fr: 'Services professionnels' },
+  { id: '16', slug: 'soins-a-domicile', label_fr: 'Soins à domicile' },
+  { id: '17', slug: 'sports-et-loisirs', label_fr: 'Sports et loisirs' },
+  { id: '18', slug: 'technologie-et-informatique', label_fr: 'Technologie et informatique' },
+  { id: '19', slug: 'tourisme-et-hebergement', label_fr: 'Tourisme et hébergement' },
+]
 
-async function getFeaturedBusinesses() {
-  const supabase = createServiceClient()
-  const { data } = await supabase
-    .from('businesses')
-    .select('id, name, slug, city, google_rating, google_reviews_count, ai_description, main_category_slug')
-    .not('ai_description', 'is', null)
-    .not('google_rating', 'is', null)
-    .gte('google_rating', 4.5)
-    .order('google_reviews_count', { ascending: false })
-    .limit(6)
-  return data || []
-}
-
-export default async function HomePage() {
-  const [categories, featuredBusinesses] = await Promise.all([
-    getCategories(),
-    getFeaturedBusinesses(),
-  ])
+export default function HomePage() {
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -68,8 +62,7 @@ export default async function HomePage() {
 
       <main>
         <HeroSection totalBusinesses={TOTAL_BUSINESSES} />
-        <FeaturedBusinessesSection businesses={featuredBusinesses} />
-        <CategoriesSection categories={categories} />
+        <CategoriesSection categories={CATEGORIES} />
         <CitiesSection />
         <StatsSection />
         <AboutSection />
