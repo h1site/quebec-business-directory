@@ -61,7 +61,7 @@ export default function Header() {
               alt="Registre du Québec"
               width={40}
               height={40}
-              className="rounded-xl drop-shadow-lg group-hover:scale-105 transition-transform"
+              className="rounded-xl drop-shadow-lg group-hover:scale-105 transition-transform brightness-0 invert"
             />
             <div className="hidden sm:block">
               <span className="font-bold text-white text-sm">Registre du Québec</span>
