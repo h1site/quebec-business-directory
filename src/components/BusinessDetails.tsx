@@ -65,11 +65,11 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
               {/* Logo */}
               <div className="w-32 h-32 rounded-xl bg-white/10 backdrop-blur-sm p-2 shrink-0 border border-white/10">
                 <img
-                  src={business.logo_url || '/images/logos/placeholder-white.svg'}
+                  src={business.logo_url || '/images/logos/logo.webp'}
                   alt={business.logo_url
                     ? `Logo de ${business.name}`
                     : `${business.name} - Entreprise enregistrée au Registre du Québec à ${business.city || 'Québec'}`}
-                  className="w-full h-full object-contain"
+                  className={`w-full h-full object-contain ${!business.logo_url ? 'brightness-0 invert' : ''}`}
                 />
               </div>
 

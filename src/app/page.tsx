@@ -1,4 +1,3 @@
-import { createServiceClient } from '@/lib/supabase/server'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import {
@@ -9,22 +8,13 @@ import {
   AboutSection,
   FeaturedBusinessesSection,
 } from '@/components/home'
+import { createServiceClient } from '@/lib/supabase/server'
 
-export const dynamic = 'force-dynamic'
+// Cache page for 1 hour
+export const revalidate = 3600
 
-async function getStats() {
-  const supabase = createServiceClient()
-  // Count businesses with website
-  const { count: withWebsite } = await supabase
-    .from('businesses')
-    .select('*', { count: 'exact', head: true })
-    .not('website', 'is', null)
-
-  // Add traffic slugs count (businesses without website but with traffic)
-  const trafficSlugsCount = 1912
-
-  return { totalBusinesses: (withWebsite || 46000) + trafficSlugsCount }
-}
+// Static stats - update periodically instead of counting every request
+const TOTAL_BUSINESSES = 48000
 
 async function getCategories() {
   const supabase = createServiceClient()
@@ -42,15 +32,14 @@ async function getFeaturedBusinesses() {
     .select('id, name, slug, city, google_rating, google_reviews_count, ai_description, main_category_slug')
     .not('ai_description', 'is', null)
     .not('google_rating', 'is', null)
-    .gte('google_rating', 4.0)
+    .gte('google_rating', 4.5)
     .order('google_reviews_count', { ascending: false })
-    .limit(9)
+    .limit(6)
   return data || []
 }
 
 export default async function HomePage() {
-  const [stats, categories, featuredBusinesses] = await Promise.all([
-    getStats(),
+  const [categories, featuredBusinesses] = await Promise.all([
     getCategories(),
     getFeaturedBusinesses(),
   ])
@@ -78,7 +67,7 @@ export default async function HomePage() {
       <Header />
 
       <main>
-        <HeroSection totalBusinesses={stats.totalBusinesses} />
+        <HeroSection totalBusinesses={TOTAL_BUSINESSES} />
         <FeaturedBusinessesSection businesses={featuredBusinesses} />
         <CategoriesSection categories={categories} />
         <CitiesSection />
