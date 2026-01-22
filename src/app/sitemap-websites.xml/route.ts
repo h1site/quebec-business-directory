@@ -21,15 +21,13 @@ export async function GET() {
 
   const supabase = createClient(supabaseUrl, supabaseKey)
 
-  // Get only enriched businesses with website
+  // Get all businesses with website (index all served pages)
   const { data: websiteBusinesses, error: websiteError } = await supabase
     .from('businesses')
     .select('slug, updated_at, ai_enriched_at')
     .not('slug', 'is', null)
     .not('website', 'is', null)
-    .not('ai_enriched_at', 'is', null)
     .neq('website', '')
-    .order('ai_enriched_at', { ascending: false })
     .order('updated_at', { ascending: false })
     .limit(50000)
 
@@ -41,23 +39,22 @@ export async function GET() {
   const websiteSlugs = new Set(websiteBusinesses.map(b => b.slug))
   const trafficOnlySlugs = Array.from(trafficSlugSet).filter(slug => !websiteSlugs.has(slug))
 
-  // Fetch traffic-only businesses from DB (only if enriched)
+  // Fetch traffic-only businesses from DB (all, not just enriched)
   let trafficOnlyBusinesses: typeof websiteBusinesses = []
   if (trafficOnlySlugs.length > 0) {
     const { data } = await supabase
       .from('businesses')
       .select('slug, updated_at, ai_enriched_at')
       .in('slug', trafficOnlySlugs)
-      .not('ai_enriched_at', 'is', null)
     trafficOnlyBusinesses = data || []
   }
 
-  // Combine all enriched businesses
+  // Combine all businesses
   const allBusinesses = [...websiteBusinesses, ...trafficOnlyBusinesses]
 
   const urls = allBusinesses.map((business) => {
     const lastmod = business.ai_enriched_at?.split('T')[0] || business.updated_at?.split('T')[0] || today
-    const priority = '0.9' // All are enriched now
+    const priority = business.ai_enriched_at ? '0.9' : '0.7' // Higher priority for enriched
 
     return `  <url>
     <loc>${baseUrl}/entreprise/${business.slug}</loc>

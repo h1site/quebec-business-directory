@@ -87,8 +87,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const canonical = `https://registreduquebec.com/entreprise/${slug}`
 
-  // Only index enriched pages with website
-  const shouldIndex = !!business.website && !!business.ai_description
+  // Index all served pages
+  const shouldIndex = true
 
   return {
     title,
