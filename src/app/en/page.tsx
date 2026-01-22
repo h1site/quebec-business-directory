@@ -14,10 +14,11 @@ export const dynamic = 'force-dynamic'
 
 async function getStats() {
   const supabase = createServiceClient()
-  // Count all businesses in the database
+  // Count businesses with website (quality entries)
   const { count } = await supabase
     .from('businesses')
     .select('*', { count: 'exact', head: true })
+    .not('website', 'is', null)
   return { totalBusinesses: count || 46000 }
 }
 
