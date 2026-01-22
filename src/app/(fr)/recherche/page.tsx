@@ -2,12 +2,35 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { searchBusinesses, getCategories, type Business, type Category } from '@/lib/search'
+import { searchBusinesses, type Business } from '@/lib/search'
 
 export const metadata: Metadata = {
   title: 'Rechercher une entreprise au Québec',
   description: 'Recherchez parmi plus de 46 000 entreprises québécoises de qualité. Trouvez des commerces, services et professionnels près de chez vous.',
 }
+
+// Static categories for fast loading
+const CATEGORIES = [
+  { id: '1', slug: 'agriculture-et-environnement', label_fr: 'Agriculture et environnement' },
+  { id: '2', slug: 'arts-medias-et-divertissement', label_fr: 'Arts, médias et divertissement' },
+  { id: '3', slug: 'automobile-et-transport', label_fr: 'Automobile et transport' },
+  { id: '4', slug: 'commerce-de-detail', label_fr: 'Commerce de détail' },
+  { id: '5', slug: 'construction-et-renovation', label_fr: 'Construction et rénovation' },
+  { id: '6', slug: 'education-et-formation', label_fr: 'Éducation et formation' },
+  { id: '7', slug: 'finance-assurance-et-juridique', label_fr: 'Finance, assurance et juridique' },
+  { id: '8', slug: 'immobilier', label_fr: 'Immobilier' },
+  { id: '9', slug: 'industrie-fabrication-et-logistique', label_fr: 'Industrie, fabrication et logistique' },
+  { id: '10', slug: 'maison-et-services-domestiques', label_fr: 'Maison et services domestiques' },
+  { id: '11', slug: 'organismes-publics-et-communautaires', label_fr: 'Organismes publics et communautaires' },
+  { id: '12', slug: 'restauration-et-alimentation', label_fr: 'Restauration et alimentation' },
+  { id: '13', slug: 'sante-et-bien-etre', label_fr: 'Santé et bien-être' },
+  { id: '14', slug: 'services-funeraires', label_fr: 'Services funéraires' },
+  { id: '15', slug: 'services-professionnels', label_fr: 'Services professionnels' },
+  { id: '16', slug: 'soins-a-domicile', label_fr: 'Soins à domicile' },
+  { id: '17', slug: 'sports-et-loisirs', label_fr: 'Sports et loisirs' },
+  { id: '18', slug: 'technologie-et-informatique', label_fr: 'Technologie et informatique' },
+  { id: '19', slug: 'tourisme-et-hebergement', label_fr: 'Tourisme et hébergement' },
+]
 
 interface SearchParams {
   q?: string
@@ -192,12 +215,7 @@ export default async function SearchPage({
   const category = params.categorie
   const city = params.ville
 
-  const [searchResult, categories] = await Promise.all([
-    searchBusinesses(query, page, category, city),
-    getCategories('fr'),
-  ])
-
-  const { businesses, total } = searchResult
+  const { businesses, total } = await searchBusinesses(query, page, category, city)
   const totalPages = Math.ceil(total / 20)
   const hasFilters = query || category || city
 
@@ -259,7 +277,7 @@ export default async function SearchPage({
                     className="w-full bg-transparent text-white outline-none text-base"
                   >
                     <option value="" className="bg-slate-900">Toutes les catégories</option>
-                    {categories.map((cat) => (
+                    {CATEGORIES.map((cat) => (
                       <option key={cat.id} value={cat.slug} className="bg-slate-900">
                         {cat.label_fr}
                       </option>
@@ -294,7 +312,7 @@ export default async function SearchPage({
                   <p className="text-slate-400 text-sm">
                     {query && `pour « ${query} »`}
                     {city && ` à ${city}`}
-                    {category && ` dans ${categories.find(c => c.slug === category)?.label_fr || category}`}
+                    {category && ` dans ${CATEGORIES.find(c => c.slug === category)?.label_fr || category}`}
                   </p>
                 </div>
               ) : (

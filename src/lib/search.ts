@@ -1,8 +1,4 @@
 import { createServiceClient } from '@/lib/supabase/server'
-import trafficSlugs from '@/data/traffic-slugs.json'
-
-// Set of valid slugs (with traffic) for fast lookup
-const trafficSlugSet = new Set(trafficSlugs.slugs)
 
 export interface Business {
   id: string
@@ -35,10 +31,8 @@ export function isValidBusiness(business: {
 }): boolean {
   // User-claimed businesses are always visible
   if (business.is_claimed || business.owner_id) return true
-  // Must be enriched (has AI description)
-  if (!business.ai_description) return false
-  // Must have website OR be in traffic list
-  return !!business.website || trafficSlugSet.has(business.slug)
+  // Must be enriched AND have a website
+  return !!business.ai_description && !!business.website
 }
 
 // Normalize text for matching
@@ -63,7 +57,7 @@ export async function searchBusinesses(
   const offset = (page - 1) * limit
   const cleanQuery = query?.trim() || ''
 
-  // Query only valid businesses: enriched OR claimed OR has website
+  // Query only valid businesses: claimed OR (enriched AND has website)
   let queryBuilder = supabase
     .from('businesses')
     .select(
@@ -71,8 +65,8 @@ export async function searchBusinesses(
       { count: 'exact' }
     )
     .not('slug', 'is', null)
-    // Only valid businesses (enriched OR claimed OR has website)
-    .or('ai_description.not.is.null,is_claimed.eq.true,owner_id.not.is.null')
+    // Only valid businesses: claimed OR owner OR (enriched AND has website)
+    .or('is_claimed.eq.true,owner_id.not.is.null,and(ai_description.not.is.null,website.not.is.null)')
 
   // Apply filters
   if (category) {
@@ -138,14 +132,16 @@ export async function quickSearch(query: string): Promise<Business[]> {
     .from('businesses')
     .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, ai_description, phone, website, is_claimed, owner_id')
     .not('slug', 'is', null)
+    // Same filter as searchBusinesses for consistency
+    .or('is_claimed.eq.true,owner_id.not.is.null,and(ai_description.not.is.null,website.not.is.null)')
     .ilike('name', `%${cleanQuery}%`)
     .order('google_rating', { ascending: false, nullsFirst: false })
-    .limit(10)
+    .limit(5)
 
   if (error) {
     console.error('Quick search error:', error)
     return []
   }
 
-  return (data || []).filter(isValidBusiness).slice(0, 5)
+  return data || []
 }
