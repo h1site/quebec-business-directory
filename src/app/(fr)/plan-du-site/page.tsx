@@ -22,11 +22,12 @@ async function getCategories() {
 
 async function getCities() {
   const supabase = createServiceClient()
+  // TODO: Replace with RPC function for better performance (SELECT DISTINCT city)
   const { data } = await supabase
     .from('businesses')
     .select('city')
     .not('city', 'is', null)
-    .limit(1000)
+    .limit(500) // Reduced from 1000
 
   // Get unique cities
   const uniqueCities = [...new Set(data?.map(b => b.city).filter(Boolean))]
@@ -38,11 +39,12 @@ async function getCities() {
 
 async function getRegions() {
   const supabase = createServiceClient()
+  // TODO: Replace with RPC function for better performance (SELECT DISTINCT region)
   const { data } = await supabase
     .from('businesses')
     .select('region')
     .not('region', 'is', null)
-    .limit(1000)
+    .limit(300) // Reduced from 1000 (fewer unique regions than cities)
 
   const uniqueRegions = [...new Set(data?.map(b => b.region).filter(Boolean))].sort()
   return uniqueRegions

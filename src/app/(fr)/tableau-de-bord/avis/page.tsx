@@ -60,6 +60,7 @@ export default function MyReviewsPage() {
       `)
       .eq('user_id', session.user.id)
       .order('created_at', { ascending: false })
+      .limit(100)
 
     setReviews((data as unknown as Review[]) || [])
     setLoading(false)

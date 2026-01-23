@@ -38,19 +38,22 @@ export default function DashboardPage() {
 
       setUser(session.user)
 
-      // Fetch user's businesses
-      const { data: businesses, count: businessCount } = await supabase
-        .from('businesses')
-        .select('id, name, city, slug, main_category_slug, google_rating', { count: 'exact' })
-        .eq('owner_id', session.user.id)
-        .order('created_at', { ascending: false })
-        .limit(5)
-
-      // Fetch user's reviews count
-      const { count: reviewCount } = await supabase
-        .from('reviews')
-        .select('id', { count: 'exact', head: true })
-        .eq('user_id', session.user.id)
+      // Fetch user's businesses and reviews in parallel
+      const [
+        { data: businesses, count: businessCount },
+        { count: reviewCount }
+      ] = await Promise.all([
+        supabase
+          .from('businesses')
+          .select('id, name, city, slug, main_category_slug, google_rating', { count: 'exact' })
+          .eq('owner_id', session.user.id)
+          .order('created_at', { ascending: false })
+          .limit(5),
+        supabase
+          .from('reviews')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', session.user.id)
+      ])
 
       setStats({
         businessCount: businessCount || 0,
