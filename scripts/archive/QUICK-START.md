@@ -1,148 +1,103 @@
-# 🚀 Quick Start - Archivage des Businesses
+# Quick Start - Archivage des Businesses (Version Simplifiée)
 
 ## TL;DR
 
 Tu as **480k lignes** dans businesses, mais seulement **~50k** sont actives.
 
-**Ce script va:**
+**Ce process va:**
 - Archiver ~430k businesses inactives (sans website ET sans trafic)
 - Garder ~50k actives (avec website OU avec trafic Google)
 - Libérer 90% des ressources
 - Permettre la création des index
 
-**Temps:** 15-20 minutes
+---
+
+## Scripts à Exécuter (dans l'ordre)
+
+Ouvre **Supabase SQL Editor** et exécute chaque script **UN PAR UN**.
+
+### Étape 1: Créer la table des slugs de trafic
+```
+Fichier: 01-create-traffic-slugs-table.sql
+```
+**Clique Run** - Résultat: Table créée
 
 ---
 
-## Exécution Pas-à-Pas
-
-### 1. Ouvre Supabase SQL Editor
-
-Dashboard → SQL Editor → New Query
-
-### 2. Copie ÉTAPE 1 de `archive-businesses.sql`
-
-Copie depuis:
-```sql
--- ÉTAPE 1: Vérifier combien...
-SELECT
-  COUNT(*) as total_to_archive,
-  ...
+### Étape 2: Insérer les slugs de trafic
 ```
-
-Jusqu'à la fin de l'ÉTAPE 1.
-
-**Clique Run**
-
-**Résultat attendu:** ~430,000 à archiver
+Fichier: 02-insert-traffic-slugs.sql
+```
+**Clique Run** - Résultat: 1463 slugs insérés
 
 ---
 
-### 3. Copie ÉTAPE 2
-
-```sql
-CREATE TABLE IF NOT EXISTS businesses_archive (
-  LIKE businesses INCLUDING ALL
-);
+### Étape 3: Vérifier combien vont être archivées
 ```
-
-**Clique Run**
-
-**Résultat:** Table créée
+Fichier: 03-count-to-archive.sql
+```
+**Clique Run** - Résultat attendu: ~430,000
 
 ---
 
-### 4. Copie ÉTAPE 3 (ATTENDS 2-5 min)
-
-```sql
-INSERT INTO businesses_archive
-SELECT * FROM businesses
-WHERE (website IS NULL OR website = '')
-AND slug NOT IN (...tous les slugs...);
+### Étape 4: Créer la table d'archive
 ```
-
-**Clique Run** et **ATTENDS** (peut prendre 2-5 minutes)
-
-**Résultat:** ~430k lignes copiées
+Fichier: 04-create-archive-table.sql
+```
+**Clique Run** - Résultat: Table créée
 
 ---
 
-### 5. Copie ÉTAPE 4 (Vérification)
-
-```sql
-SELECT COUNT(*) as archived_count FROM businesses_archive;
+### Étape 5: Copier dans l'archive
 ```
+Fichier: 05-copy-to-archive.sql
+```
+**Clique Run** et **ATTENDS** (2-5 minutes)
 
-**Clique Run**
-
-**IMPORTANT:** Le nombre DOIT matcher l'étape 1!
+**Si timeout:** Utilise `05b-copy-batched.sql` et exécute batch par batch.
 
 ---
 
-### 6. Copie ÉTAPE 5 (DELETE - ATTENTION!)
-
-⚠️ Seulement si l'étape 4 est OK!
-
-```sql
-DELETE FROM businesses
-WHERE (website IS NULL OR website = '')
-AND slug NOT IN (...);
+### Étape 6: Supprimer de businesses
 ```
+Fichier: 06-delete-archived.sql
+```
+1. D'abord exécute la vérification (première requête)
+2. Si "OK", décommente le DELETE et exécute
 
-**Clique Run** (peut prendre 1-2 min)
-
-**Résultat:** ~430k lignes supprimées
+**Si timeout:** Utilise `06b-delete-batched.sql` et exécute batch par batch.
 
 ---
 
-### 7. Copie ÉTAPE 6 (Vérification finale)
-
-```sql
-SELECT
-  COUNT(*) as remaining_businesses,
-  COUNT(*) FILTER (WHERE website IS NOT NULL) as with_website,
-  COUNT(*) FILTER (WHERE ai_enriched_at IS NOT NULL) as enriched
-FROM businesses;
+### Étape 7: Vérifier le résultat
 ```
-
-**Résultat attendu:**
+Fichier: 07-verify-result.sql
+```
+**Clique Run** - Résultat attendu:
 - remaining_businesses: ~50-60k
 - with_website: ~48k+
-- enriched: ~48k
 
 ---
 
-### 8. Copie ÉTAPE 7 (VACUUM - ATTENDS 5-10 min)
-
-```sql
-VACUUM FULL ANALYZE businesses;
+### Étape 8: VACUUM pour libérer l'espace
 ```
-
-**Clique Run** et **ATTENDS** (5-10 min)
-
-**Résultat:** Espace libéré
+Fichier: 08-vacuum.sql
+```
+**Clique Run** et **ATTENDS** (5-10 minutes)
 
 ---
 
-### 9. Crée les Index (RAPIDE maintenant!)
-
-```sql
-CREATE INDEX idx_businesses_slug ON businesses(slug) WHERE slug IS NOT NULL;
-CREATE INDEX idx_businesses_city ON businesses(city) WHERE city IS NOT NULL;
-CREATE INDEX idx_businesses_owner_id ON businesses(owner_id) WHERE owner_id IS NOT NULL;
-CREATE INDEX idx_businesses_website ON businesses(website) WHERE website IS NOT NULL;
-ANALYZE businesses;
+### Étape 9: Créer les index
 ```
-
-**Chaque index prend < 30 secondes!**
+Fichier: 09-create-indexes.sql
+```
+**Clique Run** - Chaque index prend < 30 secondes maintenant!
 
 ---
 
 ## Vérification Post-Archivage
 
-### Dans Supabase Dashboard → Database
-
-Attends 10 minutes puis vérifie:
+### Attends 10 minutes puis vérifie Supabase Dashboard:
 
 **Avant:**
 - CPU: 90-100%
@@ -150,12 +105,11 @@ Attends 10 minutes puis vérifie:
 - Disk I/O: 90-100%
 
 **Après:**
-- CPU: 20-30% ✅
-- Memory: 30-40% ✅
-- Disk I/O: 10-20% ✅
+- CPU: 20-30%
+- Memory: 30-40%
+- Disk I/O: 10-20%
 
 ### Cache Hit Ratio
-
 ```sql
 SELECT
     ROUND(sum(heap_blks_hit) / NULLIF((sum(heap_blks_hit) + sum(heap_blks_read)), 0) * 100, 2) AS cache_hit_ratio
@@ -163,50 +117,36 @@ FROM pg_statio_user_tables;
 ```
 
 **Avant:** 73%
-**Après:** >95% ✅
-
----
-
-## Si Problème
-
-### "Query timeout" sur ÉTAPE 3 ou 5
-
-Essaie par batch:
-
-```sql
--- Supprime 100k à la fois
-DELETE FROM businesses
-WHERE (website IS NULL OR website = '')
-AND slug NOT IN (...)
-AND id IN (
-  SELECT id FROM businesses
-  WHERE (website IS NULL OR website = '')
-  LIMIT 100000
-);
-```
-
-Répète 4-5 fois.
-
-### "Not enough disk space"
-
-Normal! VACUUM FULL va libérer l'espace.
+**Après:** >95%
 
 ---
 
 ## Rollback (si besoin)
 
-Si tu veux tout annuler:
-
 ```sql
 -- Restaurer depuis l'archive
 INSERT INTO businesses SELECT * FROM businesses_archive;
 
--- Supprimer l'archive
+-- Supprimer l'archive et la table de slugs
 DROP TABLE businesses_archive;
+DROP TABLE traffic_slugs;
 ```
 
 ---
 
-**Prêt? Lance ÉTAPE 1 maintenant!** 🚀
+## Checklist
 
-Questions? Vérifie [README.md](./README.md) pour les détails complets.
+- [ ] Script 01 - Créer table traffic_slugs
+- [ ] Script 02 - Insérer 1463 slugs
+- [ ] Script 03 - Vérifier count (~430k)
+- [ ] Script 04 - Créer businesses_archive
+- [ ] Script 05 - Copier dans archive
+- [ ] Script 06 - DELETE de businesses
+- [ ] Script 07 - Vérifier résultat (~50k)
+- [ ] Script 08 - VACUUM FULL
+- [ ] Script 09 - Créer les index
+- [ ] Vérifier métriques après 10 min
+
+---
+
+**Prêt? Lance le script 01 maintenant!**
