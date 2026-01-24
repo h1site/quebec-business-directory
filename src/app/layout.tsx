@@ -19,6 +19,13 @@ export const metadata: Metadata = {
     default: 'Registre des entreprises du Québec - Annuaire de plus de 46 000 entreprises',
     template: '%s | Registre du Québec',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/images/logos/logo.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: '/images/logos/logo.png',
+  },
   description:
     'Trouvez facilement parmi plus de 46 000 entreprises québécoises. Annuaire complet avec coordonnées, avis Google et informations détaillées pour Montréal, Québec, Laval et toutes les régions du Québec.',
   authors: [{ name: 'Registre du Québec' }],
@@ -73,8 +80,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+                <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         {/* Google Tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NF84WEBS49"
