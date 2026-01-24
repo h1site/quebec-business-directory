@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
-      { url: '/images/logos/logo.png', sizes: '192x192', type: 'image/png' },
+      { url: '/images/logos/logo-favicon.png', sizes: '192x192', type: 'image/png' },
     ],
-    apple: '/images/logos/logo.png',
+    apple: '/images/logos/logo-favicon.png',
   },
   description:
     'Trouvez facilement parmi plus de 46 000 entreprises québécoises. Annuaire complet avec coordonnées, avis Google et informations détaillées pour Montréal, Québec, Laval et toutes les régions du Québec.',
