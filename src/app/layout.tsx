@@ -32,7 +32,6 @@ export const metadata: Metadata = {
   creator: 'Registre du Québec',
   publisher: 'Registre du Québec',
   alternates: {
-    canonical: 'https://registreduquebec.com',
     languages: {
       'fr-CA': 'https://registreduquebec.com',
       'en-CA': 'https://registreduquebec.com/en',
