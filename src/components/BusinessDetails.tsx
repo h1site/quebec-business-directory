@@ -8,6 +8,30 @@ import Footer from '@/components/Footer'
 interface Props {
   business: Business
   relatedBusinesses?: Business[]
+  categoryBusinesses?: Business[]
+  cityBusinesses?: Business[]
+}
+
+const categoryLabels: Record<string, string> = {
+  'agriculture-et-environnement': 'Agriculture et environnement',
+  'arts-medias-et-divertissement': 'Arts, médias et divertissement',
+  'automobile-et-transport': 'Automobile et transport',
+  'commerce-de-detail': 'Commerce de détail',
+  'construction-et-renovation': 'Construction et rénovation',
+  'education-et-formation': 'Éducation et formation',
+  'finance-assurance-et-juridique': 'Finance, assurance et juridique',
+  'immobilier': 'Immobilier',
+  'industrie-fabrication-et-logistique': 'Industrie, fabrication et logistique',
+  'maison-et-services-domestiques': 'Maison et services domestiques',
+  'organismes-publics-et-communautaires': 'Organismes publics et communautaires',
+  'restauration-et-alimentation': 'Restauration et alimentation',
+  'sante-et-bien-etre': 'Santé et bien-être',
+  'services-funeraires': 'Services funéraires',
+  'services-professionnels': 'Services professionnels',
+  'soins-a-domicile': 'Soins à domicile',
+  'sports-et-loisirs': 'Sports et loisirs',
+  'technologie-et-informatique': 'Technologie et informatique',
+  'tourisme-et-hebergement': 'Tourisme et hébergement',
 }
 
 const dayNames: Record<string, string> = {
@@ -20,7 +44,7 @@ const dayNames: Record<string, string> = {
   sunday: 'Dimanche',
 }
 
-export default function BusinessDetails({ business, relatedBusinesses = [] }: Props) {
+export default function BusinessDetails({ business, relatedBusinesses = [], categoryBusinesses = [], cityBusinesses = [] }: Props) {
   const citySlug = generateSlug(business.city || '')
 
   // Use verified data if available, otherwise fall back to original (but only for phone in hero buttons)
@@ -488,6 +512,94 @@ export default function BusinessDetails({ business, relatedBusinesses = [] }: Pr
                     </Link>
                   )
                 })}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Category Businesses */}
+        {categoryBusinesses.length > 0 && business.main_category_slug && (
+          <section className="py-8 bg-slate-950">
+            <div className="max-w-6xl mx-auto px-4">
+              <h2 className="text-2xl font-bold text-white mb-2">
+                <Link href={`/categorie/${business.main_category_slug}`} className="hover:text-sky-400 transition-colors">
+                  {categoryLabels[business.main_category_slug] || business.main_category_slug}
+                </Link>
+              </h2>
+              <p className="text-slate-400 mb-6">
+                Autres entreprises dans cette catégorie
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {categoryBusinesses.map((biz) => (
+                  <Link
+                    key={biz.id}
+                    href={`/entreprise/${biz.slug}`}
+                    className="glass rounded-xl p-6 hover:bg-white/10 transition-all"
+                  >
+                    <h3 className="font-bold text-white mb-2 line-clamp-2">{biz.name}</h3>
+                    <p className="text-slate-400 text-sm flex items-center gap-1">
+                      <span>📍</span> {biz.city}
+                    </p>
+                    {biz.google_rating && (
+                      <div className="flex items-center gap-1 mt-2">
+                        <span className="text-amber-400">★</span>
+                        <span className="font-medium text-white">{biz.google_rating}</span>
+                      </div>
+                    )}
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-4">
+                <Link
+                  href={`/categorie/${business.main_category_slug}`}
+                  className="text-sky-400 hover:text-sky-300 text-sm font-medium"
+                >
+                  Voir toutes les entreprises en {categoryLabels[business.main_category_slug] || business.main_category_slug} →
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* City Businesses */}
+        {cityBusinesses.length > 0 && business.city && (
+          <section className="py-8 bg-slate-900">
+            <div className="max-w-6xl mx-auto px-4">
+              <h2 className="text-2xl font-bold text-white mb-2">
+                <Link href={`/ville/${citySlug}`} className="hover:text-sky-400 transition-colors">
+                  Entreprises à {business.city}
+                </Link>
+              </h2>
+              <p className="text-slate-400 mb-6">
+                Autres entreprises dans cette ville
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {cityBusinesses.map((biz) => (
+                  <Link
+                    key={biz.id}
+                    href={`/entreprise/${biz.slug}`}
+                    className="glass rounded-xl p-6 hover:bg-white/10 transition-all"
+                  >
+                    <h3 className="font-bold text-white mb-2 line-clamp-2">{biz.name}</h3>
+                    {biz.main_category_slug && (
+                      <p className="text-slate-400 text-sm">{categoryLabels[biz.main_category_slug] || biz.main_category_slug}</p>
+                    )}
+                    {biz.google_rating && (
+                      <div className="flex items-center gap-1 mt-2">
+                        <span className="text-amber-400">★</span>
+                        <span className="font-medium text-white">{biz.google_rating}</span>
+                      </div>
+                    )}
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-4">
+                <Link
+                  href={`/ville/${citySlug}`}
+                  className="text-sky-400 hover:text-sky-300 text-sm font-medium"
+                >
+                  Voir toutes les entreprises à {business.city} →
+                </Link>
               </div>
             </div>
           </section>

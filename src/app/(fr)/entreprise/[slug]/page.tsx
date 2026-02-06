@@ -53,6 +53,41 @@ async function getRelatedBusinesses(business: Business): Promise<Business[]> {
   return shuffled.slice(0, 3) as Business[]
 }
 
+async function getCategoryBusinesses(business: Business): Promise<Business[]> {
+  if (!business.main_category_slug) return []
+
+  const supabase = createServiceClient()
+  const { data } = await supabase
+    .from('businesses')
+    .select('id, slug, name, city, google_rating, main_category_slug')
+    .eq('main_category_slug', business.main_category_slug)
+    .neq('id', business.id)
+    .not('slug', 'is', null)
+    .not('city', 'is', null)
+    .limit(50)
+
+  if (!data) return []
+  const shuffled = data.sort(() => 0.5 - Math.random())
+  return shuffled.slice(0, 3) as Business[]
+}
+
+async function getCityBusinesses(business: Business): Promise<Business[]> {
+  if (!business.city) return []
+
+  const supabase = createServiceClient()
+  const { data } = await supabase
+    .from('businesses')
+    .select('id, slug, name, city, google_rating, main_category_slug')
+    .eq('city', business.city)
+    .neq('id', business.id)
+    .not('slug', 'is', null)
+    .limit(50)
+
+  if (!data) return []
+  const shuffled = data.sort(() => 0.5 - Math.random())
+  return shuffled.slice(0, 3) as Business[]
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const business = await getBusiness(slug)
@@ -132,7 +167,11 @@ export default async function BusinessPage({ params }: Props) {
     notFound()
   }
 
-  const relatedBusinesses = await getRelatedBusinesses(business)
+  const [relatedBusinesses, categoryBusinesses, cityBusinesses] = await Promise.all([
+    getRelatedBusinesses(business),
+    getCategoryBusinesses(business),
+    getCityBusinesses(business),
+  ])
 
   // Generate Schema.org JSON-LD
   const businessSchema = generateBusinessSchemaSimple(business, false)
@@ -150,7 +189,12 @@ export default async function BusinessPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <BusinessDetails business={business} relatedBusinesses={relatedBusinesses} />
+      <BusinessDetails
+        business={business}
+        relatedBusinesses={relatedBusinesses}
+        categoryBusinesses={categoryBusinesses}
+        cityBusinesses={cityBusinesses}
+      />
     </>
   )
 }

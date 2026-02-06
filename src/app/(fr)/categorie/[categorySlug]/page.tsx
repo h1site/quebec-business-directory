@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { createServiceClient } from '@/lib/supabase/server'
+import { generateSlug } from '@/lib/utils'
 import trafficSlugs from '@/data/traffic-slugs.json'
 
 const trafficSlugSet = new Set(trafficSlugs.slugs)
@@ -143,7 +144,14 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                           {business.city && (
                             <p className="text-slate-400 mt-1 flex items-center gap-2">
                               <span>📍</span>
-                              {business.city}{business.region && `, ${business.region}`}
+                              <Link
+                                href={`/ville/${generateSlug(business.city)}`}
+                                className="hover:text-sky-400 transition-colors"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {business.city}
+                              </Link>
+                              {business.region && `, ${business.region}`}
                             </p>
                           )}
                           {business.ai_description && (

@@ -36,6 +36,56 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Popular Links */}
+      <div className="max-w-7xl mx-auto px-6 pt-12 pb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Popular Categories */}
+          <div>
+            <h4 className="font-bold text-white mb-4">Categories populaires</h4>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { slug: 'construction-et-renovation', label: 'Construction et renovation' },
+                { slug: 'restauration-et-alimentation', label: 'Restauration et alimentation' },
+                { slug: 'sante-et-bien-etre', label: 'Sante et bien-etre' },
+                { slug: 'commerce-de-detail', label: 'Commerce de detail' },
+                { slug: 'services-professionnels', label: 'Services professionnels' },
+                { slug: 'automobile-et-transport', label: 'Automobile et transport' },
+              ].map((cat) => (
+                <Link
+                  key={cat.slug}
+                  href={`/categorie/${cat.slug}`}
+                  className="px-3 py-1.5 bg-slate-800/50 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-sky-400 text-xs font-medium transition-colors border border-slate-700/50"
+                >
+                  {cat.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+          {/* Popular Cities */}
+          <div>
+            <h4 className="font-bold text-white mb-4">Villes populaires</h4>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { slug: 'montreal', label: 'Montreal' },
+                { slug: 'quebec', label: 'Quebec' },
+                { slug: 'laval', label: 'Laval' },
+                { slug: 'gatineau', label: 'Gatineau' },
+                { slug: 'longueuil', label: 'Longueuil' },
+                { slug: 'sherbrooke', label: 'Sherbrooke' },
+              ].map((city) => (
+                <Link
+                  key={city.slug}
+                  href={`/ville/${city.slug}`}
+                  className="px-3 py-1.5 bg-slate-800/50 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-sky-400 text-xs font-medium transition-colors border border-slate-700/50"
+                >
+                  {city.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">

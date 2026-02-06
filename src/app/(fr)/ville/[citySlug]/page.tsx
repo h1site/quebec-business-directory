@@ -5,6 +5,28 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { createServiceClient } from '@/lib/supabase/server'
 
+const categoryLabels: Record<string, string> = {
+  'agriculture-et-environnement': 'Agriculture et environnement',
+  'arts-medias-et-divertissement': 'Arts, médias et divertissement',
+  'automobile-et-transport': 'Automobile et transport',
+  'commerce-de-detail': 'Commerce de détail',
+  'construction-et-renovation': 'Construction et rénovation',
+  'education-et-formation': 'Éducation et formation',
+  'finance-assurance-et-juridique': 'Finance, assurance et juridique',
+  'immobilier': 'Immobilier',
+  'industrie-fabrication-et-logistique': 'Industrie, fabrication et logistique',
+  'maison-et-services-domestiques': 'Maison et services domestiques',
+  'organismes-publics-et-communautaires': 'Organismes publics et communautaires',
+  'restauration-et-alimentation': 'Restauration et alimentation',
+  'sante-et-bien-etre': 'Santé et bien-être',
+  'services-funeraires': 'Services funéraires',
+  'services-professionnels': 'Services professionnels',
+  'soins-a-domicile': 'Soins à domicile',
+  'sports-et-loisirs': 'Sports et loisirs',
+  'technologie-et-informatique': 'Technologie et informatique',
+  'tourisme-et-hebergement': 'Tourisme et hébergement',
+}
+
 interface Props {
   params: Promise<{
     citySlug: string
@@ -100,6 +122,40 @@ async function getBusinessesByCity(citySlug: string, page: number) {
   }
 }
 
+async function getPopularCategories(citySlug: string) {
+  const supabase = createServiceClient()
+  const cityName = slugToCity(citySlug)
+  const searchPattern = citySlug.replace(/-/g, '%')
+
+  const { data } = await supabase
+    .from('businesses')
+    .select('main_category_slug')
+    .not('slug', 'is', null)
+    .not('website', 'is', null)
+    .not('main_category_slug', 'is', null)
+    .or(`city.ilike.${cityName},city.ilike.%${searchPattern}%`)
+    .limit(500)
+
+  if (!data) return []
+
+  // Count occurrences of each category
+  const counts: Record<string, number> = {}
+  for (const b of data) {
+    if (b.main_category_slug) {
+      counts[b.main_category_slug] = (counts[b.main_category_slug] || 0) + 1
+    }
+  }
+
+  // Sort by count and take top 6
+  return Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([slug]) => ({
+      slug,
+      label: categoryLabels[slug] || slug,
+    }))
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { citySlug } = await params
   const cityName = slugToCity(citySlug)
@@ -115,7 +171,10 @@ export default async function CityPage({ params, searchParams }: Props) {
   const { page: pageParam } = await searchParams
   const page = Math.max(1, parseInt(pageParam || '1', 10))
 
-  const { businesses, total, actualCityName } = await getBusinessesByCity(citySlug, page)
+  const [{ businesses, total, actualCityName }, popularCategories] = await Promise.all([
+    getBusinessesByCity(citySlug, page),
+    getPopularCategories(citySlug),
+  ])
   const totalPages = Math.ceil(total / 20)
 
   // If no businesses found, show 404
@@ -157,6 +216,28 @@ export default async function CityPage({ params, searchParams }: Props) {
             </p>
           </div>
         </section>
+
+        {/* Popular Categories */}
+        {popularCategories.length > 0 && (
+          <section className="py-8 border-b border-slate-800">
+            <div className="max-w-6xl mx-auto px-4">
+              <h2 className="text-xl font-bold text-white mb-4">
+                Categories populaires a {actualCityName}
+              </h2>
+              <div className="flex flex-wrap gap-3">
+                {popularCategories.map((cat) => (
+                  <Link
+                    key={cat.slug}
+                    href={`/categorie/${cat.slug}`}
+                    className="px-4 py-2 bg-slate-800/50 hover:bg-slate-800 rounded-lg border border-slate-700/50 hover:border-sky-500/50 text-slate-300 hover:text-sky-400 text-sm font-medium transition-all"
+                  >
+                    {cat.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Results */}
         <section className="py-8">
