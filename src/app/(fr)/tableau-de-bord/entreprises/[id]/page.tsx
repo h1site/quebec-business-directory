@@ -80,47 +80,59 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
 
   useEffect(() => {
     const fetchBusiness = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      if (!session) {
-        router.push('/connexion')
-        return
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (!session) {
+          router.push('/connexion')
+          return
+        }
+
+        const admin = session.user.email === 'info@h1site.com'
+        setIsAdmin(admin)
+
+        const { data: businessData, error: fetchError } = await supabase
+          .from('businesses')
+          .select('*')
+          .eq('id', id)
+          .single()
+
+        if (fetchError) {
+          console.error('Supabase fetch error:', fetchError)
+          setError(`Erreur de chargement: ${fetchError.message}`)
+          setLoading(false)
+          return
+        }
+
+        if (!businessData) {
+          router.push('/tableau-de-bord/entreprises')
+          return
+        }
+
+        // Check ownership for non-admin users
+        if (!admin && businessData.owner_id !== session.user.id) {
+          router.push('/tableau-de-bord/entreprises')
+          return
+        }
+
+        setBusiness(businessData)
+        setFormData({
+          name: businessData.name || '',
+          category: businessData.main_category_slug || '',
+          description: businessData.description || '',
+          phone: businessData.phone || '',
+          email: businessData.email || '',
+          website: businessData.website || '',
+          address: businessData.address || '',
+          city: businessData.city || '',
+          postalCode: businessData.postal_code || '',
+          region: businessData.region || '',
+        })
+        setLoading(false)
+      } catch (err) {
+        console.error('Unexpected error:', err)
+        setError('Erreur inattendue lors du chargement.')
+        setLoading(false)
       }
-
-      const admin = session.user.email === 'info@h1site.com'
-      setIsAdmin(admin)
-
-      // RLS allows public SELECT, so we can read directly
-      // Admin: no owner_id filter; Regular user: filter by owner_id
-      let query = supabase
-        .from('businesses')
-        .select('*')
-        .eq('id', id)
-
-      if (!admin) {
-        query = query.eq('owner_id', session.user.id)
-      }
-
-      const { data: businessData } = await query.single()
-
-      if (!businessData) {
-        router.push('/tableau-de-bord/entreprises')
-        return
-      }
-
-      setBusiness(businessData)
-      setFormData({
-        name: businessData.name || '',
-        category: businessData.main_category_slug || '',
-        description: businessData.description || '',
-        phone: businessData.phone || '',
-        email: businessData.email || '',
-        website: businessData.website || '',
-        address: businessData.address || '',
-        city: businessData.city || '',
-        postalCode: businessData.postal_code || '',
-        region: businessData.region || '',
-      })
-      setLoading(false)
     }
 
     fetchBusiness()
@@ -196,13 +208,29 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
     }
   }
 
-  if (loading) {
+  if (loading && !error) {
     return (
       <div className="max-w-2xl mx-auto">
         <div className="animate-pulse space-y-4">
           <div className="h-6 bg-gray-200 rounded w-1/4" />
           <div className="h-8 bg-gray-200 rounded w-1/2" />
           <div className="h-96 bg-gray-200 rounded-xl" />
+        </div>
+      </div>
+    )
+  }
+
+  if (error && !business) {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <Link
+          href="/tableau-de-bord/entreprises"
+          className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1 mb-4"
+        >
+          ← Retour à mes entreprises
+        </Link>
+        <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg text-sm">
+          {error}
         </div>
       </div>
     )
