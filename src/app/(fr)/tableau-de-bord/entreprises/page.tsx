@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { createBrowserClient } from '@supabase/ssr'
 
@@ -17,64 +17,71 @@ interface Business {
   created_at: string
 }
 
+const perPage = 50
+
 export default function MyBusinessesPage() {
   const [businesses, setBusinesses] = useState<Business[]>([])
-  const [filteredBusinesses, setFilteredBusinesses] = useState<Business[]>([])
   const [loading, setLoading] = useState(true)
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const [deleting, setDeleting] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const perPage = 50
+  const [totalCount, setTotalCount] = useState(0)
 
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
 
-  const fetchBusinesses = async () => {
+  const fetchBusinesses = useCallback(async (page: number, searchQuery: string) => {
     const { data: { session } } = await supabase.auth.getSession()
     if (!session) return
 
     const admin = session.user.email === 'info@h1site.com'
     setIsAdmin(admin)
+    setLoading(true)
 
-    const query = supabase
+    const offset = (page - 1) * perPage
+
+    let query = supabase
       .from('businesses')
-      .select('id, name, city, slug, main_category_slug, google_rating, google_reviews_count, phone, website, created_at')
+      .select('id, name, city, slug, main_category_slug, google_rating, google_reviews_count, phone, website, created_at', { count: 'exact' })
       .order('created_at', { ascending: false })
+      .range(offset, offset + perPage - 1)
 
     if (!admin) {
-      query.eq('owner_id', session.user.id)
-    } else {
-      query.limit(1000)
+      query = query.eq('owner_id', session.user.id)
     }
 
-    const { data } = await query
+    if (searchQuery.trim()) {
+      query = query.or(`name.ilike.%${searchQuery}%,city.ilike.%${searchQuery}%`)
+    }
+
+    const { data, count } = await query
     setBusinesses(data || [])
-    setFilteredBusinesses(data || [])
+    setTotalCount(count || 0)
     setLoading(false)
+  }, [supabase])
+
+  useEffect(() => {
+    fetchBusinesses(1, '')
+  }, [fetchBusinesses])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCurrentPage(1)
+      fetchBusinesses(1, search)
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [search, fetchBusinesses])
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    fetchBusinesses(page, search)
   }
 
-  useEffect(() => {
-    fetchBusinesses()
-  }, [])
-
-  useEffect(() => {
-    if (!search.trim()) {
-      setFilteredBusinesses(businesses)
-    } else {
-      const q = search.toLowerCase()
-      setFilteredBusinesses(businesses.filter(b =>
-        b.name.toLowerCase().includes(q) || b.city?.toLowerCase().includes(q)
-      ))
-    }
-    setCurrentPage(1)
-  }, [search, businesses])
-
-  const paginatedBusinesses = filteredBusinesses.slice((currentPage - 1) * perPage, currentPage * perPage)
-  const totalPages = Math.ceil(filteredBusinesses.length / perPage)
+  const totalPages = Math.ceil(totalCount / perPage)
 
   const handleDelete = async (id: string) => {
     setDeleting(true)
@@ -85,12 +92,13 @@ export default function MyBusinessesPage() {
 
     if (!error) {
       setBusinesses(prev => prev.filter(b => b.id !== id))
+      setTotalCount(prev => prev - 1)
     }
     setDeleteId(null)
     setDeleting(false)
   }
 
-  if (loading) {
+  if (loading && businesses.length === 0) {
     return (
       <div className="animate-pulse space-y-4">
         <div className="h-8 bg-gray-200 rounded w-1/3" />
@@ -108,8 +116,7 @@ export default function MyBusinessesPage() {
             {isAdmin ? 'Toutes les entreprises' : 'Mes entreprises'}
           </h1>
           <p className="text-gray-600 mt-1">
-            {filteredBusinesses.length} entreprise{filteredBusinesses.length !== 1 ? 's' : ''}
-            {isAdmin && search && ` (filtrées de ${businesses.length})`}
+            {totalCount.toLocaleString('fr-CA')} entreprise{totalCount !== 1 ? 's' : ''}
           </p>
         </div>
         <Link
@@ -135,7 +142,7 @@ export default function MyBusinessesPage() {
       )}
 
       {/* Businesses List */}
-      {paginatedBusinesses.length > 0 ? (
+      {businesses.length > 0 ? (
         <>
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="overflow-x-auto">
@@ -150,7 +157,7 @@ export default function MyBusinessesPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {paginatedBusinesses.map((biz) => {
+                  {businesses.map((biz) => {
                     const businessUrl = `/entreprise/${biz.slug}`
 
                     return (
@@ -228,7 +235,7 @@ export default function MyBusinessesPage() {
           {totalPages > 1 && (
             <div className="flex justify-center items-center gap-2">
               <button
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
                 className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
@@ -238,7 +245,7 @@ export default function MyBusinessesPage() {
                 Page {currentPage} / {totalPages}
               </span>
               <button
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                 disabled={currentPage === totalPages}
                 className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
@@ -252,14 +259,16 @@ export default function MyBusinessesPage() {
           <div className="text-6xl mb-4">🏢</div>
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Aucune entreprise</h2>
           <p className="text-gray-500 mb-6">
-            Vous n&apos;avez pas encore ajouté d&apos;entreprise à votre compte
+            {search ? 'Aucun resultat pour cette recherche' : 'Vous n\'avez pas encore ajoute d\'entreprise a votre compte'}
           </p>
-          <Link
-            href="/entreprise/nouvelle"
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
-          >
-            Ajouter ma première entreprise
-          </Link>
+          {!search && (
+            <Link
+              href="/entreprise/nouvelle"
+              className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            >
+              Ajouter ma premiere entreprise
+            </Link>
+          )}
         </div>
       )}
 
@@ -271,7 +280,7 @@ export default function MyBusinessesPage() {
               <div className="text-5xl mb-4">⚠️</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Supprimer cette entreprise?</h3>
               <p className="text-gray-600 mb-6">
-                Cette action est irréversible. Toutes les données de cette entreprise seront supprimées.
+                Cette action est irreversible. Toutes les donnees de cette entreprise seront supprimees.
               </p>
               <div className="flex gap-3">
                 <button
