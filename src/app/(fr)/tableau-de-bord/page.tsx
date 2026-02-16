@@ -38,17 +38,24 @@ export default function DashboardPage() {
 
       setUser(session.user)
 
-      // Fetch user's businesses and reviews in parallel
+      const isAdmin = session.user.email === 'info@h1site.com'
+
+      // Fetch businesses and reviews in parallel
+      const businessQuery = supabase
+        .from('businesses')
+        .select('id, name, city, slug, main_category_slug, google_rating', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .limit(5)
+
+      if (!isAdmin) {
+        businessQuery.eq('owner_id', session.user.id)
+      }
+
       const [
         { data: businesses, count: businessCount },
         { count: reviewCount }
       ] = await Promise.all([
-        supabase
-          .from('businesses')
-          .select('id, name, city, slug, main_category_slug, google_rating', { count: 'exact' })
-          .eq('owner_id', session.user.id)
-          .order('created_at', { ascending: false })
-          .limit(5),
+        businessQuery,
         supabase
           .from('reviews')
           .select('id', { count: 'exact', head: true })

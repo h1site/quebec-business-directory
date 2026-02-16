@@ -49,9 +49,11 @@ export default function DashboardLayout({
     router.push('/')
   }
 
+  const isAdmin = user?.email === 'info@h1site.com'
+
   const navItems = [
     { href: '/tableau-de-bord', label: 'Tableau de bord', icon: '📊' },
-    { href: '/tableau-de-bord/entreprises', label: 'Mes entreprises', icon: '🏢' },
+    { href: '/tableau-de-bord/entreprises', label: isAdmin ? 'Toutes les entreprises' : 'Mes entreprises', icon: '🏢' },
     { href: '/tableau-de-bord/profil', label: 'Mon profil', icon: '👤' },
     { href: '/tableau-de-bord/avis', label: 'Mes avis', icon: '⭐' },
   ]
