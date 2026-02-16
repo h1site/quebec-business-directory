@@ -59,6 +59,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
   const [success, setSuccess] = useState('')
   const [business, setBusiness] = useState<Business | null>(null)
 
+  const [isAdmin, setIsAdmin] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -85,36 +86,44 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
         return
       }
 
-      const isAdmin = session.user.email === 'info@h1site.com'
+      const admin = session.user.email === 'info@h1site.com'
+      setIsAdmin(admin)
 
-      const query = supabase
-        .from('businesses')
-        .select('*')
-        .eq('id', id)
+      let businessData: Business | null = null
 
-      if (!isAdmin) {
-        query.eq('owner_id', session.user.id)
+      if (admin) {
+        // Use server-side API to bypass RLS
+        const res = await fetch(`/api/admin/business/${id}`)
+        if (res.ok) {
+          businessData = await res.json()
+        }
+      } else {
+        const { data } = await supabase
+          .from('businesses')
+          .select('*')
+          .eq('id', id)
+          .eq('owner_id', session.user.id)
+          .single()
+        businessData = data
       }
 
-      const { data, error } = await query.single()
-
-      if (error || !data) {
+      if (!businessData) {
         router.push('/tableau-de-bord/entreprises')
         return
       }
 
-      setBusiness(data)
+      setBusiness(businessData)
       setFormData({
-        name: data.name || '',
-        category: data.main_category_slug || '',
-        description: data.description || '',
-        phone: data.phone || '',
-        email: data.email || '',
-        website: data.website || '',
-        address: data.address || '',
-        city: data.city || '',
-        postalCode: data.postal_code || '',
-        region: data.region || '',
+        name: businessData.name || '',
+        category: businessData.main_category_slug || '',
+        description: businessData.description || '',
+        phone: businessData.phone || '',
+        email: businessData.email || '',
+        website: businessData.website || '',
+        address: businessData.address || '',
+        city: businessData.city || '',
+        postalCode: businessData.postal_code || '',
+        region: businessData.region || '',
       })
       setLoading(false)
     }
@@ -139,35 +148,51 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
       return
     }
 
-    try {
-      const { error: updateError } = await supabase
-        .from('businesses')
-        .update({
-          name: formData.name,
-          main_category_slug: formData.category,
-          description: formData.description || null,
-          phone: formData.phone || null,
-          email: formData.email || null,
-          website: formData.website || null,
-          address: formData.address || null,
-          city: formData.city,
-          postal_code: formData.postalCode || null,
-          region: formData.region || null,
-        })
-        .eq('id', id)
+    const updateData = {
+      name: formData.name,
+      main_category_slug: formData.category,
+      description: formData.description || null,
+      phone: formData.phone || null,
+      email: formData.email || null,
+      website: formData.website || null,
+      address: formData.address || null,
+      city: formData.city,
+      postal_code: formData.postalCode || null,
+      region: formData.region || null,
+    }
 
-      if (updateError) {
-        console.error('Update error:', updateError)
-        setError('Une erreur est survenue lors de la mise à jour.')
-        setSaving(false)
-        return
+    try {
+      if (isAdmin) {
+        const res = await fetch(`/api/admin/business/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updateData),
+        })
+        if (!res.ok) {
+          const { error: msg } = await res.json()
+          setError(msg || 'Une erreur est survenue lors de la mise à jour.')
+          setSaving(false)
+          return
+        }
+      } else {
+        const { error: updateError } = await supabase
+          .from('businesses')
+          .update(updateData)
+          .eq('id', id)
+
+        if (updateError) {
+          console.error('Update error:', updateError)
+          setError('Une erreur est survenue lors de la mise à jour.')
+          setSaving(false)
+          return
+        }
       }
 
-      setSuccess('Entreprise mise à jour avec succès!')
+      setSuccess('Entreprise mise à jour avec succes!')
       setSaving(false)
     } catch (err) {
       console.error('Error:', err)
-      setError('Une erreur est survenue. Veuillez réessayer.')
+      setError('Une erreur est survenue. Veuillez reessayer.')
       setSaving(false)
     }
   }
