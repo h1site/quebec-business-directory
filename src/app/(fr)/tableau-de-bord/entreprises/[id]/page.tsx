@@ -85,12 +85,18 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
         return
       }
 
-      const { data, error } = await supabase
+      const isAdmin = session.user.email === 'info@h1site.com'
+
+      const query = supabase
         .from('businesses')
         .select('*')
         .eq('id', id)
-        .eq('owner_id', session.user.id)
-        .single()
+
+      if (!isAdmin) {
+        query.eq('owner_id', session.user.id)
+      }
+
+      const { data, error } = await query.single()
 
       if (error || !data) {
         router.push('/tableau-de-bord/entreprises')
