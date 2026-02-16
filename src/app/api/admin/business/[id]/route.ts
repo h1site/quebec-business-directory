@@ -1,13 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
-import { createServiceClient } from '@/lib/supabase/server'
+import { createClient, createServiceClient } from '@/lib/supabase/server'
 
 const ADMIN_EMAIL = 'info@h1site.com'
 
-async function isAdmin(request: NextRequest) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  return user?.email === ADMIN_EMAIL
+async function getAdminUser() {
+  try {
+    const supabase = await createClient()
+    const { data: { user }, error } = await supabase.auth.getUser()
+    if (error) {
+      console.error('Auth error:', error.message)
+      return null
+    }
+    if (user?.email === ADMIN_EMAIL) {
+      return user
+    }
+    return null
+  } catch (err) {
+    console.error('getAdminUser error:', err)
+    return null
+  }
 }
 
 export async function GET(
@@ -16,7 +27,8 @@ export async function GET(
 ) {
   const { id } = await params
 
-  if (!(await isAdmin(request))) {
+  const admin = await getAdminUser()
+  if (!admin) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
   }
 
@@ -28,7 +40,7 @@ export async function GET(
     .single()
 
   if (error || !data) {
-    return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    return NextResponse.json({ error: error?.message || 'Not found' }, { status: 404 })
   }
 
   return NextResponse.json(data)
@@ -40,7 +52,8 @@ export async function PUT(
 ) {
   const { id } = await params
 
-  if (!(await isAdmin(request))) {
+  const admin = await getAdminUser()
+  if (!admin) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
   }
 

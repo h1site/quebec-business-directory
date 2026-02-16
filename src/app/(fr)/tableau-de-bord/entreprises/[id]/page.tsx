@@ -93,9 +93,13 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
 
       if (admin) {
         // Use server-side API to bypass RLS
-        const res = await fetch(`/api/admin/business/${id}`)
+        const res = await fetch(`/api/admin/business/${id}`, {
+          credentials: 'include',
+        })
         if (res.ok) {
           businessData = await res.json()
+        } else {
+          console.error('Admin API error:', res.status, await res.text())
         }
       } else {
         const { data } = await supabase
