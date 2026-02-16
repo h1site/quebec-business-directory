@@ -94,7 +94,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
       if (admin) {
         // Use server-side API to bypass RLS
         const res = await fetch(`/api/admin/business/${id}`, {
-          credentials: 'include',
+          headers: { 'Authorization': `Bearer ${session.access_token}` },
         })
         if (res.ok) {
           businessData = await res.json()
@@ -167,9 +167,13 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
 
     try {
       if (isAdmin) {
+        const { data: { session } } = await supabase.auth.getSession()
         const res = await fetch(`/api/admin/business/${id}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.access_token}`,
+          },
           body: JSON.stringify(updateData),
         })
         if (!res.ok) {

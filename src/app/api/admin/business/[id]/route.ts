@@ -1,24 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient, createServiceClient } from '@/lib/supabase/server'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
+import { createServiceClient } from '@/lib/supabase/server'
 
 const ADMIN_EMAIL = 'info@h1site.com'
 
-async function getAdminUser() {
-  try {
-    const supabase = await createClient()
-    const { data: { user }, error } = await supabase.auth.getUser()
-    if (error) {
-      console.error('Auth error:', error.message)
-      return null
-    }
-    if (user?.email === ADMIN_EMAIL) {
-      return user
-    }
-    return null
-  } catch (err) {
-    console.error('getAdminUser error:', err)
+async function getAdminUser(request: NextRequest) {
+  const authHeader = request.headers.get('authorization')
+  if (!authHeader?.startsWith('Bearer ')) {
     return null
   }
+
+  const token = authHeader.slice(7)
+  const supabase = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+
+  const { data: { user }, error } = await supabase.auth.getUser(token)
+  if (error || !user || user.email !== ADMIN_EMAIL) {
+    return null
+  }
+
+  return user
 }
 
 export async function GET(
@@ -27,7 +30,7 @@ export async function GET(
 ) {
   const { id } = await params
 
-  const admin = await getAdminUser()
+  const admin = await getAdminUser(request)
   if (!admin) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
   }
@@ -52,7 +55,7 @@ export async function PUT(
 ) {
   const { id } = await params
 
-  const admin = await getAdminUser()
+  const admin = await getAdminUser(request)
   if (!admin) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
   }
