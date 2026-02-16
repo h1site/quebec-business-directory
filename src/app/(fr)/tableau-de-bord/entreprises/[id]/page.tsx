@@ -89,27 +89,18 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
       const admin = session.user.email === 'info@h1site.com'
       setIsAdmin(admin)
 
-      let businessData: Business | null = null
+      // RLS allows public SELECT, so we can read directly
+      // Admin: no owner_id filter; Regular user: filter by owner_id
+      let query = supabase
+        .from('businesses')
+        .select('*')
+        .eq('id', id)
 
-      if (admin) {
-        // Use server-side API to bypass RLS
-        const res = await fetch(`/api/admin/business/${id}`, {
-          headers: { 'Authorization': `Bearer ${session.access_token}` },
-        })
-        if (res.ok) {
-          businessData = await res.json()
-        } else {
-          console.error('Admin API error:', res.status, await res.text())
-        }
-      } else {
-        const { data } = await supabase
-          .from('businesses')
-          .select('*')
-          .eq('id', id)
-          .eq('owner_id', session.user.id)
-          .single()
-        businessData = data
+      if (!admin) {
+        query = query.eq('owner_id', session.user.id)
       }
+
+      const { data: businessData } = await query.single()
 
       if (!businessData) {
         router.push('/tableau-de-bord/entreprises')
