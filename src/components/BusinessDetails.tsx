@@ -44,15 +44,20 @@ const dayNames: Record<string, string> = {
   sunday: 'Dimanche',
 }
 
+function ensureProtocol(url: string): string {
+  if (!/^https?:\/\//i.test(url)) return `https://${url}`
+  return url
+}
+
 function addUtm(url: string): string {
   try {
-    const u = new URL(url)
+    const u = new URL(ensureProtocol(url))
     u.searchParams.set('utm_source', 'registreduquebec')
     u.searchParams.set('utm_medium', 'referral')
     u.searchParams.set('utm_campaign', 'fiche-entreprise')
     return u.toString()
   } catch {
-    return url
+    return ensureProtocol(url)
   }
 }
 
