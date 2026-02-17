@@ -77,9 +77,12 @@ export async function searchBusinesses(
     queryBuilder = queryBuilder.ilike('city', `%${normalizeText(city)}%`)
   }
 
-  // Text search
+  // Text search across name, description, ai_description, and category
   if (cleanQuery) {
-    queryBuilder = queryBuilder.ilike('name', `%${normalizeText(cleanQuery)}%`)
+    const q = normalizeText(cleanQuery)
+    queryBuilder = queryBuilder.or(
+      `name.ilike.%${q}%,description.ilike.%${q}%,ai_description.ilike.%${q}%,main_category_slug.ilike.%${q}%`
+    )
   }
 
   const { data, count, error } = await queryBuilder
@@ -134,7 +137,7 @@ export async function quickSearch(query: string): Promise<Business[]> {
     .not('slug', 'is', null)
     // Same filter as searchBusinesses for consistency
     .or('is_claimed.eq.true,owner_id.not.is.null,and(ai_description.not.is.null,website.not.is.null)')
-    .ilike('name', `%${cleanQuery}%`)
+    .or(`name.ilike.%${cleanQuery}%,description.ilike.%${cleanQuery}%,ai_description.ilike.%${cleanQuery}%,main_category_slug.ilike.%${cleanQuery}%`)
     .order('google_rating', { ascending: false, nullsFirst: false })
     .limit(5)
 
