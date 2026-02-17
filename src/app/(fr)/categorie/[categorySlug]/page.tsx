@@ -130,16 +130,20 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             {businesses.length > 0 ? (
               <div className="space-y-4">
                 {businesses.map((business) => (
-                  <Link
+                  <div
                     key={business.id}
-                    href={`/entreprise/${business.slug}`}
-                    className="block glass rounded-xl hover:bg-white/10 transition-all overflow-hidden group"
+                    className="glass rounded-xl hover:bg-white/10 transition-all overflow-hidden"
                   >
                     <div className="p-6">
                       <div className="flex justify-between items-start gap-4">
                         <div className="flex-1 min-w-0">
-                          <h2 className="text-xl font-semibold text-white group-hover:text-sky-400 transition-colors">
-                            {business.name}
+                          <h2 className="text-xl font-semibold">
+                            <Link
+                              href={`/entreprise/${business.slug}`}
+                              className="text-white hover:text-sky-400 transition-colors"
+                            >
+                              {business.name}
+                            </Link>
                           </h2>
                           {business.city && (
                             <p className="text-slate-400 mt-1 flex items-center gap-2">
@@ -147,7 +151,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                               <Link
                                 href={`/ville/${generateSlug(business.city)}`}
                                 className="hover:text-sky-400 transition-colors"
-                                onClick={(e) => e.stopPropagation()}
                               >
                                 {business.city}
                               </Link>
@@ -178,7 +181,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                         )}
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             ) : (
