@@ -264,45 +264,102 @@ export default function BusinessDetails({ business, relatedBusinesses = [], cate
                   </div>
                 )}
 
+                {/* Google Reviews */}
+                {business.google_reviews && Array.isArray(business.google_reviews) && business.google_reviews.length > 0 && (
+                  <div className="glass rounded-xl p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-xl font-bold text-white">Avis Google</h2>
+                      {business.google_rating && (
+                        <div className="flex items-center gap-2">
+                          <div className="flex">
+                            {[1, 2, 3, 4, 5].map(star => (
+                              <span key={star} className={star <= Math.round(business.google_rating!) ? 'text-amber-400' : 'text-slate-600'}>★</span>
+                            ))}
+                          </div>
+                          <span className="font-bold text-white">{business.google_rating}</span>
+                          <span className="text-slate-400 text-sm">({business.google_reviews_count} avis)</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="space-y-4">
+                      {(business.google_reviews as Array<{text?: string; rating?: number; author_name?: string; relative_time_description?: string}>).filter(r => r.text).map((review, i) => (
+                        <div key={i} className="bg-slate-800/50 rounded-lg p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-medium text-white">{review.author_name || 'Anonyme'}</span>
+                            <div className="flex items-center gap-2">
+                              <div className="flex text-sm">
+                                {[1, 2, 3, 4, 5].map(star => (
+                                  <span key={star} className={star <= (review.rating || 0) ? 'text-amber-400' : 'text-slate-600'}>★</span>
+                                ))}
+                              </div>
+                              {review.relative_time_description && (
+                                <span className="text-xs text-slate-500">{review.relative_time_description}</span>
+                              )}
+                            </div>
+                          </div>
+                          <p className="text-slate-300 text-sm leading-relaxed">{review.text}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* FAQ Section */}
                 <div className="glass rounded-xl p-6">
                   <h2 className="text-xl font-bold text-white mb-4">Questions fréquentes</h2>
                   <div className="space-y-3">
-                    {/* Default FAQs */}
-                    <details className="group bg-slate-800/50 rounded-lg">
+                    <details className="group bg-slate-800/50 rounded-lg" open>
                       <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
-                        Dans quelle ville se situe {business.name} ?
+                        Comment contacter {business.name} ?
                         <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
                       </summary>
-                      <p className="px-4 pb-4 text-slate-300">
-                        {business.name} se situe à {business.city || 'Québec'}
-                        {business.region && `, dans la région de ${business.region}`}.
-                      </p>
+                      <div className="px-4 pb-4 text-slate-300 space-y-2">
+                        <p>
+                          {business.name} est situé à {displayAddress || business.city || 'Québec'}
+                          {displayCity && displayAddress ? `, ${displayCity}` : ''}
+                          {business.region && `, dans la région de ${business.region}`}
+                          {business.mrc && ` (MRC ${business.mrc})`}
+                          {displayPostalCode && `, ${displayPostalCode}`}.
+                        </p>
+                        {displayPhone && <p>Téléphone : {displayPhone}</p>}
+                        {displayEmail && <p>Courriel : {displayEmail}</p>}
+                        {business.website && <p>Site web : {business.website.replace(/^https?:\/\//, '').replace(/\/+$/, '')}</p>}
+                      </div>
                     </details>
 
-                    <details className="group bg-slate-800/50 rounded-lg">
-                      <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
-                        Est-ce que {business.name} a un numéro de téléphone ?
-                        <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
-                      </summary>
-                      <p className="px-4 pb-4 text-slate-300">
-                        {displayPhone
-                          ? `Oui, vous pouvez contacter ${business.name} au ${displayPhone}.`
-                          : `Les informations de téléphone pour ${business.name} ne sont pas disponibles.`}
-                      </p>
-                    </details>
+                    {business.main_category_slug && (
+                      <details className="group bg-slate-800/50 rounded-lg">
+                        <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
+                          Dans quel domaine {business.name} se spécialise ?
+                          <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
+                        </summary>
+                        <div className="px-4 pb-4 text-slate-300 space-y-2">
+                          <p>
+                            {business.name} oeuvre dans le domaine «{' '}
+                            {categoryLabels[business.main_category_slug] || business.main_category_slug} » à {business.city || 'au Québec'}.
+                          </p>
+                          {(business.ai_services && business.ai_services.length > 0) ? (
+                            <p>Parmi ses services : {business.ai_services.slice(0, 5).join(', ')}.</p>
+                          ) : business.products_services ? (
+                            <p>Parmi ses services : {business.products_services.split('\n').filter(Boolean).slice(0, 5).join(', ')}.</p>
+                          ) : null}
+                        </div>
+                      </details>
+                    )}
 
-                    <details className="group bg-slate-800/50 rounded-lg">
-                      <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
-                        {business.name} a-t-il un site internet ?
-                        <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
-                      </summary>
-                      <p className="px-4 pb-4 text-slate-300">
-                        {business.website
-                          ? `Oui, ${business.name} a un site internet accessible à ${business.website.replace(/\/+$/, '')}.`
-                          : `Les informations de site internet pour ${business.name} ne sont pas disponibles.`}
-                      </p>
-                    </details>
+                    {business.google_rating && (
+                      <details className="group bg-slate-800/50 rounded-lg">
+                        <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
+                          Quelle est la réputation de {business.name} ?
+                          <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
+                        </summary>
+                        <p className="px-4 pb-4 text-slate-300">
+                          {business.name} a une note de {business.google_rating}/5 sur Google
+                          {business.google_reviews_count > 0 && `, basée sur ${business.google_reviews_count} avis de clients`}.
+                          {business.google_rating >= 4 && ' Cette note élevée témoigne de la satisfaction de sa clientèle.'}
+                        </p>
+                      </details>
+                    )}
 
                     {hasOpeningHours && (
                       <details className="group bg-slate-800/50 rounded-lg">

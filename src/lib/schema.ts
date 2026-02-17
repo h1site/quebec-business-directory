@@ -401,68 +401,63 @@ export function generateBusinessSchemaSimple(business: Business, isEnglish = fal
 export function generateFAQSchemaSimple(business: Business, isEnglish = false) {
   const faqItems: Array<{ '@type': string; name: string; acceptedAnswer: { '@type': string; text: string } }> = []
 
-  if (business.city) {
+  // Contact info FAQ
+  const contactParts: string[] = []
+  const address = business.verified_address || business.address
+  if (address) contactParts.push(`${address}, ${business.city || ''}`)
+  else if (business.city) contactParts.push(business.city)
+  if (business.region) contactParts.push(business.region)
+  if (business.phone || business.verified_phone) contactParts.push(`Téléphone : ${business.verified_phone || business.phone}`)
+  if (business.website) contactParts.push(`Site web : ${business.website.replace(/\/+$/, '')}`)
+
+  faqItems.push({
+    '@type': 'Question',
+    name: isEnglish
+      ? `How to contact ${business.name}?`
+      : `Comment contacter ${business.name} ?`,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: isEnglish
+        ? `${business.name} is located in ${business.city || 'Quebec'}${business.region ? `, ${business.region}` : ''}.`
+        : contactParts.join('. ') + '.',
+    },
+  })
+
+  // Category/services FAQ
+  if (business.main_category_slug) {
+    const services = business.ai_services?.slice(0, 5)
+      || business.products_services?.split('\n').filter(Boolean).slice(0, 5)
+      || []
+
     faqItems.push({
       '@type': 'Question',
       name: isEnglish
-        ? `In which city is ${business.name} located?`
-        : `Dans quelle ville se situe ${business.name} ?`,
+        ? `What does ${business.name} specialize in?`
+        : `Dans quel domaine ${business.name} se spécialise ?`,
       acceptedAnswer: {
         '@type': 'Answer',
         text: isEnglish
-          ? `${business.name} is located in ${business.city}${business.region ? `, ${business.region}` : ''}.`
-          : `${business.name} se situe à ${business.city}${business.region ? `, ${business.region}` : ''}.`,
+          ? `${business.name} operates in ${business.main_category_slug.replace(/-/g, ' ')} in ${business.city || 'Quebec'}.${services.length > 0 ? ` Services include: ${services.join(', ')}.` : ''}`
+          : `${business.name} oeuvre dans le domaine ${business.main_category_slug.replace(/-/g, ' ')} à ${business.city || 'au Québec'}.${services.length > 0 ? ` Parmi ses services : ${services.join(', ')}.` : ''}`,
       },
     })
   }
 
-  if (business.address) {
-    const fullAddress = `${business.address}, ${business.city}, ${business.province || 'QC'} ${business.postal_code || ''}`
+  // Rating FAQ
+  if (business.google_rating) {
     faqItems.push({
       '@type': 'Question',
       name: isEnglish
-        ? `What is the address of ${business.name}?`
-        : `À quelle adresse se situe ${business.name} ?`,
+        ? `What is the reputation of ${business.name}?`
+        : `Quelle est la réputation de ${business.name} ?`,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: fullAddress,
+        text: isEnglish
+          ? `${business.name} has a rating of ${business.google_rating}/5 on Google${business.google_reviews_count > 0 ? `, based on ${business.google_reviews_count} customer reviews` : ''}.`
+          : `${business.name} a une note de ${business.google_rating}/5 sur Google${business.google_reviews_count > 0 ? `, basée sur ${business.google_reviews_count} avis de clients` : ''}.`,
       },
     })
   }
-
-  faqItems.push({
-    '@type': 'Question',
-    name: isEnglish
-      ? `Does ${business.name} have a phone number?`
-      : `Est-ce que ${business.name} a un numéro de téléphone ?`,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: business.phone
-        ? (isEnglish
-            ? `Yes, you can contact ${business.name} at ${business.phone}.`
-            : `Oui, vous pouvez contacter ${business.name} au ${business.phone}.`)
-        : (isEnglish
-            ? `Phone information for ${business.name} is not available.`
-            : `Les informations de téléphone pour ${business.name} ne sont pas disponibles.`),
-    },
-  })
-
-  faqItems.push({
-    '@type': 'Question',
-    name: isEnglish
-      ? `Does ${business.name} have a website?`
-      : `${business.name} a-t-il un site internet ?`,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: business.website
-        ? (isEnglish
-            ? `Yes, ${business.name} has a website.`
-            : `Oui, ${business.name} a un site internet.`)
-        : (isEnglish
-            ? `Website information for ${business.name} is not available.`
-            : `Les informations de site internet pour ${business.name} ne sont pas disponibles.`),
-    },
-  })
 
   return {
     '@context': 'https://schema.org',
