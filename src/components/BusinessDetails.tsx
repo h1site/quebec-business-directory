@@ -44,6 +44,18 @@ const dayNames: Record<string, string> = {
   sunday: 'Dimanche',
 }
 
+function addUtm(url: string): string {
+  try {
+    const u = new URL(url)
+    u.searchParams.set('utm_source', 'registreduquebec')
+    u.searchParams.set('utm_medium', 'referral')
+    u.searchParams.set('utm_campaign', 'fiche-entreprise')
+    return u.toString()
+  } catch {
+    return url
+  }
+}
+
 export default function BusinessDetails({ business, relatedBusinesses = [], categoryBusinesses = [], cityBusinesses = [] }: Props) {
   const citySlug = generateSlug(business.city || '')
 
@@ -135,7 +147,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [], cate
 
                   {business.website && (
                     <a
-                      href={business.website}
+                      href={addUtm(business.website)}
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                       className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-500 rounded-xl font-medium transition-colors text-white"
@@ -322,7 +334,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [], cate
                         <div className="flex items-center gap-3">
                           <span className="text-slate-500">🌐</span>
                           <a
-                            href={business.website}
+                            href={addUtm(business.website)}
                             target="_blank"
                             rel="noopener noreferrer nofollow"
                             className="text-sky-400 hover:text-sky-300 truncate"
