@@ -268,7 +268,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [], cate
                       </summary>
                       <p className="px-4 pb-4 text-slate-300">
                         {business.website
-                          ? `Oui, ${business.name} a un site internet accessible à ${business.website}.`
+                          ? `Oui, ${business.name} a un site internet accessible à ${business.website.replace(/\/+$/, '')}.`
                           : `Les informations de site internet pour ${business.name} ne sont pas disponibles.`}
                       </p>
                     </details>
@@ -327,7 +327,7 @@ export default function BusinessDetails({ business, relatedBusinesses = [], cate
                             rel="noopener noreferrer nofollow"
                             className="text-sky-400 hover:text-sky-300 truncate"
                           >
-                            {business.website.replace(/^https?:\/\//, '')}
+                            {business.website.replace(/^https?:\/\//, '').replace(/\/+$/, '')}
                           </a>
                         </div>
                       )}
