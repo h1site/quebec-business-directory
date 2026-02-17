@@ -113,56 +113,37 @@ async function main() {
   urls.push(...staticPages)
   console.log(`\n📄 Added ${staticPages.length} static pages`)
 
-  // Get businesses based on type
-  if (TYPE === 'reviews' || TYPE === 'all') {
-    console.log('\n🔍 Fetching businesses with Google reviews...')
-    const { data: reviewBusinesses, error } = await supabase
+  // Get ALL businesses (paginate to get all results)
+  console.log('\n🔍 Fetching all businesses...')
+  let allBusinesses: { slug: string }[] = []
+  let page = 0
+  const pageSize = 1000
+
+  while (true) {
+    const { data: businesses, error } = await supabase
       .from('businesses')
-      .select('slug, city, main_category_slug')
-      .not('google_rating', 'is', null)
-      .gt('google_reviews_count', 0)
+      .select('slug')
       .not('slug', 'is', null)
-      .not('city', 'is', null)
-      .order('google_reviews_count', { ascending: false })
-      .limit(TYPE === 'all' ? Math.floor(LIMIT / 2) : LIMIT)
+      .range(page * pageSize, (page + 1) * pageSize - 1)
 
     if (error) {
-      console.error('❌ Error fetching review businesses:', error)
-    } else if (reviewBusinesses) {
-      reviewBusinesses.forEach((b) => {
-        const citySlug = generateSlug(b.city)
-        const category = b.main_category_slug || 'entreprise'
-        urls.push(`${SITE_URL}/${category}/${citySlug}/${b.slug}`)
-      })
-      console.log(`   Found ${reviewBusinesses.length} businesses with reviews`)
+      console.error('❌ Error fetching businesses:', error)
+      break
     }
+
+    if (!businesses || businesses.length === 0) {
+      break
+    }
+
+    allBusinesses = allBusinesses.concat(businesses)
+    console.log(`   Page ${page + 1}: ${businesses.length} businesses (total: ${allBusinesses.length})`)
+    page++
   }
 
-  if (TYPE === 'enriched' || TYPE === 'all') {
-    console.log('\n🔍 Fetching AI-enriched businesses...')
-    const { data: enrichedBusinesses, error } = await supabase
-      .from('businesses')
-      .select('slug, city, main_category_slug')
-      .not('ai_enriched_at', 'is', null)
-      .not('slug', 'is', null)
-      .not('city', 'is', null)
-      .order('ai_enriched_at', { ascending: false })
-      .limit(TYPE === 'all' ? Math.floor(LIMIT / 2) : LIMIT)
-
-    if (error) {
-      console.error('❌ Error fetching enriched businesses:', error)
-    } else if (enrichedBusinesses) {
-      enrichedBusinesses.forEach((b) => {
-        const citySlug = generateSlug(b.city)
-        const category = b.main_category_slug || 'entreprise'
-        const url = `${SITE_URL}/${category}/${citySlug}/${b.slug}`
-        if (!urls.includes(url)) {
-          urls.push(url)
-        }
-      })
-      console.log(`   Found ${enrichedBusinesses.length} enriched businesses`)
-    }
-  }
+  allBusinesses.forEach((b) => {
+    urls.push(`${SITE_URL}/entreprise/${b.slug}`)
+  })
+  console.log(`   Found ${allBusinesses.length} total businesses`)
 
   // Remove duplicates
   const uniqueUrls = [...new Set(urls)]
