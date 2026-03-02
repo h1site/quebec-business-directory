@@ -43,6 +43,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: '/',
       },
     ],
-    sitemap: 'https://registreduquebec.com/sitemap.xml',
+    sitemap: 'https://registreduquebec.com/sitemap2026.xml',
   }
 }
