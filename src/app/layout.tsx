@@ -78,24 +78,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr" className="dark" suppressHydrationWarning>
+    <html lang="fr" className="dark">
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                const mode = localStorage.getItem('theme-mode');
-                if (mode === 'light') {
-                  document.documentElement.classList.remove('dark');
-                  document.documentElement.setAttribute('data-theme', 'light');
-                } else {
-                  document.documentElement.classList.add('dark');
-                  document.documentElement.setAttribute('data-theme', 'dark');
-                }
-              } catch (e) {}
-            `,
-          }}
-        />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         {/* Google Tag (gtag.js) */}
         <Script

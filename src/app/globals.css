@@ -1,26 +1,13 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-/* Light mode defaults */
 :root {
-  --background: #f8fafc;
-  --background-secondary: #f1f5f9;
-  --foreground: #0f172a;
-  --foreground-muted: #475569;
-  --accent: #0284c7;
-  --accent-hover: #0369a1;
-  --font-inter: 'Inter', sans-serif;
-}
-
-/* Dark mode overrides */
-.dark {
   --background: #0f172a;
   --background-secondary: #1e293b;
   --foreground: #f8fafc;
   --foreground-muted: #94a3b8;
   --accent: #0ea5e9;
   --accent-hover: #0284c7;
+  --font-inter: 'Inter', sans-serif;
 }
 
 @theme inline {
@@ -33,7 +20,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'Inter', Arial, Helvetica, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -52,12 +38,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #94a3b8;
-  border-radius: 4px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
   background: #475569;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -103,33 +85,17 @@ h1, h2, h3, h4, h5, h6 {
 .animation-delay-400 { animation-delay: 0.4s; opacity: 0; }
 .animation-delay-500 { animation-delay: 0.5s; opacity: 0; }
 
-/* Glass effect - mode aware */
+/* Glass effect */
 .glass {
-  backdrop-filter: blur(10px);
-}
-
-.dark .glass {
   background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-:root:not(.dark) .glass {
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .glass-dark {
-  backdrop-filter: blur(10px);
-}
-
-.dark .glass-dark {
   background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-:root:not(.dark) .glass-dark {
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 /* Text shadow for hero sections */
@@ -151,14 +117,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .card-hover:hover {
   transform: translateY(-4px);
-}
-
-.dark .card-hover:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-:root:not(.dark) .card-hover:hover {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 /* Button glow effect */
@@ -205,29 +164,21 @@ h1, h2, h3, h4, h5, h6 {
 ins.adsbygoogle[data-anchor-status="displayed"] {
   border-radius: 12px !important;
   box-shadow:
-    0 -8px 32px rgba(0, 0, 0, 0.12),
-    0 4px 16px rgba(0, 0, 0, 0.08) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    0 -8px 32px rgba(0, 0, 0, 0.4),
+    0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(12px) !important;
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(30, 41, 59, 0.95) !important;
   margin-bottom: 8px !important;
   max-width: 1024px !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-.dark ins.adsbygoogle[data-anchor-status="displayed"] {
-  background: rgba(30, 41, 59, 0.95) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow:
-    0 -8px 32px rgba(0, 0, 0, 0.4),
-    0 4px 16px rgba(0, 0, 0, 0.3) !important;
-}
-
 /* Override browser autofill */
-.dark input:-webkit-autofill,
-.dark input:-webkit-autofill:hover,
-.dark input:-webkit-autofill:focus,
-.dark input:-webkit-autofill:active {
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
   -webkit-text-fill-color: #f8fafc !important;
   background-color: transparent !important;

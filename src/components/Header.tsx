@@ -22,9 +22,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import AddBusinessIcon from '@mui/icons-material/AddBusiness'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import LogoutIcon from '@mui/icons-material/Logout'
-import DashboardIcon from '@mui/icons-material/Dashboard'
 import LoginIcon from '@mui/icons-material/Login'
-import ThemeToggle from '@/components/ThemeToggle'
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -129,8 +127,6 @@ export default function Header() {
 
             <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'divider' }} />
 
-            <ThemeToggle />
-
             {!loading && (
               <>
                 {user ? (
@@ -203,7 +199,6 @@ export default function Header() {
 
           {/* Mobile */}
           <Box className="flex lg:hidden items-center gap-1">
-            <ThemeToggle />
             <Button
               component={Link}
               href="/en"
@@ -229,11 +224,13 @@ export default function Header() {
         anchor="right"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        PaperProps={{
-          sx: {
-            width: 300,
-            bgcolor: 'background.paper',
-            p: 2,
+        slotProps={{
+          paper: {
+            sx: {
+              width: 300,
+              bgcolor: 'background.paper',
+              p: 2,
+            },
           },
         }}
       >
