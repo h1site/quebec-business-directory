@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: 'Recherchez parmi plus de 46 000 entreprises québécoises de qualité. Trouvez des commerces, services et professionnels près de chez vous.',
 }
 
-// Static categories for fast loading
 const CATEGORIES = [
   { id: '1', slug: 'agriculture-et-environnement', label_fr: 'Agriculture et environnement' },
   { id: '2', slug: 'arts-medias-et-divertissement', label_fr: 'Arts, médias et divertissement' },
@@ -45,13 +44,14 @@ function BusinessCard({ business }: { business: Business }) {
   return (
     <Link
       href={`/entreprise/${business.slug}`}
-      className="block glass rounded-xl hover:bg-white/10 transition-all overflow-hidden group"
+      className="block rounded-xl transition-all overflow-hidden group border"
+      style={{ background: 'var(--background-secondary)', borderColor: 'rgba(128,128,128,0.15)' }}
     >
       <div className="p-6">
         <div className="flex justify-between items-start gap-4">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <h3 className="text-xl font-semibold text-white group-hover:text-sky-400 transition-colors truncate">
+              <h3 className="text-xl font-semibold group-hover:text-sky-500 transition-colors truncate" style={{ color: 'var(--foreground)' }}>
                 {business.name}
               </h3>
               {business.ai_description && (
@@ -61,13 +61,13 @@ function BusinessCard({ business }: { business: Business }) {
               )}
             </div>
             {business.city && (
-              <p className="text-slate-400 mt-1 flex items-center gap-2">
+              <p className="mt-1 flex items-center gap-2" style={{ color: 'var(--foreground-muted)' }}>
                 <span>📍</span>
                 {business.city}
               </p>
             )}
             {(business.ai_description || business.description) && (
-              <p className="text-slate-500 mt-2 text-sm line-clamp-2">
+              <p className="mt-2 text-sm line-clamp-2" style={{ color: 'var(--foreground-muted)' }}>
                 {business.ai_description || business.description}
               </p>
             )}
@@ -75,12 +75,12 @@ function BusinessCard({ business }: { business: Business }) {
             {hasContact && (
               <div className="flex flex-wrap gap-2 mt-3">
                 {business.phone && (
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 text-green-400 text-xs font-medium rounded-full">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 text-green-500 dark:text-green-400 text-xs font-medium rounded-full">
                     📞 Téléphone
                   </span>
                 )}
                 {business.website && (
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-sky-500/20 text-sky-400 text-xs font-medium rounded-full">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-sky-500/20 text-sky-500 dark:text-sky-400 text-xs font-medium rounded-full">
                     🌐 Site web
                   </span>
                 )}
@@ -90,14 +90,14 @@ function BusinessCard({ business }: { business: Business }) {
 
           {business.google_rating && (
             <div className="flex flex-col items-end shrink-0">
-              <div className="flex items-center gap-1 bg-amber-500/20 px-3 py-1.5 rounded-lg">
-                <span className="text-amber-400 text-lg">★</span>
-                <span className="font-bold text-white">
+              <div className="flex items-center gap-1 bg-amber-500/15 px-3 py-1.5 rounded-lg">
+                <span className="text-amber-500 text-lg">★</span>
+                <span className="font-bold" style={{ color: 'var(--foreground)' }}>
                   {business.google_rating}
                 </span>
               </div>
               {business.google_reviews_count && (
-                <span className="text-xs text-slate-500 mt-1">
+                <span className="text-xs mt-1" style={{ color: 'var(--foreground-muted)' }}>
                   {business.google_reviews_count} avis
                 </span>
               )}
@@ -146,7 +146,8 @@ function Pagination({
       {currentPage > 1 && (
         <Link
           href={buildUrl(currentPage - 1)}
-          className="px-4 py-2 bg-slate-800 rounded-lg hover:bg-slate-700 font-medium text-white border border-slate-700"
+          className="px-4 py-2 rounded-lg font-medium border transition-colors"
+          style={{ background: 'var(--background-secondary)', color: 'var(--foreground)', borderColor: 'rgba(128,128,128,0.2)' }}
         >
           ← Précédent
         </Link>
@@ -157,11 +158,12 @@ function Pagination({
           <>
             <Link
               href={buildUrl(1)}
-              className="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-800 text-white hover:bg-slate-700 border border-slate-700 font-medium"
+              className="w-10 h-10 flex items-center justify-center rounded-lg border font-medium"
+              style={{ background: 'var(--background-secondary)', color: 'var(--foreground)', borderColor: 'rgba(128,128,128,0.2)' }}
             >
               1
             </Link>
-            {startPage > 2 && <span className="px-2 text-slate-500">...</span>}
+            {startPage > 2 && <span style={{ color: 'var(--foreground-muted)' }} className="px-2">...</span>}
           </>
         )}
 
@@ -172,8 +174,9 @@ function Pagination({
             className={`w-10 h-10 flex items-center justify-center rounded-lg font-medium transition-colors ${
               currentPage === pageNum
                 ? 'bg-sky-500 text-white'
-                : 'bg-slate-800 text-white hover:bg-slate-700 border border-slate-700'
+                : 'border'
             }`}
+            style={currentPage !== pageNum ? { background: 'var(--background-secondary)', color: 'var(--foreground)', borderColor: 'rgba(128,128,128,0.2)' } : undefined}
           >
             {pageNum}
           </Link>
@@ -181,10 +184,11 @@ function Pagination({
 
         {endPage < totalPages && (
           <>
-            {endPage < totalPages - 1 && <span className="px-2 text-slate-500">...</span>}
+            {endPage < totalPages - 1 && <span style={{ color: 'var(--foreground-muted)' }} className="px-2">...</span>}
             <Link
               href={buildUrl(totalPages)}
-              className="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-800 text-white hover:bg-slate-700 border border-slate-700 font-medium"
+              className="w-10 h-10 flex items-center justify-center rounded-lg border font-medium"
+              style={{ background: 'var(--background-secondary)', color: 'var(--foreground)', borderColor: 'rgba(128,128,128,0.2)' }}
             >
               {totalPages}
             </Link>
@@ -195,7 +199,8 @@ function Pagination({
       {currentPage < totalPages && (
         <Link
           href={buildUrl(currentPage + 1)}
-          className="px-4 py-2 bg-slate-800 rounded-lg hover:bg-slate-700 font-medium text-white border border-slate-700"
+          className="px-4 py-2 rounded-lg font-medium border transition-colors"
+          style={{ background: 'var(--background-secondary)', color: 'var(--foreground)', borderColor: 'rgba(128,128,128,0.2)' }}
         >
           Suivant →
         </Link>
@@ -223,26 +228,25 @@ export default async function SearchPage({
     <>
       <Header />
 
-      <main className="min-h-screen bg-slate-950 pt-16">
+      <main className="min-h-screen pt-16" style={{ background: 'var(--background)' }}>
         {/* Search Header */}
-        <section className="relative bg-slate-900 py-12 overflow-hidden">
+        <section className="relative py-12 overflow-hidden" style={{ background: 'var(--background-secondary)' }}>
           <div className="absolute inset-0">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl" />
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
           </div>
           <div className="relative z-10 max-w-4xl mx-auto px-4">
-            <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center text-white">
+            <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center" style={{ color: 'var(--foreground)' }}>
               Rechercher une entreprise
             </h1>
-            <p className="text-slate-400 text-center mb-8">
+            <p className="text-center mb-8" style={{ color: 'var(--foreground-muted)' }}>
               Plus de 46 000 entreprises québécoises de qualité
             </p>
 
-            {/* Search Form */}
             <form action="/recherche" method="GET" className="glass rounded-2xl overflow-hidden">
               <div className="flex flex-col md:flex-row">
-                <div className="flex-1 p-5 border-b md:border-b-0 md:border-r border-white/10">
-                  <label className="block text-xs font-bold text-sky-400 uppercase tracking-wide mb-2">
+                <div className="flex-1 p-5 border-b md:border-b-0 md:border-r" style={{ borderColor: 'rgba(128,128,128,0.15)' }}>
+                  <label className="block text-xs font-bold uppercase tracking-wide mb-2" style={{ color: 'var(--accent)' }}>
                     Quoi?
                   </label>
                   <input
@@ -250,12 +254,13 @@ export default async function SearchPage({
                     name="q"
                     defaultValue={query}
                     placeholder="Restaurant, plombier, avocat..."
-                    className="w-full bg-transparent text-white placeholder-slate-500 outline-none text-base"
+                    className="w-full bg-transparent outline-none text-base"
+                    style={{ color: 'var(--foreground)' }}
                     autoComplete="off"
                   />
                 </div>
-                <div className="flex-1 p-5 border-b md:border-b-0 md:border-r border-white/10">
-                  <label className="block text-xs font-bold text-sky-400 uppercase tracking-wide mb-2">
+                <div className="flex-1 p-5 border-b md:border-b-0 md:border-r" style={{ borderColor: 'rgba(128,128,128,0.15)' }}>
+                  <label className="block text-xs font-bold uppercase tracking-wide mb-2" style={{ color: 'var(--accent)' }}>
                     Où?
                   </label>
                   <input
@@ -263,22 +268,24 @@ export default async function SearchPage({
                     name="ville"
                     defaultValue={city || ''}
                     placeholder="Montréal, Québec, Laval..."
-                    className="w-full bg-transparent text-white placeholder-slate-500 outline-none text-base"
+                    className="w-full bg-transparent outline-none text-base"
+                    style={{ color: 'var(--foreground)' }}
                     autoComplete="off"
                   />
                 </div>
-                <div className="flex-1 p-5 border-b md:border-b-0 md:border-r border-white/10">
-                  <label className="block text-xs font-bold text-sky-400 uppercase tracking-wide mb-2">
+                <div className="flex-1 p-5 border-b md:border-b-0 md:border-r" style={{ borderColor: 'rgba(128,128,128,0.15)' }}>
+                  <label className="block text-xs font-bold uppercase tracking-wide mb-2" style={{ color: 'var(--accent)' }}>
                     Catégorie
                   </label>
                   <select
                     name="categorie"
                     defaultValue={category || ''}
-                    className="w-full bg-transparent text-white outline-none text-base"
+                    className="w-full bg-transparent outline-none text-base"
+                    style={{ color: 'var(--foreground)' }}
                   >
-                    <option value="" className="bg-slate-900">Toutes les catégories</option>
+                    <option value="" style={{ background: 'var(--background)' }}>Toutes les catégories</option>
                     {CATEGORIES.map((cat) => (
-                      <option key={cat.id} value={cat.slug} className="bg-slate-900">
+                      <option key={cat.id} value={cat.slug} style={{ background: 'var(--background)' }}>
                         {cat.label_fr}
                       </option>
                     ))}
@@ -302,14 +309,13 @@ export default async function SearchPage({
         {/* Results */}
         <section className="py-8">
           <div className="max-w-6xl mx-auto px-4">
-            {/* Results Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
               {hasFilters ? (
                 <div>
-                  <h2 className="text-xl font-bold text-white">
+                  <h2 className="text-xl font-bold" style={{ color: 'var(--foreground)' }}>
                     {total.toLocaleString('fr-CA')} résultat{total !== 1 ? 's' : ''}
                   </h2>
-                  <p className="text-slate-400 text-sm">
+                  <p className="text-sm" style={{ color: 'var(--foreground-muted)' }}>
                     {query && `pour « ${query} »`}
                     {city && ` à ${city}`}
                     {category && ` dans ${CATEGORIES.find(c => c.slug === category)?.label_fr || category}`}
@@ -317,10 +323,10 @@ export default async function SearchPage({
                 </div>
               ) : (
                 <div>
-                  <h2 className="text-xl font-bold text-white">
+                  <h2 className="text-xl font-bold" style={{ color: 'var(--foreground)' }}>
                     Recherchez une entreprise
                   </h2>
-                  <p className="text-slate-400 text-sm">
+                  <p className="text-sm" style={{ color: 'var(--foreground-muted)' }}>
                     Entrez un terme de recherche pour trouver des entreprises
                   </p>
                 </div>
@@ -329,14 +335,13 @@ export default async function SearchPage({
               {hasFilters && (
                 <Link
                   href="/recherche"
-                  className="text-sky-400 hover:text-sky-300 text-sm font-medium flex items-center gap-1"
+                  className="text-sky-500 hover:text-sky-400 text-sm font-medium flex items-center gap-1"
                 >
                   <span>✕</span> Réinitialiser
                 </Link>
               )}
             </div>
 
-            {/* Results List */}
             {businesses.length > 0 ? (
               <div className="space-y-4">
                 {businesses.map((biz) => (
@@ -346,10 +351,10 @@ export default async function SearchPage({
             ) : hasFilters ? (
               <div className="text-center py-16 glass rounded-xl">
                 <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-xl font-semibold text-white mb-2">
+                <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--foreground)' }}>
                   Aucun résultat trouvé
                 </h3>
-                <p className="text-slate-400 mb-6">
+                <p className="mb-6" style={{ color: 'var(--foreground-muted)' }}>
                   Essayez avec d&apos;autres termes de recherche ou moins de filtres
                 </p>
                 <Link
@@ -362,16 +367,15 @@ export default async function SearchPage({
             ) : (
               <div className="text-center py-16 glass rounded-xl">
                 <div className="text-6xl mb-4">🏢</div>
-                <h3 className="text-xl font-semibold text-white mb-2">
+                <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--foreground)' }}>
                   Trouvez l&apos;entreprise parfaite
                 </h3>
-                <p className="text-slate-400">
+                <p style={{ color: 'var(--foreground-muted)' }}>
                   Utilisez le formulaire ci-dessus pour rechercher parmi plus de 46 000 entreprises de qualité
                 </p>
               </div>
             )}
 
-            {/* Pagination */}
             <Pagination
               currentPage={page}
               totalPages={totalPages}

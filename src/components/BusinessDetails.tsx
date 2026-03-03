@@ -1,14 +1,38 @@
+'use client'
+
 import type { Business } from '@/types/business'
 import Link from 'next/link'
 import Image from 'next/image'
 import { generateSlug } from '@/lib/utils'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import {
+  Card,
+  CardContent,
+  Button,
+  Chip,
+  Rating,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Box,
+  Divider,
+  IconButton,
+} from '@mui/material'
+import PhoneIcon from '@mui/icons-material/Phone'
+import EmailIcon from '@mui/icons-material/Email'
+import LanguageIcon from '@mui/icons-material/Language'
+import NavigationIcon from '@mui/icons-material/Navigation'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+import StarIcon from '@mui/icons-material/Star'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import ShareIcon from '@mui/icons-material/Share'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 interface Props {
   business: Business
-  relatedBusinesses?: Business[]
-  categoryBusinesses?: Business[]
   cityBusinesses?: Business[]
 }
 
@@ -61,13 +85,12 @@ function addUtm(url: string): string {
   }
 }
 
-export default function BusinessDetails({ business, relatedBusinesses = [], categoryBusinesses = [], cityBusinesses = [] }: Props) {
+export default function BusinessDetails({ business, cityBusinesses = [] }: Props) {
   const citySlug = generateSlug(business.city || '')
 
-  // Use verified data if available, otherwise fall back to original (but only for phone in hero buttons)
-  const displayAddress = business.verified_address || null // Only show verified address
-  const displayPhone = business.verified_phone || null // Only show verified phone
-  const displayEmail = business.verified_email || null // Only show verified email
+  const displayAddress = business.verified_address || null
+  const displayPhone = business.verified_phone || null
+  const displayEmail = business.verified_email || null
   const displayCity = business.verified_city || business.city
   const displayPostalCode = business.verified_postal_code || business.postal_code
 
@@ -79,647 +102,597 @@ export default function BusinessDetails({ business, relatedBusinesses = [], cate
     <>
       <Header />
 
-      <main className="min-h-screen bg-slate-950 pt-16">
+      <main className="min-h-screen pt-16" style={{ background: 'var(--background)' }}>
         {/* Hero Section */}
-        <section className="relative bg-slate-900 py-8 overflow-hidden">
-          {/* Background decoration */}
+        <Box
+          component="section"
+          sx={{ position: 'relative', bgcolor: 'background.paper', py: 4, overflow: 'hidden' }}
+        >
           <div className="absolute inset-0">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl" />
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
           </div>
           <div className="relative z-10 max-w-6xl mx-auto px-4">
             {/* Breadcrumb */}
-            <nav className="text-sm mb-6 flex items-center gap-2 text-slate-400 flex-wrap">
-              <Link href="/" className="hover:text-sky-400 transition-colors">Accueil</Link>
+            <Box component="nav" sx={{ fontSize: '0.875rem', mb: 3, display: 'flex', alignItems: 'center', gap: 1, color: 'text.secondary', flexWrap: 'wrap' }}>
+              <Link href="/" className="hover:text-sky-400 transition-colors" style={{ color: 'inherit' }}>Accueil</Link>
               <span>›</span>
-              <Link href="/recherche" className="hover:text-sky-400 transition-colors">
-                Entreprises
-              </Link>
+              <Link href="/recherche" className="hover:text-sky-400 transition-colors" style={{ color: 'inherit' }}>Entreprises</Link>
               <span>›</span>
-              <Link href={`/ville/${citySlug}`} className="hover:text-sky-400 transition-colors">
-                {business.city}
-              </Link>
+              <Link href={`/ville/${citySlug}`} className="hover:text-sky-400 transition-colors" style={{ color: 'inherit' }}>{business.city}</Link>
               <span>›</span>
-              <span className="text-white">{business.name}</span>
-            </nav>
+              <Box component="span" sx={{ color: 'text.primary' }}>{business.name}</Box>
+            </Box>
 
             <div className="flex flex-col md:flex-row gap-6 items-start">
               {/* Logo */}
-              <div className="w-32 h-32 rounded-xl bg-white/10 backdrop-blur-sm p-2 shrink-0 border border-white/10">
+              <Box sx={{ width: 128, height: 128, borderRadius: 3, bgcolor: 'action.hover', p: 1, flexShrink: 0, border: '1px solid', borderColor: 'divider' }}>
                 <img
                   src={business.logo_url || '/images/logos/logo.webp'}
                   alt={business.logo_url
                     ? `Logo de ${business.name}`
                     : `${business.name} - Entreprise enregistrée au Registre du Québec à ${business.city || 'Québec'}`}
-                  className={`w-full h-full object-contain ${!business.logo_url ? 'brightness-0 invert' : ''}`}
+                  className={`w-full h-full object-contain ${!business.logo_url ? 'brightness-0 invert dark:brightness-0 dark:invert' : ''}`}
                 />
-              </div>
+              </Box>
 
               <div className="flex-1">
-                <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">
+                <Box component="h1" sx={{ fontSize: { xs: '1.875rem', md: '2.25rem' }, fontWeight: 700, mb: 1, color: 'text.primary' }}>
                   {business.name}
-                </h1>
+                </Box>
 
-                <div className="flex flex-wrap items-center gap-3 text-slate-300">
-                  <span className="flex items-center gap-1">
-                    <span>📍</span>
-                    {business.city}, {business.region || 'Québec'}
-                  </span>
+                <div className="flex flex-wrap items-center gap-3">
+                  <Chip
+                    icon={<LocationOnIcon />}
+                    label={`${business.city}, ${business.region || 'Québec'}`}
+                    variant="outlined"
+                    size="small"
+                    sx={{ borderColor: 'divider' }}
+                  />
 
                   {business.google_rating && (
-                    <span className="flex items-center gap-1 bg-amber-500/20 px-3 py-1 rounded-full">
-                      <span className="text-amber-400">★</span>
-                      <span className="font-bold text-white">{business.google_rating}</span>
-                      {business.google_reviews_count && (
-                        <span className="text-sm text-slate-400">({business.google_reviews_count} avis)</span>
-                      )}
-                    </span>
+                    <Chip
+                      icon={<StarIcon sx={{ color: '#f59e0b !important' }} />}
+                      label={
+                        <Box className="flex items-center gap-1">
+                          <Box component="span" sx={{ fontWeight: 700 }}>{business.google_rating}</Box>
+                          {business.google_reviews_count && (
+                            <Box component="span" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>({business.google_reviews_count} avis)</Box>
+                          )}
+                        </Box>
+                      }
+                      sx={{ bgcolor: 'rgba(245,158,11,0.1)', borderColor: 'rgba(245,158,11,0.3)' }}
+                      variant="outlined"
+                      size="small"
+                    />
+                  )}
+
+                  {business.main_category_slug && (
+                    <Chip
+                      component={Link}
+                      href={`/categorie/${business.main_category_slug}`}
+                      label={categoryLabels[business.main_category_slug] || business.main_category_slug}
+                      clickable
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                    />
                   )}
                 </div>
 
                 {/* Quick Action Buttons */}
-                <div className="flex flex-wrap gap-3 mt-4">
+                <div className="flex flex-wrap gap-2 mt-4">
                   {displayPhone && (
-                    <a
+                    <Button
+                      component="a"
                       href={`tel:${displayPhone}`}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 rounded-xl font-medium transition-colors text-white"
+                      variant="contained"
+                      startIcon={<PhoneIcon />}
+                      size="small"
+                      sx={{ bgcolor: '#16a34a', '&:hover': { bgcolor: '#22c55e' } }}
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                      </svg>
                       Appeler
-                    </a>
+                    </Button>
                   )}
-
                   {displayEmail && (
-                    <a
+                    <Button
+                      component="a"
                       href={`mailto:${displayEmail}`}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 rounded-xl font-medium transition-colors text-white"
+                      variant="contained"
+                      startIcon={<EmailIcon />}
+                      size="small"
+                      sx={{ bgcolor: '#9333ea', '&:hover': { bgcolor: '#a855f7' } }}
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                        <polyline points="22,6 12,13 2,6" />
-                      </svg>
                       Courriel
-                    </a>
+                    </Button>
                   )}
-
                   {business.website && (
-                    <a
+                    <Button
+                      component="a"
                       href={addUtm(business.website)}
                       target="_blank"
                       rel="noopener noreferrer nofollow"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-500 rounded-xl font-medium transition-colors text-white"
+                      variant="contained"
+                      startIcon={<LanguageIcon />}
+                      size="small"
+                      color="primary"
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" />
-                        <line x1="2" y1="12" x2="22" y2="12" />
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                      </svg>
                       Site web
-                    </a>
+                    </Button>
                   )}
-
                   {(business.latitude && business.longitude) && (
-                    <a
+                    <Button
+                      component="a"
                       href={`https://waze.com/ul?ll=${business.latitude},${business.longitude}&navigate=yes`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#33ccff] hover:bg-[#00b8f5] text-black rounded-xl font-medium transition-colors"
+                      variant="contained"
+                      startIcon={<NavigationIcon />}
+                      size="small"
+                      sx={{ bgcolor: '#33ccff', color: '#000', '&:hover': { bgcolor: '#00b8f5' } }}
                     >
-                      <Image src="/images/logos/waze.svg" alt="Waze" width={20} height={20} />
                       Itinéraire
-                    </a>
+                    </Button>
                   )}
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </Box>
 
         {/* Main Content */}
-        <section className="py-8">
+        <section className="py-8" style={{ background: 'var(--background-secondary)' }}>
           <div className="max-w-6xl mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Left Column - Main Content */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Left Column */}
               <div className="lg:col-span-2 space-y-6">
-                {/* About Section */}
-                <div className="glass rounded-xl p-6">
-                  <h2 className="text-xl font-bold text-white mb-4">À propos</h2>
-                  {business.ai_description ? (
-                    <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-                      {business.ai_description}
-                    </p>
-                  ) : business.description ? (
-                    <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-                      {business.description}
-                    </p>
-                  ) : (
-                    <p className="text-slate-500 italic">
-                      Aucune description disponible pour cette entreprise.
-                    </p>
-                  )}
+                {/* About */}
+                <Card elevation={2} sx={{ bgcolor: 'background.paper' }}>
+                  <CardContent sx={{ p: 3 }}>
+                    <Box component="h2" sx={{ fontSize: '1.25rem', fontWeight: 700, color: 'text.primary', mb: 2 }}>À propos</Box>
+                    {business.ai_description ? (
+                      <Box sx={{ color: 'text.secondary', lineHeight: 1.8, whiteSpace: 'pre-line' }}>
+                        {business.ai_description}
+                      </Box>
+                    ) : business.description ? (
+                      <Box sx={{ color: 'text.secondary', lineHeight: 1.8, whiteSpace: 'pre-line' }}>
+                        {business.description}
+                      </Box>
+                    ) : (
+                      <Box sx={{ color: 'text.secondary', fontStyle: 'italic' }}>
+                        Aucune description disponible pour cette entreprise.
+                      </Box>
+                    )}
 
-                  {business.ai_services && business.ai_services.length > 0 && (
-                    <div className="mt-6 pt-6 border-t border-white/10">
-                      <h3 className="font-semibold text-white mb-3">Services</h3>
-                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        {business.ai_services.map((service, i) => (
-                          <li key={i} className="flex items-center gap-2 text-slate-300">
-                            <span className="text-green-400">✓</span>
-                            {service}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                    {business.ai_services && business.ai_services.length > 0 && (
+                      <>
+                        <Divider sx={{ my: 3 }} />
+                        <Box component="h3" sx={{ fontWeight: 600, color: 'text.primary', mb: 2 }}>Services</Box>
+                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                          {business.ai_services.map((service, i) => (
+                            <li key={i} className="flex items-center gap-2">
+                              <CheckCircleIcon sx={{ fontSize: 18, color: '#22c55e' }} />
+                              <Box component="span" sx={{ color: 'text.secondary' }}>{service}</Box>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
 
-                  {!business.ai_services && business.products_services && (
-                    <div className="mt-6 pt-6 border-t border-white/10">
-                      <h3 className="font-semibold text-white mb-3">Produits et services</h3>
-                      <ul className="list-disc list-inside text-slate-300 space-y-1">
-                        {business.products_services.split('\n').filter(Boolean).map((service, i) => (
-                          <li key={i}>{service.trim()}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
+                    {!business.ai_services && business.products_services && (
+                      <>
+                        <Divider sx={{ my: 3 }} />
+                        <Box component="h3" sx={{ fontWeight: 600, color: 'text.primary', mb: 2 }}>Produits et services</Box>
+                        <ul className="list-disc list-inside space-y-1">
+                          {business.products_services.split('\n').filter(Boolean).map((service, i) => (
+                            <li key={i} style={{ color: 'var(--foreground-muted)' }}>{service.trim()}</li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+                  </CardContent>
+                </Card>
 
                 {/* Gallery */}
                 {business.gallery_images && business.gallery_images.length > 0 && (
-                  <div className="glass rounded-xl p-6">
-                    <h2 className="text-xl font-bold text-white mb-4">Photos</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {business.gallery_images.map((img, i) => (
-                        <div key={i} className="aspect-square rounded-lg overflow-hidden">
-                          <img
-                            src={img}
-                            alt={`${business.name} - Photo ${i + 1}`}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <Card elevation={2} sx={{ bgcolor: 'background.paper' }}>
+                    <CardContent sx={{ p: 3 }}>
+                      <Box component="h2" sx={{ fontSize: '1.25rem', fontWeight: 700, color: 'text.primary', mb: 2 }}>Photos</Box>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {business.gallery_images.map((img, i) => (
+                          <div key={i} className="aspect-square rounded-lg overflow-hidden">
+                            <img src={img} alt={`${business.name} - Photo ${i + 1}`} className="w-full h-full object-cover" />
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
                 )}
 
                 {/* Google Reviews */}
                 {business.google_reviews && Array.isArray(business.google_reviews) && business.google_reviews.length > 0 && (
-                  <div className="glass rounded-xl p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-xl font-bold text-white">Avis Google</h2>
-                      {business.google_rating && (
-                        <div className="flex items-center gap-2">
-                          <div className="flex">
-                            {[1, 2, 3, 4, 5].map(star => (
-                              <span key={star} className={star <= Math.round(business.google_rating!) ? 'text-amber-400' : 'text-slate-600'}>★</span>
-                            ))}
-                          </div>
-                          <span className="font-bold text-white">{business.google_rating}</span>
-                          <span className="text-slate-400 text-sm">({business.google_reviews_count} avis)</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="space-y-4">
-                      {(business.google_reviews as Array<{text?: string; rating?: number; author_name?: string; relative_time_description?: string}>).filter(r => r.text).map((review, i) => (
-                        <div key={i} className="bg-slate-800/50 rounded-lg p-4">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="font-medium text-white">{review.author_name || 'Anonyme'}</span>
-                            <div className="flex items-center gap-2">
-                              <div className="flex text-sm">
-                                {[1, 2, 3, 4, 5].map(star => (
-                                  <span key={star} className={star <= (review.rating || 0) ? 'text-amber-400' : 'text-slate-600'}>★</span>
-                                ))}
-                              </div>
-                              {review.relative_time_description && (
-                                <span className="text-xs text-slate-500">{review.relative_time_description}</span>
-                              )}
-                            </div>
-                          </div>
-                          <p className="text-slate-300 text-sm leading-relaxed">{review.text}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <Card elevation={2} sx={{ bgcolor: 'background.paper' }}>
+                    <CardContent sx={{ p: 3 }}>
+                      <Box className="flex items-center justify-between mb-4">
+                        <Box component="h2" sx={{ fontSize: '1.25rem', fontWeight: 700, color: 'text.primary' }}>Avis Google</Box>
+                        {business.google_rating && (
+                          <Box className="flex items-center gap-2">
+                            <Rating value={business.google_rating} readOnly precision={0.5} size="small" />
+                            <Box component="span" sx={{ fontWeight: 700, color: 'text.primary' }}>{business.google_rating}</Box>
+                            <Box component="span" sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>({business.google_reviews_count} avis)</Box>
+                          </Box>
+                        )}
+                      </Box>
+                      <div className="space-y-4">
+                        {(business.google_reviews as Array<{text?: string; rating?: number; author_name?: string; relative_time_description?: string}>).filter(r => r.text).map((review, i) => (
+                          <Box key={i} sx={{ bgcolor: 'action.hover', borderRadius: 2, p: 2 }}>
+                            <Box className="flex items-center justify-between mb-2">
+                              <Box component="span" sx={{ fontWeight: 500, color: 'text.primary' }}>{review.author_name || 'Anonyme'}</Box>
+                              <Box className="flex items-center gap-2">
+                                <Rating value={review.rating || 0} readOnly size="small" />
+                                {review.relative_time_description && (
+                                  <Box component="span" sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>{review.relative_time_description}</Box>
+                                )}
+                              </Box>
+                            </Box>
+                            <Box sx={{ color: 'text.secondary', fontSize: '0.875rem', lineHeight: 1.6 }}>{review.text}</Box>
+                          </Box>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
                 )}
 
                 {/* FAQ Section */}
-                <div className="glass rounded-xl p-6">
-                  <h2 className="text-xl font-bold text-white mb-4">Questions fréquentes</h2>
-                  <div className="space-y-3">
-                    <details className="group bg-slate-800/50 rounded-lg" open>
-                      <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
-                        Comment contacter {business.name} ?
-                        <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
-                      </summary>
-                      <div className="px-4 pb-4 text-slate-300 space-y-2">
-                        <p>
-                          {business.name} est situé à {displayAddress || business.city || 'Québec'}
-                          {displayCity && displayAddress ? `, ${displayCity}` : ''}
-                          {business.region && `, dans la région de ${business.region}`}
-                          {business.mrc && ` (MRC ${business.mrc})`}
-                          {displayPostalCode && `, ${displayPostalCode}`}.
-                        </p>
-                        {displayPhone && <p>Téléphone : {displayPhone}</p>}
-                        {displayEmail && <p>Courriel : {displayEmail}</p>}
-                        {business.website && <p>Site web : {business.website.replace(/^https?:\/\//, '').replace(/\/+$/, '')}</p>}
-                      </div>
-                    </details>
+                <Card elevation={2} sx={{ bgcolor: 'background.paper' }}>
+                  <CardContent sx={{ p: 3 }}>
+                    <Box component="h2" sx={{ fontSize: '1.25rem', fontWeight: 700, color: 'text.primary', mb: 2 }}>Questions fréquentes</Box>
+                    <div className="space-y-2">
+                      <Accordion defaultExpanded disableGutters elevation={0} sx={{ bgcolor: 'action.hover', borderRadius: '12px !important', '&:before': { display: 'none' } }}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ fontWeight: 500, color: 'text.primary' }}>
+                          Comment contacter {business.name} ?
+                        </AccordionSummary>
+                        <AccordionDetails sx={{ color: 'text.secondary' }}>
+                          <Box className="space-y-2">
+                            <p>
+                              {business.name} est situé à {displayAddress || business.city || 'Québec'}
+                              {displayCity && displayAddress ? `, ${displayCity}` : ''}
+                              {business.region && `, dans la région de ${business.region}`}
+                              {business.mrc && ` (MRC ${business.mrc})`}
+                              {displayPostalCode && `, ${displayPostalCode}`}.
+                            </p>
+                            {displayPhone && <p>Téléphone : {displayPhone}</p>}
+                            {displayEmail && <p>Courriel : {displayEmail}</p>}
+                            {business.website && <p>Site web : {business.website.replace(/^https?:\/\//, '').replace(/\/+$/, '')}</p>}
+                          </Box>
+                        </AccordionDetails>
+                      </Accordion>
 
-                    {business.main_category_slug && (
-                      <details className="group bg-slate-800/50 rounded-lg">
-                        <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
-                          Dans quel domaine {business.name} se spécialise ?
-                          <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
-                        </summary>
-                        <div className="px-4 pb-4 text-slate-300 space-y-2">
-                          <p>
-                            {business.name} oeuvre dans le domaine «{' '}
-                            {categoryLabels[business.main_category_slug] || business.main_category_slug} » à {business.city || 'au Québec'}.
-                          </p>
-                          {(business.ai_services && business.ai_services.length > 0) ? (
-                            <p>Parmi ses services : {business.ai_services.slice(0, 5).join(', ')}.</p>
-                          ) : business.products_services ? (
-                            <p>Parmi ses services : {business.products_services.split('\n').filter(Boolean).slice(0, 5).join(', ')}.</p>
-                          ) : null}
-                        </div>
-                      </details>
-                    )}
+                      {business.main_category_slug && (
+                        <Accordion disableGutters elevation={0} sx={{ bgcolor: 'action.hover', borderRadius: '12px !important', '&:before': { display: 'none' } }}>
+                          <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ fontWeight: 500, color: 'text.primary' }}>
+                            Dans quel domaine {business.name} se spécialise ?
+                          </AccordionSummary>
+                          <AccordionDetails sx={{ color: 'text.secondary' }}>
+                            <Box className="space-y-2">
+                              <p>
+                                {business.name} oeuvre dans le domaine «{' '}
+                                {categoryLabels[business.main_category_slug] || business.main_category_slug} » à {business.city || 'au Québec'}.
+                              </p>
+                              {(business.ai_services && business.ai_services.length > 0) ? (
+                                <p>Parmi ses services : {business.ai_services.slice(0, 5).join(', ')}.</p>
+                              ) : business.products_services ? (
+                                <p>Parmi ses services : {business.products_services.split('\n').filter(Boolean).slice(0, 5).join(', ')}.</p>
+                              ) : null}
+                            </Box>
+                          </AccordionDetails>
+                        </Accordion>
+                      )}
 
-                    {business.google_rating && (
-                      <details className="group bg-slate-800/50 rounded-lg">
-                        <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
-                          Quelle est la réputation de {business.name} ?
-                          <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
-                        </summary>
-                        <p className="px-4 pb-4 text-slate-300">
-                          {business.name} a une note de {business.google_rating}/5 sur Google
-                          {business.google_reviews_count > 0 && `, basée sur ${business.google_reviews_count} avis de clients`}.
-                          {business.google_rating >= 4 && ' Cette note élevée témoigne de la satisfaction de sa clientèle.'}
-                        </p>
-                      </details>
-                    )}
+                      {business.google_rating && (
+                        <Accordion disableGutters elevation={0} sx={{ bgcolor: 'action.hover', borderRadius: '12px !important', '&:before': { display: 'none' } }}>
+                          <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ fontWeight: 500, color: 'text.primary' }}>
+                            Quelle est la réputation de {business.name} ?
+                          </AccordionSummary>
+                          <AccordionDetails sx={{ color: 'text.secondary' }}>
+                            {business.name} a une note de {business.google_rating}/5 sur Google
+                            {business.google_reviews_count > 0 && `, basée sur ${business.google_reviews_count} avis de clients`}.
+                            {business.google_rating >= 4 && ' Cette note élevée témoigne de la satisfaction de sa clientèle.'}
+                          </AccordionDetails>
+                        </Accordion>
+                      )}
 
-                    {hasOpeningHours && (
-                      <details className="group bg-slate-800/50 rounded-lg">
-                        <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-white">
-                          Quelles sont les heures d&apos;ouverture de {business.name} ?
-                          <span className="transform transition-transform group-open:rotate-180 text-slate-400">▼</span>
-                        </summary>
-                        <p className="px-4 pb-4 text-slate-300">
-                          Consultez les heures d&apos;ouverture dans la section &quot;Heures d&apos;ouverture&quot; sur cette page.
-                        </p>
-                      </details>
-                    )}
-                  </div>
-                </div>
+                      {hasOpeningHours && (
+                        <Accordion disableGutters elevation={0} sx={{ bgcolor: 'action.hover', borderRadius: '12px !important', '&:before': { display: 'none' } }}>
+                          <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ fontWeight: 500, color: 'text.primary' }}>
+                            Quelles sont les heures d&apos;ouverture de {business.name} ?
+                          </AccordionSummary>
+                          <AccordionDetails sx={{ color: 'text.secondary' }}>
+                            Consultez les heures d&apos;ouverture dans la section &quot;Heures d&apos;ouverture&quot; sur cette page.
+                          </AccordionDetails>
+                        </Accordion>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
 
               {/* Right Column - Sidebar */}
               <div className="space-y-6">
                 {/* Contact Card */}
                 {hasContactInfo && (
-                  <div className="glass rounded-xl p-6">
-                    <h3 className="text-lg font-bold text-white mb-4">Coordonnées</h3>
-                    <div className="space-y-4">
-                      {displayAddress && (
-                        <div className="flex items-start gap-3">
-                          <span className="text-slate-500 mt-0.5">📍</span>
-                          <div>
-                            <p className="text-white">{displayAddress}</p>
-                            {displayCity && (
-                              <p className="text-slate-400">
-                                {displayCity}{displayPostalCode && `, ${displayPostalCode}`}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      {displayPhone && (
-                        <div className="flex items-center gap-3">
-                          <span className="text-slate-500">📞</span>
-                          <a href={`tel:${displayPhone}`} className="text-sky-400 hover:text-sky-300">
-                            {displayPhone}
-                          </a>
-                        </div>
-                      )}
-
-                      {displayEmail && (
-                        <div className="flex items-center gap-3">
-                          <span className="text-slate-500">✉️</span>
-                          <a href={`mailto:${displayEmail}`} className="text-sky-400 hover:text-sky-300 truncate">
-                            {displayEmail}
-                          </a>
-                        </div>
-                      )}
-
-                      {business.website && (
-                        <div className="flex items-center gap-3">
-                          <span className="text-slate-500">🌐</span>
-                          <a
-                            href={addUtm(business.website)}
-                            target="_blank"
-                            rel="noopener noreferrer nofollow"
-                            className="text-sky-400 hover:text-sky-300 truncate"
-                          >
-                            {business.website.replace(/^https?:\/\//, '').replace(/\/+$/, '')}
-                          </a>
-                        </div>
-                      )}
-
-                      {business.neq && (
-                        <div className="flex items-center gap-3 pt-3 border-t border-white/10">
-                          <span className="text-slate-500">🏛️</span>
-                          <div>
-                            <span className="text-sm text-slate-500">NEQ: </span>
-                            <span className="text-white">{business.neq}</span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                  <Card elevation={2} sx={{ bgcolor: 'background.paper' }}>
+                    <CardContent sx={{ p: 3 }}>
+                      <Box component="h3" sx={{ fontSize: '1.125rem', fontWeight: 700, color: 'text.primary', mb: 2 }}>Coordonnées</Box>
+                      <div className="space-y-4">
+                        {displayAddress && (
+                          <Box className="flex items-start gap-3">
+                            <LocationOnIcon sx={{ color: 'text.secondary', mt: 0.25, fontSize: 20 }} />
+                            <Box>
+                              <Box sx={{ color: 'text.primary' }}>{displayAddress}</Box>
+                              {displayCity && (
+                                <Box sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
+                                  {displayCity}{displayPostalCode && `, ${displayPostalCode}`}
+                                </Box>
+                              )}
+                            </Box>
+                          </Box>
+                        )}
+                        {displayPhone && (
+                          <Box className="flex items-center gap-3">
+                            <PhoneIcon sx={{ color: 'text.secondary', fontSize: 20 }} />
+                            <a href={`tel:${displayPhone}`} className="text-sky-500 hover:text-sky-400">{displayPhone}</a>
+                          </Box>
+                        )}
+                        {displayEmail && (
+                          <Box className="flex items-center gap-3">
+                            <EmailIcon sx={{ color: 'text.secondary', fontSize: 20 }} />
+                            <a href={`mailto:${displayEmail}`} className="text-sky-500 hover:text-sky-400 truncate">{displayEmail}</a>
+                          </Box>
+                        )}
+                        {business.website && (
+                          <Box className="flex items-center gap-3">
+                            <LanguageIcon sx={{ color: 'text.secondary', fontSize: 20 }} />
+                            <a href={addUtm(business.website)} target="_blank" rel="noopener noreferrer nofollow" className="text-sky-500 hover:text-sky-400 truncate">
+                              {business.website.replace(/^https?:\/\//, '').replace(/\/+$/, '')}
+                            </a>
+                          </Box>
+                        )}
+                        {business.neq && (
+                          <>
+                            <Divider />
+                            <Box className="flex items-center gap-3">
+                              <Box sx={{ fontSize: '1.25rem' }}>🏛️</Box>
+                              <Box>
+                                <Box component="span" sx={{ fontSize: '0.875rem', color: 'text.secondary' }}>NEQ: </Box>
+                                <Box component="span" sx={{ color: 'text.primary' }}>{business.neq}</Box>
+                              </Box>
+                            </Box>
+                          </>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
                 )}
 
                 {/* Map */}
                 {(business.latitude && business.longitude) && (
-                  <div className="glass rounded-xl p-6">
-                    <h3 className="text-lg font-bold text-white mb-4">Localisation</h3>
-                    <div className="rounded-lg overflow-hidden">
-                      <iframe
-                        width="100%"
-                        height="250"
-                        style={{ border: 0 }}
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        src={`https://www.openstreetmap.org/export/embed.html?bbox=${Number(business.longitude) - 0.01}%2C${Number(business.latitude) - 0.01}%2C${Number(business.longitude) + 0.01}%2C${Number(business.latitude) + 0.01}&layer=mapnik&marker=${business.latitude}%2C${business.longitude}`}
-                      />
-                    </div>
-                    <a
-                      href={`https://www.openstreetmap.org/?mlat=${business.latitude}&mlon=${business.longitude}#map=16/${business.latitude}/${business.longitude}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 text-sm font-medium"
-                    >
-                      <span>🗺️</span>
-                      Voir sur OpenStreetMap
-                    </a>
-                  </div>
+                  <Card elevation={2} sx={{ bgcolor: 'background.paper' }}>
+                    <CardContent sx={{ p: 3 }}>
+                      <Box component="h3" sx={{ fontSize: '1.125rem', fontWeight: 700, color: 'text.primary', mb: 2 }}>Localisation</Box>
+                      <div className="rounded-lg overflow-hidden">
+                        <iframe
+                          width="100%"
+                          height="250"
+                          style={{ border: 0 }}
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                          src={`https://www.openstreetmap.org/export/embed.html?bbox=${Number(business.longitude) - 0.01}%2C${Number(business.latitude) - 0.01}%2C${Number(business.longitude) + 0.01}%2C${Number(business.latitude) + 0.01}&layer=mapnik&marker=${business.latitude}%2C${business.longitude}`}
+                        />
+                      </div>
+                      <Button
+                        component="a"
+                        href={`https://www.openstreetmap.org/?mlat=${business.latitude}&mlon=${business.longitude}#map=16/${business.latitude}/${business.longitude}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        size="small"
+                        sx={{ mt: 1.5, color: 'primary.main' }}
+                      >
+                        Voir sur OpenStreetMap
+                      </Button>
+                    </CardContent>
+                  </Card>
                 )}
 
                 {/* Official Source */}
-                <div className="glass rounded-xl p-6">
-                  <h3 className="text-lg font-bold text-white mb-4">Source officielle</h3>
-                  <p className="text-sm text-slate-400">
-                    Cette fiche est basée sur les informations du Registre des entreprises du Quebec.
-                  </p>
-                  <a
-                    href="https://www.registreentreprises.gouv.qc.ca/reqna/gr/gr03/gr03a71.rechercheregistre.mvc/gr03a71?choixdomaine=RegistreEntreprisesQuebec"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 text-sm font-medium"
-                  >
-                    Consulter le registre
-                  </a>
-                </div>
+                <Card elevation={2} sx={{ bgcolor: 'background.paper' }}>
+                  <CardContent sx={{ p: 3 }}>
+                    <Box component="h3" sx={{ fontSize: '1.125rem', fontWeight: 700, color: 'text.primary', mb: 2 }}>Source officielle</Box>
+                    <Box sx={{ fontSize: '0.875rem', color: 'text.secondary', mb: 1.5 }}>
+                      Cette fiche est basée sur les informations du Registre des entreprises du Quebec.
+                    </Box>
+                    <Button
+                      component="a"
+                      href="https://www.registreentreprises.gouv.qc.ca/reqna/gr/gr03/gr03a71.rechercheregistre.mvc/gr03a71?choixdomaine=RegistreEntreprisesQuebec"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      size="small"
+                      sx={{ color: 'primary.main' }}
+                    >
+                      Consulter le registre
+                    </Button>
+                  </CardContent>
+                </Card>
 
                 {/* Opening Hours */}
                 {hasOpeningHours && (
-                  <div className="glass rounded-xl p-6">
-                    <h3 className="text-lg font-bold text-white mb-4">Heures d&apos;ouverture</h3>
-                    <div className="space-y-2">
-                      {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => {
-                        const hours = business.opening_hours?.[day]
-                        if (!hours) return null
-
-                        return (
-                          <div key={day} className="flex justify-between py-1.5 border-b border-white/10 last:border-0">
-                            <span className="font-medium text-slate-300">{dayNames[day]}</span>
-                            <span className="text-slate-400">
-                              {hours.closed ? 'Fermé' : `${hours.open} - ${hours.close}`}
-                            </span>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
+                  <Card elevation={2} sx={{ bgcolor: 'background.paper' }}>
+                    <CardContent sx={{ p: 3 }}>
+                      <Box component="h3" sx={{ fontSize: '1.125rem', fontWeight: 700, color: 'text.primary', mb: 2 }}>Heures d&apos;ouverture</Box>
+                      <div className="space-y-0">
+                        {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => {
+                          const hours = business.opening_hours?.[day]
+                          if (!hours) return null
+                          return (
+                            <Box key={day} sx={{ display: 'flex', justifyContent: 'space-between', py: 1, borderBottom: '1px solid', borderColor: 'divider', '&:last-child': { borderBottom: 'none' } }}>
+                              <Box sx={{ fontWeight: 500, color: 'text.primary' }}>{dayNames[day]}</Box>
+                              <Box sx={{ color: 'text.secondary' }}>
+                                {hours.closed ? 'Fermé' : `${hours.open} - ${hours.close}`}
+                              </Box>
+                            </Box>
+                          )
+                        })}
+                      </div>
+                    </CardContent>
+                  </Card>
                 )}
 
                 {/* Social Media */}
                 {hasSocialMedia && (
-                  <div className="glass rounded-xl p-6">
-                    <h3 className="text-lg font-bold text-white mb-4">Réseaux sociaux</h3>
-                    <div className="flex flex-wrap gap-3">
-                      {business.facebook_url && (
-                        <a
-                          href={business.facebook_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-10 h-10 bg-[#1877f2] text-white rounded-lg flex items-center justify-center hover:opacity-90 transition-opacity"
-                          title="Facebook"
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                          </svg>
-                        </a>
-                      )}
-                      {business.instagram_url && (
-                        <a
-                          href={business.instagram_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-10 h-10 bg-gradient-to-br from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white rounded-lg flex items-center justify-center hover:opacity-90 transition-opacity"
-                          title="Instagram"
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                          </svg>
-                        </a>
-                      )}
-                      {business.linkedin_url && (
-                        <a
-                          href={business.linkedin_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-10 h-10 bg-[#0077b5] text-white rounded-lg flex items-center justify-center hover:opacity-90 transition-opacity"
-                          title="LinkedIn"
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                          </svg>
-                        </a>
-                      )}
-                    </div>
-                  </div>
+                  <Card elevation={2} sx={{ bgcolor: 'background.paper' }}>
+                    <CardContent sx={{ p: 3 }}>
+                      <Box component="h3" sx={{ fontSize: '1.125rem', fontWeight: 700, color: 'text.primary', mb: 2 }}>Réseaux sociaux</Box>
+                      <div className="flex flex-wrap gap-2">
+                        {business.facebook_url && (
+                          <IconButton
+                            component="a"
+                            href={business.facebook_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            sx={{ bgcolor: '#1877f2', color: 'white', '&:hover': { bgcolor: '#1565d8' } }}
+                          >
+                            <FacebookIcon />
+                          </IconButton>
+                        )}
+                        {business.instagram_url && (
+                          <IconButton
+                            component="a"
+                            href={business.instagram_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            sx={{ background: 'linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)', color: 'white', '&:hover': { opacity: 0.9 } }}
+                          >
+                            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                          </IconButton>
+                        )}
+                        {business.linkedin_url && (
+                          <IconButton
+                            component="a"
+                            href={business.linkedin_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            sx={{ bgcolor: '#0077b5', color: 'white', '&:hover': { bgcolor: '#006699' } }}
+                          >
+                            <LinkedInIcon />
+                          </IconButton>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
                 )}
 
-                {/* Share Card */}
-                <div className="glass rounded-xl p-6">
-                  <h3 className="text-lg font-bold text-white mb-4">Partager</h3>
-                  <div className="flex gap-3">
-                    <a
-                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://registreduquebec.com/entreprise/${business.slug}`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 py-2 bg-[#1877f2] text-white rounded-lg text-center text-sm font-medium hover:opacity-90 transition-opacity"
-                    >
-                      Facebook
-                    </a>
-                    <a
-                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://registreduquebec.com/entreprise/${business.slug}`)}&text=${encodeURIComponent(`Découvrez ${business.name} à ${business.city}`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 py-2 bg-black text-white rounded-lg text-center text-sm font-medium hover:opacity-90 transition-opacity"
-                    >
-                      X
-                    </a>
-                  </div>
-                </div>
+                {/* Share */}
+                <Card elevation={2} sx={{ bgcolor: 'background.paper' }}>
+                  <CardContent sx={{ p: 3 }}>
+                    <Box component="h3" sx={{ fontSize: '1.125rem', fontWeight: 700, color: 'text.primary', mb: 2 }}>Partager</Box>
+                    <div className="flex gap-2">
+                      <Button
+                        component="a"
+                        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://registreduquebec.com/entreprise/${business.slug}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variant="contained"
+                        fullWidth
+                        size="small"
+                        sx={{ bgcolor: '#1877f2', '&:hover': { bgcolor: '#1565d8' } }}
+                      >
+                        Facebook
+                      </Button>
+                      <Button
+                        component="a"
+                        href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://registreduquebec.com/entreprise/${business.slug}`)}&text=${encodeURIComponent(`Découvrez ${business.name} à ${business.city}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variant="contained"
+                        fullWidth
+                        size="small"
+                        sx={{ bgcolor: '#000', '&:hover': { bgcolor: '#333' } }}
+                      >
+                        X
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Related Businesses */}
-        {relatedBusinesses.length > 0 && (
-          <section className="py-8 bg-slate-900">
-            <div className="max-w-6xl mx-auto px-4">
-              <h2 className="text-2xl font-bold text-white mb-6">
-                Entreprises à découvrir dans la région
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {relatedBusinesses.map((biz) => {
-                  return (
-                    <Link
-                      key={biz.id}
-                      href={`/entreprise/${biz.slug}`}
-                      className="glass rounded-xl p-6 hover:bg-white/10 transition-all"
-                    >
-                      <h3 className="font-bold text-white mb-2 line-clamp-2">{biz.name}</h3>
-                      <p className="text-slate-400 text-sm flex items-center gap-1">
-                        <span>📍</span> {biz.city}
-                      </p>
-                      {biz.google_rating && (
-                        <div className="flex items-center gap-1 mt-2">
-                          <span className="text-amber-400">★</span>
-                          <span className="font-medium text-white">{biz.google_rating}</span>
-                        </div>
-                      )}
-                    </Link>
-                  )
-                })}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Category Businesses */}
-        {categoryBusinesses.length > 0 && business.main_category_slug && (
-          <section className="py-8 bg-slate-950">
-            <div className="max-w-6xl mx-auto px-4">
-              <h2 className="text-2xl font-bold text-white mb-2">
-                <Link href={`/categorie/${business.main_category_slug}`} className="hover:text-sky-400 transition-colors">
-                  {categoryLabels[business.main_category_slug] || business.main_category_slug}
-                </Link>
-              </h2>
-              <p className="text-slate-400 mb-6">
-                Autres entreprises dans cette catégorie
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {categoryBusinesses.map((biz) => (
-                  <Link
-                    key={biz.id}
-                    href={`/entreprise/${biz.slug}`}
-                    className="glass rounded-xl p-6 hover:bg-white/10 transition-all"
-                  >
-                    <h3 className="font-bold text-white mb-2 line-clamp-2">{biz.name}</h3>
-                    <p className="text-slate-400 text-sm flex items-center gap-1">
-                      <span>📍</span> {biz.city}
-                    </p>
-                    {biz.google_rating && (
-                      <div className="flex items-center gap-1 mt-2">
-                        <span className="text-amber-400">★</span>
-                        <span className="font-medium text-white">{biz.google_rating}</span>
-                      </div>
-                    )}
-                  </Link>
-                ))}
-              </div>
-              <div className="mt-4">
-                <Link
-                  href={`/categorie/${business.main_category_slug}`}
-                  className="text-sky-400 hover:text-sky-300 text-sm font-medium"
-                >
-                  Voir toutes les entreprises en {categoryLabels[business.main_category_slug] || business.main_category_slug} →
-                </Link>
-              </div>
-            </div>
-          </section>
-        )}
-
         {/* City Businesses */}
         {cityBusinesses.length > 0 && business.city && (
-          <section className="py-8 bg-slate-900">
+          <Box component="section" sx={{ py: 4, bgcolor: 'background.paper' }}>
             <div className="max-w-6xl mx-auto px-4">
-              <h2 className="text-2xl font-bold text-white mb-2">
-                <Link href={`/ville/${citySlug}`} className="hover:text-sky-400 transition-colors">
+              <Box component="h2" sx={{ fontSize: '1.5rem', fontWeight: 700, color: 'text.primary', mb: 1 }}>
+                <Link href={`/ville/${citySlug}`} className="hover:text-sky-400 transition-colors" style={{ color: 'inherit', textDecoration: 'none' }}>
                   Entreprises à {business.city}
                 </Link>
-              </h2>
-              <p className="text-slate-400 mb-6">
-                Autres entreprises dans cette ville
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              </Box>
+              <Box sx={{ color: 'text.secondary', mb: 3 }}>Autres entreprises dans cette ville</Box>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {cityBusinesses.map((biz) => (
-                  <Link
+                  <Card
                     key={biz.id}
-                    href={`/entreprise/${biz.slug}`}
-                    className="glass rounded-xl p-6 hover:bg-white/10 transition-all"
+                    sx={{ bgcolor: 'action.hover', transition: 'all 0.2s', '&:hover': { boxShadow: 4, transform: 'translateY(-2px)' } }}
                   >
-                    <h3 className="font-bold text-white mb-2 line-clamp-2">{biz.name}</h3>
-                    {biz.main_category_slug && (
-                      <p className="text-slate-400 text-sm">{categoryLabels[biz.main_category_slug] || biz.main_category_slug}</p>
-                    )}
-                    {biz.google_rating && (
-                      <div className="flex items-center gap-1 mt-2">
-                        <span className="text-amber-400">★</span>
-                        <span className="font-medium text-white">{biz.google_rating}</span>
-                      </div>
-                    )}
-                  </Link>
+                    <CardContent component={Link} href={`/entreprise/${biz.slug}`} sx={{ p: 3, display: 'block', textDecoration: 'none', color: 'inherit' }}>
+                      <Box sx={{ fontWeight: 700, color: 'text.primary', mb: 1 }} className="line-clamp-2">{biz.name}</Box>
+                      {biz.main_category_slug && (
+                        <Box sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>{categoryLabels[biz.main_category_slug] || biz.main_category_slug}</Box>
+                      )}
+                      {biz.google_rating && (
+                        <Box className="flex items-center gap-1 mt-1">
+                          <Rating value={biz.google_rating} readOnly size="small" precision={0.5} />
+                          <Box component="span" sx={{ fontWeight: 500, color: 'text.primary', fontSize: '0.875rem' }}>{biz.google_rating}</Box>
+                        </Box>
+                      )}
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
-              <div className="mt-4">
-                <Link
-                  href={`/ville/${citySlug}`}
-                  className="text-sky-400 hover:text-sky-300 text-sm font-medium"
-                >
-                  Voir toutes les entreprises à {business.city} →
-                </Link>
-              </div>
+              <Button
+                component={Link}
+                href={`/ville/${citySlug}`}
+                size="small"
+                sx={{ mt: 2, color: 'primary.main' }}
+              >
+                Voir toutes les entreprises à {business.city} →
+              </Button>
             </div>
-          </section>
+          </Box>
         )}
 
-        {/* CTA Section - Only show if business is not claimed */}
+        {/* CTA Section */}
         {!business.owner_id && (
-          <section className="py-12 bg-gradient-to-r from-sky-900/50 to-blue-900/50 border-t border-sky-500/20">
+          <Box component="section" sx={{ py: 6, background: 'linear-gradient(to right, rgba(12,74,110,0.5), rgba(30,58,138,0.5))', borderTop: '1px solid rgba(14,165,233,0.2)' }}>
             <div className="max-w-4xl mx-auto px-4 text-center">
-              <h2 className="text-2xl font-bold mb-4 text-white">
+              <Box component="h2" sx={{ fontSize: '1.5rem', fontWeight: 700, mb: 2, color: 'white' }}>
                 C&apos;est votre entreprise ?
-              </h2>
-              <p className="text-slate-300 mb-6">
+              </Box>
+              <Box sx={{ color: 'rgb(203,213,225)', mb: 3 }}>
                 Réclamez votre fiche gratuitement pour mettre à jour vos informations et gérer votre présence en ligne.
-              </p>
-              <Link
+              </Box>
+              <Button
+                component={Link}
                 href="/connexion"
-                className="inline-block px-6 py-3 bg-white text-slate-900 font-semibold rounded-xl hover:bg-slate-100 transition-colors"
+                variant="contained"
+                sx={{ bgcolor: 'white', color: '#0f172a', '&:hover': { bgcolor: '#f1f5f9' }, fontWeight: 600 }}
               >
                 Réclamer cette fiche
-              </Link>
+              </Button>
             </div>
-          </section>
+          </Box>
         )}
       </main>
 
