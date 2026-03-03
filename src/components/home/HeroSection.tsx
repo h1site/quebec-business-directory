@@ -1,4 +1,10 @@
+'use client'
+
 import Link from 'next/link'
+import { Button, Chip, TextField, InputAdornment } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 
 interface HeroSectionProps {
   totalBusinesses: number
@@ -19,24 +25,25 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
         backgroundImage: 'url(https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80)',
       }}
     >
-      {/* Dark Overlay with gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-sky-900/80" />
-      {/* Animated orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 w-full max-w-4xl mx-auto px-4 py-24 text-center">
-        {/* Beta Badge */}
-        <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full px-5 py-2 mb-8 animate-fade-in">
-          <span className="px-3 py-1 bg-gradient-to-r from-sky-400 to-cyan-400 text-slate-900 text-xs font-bold rounded-full uppercase tracking-wide">
-            Bêta
-          </span>
-          <span className="text-slate-300 text-sm">
-            Version en développement
-          </span>
+        <div className="mb-8 animate-fade-in">
+          <Chip
+            label="Bêta — Version en développement"
+            variant="outlined"
+            sx={{
+              color: 'white',
+              borderColor: 'rgba(255,255,255,0.2)',
+              bgcolor: 'rgba(255,255,255,0.05)',
+              backdropFilter: 'blur(8px)',
+              fontWeight: 500,
+            }}
+          />
         </div>
 
         <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 animate-slide-up">
@@ -52,74 +59,129 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
           {' '}entreprises québécoises vérifiées
         </p>
 
-        {/* Search Form - Glassmorphism Style */}
         <form
           action="/recherche"
           method="GET"
           className="glass rounded-2xl overflow-hidden mb-8 animate-slide-up animation-delay-200"
         >
           <div className="flex flex-col md:flex-row">
-            <div className="flex-1 p-5 border-b md:border-b-0 md:border-r border-white/10">
-              <label className="block text-xs font-bold text-sky-400 uppercase tracking-wide mb-2 text-left">
-                Quoi?
-              </label>
-              <input
-                type="text"
+            <div className="flex-1 p-4 border-b md:border-b-0 md:border-r border-white/10">
+              <TextField
                 name="q"
                 placeholder="Restaurant, plombier, avocat..."
-                className="w-full bg-transparent text-white placeholder-slate-500 outline-none text-lg"
+                variant="standard"
+                fullWidth
+                label="Quoi?"
+                slotProps={{
+                  input: {
+                    disableUnderline: true,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon sx={{ color: 'rgba(148,163,184,0.6)' }} />
+                      </InputAdornment>
+                    ),
+                    sx: { color: 'white', fontSize: '1.1rem' },
+                  },
+                  inputLabel: {
+                    sx: { color: '#0ea5e9', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' },
+                    shrink: true,
+                  },
+                }}
               />
             </div>
-            <div className="flex-1 p-5 border-b md:border-b-0 md:border-r border-white/10">
-              <label className="block text-xs font-bold text-sky-400 uppercase tracking-wide mb-2 text-left">
-                Où?
-              </label>
-              <input
-                type="text"
+            <div className="flex-1 p-4 border-b md:border-b-0 md:border-r border-white/10">
+              <TextField
                 name="ville"
                 placeholder="Montréal, Québec, Laval..."
-                className="w-full bg-transparent text-white placeholder-slate-500 outline-none text-lg"
+                variant="standard"
+                fullWidth
+                label="Où?"
+                slotProps={{
+                  input: {
+                    disableUnderline: true,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LocationOnIcon sx={{ color: 'rgba(148,163,184,0.6)' }} />
+                      </InputAdornment>
+                    ),
+                    sx: { color: 'white', fontSize: '1.1rem' },
+                  },
+                  inputLabel: {
+                    sx: { color: '#0ea5e9', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' },
+                    shrink: true,
+                  },
+                }}
               />
             </div>
-            <button
+            <Button
               type="submit"
-              className="bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-white px-10 py-5 md:py-0 flex items-center justify-center gap-2 font-semibold transition-all hover:scale-105 active:scale-95"
+              variant="contained"
+              startIcon={<SearchIcon />}
+              sx={{
+                background: 'linear-gradient(to right, #0ea5e9, #06b6d4)',
+                '&:hover': { background: 'linear-gradient(to right, #38bdf8, #22d3ee)' },
+                px: 5,
+                py: { xs: 2, md: 0 },
+                borderRadius: 0,
+                fontSize: '1rem',
+                fontWeight: 600,
+              }}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.35-4.35" />
-              </svg>
               <span className="hidden md:inline">Rechercher</span>
-            </button>
+            </Button>
           </div>
         </form>
 
-        {/* Quick Search Buttons */}
         <div className="flex flex-wrap justify-center gap-3 animate-slide-up animation-delay-300">
           {quickSearches.map((item) => (
-            <Link
+            <Chip
               key={item.query}
+              component={Link}
               href={`/recherche?q=${encodeURIComponent(item.query)}`}
-              className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-sky-500/50 text-white px-5 py-2.5 rounded-xl font-medium text-sm transition-all hover:-translate-y-0.5"
-            >
-              <span>{item.icon}</span>
-              {item.label}
-            </Link>
+              icon={<span>{item.icon}</span>}
+              label={item.label}
+              clickable
+              variant="outlined"
+              sx={{
+                color: 'white',
+                borderColor: 'rgba(255,255,255,0.15)',
+                bgcolor: 'rgba(255,255,255,0.05)',
+                '&:hover': {
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                  borderColor: 'rgba(14,165,233,0.5)',
+                  transform: 'translateY(-2px)',
+                },
+                transition: 'all 0.2s ease',
+                fontWeight: 500,
+                py: 2.5,
+                px: 1,
+              }}
+            />
           ))}
         </div>
 
-        {/* Add Business CTA */}
         <div className="mt-12 glass rounded-2xl p-6 max-w-xl mx-auto animate-slide-up animation-delay-400">
           <p className="text-slate-300 text-sm mb-4">
             Vous êtes propriétaire d&apos;une entreprise?
           </p>
-          <Link
+          <Button
+            component={Link}
             href="/inscription"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-xl font-semibold text-sm transition-all hover:-translate-y-0.5"
+            variant="outlined"
+            startIcon={<AutoAwesomeIcon />}
+            sx={{
+              color: 'white',
+              borderColor: 'rgba(255,255,255,0.2)',
+              '&:hover': {
+                bgcolor: 'rgba(255,255,255,0.1)',
+                borderColor: 'rgba(255,255,255,0.3)',
+                transform: 'translateY(-2px)',
+              },
+              transition: 'all 0.2s ease',
+            }}
           >
-            <span>✨</span>
             Réclamez votre fiche gratuitement
-          </Link>
+          </Button>
         </div>
       </div>
     </section>

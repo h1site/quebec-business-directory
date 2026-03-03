@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { Card, CardActionArea, Box } from '@mui/material'
 
 interface Category {
   id: string
@@ -34,31 +37,41 @@ const categoryIcons: Record<string, string> = {
 
 export default function CategoriesSection({ categories }: CategoriesSectionProps) {
   return (
-    <section className="py-20 bg-slate-900">
+    <section className="py-20" style={{ background: 'var(--background-secondary)' }}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-3xl font-bold text-white mb-3">
+          <h2 className="text-3xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>
             Parcourir par catégorie
           </h2>
-          <p className="text-slate-400">
+          <p style={{ color: 'var(--foreground-muted)' }}>
             Explorez nos catégories pour trouver ce que vous cherchez
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {categories.map((category) => (
-            <Link
+            <Card
               key={category.id}
-              href={`/categorie/${category.slug}`}
-              className="group flex items-center gap-4 bg-slate-800/50 hover:bg-slate-800 p-5 rounded-xl border border-slate-700/50 hover:border-sky-500/50 transition-all hover:-translate-y-1 animate-fade-in-up"
+              sx={{
+                bgcolor: 'background.paper',
+                transition: 'all 0.2s ease',
+                '&:hover': { transform: 'translateY(-4px)', boxShadow: 6 },
+              }}
+              className="animate-fade-in-up"
             >
-              <span className="text-3xl group-hover:scale-110 transition-transform">
-                {categoryIcons[category.slug] || '📁'}
-              </span>
-              <span className="font-medium text-slate-200 group-hover:text-sky-400 transition-colors">
-                {category.label_fr}
-              </span>
-            </Link>
+              <CardActionArea
+                component={Link}
+                href={`/categorie/${category.slug}`}
+                sx={{ p: 2.5, display: 'flex', justifyContent: 'flex-start', gap: 2 }}
+              >
+                <Box sx={{ fontSize: '1.875rem', lineHeight: 1 }}>
+                  {categoryIcons[category.slug] || '📁'}
+                </Box>
+                <Box sx={{ fontWeight: 500, color: 'text.primary' }}>
+                  {category.label_fr}
+                </Box>
+              </CardActionArea>
+            </Card>
           ))}
         </div>
       </div>

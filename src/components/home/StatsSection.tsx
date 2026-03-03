@@ -1,3 +1,7 @@
+'use client'
+
+import { Box, Paper } from '@mui/material'
+
 interface StatItemProps {
   value: string
   label: string
@@ -6,21 +10,34 @@ interface StatItemProps {
 
 function StatItem({ value, label, icon }: StatItemProps) {
   return (
-    <div className="text-center animate-fade-in-up">
-      <div className="inline-flex items-center justify-center w-16 h-16 bg-sky-500/10 rounded-2xl mb-4 text-3xl">
-        {icon}
-      </div>
-      <div className="text-4xl md:text-5xl font-bold text-white mb-2">
+    <Box className="text-center animate-fade-in-up">
+      <Box sx={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 64, height: 64, bgcolor: 'primary.main', borderRadius: 4, mb: 2, fontSize: '1.875rem', opacity: 0.15 }}>
+        <Box sx={{ opacity: 1, position: 'absolute' }}>{icon}</Box>
+      </Box>
+      <Box className="relative" sx={{ mb: 2 }}>
+        <Box sx={{ fontSize: '1.875rem' }}>{icon}</Box>
+      </Box>
+      <Box sx={{ fontSize: { xs: '2.25rem', md: '3rem' }, fontWeight: 800, color: 'primary.main', mb: 1 }}>
         {value}
-      </div>
-      <div className="text-slate-400">{label}</div>
-    </div>
+      </Box>
+      <Box sx={{ color: 'text.secondary' }}>{label}</Box>
+    </Box>
   )
 }
 
 export default function StatsSection() {
   return (
-    <section className="py-20 bg-slate-900 overflow-hidden relative">
+    <Paper
+      component="section"
+      elevation={0}
+      sx={{
+        py: 10,
+        bgcolor: 'background.paper',
+        overflow: 'hidden',
+        position: 'relative',
+        borderRadius: 0,
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <StatItem icon="🏢" value="46 000+" label="Entreprises de qualité" />
@@ -29,10 +46,9 @@ export default function StatsSection() {
         </div>
       </div>
 
-      {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/5 rounded-full blur-3xl" />
       </div>
-    </section>
+    </Paper>
   )
 }
