@@ -5,14 +5,33 @@ import Image from 'next/image'
 import { useState, useEffect, useMemo } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import type { User } from '@supabase/supabase-js'
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  IconButton,
+  Drawer,
+  Box,
+  Divider,
+  Avatar,
+  Chip,
+} from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close'
+import SearchIcon from '@mui/icons-material/Search'
+import AddBusinessIcon from '@mui/icons-material/AddBusiness'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import LogoutIcon from '@mui/icons-material/Logout'
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import LoginIcon from '@mui/icons-material/Login'
+import ThemeToggle from '@/components/ThemeToggle'
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 
-  // Create supabase client once
   const supabase = useMemo(() => createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -45,234 +64,300 @@ export default function Header() {
     window.location.href = '/'
   }
 
-  const closeMenu = () => setIsMenuOpen(false)
-
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled
-        ? 'bg-slate-900/95 backdrop-blur-md shadow-lg shadow-black/20'
-        : 'bg-transparent'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <nav className="flex items-center justify-between h-16">
+    <>
+      <AppBar
+        position="fixed"
+        elevation={isScrolled ? 2 : 0}
+        sx={{
+          bgcolor: isScrolled ? 'background.paper' : 'transparent',
+          backdropFilter: isScrolled ? 'blur(12px)' : 'none',
+          transition: 'all 0.3s ease',
+          borderBottom: isScrolled ? '1px solid' : 'none',
+          borderColor: 'divider',
+        }}
+      >
+        <Toolbar className="max-w-7xl mx-auto w-full px-4 sm:px-6" sx={{ minHeight: { xs: 64 } }}>
           {/* Logo */}
-          <Link href="/" prefetch={true} className="flex items-center gap-3 group">
+          <Link href="/" prefetch={true} className="flex items-center gap-3 group no-underline">
             <Image
               src="/images/logos/logo.webp"
               alt="Registre du Québec"
-              width={40}
-              height={40}
+              width={36}
+              height={36}
               priority
               className="rounded-xl drop-shadow-lg group-hover:scale-105 transition-transform brightness-0 invert"
             />
-            <div className="hidden sm:block">
-              <span className="font-bold text-white text-sm">Registre du Québec</span>
-              <span className="ml-2 px-2 py-0.5 bg-sky-500/20 text-sky-400 text-[10px] font-semibold rounded-full uppercase tracking-wide">
-                Bêta
-              </span>
-            </div>
+            <Box className="hidden sm:flex items-center gap-2">
+              <Box component="span" sx={{ fontWeight: 700, fontSize: '0.875rem', color: 'text.primary' }}>
+                Registre du Québec
+              </Box>
+              <Chip label="Bêta" size="small" color="primary" variant="outlined" sx={{ fontSize: '0.6rem', height: 20 }} />
+            </Box>
           </Link>
 
+          <Box sx={{ flexGrow: 1 }} />
+
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
-            <Link
+          <Box className="hidden lg:flex items-center gap-1">
+            <Button
+              component={Link}
               href="/"
-              className="px-4 py-2 rounded-lg font-medium text-sm text-slate-300 hover:text-white hover:bg-white/10 transition-all"
+              color="inherit"
+              sx={{ fontSize: '0.875rem', color: 'text.secondary', '&:hover': { color: 'text.primary', bgcolor: 'action.hover' } }}
             >
               Accueil
-            </Link>
-            <Link
+            </Button>
+            <Button
+              component={Link}
               href="/recherche"
-              className="px-4 py-2 rounded-lg font-medium text-sm text-slate-300 hover:text-white hover:bg-white/10 transition-all"
+              color="inherit"
+              startIcon={<SearchIcon sx={{ fontSize: 18 }} />}
+              sx={{ fontSize: '0.875rem', color: 'text.secondary', '&:hover': { color: 'text.primary', bgcolor: 'action.hover' } }}
             >
               Recherche
-            </Link>
-            <Link
+            </Button>
+            <Button
+              component={Link}
               href="/entreprise/nouvelle"
-              className="px-4 py-2 rounded-lg font-medium text-sm text-slate-300 hover:text-white hover:bg-white/10 transition-all"
+              color="inherit"
+              startIcon={<AddBusinessIcon sx={{ fontSize: 18 }} />}
+              sx={{ fontSize: '0.875rem', color: 'text.secondary', '&:hover': { color: 'text.primary', bgcolor: 'action.hover' } }}
             >
               Ajouter
-            </Link>
+            </Button>
 
-            <div className="w-px h-5 mx-2 bg-slate-700" />
+            <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'divider' }} />
+
+            <ThemeToggle />
 
             {!loading && (
               <>
                 {user ? (
-                  <div className="flex items-center gap-2">
-                    <Link
+                  <Box className="flex items-center gap-1">
+                    <Button
+                      component={Link}
                       href="/tableau-de-bord"
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all bg-white/10 hover:bg-white/20 border border-white/10"
+                      variant="outlined"
+                      size="small"
+                      startIcon={
+                        user.user_metadata?.avatar_url ? (
+                          <Avatar src={user.user_metadata.avatar_url} sx={{ width: 24, height: 24 }} />
+                        ) : (
+                          <Avatar sx={{ width: 24, height: 24, bgcolor: 'primary.main', fontSize: '0.75rem' }}>
+                            {user.email?.charAt(0).toUpperCase()}
+                          </Avatar>
+                        )
+                      }
+                      sx={{ borderColor: 'divider', color: 'text.primary', textTransform: 'none' }}
                     >
-                      {user.user_metadata?.avatar_url ? (
-                        <Image
-                          src={user.user_metadata.avatar_url}
-                          alt=""
-                          width={24}
-                          height={24}
-                          className="rounded-full"
-                        />
-                      ) : (
-                        <div className="w-6 h-6 bg-sky-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                          {user.email?.charAt(0).toUpperCase()}
-                        </div>
-                      )}
-                      <span className="text-sm font-medium text-white hidden xl:block">
+                      <Box component="span" className="hidden xl:inline">
                         {user.user_metadata?.full_name || user.email?.split('@')[0]}
-                      </span>
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="px-3 py-1.5 rounded-lg font-medium text-sm text-slate-400 hover:text-white hover:bg-white/10 transition-all"
-                    >
-                      Déconnexion
-                    </button>
-                  </div>
+                      </Box>
+                    </Button>
+                    <IconButton onClick={handleLogout} size="small" sx={{ color: 'text.secondary' }}>
+                      <LogoutIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
                 ) : (
-                  <Link
+                  <Button
+                    component={Link}
                     href="/connexion"
-                    className="px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white rounded-lg font-semibold text-sm transition-all btn-glow"
+                    variant="contained"
+                    size="small"
+                    startIcon={<LoginIcon />}
                   >
                     Connexion
-                  </Link>
+                  </Button>
                 )}
               </>
             )}
 
-            <a
+            <Button
+              component="a"
               href="https://www.paypal.com/donate/?hosted_button_id=GUPL4K5WR3ZG4"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-2 px-3 py-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white rounded-lg font-semibold text-sm transition-all flex items-center gap-1.5"
+              variant="contained"
+              size="small"
+              startIcon={<FavoriteIcon />}
+              sx={{
+                ml: 1,
+                background: 'linear-gradient(to right, #ec4899, #f43f5e)',
+                '&:hover': { background: 'linear-gradient(to right, #db2777, #e11d48)' },
+              }}
             >
-              <span>❤️</span>
-              <span className="hidden xl:inline">Don</span>
-            </a>
+              <Box component="span" className="hidden xl:inline">Don</Box>
+            </Button>
 
-            <Link
+            <Button
+              component={Link}
               href="/en"
-              className="ml-2 px-3 py-2 rounded-lg font-medium text-sm text-slate-400 hover:text-white hover:bg-white/10 transition-all"
+              color="inherit"
+              size="small"
+              sx={{ ml: 1, minWidth: 'auto', color: 'text.secondary', fontWeight: 600 }}
             >
               EN
-            </Link>
-          </div>
+            </Button>
+          </Box>
 
-          {/* Mobile: Language + Menu */}
-          <div className="flex lg:hidden items-center gap-3">
-            <Link
+          {/* Mobile */}
+          <Box className="flex lg:hidden items-center gap-1">
+            <ThemeToggle />
+            <Button
+              component={Link}
               href="/en"
-              className="px-2 py-1 rounded text-sm font-medium text-slate-400 hover:text-white"
+              color="inherit"
+              size="small"
+              sx={{ minWidth: 'auto', color: 'text.secondary', fontWeight: 600 }}
             >
               EN
-            </Link>
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
-              aria-label="Menu"
+            </Button>
+            <IconButton
+              color="inherit"
+              onClick={() => setDrawerOpen(true)}
+              sx={{ color: 'text.primary' }}
             >
-              {isMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+              <MenuIcon />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        PaperProps={{
+          sx: {
+            width: 300,
+            bgcolor: 'background.paper',
+            p: 2,
+          },
+        }}
+      >
+        <Box className="flex justify-between items-center mb-4">
+          <Box sx={{ fontWeight: 700, fontSize: '1rem', color: 'text.primary' }}>Menu</Box>
+          <IconButton onClick={() => setDrawerOpen(false)} sx={{ color: 'text.secondary' }}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+
+        {user && (
+          <Button
+            component={Link}
+            href="/tableau-de-bord"
+            onClick={() => setDrawerOpen(false)}
+            fullWidth
+            startIcon={
+              user.user_metadata?.avatar_url ? (
+                <Avatar src={user.user_metadata.avatar_url} sx={{ width: 36, height: 36 }} />
               ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
-          </div>
-        </nav>
-
-        {/* Mobile menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden glass-dark rounded-2xl p-4 mb-4 animate-fade-in">
-            <div className="flex flex-col gap-1">
-              {user && (
-                <Link
-                  href="/tableau-de-bord"
-                  onClick={closeMenu}
-                  className="flex items-center gap-3 p-3 bg-white/5 hover:bg-white/10 rounded-xl mb-2 transition-colors"
-                >
-                  {user.user_metadata?.avatar_url ? (
-                    <Image
-                      src={user.user_metadata.avatar_url}
-                      alt=""
-                      width={36}
-                      height={36}
-                      className="rounded-full"
-                    />
-                  ) : (
-                    <div className="w-9 h-9 bg-sky-500 rounded-full flex items-center justify-center text-white font-bold">
-                      {user.email?.charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                  <div>
-                    <span className="font-medium text-white block">
-                      {user.user_metadata?.full_name || user.email?.split('@')[0]}
-                    </span>
-                    <span className="text-xs text-slate-400">Tableau de bord</span>
-                  </div>
-                </Link>
-              )}
-
-              <Link
-                href="/"
-                onClick={closeMenu}
-                className="text-slate-300 font-medium py-3 px-4 rounded-xl hover:bg-white/10 hover:text-white transition-colors"
-              >
-                Accueil
-              </Link>
-              <Link
-                href="/recherche"
-                onClick={closeMenu}
-                className="text-slate-300 font-medium py-3 px-4 rounded-xl hover:bg-white/10 hover:text-white transition-colors"
-              >
-                Recherche
-              </Link>
-              <Link
-                href="/entreprise/nouvelle"
-                onClick={closeMenu}
-                className="text-slate-300 font-medium py-3 px-4 rounded-xl hover:bg-white/10 hover:text-white transition-colors"
-              >
-                Ajouter une entreprise
-              </Link>
-
-              <hr className="my-3 border-slate-700" />
-
-              {user ? (
-                <button
-                  onClick={() => {
-                    handleLogout()
-                    closeMenu()
-                  }}
-                  className="text-red-400 font-medium py-3 px-4 rounded-xl hover:bg-red-500/10 transition-colors text-left"
-                >
-                  Déconnexion
-                </button>
-              ) : (
-                <Link
-                  href="/connexion"
-                  onClick={closeMenu}
-                  className="bg-sky-500 hover:bg-sky-600 text-white text-center py-3 px-4 rounded-xl font-semibold transition-colors"
-                >
-                  Connexion avec Google
-                </Link>
-              )}
-
-              <a
-                href="https://www.paypal.com/donate/?hosted_button_id=GUPL4K5WR3ZG4"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={closeMenu}
-                className="mt-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-center py-3 px-4 rounded-xl font-semibold flex items-center justify-center gap-2"
-              >
-                <span>❤️</span>
-                Faire un don
-              </a>
-            </div>
-          </div>
+                <Avatar sx={{ width: 36, height: 36, bgcolor: 'primary.main' }}>
+                  {user.email?.charAt(0).toUpperCase()}
+                </Avatar>
+              )
+            }
+            sx={{
+              justifyContent: 'flex-start',
+              color: 'text.primary',
+              textTransform: 'none',
+              mb: 2,
+              py: 1.5,
+              bgcolor: 'action.hover',
+              borderRadius: 3,
+            }}
+          >
+            <Box>
+              <Box sx={{ fontWeight: 600, lineHeight: 1.2 }}>
+                {user.user_metadata?.full_name || user.email?.split('@')[0]}
+              </Box>
+              <Box sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>Tableau de bord</Box>
+            </Box>
+          </Button>
         )}
-      </div>
-    </header>
+
+        <Box className="flex flex-col gap-1">
+          <Button
+            component={Link}
+            href="/"
+            onClick={() => setDrawerOpen(false)}
+            fullWidth
+            sx={{ justifyContent: 'flex-start', color: 'text.primary', py: 1.5 }}
+          >
+            Accueil
+          </Button>
+          <Button
+            component={Link}
+            href="/recherche"
+            onClick={() => setDrawerOpen(false)}
+            fullWidth
+            startIcon={<SearchIcon />}
+            sx={{ justifyContent: 'flex-start', color: 'text.primary', py: 1.5 }}
+          >
+            Recherche
+          </Button>
+          <Button
+            component={Link}
+            href="/entreprise/nouvelle"
+            onClick={() => setDrawerOpen(false)}
+            fullWidth
+            startIcon={<AddBusinessIcon />}
+            sx={{ justifyContent: 'flex-start', color: 'text.primary', py: 1.5 }}
+          >
+            Ajouter une entreprise
+          </Button>
+        </Box>
+
+        <Divider sx={{ my: 2 }} />
+
+        {user ? (
+          <Button
+            onClick={() => {
+              handleLogout()
+              setDrawerOpen(false)
+            }}
+            fullWidth
+            color="error"
+            startIcon={<LogoutIcon />}
+            sx={{ justifyContent: 'flex-start', py: 1.5 }}
+          >
+            Déconnexion
+          </Button>
+        ) : (
+          <Button
+            component={Link}
+            href="/connexion"
+            onClick={() => setDrawerOpen(false)}
+            fullWidth
+            variant="contained"
+            startIcon={<LoginIcon />}
+            sx={{ py: 1.5 }}
+          >
+            Connexion avec Google
+          </Button>
+        )}
+
+        <Button
+          component="a"
+          href="https://www.paypal.com/donate/?hosted_button_id=GUPL4K5WR3ZG4"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setDrawerOpen(false)}
+          fullWidth
+          variant="contained"
+          startIcon={<FavoriteIcon />}
+          sx={{
+            mt: 2,
+            py: 1.5,
+            background: 'linear-gradient(to right, #ec4899, #f43f5e)',
+            '&:hover': { background: 'linear-gradient(to right, #db2777, #e11d48)' },
+          }}
+        >
+          Faire un don
+        </Button>
+      </Drawer>
+    </>
   )
 }

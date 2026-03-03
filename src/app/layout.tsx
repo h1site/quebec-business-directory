@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Script from 'next/script'
+import ThemeRegistry from '@/providers/ThemeRegistry'
 import './globals.css'
 
 const googleVerification =
@@ -77,9 +78,25 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" className="dark" suppressHydrationWarning>
       <head>
-                <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const mode = localStorage.getItem('theme-mode');
+                if (mode === 'light') {
+                  document.documentElement.classList.remove('dark');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                } else {
+                  document.documentElement.classList.add('dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         {/* Google Tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NF84WEBS49"
@@ -100,8 +117,10 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={`${inter.variable} font-sans antialiased bg-gray-50 text-gray-900`}>
-        {children}
+      <body className={`${inter.variable} font-sans antialiased`}>
+        <ThemeRegistry>
+          {children}
+        </ThemeRegistry>
       </body>
     </html>
   )
