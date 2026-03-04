@@ -30,32 +30,12 @@ import FacebookIcon from '@mui/icons-material/Facebook'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import ShareIcon from '@mui/icons-material/Share'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { categoryLabels } from '@/lib/category-labels'
 
 interface Props {
   business: Business
   cityBusinesses?: Business[]
-}
-
-const categoryLabels: Record<string, string> = {
-  'agriculture-et-environnement': 'Agriculture et environnement',
-  'arts-medias-et-divertissement': 'Arts, médias et divertissement',
-  'automobile-et-transport': 'Automobile et transport',
-  'commerce-de-detail': 'Commerce de détail',
-  'construction-et-renovation': 'Construction et rénovation',
-  'education-et-formation': 'Éducation et formation',
-  'finance-assurance-et-juridique': 'Finance, assurance et juridique',
-  'immobilier': 'Immobilier',
-  'industrie-fabrication-et-logistique': 'Industrie, fabrication et logistique',
-  'maison-et-services-domestiques': 'Maison et services domestiques',
-  'organismes-publics-et-communautaires': 'Organismes publics et communautaires',
-  'restauration-et-alimentation': 'Restauration et alimentation',
-  'sante-et-bien-etre': 'Santé et bien-être',
-  'services-funeraires': 'Services funéraires',
-  'services-professionnels': 'Services professionnels',
-  'soins-a-domicile': 'Soins à domicile',
-  'sports-et-loisirs': 'Sports et loisirs',
-  'technologie-et-informatique': 'Technologie et informatique',
-  'tourisme-et-hebergement': 'Tourisme et hébergement',
+  categoryBusinesses?: Business[]
 }
 
 const dayNames: Record<string, string> = {

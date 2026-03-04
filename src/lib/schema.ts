@@ -466,6 +466,56 @@ export function generateFAQSchemaSimple(business: Business, isEnglish = false) {
   }
 }
 
+// ============================================
+// Listing page schemas (city, category, combo)
+// ============================================
+
+export function generateItemListSchema(
+  name: string,
+  url: string,
+  businesses: Array<{ name: string; slug: string; google_rating?: number | null }>,
+  totalCount: number
+) {
+  const baseUrl = 'https://registreduquebec.com'
+  return {
+    '@type': 'ItemList',
+    name,
+    description: name,
+    url,
+    numberOfItems: totalCount,
+    itemListElement: businesses.slice(0, 20).map((biz, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'LocalBusiness',
+        name: biz.name,
+        url: `${baseUrl}/entreprise/${biz.slug}`,
+        ...(biz.google_rating ? {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: biz.google_rating,
+            bestRating: '5',
+          },
+        } : {}),
+      },
+    })),
+  }
+}
+
+export function generateListingBreadcrumbSchema(
+  items: Array<{ name: string; url: string }>
+) {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  }
+}
+
 export function generateBreadcrumbSchemaSimple(business: Business, isEnglish = false) {
   const baseUrl = 'https://registreduquebec.com'
 

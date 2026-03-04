@@ -36,6 +36,21 @@ export async function GET() {
   </sitemap>`)
   }
 
+  sitemaps.push(`  <sitemap>
+    <loc>${baseUrl}/sitemap-villes.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>`)
+
+  sitemaps.push(`  <sitemap>
+    <loc>${baseUrl}/sitemap-categories.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>`)
+
+  sitemaps.push(`  <sitemap>
+    <loc>${baseUrl}/sitemap-combo.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>`)
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemaps.join('\n')}

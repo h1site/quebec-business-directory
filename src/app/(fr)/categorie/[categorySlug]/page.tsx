@@ -5,9 +5,8 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { createServiceClient } from '@/lib/supabase/server'
 import { generateSlug } from '@/lib/utils'
-import trafficSlugs from '@/data/traffic-slugs.json'
-
-const trafficSlugSet = new Set(trafficSlugs.slugs)
+import { slugToCity } from '@/lib/cities'
+import { generateItemListSchema, generateListingBreadcrumbSchema } from '@/lib/schema'
 
 interface Props {
   params: Promise<{
@@ -18,7 +17,6 @@ interface Props {
   }>
 }
 
-// ISR: Revalidate every 24 hours
 export const revalidate = 86400
 
 async function getCategory(slug: string) {
@@ -28,7 +26,6 @@ async function getCategory(slug: string) {
     .select('id, slug, label_fr, label_en')
     .eq('slug', slug)
     .single()
-
   return data
 }
 
@@ -57,8 +54,39 @@ async function getBusinessesByCategory(categorySlug: string, page: number) {
 
   return {
     businesses: data || [],
-    total: count || 0
+    total: count || 0,
   }
+}
+
+async function getPopularCitiesForCategory(categorySlug: string) {
+  const supabase = createServiceClient()
+
+  const { data } = await supabase
+    .from('businesses')
+    .select('city')
+    .eq('main_category_slug', categorySlug)
+    .not('slug', 'is', null)
+    .not('website', 'is', null)
+    .not('city', 'is', null)
+    .limit(1000)
+
+  if (!data) return []
+
+  const counts: Record<string, number> = {}
+  for (const b of data) {
+    if (b.city) {
+      counts[b.city] = (counts[b.city] || 0) + 1
+    }
+  }
+
+  return Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 12)
+    .map(([city, count]) => ({
+      name: city,
+      slug: generateSlug(city),
+      count,
+    }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -69,9 +97,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: 'Catégorie non trouvée' }
   }
 
+  const { total } = await getBusinessesByCategory(categorySlug, 1)
+
   return {
     title: `${category.label_fr} - Entreprises au Québec`,
-    description: `Trouvez les meilleures entreprises de ${category.label_fr} au Québec. Annuaire complet avec coordonnées, avis et informations détaillées.`,
+    description: `${total.toLocaleString('fr-CA')} entreprises de ${category.label_fr} au Québec. Comparez les avis, coordonnées et services.`,
+    alternates: { canonical: `https://registreduquebec.com/categorie/${categorySlug}` },
   }
 }
 
@@ -81,12 +112,12 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   const page = Math.max(1, parseInt(pageParam || '1', 10))
 
   const category = await getCategory(categorySlug)
+  if (!category) notFound()
 
-  if (!category) {
-    notFound()
-  }
-
-  const { businesses, total } = await getBusinessesByCategory(categorySlug, page)
+  const [{ businesses, total }, popularCities] = await Promise.all([
+    getBusinessesByCategory(categorySlug, page),
+    getPopularCitiesForCategory(categorySlug),
+  ])
   const totalPages = Math.ceil(total / 20)
 
   const buildUrl = (pageNum: number) => {
@@ -94,8 +125,26 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     return `/categorie/${categorySlug}?page=${pageNum}`
   }
 
+  const baseUrl = 'https://registreduquebec.com'
+  const itemListSchema = generateItemListSchema(
+    category.label_fr,
+    `${baseUrl}/categorie/${categorySlug}`,
+    businesses,
+    total
+  )
+  const breadcrumbSchema = generateListingBreadcrumbSchema([
+    { name: 'Accueil', url: baseUrl },
+    { name: 'Entreprises', url: `${baseUrl}/recherche` },
+    { name: category.label_fr, url: `${baseUrl}/categorie/${categorySlug}` },
+  ])
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [itemListSchema, breadcrumbSchema] }) }}
+      />
+
       <Header />
 
       <main className="min-h-screen bg-slate-950 pt-16">
@@ -106,7 +155,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
           </div>
           <div className="relative z-10 max-w-6xl mx-auto px-4">
-            {/* Breadcrumb */}
             <nav className="text-sm mb-6 flex items-center gap-2 text-slate-400">
               <Link href="/" className="hover:text-sky-400 transition-colors">Accueil</Link>
               <span>›</span>
@@ -119,10 +167,32 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               {category.label_fr}
             </h1>
             <p className="text-slate-400 text-lg">
-              {total.toLocaleString('fr-CA')} entreprise{total !== 1 ? 's' : ''} trouvée{total !== 1 ? 's' : ''}
+              {total.toLocaleString('fr-CA')} entreprise{total !== 1 ? 's' : ''} au Québec
             </p>
           </div>
         </section>
+
+        {/* Popular cities for this category — linking to combo pages */}
+        {popularCities.length > 0 && (
+          <section className="py-8 border-b border-slate-800">
+            <div className="max-w-6xl mx-auto px-4">
+              <h2 className="text-xl font-bold text-white mb-4">
+                {category.label_fr} par ville
+              </h2>
+              <div className="flex flex-wrap gap-3">
+                {popularCities.map((city) => (
+                  <Link
+                    key={city.slug}
+                    href={`/categorie/${categorySlug}/${city.slug}`}
+                    className="px-4 py-2 bg-slate-800/50 hover:bg-slate-800 rounded-lg border border-slate-700/50 hover:border-sky-500/50 text-slate-300 hover:text-sky-400 text-sm font-medium transition-all"
+                  >
+                    {city.name} ({city.count})
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Results */}
         <section className="py-8">
@@ -163,19 +233,14 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                             </p>
                           )}
                         </div>
-
                         {business.google_rating && (
                           <div className="flex flex-col items-end shrink-0">
                             <div className="flex items-center gap-1 bg-amber-500/20 px-3 py-1.5 rounded-lg">
                               <span className="text-amber-400 text-lg">★</span>
-                              <span className="font-bold text-white">
-                                {business.google_rating}
-                              </span>
+                              <span className="font-bold text-white">{business.google_rating}</span>
                             </div>
                             {business.google_reviews_count && (
-                              <span className="text-xs text-slate-500 mt-1">
-                                {business.google_reviews_count} avis
-                              </span>
+                              <span className="text-xs text-slate-500 mt-1">{business.google_reviews_count} avis</span>
                             )}
                           </div>
                         )}
@@ -186,7 +251,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               </div>
             ) : (
               <div className="text-center py-16 glass rounded-xl">
-                <div className="text-6xl mb-4">📁</div>
                 <h3 className="text-xl font-semibold text-white mb-2">
                   Aucune entreprise trouvée
                 </h3>
@@ -213,7 +277,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                     ← Précédent
                   </Link>
                 )}
-
                 <div className="flex items-center gap-1">
                   {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                     let pageNum: number
@@ -226,7 +289,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                     } else {
                       pageNum = page - 2 + i
                     }
-
                     return (
                       <Link
                         key={pageNum}
@@ -242,7 +304,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                     )
                   })}
                 </div>
-
                 {page < totalPages && (
                   <Link
                     href={buildUrl(page + 1)}
@@ -267,9 +328,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                 className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-white rounded-xl font-semibold transition-all hover:-translate-y-0.5"
               >
                 Recherche avancée
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
               </Link>
             </div>
           </div>
