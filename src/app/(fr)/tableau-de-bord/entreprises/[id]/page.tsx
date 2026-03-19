@@ -90,17 +90,36 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
         const admin = session.user.email === 'info@h1site.com'
         setIsAdmin(admin)
 
-        const { data: businessData, error: fetchError } = await supabase
-          .from('businesses')
-          .select('*')
-          .eq('id', id)
-          .single()
+        let businessData = null
 
-        if (fetchError) {
-          console.error('Supabase fetch error:', fetchError)
-          setError(`Erreur de chargement: ${fetchError.message}`)
-          setLoading(false)
-          return
+        if (admin) {
+          // Admin: fetch via API route (bypasses RLS)
+          const res = await fetch(`/api/admin/business/${id}`, {
+            headers: { Authorization: `Bearer ${session.access_token}` },
+          })
+          if (res.ok) {
+            businessData = await res.json()
+          } else {
+            const { error: msg } = await res.json()
+            setError(`Erreur de chargement: ${msg}`)
+            setLoading(false)
+            return
+          }
+        } else {
+          // Regular user: fetch via Supabase client (RLS)
+          const { data, error: fetchError } = await supabase
+            .from('businesses')
+            .select('*')
+            .eq('id', id)
+            .single()
+
+          if (fetchError) {
+            console.error('Supabase fetch error:', fetchError)
+            setError(`Erreur de chargement: ${fetchError.message}`)
+            setLoading(false)
+            return
+          }
+          businessData = data
         }
 
         if (!businessData) {
