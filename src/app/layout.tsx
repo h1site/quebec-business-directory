@@ -80,7 +80,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className="dark">
       <head>
-        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
         {/* Google Tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NF84WEBS49"

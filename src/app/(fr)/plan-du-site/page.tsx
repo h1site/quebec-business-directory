@@ -296,7 +296,7 @@ export default async function SitemapPage() {
               </h2>
               <ul className="space-y-2">
                 <li>
-                  <a href="/sitemap.xml" target="_blank" rel="noopener" className="text-slate-300 hover:text-sky-400 transition-colors">
+                  <a href="/sitemap-index.xml" target="_blank" rel="noopener" className="text-slate-300 hover:text-sky-400 transition-colors">
                     Sitemap Index
                   </a>
                 </li>

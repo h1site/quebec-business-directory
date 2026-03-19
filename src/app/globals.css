@@ -160,7 +160,20 @@ h1, h2, h3, h4, h5, h6 {
     );
 }
 
-/* Google AdSense anchor ad - modern container styling */
+/* Google AdSense anchor ad - prevent extra space after footer */
+body > ins.adsbygoogle,
+body > div[id^="google_ads"],
+body > div[style*="position: fixed"][style*="bottom"] {
+  z-index: 9999 !important;
+}
+
+/* Remove the padding/margin AdSense injects on body */
+html body {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Style the anchor ad itself */
 ins.adsbygoogle[data-anchor-status="displayed"] {
   border-radius: 12px !important;
   box-shadow:

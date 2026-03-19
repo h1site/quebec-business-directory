@@ -124,7 +124,7 @@ export default function FooterEN() {
                 </Link>
               </li>
               <li>
-                <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <a href="/sitemap-index.xml" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   Sitemap
                 </a>
               </li>
