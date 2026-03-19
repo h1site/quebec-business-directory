@@ -117,7 +117,7 @@ export default function Header() {
             </Button>
             <Button
               component={Link}
-              href="/entreprise/nouvelle"
+              href={user ? '/entreprise/nouvelle' : '/connexion?redirect=/entreprise/nouvelle'}
               color="inherit"
               startIcon={<AddBusinessIcon sx={{ fontSize: 18 }} />}
               sx={{ fontSize: '0.875rem', color: 'text.secondary', '&:hover': { color: 'text.primary', bgcolor: 'action.hover' } }}
@@ -297,7 +297,7 @@ export default function Header() {
           </Button>
           <Button
             component={Link}
-            href="/entreprise/nouvelle"
+            href={user ? '/entreprise/nouvelle' : '/connexion?redirect=/entreprise/nouvelle'}
             onClick={() => setDrawerOpen(false)}
             fullWidth
             startIcon={<AddBusinessIcon />}

@@ -84,7 +84,7 @@ export default function HeaderEN() {
               Search
             </Link>
             <Link
-              href="/en/add-business"
+              href={user ? '/en/add-business' : '/en/login?redirect=/en/add-business'}
               className="px-3 py-2 rounded-lg font-medium text-sm transition-colors text-gray-700 hover:bg-gray-100 whitespace-nowrap"
             >
               Add
@@ -225,7 +225,7 @@ export default function HeaderEN() {
                 Search
               </Link>
               <Link
-                href="/en/add-business"
+                href={user ? '/en/add-business' : '/en/login?redirect=/en/add-business'}
                 onClick={closeMenu}
                 className="text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
               >
