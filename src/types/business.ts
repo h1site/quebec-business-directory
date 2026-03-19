@@ -58,6 +58,9 @@ export interface Business {
   neq: string | null
   is_claimed: boolean
   claimed_at: string | null
+  claimed_by: string | null
+  claim_status: 'pending' | 'approved' | 'rejected' | null
+  claim_email: string | null
   data_source: string | null
   scian_code: string | null
   scian_description: string | null

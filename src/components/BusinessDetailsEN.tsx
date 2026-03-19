@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { generateSlug } from '@/lib/utils'
 import HeaderEN from '@/components/HeaderEN'
 import FooterEN from '@/components/FooterEN'
+import ClaimButtonEN from '@/components/ClaimButtonEN'
 
 interface Props {
   business: Business
@@ -482,25 +483,14 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
           </section>
         )}
 
-        {/* CTA Section - Only show if business is not claimed */}
-        {!business.owner_id && (
-          <section className="py-12 bg-blue-900 text-white">
-            <div className="max-w-4xl mx-auto px-4 text-center">
-              <h2 className="text-2xl font-bold mb-4">
-                Is this your business?
-              </h2>
-              <p className="text-blue-200 mb-6">
-                Claim your listing for free to update your information and manage your online presence.
-              </p>
-              <Link
-                href="/en/login"
-                className="inline-block px-6 py-3 bg-white text-blue-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
-              >
-                Claim this listing
-              </Link>
-            </div>
-          </section>
-        )}
+        {/* CTA Section */}
+        <ClaimButtonEN
+          businessId={business.id}
+          businessSlug={business.slug}
+          isClaimed={business.is_claimed}
+          claimStatus={business.claim_status}
+          ownerIdExists={!!business.owner_id}
+        />
       </main>
 
       <FooterEN />

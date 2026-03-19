@@ -31,6 +31,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import ShareIcon from '@mui/icons-material/Share'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { categoryLabels } from '@/lib/category-labels'
+import ClaimButton from '@/components/ClaimButton'
 
 interface Props {
   business: Business
@@ -654,26 +655,13 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
         )}
 
         {/* CTA Section */}
-        {!business.owner_id && (
-          <Box component="section" sx={{ py: 6, background: 'linear-gradient(to right, rgba(12,74,110,0.5), rgba(30,58,138,0.5))', borderTop: '1px solid rgba(14,165,233,0.2)' }}>
-            <div className="max-w-4xl mx-auto px-4 text-center">
-              <Box component="h2" sx={{ fontSize: '1.5rem', fontWeight: 700, mb: 2, color: 'white' }}>
-                C&apos;est votre entreprise ?
-              </Box>
-              <Box sx={{ color: 'rgb(203,213,225)', mb: 3 }}>
-                Réclamez votre fiche gratuitement pour mettre à jour vos informations et gérer votre présence en ligne.
-              </Box>
-              <Button
-                component={Link}
-                href="/connexion"
-                variant="contained"
-                sx={{ bgcolor: 'white', color: '#0f172a', '&:hover': { bgcolor: '#f1f5f9' }, fontWeight: 600 }}
-              >
-                Réclamer cette fiche
-              </Button>
-            </div>
-          </Box>
-        )}
+        <ClaimButton
+          businessId={business.id}
+          businessSlug={business.slug}
+          isClaimed={business.is_claimed}
+          claimStatus={business.claim_status}
+          ownerIdExists={!!business.owner_id}
+        />
       </main>
 
       <Footer />

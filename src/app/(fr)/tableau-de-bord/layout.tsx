@@ -54,6 +54,7 @@ export default function DashboardLayout({
   const navItems = [
     { href: '/tableau-de-bord', label: 'Tableau de bord', icon: '📊' },
     { href: '/tableau-de-bord/entreprises', label: isAdmin ? 'Toutes les entreprises' : 'Mes entreprises', icon: '🏢' },
+    ...(isAdmin ? [{ href: '/tableau-de-bord/reclamations', label: 'Réclamations', icon: '📋' }] : []),
     { href: '/tableau-de-bord/profil', label: 'Mon profil', icon: '👤' },
     { href: '/tableau-de-bord/avis', label: 'Mes avis', icon: '⭐' },
   ]
