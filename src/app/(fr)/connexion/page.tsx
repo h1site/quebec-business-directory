@@ -3,13 +3,15 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createBrowserClient } from '@supabase/ssr'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get('redirect') || '/'
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [email, setEmail] = useState('')
@@ -28,7 +30,7 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`,
         },
       })
 
@@ -57,7 +59,7 @@ export default function LoginPage() {
         setError(error.message)
         setLoading(false)
       } else {
-        router.push('/')
+        router.push(redirectTo)
         router.refresh()
       }
     } catch (err) {
@@ -172,7 +174,7 @@ export default function LoginPage() {
 
             <p className="mt-6 text-center text-gray-600">
               Pas encore de compte?{' '}
-              <Link href="/inscription" className="text-blue-600 hover:underline font-medium">
+              <Link href={`/inscription${redirectTo !== '/' ? `?redirect=${encodeURIComponent(redirectTo)}` : ''}`} className="text-blue-600 hover:underline font-medium">
                 Créer un compte
               </Link>
             </p>

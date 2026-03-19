@@ -3,13 +3,15 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createBrowserClient } from '@supabase/ssr'
 import HeaderEN from '@/components/HeaderEN'
 import FooterEN from '@/components/FooterEN'
 
 export default function LoginPageEN() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get('redirect') || '/en'
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [email, setEmail] = useState('')
@@ -28,7 +30,7 @@ export default function LoginPageEN() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`,
         },
       })
 
@@ -57,7 +59,7 @@ export default function LoginPageEN() {
         setError(error.message)
         setLoading(false)
       } else {
-        router.push('/en')
+        router.push(redirectTo)
         router.refresh()
       }
     } catch (err) {
