@@ -668,7 +668,7 @@ export default function AddBusinessPage() {
     switch (step) {
       case 1:
         if (!formData.name.trim() || formData.name.length < 3) newErrors.name = 'Le nom doit contenir au moins 3 caractères'
-        if (!formData.description.trim() || formData.description.length < 50) newErrors.description = 'La description doit contenir au moins 50 caractères'
+        if (!formData.description.trim() || formData.description.length < 10) newErrors.description = 'La description doit contenir au moins 10 caractères'
         break
       case 2:
         if (!formData.logo_preview) newErrors.logo = 'Le logo est requis'
@@ -960,11 +960,11 @@ export default function AddBusinessPage() {
                     onChange={handleChange}
                     rows={6}
                     className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.description ? 'border-red-400' : 'border-gray-300'}`}
-                    placeholder="Décrivez votre entreprise... (minimum 50 caractères)"
+                    placeholder="Décrivez votre entreprise... (minimum 10 caractères)"
                   />
                   <div className="flex justify-between mt-1">
-                    <span className={`text-sm ${formData.description.length < 50 ? 'text-amber-600' : 'text-gray-500'}`}>
-                      {formData.description.length}/500 caractères
+                    <span className={`text-sm ${formData.description.length < 10 ? 'text-amber-600' : 'text-gray-500'}`}>
+                      {formData.description.length} caractères
                     </span>
                   </div>
                   {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
