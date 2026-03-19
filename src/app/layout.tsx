@@ -94,11 +94,12 @@ export default function RootLayout({
             gtag('config', 'G-NF84WEBS49');
           `}
         </Script>
-        {/* Google AdSense */}
+        {/* Google AdSense - data-overlays="bottom" blocks top anchor ads */}
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8781698761921917"
           crossOrigin="anonymous"
+          data-overlays="bottom"
         />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
