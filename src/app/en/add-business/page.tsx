@@ -726,15 +726,15 @@ export default function AddBusinessPageEN() {
       const slug = generateSlug(formData.name) + '-' + Date.now().toString(36)
 
       // Insert business
-      const { data: business, error: insertError } = await supabase
-        .from('businesses')
-        .insert({
+      const insertData = {
           name: formData.name,
           slug: slug,
           description: formData.description,
+          main_category_id: formData.main_category_id,
           main_category_slug: formData.main_category_slug,
           phone: formData.phone,
           email: formData.email,
+          show_email: formData.show_email,
           website: formData.website || null,
           address: formData.address,
           city: formData.city,
@@ -744,13 +744,23 @@ export default function AddBusinessPageEN() {
           province: 'QC',
           owner_id: userId,
           show_address: formData.show_address,
+          opening_hours: formData.show_hours ? formData.hours : null,
+          products_services: formData.services.length > 0 ? formData.services.join(', ') : null,
           data_source: 'user_created',
           is_claimed: true,
-        })
+          claimed_at: new Date().toISOString(),
+        }
+
+      const { data: business, error: insertError } = await supabase
+        .from('businesses')
+        .insert(insertData)
         .select()
         .single()
 
-      if (insertError) throw insertError
+      if (insertError) {
+        console.error('Insert error details:', insertError.message, insertError.details, insertError.hint)
+        throw insertError
+      }
 
       // Upload logo
       if (formData.logo && business) {
@@ -817,8 +827,9 @@ export default function AddBusinessPageEN() {
       }, 2000)
 
     } catch (error: any) {
-      console.error('Submit error:', error)
-      setStatus({ type: 'error', message: 'An error occurred. Please try again.' })
+      console.error('Submit error:', error?.message || error)
+      const msg = error?.message || 'An error occurred. Please try again.'
+      setStatus({ type: 'error', message: msg })
       setLoading(false)
     }
   }
