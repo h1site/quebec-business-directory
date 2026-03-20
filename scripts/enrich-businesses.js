@@ -227,6 +227,27 @@ Réponds UNIQUEMENT avec le JSON, sans markdown ni explication.`;
   });
 }
 
+// Delete business from Supabase (failed to enrich)
+async function deleteFromSupabase(slug) {
+  return new Promise((resolve) => {
+    const req = https.request({
+      hostname: 'tiaofyawimkckjgxdnbd.supabase.co',
+      path: `/rest/v1/businesses?slug=eq.${encodeURIComponent(slug)}`,
+      method: 'DELETE',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Prefer': 'return=minimal',
+      }
+    }, (res) => {
+      resolve(res.statusCode === 204 || res.statusCode === 200);
+    });
+
+    req.on('error', () => resolve(false));
+    req.end();
+  });
+}
+
 // Update Supabase
 async function updateSupabase(slug, data) {
   return new Promise((resolve) => {
@@ -315,7 +336,9 @@ async function main() {
     const html = await fetchWebsite(business.website);
 
     if (!html) {
-      console.log('  ❌ Could not fetch website');
+      console.log('  ❌ Could not fetch website — suppression...');
+      await deleteFromSupabase(slug);
+      console.log('  🗑️ Supprimé');
       progress.failed.push({ slug, reason: 'fetch_failed' });
       failCount++;
       saveProgress(progress);
@@ -325,7 +348,9 @@ async function main() {
     // 2. Extract text
     const text = extractText(html);
     if (text.length < 100) {
-      console.log('  ❌ Not enough content');
+      console.log('  ❌ Not enough content — suppression...');
+      await deleteFromSupabase(slug);
+      console.log('  🗑️ Supprimé');
       progress.failed.push({ slug, reason: 'no_content' });
       failCount++;
       saveProgress(progress);
@@ -339,7 +364,9 @@ async function main() {
     const enrichedData = await callOpenAI(business.name, text);
 
     if (!enrichedData || !enrichedData.description) {
-      console.log('  ❌ OpenAI failed to generate content');
+      console.log('  ❌ OpenAI failed — suppression...');
+      await deleteFromSupabase(slug);
+      console.log('  🗑️ Supprimé');
       progress.failed.push({ slug, reason: 'openai_failed' });
       failCount++;
       saveProgress(progress);
