@@ -141,6 +141,14 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                       Directions
                     </a>
                   )}
+                  <ClaimButtonEN
+                    businessId={business.id}
+                    businessSlug={business.slug}
+                    isClaimed={business.is_claimed}
+                    claimStatus={business.claim_status}
+                    ownerIdExists={!!business.owner_id}
+                    inline
+                  />
                 </div>
               </div>
             </div>
@@ -483,14 +491,7 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
           </section>
         )}
 
-        {/* CTA Section */}
-        <ClaimButtonEN
-          businessId={business.id}
-          businessSlug={business.slug}
-          isClaimed={business.is_claimed}
-          claimStatus={business.claim_status}
-          ownerIdExists={!!business.owner_id}
-        />
+        {/* CTA Section removed - claim button is now inline */}
       </main>
 
       <FooterEN />

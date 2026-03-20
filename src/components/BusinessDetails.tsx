@@ -215,6 +215,14 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                       Itinéraire
                     </Button>
                   )}
+                  <ClaimButton
+                    businessId={business.id}
+                    businessSlug={business.slug}
+                    isClaimed={business.is_claimed}
+                    claimStatus={business.claim_status}
+                    ownerIdExists={!!business.owner_id}
+                    inline
+                  />
                 </div>
               </div>
             </div>
@@ -654,14 +662,6 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
           </Box>
         )}
 
-        {/* CTA Section */}
-        <ClaimButton
-          businessId={business.id}
-          businessSlug={business.slug}
-          isClaimed={business.is_claimed}
-          claimStatus={business.claim_status}
-          ownerIdExists={!!business.owner_id}
-        />
       </main>
 
       <Footer />

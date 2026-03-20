@@ -36,34 +36,51 @@ export async function POST(request: NextRequest) {
   // Check business exists and is not already claimed
   const { data: business, error: fetchError } = await supabase
     .from('businesses')
-    .select('id, is_claimed, claim_status')
+    .select('id, is_claimed, owner_id')
     .eq('id', business_id)
     .single()
 
   if (fetchError || !business) {
-    return NextResponse.json({ error: 'Entreprise introuvable' }, { status: 404 })
+    return NextResponse.json({ error: `Entreprise introuvable: ${fetchError?.message || 'no data'}` }, { status: 404 })
   }
 
-  if (business.is_claimed) {
+  if (business.is_claimed || business.owner_id) {
     return NextResponse.json({ error: 'Cette entreprise est déjà réclamée' }, { status: 409 })
   }
 
-  if (business.claim_status === 'pending') {
-    return NextResponse.json({ error: 'Une réclamation est déjà en attente' }, { status: 409 })
+  // Try to check claim_status if column exists, otherwise proceed
+  try {
+    const { data: claimCheck } = await supabase
+      .from('businesses')
+      .select('claim_status')
+      .eq('id', business_id)
+      .single()
+
+    if (claimCheck?.claim_status === 'pending') {
+      return NextResponse.json({ error: 'Une réclamation est déjà en attente' }, { status: 409 })
+    }
+  } catch {
+    // claim_status column may not exist yet — continue
   }
 
   // Submit claim
+  const updateData: Record<string, unknown> = {
+    claimed_by: user.id,
+    claim_status: 'pending',
+    claim_email: user.email,
+  }
+
   const { error: updateError } = await supabase
     .from('businesses')
-    .update({
-      claimed_by: user.id,
-      claim_status: 'pending',
-      claim_email: user.email,
-    })
+    .update(updateData)
     .eq('id', business_id)
     .is('is_claimed', false)
 
   if (updateError) {
+    // If columns don't exist yet, give a helpful message
+    if (updateError.message?.includes('column')) {
+      return NextResponse.json({ error: 'Migration requise: les colonnes claim_status, claimed_by, claim_email doivent être ajoutées à la table businesses.' }, { status: 500 })
+    }
     return NextResponse.json({ error: updateError.message }, { status: 500 })
   }
 

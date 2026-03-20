@@ -10,9 +10,10 @@ interface Props {
   isClaimed: boolean
   claimStatus: string | null
   ownerIdExists: boolean
+  inline?: boolean
 }
 
-export default function ClaimButtonEN({ businessId, businessSlug, isClaimed, claimStatus, ownerIdExists }: Props) {
+export default function ClaimButtonEN({ businessId, businessSlug, isClaimed, claimStatus, ownerIdExists, inline }: Props) {
   const [user, setUser] = useState<{ id: string; email: string } | null>(null)
   const [authChecked, setAuthChecked] = useState(false)
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
@@ -66,40 +67,39 @@ export default function ClaimButtonEN({ businessId, businessSlug, isClaimed, cla
     }
   }
 
-  return (
-    <section className="py-12 bg-blue-900 text-white">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <h2 className="text-2xl font-bold mb-4">Is this your business?</h2>
-        <p className="text-blue-200 mb-6">
-          Claim your listing for free to update your information and manage your online presence.
-        </p>
+  if (!authChecked) return null
 
-        {status === 'success' ? (
-          <p className="text-green-300 font-semibold text-lg">
-            Claim submitted! We will review your request shortly.
-          </p>
-        ) : !authChecked ? null : !user ? (
-          <Link
-            href={`/en/login?redirect=/en/company/${businessSlug}`}
-            className="inline-block px-6 py-3 bg-white text-blue-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
-          >
-            Log in to claim
-          </Link>
-        ) : (
-          <>
-            <button
-              onClick={handleClaim}
-              disabled={status === 'loading'}
-              className="inline-block px-6 py-3 bg-white text-blue-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50"
-            >
-              {status === 'loading' ? 'Submitting...' : 'Claim this listing'}
-            </button>
-            {status === 'error' && (
-              <p className="text-red-300 mt-3 text-sm">{errorMsg}</p>
-            )}
-          </>
-        )}
-      </div>
-    </section>
+  if (status === 'success') {
+    return (
+      <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-600 text-white text-sm rounded-lg font-medium">
+        ✓ Claim submitted
+      </span>
+    )
+  }
+
+  if (!user) {
+    return (
+      <Link
+        href={`/en/login?redirect=/en/company/${businessSlug}`}
+        className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black rounded-lg font-medium transition-colors text-sm"
+      >
+        ✓ Claim
+      </Link>
+    )
+  }
+
+  return (
+    <span className="inline-flex items-center gap-1">
+      <button
+        onClick={handleClaim}
+        disabled={status === 'loading'}
+        className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black rounded-lg font-medium transition-colors text-sm disabled:opacity-50"
+      >
+        {status === 'loading' ? 'Sending...' : '✓ Claim'}
+      </button>
+      {status === 'error' && (
+        <span className="text-red-300 text-xs">{errorMsg}</span>
+      )}
+    </span>
   )
 }

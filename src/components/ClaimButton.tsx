@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
-import { Button, Box } from '@mui/material'
+import { Button, Box, Chip } from '@mui/material'
 import Link from 'next/link'
+import VerifiedIcon from '@mui/icons-material/Verified'
 
 interface Props {
   businessId: string
@@ -11,9 +12,10 @@ interface Props {
   isClaimed: boolean
   claimStatus: string | null
   ownerIdExists: boolean
+  inline?: boolean
 }
 
-export default function ClaimButton({ businessId, businessSlug, isClaimed, claimStatus, ownerIdExists }: Props) {
+export default function ClaimButton({ businessId, businessSlug, isClaimed, claimStatus, ownerIdExists, inline }: Props) {
   const [user, setUser] = useState<{ id: string; email: string } | null>(null)
   const [authChecked, setAuthChecked] = useState(false)
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
@@ -68,52 +70,48 @@ export default function ClaimButton({ businessId, businessSlug, isClaimed, claim
     }
   }
 
-  return (
-    <Box
-      component="section"
-      sx={{
-        py: 6,
-        background: 'linear-gradient(to right, rgba(12,74,110,0.5), rgba(30,58,138,0.5))',
-        borderTop: '1px solid rgba(14,165,233,0.2)',
-      }}
-    >
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <Box component="h2" sx={{ fontSize: '1.5rem', fontWeight: 700, mb: 2, color: 'white' }}>
-          C&apos;est votre entreprise ?
-        </Box>
-        <Box sx={{ color: 'rgb(203,213,225)', mb: 3 }}>
-          Réclamez votre fiche gratuitement pour mettre à jour vos informations et gérer votre présence en ligne.
-        </Box>
+  // Inline mode: renders as a button in the action row
+  if (inline) {
+    if (!authChecked) return null
 
-        {status === 'success' ? (
-          <Box sx={{ color: '#86efac', fontWeight: 600, fontSize: '1.1rem' }}>
-            Réclamation envoyée ! Nous allons vérifier votre demande.
-          </Box>
-        ) : !authChecked ? null : !user ? (
-          <Button
-            component={Link}
-            href={`/connexion?redirect=/entreprise/${businessSlug}`}
-            variant="contained"
-            sx={{ bgcolor: 'white', color: '#0f172a', '&:hover': { bgcolor: '#f1f5f9' }, fontWeight: 600 }}
-          >
-            Connectez-vous pour réclamer
-          </Button>
-        ) : (
-          <>
-            <Button
-              onClick={handleClaim}
-              disabled={status === 'loading'}
-              variant="contained"
-              sx={{ bgcolor: 'white', color: '#0f172a', '&:hover': { bgcolor: '#f1f5f9' }, fontWeight: 600 }}
-            >
-              {status === 'loading' ? 'Envoi en cours...' : 'Réclamer cette fiche'}
-            </Button>
-            {status === 'error' && (
-              <Box sx={{ color: '#fca5a5', mt: 2, fontSize: '0.9rem' }}>{errorMsg}</Box>
-            )}
-          </>
+    if (status === 'success') {
+      return <Chip label="Réclamation envoyée" color="success" size="small" icon={<VerifiedIcon />} />
+    }
+
+    if (!user) {
+      return (
+        <Button
+          component={Link}
+          href={`/connexion?redirect=/entreprise/${businessSlug}`}
+          variant="contained"
+          size="small"
+          startIcon={<VerifiedIcon />}
+          sx={{ bgcolor: '#f59e0b', color: '#000', '&:hover': { bgcolor: '#d97706' } }}
+        >
+          Réclamer
+        </Button>
+      )
+    }
+
+    return (
+      <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1 }}>
+        <Button
+          onClick={handleClaim}
+          disabled={status === 'loading'}
+          variant="contained"
+          size="small"
+          startIcon={<VerifiedIcon />}
+          sx={{ bgcolor: '#f59e0b', color: '#000', '&:hover': { bgcolor: '#d97706' } }}
+        >
+          {status === 'loading' ? 'Envoi...' : 'Réclamer'}
+        </Button>
+        {status === 'error' && (
+          <Box component="span" sx={{ color: '#fca5a5', fontSize: '0.75rem' }}>{errorMsg}</Box>
         )}
-      </div>
-    </Box>
-  )
+      </Box>
+    )
+  }
+
+  // Full section mode (not used anymore but kept for flexibility)
+  return null
 }
