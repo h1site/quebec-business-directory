@@ -160,28 +160,33 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
           ))}
         </div>
 
-        <div className="mt-12 glass rounded-2xl p-6 max-w-xl mx-auto animate-slide-up animation-delay-400">
-          <p className="text-slate-300 text-sm mb-4">
-            Vous êtes propriétaire d&apos;une entreprise?
+        <div className="mt-12 glass rounded-2xl p-8 max-w-2xl mx-auto animate-slide-up animation-delay-400">
+          <h3 className="text-white font-bold text-lg mb-3">Ajoutez votre entreprise gratuitement</h3>
+          <p className="text-slate-300 text-sm mb-5">
+            Créez votre fiche en quelques minutes et augmentez votre visibilité auprès de milliers de Québécois.
           </p>
           <Button
             component={Link}
-            href="/inscription"
-            variant="outlined"
+            href="/entreprise/nouvelle"
+            variant="contained"
             startIcon={<AutoAwesomeIcon />}
             sx={{
-              color: 'white',
-              borderColor: 'rgba(255,255,255,0.2)',
+              bgcolor: 'primary.main',
               '&:hover': {
-                bgcolor: 'rgba(255,255,255,0.1)',
-                borderColor: 'rgba(255,255,255,0.3)',
+                bgcolor: 'primary.dark',
                 transform: 'translateY(-2px)',
               },
               transition: 'all 0.2s ease',
+              fontWeight: 600,
+              mb: 3,
             }}
           >
-            Réclamez votre fiche gratuitement
+            Ajouter mon entreprise
           </Button>
+          <p className="text-slate-400 text-xs leading-relaxed">
+            Vous voyez une entreprise qui vous appartient et qui n&apos;a pas été réclamée ? Rendez-vous sur sa fiche et faites une demande pour en prendre possession. Pour toute question, écrivez-nous à{' '}
+            <a href="mailto:info@h1site.com" className="text-sky-400 hover:text-sky-300 underline">info@h1site.com</a>
+          </p>
         </div>
       </div>
     </section>
