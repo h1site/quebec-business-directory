@@ -31,8 +31,8 @@ export function isValidBusiness(business: {
 }): boolean {
   // User-claimed businesses are always visible
   if (business.is_claimed || business.owner_id) return true
-  // Must be enriched AND have a website
-  return !!business.ai_description && !!business.website
+  // Must be enriched
+  return !!business.ai_description
 }
 
 // Normalize text for matching
@@ -66,7 +66,7 @@ export async function searchBusinesses(
     )
     .not('slug', 'is', null)
     // Only valid businesses: claimed OR owner OR (enriched AND has website)
-    .or('is_claimed.eq.true,owner_id.not.is.null,and(ai_description.not.is.null,website.not.is.null)')
+    .or('is_claimed.eq.true,owner_id.not.is.null,ai_description.not.is.null')
 
   // Apply filters
   if (category) {
@@ -136,7 +136,7 @@ export async function quickSearch(query: string): Promise<Business[]> {
     .select('id, name, slug, city, main_category_slug, google_rating, google_reviews_count, description, ai_description, phone, website, is_claimed, owner_id')
     .not('slug', 'is', null)
     // Same filter as searchBusinesses for consistency
-    .or('is_claimed.eq.true,owner_id.not.is.null,and(ai_description.not.is.null,website.not.is.null)')
+    .or('is_claimed.eq.true,owner_id.not.is.null,ai_description.not.is.null')
     .or(`name.ilike.%${cleanQuery}%,description.ilike.%${cleanQuery}%,ai_description.ilike.%${cleanQuery}%,main_category_slug.ilike.%${cleanQuery}%`)
     .order('google_rating', { ascending: false, nullsFirst: false })
     .limit(5)
