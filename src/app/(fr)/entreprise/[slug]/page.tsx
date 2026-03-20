@@ -124,8 +124,8 @@ export default async function BusinessPage({ params }: Props) {
     notFound()
   }
 
-  // 404 if no website AND not in traffic list
-  if (!business.website && !trafficSlugSet.has(slug)) {
+  // 404 if no website AND not enriched AND not in traffic list
+  if (!business.website && !business.ai_description && !trafficSlugSet.has(slug)) {
     notFound()
   }
 
