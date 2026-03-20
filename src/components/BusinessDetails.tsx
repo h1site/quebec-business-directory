@@ -206,7 +206,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                       component="a"
                       href={`https://waze.com/ul?ll=${business.latitude},${business.longitude}&navigate=yes`}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="noopener noreferrer nofollow"
                       variant="contained"
                       startIcon={<NavigationIcon />}
                       size="small"
@@ -483,7 +483,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                         component="a"
                         href={`https://www.openstreetmap.org/?mlat=${business.latitude}&mlon=${business.longitude}#map=16/${business.latitude}/${business.longitude}`}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noopener noreferrer nofollow"
                         size="small"
                         sx={{ mt: 1.5, color: 'primary.main' }}
                       >
@@ -504,7 +504,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                       component="a"
                       href="https://www.registreentreprises.gouv.qc.ca/reqna/gr/gr03/gr03a71.rechercheregistre.mvc/gr03a71?choixdomaine=RegistreEntreprisesQuebec"
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="noopener noreferrer nofollow"
                       size="small"
                       sx={{ color: 'primary.main' }}
                     >
@@ -547,7 +547,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                             component="a"
                             href={business.facebook_url}
                             target="_blank"
-                            rel="noopener noreferrer"
+                            rel="noopener noreferrer nofollow"
                             sx={{ bgcolor: '#1877f2', color: 'white', '&:hover': { bgcolor: '#1565d8' } }}
                           >
                             <FacebookIcon />
@@ -558,7 +558,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                             component="a"
                             href={business.instagram_url}
                             target="_blank"
-                            rel="noopener noreferrer"
+                            rel="noopener noreferrer nofollow"
                             sx={{ background: 'linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)', color: 'white', '&:hover': { opacity: 0.9 } }}
                           >
                             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -571,7 +571,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                             component="a"
                             href={business.linkedin_url}
                             target="_blank"
-                            rel="noopener noreferrer"
+                            rel="noopener noreferrer nofollow"
                             sx={{ bgcolor: '#0077b5', color: 'white', '&:hover': { bgcolor: '#006699' } }}
                           >
                             <LinkedInIcon />
@@ -591,7 +591,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                         component="a"
                         href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://registreduquebec.com/entreprise/${business.slug}`)}`}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noopener noreferrer nofollow"
                         variant="contained"
                         fullWidth
                         size="small"
@@ -603,7 +603,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                         component="a"
                         href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://registreduquebec.com/entreprise/${business.slug}`)}&text=${encodeURIComponent(`Découvrez ${business.name} à ${business.city}`)}`}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noopener noreferrer nofollow"
                         variant="contained"
                         fullWidth
                         size="small"
