@@ -87,6 +87,22 @@ export async function DELETE(
   }
 
   const supabase = createServiceClient()
+
+  // First verify the business exists
+  const { data: existing } = await supabase
+    .from('businesses')
+    .select('id')
+    .eq('id', id)
+    .single()
+
+  if (!existing) {
+    return NextResponse.json({ error: 'Business not found' }, { status: 404 })
+  }
+
+  // Delete related records first (foreign key constraints)
+  await supabase.from('business_categories').delete().eq('business_id', id)
+  await supabase.from('reviews').delete().eq('business_id', id)
+
   const { error } = await supabase
     .from('businesses')
     .delete()
@@ -94,6 +110,17 @@ export async function DELETE(
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  // Verify deletion
+  const { data: check } = await supabase
+    .from('businesses')
+    .select('id')
+    .eq('id', id)
+    .single()
+
+  if (check) {
+    return NextResponse.json({ error: 'Delete failed - row still exists' }, { status: 500 })
   }
 
   return NextResponse.json({ success: true })

@@ -27,6 +27,13 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
+/* Force text-gray-900 to override dark theme body color in dashboard forms */
+input.text-gray-900,
+textarea.text-gray-900,
+select.text-gray-900 {
+  color: rgb(17 24 39) !important;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -160,13 +167,22 @@ h1, h2, h3, h4, h5, h6 {
     );
 }
 
-/* Google AdSense anchor ad - block top anchor, allow bottom only */
-body > ins.adsbygoogle[data-ad-format="auto"][style*="top"],
+/* Google AdSense - block ALL top/header anchor ads */
+ins.adsbygoogle[data-anchor-status][data-ad-format="auto"],
+ins.adsbygoogle[data-anchor-status="displayed"][style*="top"],
+body > ins.adsbygoogle[style*="position: fixed"][style*="top"],
 body > div[id^="google_ads"][style*="top: 0"],
-body > div[style*="position: fixed"][style*="top: 0"] {
+body > div[id^="google_ads"][style*="top:0"],
+body > div[style*="position: fixed"][style*="top: 0"],
+body > div[style*="position: fixed"][style*="top:0"],
+body > div[style*="position:fixed"][style*="top:0"],
+body > div[style*="position:fixed"][style*="top: 0"] {
   display: none !important;
   height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
   visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 body > ins.adsbygoogle,

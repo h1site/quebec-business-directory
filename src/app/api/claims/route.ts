@@ -74,7 +74,6 @@ export async function POST(request: NextRequest) {
     .from('businesses')
     .update(updateData)
     .eq('id', business_id)
-    .is('is_claimed', false)
 
   if (updateError) {
     // If columns don't exist yet, give a helpful message

@@ -30,11 +30,21 @@ export default function ClaimButton({ businessId, businessSlug, isClaimed, claim
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
+      if (session?.user) {
         setUser({ id: session.user.id, email: session.user.email || '' })
       }
       setAuthChecked(true)
     })
+    // Also listen for auth changes (user logs in while on the page)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser({ id: session.user.id, email: session.user.email || '' })
+      } else {
+        setUser(null)
+      }
+      setAuthChecked(true)
+    })
+    return () => subscription.unsubscribe()
   }, [supabase])
 
   // Don't show if already claimed/owned
