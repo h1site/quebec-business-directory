@@ -42,6 +42,7 @@ async function getCityBusinesses(business: Business): Promise<Business[]> {
     .eq('city', business.city)
     .neq('id', business.id)
     .not('slug', 'is', null)
+    .not('ai_description', 'is', null)
     .limit(50)
 
   if (!data) return []

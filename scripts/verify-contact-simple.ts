@@ -116,13 +116,16 @@ async function main() {
 
   const supabase = getSupabaseClient()
 
-  // Fetch businesses with websites
-  console.log(`📊 Fetching ${BATCH_LIMIT} businesses to verify...`)
+  // Fetch enriched businesses that haven't been verified yet
+  console.log(`📊 Fetching up to ${BATCH_LIMIT} enriched businesses to verify...`)
   const { data: businesses, error } = await supabase
     .from('businesses')
     .select('id, name, slug, website, city')
     .not('website', 'is', null)
     .not('website', 'eq', '')
+    .not('ai_description', 'is', null)
+    .is('verified_at', null)
+    .order('ai_enriched_at', { ascending: true })
     .limit(BATCH_LIMIT)
 
   if (error) {

@@ -43,6 +43,7 @@ async function getBusinessesByCategory(categorySlug: string, page: number) {
     .not('slug', 'is', null)
     .eq('main_category_slug', categorySlug)
     .not('website', 'is', null)
+    .not('ai_description', 'is', null)
     .order('google_rating', { ascending: false, nullsFirst: false })
     .order('google_reviews_count', { ascending: false, nullsFirst: false })
     .range(offset, offset + limit - 1)
@@ -67,6 +68,7 @@ async function getPopularCitiesForCategory(categorySlug: string) {
     .eq('main_category_slug', categorySlug)
     .not('slug', 'is', null)
     .not('website', 'is', null)
+    .not('ai_description', 'is', null)
     .not('city', 'is', null)
     .limit(1000)
 
