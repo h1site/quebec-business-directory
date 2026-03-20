@@ -85,12 +85,25 @@ export default function MyBusinessesPage() {
 
   const handleDelete = async (id: string) => {
     setDeleting(true)
-    const { error } = await supabase
-      .from('businesses')
-      .delete()
-      .eq('id', id)
 
-    if (!error) {
+    let success = false
+
+    if (isAdmin) {
+      const { data: { session } } = await supabase.auth.getSession()
+      const res = await fetch(`/api/admin/business/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${session?.access_token}` },
+      })
+      success = res.ok
+    } else {
+      const { error } = await supabase
+        .from('businesses')
+        .delete()
+        .eq('id', id)
+      success = !error
+    }
+
+    if (success) {
       setBusinesses(prev => prev.filter(b => b.id !== id))
       setTotalCount(prev => prev - 1)
     }
