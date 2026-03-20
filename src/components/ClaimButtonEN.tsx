@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import Link from 'next/link'
 
@@ -14,23 +14,25 @@ interface Props {
 
 export default function ClaimButtonEN({ businessId, businessSlug, isClaimed, claimStatus, ownerIdExists }: Props) {
   const [user, setUser] = useState<{ id: string; email: string } | null>(null)
+  const [authChecked, setAuthChecked] = useState(false)
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
     claimStatus === 'pending' ? 'success' : 'idle'
   )
   const [errorMsg, setErrorMsg] = useState('')
 
-  const supabase = createBrowserClient(
+  const supabase = useMemo(() => createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  ), [])
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         setUser({ id: session.user.id, email: session.user.email || '' })
       }
+      setAuthChecked(true)
     })
-  }, [supabase.auth])
+  }, [supabase])
 
   if (isClaimed || ownerIdExists) return null
 
@@ -76,7 +78,7 @@ export default function ClaimButtonEN({ businessId, businessSlug, isClaimed, cla
           <p className="text-green-300 font-semibold text-lg">
             Claim submitted! We will review your request shortly.
           </p>
-        ) : !user ? (
+        ) : !authChecked ? null : !user ? (
           <Link
             href={`/en/login?redirect=/en/company/${businessSlug}`}
             className="inline-block px-6 py-3 bg-white text-blue-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors"

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import { Button, Box } from '@mui/material'
 import Link from 'next/link'
@@ -15,23 +15,25 @@ interface Props {
 
 export default function ClaimButton({ businessId, businessSlug, isClaimed, claimStatus, ownerIdExists }: Props) {
   const [user, setUser] = useState<{ id: string; email: string } | null>(null)
+  const [authChecked, setAuthChecked] = useState(false)
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
     claimStatus === 'pending' ? 'success' : 'idle'
   )
   const [errorMsg, setErrorMsg] = useState('')
 
-  const supabase = createBrowserClient(
+  const supabase = useMemo(() => createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  ), [])
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         setUser({ id: session.user.id, email: session.user.email || '' })
       }
+      setAuthChecked(true)
     })
-  }, [supabase.auth])
+  }, [supabase])
 
   // Don't show if already claimed/owned
   if (isClaimed || ownerIdExists) return null
@@ -87,7 +89,7 @@ export default function ClaimButton({ businessId, businessSlug, isClaimed, claim
           <Box sx={{ color: '#86efac', fontWeight: 600, fontSize: '1.1rem' }}>
             Réclamation envoyée ! Nous allons vérifier votre demande.
           </Box>
-        ) : !user ? (
+        ) : !authChecked ? null : !user ? (
           <Button
             component={Link}
             href={`/connexion?redirect=/entreprise/${businessSlug}`}
