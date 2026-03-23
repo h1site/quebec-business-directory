@@ -26,7 +26,7 @@ export async function GET() {
     .from('businesses')
     .select('city')
     .not('slug', 'is', null)
-    .not('website', 'is', null)
+    .eq('verification_confidence', 'high')
     .not('city', 'is', null)
 
   if (!data) return new NextResponse('Error fetching data', { status: 500 })

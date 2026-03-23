@@ -65,8 +65,7 @@ export async function searchBusinesses(
       { count: 'exact' }
     )
     .not('slug', 'is', null)
-    // Only valid businesses: claimed OR owner OR (enriched AND has website)
-    .or('is_claimed.eq.true,owner_id.not.is.null,ai_description.not.is.null')
+    .eq('verification_confidence', 'high')
 
   // Apply filters
   if (category) {

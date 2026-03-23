@@ -34,6 +34,7 @@ export async function GET(
     .from('businesses')
     .select('slug, updated_at, ai_enriched_at')
     .not('slug', 'is', null)
+    .eq('verification_confidence', 'high')
     .order('slug')
     .range(offset, offset + PAGE_SIZE - 1)
 

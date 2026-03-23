@@ -26,7 +26,7 @@ export async function GET() {
     .from('businesses')
     .select('main_category_slug, city')
     .not('slug', 'is', null)
-    .not('website', 'is', null)
+    .eq('verification_confidence', 'high')
     .not('main_category_slug', 'is', null)
     .not('city', 'is', null)
 

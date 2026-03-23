@@ -26,6 +26,7 @@ async function getBusiness(slug: string): Promise<Business | null> {
     .from('businesses')
     .select('*')
     .eq('slug', slug)
+    .eq('verification_confidence', 'high')
     .single()
 
   if (error || !data) return null
@@ -43,7 +44,7 @@ async function getRelatedBusinesses(business: Business): Promise<Business[]> {
     .neq('id', business.id)
     .not('slug', 'is', null)
     .not('city', 'is', null)
-    .not('ai_description', 'is', null)
+    .eq('verification_confidence', 'high')
     .limit(50)
 
   if (!data) return []

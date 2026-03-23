@@ -33,8 +33,7 @@ async function getBusinessesByCity(citySlug: string, page: number) {
       { count: 'exact' }
     )
     .not('slug', 'is', null)
-    .not('ai_enriched_at', 'is', null)
-    .not('website', 'is', null)
+    .eq('verification_confidence', 'high')
     .or(`city.ilike.${cityName},city.ilike.%${searchPattern}%`)
     .order('google_rating', { ascending: false, nullsFirst: false })
     .order('google_reviews_count', { ascending: false, nullsFirst: false })
@@ -62,7 +61,7 @@ async function getCityStats(citySlug: string) {
     .from('businesses')
     .select('google_rating, google_reviews_count')
     .not('slug', 'is', null)
-    .not('website', 'is', null)
+    .eq('verification_confidence', 'high')
     .or(`city.ilike.${cityName},city.ilike.%${searchPattern}%`)
 
   if (!data || data.length === 0) return null
@@ -85,7 +84,7 @@ async function getPopularCategories(citySlug: string) {
     .from('businesses')
     .select('main_category_slug')
     .not('slug', 'is', null)
-    .not('website', 'is', null)
+    .eq('verification_confidence', 'high')
     .not('main_category_slug', 'is', null)
     .or(`city.ilike.${cityName},city.ilike.%${searchPattern}%`)
     .limit(500)
