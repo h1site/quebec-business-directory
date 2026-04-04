@@ -17,7 +17,7 @@ interface Props {
   }>
 }
 
-export const revalidate = 86400
+export const revalidate = 604800 // 7 days
 
 async function getBusinessesByCity(citySlug: string, page: number) {
   const supabase = createServiceClient()

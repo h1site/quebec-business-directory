@@ -32,7 +32,9 @@ export async function GET(request: Request) {
       .order('published_at', { ascending: false })
 
     if (!error && data && data.length > 0) {
-      return NextResponse.json({ articles: data, source: 'supabase' })
+      return NextResponse.json({ articles: data, source: 'supabase' }, {
+        headers: { 'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800' },
+      })
     }
 
     // If table doesn't exist or is empty, return empty array
@@ -41,6 +43,8 @@ export async function GET(request: Request) {
       articles: [],
       source: 'none',
       message: 'No blog articles table found. Create the table in Supabase with the provided schema.'
+    }, {
+      headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' },
     })
   } catch (error) {
     console.error('API error:', error)

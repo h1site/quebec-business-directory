@@ -17,7 +17,7 @@ interface Props {
   }>
 }
 
-export const revalidate = 86400
+export const revalidate = 604800 // 7 days
 
 async function getCategory(slug: string) {
   const supabase = createServiceClient()

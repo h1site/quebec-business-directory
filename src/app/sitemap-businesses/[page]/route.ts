@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 3600
+export const revalidate = 86400 // 24 hours
 
 const PAGE_SIZE = 5000
 

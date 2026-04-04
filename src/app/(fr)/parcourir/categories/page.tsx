@@ -4,7 +4,7 @@ import { createServiceClient } from '@/lib/supabase/server'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 604800 // 7 days
 
 export const metadata: Metadata = {
   title: 'Toutes les catégories',

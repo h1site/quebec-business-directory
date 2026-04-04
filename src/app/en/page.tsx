@@ -10,7 +10,7 @@ import {
   FeaturedBusinessesSectionEN,
 } from '@/components/home'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 86400 // 24 hours
 
 async function getStats() {
   const supabase = createServiceClient()
