@@ -410,6 +410,44 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* SEO Content Block - adds text to improve text/HTML ratio */}
+                <div className="rounded-xl p-6" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <h2 className="text-lg font-bold mb-3" style={{ color: 'var(--foreground)' }}>
+                    {business.name} {business.city ? `à ${business.city}` : 'au Québec'}
+                  </h2>
+                  <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                    <p>
+                      {business.name} est une entreprise
+                      {business.main_category_slug ? ` du secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : ''}
+                      {business.city ? ` située à ${business.city}` : ''}
+                      {business.region ? `, dans la région de ${business.region}` : ''}
+                      {business.mrc ? ` (MRC ${business.mrc})` : ''}.
+                      {business.neq ? ` Son numéro d'entreprise du Québec (NEQ) est le ${business.neq}.` : ''}
+                    </p>
+                    {business.ai_services && business.ai_services.length > 0 && (
+                      <p>
+                        L&apos;entreprise propose les services suivants : {business.ai_services.join(', ')}.
+                        {business.city ? ` Ces services sont offerts dans la ville de ${business.city} et les environs.` : ''}
+                      </p>
+                    )}
+                    {business.google_rating && business.google_reviews_count > 0 && (
+                      <p>
+                        Avec une note de {business.google_rating} sur 5 basée sur {business.google_reviews_count} avis Google,
+                        {business.name} {business.google_rating >= 4 ? 'bénéficie d\'une excellente réputation auprès de sa clientèle' : 'est une entreprise reconnue dans son domaine'}.
+                      </p>
+                    )}
+                    <p>
+                      Vous cherchez {business.main_category_slug ? `une entreprise de ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : 'une entreprise'}
+                      {business.city ? ` à ${business.city}` : ' au Québec'} ?
+                      Consultez la fiche complète de {business.name} pour obtenir ses coordonnées,
+                      {displayPhone ? ' numéro de téléphone,' : ''}
+                      {business.website ? ' site web,' : ''}
+                      {' '}avis clients et informations détaillées.
+                      {business.city && business.main_category_slug ? ` Découvrez également d'autres entreprises de ${categoryLabels[business.main_category_slug] || business.main_category_slug} à ${business.city}.` : ''}
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* Right Column - Sidebar */}
