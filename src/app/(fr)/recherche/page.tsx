@@ -350,12 +350,12 @@ export default async function SearchPage({
                     <BusinessCard business={biz} />
                     {index === 2 && (
                       <div className="my-4">
-                        <AdSense slot="3234567890" format="auto" responsive={true} style={{ minHeight: '90px' }} />
+                        <AdSense slot="8544579045" format="auto" responsive={true} style={{ minHeight: '90px' }} />
                       </div>
                     )}
                     {index === 7 && (
                       <div className="my-4">
-                        <AdSense slot="3234567891" format="fluid" layout="in-feed" />
+                        <AdSense slot="8544579045" format="auto" responsive={true} />
                       </div>
                     )}
                   </div>

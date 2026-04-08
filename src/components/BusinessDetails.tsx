@@ -285,7 +285,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Ad - In Article */}
                 <div className="my-4">
-                  <AdSense slot="2234567892" format="fluid" layout="in-article" />
+                  <AdSense slot="8544579045" format="auto" responsive={true} />
                 </div>
 
                 {/* Gallery */}
@@ -623,7 +623,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Ad - Sidebar Sticky */}
                 <div className="sticky top-24">
-                  <AdSense slot="2234567891" format="auto" responsive={true} style={{ minHeight: '600px' }} />
+                  <AdSense slot="8544579045" format="auto" responsive={true} style={{ minHeight: '600px' }} />
                 </div>
               </div>
             </div>
@@ -632,7 +632,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
         {/* Ad - Leaderboard before recommendations */}
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="2234567893" format="auto" responsive={true} style={{ minHeight: '90px' }} />
+          <AdSense slot="8544579045" format="auto" responsive={true} style={{ minHeight: '90px' }} />
         </div>
 
         {/* City Businesses */}

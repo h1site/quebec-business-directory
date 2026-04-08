@@ -248,12 +248,12 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                     </div>
                     {index === 3 && (
                       <div className="my-4">
-                        <AdSense slot="4234567890" format="auto" responsive={true} style={{ minHeight: '90px' }} />
+                        <AdSense slot="8544579045" format="auto" responsive={true} style={{ minHeight: '90px' }} />
                       </div>
                     )}
                     {index === 9 && (
                       <div className="my-4">
-                        <AdSense slot="4234567891" format="fluid" layout="in-feed" />
+                        <AdSense slot="8544579045" format="auto" responsive={true} />
                       </div>
                     )}
                   </div>
