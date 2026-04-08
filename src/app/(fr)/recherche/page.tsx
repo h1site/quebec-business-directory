@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import AdSense from '@/components/AdSense'
 import { searchBusinesses, type Business } from '@/lib/search'
 
 export const metadata: Metadata = {
@@ -344,8 +345,20 @@ export default async function SearchPage({
 
             {businesses.length > 0 ? (
               <div className="space-y-4">
-                {businesses.map((biz) => (
-                  <BusinessCard key={biz.id} business={biz} />
+                {businesses.map((biz, index) => (
+                  <div key={biz.id}>
+                    <BusinessCard business={biz} />
+                    {index === 2 && (
+                      <div className="my-4">
+                        <AdSense slot="3234567890" format="auto" responsive={true} style={{ minHeight: '90px' }} />
+                      </div>
+                    )}
+                    {index === 7 && (
+                      <div className="my-4">
+                        <AdSense slot="3234567891" format="fluid" layout="in-feed" />
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             ) : hasFilters ? (

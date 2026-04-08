@@ -32,6 +32,7 @@ import ShareIcon from '@mui/icons-material/Share'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { categoryLabels } from '@/lib/category-labels'
 import ClaimButton from '@/components/ClaimButton'
+import AdSense from '@/components/AdSense'
 
 interface Props {
   business: Business
@@ -281,6 +282,11 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     )}
                   </CardContent>
                 </Card>
+
+                {/* Ad - In Article */}
+                <div className="my-4">
+                  <AdSense slot="2234567892" format="fluid" layout="in-article" />
+                </div>
 
                 {/* Gallery */}
                 {business.gallery_images && business.gallery_images.length > 0 && (
@@ -614,10 +620,20 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* Ad - Sidebar Sticky */}
+                <div className="sticky top-24">
+                  <AdSense slot="2234567891" format="auto" responsive={true} style={{ minHeight: '600px' }} />
+                </div>
               </div>
             </div>
           </div>
         </section>
+
+        {/* Ad - Leaderboard before recommendations */}
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <AdSense slot="2234567893" format="auto" responsive={true} style={{ minHeight: '90px' }} />
+        </div>
 
         {/* City Businesses */}
         {cityBusinesses.length > 0 && business.city && (

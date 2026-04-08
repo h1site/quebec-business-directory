@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import AdSense from '@/components/AdSense'
 import { createServiceClient } from '@/lib/supabase/server'
 import { generateSlug } from '@/lib/utils'
 import { slugToCity } from '@/lib/cities'
@@ -199,53 +200,62 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           <div className="max-w-6xl mx-auto px-4">
             {businesses.length > 0 ? (
               <div className="space-y-4">
-                {businesses.map((business) => (
-                  <div
-                    key={business.id}
-                    className="glass rounded-xl hover:bg-white/10 transition-all overflow-hidden"
-                  >
-                    <div className="p-6">
-                      <div className="flex justify-between items-start gap-4">
-                        <div className="flex-1 min-w-0">
-                          <h2 className="text-xl font-semibold">
-                            <Link
-                              href={`/entreprise/${business.slug}`}
-                              className="text-white hover:text-sky-400 transition-colors"
-                            >
-                              {business.name}
-                            </Link>
-                          </h2>
-                          {business.city && (
-                            <p className="text-slate-400 mt-1 flex items-center gap-2">
-                              <span>📍</span>
+                {businesses.map((business, index) => (
+                  <div key={business.id}>
+                    <div className="glass rounded-xl hover:bg-white/10 transition-all overflow-hidden">
+                      <div className="p-6">
+                        <div className="flex justify-between items-start gap-4">
+                          <div className="flex-1 min-w-0">
+                            <h2 className="text-xl font-semibold">
                               <Link
-                                href={`/ville/${generateSlug(business.city)}`}
-                                className="hover:text-sky-400 transition-colors"
+                                href={`/entreprise/${business.slug}`}
+                                className="text-white hover:text-sky-400 transition-colors"
                               >
-                                {business.city}
+                                {business.name}
                               </Link>
-                              {business.region && `, ${business.region}`}
-                            </p>
-                          )}
-                          {business.ai_description && (
-                            <p className="text-slate-500 mt-2 text-sm line-clamp-2">
-                              {business.ai_description}
-                            </p>
-                          )}
-                        </div>
-                        {business.google_rating && (
-                          <div className="flex flex-col items-end shrink-0">
-                            <div className="flex items-center gap-1 bg-amber-500/20 px-3 py-1.5 rounded-lg">
-                              <span className="text-amber-400 text-lg">★</span>
-                              <span className="font-bold text-white">{business.google_rating}</span>
-                            </div>
-                            {business.google_reviews_count && (
-                              <span className="text-xs text-slate-500 mt-1">{business.google_reviews_count} avis</span>
+                            </h2>
+                            {business.city && (
+                              <p className="text-slate-400 mt-1 flex items-center gap-2">
+                                <span>📍</span>
+                                <Link
+                                  href={`/ville/${generateSlug(business.city)}`}
+                                  className="hover:text-sky-400 transition-colors"
+                                >
+                                  {business.city}
+                                </Link>
+                                {business.region && `, ${business.region}`}
+                              </p>
+                            )}
+                            {business.ai_description && (
+                              <p className="text-slate-500 mt-2 text-sm line-clamp-2">
+                                {business.ai_description}
+                              </p>
                             )}
                           </div>
-                        )}
+                          {business.google_rating && (
+                            <div className="flex flex-col items-end shrink-0">
+                              <div className="flex items-center gap-1 bg-amber-500/20 px-3 py-1.5 rounded-lg">
+                                <span className="text-amber-400 text-lg">★</span>
+                                <span className="font-bold text-white">{business.google_rating}</span>
+                              </div>
+                              {business.google_reviews_count && (
+                                <span className="text-xs text-slate-500 mt-1">{business.google_reviews_count} avis</span>
+                              )}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
+                    {index === 3 && (
+                      <div className="my-4">
+                        <AdSense slot="4234567890" format="auto" responsive={true} style={{ minHeight: '90px' }} />
+                      </div>
+                    )}
+                    {index === 9 && (
+                      <div className="my-4">
+                        <AdSense slot="4234567891" format="fluid" layout="in-feed" />
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
