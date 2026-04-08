@@ -1,0 +1,57 @@
+# Registre des entreprises du Quebec
+
+> Annuaire en ligne des entreprises du Quebec, Canada. Plus de 7 000 fiches d'entreprises verifiees avec coordonnees, avis Google et descriptions detaillees.
+
+## A propos
+
+Le Registre du Quebec (registreduquebec.com) est un annuaire gratuit qui repertorie les entreprises quebecoises. Chaque fiche est enrichie par intelligence artificielle et verifiee pour garantir l'exactitude des informations. Le site couvre toutes les regions administratives du Quebec.
+
+## Pages importantes
+
+- [Accueil](https://registreduquebec.com/)
+- [Recherche d'entreprises](https://registreduquebec.com/recherche)
+- [Toutes les categories](https://registreduquebec.com/parcourir/categories)
+- [A propos](https://registreduquebec.com/a-propos)
+- [FAQ](https://registreduquebec.com/faq)
+- [Plan du site](https://registreduquebec.com/plan-du-site)
+- [Sitemap XML](https://registreduquebec.com/sitemap-index.xml)
+
+## Categories principales
+
+- [Agriculture et environnement](https://registreduquebec.com/categorie/agriculture-et-environnement)
+- [Arts, medias et divertissement](https://registreduquebec.com/categorie/arts-medias-et-divertissement)
+- [Automobile et transport](https://registreduquebec.com/categorie/automobile-et-transport)
+- [Commerce de detail](https://registreduquebec.com/categorie/commerce-de-detail)
+- [Construction et renovation](https://registreduquebec.com/categorie/construction-et-renovation)
+- [Education et formation](https://registreduquebec.com/categorie/education-et-formation)
+- [Finance, assurance et juridique](https://registreduquebec.com/categorie/finance-assurance-et-juridique)
+- [Immobilier](https://registreduquebec.com/categorie/immobilier)
+- [Industrie, fabrication et logistique](https://registreduquebec.com/categorie/industrie-fabrication-et-logistique)
+- [Maison et services domestiques](https://registreduquebec.com/categorie/maison-et-services-domestiques)
+- [Organismes publics et communautaires](https://registreduquebec.com/categorie/organismes-publics-et-communautaires)
+- [Restauration et alimentation](https://registreduquebec.com/categorie/restauration-et-alimentation)
+- [Sante et bien-etre](https://registreduquebec.com/categorie/sante-et-bien-etre)
+- [Services funeraires](https://registreduquebec.com/categorie/services-funeraires)
+- [Services professionnels](https://registreduquebec.com/categorie/services-professionnels)
+- [Soins a domicile](https://registreduquebec.com/categorie/soins-a-domicile)
+- [Sports et loisirs](https://registreduquebec.com/categorie/sports-et-loisirs)
+- [Technologie et informatique](https://registreduquebec.com/categorie/technologie-et-informatique)
+- [Tourisme et hebergement](https://registreduquebec.com/categorie/tourisme-et-hebergement)
+
+## Villes principales
+
+- [Montreal](https://registreduquebec.com/ville/montreal)
+- [Quebec](https://registreduquebec.com/ville/quebec)
+- [Laval](https://registreduquebec.com/ville/laval)
+- [Gatineau](https://registreduquebec.com/ville/gatineau)
+- [Longueuil](https://registreduquebec.com/ville/longueuil)
+- [Sherbrooke](https://registreduquebec.com/ville/sherbrooke)
+- [Levis](https://registreduquebec.com/ville/levis)
+- [Trois-Rivieres](https://registreduquebec.com/ville/trois-rivieres)
+- [Terrebonne](https://registreduquebec.com/ville/terrebonne)
+- [Saint-Jean-sur-Richelieu](https://registreduquebec.com/ville/saint-jean-sur-richelieu)
+
+## Contact
+
+- Email: info@h1site.com
+- Site web: https://registreduquebec.com
