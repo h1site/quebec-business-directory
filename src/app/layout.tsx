@@ -12,6 +12,7 @@ const googleVerification =
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
   publisher: 'Registre du Québec',
   alternates: {
     languages: {
+      'x-default': 'https://registreduquebec.com',
       'fr-CA': 'https://registreduquebec.com',
       'en-CA': 'https://registreduquebec.com/en',
     },
@@ -81,12 +83,17 @@ export default function RootLayout({
     <html lang="fr" className="dark">
       <head>
         <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
-        {/* Google Tag (gtag.js) */}
+        {/* Preconnect to critical 3rd parties */}
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Google Tag (gtag.js) - lazyOnload to reduce blocking */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NF84WEBS49"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-tag" strategy="afterInteractive">
+        <Script id="google-tag" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -94,10 +101,10 @@ export default function RootLayout({
             gtag('config', 'G-NF84WEBS49');
           `}
         </Script>
-        {/* Google AdSense - data-overlays="bottom" blocks top anchor ads */}
-        <script
-          async
+        {/* Google AdSense - lazyOnload to reduce TBT, data-overlays="bottom" blocks top anchor */}
+        <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8781698761921917"
+          strategy="lazyOnload"
           crossOrigin="anonymous"
           data-overlays="bottom"
         />
