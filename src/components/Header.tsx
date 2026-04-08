@@ -5,24 +5,64 @@ import Image from 'next/image'
 import { useState, useEffect, useMemo } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import type { User } from '@supabase/supabase-js'
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  IconButton,
-  Drawer,
-  Box,
-  Divider,
-  Avatar,
-  Chip,
-} from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
-import CloseIcon from '@mui/icons-material/Close'
-import SearchIcon from '@mui/icons-material/Search'
-import AddBusinessIcon from '@mui/icons-material/AddBusiness'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import LogoutIcon from '@mui/icons-material/Logout'
-import LoginIcon from '@mui/icons-material/Login'
+
+// Inline SVG icons
+function MenuIcon({ className = 'w-6 h-6' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  )
+}
+
+function CloseIcon({ className = 'w-6 h-6' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  )
+}
+
+function SearchIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+    </svg>
+  )
+}
+
+function AddBusinessIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 21h18M3 7l9-4 9 4M4 7v7m16-7v7" />
+    </svg>
+  )
+}
+
+function HeartIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+    </svg>
+  )
+}
+
+function LogoutIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+    </svg>
+  )
+}
+
+function LoginIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h9a2 2 0 012 2v1" />
+    </svg>
+  )
+}
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -64,18 +104,15 @@ export default function Header() {
 
   return (
     <>
-      <AppBar
-        position="fixed"
-        elevation={isScrolled ? 2 : 0}
-        sx={{
-          bgcolor: isScrolled ? 'background.paper' : 'transparent',
-          backdropFilter: isScrolled ? 'blur(12px)' : 'none',
-          transition: 'all 0.3s ease',
-          borderBottom: isScrolled ? '1px solid' : 'none',
-          borderColor: 'divider',
-        }}
+      {/* AppBar */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-[var(--background)]/95 backdrop-blur-xl border-b border-[var(--foreground)]/10 shadow-md'
+            : 'bg-transparent border-b border-transparent'
+        }`}
       >
-        <Toolbar className="max-w-7xl mx-auto w-full px-4 sm:px-6" sx={{ minHeight: { xs: 64 } }}>
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 flex items-center h-16">
           {/* Logo */}
           <Link href="/" prefetch={true} className="flex items-center gap-3 group no-underline">
             <Image
@@ -86,275 +123,234 @@ export default function Header() {
               priority
               className="rounded-xl drop-shadow-lg group-hover:scale-105 transition-transform brightness-0 invert"
             />
-            <Box className="hidden sm:flex items-center gap-2">
-              <Box component="span" sx={{ fontWeight: 700, fontSize: '0.875rem', color: 'text.primary' }}>
+            <span className="hidden sm:flex items-center gap-2">
+              <span className="font-bold text-sm text-[var(--foreground)]">
                 Registre du Québec
-              </Box>
-              <Chip label="Bêta" size="small" color="primary" variant="outlined" sx={{ fontSize: '0.6rem', height: 20 }} />
-            </Box>
+              </span>
+              <span className="text-[0.6rem] leading-none px-1.5 py-0.5 border border-blue-500 text-blue-500 rounded-full font-medium">
+                Bêta
+              </span>
+            </span>
           </Link>
 
-          <Box sx={{ flexGrow: 1 }} />
+          <div className="flex-grow" />
 
           {/* Desktop Navigation */}
-          <Box className="hidden lg:flex items-center gap-1">
-            <Button
-              component={Link}
+          <nav className="hidden lg:flex items-center gap-1">
+            <Link
               href="/"
-              color="inherit"
-              sx={{ fontSize: '0.875rem', color: 'text.secondary', '&:hover': { color: 'text.primary', bgcolor: 'action.hover' } }}
+              className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 px-3 py-1.5 rounded-md transition-colors no-underline"
             >
               Accueil
-            </Button>
-            <Button
-              component={Link}
+            </Link>
+            <Link
               href="/recherche"
-              color="inherit"
-              startIcon={<SearchIcon sx={{ fontSize: 18 }} />}
-              sx={{ fontSize: '0.875rem', color: 'text.secondary', '&:hover': { color: 'text.primary', bgcolor: 'action.hover' } }}
+              className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 px-3 py-1.5 rounded-md transition-colors no-underline flex items-center gap-1.5"
             >
+              <SearchIcon />
               Recherche
-            </Button>
-            <Button
-              component={Link}
+            </Link>
+            <Link
               href={user ? '/entreprise/nouvelle' : '/connexion?redirect=/entreprise/nouvelle'}
-              color="inherit"
-              startIcon={<AddBusinessIcon sx={{ fontSize: 18 }} />}
-              sx={{ fontSize: '0.875rem', color: 'text.secondary', '&:hover': { color: 'text.primary', bgcolor: 'action.hover' } }}
+              className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 px-3 py-1.5 rounded-md transition-colors no-underline flex items-center gap-1.5"
             >
+              <AddBusinessIcon />
               Ajouter
-            </Button>
+            </Link>
 
-            <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'divider' }} />
+            {/* Divider */}
+            <div className="w-px h-6 bg-[var(--foreground)]/10 mx-1" />
 
             {!loading && (
               <>
                 {user ? (
-                  <Box className="flex items-center gap-1">
-                    <Button
-                      component={Link}
+                  <div className="flex items-center gap-1">
+                    <Link
                       href="/tableau-de-bord"
-                      variant="outlined"
-                      size="small"
-                      startIcon={
-                        user.user_metadata?.avatar_url ? (
-                          <Avatar src={user.user_metadata.avatar_url} sx={{ width: 24, height: 24 }} />
-                        ) : (
-                          <Avatar sx={{ width: 24, height: 24, bgcolor: 'primary.main', fontSize: '0.75rem' }}>
-                            {user.email?.charAt(0).toUpperCase()}
-                          </Avatar>
-                        )
-                      }
-                      sx={{ borderColor: 'divider', color: 'text.primary', textTransform: 'none' }}
+                      className="flex items-center gap-2 border border-[var(--foreground)]/10 text-[var(--foreground)] rounded-md px-3 py-1 text-sm no-underline hover:bg-[var(--foreground)]/5 transition-colors"
                     >
-                      <Box component="span" className="hidden xl:inline">
+                      {user.user_metadata?.avatar_url ? (
+                        <img
+                          src={user.user_metadata.avatar_url}
+                          alt=""
+                          className="w-6 h-6 rounded-full"
+                        />
+                      ) : (
+                        <span className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-medium">
+                          {user.email?.charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                      <span className="hidden xl:inline">
                         {user.user_metadata?.full_name || user.email?.split('@')[0]}
-                      </Box>
-                    </Button>
-                    <IconButton onClick={handleLogout} size="small" sx={{ color: 'text.secondary' }}>
-                      <LogoutIcon fontSize="small" />
-                    </IconButton>
-                  </Box>
+                      </span>
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="p-1.5 rounded-md text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 transition-colors"
+                    >
+                      <LogoutIcon />
+                    </button>
+                  </div>
                 ) : (
-                  <Button
-                    component={Link}
+                  <Link
                     href="/connexion"
-                    variant="contained"
-                    size="small"
-                    startIcon={<LoginIcon />}
+                    className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1.5 rounded-md transition-colors no-underline"
                   >
+                    <LoginIcon />
                     Connexion
-                  </Button>
+                  </Link>
                 )}
               </>
             )}
 
-            <Button
-              component="a"
+            <a
               href="https://www.paypal.com/donate/?hosted_button_id=GUPL4K5WR3ZG4"
               target="_blank"
               rel="noopener noreferrer"
-              variant="contained"
-              size="small"
-              startIcon={<FavoriteIcon />}
-              sx={{
-                ml: 1,
-                background: 'linear-gradient(to right, #ec4899, #f43f5e)',
-                '&:hover': { background: 'linear-gradient(to right, #db2777, #e11d48)' },
-              }}
+              className="ml-1 flex items-center gap-1.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white text-sm px-3 py-1.5 rounded-md transition-all no-underline"
             >
-              <Box component="span" className="hidden xl:inline">Don</Box>
-            </Button>
+              <HeartIcon />
+              <span className="hidden xl:inline">Don</span>
+            </a>
 
-            <Button
-              component={Link}
+            <Link
               href="/en"
-              color="inherit"
-              size="small"
-              sx={{ ml: 1, minWidth: 'auto', color: 'text.secondary', fontWeight: 600 }}
+              className="ml-1 text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] font-semibold px-2 py-1.5 rounded-md transition-colors no-underline"
             >
               EN
-            </Button>
-          </Box>
+            </Link>
+          </nav>
 
           {/* Mobile */}
-          <Box className="flex lg:hidden items-center gap-1">
-            <Button
-              component={Link}
+          <div className="flex lg:hidden items-center gap-1">
+            <Link
               href="/en"
-              color="inherit"
-              size="small"
-              sx={{ minWidth: 'auto', color: 'text.secondary', fontWeight: 600 }}
+              className="text-sm text-[var(--foreground)]/60 font-semibold px-2 py-1.5 no-underline"
             >
               EN
-            </Button>
-            <IconButton
-              color="inherit"
+            </Link>
+            <button
               onClick={() => setDrawerOpen(true)}
-              sx={{ color: 'text.primary' }}
+              className="p-2 text-[var(--foreground)] rounded-md hover:bg-[var(--foreground)]/5 transition-colors"
             >
               <MenuIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Drawer Overlay */}
+      <div
+        className={`fixed inset-0 z-[60] bg-black/50 transition-opacity duration-300 ${
+          drawerOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setDrawerOpen(false)}
+      />
 
       {/* Mobile Drawer */}
-      <Drawer
-        anchor="right"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        slotProps={{
-          paper: {
-            sx: {
-              width: 300,
-              bgcolor: 'background.paper',
-              p: 2,
-            },
-          },
-        }}
+      <div
+        className={`fixed top-0 right-0 z-[70] h-full w-[300px] bg-[var(--background)] p-4 shadow-2xl transition-transform duration-300 ease-in-out ${
+          drawerOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
       >
-        <Box className="flex justify-between items-center mb-4">
-          <Box sx={{ fontWeight: 700, fontSize: '1rem', color: 'text.primary' }}>Menu</Box>
-          <IconButton onClick={() => setDrawerOpen(false)} sx={{ color: 'text.secondary' }}>
+        <div className="flex justify-between items-center mb-4">
+          <span className="font-bold text-base text-[var(--foreground)]">Menu</span>
+          <button
+            onClick={() => setDrawerOpen(false)}
+            className="p-1.5 rounded-md text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 transition-colors"
+          >
             <CloseIcon />
-          </IconButton>
-        </Box>
+          </button>
+        </div>
 
         {user && (
-          <Button
-            component={Link}
+          <Link
             href="/tableau-de-bord"
             onClick={() => setDrawerOpen(false)}
-            fullWidth
-            startIcon={
-              user.user_metadata?.avatar_url ? (
-                <Avatar src={user.user_metadata.avatar_url} sx={{ width: 36, height: 36 }} />
-              ) : (
-                <Avatar sx={{ width: 36, height: 36, bgcolor: 'primary.main' }}>
-                  {user.email?.charAt(0).toUpperCase()}
-                </Avatar>
-              )
-            }
-            sx={{
-              justifyContent: 'flex-start',
-              color: 'text.primary',
-              textTransform: 'none',
-              mb: 2,
-              py: 1.5,
-              bgcolor: 'action.hover',
-              borderRadius: 3,
-            }}
+            className="flex items-center gap-3 w-full text-left bg-[var(--foreground)]/5 rounded-xl px-3 py-3 mb-4 no-underline hover:bg-[var(--foreground)]/10 transition-colors"
           >
-            <Box>
-              <Box sx={{ fontWeight: 600, lineHeight: 1.2 }}>
+            {user.user_metadata?.avatar_url ? (
+              <img
+                src={user.user_metadata.avatar_url}
+                alt=""
+                className="w-9 h-9 rounded-full"
+              />
+            ) : (
+              <span className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-medium">
+                {user.email?.charAt(0).toUpperCase()}
+              </span>
+            )}
+            <div>
+              <div className="font-semibold text-[var(--foreground)] leading-tight text-sm">
                 {user.user_metadata?.full_name || user.email?.split('@')[0]}
-              </Box>
-              <Box sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>Tableau de bord</Box>
-            </Box>
-          </Button>
+              </div>
+              <div className="text-xs text-[var(--foreground)]/60">Tableau de bord</div>
+            </div>
+          </Link>
         )}
 
-        <Box className="flex flex-col gap-1">
-          <Button
-            component={Link}
+        <div className="flex flex-col gap-1">
+          <Link
             href="/"
             onClick={() => setDrawerOpen(false)}
-            fullWidth
-            sx={{ justifyContent: 'flex-start', color: 'text.primary', py: 1.5 }}
+            className="w-full text-left text-[var(--foreground)] py-3 px-3 rounded-md hover:bg-[var(--foreground)]/5 transition-colors no-underline text-sm"
           >
             Accueil
-          </Button>
-          <Button
-            component={Link}
+          </Link>
+          <Link
             href="/recherche"
             onClick={() => setDrawerOpen(false)}
-            fullWidth
-            startIcon={<SearchIcon />}
-            sx={{ justifyContent: 'flex-start', color: 'text.primary', py: 1.5 }}
+            className="w-full text-left text-[var(--foreground)] py-3 px-3 rounded-md hover:bg-[var(--foreground)]/5 transition-colors no-underline flex items-center gap-2 text-sm"
           >
+            <SearchIcon />
             Recherche
-          </Button>
-          <Button
-            component={Link}
+          </Link>
+          <Link
             href={user ? '/entreprise/nouvelle' : '/connexion?redirect=/entreprise/nouvelle'}
             onClick={() => setDrawerOpen(false)}
-            fullWidth
-            startIcon={<AddBusinessIcon />}
-            sx={{ justifyContent: 'flex-start', color: 'text.primary', py: 1.5 }}
+            className="w-full text-left text-[var(--foreground)] py-3 px-3 rounded-md hover:bg-[var(--foreground)]/5 transition-colors no-underline flex items-center gap-2 text-sm"
           >
+            <AddBusinessIcon />
             Ajouter une entreprise
-          </Button>
-        </Box>
+          </Link>
+        </div>
 
-        <Divider sx={{ my: 2 }} />
+        {/* Divider */}
+        <div className="h-px bg-[var(--foreground)]/10 my-4" />
 
         {user ? (
-          <Button
+          <button
             onClick={() => {
               handleLogout()
               setDrawerOpen(false)
             }}
-            fullWidth
-            color="error"
-            startIcon={<LogoutIcon />}
-            sx={{ justifyContent: 'flex-start', py: 1.5 }}
+            className="w-full text-left text-red-500 py-3 px-3 rounded-md hover:bg-red-500/10 transition-colors flex items-center gap-2 text-sm"
           >
+            <LogoutIcon />
             Déconnexion
-          </Button>
+          </button>
         ) : (
-          <Button
-            component={Link}
+          <Link
             href="/connexion"
             onClick={() => setDrawerOpen(false)}
-            fullWidth
-            variant="contained"
-            startIcon={<LoginIcon />}
-            sx={{ py: 1.5 }}
+            className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 px-3 rounded-md transition-colors no-underline text-sm"
           >
+            <LoginIcon />
             Connexion avec Google
-          </Button>
+          </Link>
         )}
 
-        <Button
-          component="a"
+        <a
           href="https://www.paypal.com/donate/?hosted_button_id=GUPL4K5WR3ZG4"
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => setDrawerOpen(false)}
-          fullWidth
-          variant="contained"
-          startIcon={<FavoriteIcon />}
-          sx={{
-            mt: 2,
-            py: 1.5,
-            background: 'linear-gradient(to right, #ec4899, #f43f5e)',
-            '&:hover': { background: 'linear-gradient(to right, #db2777, #e11d48)' },
-          }}
+          className="mt-4 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white py-3 px-3 rounded-md transition-all no-underline text-sm"
         >
+          <HeartIcon />
           Faire un don
-        </Button>
-      </Drawer>
+        </a>
+      </div>
     </>
   )
 }

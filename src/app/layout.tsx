@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Script from 'next/script'
-import ThemeRegistry from '@/providers/ThemeRegistry'
 import './globals.css'
 
 const googleVerification =
@@ -110,9 +109,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
-        <ThemeRegistry>
           {children}
-        </ThemeRegistry>
       </body>
     </html>
   )

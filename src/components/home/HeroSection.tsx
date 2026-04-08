@@ -1,10 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { Button, Chip, TextField, InputAdornment } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 
 interface HeroSectionProps {
   totalBusinesses: number
@@ -33,17 +29,9 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
 
       <div className="relative z-10 w-full max-w-4xl mx-auto px-4 py-24 text-center">
         <div className="mb-8 animate-fade-in">
-          <Chip
-            label="Bêta — Version en développement"
-            variant="outlined"
-            sx={{
-              color: 'white',
-              borderColor: 'rgba(255,255,255,0.2)',
-              bgcolor: 'rgba(255,255,255,0.05)',
-              backdropFilter: 'blur(8px)',
-              fontWeight: 500,
-            }}
-          />
+          <span className="inline-block px-3 py-1 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-white text-sm font-medium">
+            Bêta — Version en développement
+          </span>
         </div>
 
         <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 animate-slide-up">
@@ -66,97 +54,60 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
         >
           <div className="flex flex-col md:flex-row">
             <div className="flex-1 p-4 border-b md:border-b-0 md:border-r border-white/10">
-              <TextField
-                name="q"
-                placeholder="Restaurant, plombier, avocat..."
-                variant="standard"
-                fullWidth
-                label="Quoi?"
-                slotProps={{
-                  input: {
-                    disableUnderline: true,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon sx={{ color: 'rgba(148,163,184,0.6)' }} />
-                      </InputAdornment>
-                    ),
-                    sx: { color: 'white', fontSize: '1.1rem' },
-                  },
-                  inputLabel: {
-                    sx: { color: '#0ea5e9', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' },
-                    shrink: true,
-                  },
-                }}
-              />
+              <label className="block text-sky-500 font-bold text-xs uppercase tracking-wider mb-1">
+                Quoi?
+              </label>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-slate-400/60 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input
+                  name="q"
+                  type="text"
+                  placeholder="Restaurant, plombier, avocat..."
+                  className="w-full bg-transparent text-white text-lg outline-none placeholder-slate-400/60"
+                />
+              </div>
             </div>
             <div className="flex-1 p-4 border-b md:border-b-0 md:border-r border-white/10">
-              <TextField
-                name="ville"
-                placeholder="Montréal, Québec, Laval..."
-                variant="standard"
-                fullWidth
-                label="Où?"
-                slotProps={{
-                  input: {
-                    disableUnderline: true,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocationOnIcon sx={{ color: 'rgba(148,163,184,0.6)' }} />
-                      </InputAdornment>
-                    ),
-                    sx: { color: 'white', fontSize: '1.1rem' },
-                  },
-                  inputLabel: {
-                    sx: { color: '#0ea5e9', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' },
-                    shrink: true,
-                  },
-                }}
-              />
+              <label className="block text-sky-500 font-bold text-xs uppercase tracking-wider mb-1">
+                Où?
+              </label>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-slate-400/60 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <input
+                  name="ville"
+                  type="text"
+                  placeholder="Montréal, Québec, Laval..."
+                  className="w-full bg-transparent text-white text-lg outline-none placeholder-slate-400/60"
+                />
+              </div>
             </div>
-            <Button
+            <button
               type="submit"
-              variant="contained"
-              startIcon={<SearchIcon />}
-              sx={{
-                background: 'linear-gradient(to right, #0ea5e9, #06b6d4)',
-                '&:hover': { background: 'linear-gradient(to right, #38bdf8, #22d3ee)' },
-                px: 5,
-                py: { xs: 2, md: 0 },
-                borderRadius: 0,
-                fontSize: '1rem',
-                fontWeight: 600,
-              }}
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-white font-semibold text-base px-10 py-4 md:py-0 transition-all"
             >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
               <span className="hidden md:inline">Rechercher</span>
-            </Button>
+            </button>
           </div>
         </form>
 
         <div className="flex flex-wrap justify-center gap-3 animate-slide-up animation-delay-300">
           {quickSearches.map((item) => (
-            <Chip
+            <Link
               key={item.query}
-              component={Link}
               href={`/recherche?q=${encodeURIComponent(item.query)}`}
-              icon={<span>{item.icon}</span>}
-              label={item.label}
-              clickable
-              variant="outlined"
-              sx={{
-                color: 'white',
-                borderColor: 'rgba(255,255,255,0.15)',
-                bgcolor: 'rgba(255,255,255,0.05)',
-                '&:hover': {
-                  bgcolor: 'rgba(255,255,255,0.1)',
-                  borderColor: 'rgba(14,165,233,0.5)',
-                  transform: 'translateY(-2px)',
-                },
-                transition: 'all 0.2s ease',
-                fontWeight: 500,
-                py: 2.5,
-                px: 1,
-              }}
-            />
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full border border-white/15 bg-white/5 text-white font-medium text-sm hover:bg-white/10 hover:border-sky-500/50 hover:-translate-y-0.5 transition-all duration-200"
+            >
+              <span>{item.icon}</span>
+              {item.label}
+            </Link>
           ))}
         </div>
 
@@ -165,24 +116,15 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
           <p className="text-slate-300 text-sm mb-5">
             Créez votre fiche en quelques minutes et augmentez votre visibilité auprès de milliers de Québécois.
           </p>
-          <Button
-            component={Link}
+          <Link
             href="/entreprise/nouvelle"
-            variant="contained"
-            startIcon={<AutoAwesomeIcon />}
-            sx={{
-              bgcolor: 'primary.main',
-              '&:hover': {
-                bgcolor: 'primary.dark',
-                transform: 'translateY(-2px)',
-              },
-              transition: 'all 0.2s ease',
-              fontWeight: 600,
-              mb: 3,
-            }}
+            className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold px-5 py-2.5 rounded-md hover:-translate-y-0.5 transition-all duration-200 mb-6"
           >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
             Ajouter mon entreprise
-          </Button>
+          </Link>
           <p className="text-slate-400 text-xs leading-relaxed">
             Vous voyez une entreprise qui vous appartient et qui n&apos;a pas été réclamée ? Rendez-vous sur sa fiche et faites une demande pour en prendre possession. Pour toute question, écrivez-nous à{' '}
             <a href="mailto:info@h1site.com" className="text-sky-400 hover:text-sky-300 underline">info@h1site.com</a>

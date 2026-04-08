@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { Card, CardActionArea, Box } from '@mui/material'
 
 interface Category {
   id: string
@@ -50,28 +49,18 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {categories.map((category) => (
-            <Card
+            <Link
               key={category.id}
-              sx={{
-                bgcolor: 'background.paper',
-                transition: 'all 0.2s ease',
-                '&:hover': { transform: 'translateY(-4px)', boxShadow: 6 },
-              }}
-              className="animate-fade-in-up"
+              href={`/categorie/${category.slug}`}
+              className="flex items-center gap-3 p-3 rounded-lg bg-slate-800/80 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 animate-fade-in-up"
             >
-              <CardActionArea
-                component={Link}
-                href={`/categorie/${category.slug}`}
-                sx={{ p: 2.5, display: 'flex', justifyContent: 'flex-start', gap: 2 }}
-              >
-                <Box sx={{ fontSize: '1.875rem', lineHeight: 1 }}>
-                  {categoryIcons[category.slug] || '📁'}
-                </Box>
-                <Box sx={{ fontWeight: 500, color: 'text.primary' }}>
-                  {category.label_fr}
-                </Box>
-              </CardActionArea>
-            </Card>
+              <span className="text-3xl leading-none">
+                {categoryIcons[category.slug] || '📁'}
+              </span>
+              <span className="font-medium" style={{ color: 'var(--foreground)' }}>
+                {category.label_fr}
+              </span>
+            </Link>
           ))}
         </div>
       </div>

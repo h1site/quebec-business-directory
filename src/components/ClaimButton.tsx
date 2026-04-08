@@ -2,9 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
-import { Button, Box, Chip } from '@mui/material'
 import Link from 'next/link'
-import VerifiedIcon from '@mui/icons-material/Verified'
 
 interface Props {
   businessId: string
@@ -13,6 +11,14 @@ interface Props {
   claimStatus: string | null
   ownerIdExists: boolean
   inline?: boolean
+}
+
+function VerifiedIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em">
+      <path d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82 1.89 3.2L12 21.04l3.4 1.46 1.89-3.2 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z" />
+    </svg>
+  )
 }
 
 export default function ClaimButton({ businessId, businessSlug, isClaimed, claimStatus, ownerIdExists, inline }: Props) {
@@ -85,40 +91,40 @@ export default function ClaimButton({ businessId, businessSlug, isClaimed, claim
     if (!authChecked) return null
 
     if (status === 'success') {
-      return <Chip label="Réclamation envoyée" color="success" size="small" icon={<VerifiedIcon />} />
+      return (
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-900/60 px-3 py-1 text-xs font-medium text-emerald-300 border border-emerald-700/50">
+          <VerifiedIcon className="w-4 h-4" />
+          Réclamation envoyée
+        </span>
+      )
     }
 
     if (!user) {
       return (
-        <Button
-          component={Link}
+        <Link
           href={`/connexion?redirect=/entreprise/${businessSlug}`}
-          variant="contained"
-          size="small"
-          startIcon={<VerifiedIcon />}
-          sx={{ bgcolor: '#f59e0b', color: '#000', '&:hover': { bgcolor: '#d97706' } }}
+          className="inline-flex items-center gap-1.5 rounded-md bg-amber-500 px-3 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-amber-600 transition-colors"
         >
+          <VerifiedIcon className="w-4 h-4" />
           Réclamer
-        </Button>
+        </Link>
       )
     }
 
     return (
-      <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1 }}>
-        <Button
+      <span className="inline-flex items-center gap-2">
+        <button
           onClick={handleClaim}
           disabled={status === 'loading'}
-          variant="contained"
-          size="small"
-          startIcon={<VerifiedIcon />}
-          sx={{ bgcolor: '#f59e0b', color: '#000', '&:hover': { bgcolor: '#d97706' } }}
+          className="inline-flex items-center gap-1.5 rounded-md bg-amber-500 px-3 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-amber-600 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
         >
+          <VerifiedIcon className="w-4 h-4" />
           {status === 'loading' ? 'Envoi...' : 'Réclamer'}
-        </Button>
+        </button>
         {status === 'error' && (
-          <Box component="span" sx={{ color: '#fca5a5', fontSize: '0.75rem' }}>{errorMsg}</Box>
+          <span className="text-xs text-red-300">{errorMsg}</span>
         )}
-      </Box>
+      </span>
     )
   }
 
