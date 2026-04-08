@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import {
@@ -7,11 +8,25 @@ import {
   StatsSection,
   AboutSection,
 } from '@/components/home'
+import { createServiceClient } from '@/lib/supabase/server'
 
-// Fully static page - no server calls
-export const dynamic = 'force-static'
+export const revalidate = 86400 // 24 hours
 
-const TOTAL_BUSINESSES = 48000
+async function getFeaturedBusinesses() {
+  const supabase = createServiceClient()
+  const { data } = await supabase
+    .from('businesses')
+    .select('slug, name, city, main_category_slug, google_rating')
+    .eq('verification_confidence', 'high')
+    .not('ai_description', 'is', null)
+    .not('google_rating', 'is', null)
+    .gte('google_rating', 4)
+    .order('google_reviews_count', { ascending: false })
+    .limit(30)
+  return data || []
+}
+
+const TOTAL_BUSINESSES = 7000
 
 // Static categories - update when categories change
 const CATEGORIES = [
@@ -36,7 +51,8 @@ const CATEGORIES = [
   { id: '19', slug: 'tourisme-et-hebergement', label_fr: 'Tourisme et hébergement' },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featuredBusinesses = await getFeaturedBusinesses()
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -65,6 +81,36 @@ export default function HomePage() {
         <CategoriesSection categories={CATEGORIES} />
         <CitiesSection />
         <StatsSection />
+
+        {/* Featured Businesses - critical for Google crawling internal links */}
+        {featuredBusinesses.length > 0 && (
+          <section className="py-12" style={{ background: 'var(--background-secondary)' }}>
+            <div className="max-w-6xl mx-auto px-4">
+              <h2 className="text-2xl font-bold text-white mb-2 text-center">Entreprises populaires au Québec</h2>
+              <p className="text-slate-400 text-center mb-8">Découvrez les entreprises les mieux notées par leurs clients</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {featuredBusinesses.map((biz) => (
+                  <Link
+                    key={biz.slug}
+                    href={`/entreprise/${biz.slug}`}
+                    className="glass rounded-xl p-4 hover:bg-white/10 transition-all no-underline"
+                  >
+                    <div className="flex justify-between items-start">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold text-white truncate">{biz.name}</h3>
+                        <p className="text-slate-400 text-sm">{biz.city}</p>
+                      </div>
+                      {biz.google_rating && (
+                        <span className="text-amber-400 text-sm font-bold shrink-0 ml-2">★ {biz.google_rating}</span>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         <AboutSection />
       </main>
 
