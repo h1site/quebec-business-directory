@@ -62,7 +62,7 @@ export default function HistoirePMEPage() {
             <hr className="mt-8 border-white/10" />
           </header>
 
-          <div className="prose prose-invert prose-sky max-w-none prose-headings:text-[var(--foreground)] prose-headings:font-bold prose-p:text-[var(--foreground-muted)] prose-p:leading-[1.8] prose-a:text-sky-400 prose-li:text-[var(--foreground-muted)] prose-li:leading-[1.8] prose-strong:text-[var(--foreground)] prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-white/10 prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3 prose-blockquote:border-sky-500 prose-blockquote:bg-sky-500/5 prose-blockquote:rounded-r-lg prose-blockquote:py-1">
+          <div className="prose prose-lg prose-invert prose-sky max-w-none prose-headings:text-[var(--foreground)] prose-headings:font-bold prose-p:text-[var(--foreground-muted)] prose-p:leading-[1.9] prose-p:mb-6 prose-a:text-sky-400 prose-li:text-[var(--foreground-muted)] prose-li:leading-[1.8] prose-strong:text-[var(--foreground)] prose-h2:text-3xl prose-h2:mt-16 prose-h2:mb-6 prose-h2:pb-3 prose-h2:border-b prose-h2:border-white/10 prose-h3:text-xl prose-h3:mt-10 prose-h3:mb-4 prose-blockquote:border-sky-500 prose-blockquote:bg-sky-500/5 prose-blockquote:rounded-r-lg prose-blockquote:py-1">
 
             <h2>La Nouvelle-France : les premiers entrepreneurs du territoire (1608-1760)</h2>
 
