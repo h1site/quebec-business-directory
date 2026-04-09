@@ -225,6 +225,21 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
               <div className="flex-1">
                 <h1 className="text-3xl md:text-4xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>
                   {business.name}
+                  {business.main_category_slug && business.city && (
+                    <span className="block text-lg md:text-xl font-medium mt-1" style={{ color: 'var(--foreground-muted)' }}>
+                      {categoryLabels[business.main_category_slug] || business.main_category_slug} à {business.city}
+                    </span>
+                  )}
+                  {business.main_category_slug && !business.city && (
+                    <span className="block text-lg md:text-xl font-medium mt-1" style={{ color: 'var(--foreground-muted)' }}>
+                      {categoryLabels[business.main_category_slug] || business.main_category_slug} au Québec
+                    </span>
+                  )}
+                  {!business.main_category_slug && business.city && (
+                    <span className="block text-lg md:text-xl font-medium mt-1" style={{ color: 'var(--foreground-muted)' }}>
+                      Entreprise à {business.city}
+                    </span>
+                  )}
                 </h1>
 
                 <div className="flex flex-wrap items-center gap-3">
