@@ -141,17 +141,20 @@ export default async function BusinessPage({ params }: Props) {
   const faqSchema = generateFAQSchemaSimple(business, false)
   const breadcrumbSchema = generateBreadcrumbSchemaSimple(business, false)
 
-  const jsonLd = [businessSchema, faqSchema, breadcrumbSchema]
-
   return (
     <>
-      {jsonLd.map((schema, i) => (
-        <script
-          key={i}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', ...schema }) }}
-        />
-      ))}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <BusinessDetails business={business} cityBusinesses={cityBusinesses} />
     </>
   )
