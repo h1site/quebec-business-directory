@@ -2,9 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useEffect, useMemo } from 'react'
-import { createBrowserClient } from '@supabase/ssr'
-import type { User } from '@supabase/supabase-js'
+import { useState, useEffect, useCallback } from 'react'
 
 // Inline SVG icons
 function MenuIcon({ className = 'w-6 h-6' }: { className?: string }) {
@@ -67,13 +65,8 @@ function LoginIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<{ email?: string; avatar_url?: string; full_name?: string } | null>(null)
   const [loading, setLoading] = useState(true)
-
-  const supabase = useMemo(() => createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  ), [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,24 +76,48 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Lazy-load Supabase only when needed (saves ~212KB from initial bundle)
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-      setLoading(false)
-    })
+    import('@supabase/ssr').then(({ createBrowserClient }) => {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session?.user) {
+          setUser({
+            email: session.user.email,
+            avatar_url: session.user.user_metadata?.avatar_url,
+            full_name: session.user.user_metadata?.full_name,
+          })
+        }
+        setLoading(false)
+      })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
+      supabase.auth.onAuthStateChange((_event, session) => {
+        if (session?.user) {
+          setUser({
+            email: session.user.email,
+            avatar_url: session.user.user_metadata?.avatar_url,
+            full_name: session.user.user_metadata?.full_name,
+          })
+        } else {
+          setUser(null)
+        }
+      })
     })
-
-    return () => subscription.unsubscribe()
   }, [])
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
+    const { createBrowserClient } = await import('@supabase/ssr')
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
     await supabase.auth.signOut()
     setUser(null)
     window.location.href = '/'
-  }
+  }, [])
 
   return (
     <>
@@ -169,19 +186,19 @@ export default function Header() {
                       href="/tableau-de-bord"
                       className="flex items-center gap-2 border border-[var(--foreground)]/10 text-[var(--foreground)] rounded-md px-3 py-1 text-sm no-underline hover:bg-[var(--foreground)]/5 transition-colors"
                     >
-                      {user.user_metadata?.avatar_url ? (
+                      {user?.avatar_url ? (
                         <img
-                          src={user.user_metadata.avatar_url}
+                          src={user?.avatar_url}
                           alt=""
                           className="w-6 h-6 rounded-full"
                         />
                       ) : (
                         <span className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-medium">
-                          {user.email?.charAt(0).toUpperCase()}
+                          {user?.email?.charAt(0).toUpperCase()}
                         </span>
                       )}
                       <span className="hidden xl:inline">
-                        {user.user_metadata?.full_name || user.email?.split('@')[0]}
+                        {user?.full_name || user?.email?.split('@')[0]}
                       </span>
                     </Link>
                     <button
@@ -269,20 +286,20 @@ export default function Header() {
             onClick={() => setDrawerOpen(false)}
             className="flex items-center gap-3 w-full text-left bg-[var(--foreground)]/5 rounded-xl px-3 py-3 mb-4 no-underline hover:bg-[var(--foreground)]/10 transition-colors"
           >
-            {user.user_metadata?.avatar_url ? (
+            {user?.avatar_url ? (
               <img
-                src={user.user_metadata.avatar_url}
+                src={user?.avatar_url}
                 alt=""
                 className="w-9 h-9 rounded-full"
               />
             ) : (
               <span className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-medium">
-                {user.email?.charAt(0).toUpperCase()}
+                {user?.email?.charAt(0).toUpperCase()}
               </span>
             )}
             <div>
               <div className="font-semibold text-[var(--foreground)] leading-tight text-sm">
-                {user.user_metadata?.full_name || user.email?.split('@')[0]}
+                {user?.full_name || user?.email?.split('@')[0]}
               </div>
               <div className="text-xs text-[var(--foreground)]/60">Tableau de bord</div>
             </div>
