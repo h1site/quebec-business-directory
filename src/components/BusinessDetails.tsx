@@ -86,6 +86,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
   const hasContactInfo = displayPhone || displayEmail || business.website || displayAddress
   const hasSocialMedia = business.facebook_url || business.instagram_url || business.linkedin_url
   const hasOpeningHours = business.opening_hours && Object.keys(business.opening_hours).length > 0
+  const seo = (business as any).ai_seo_content as { intro?: string; analysis?: string; local_context?: string; reputation_text?: string; score_popularity?: number; score_services?: number; score_accessibility?: number } | null
 
   return (
     <>
@@ -232,6 +233,15 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Left Column */}
               <div className="lg:col-span-2 space-y-6">
+                {/* Intro unique (SEO) */}
+                {seo?.intro && (
+                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
+                    <p className="leading-relaxed text-[15px]" style={{ color: 'var(--foreground-muted)' }}>
+                      {seo.intro}
+                    </p>
+                  </div>
+                )}
+
                 {/* About */}
                 <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
                   <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>À propos</h2>
@@ -448,8 +458,10 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                         </span>
                       </div>
                     </div>
-                    {business.ai_services && business.ai_services.length > 0 && (
-                      <div className="text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                    <div className="text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                      {seo?.analysis ? (
+                        <p>{seo.analysis}</p>
+                      ) : business.ai_services && business.ai_services.length > 0 ? (
                         <p>
                           {business.name} se positionne dans le secteur{' '}
                           <strong style={{ color: 'var(--foreground)' }}>{categoryLabels[business.main_category_slug] || business.main_category_slug}</strong>
@@ -458,40 +470,68 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                             ? ` Avec une note de ${business.google_rating}/5, cette entreprise figure parmi les mieux évaluées de sa catégorie dans la région.`
                             : ` L'entreprise offre ses services aux résidents et entreprises de la région.`}
                         </p>
-                      </div>
-                    )}
+                      ) : null}
+                    </div>
+                  </div>
+                )}
+
+                {/* Score (si SEO content disponible) */}
+                {seo?.score_popularity && (
+                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
+                    <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Score de l&apos;entreprise <span className="text-xs font-normal px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-400">beta</span></h2>
+                    <div className="grid grid-cols-3 gap-4">
+                      {[
+                        { label: 'Popularité', value: seo.score_popularity, icon: '📈' },
+                        { label: 'Services', value: seo.score_services || 0, icon: '🛍️' },
+                        { label: 'Accessibilité', value: seo.score_accessibility || 0, icon: '📍' },
+                      ].map((item) => (
+                        <div key={item.label} className="text-center">
+                          <span className="text-2xl block">{item.icon}</span>
+                          <div className="mt-2 h-2 rounded-full overflow-hidden" style={{ background: 'var(--background-secondary)' }}>
+                            <div className="h-full rounded-full bg-gradient-to-r from-sky-500 to-cyan-400" style={{ width: `${item.value * 10}%` }} />
+                          </div>
+                          <span className="text-lg font-bold block mt-1" style={{ color: 'var(--foreground)' }}>{item.value}/10</span>
+                          <span className="text-xs" style={{ color: 'var(--foreground-muted)' }}>{item.label}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
 
                 {/* Pertinence locale */}
                 {business.city && (
                   <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                    <h2 className="text-xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>Pourquoi {business.name} est pertinente localement</h2>
+                    <h2 className="text-xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>Présence locale</h2>
                     <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
-                      <p>
-                        {business.name} joue un rôle important dans l&apos;économie locale de {business.city}
-                        {business.region ? ` et de la région de ${business.region}` : ''}.
-                        {business.main_category_slug
-                          ? ` En tant qu'entreprise du secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}, elle contribue à offrir des services essentiels aux résidents et aux entreprises locales.`
-                          : ''}
-                      </p>
-                      {displayAddress && (
-                        <p>
-                          Sa localisation{displayAddress ? ` au ${displayAddress}` : ''} à {business.city} en fait un point d&apos;accès pratique pour la clientèle locale.
-                          {business.region ? ` L'entreprise dessert également les municipalités avoisinantes dans la région de ${business.region}.` : ''}
-                        </p>
-                      )}
-                      {business.ai_services && business.ai_services.length > 3 && (
-                        <p>
-                          Avec {business.ai_services.length} services offerts, {business.name} se distingue par la diversité de son offre, répondant à des besoins variés de sa clientèle : {business.ai_services.slice(0, 3).join(', ')} et plus encore.
-                        </p>
-                      )}
-                      {business.neq && (
-                        <p>
-                          {business.name} est une entreprise officiellement enregistrée au Registre des entreprises du Québec (NEQ : {business.neq}), ce qui confirme sa légitimité et sa conformité aux exigences réglementaires québécoises.
-                        </p>
+                      {seo?.local_context ? (
+                        <p>{seo.local_context}</p>
+                      ) : (
+                        <>
+                          <p>
+                            {business.name} joue un rôle important dans l&apos;économie locale de {business.city}
+                            {business.region ? ` et de la région de ${business.region}` : ''}.
+                            {business.main_category_slug
+                              ? ` En tant qu'entreprise du secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}, elle contribue à offrir des services essentiels aux résidents et aux entreprises locales.`
+                              : ''}
+                          </p>
+                          {business.neq && (
+                            <p>
+                              Entreprise enregistrée au Registre des entreprises du Québec (NEQ : {business.neq}).
+                            </p>
+                          )}
+                        </>
                       )}
                     </div>
+                  </div>
+                )}
+
+                {/* Réputation (si SEO content) */}
+                {seo?.reputation_text && (
+                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
+                    <h2 className="text-xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>Avis et réputation</h2>
+                    <p className="text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                      {seo.reputation_text}
+                    </p>
                   </div>
                 )}
 
