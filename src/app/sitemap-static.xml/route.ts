@@ -13,6 +13,8 @@ export async function GET() {
     { url: '/faq', priority: '0.6', changefreq: 'monthly' },
     { url: '/en/faq', priority: '0.6', changefreq: 'monthly' },
     { url: '/blogue', priority: '0.8', changefreq: 'weekly' },
+    { url: '/blogue/subventions-aide-financiere-pme-quebec-2026', priority: '0.8', changefreq: 'monthly' },
+    { url: '/histoire-pme-quebec', priority: '0.8', changefreq: 'monthly' },
     { url: '/en/blog', priority: '0.8', changefreq: 'weekly' },
     { url: '/parcourir/categories', priority: '0.8', changefreq: 'weekly' },
     { url: '/en/browse/categories', priority: '0.8', changefreq: 'weekly' },

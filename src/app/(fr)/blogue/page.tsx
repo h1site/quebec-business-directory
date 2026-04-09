@@ -75,7 +75,26 @@ export default async function BlogPage() {
             </div>
           )}
 
-          <div className="mt-12 rounded-xl p-8 text-center" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>
+          {/* Articles vedettes */}
+          <div className="mt-12">
+            <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Articles vedettes</h2>
+            <Link
+              href="/histoire-pme-quebec"
+              className="block rounded-xl p-6 hover:scale-[1.01] transition-transform no-underline mb-6"
+              style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}
+            >
+              <span className="text-xs font-medium text-sky-400 mb-2 block">Article</span>
+              <span className="text-lg font-bold block mb-2" style={{ color: 'var(--foreground)' }}>
+                Histoire des PME au Québec — Des origines à aujourd&apos;hui
+              </span>
+              <span className="text-sm block" style={{ color: 'var(--foreground-muted)' }}>
+                De la traite des fourrures en Nouvelle-France aux startups technologiques de Montréal. 400 ans d&apos;entrepreneuriat québécois.
+              </span>
+              <span className="inline-block mt-3 text-sky-400 text-sm font-medium">Lire l&apos;article →</span>
+            </Link>
+          </div>
+
+          <div className="mt-8 rounded-xl p-8 text-center" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>
             <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>
               Vous avez des questions?
             </h3>
