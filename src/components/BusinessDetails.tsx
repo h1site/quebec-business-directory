@@ -418,83 +418,114 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                   </div>
                 </div>
 
-                {/* SEO Content Block */}
-                <div className="rounded-xl p-6" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <h2 className="text-lg font-bold mb-3" style={{ color: 'var(--foreground)' }}>
-                    {business.name} — {business.main_category_slug ? categoryLabels[business.main_category_slug] || business.main_category_slug : 'Entreprise'} {business.city ? `à ${business.city}` : 'au Québec'}
-                  </h2>
-                  <div className="space-y-4 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
-                    <p>
-                      {business.name} est une entreprise qu&eacute;b&eacute;coise
-                      {business.main_category_slug ? ` sp&eacute;cialis&eacute;e dans le secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : ''}
-                      {business.city ? ` &eacute;tablie &agrave; ${business.city}` : ''}
-                      {business.region ? `, dans la r&eacute;gion administrative de ${business.region}` : ''}
-                      {business.mrc ? ` (MRC ${business.mrc})` : ''}.
-                      {business.neq ? ` L'entreprise est officiellement enregistr&eacute;e au Registre des entreprises du Qu&eacute;bec sous le num&eacute;ro NEQ ${business.neq}.` : ''}
-                      {' '}Cette fiche a &eacute;t&eacute; v&eacute;rifi&eacute;e et enrichie par notre &eacute;quipe afin de fournir les informations les plus pr&eacute;cises et &agrave; jour possibles.
-                    </p>
-
-                    {business.ai_description && (
-                      <p>
-                        {business.ai_description.length > 200
-                          ? business.ai_description.substring(0, business.ai_description.lastIndexOf(' ', 200)) + '...'
-                          : business.ai_description}
-                        {' '}Pour en savoir plus sur les activit&eacute;s de {business.name}, consultez la description compl&egrave;te en haut de cette page.
-                      </p>
-                    )}
-
+                {/* Analyse de l'entreprise */}
+                {business.main_category_slug && (
+                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
+                    <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Analyse de l&apos;entreprise</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                      <div className="rounded-lg p-4 text-center" style={{ background: 'var(--background-secondary)' }}>
+                        <span className="text-2xl block mb-1">🏢</span>
+                        <span className="text-xs font-medium block" style={{ color: 'var(--foreground-muted)' }}>Type</span>
+                        <span className="text-sm font-semibold" style={{ color: 'var(--foreground)' }}>
+                          {categoryLabels[business.main_category_slug] || business.main_category_slug}
+                        </span>
+                      </div>
+                      <div className="rounded-lg p-4 text-center" style={{ background: 'var(--background-secondary)' }}>
+                        <span className="text-2xl block mb-1">📍</span>
+                        <span className="text-xs font-medium block" style={{ color: 'var(--foreground-muted)' }}>Zone desservie</span>
+                        <span className="text-sm font-semibold" style={{ color: 'var(--foreground)' }}>
+                          {business.city}{business.region ? ` et ${business.region}` : ''}
+                        </span>
+                      </div>
+                      <div className="rounded-lg p-4 text-center" style={{ background: 'var(--background-secondary)' }}>
+                        <span className="text-2xl block mb-1">{business.google_rating && business.google_rating >= 4 ? '⭐' : '🎯'}</span>
+                        <span className="text-xs font-medium block" style={{ color: 'var(--foreground-muted)' }}>
+                          {business.google_rating ? 'Note Google' : 'Statut'}
+                        </span>
+                        <span className="text-sm font-semibold" style={{ color: 'var(--foreground)' }}>
+                          {business.google_rating ? `${business.google_rating}/5` : 'Entreprise vérifiée'}
+                          {business.google_reviews_count > 0 ? ` (${business.google_reviews_count} avis)` : ''}
+                        </span>
+                      </div>
+                    </div>
                     {business.ai_services && business.ai_services.length > 0 && (
-                      <div>
-                        <h3 className="font-semibold mb-2" style={{ color: 'var(--foreground)' }}>Services offerts par {business.name}</h3>
+                      <div className="text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
                         <p>
-                          {business.name} propose une gamme compl&egrave;te de services pour r&eacute;pondre aux besoins de sa client&egrave;le.
-                          Parmi les principaux services offerts, on retrouve : {business.ai_services.join(', ')}.
-                          {business.city ? ` Ces services sont disponibles pour les r&eacute;sidents de ${business.city} et des municipalit&eacute;s environnantes.` : ''}
-                          {business.region ? ` L'entreprise dessert &eacute;galement l'ensemble de la r&eacute;gion de ${business.region}.` : ''}
+                          {business.name} se positionne dans le secteur{' '}
+                          <strong style={{ color: 'var(--foreground)' }}>{categoryLabels[business.main_category_slug] || business.main_category_slug}</strong>
+                          {business.city ? ` à ${business.city}` : ''}.
+                          {business.google_rating && business.google_rating >= 4
+                            ? ` Avec une note de ${business.google_rating}/5, cette entreprise figure parmi les mieux évaluées de sa catégorie dans la région.`
+                            : ` L'entreprise offre ses services aux résidents et entreprises de la région.`}
                         </p>
                       </div>
                     )}
+                  </div>
+                )}
 
-                    {business.google_rating && business.google_reviews_count > 0 && (
-                      <div>
-                        <h3 className="font-semibold mb-2" style={{ color: 'var(--foreground)' }}>Avis et r&eacute;putation</h3>
-                        <p>
-                          Fort d&apos;une note de {business.google_rating} &eacute;toiles sur 5, {business.name} jouit d&apos;une {business.google_rating >= 4.5 ? 'excellente' : business.google_rating >= 4 ? 'tr&egrave;s bonne' : 'bonne'} r&eacute;putation
-                          aupr&egrave;s de ses {business.google_reviews_count} &eacute;valuateurs sur Google.
-                          Les avis clients constituent un indicateur fiable de la qualit&eacute; des services offerts et de l&apos;exp&eacute;rience client globale.
-                          N&apos;h&eacute;sitez pas &agrave; consulter les avis d&eacute;taill&eacute;s disponibles sur cette page pour vous faire votre propre opinion.
-                        </p>
-                      </div>
-                    )}
-
-                    <div>
-                      <h3 className="font-semibold mb-2" style={{ color: 'var(--foreground)' }}>Comment trouver {business.name}</h3>
+                {/* Pertinence locale */}
+                {business.city && (
+                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
+                    <h2 className="text-xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>Pourquoi {business.name} est pertinente localement</h2>
+                    <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
                       <p>
-                        Vous &ecirc;tes &agrave; la recherche {business.main_category_slug ? `d'une entreprise de ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : 'd\'une entreprise'}
-                        {business.city ? ` &agrave; ${business.city}` : ' au Qu&eacute;bec'} ?
-                        La fiche compl&egrave;te de {business.name} ci-dessus contient toutes les informations dont vous avez besoin :
-                        {displayPhone ? ` num&eacute;ro de t&eacute;l&eacute;phone (${displayPhone}),` : ''}
-                        {displayEmail ? ' adresse courriel,' : ''}
-                        {displayAddress ? ' adresse civique,' : ''}
-                        {business.website ? ' lien vers le site web officiel,' : ''}
-                        {' '}ainsi que les avis de clients v&eacute;rifi&eacute;s.
+                        {business.name} joue un rôle important dans l&apos;économie locale de {business.city}
+                        {business.region ? ` et de la région de ${business.region}` : ''}.
+                        {business.main_category_slug
+                          ? ` En tant qu'entreprise du secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}, elle contribue à offrir des services essentiels aux résidents et aux entreprises locales.`
+                          : ''}
                       </p>
-                      {business.city && business.main_category_slug && (
-                        <p className="mt-2">
-                          D&eacute;couvrez &eacute;galement d&apos;autres entreprises de{' '}
-                          <Link href={`/categorie/${business.main_category_slug}`} className="text-sky-400 hover:text-sky-300 underline">
-                            {categoryLabels[business.main_category_slug] || business.main_category_slug}
-                          </Link>
-                          {' '}&agrave;{' '}
-                          <Link href={`/ville/${citySlug}`} className="text-sky-400 hover:text-sky-300 underline">
-                            {business.city}
-                          </Link>
-                          {' '}ou parcourez notre{' '}
-                          <Link href="/recherche" className="text-sky-400 hover:text-sky-300 underline">annuaire complet</Link>
-                          {' '}pour trouver l&apos;entreprise qui r&eacute;pond le mieux &agrave; vos besoins.
+                      {displayAddress && (
+                        <p>
+                          Sa localisation{displayAddress ? ` au ${displayAddress}` : ''} à {business.city} en fait un point d&apos;accès pratique pour la clientèle locale.
+                          {business.region ? ` L'entreprise dessert également les municipalités avoisinantes dans la région de ${business.region}.` : ''}
+                        </p>
+                      )}
+                      {business.ai_services && business.ai_services.length > 3 && (
+                        <p>
+                          Avec {business.ai_services.length} services offerts, {business.name} se distingue par la diversité de son offre, répondant à des besoins variés de sa clientèle : {business.ai_services.slice(0, 3).join(', ')} et plus encore.
+                        </p>
+                      )}
+                      {business.neq && (
+                        <p>
+                          {business.name} est une entreprise officiellement enregistrée au Registre des entreprises du Québec (NEQ : {business.neq}), ce qui confirme sa légitimité et sa conformité aux exigences réglementaires québécoises.
                         </p>
                       )}
                     </div>
+                  </div>
+                )}
+
+                {/* Comment trouver */}
+                <div className="rounded-xl p-6" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <h2 className="text-lg font-bold mb-3" style={{ color: 'var(--foreground)' }}>
+                    Comment trouver {business.name}
+                  </h2>
+                  <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                    <p>
+                      Vous êtes à la recherche {business.main_category_slug ? `d'une entreprise de ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : 'd\'une entreprise'}
+                      {business.city ? ` à ${business.city}` : ' au Québec'} ?
+                      La fiche complète de {business.name} ci-dessus contient toutes les informations dont vous avez besoin :
+                      {displayPhone ? ` numéro de téléphone (${displayPhone}),` : ''}
+                      {displayEmail ? ' adresse courriel,' : ''}
+                      {displayAddress ? ' adresse civique,' : ''}
+                      {business.website ? ' lien vers le site web officiel,' : ''}
+                      {' '}ainsi que les avis de clients vérifiés.
+                    </p>
+                    {business.city && business.main_category_slug && (
+                      <p>
+                        Découvrez également d&apos;autres entreprises de{' '}
+                        <Link href={`/categorie/${business.main_category_slug}`} className="text-sky-400 hover:text-sky-300 underline">
+                          {categoryLabels[business.main_category_slug] || business.main_category_slug}
+                        </Link>
+                        {' '}à{' '}
+                        <Link href={`/ville/${citySlug}`} className="text-sky-400 hover:text-sky-300 underline">
+                          {business.city}
+                        </Link>
+                        {' '}ou parcourez notre{' '}
+                        <Link href="/recherche" className="text-sky-400 hover:text-sky-300 underline">annuaire complet</Link>
+                        {' '}pour trouver l&apos;entreprise qui répond le mieux à vos besoins.
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
