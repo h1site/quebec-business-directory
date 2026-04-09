@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { createServiceClient } from '@/lib/supabase/server'
+import { marked } from 'marked'
 
 export const revalidate = 86400 // 24 hours
 
@@ -100,35 +101,44 @@ export default async function BlogArticlePage({ params }: Props) {
             <span style={{ color: 'var(--foreground)' }}>{article.title_fr}</span>
           </nav>
 
-          <header className="mb-8">
-            <time className="text-sm mb-3 block" style={{ color: 'var(--foreground-muted)' }}>
-              {new Date(article.published_at).toLocaleDateString('fr-CA', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </time>
-            <h1 className="text-3xl md:text-4xl font-bold leading-tight" style={{ color: 'var(--foreground)' }}>
+          <header className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <time className="text-sm" style={{ color: 'var(--foreground-muted)' }}>
+                {new Date(article.published_at).toLocaleDateString('fr-CA', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+              <span style={{ color: 'var(--foreground-muted)' }}>·</span>
+              <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>
+                {Math.ceil((article.content_fr?.length || 0) / 1500)} min de lecture
+              </span>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-extrabold leading-tight mb-4" style={{ color: 'var(--foreground)' }}>
               {article.title_fr}
             </h1>
             {article.excerpt_fr && (
-              <p className="text-lg mt-4 leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+              <p className="text-lg leading-relaxed border-l-4 border-sky-500 pl-4 py-1" style={{ color: 'var(--foreground-muted)' }}>
                 {article.excerpt_fr}
               </p>
             )}
+            <hr className="mt-8 border-white/10" />
           </header>
 
           <div
             className="prose prose-invert prose-sky max-w-none
               prose-headings:text-[var(--foreground)] prose-headings:font-bold
-              prose-p:text-[var(--foreground-muted)] prose-p:leading-relaxed
-              prose-a:text-sky-400 prose-a:no-underline hover:prose-a:underline
-              prose-li:text-[var(--foreground-muted)]
-              prose-strong:text-[var(--foreground)]
+              prose-p:text-[var(--foreground-muted)] prose-p:leading-[1.8]
+              prose-a:text-sky-400 prose-a:underline prose-a:underline-offset-2 hover:prose-a:text-sky-300
+              prose-li:text-[var(--foreground-muted)] prose-li:leading-[1.8]
+              prose-ul:space-y-1
+              prose-strong:text-[var(--foreground)] prose-strong:font-semibold
               prose-hr:border-white/10
-              prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
-              prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3"
-            dangerouslySetInnerHTML={{ __html: markdownToHtml(article.content_fr) }}
+              prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-white/10
+              prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3
+              prose-blockquote:border-sky-500 prose-blockquote:bg-sky-500/5 prose-blockquote:rounded-r-lg prose-blockquote:py-1"
+            dangerouslySetInnerHTML={{ __html: marked.parse(article.content_fr) as string }}
           />
 
           <footer className="mt-12 pt-8 border-t border-white/10">
@@ -161,34 +171,3 @@ export default async function BlogArticlePage({ params }: Props) {
   )
 }
 
-function markdownToHtml(markdown: string): string {
-  if (!markdown) return ''
-
-  return markdown
-    // Headers
-    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-    // Bold
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    // Italic
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    // Unordered lists
-    .replace(/^\- (.*$)/gm, '<li>$1</li>')
-    .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
-    // Ordered lists
-    .replace(/^\d+\. (.*$)/gm, '<li>$1</li>')
-    // Horizontal rules
-    .replace(/^---$/gm, '<hr />')
-    // Paragraphs
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/^(?!<[hulo])(.+)/gm, '<p>$1</p>')
-    // Clean up
-    .replace(/<p><\/p>/g, '')
-    .replace(/<p>(<h[23]>)/g, '$1')
-    .replace(/(<\/h[23]>)<\/p>/g, '$1')
-    .replace(/<p>(<ul>)/g, '$1')
-    .replace(/(<\/ul>)<\/p>/g, '$1')
-    .replace(/<p>(<hr \/>)<\/p>/g, '$1')
-}
