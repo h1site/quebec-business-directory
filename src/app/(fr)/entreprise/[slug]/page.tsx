@@ -99,19 +99,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: 'fr_CA',
       url: canonical,
       images: business.logo_url
-        ? [{ url: business.logo_url, alt: `Logo de ${business.name}` }]
-        : undefined,
+        ? [{ url: business.logo_url, width: 400, height: 400, alt: `Logo de ${business.name}` }]
+        : [{ url: 'https://registreduquebec.com/images/logos/logo.webp', width: 512, height: 512, alt: 'Registre du Québec' }],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: 'summary',
       title,
       description,
+      images: business.logo_url
+        ? [business.logo_url]
+        : ['https://registreduquebec.com/images/logos/logo.webp'],
     },
     alternates: {
       canonical,
       languages: {
+        'x-default': `/entreprise/${slug}`,
         'fr-CA': `/entreprise/${slug}`,
-        'en-CA': `/company/${slug}`,
+        'en-CA': `/en/company/${slug}`,
       },
     },
   }
@@ -137,17 +141,17 @@ export default async function BusinessPage({ params }: Props) {
   const faqSchema = generateFAQSchemaSimple(business, false)
   const breadcrumbSchema = generateBreadcrumbSchemaSimple(business, false)
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [businessSchema, faqSchema, breadcrumbSchema],
-  }
+  const jsonLd = [businessSchema, faqSchema, breadcrumbSchema]
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {jsonLd.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', ...schema }) }}
+        />
+      ))}
       <BusinessDetails business={business} cityBusinesses={cityBusinesses} />
     </>
   )

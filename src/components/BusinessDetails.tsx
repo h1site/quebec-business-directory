@@ -218,6 +218,8 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                   alt={business.logo_url
                     ? `Logo de ${business.name}`
                     : `${business.name} - Entreprise enregistrée au Registre du Québec à ${business.city || 'Québec'}`}
+                  width={128}
+                  height={128}
                   className={`w-full h-full object-contain ${!business.logo_url ? 'brightness-0 invert dark:brightness-0 dark:invert' : ''}`}
                 />
               </div>
