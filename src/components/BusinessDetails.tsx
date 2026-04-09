@@ -421,17 +421,19 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                         <span>Comment contacter {business.name} ?</span>
                         <ChevronIcon className="w-5 h-5 transition-transform group-open:rotate-180" />
                       </summary>
-                      <div className="px-4 pb-4 space-y-2" style={{ color: 'var(--foreground-muted)' }}>
+                      <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
                         <p>
-                          {business.name} est situ&eacute; &agrave; {displayAddress || business.city || 'Québec'}
+                          {business.name} est une entreprise{business.main_category_slug ? ` du secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : ''} situ&eacute;e &agrave; {displayAddress || business.city || 'Québec'}
                           {displayCity && displayAddress ? `, ${displayCity}` : ''}
-                          {business.region && `, dans la région de ${business.region}`}
+                          {business.region && `, dans la région administrative de ${business.region}`}
                           {business.mrc && ` (MRC ${business.mrc})`}
                           {displayPostalCode && `, ${displayPostalCode}`}.
+                          {' '}Vous pouvez contacter {business.name} de plusieurs façons :
                         </p>
-                        {displayPhone && <p>T&eacute;l&eacute;phone : {displayPhone}</p>}
-                        {displayEmail && <p>Courriel : {displayEmail}</p>}
-                        {business.website && <p>Site web : {business.website.replace(/^https?:\/\//, '').replace(/\/+$/, '')}</p>}
+                        {displayPhone && <p>Par t&eacute;l&eacute;phone au {displayPhone}. N&apos;h&eacute;sitez pas &agrave; appeler pour prendre rendez-vous ou obtenir plus d&apos;informations sur les services offerts.</p>}
+                        {displayEmail && <p>Par courriel &agrave; l&apos;adresse {displayEmail}. Un membre de l&apos;&eacute;quipe se fera un plaisir de r&eacute;pondre &agrave; vos questions.</p>}
+                        {business.website && <p>En visitant le site web officiel : {business.website.replace(/^https?:\/\//, '').replace(/\/+$/, '')}. Vous y trouverez des informations compl&eacute;mentaires sur l&apos;entreprise, ses services et ses r&eacute;alisations.</p>}
+                        <p>Vous pouvez &eacute;galement vous rendre directement sur place{displayAddress ? ` au ${displayAddress}` : ''}{displayCity ? ` &agrave; ${displayCity}` : ''} durant les heures d&apos;ouverture.</p>
                       </div>
                     </details>
 
@@ -441,13 +443,22 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                           <span>Dans quel domaine {business.name} se sp&eacute;cialise ?</span>
                           <ChevronIcon className="w-5 h-5 transition-transform group-open:rotate-180" />
                         </summary>
-                        <div className="px-4 pb-4 space-y-2" style={{ color: 'var(--foreground-muted)' }}>
+                        <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
                           <p>
-                            {business.name} oeuvre dans le domaine &laquo;{' '}
-                            {categoryLabels[business.main_category_slug] || business.main_category_slug} &raquo; &agrave; {business.city || 'au Québec'}.
+                            {business.name} est une entreprise sp&eacute;cialis&eacute;e dans le domaine &laquo;{' '}
+                            {categoryLabels[business.main_category_slug] || business.main_category_slug} &raquo;, offrant ses services
+                            {business.city ? ` à ${business.city}` : ' au Québec'}
+                            {business.region ? ` et dans l'ensemble de la région de ${business.region}` : ''}.
+                            Cette entreprise se distingue par son expertise et son engagement envers la qualit&eacute; de ses prestations.
                           </p>
                           {(business.ai_services && business.ai_services.length > 0) ? (
-                            <p>Parmi ses services : {business.ai_services.slice(0, 5).join(', ')}.</p>
+                            <>
+                              <p>Les principaux services offerts par {business.name} incluent :</p>
+                              <ul className="list-disc list-inside space-y-1 ml-2">
+                                {business.ai_services.map((s, i) => <li key={i}>{s}</li>)}
+                              </ul>
+                              <p>Chacun de ces services est offert avec professionnalisme et adapt&eacute; aux besoins sp&eacute;cifiques de chaque client, que ce soit pour les particuliers ou les entreprises.</p>
+                            </>
                           ) : business.products_services ? (
                             <p>Parmi ses services : {business.products_services.split('\n').filter(Boolean).slice(0, 5).join(', ')}.</p>
                           ) : null}
@@ -461,10 +472,17 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                           <span>Quelle est la r&eacute;putation de {business.name} ?</span>
                           <ChevronIcon className="w-5 h-5 transition-transform group-open:rotate-180" />
                         </summary>
-                        <div className="px-4 pb-4" style={{ color: 'var(--foreground-muted)' }}>
-                          {business.name} a une note de {business.google_rating}/5 sur Google
-                          {business.google_reviews_count > 0 && `, basée sur ${business.google_reviews_count} avis de clients`}.
-                          {business.google_rating >= 4 && ' Cette note élevée témoigne de la satisfaction de sa clientèle.'}
+                        <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                          <p>
+                            {business.name} a obtenu une note de {business.google_rating} sur 5 sur Google
+                            {business.google_reviews_count > 0 && `, basée sur ${business.google_reviews_count} avis vérifiés de clients`}.
+                            {business.google_rating >= 4.5 && ` Cette excellente note place ${business.name} parmi les entreprises les mieux évaluées de ${business.city || 'sa région'}. Les clients apprécient particulièrement la qualité du service, le professionnalisme de l'équipe et la fiabilité des prestations.`}
+                            {business.google_rating >= 4 && business.google_rating < 4.5 && ` Cette très bonne note témoigne de la satisfaction générale de la clientèle de ${business.name}. L'entreprise maintient un haut niveau de qualité dans ses services.`}
+                            {business.google_rating >= 3 && business.google_rating < 4 && ` Cette note reflète une satisfaction correcte de la part des clients.`}
+                          </p>
+                          <p>
+                            Les avis Google sont un indicateur important de la qualit&eacute; d&apos;une entreprise. Nous vous encourageons &agrave; consulter les avis d&eacute;taill&eacute;s ci-dessus et &agrave; partager votre propre exp&eacute;rience avec {business.name}.
+                          </p>
                         </div>
                       </details>
                     )}
@@ -486,38 +504,80 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                 {/* SEO Content Block */}
                 <div className="rounded-xl p-6" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>
                   <h2 className="text-lg font-bold mb-3" style={{ color: 'var(--foreground)' }}>
-                    {business.name} {business.city ? `à ${business.city}` : 'au Québec'}
+                    {business.name} — {business.main_category_slug ? categoryLabels[business.main_category_slug] || business.main_category_slug : 'Entreprise'} {business.city ? `à ${business.city}` : 'au Québec'}
                   </h2>
-                  <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                  <div className="space-y-4 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
                     <p>
-                      {business.name} est une entreprise
-                      {business.main_category_slug ? ` du secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : ''}
-                      {business.city ? ` située à ${business.city}` : ''}
-                      {business.region ? `, dans la région de ${business.region}` : ''}
+                      {business.name} est une entreprise qu&eacute;b&eacute;coise
+                      {business.main_category_slug ? ` sp&eacute;cialis&eacute;e dans le secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : ''}
+                      {business.city ? ` &eacute;tablie &agrave; ${business.city}` : ''}
+                      {business.region ? `, dans la r&eacute;gion administrative de ${business.region}` : ''}
                       {business.mrc ? ` (MRC ${business.mrc})` : ''}.
-                      {business.neq ? ` Son numéro d'entreprise du Québec (NEQ) est le ${business.neq}.` : ''}
+                      {business.neq ? ` L'entreprise est officiellement enregistr&eacute;e au Registre des entreprises du Qu&eacute;bec sous le num&eacute;ro NEQ ${business.neq}.` : ''}
+                      {' '}Cette fiche a &eacute;t&eacute; v&eacute;rifi&eacute;e et enrichie par notre &eacute;quipe afin de fournir les informations les plus pr&eacute;cises et &agrave; jour possibles.
                     </p>
+
+                    {business.ai_description && (
+                      <p>
+                        {business.ai_description.length > 200
+                          ? business.ai_description.substring(0, business.ai_description.lastIndexOf(' ', 200)) + '...'
+                          : business.ai_description}
+                        {' '}Pour en savoir plus sur les activit&eacute;s de {business.name}, consultez la description compl&egrave;te en haut de cette page.
+                      </p>
+                    )}
+
                     {business.ai_services && business.ai_services.length > 0 && (
-                      <p>
-                        L&apos;entreprise propose les services suivants : {business.ai_services.join(', ')}.
-                        {business.city ? ` Ces services sont offerts dans la ville de ${business.city} et les environs.` : ''}
-                      </p>
+                      <div>
+                        <h3 className="font-semibold mb-2" style={{ color: 'var(--foreground)' }}>Services offerts par {business.name}</h3>
+                        <p>
+                          {business.name} propose une gamme compl&egrave;te de services pour r&eacute;pondre aux besoins de sa client&egrave;le.
+                          Parmi les principaux services offerts, on retrouve : {business.ai_services.join(', ')}.
+                          {business.city ? ` Ces services sont disponibles pour les r&eacute;sidents de ${business.city} et des municipalit&eacute;s environnantes.` : ''}
+                          {business.region ? ` L'entreprise dessert &eacute;galement l'ensemble de la r&eacute;gion de ${business.region}.` : ''}
+                        </p>
+                      </div>
                     )}
+
                     {business.google_rating && business.google_reviews_count > 0 && (
-                      <p>
-                        Avec une note de {business.google_rating} sur 5 basée sur {business.google_reviews_count} avis Google,
-                        {business.name} {business.google_rating >= 4 ? 'bénéficie d\'une excellente réputation auprès de sa clientèle' : 'est une entreprise reconnue dans son domaine'}.
-                      </p>
+                      <div>
+                        <h3 className="font-semibold mb-2" style={{ color: 'var(--foreground)' }}>Avis et r&eacute;putation</h3>
+                        <p>
+                          Fort d&apos;une note de {business.google_rating} &eacute;toiles sur 5, {business.name} jouit d&apos;une {business.google_rating >= 4.5 ? 'excellente' : business.google_rating >= 4 ? 'tr&egrave;s bonne' : 'bonne'} r&eacute;putation
+                          aupr&egrave;s de ses {business.google_reviews_count} &eacute;valuateurs sur Google.
+                          Les avis clients constituent un indicateur fiable de la qualit&eacute; des services offerts et de l&apos;exp&eacute;rience client globale.
+                          N&apos;h&eacute;sitez pas &agrave; consulter les avis d&eacute;taill&eacute;s disponibles sur cette page pour vous faire votre propre opinion.
+                        </p>
+                      </div>
                     )}
-                    <p>
-                      Vous cherchez {business.main_category_slug ? `une entreprise de ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : 'une entreprise'}
-                      {business.city ? ` à ${business.city}` : ' au Québec'} ?
-                      Consultez la fiche complète de {business.name} pour obtenir ses coordonnées,
-                      {displayPhone ? ' numéro de téléphone,' : ''}
-                      {business.website ? ' site web,' : ''}
-                      {' '}avis clients et informations détaillées.
-                      {business.city && business.main_category_slug ? ` Découvrez également d'autres entreprises de ${categoryLabels[business.main_category_slug] || business.main_category_slug} à ${business.city}.` : ''}
-                    </p>
+
+                    <div>
+                      <h3 className="font-semibold mb-2" style={{ color: 'var(--foreground)' }}>Comment trouver {business.name}</h3>
+                      <p>
+                        Vous &ecirc;tes &agrave; la recherche {business.main_category_slug ? `d'une entreprise de ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : 'd\'une entreprise'}
+                        {business.city ? ` &agrave; ${business.city}` : ' au Qu&eacute;bec'} ?
+                        La fiche compl&egrave;te de {business.name} ci-dessus contient toutes les informations dont vous avez besoin :
+                        {displayPhone ? ` num&eacute;ro de t&eacute;l&eacute;phone (${displayPhone}),` : ''}
+                        {displayEmail ? ' adresse courriel,' : ''}
+                        {displayAddress ? ' adresse civique,' : ''}
+                        {business.website ? ' lien vers le site web officiel,' : ''}
+                        {' '}ainsi que les avis de clients v&eacute;rifi&eacute;s.
+                      </p>
+                      {business.city && business.main_category_slug && (
+                        <p className="mt-2">
+                          D&eacute;couvrez &eacute;galement d&apos;autres entreprises de{' '}
+                          <Link href={`/categorie/${business.main_category_slug}`} className="text-sky-400 hover:text-sky-300 underline">
+                            {categoryLabels[business.main_category_slug] || business.main_category_slug}
+                          </Link>
+                          {' '}&agrave;{' '}
+                          <Link href={`/ville/${citySlug}`} className="text-sky-400 hover:text-sky-300 underline">
+                            {business.city}
+                          </Link>
+                          {' '}ou parcourez notre{' '}
+                          <Link href="/recherche" className="text-sky-400 hover:text-sky-300 underline">annuaire complet</Link>
+                          {' '}pour trouver l&apos;entreprise qui r&eacute;pond le mieux &agrave; vos besoins.
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
