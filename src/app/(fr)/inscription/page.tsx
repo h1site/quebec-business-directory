@@ -77,7 +77,13 @@ export default function SignupPage() {
         setError(error.message)
         setLoading(false)
       } else {
-        setSuccess('Compte créé! Vérifiez votre courriel pour confirmer votre inscription.')
+        // Auto-login and redirect — no email verification needed
+        const { error: loginError } = await supabase.auth.signInWithPassword({ email, password })
+        if (!loginError) {
+          window.location.href = redirectTo
+          return
+        }
+        setSuccess('Compte créé! Vous pouvez maintenant vous connecter.')
         setLoading(false)
       }
     } catch (err) {

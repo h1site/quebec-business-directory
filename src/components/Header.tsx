@@ -169,10 +169,10 @@ export default function Header() {
             </Link>
             <Link
               href={user ? '/entreprise/nouvelle' : '/connexion?redirect=/entreprise/nouvelle'}
-              className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 px-3 py-1.5 rounded-md transition-colors no-underline flex items-center gap-1.5"
+              className="text-sm bg-sky-500 hover:bg-sky-400 text-white px-4 py-1.5 rounded-md transition-colors no-underline flex items-center gap-1.5 font-semibold"
             >
               <AddBusinessIcon />
-              Ajouter
+              Ajouter mon entreprise
             </Link>
 
             {/* Divider */}
@@ -325,10 +325,10 @@ export default function Header() {
           <Link
             href={user ? '/entreprise/nouvelle' : '/connexion?redirect=/entreprise/nouvelle'}
             onClick={() => setDrawerOpen(false)}
-            className="w-full text-left text-[var(--foreground)] py-3 px-3 rounded-md hover:bg-[var(--foreground)]/5 transition-colors no-underline flex items-center gap-2 text-sm"
+            className="w-full text-center bg-sky-500 hover:bg-sky-400 text-white py-3 px-3 rounded-md transition-colors no-underline flex items-center justify-center gap-2 text-sm font-semibold"
           >
             <AddBusinessIcon />
-            Ajouter une entreprise
+            Ajouter mon entreprise
           </Link>
         </div>
 
