@@ -65,7 +65,7 @@ export async function searchBusinesses(
       { count: 'exact' }
     )
     .not('slug', 'is', null)
-    .eq('verification_confidence', 'high')
+    .or('verification_confidence.eq.high,is_claimed.eq.true,owner_id.not.is.null')
 
   // Apply filters
   if (category) {
