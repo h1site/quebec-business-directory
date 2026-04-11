@@ -28,11 +28,26 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
-/* Force text-gray-900 to override dark theme body color in dashboard forms */
+/* Force dark text in light-bg forms (add-business, dashboard edit) */
 input.text-gray-900,
 textarea.text-gray-900,
 select.text-gray-900 {
   color: rgb(17 24 39) !important;
+  -webkit-text-fill-color: rgb(17 24 39) !important;
+}
+
+input.bg-white,
+textarea.bg-white,
+select.bg-white {
+  color: rgb(17 24 39) !important;
+  -webkit-text-fill-color: rgb(17 24 39) !important;
+  color-scheme: light !important;
+}
+
+input.bg-white::placeholder,
+textarea.bg-white::placeholder {
+  color: rgb(156 163 175) !important;
+  -webkit-text-fill-color: rgb(156 163 175) !important;
 }
 
 /* Custom scrollbar */
