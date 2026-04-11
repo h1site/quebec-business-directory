@@ -118,7 +118,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `Trouvez les meilleures entreprises à ${cityName}. Annuaire complet avec coordonnées, avis et informations détaillées.`
 
   return {
-    title: `Entreprises à ${cityName} - Registre du Québec`,
+    title: `Entreprises à ${cityName} — Annuaire local`,
     description,
     alternates: { canonical: `https://registreduquebec.com/ville/${citySlug}` },
   }
