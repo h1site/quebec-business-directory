@@ -31,9 +31,8 @@ function SearchIcon({ className = 'w-[18px] h-[18px]' }: { className?: string })
 
 function AddBusinessIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 21h18M3 7l9-4 9 4M4 7v7m16-7v7" />
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m7-7H5" />
     </svg>
   )
 }
