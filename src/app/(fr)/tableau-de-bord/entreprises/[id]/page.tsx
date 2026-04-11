@@ -48,6 +48,10 @@ interface Business {
   postal_code: string | null
   region: string | null
   owner_id: string | null
+  facebook_url: string | null
+  instagram_url: string | null
+  linkedin_url: string | null
+  logo_url: string | null
 }
 
 export default function EditBusinessPage({ params }: { params: Promise<{ id: string }> }) {
@@ -71,7 +75,12 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
     city: '',
     postalCode: '',
     region: '',
+    facebook_url: '',
+    instagram_url: '',
+    linkedin_url: '',
   })
+  const [logoFile, setLogoFile] = useState<File | null>(null)
+  const [logoPreview, setLogoPreview] = useState<string | null>(null)
 
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -145,7 +154,11 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
           city: businessData.city || '',
           postalCode: businessData.postal_code || '',
           region: businessData.region || '',
+          facebook_url: businessData.facebook_url || '',
+          instagram_url: businessData.instagram_url || '',
+          linkedin_url: businessData.linkedin_url || '',
         })
+        if (businessData.logo_url) setLogoPreview(businessData.logo_url)
         setLoading(false)
       } catch (err) {
         console.error('Unexpected error:', err)
@@ -174,7 +187,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
       return
     }
 
-    const updateData = {
+    const updateData: Record<string, unknown> = {
       name: formData.name,
       main_category_slug: formData.category,
       description: formData.description || null,
@@ -185,6 +198,24 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
       city: formData.city,
       postal_code: formData.postalCode || null,
       region: formData.region || null,
+      facebook_url: formData.facebook_url || null,
+      instagram_url: formData.instagram_url || null,
+      linkedin_url: formData.linkedin_url || null,
+    }
+
+    // Upload logo if changed
+    if (logoFile && business) {
+      const logoFileName = `${business.id}/logo-${Date.now()}.${logoFile.name.split('.').pop()}`
+      const { error: logoError } = await supabase.storage
+        .from('business-images')
+        .upload(logoFileName, logoFile)
+
+      if (!logoError) {
+        const { data: { publicUrl } } = supabase.storage
+          .from('business-images')
+          .getPublicUrl(logoFileName)
+        updateData.logo_url = publicUrl
+      }
     }
 
     try {
@@ -465,6 +496,76 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                   </option>
                 ))}
               </select>
+            </div>
+          </div>
+
+          {/* Logo */}
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+              Logo
+            </h2>
+            <div className="flex items-center gap-4">
+              {logoPreview && (
+                <img src={logoPreview} alt="Logo" className="w-20 h-20 rounded-lg object-contain border border-gray-200" />
+              )}
+              <label className="cursor-pointer px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      setLogoFile(file)
+                      setLogoPreview(URL.createObjectURL(file))
+                    }
+                  }}
+                />
+                {logoPreview ? 'Changer le logo' : 'Ajouter un logo'}
+              </label>
+            </div>
+          </div>
+
+          {/* Social Media */}
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+              Réseaux sociaux
+            </h2>
+            <div>
+              <label htmlFor="facebook_url" className="block text-sm font-medium text-gray-700 mb-1">Facebook</label>
+              <input
+                type="url"
+                id="facebook_url"
+                name="facebook_url"
+                value={formData.facebook_url}
+                onChange={handleChange}
+                placeholder="https://facebook.com/votrepage"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label htmlFor="instagram_url" className="block text-sm font-medium text-gray-700 mb-1">Instagram</label>
+              <input
+                type="url"
+                id="instagram_url"
+                name="instagram_url"
+                value={formData.instagram_url}
+                onChange={handleChange}
+                placeholder="https://instagram.com/votrepage"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label htmlFor="linkedin_url" className="block text-sm font-medium text-gray-700 mb-1">LinkedIn</label>
+              <input
+                type="url"
+                id="linkedin_url"
+                name="linkedin_url"
+                value={formData.linkedin_url}
+                onChange={handleChange}
+                placeholder="https://linkedin.com/company/votrepage"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
             </div>
           </div>
 
