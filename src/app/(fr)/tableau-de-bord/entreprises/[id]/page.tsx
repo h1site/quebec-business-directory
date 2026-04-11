@@ -52,6 +52,11 @@ interface Business {
   instagram_url: string | null
   linkedin_url: string | null
   logo_url: string | null
+  images: string[] | null
+  products_services: string | null
+  opening_hours: Record<string, { open: string; close: string; closed?: boolean }> | null
+  company_size: string | null
+  founded_year: number | null
 }
 
 export default function EditBusinessPage({ params }: { params: Promise<{ id: string }> }) {
@@ -78,9 +83,29 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
     facebook_url: '',
     instagram_url: '',
     linkedin_url: '',
+    services: '',
+    company_size: '',
+    founded_year: '',
   })
   const [logoFile, setLogoFile] = useState<File | null>(null)
   const [logoPreview, setLogoPreview] = useState<string | null>(null)
+  const [photos, setPhotos] = useState<string[]>([])
+  const [newPhotos, setNewPhotos] = useState<File[]>([])
+  const [hours, setHours] = useState<Record<string, { open: string; close: string; closed: boolean }>>({
+    monday: { open: '09:00', close: '17:00', closed: false },
+    tuesday: { open: '09:00', close: '17:00', closed: false },
+    wednesday: { open: '09:00', close: '17:00', closed: false },
+    thursday: { open: '09:00', close: '17:00', closed: false },
+    friday: { open: '09:00', close: '17:00', closed: false },
+    saturday: { open: '10:00', close: '16:00', closed: true },
+    sunday: { open: '10:00', close: '16:00', closed: true },
+  })
+  const [showHours, setShowHours] = useState(false)
+
+  const dayLabels: Record<string, string> = {
+    monday: 'Lundi', tuesday: 'Mardi', wednesday: 'Mercredi',
+    thursday: 'Jeudi', friday: 'Vendredi', saturday: 'Samedi', sunday: 'Dimanche',
+  }
 
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -157,8 +182,23 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
           facebook_url: businessData.facebook_url || '',
           instagram_url: businessData.instagram_url || '',
           linkedin_url: businessData.linkedin_url || '',
+          services: businessData.products_services || '',
+          company_size: businessData.company_size || '',
+          founded_year: businessData.founded_year?.toString() || '',
         })
         if (businessData.logo_url) setLogoPreview(businessData.logo_url)
+        if (businessData.images) setPhotos(businessData.images)
+        if (businessData.opening_hours && Object.keys(businessData.opening_hours).length > 0) {
+          setShowHours(true)
+          setHours(prev => {
+            const merged = { ...prev }
+            for (const [day, val] of Object.entries(businessData.opening_hours || {})) {
+              const v = val as { open?: string; close?: string; closed?: boolean }
+              merged[day] = { open: v.open || '09:00', close: v.close || '17:00', closed: v.closed || false }
+            }
+            return merged
+          })
+        }
         setLoading(false)
       } catch (err) {
         console.error('Unexpected error:', err)
@@ -201,6 +241,10 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
       facebook_url: formData.facebook_url || null,
       instagram_url: formData.instagram_url || null,
       linkedin_url: formData.linkedin_url || null,
+      products_services: formData.services || null,
+      company_size: formData.company_size || null,
+      founded_year: formData.founded_year ? parseInt(formData.founded_year) : null,
+      opening_hours: showHours ? hours : null,
     }
 
     // Upload logo if changed
@@ -216,6 +260,20 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
           .getPublicUrl(logoFileName)
         updateData.logo_url = publicUrl
       }
+    }
+
+    // Upload new photos
+    if (newPhotos.length > 0 && business) {
+      const allUrls = [...photos]
+      for (const photo of newPhotos) {
+        const fileName = `${business.id}/photo-${Date.now()}-${Math.random().toString(36).slice(2)}.${photo.name.split('.').pop()}`
+        const { error: photoErr } = await supabase.storage.from('business-images').upload(fileName, photo)
+        if (!photoErr) {
+          const { data: { publicUrl } } = supabase.storage.from('business-images').getPublicUrl(fileName)
+          allUrls.push(publicUrl)
+        }
+      }
+      updateData.images = allUrls
     }
 
     try {
@@ -566,6 +624,156 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 placeholder="https://linkedin.com/company/votrepage"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
+            </div>
+          </div>
+
+          {/* Services */}
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+              Services
+            </h2>
+            <div>
+              <label htmlFor="services" className="block text-sm font-medium text-gray-700 mb-1">
+                Services offerts <span className="text-gray-400 text-xs">(un par ligne)</span>
+              </label>
+              <textarea
+                id="services"
+                name="services"
+                value={formData.services}
+                onChange={handleChange}
+                rows={5}
+                placeholder="Consultation&#10;Installation&#10;Réparation&#10;Entretien"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              />
+            </div>
+          </div>
+
+          {/* Photos */}
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+              Photos
+            </h2>
+            {photos.length > 0 && (
+              <div className="grid grid-cols-3 gap-2">
+                {photos.map((url, i) => (
+                  <div key={i} className="relative aspect-square rounded-lg overflow-hidden">
+                    <img src={url} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => setPhotos(prev => prev.filter((_, idx) => idx !== i))}
+                      className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full text-xs flex items-center justify-center hover:bg-red-600"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+            <label className="block w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-colors text-center">
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => {
+                  if (e.target.files) setNewPhotos(prev => [...prev, ...Array.from(e.target.files!)])
+                }}
+              />
+              <span className="text-sm text-gray-700">+ Ajouter des photos</span>
+            </label>
+            {newPhotos.length > 0 && (
+              <p className="text-sm text-green-600">{newPhotos.length} nouvelle(s) photo(s) à envoyer</p>
+            )}
+          </div>
+
+          {/* Opening Hours */}
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+              Heures d&apos;ouverture
+            </h2>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showHours}
+                onChange={() => setShowHours(!showHours)}
+                className="w-4 h-4 rounded border-gray-300 text-blue-600"
+              />
+              <span className="text-sm text-gray-700">Afficher les heures d&apos;ouverture</span>
+            </label>
+            {showHours && (
+              <div className="space-y-2">
+                {Object.entries(hours).map(([day, val]) => (
+                  <div key={day} className="flex items-center gap-3">
+                    <span className="w-24 text-sm font-medium text-gray-700">{dayLabels[day]}</span>
+                    <label className="flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        checked={val.closed}
+                        onChange={() => setHours(prev => ({ ...prev, [day]: { ...prev[day], closed: !prev[day].closed } }))}
+                        className="w-4 h-4 rounded border-gray-300 text-red-600"
+                      />
+                      <span className="text-xs text-gray-500">Fermé</span>
+                    </label>
+                    {!val.closed && (
+                      <>
+                        <input
+                          type="time"
+                          value={val.open}
+                          onChange={(e) => setHours(prev => ({ ...prev, [day]: { ...prev[day], open: e.target.value } }))}
+                          className="px-2 py-1 border border-gray-300 rounded bg-white text-gray-900 text-sm"
+                        />
+                        <span className="text-gray-400">à</span>
+                        <input
+                          type="time"
+                          value={val.close}
+                          onChange={(e) => setHours(prev => ({ ...prev, [day]: { ...prev[day], close: e.target.value } }))}
+                          className="px-2 py-1 border border-gray-300 rounded bg-white text-gray-900 text-sm"
+                        />
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Company Info */}
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+              Informations supplémentaires
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="company_size" className="block text-sm font-medium text-gray-700 mb-1">Taille</label>
+                <select
+                  id="company_size"
+                  name="company_size"
+                  value={formData.company_size}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Non spécifié</option>
+                  <option value="1-5">1-5 employés</option>
+                  <option value="6-25">6-25 employés</option>
+                  <option value="26-100">26-100 employés</option>
+                  <option value="101-500">101-500 employés</option>
+                  <option value="500+">500+ employés</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="founded_year" className="block text-sm font-medium text-gray-700 mb-1">Année de fondation</label>
+                <input
+                  type="number"
+                  id="founded_year"
+                  name="founded_year"
+                  value={formData.founded_year}
+                  onChange={handleChange}
+                  placeholder="2020"
+                  min="1800"
+                  max={new Date().getFullYear()}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
             </div>
           </div>
 
