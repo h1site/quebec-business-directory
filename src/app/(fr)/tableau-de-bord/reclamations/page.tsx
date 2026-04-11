@@ -68,8 +68,8 @@ export default function ReclamationsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Réclamations</h1>
-        <p className="text-gray-600 mt-1">{claims.length} réclamation{claims.length !== 1 ? 's' : ''}</p>
+        <h1 className="text-2xl lg:text-3xl font-bold text-[var(--foreground)]">Réclamations</h1>
+        <p className="text-[var(--foreground-muted)] mt-1">{claims.length} réclamation{claims.length !== 1 ? 's' : ''}</p>
       </div>
 
       {/* Filter tabs */}
@@ -80,8 +80,8 @@ export default function ReclamationsPage() {
             onClick={() => setFilter(s)}
             className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
               filter === s
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                ? 'bg-sky-500 text-white'
+                : 'bg-[var(--background-secondary)] text-[var(--foreground-muted)] border border-white/10 hover:bg-white/5'
             }`}
           >
             {s === 'pending' ? 'En attente' : s === 'approved' ? 'Approuvées' : 'Rejetées'}
@@ -91,46 +91,46 @@ export default function ReclamationsPage() {
 
       {loading ? (
         <div className="animate-pulse space-y-4">
-          <div className="h-64 bg-gray-200 rounded-xl" />
+          <div className="h-64 bg-white/10 rounded-xl" />
         </div>
       ) : claims.length === 0 ? (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
+        <div className="bg-[var(--background-secondary)] rounded-xl  border border-white/5 p-12 text-center">
           <div className="text-6xl mb-4">📋</div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Aucune réclamation</h2>
-          <p className="text-gray-500">
+          <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">Aucune réclamation</h2>
+          <p className="text-[var(--foreground-muted)]">
             {filter === 'pending' ? 'Aucune réclamation en attente' : `Aucune réclamation ${filter === 'approved' ? 'approuvée' : 'rejetée'}`}
           </p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-[var(--background-secondary)] rounded-xl  border border-white/5 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-100">
+              <thead className="bg-white/5 border-b border-white/5">
                 <tr>
-                  <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Entreprise</th>
-                  <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700 hidden md:table-cell">Ville</th>
-                  <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Demandeur</th>
+                  <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--foreground-muted)]">Entreprise</th>
+                  <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--foreground-muted)] hidden md:table-cell">Ville</th>
+                  <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--foreground-muted)]">Demandeur</th>
                   {filter === 'pending' && (
-                    <th className="text-right px-6 py-4 text-sm font-semibold text-gray-700">Actions</th>
+                    <th className="text-right px-6 py-4 text-sm font-semibold text-[var(--foreground-muted)]">Actions</th>
                   )}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {claims.map((claim) => (
-                  <tr key={claim.id} className="hover:bg-gray-50">
+                  <tr key={claim.id} className="hover:bg-white/5">
                     <td className="px-6 py-4">
                       <Link
                         href={`/entreprise/${claim.slug}`}
                         target="_blank"
-                        className="font-medium text-blue-600 hover:text-blue-700"
+                        className="font-medium text-sky-400 hover:text-sky-400"
                       >
                         {claim.name}
                       </Link>
                     </td>
-                    <td className="px-6 py-4 hidden md:table-cell text-gray-600">
+                    <td className="px-6 py-4 hidden md:table-cell text-[var(--foreground-muted)]">
                       {claim.city}
                     </td>
-                    <td className="px-6 py-4 text-gray-600 text-sm">
+                    <td className="px-6 py-4 text-[var(--foreground-muted)] text-sm">
                       {claim.claim_email || '—'}
                     </td>
                     {filter === 'pending' && (

@@ -75,8 +75,8 @@ export default function ProfilePage() {
     return (
       <div className="max-w-2xl mx-auto">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-200 rounded w-1/3" />
-          <div className="h-64 bg-gray-200 rounded-xl" />
+          <div className="h-8 bg-white/10 rounded w-1/3" />
+          <div className="h-64 bg-white/10 rounded-xl" />
         </div>
       </div>
     )
@@ -88,14 +88,14 @@ export default function ProfilePage() {
     <div className="max-w-2xl mx-auto space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Mon profil</h1>
-        <p className="text-gray-600 mt-1">Gérez vos informations personnelles</p>
+        <h1 className="text-2xl lg:text-3xl font-bold text-[var(--foreground)]">Mon profil</h1>
+        <p className="text-[var(--foreground-muted)] mt-1">Gérez vos informations personnelles</p>
       </div>
 
       {/* Profile Card */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 lg:p-8">
+      <div className="bg-[var(--background-secondary)] rounded-xl  border border-white/5 p-6 lg:p-8">
         {/* Avatar Section */}
-        <div className="flex items-center gap-6 pb-6 border-b border-gray-200 mb-6">
+        <div className="flex items-center gap-6 pb-6 border-b border-white/10 mb-6">
           {user.user_metadata?.avatar_url ? (
             <Image
               src={user.user_metadata.avatar_url}
@@ -105,16 +105,16 @@ export default function ProfilePage() {
               className="rounded-full"
             />
           ) : (
-            <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-3xl font-bold">
+            <div className="w-20 h-20 bg-sky-500 rounded-full flex items-center justify-center text-white text-3xl font-bold">
               {user.email?.charAt(0).toUpperCase()}
             </div>
           )}
           <div>
-            <h2 className="text-xl font-semibold text-gray-900">
+            <h2 className="text-xl font-semibold text-[var(--foreground)]">
               {user.user_metadata?.full_name || user.email?.split('@')[0]}
             </h2>
-            <p className="text-gray-500">{user.email}</p>
-            <p className="text-sm text-gray-400 mt-1">
+            <p className="text-[var(--foreground-muted)]">{user.email}</p>
+            <p className="text-sm text-[var(--foreground-muted)] mt-1">
               Membre depuis {new Date(user.created_at).toLocaleDateString('fr-CA', {
                 year: 'numeric',
                 month: 'long'
@@ -124,20 +124,20 @@ export default function ProfilePage() {
         </div>
 
         {error && (
-          <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm">
+          <div className="bg-red-500/10 text-red-400 px-4 py-3 rounded-lg mb-6 text-sm">
             {error}
           </div>
         )}
 
         {success && (
-          <div className="bg-green-50 text-green-700 px-4 py-3 rounded-lg mb-6 text-sm">
+          <div className="bg-emerald-500/10 text-emerald-400 px-4 py-3 rounded-lg mb-6 text-sm">
             {success}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
               Adresse courriel
             </label>
             <input
@@ -145,15 +145,15 @@ export default function ProfilePage() {
               id="email"
               value={user.email || ''}
               disabled
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed"
+              className="w-full px-4 py-3 border border-white/10 rounded-lg bg-white/5 text-[var(--foreground-muted)] cursor-not-allowed"
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-[var(--foreground-muted)] mt-1">
               L&apos;adresse courriel ne peut pas être modifiée
             </p>
           </div>
 
           <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="fullName" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
               Nom complet
             </label>
             <input
@@ -162,13 +162,13 @@ export default function ProfilePage() {
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Votre nom complet"
             />
           </div>
 
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="phone" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
               Numéro de téléphone
             </label>
             <input
@@ -177,7 +177,7 @@ export default function ProfilePage() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="(514) 555-1234"
             />
           </div>
@@ -186,7 +186,7 @@ export default function ProfilePage() {
             <button
               type="submit"
               disabled={saving}
-              className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-6 py-3 bg-sky-500 hover:bg-sky-400 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? 'Enregistrement...' : 'Enregistrer les modifications'}
             </button>
@@ -195,26 +195,26 @@ export default function ProfilePage() {
       </div>
 
       {/* Account Info */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 lg:p-8">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Informations du compte</h2>
+      <div className="bg-[var(--background-secondary)] rounded-xl  border border-white/5 p-6 lg:p-8">
+        <h2 className="text-lg font-semibold text-[var(--foreground)] mb-4">Informations du compte</h2>
 
         <div className="space-y-4">
-          <div className="flex justify-between items-center py-3 border-b border-gray-100">
+          <div className="flex justify-between items-center py-3 border-b border-white/5">
             <div>
-              <p className="font-medium text-gray-900">Méthode de connexion</p>
-              <p className="text-sm text-gray-500">
+              <p className="font-medium text-[var(--foreground)]">Méthode de connexion</p>
+              <p className="text-sm text-[var(--foreground-muted)]">
                 {user.app_metadata?.provider === 'google' ? 'Google' : 'Email / Mot de passe'}
               </p>
             </div>
-            <span className="px-3 py-1 bg-green-50 text-green-700 text-sm rounded-full">
+            <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm rounded-full">
               Actif
             </span>
           </div>
 
-          <div className="flex justify-between items-center py-3 border-b border-gray-100">
+          <div className="flex justify-between items-center py-3 border-b border-white/5">
             <div>
-              <p className="font-medium text-gray-900">Dernière connexion</p>
-              <p className="text-sm text-gray-500">
+              <p className="font-medium text-[var(--foreground)]">Dernière connexion</p>
+              <p className="text-sm text-[var(--foreground-muted)]">
                 {user.last_sign_in_at
                   ? new Date(user.last_sign_in_at).toLocaleString('fr-CA')
                   : 'N/A'
@@ -225,23 +225,23 @@ export default function ProfilePage() {
 
           <div className="flex justify-between items-center py-3">
             <div>
-              <p className="font-medium text-gray-900">ID utilisateur</p>
-              <p className="text-sm text-gray-500 font-mono">{user.id.slice(0, 8)}...</p>
+              <p className="font-medium text-[var(--foreground)]">ID utilisateur</p>
+              <p className="text-sm text-[var(--foreground-muted)] font-mono">{user.id.slice(0, 8)}...</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Danger Zone */}
-      <div className="bg-white rounded-xl shadow-sm border border-red-200 p-6 lg:p-8">
-        <h2 className="text-lg font-semibold text-red-700 mb-4">Zone dangereuse</h2>
-        <p className="text-gray-600 mb-4">
+      <div className="bg-[var(--background-secondary)] rounded-xl  border border-red-200 p-6 lg:p-8">
+        <h2 className="text-lg font-semibold text-red-400 mb-4">Zone dangereuse</h2>
+        <p className="text-[var(--foreground-muted)] mb-4">
           La suppression de votre compte est permanente et ne peut pas être annulée.
           Toutes vos données seront supprimées.
         </p>
         <button
           type="button"
-          className="px-6 py-3 border border-red-300 text-red-600 rounded-lg font-medium hover:bg-red-50 transition-colors"
+          className="px-6 py-3 border border-red-300 text-red-600 rounded-lg font-medium hover:bg-red-500/10 transition-colors"
           onClick={() => alert('Contactez-nous à info@registreduquebec.com pour supprimer votre compte.')}
         >
           Supprimer mon compte

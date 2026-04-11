@@ -320,9 +320,9 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
     return (
       <div className="max-w-2xl mx-auto">
         <div className="animate-pulse space-y-4">
-          <div className="h-6 bg-gray-200 rounded w-1/4" />
-          <div className="h-8 bg-gray-200 rounded w-1/2" />
-          <div className="h-96 bg-gray-200 rounded-xl" />
+          <div className="h-6 bg-white/10 rounded w-1/4" />
+          <div className="h-8 bg-white/10 rounded w-1/2" />
+          <div className="h-96 bg-white/10 rounded-xl" />
         </div>
       </div>
     )
@@ -333,11 +333,11 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
       <div className="max-w-2xl mx-auto">
         <Link
           href="/tableau-de-bord/entreprises"
-          className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1 mb-4"
+          className="text-sky-400 hover:text-sky-400 text-sm font-medium flex items-center gap-1 mb-4"
         >
           ← Retour à mes entreprises
         </Link>
-        <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg text-sm">
+        <div className="bg-red-500/10 text-red-400 px-4 py-3 rounded-lg text-sm">
           {error}
         </div>
       </div>
@@ -354,24 +354,24 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
       <div className="mb-8">
         <Link
           href="/tableau-de-bord/entreprises"
-          className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1 mb-4"
+          className="text-sky-400 hover:text-sky-400 text-sm font-medium flex items-center gap-1 mb-4"
         >
           ← Retour à mes entreprises
         </Link>
-        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Modifier l&apos;entreprise</h1>
-        <p className="text-gray-600 mt-1">{business.name}</p>
+        <h1 className="text-2xl lg:text-3xl font-bold text-[var(--foreground)]">Modifier l&apos;entreprise</h1>
+        <p className="text-[var(--foreground-muted)] mt-1">{business.name}</p>
       </div>
 
       {/* Form */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 lg:p-8">
+      <div className="bg-[var(--background-secondary)] rounded-xl  border border-white/5 p-6 lg:p-8">
         {error && (
-          <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm">
+          <div className="bg-red-500/10 text-red-400 px-4 py-3 rounded-lg mb-6 text-sm">
             {error}
           </div>
         )}
 
         {success && (
-          <div className="bg-green-50 text-green-700 px-4 py-3 rounded-lg mb-6 text-sm">
+          <div className="bg-emerald-500/10 text-emerald-400 px-4 py-3 rounded-lg mb-6 text-sm">
             {success}
           </div>
         )}
@@ -379,12 +379,12 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Info */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-[var(--foreground)] pb-2 border-b border-white/10">
               Informations de base
             </h2>
 
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="name" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
                 Nom de l&apos;entreprise <span className="text-red-500">*</span>
               </label>
               <input
@@ -394,12 +394,12 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="category" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
                 Catégorie <span className="text-red-500">*</span>
               </label>
               <select
@@ -408,7 +408,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 value={formData.category}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Sélectionnez une catégorie</option>
                 {CATEGORIES.map(cat => (
@@ -420,7 +420,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="description" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
                 Description
               </label>
               <textarea
@@ -429,20 +429,20 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 value={formData.description}
                 onChange={handleChange}
                 rows={4}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 resize-none"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-[var(--background-secondary)] text-[var(--foreground)] resize-none"
               />
             </div>
           </div>
 
           {/* Contact */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-[var(--foreground)] pb-2 border-b border-white/10">
               Coordonnées
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="phone" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
                   Téléphone
                 </label>
                 <input
@@ -451,12 +451,12 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
                   Courriel
                 </label>
                 <input
@@ -465,13 +465,13 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="website" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
                 Site web
               </label>
               <input
@@ -480,19 +480,19 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 name="website"
                 value={formData.website}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
 
           {/* Address */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-[var(--foreground)] pb-2 border-b border-white/10">
               Adresse
             </h2>
 
             <div>
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="address" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
                 Adresse
               </label>
               <input
@@ -501,13 +501,13 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="city" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
                   Ville <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -517,12 +517,12 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                   value={formData.city}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
               <div>
-                <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="postalCode" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
                   Code postal
                 </label>
                 <input
@@ -531,13 +531,13 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                   name="postalCode"
                   value={formData.postalCode}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="region" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="region" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
                 Région administrative
               </label>
               <select
@@ -545,7 +545,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 name="region"
                 value={formData.region}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Sélectionnez une région</option>
                 {REGIONS.map(region => (
@@ -559,14 +559,14 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
 
           {/* Logo */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-[var(--foreground)] pb-2 border-b border-white/10">
               Logo
             </h2>
             <div className="flex items-center gap-4">
               {logoPreview && (
-                <img src={logoPreview} alt="Logo" className="w-20 h-20 rounded-lg object-contain border border-gray-200" />
+                <img src={logoPreview} alt="Logo" className="w-20 h-20 rounded-lg object-contain border border-white/10" />
               )}
-              <label className="cursor-pointer px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+              <label className="cursor-pointer px-4 py-2 border border-white/10 rounded-lg text-sm text-[var(--foreground-muted)] hover:bg-white/5 transition-colors">
                 <input
                   type="file"
                   accept="image/*"
@@ -586,11 +586,11 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
 
           {/* Social Media */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-[var(--foreground)] pb-2 border-b border-white/10">
               Réseaux sociaux
             </h2>
             <div>
-              <label htmlFor="facebook_url" className="block text-sm font-medium text-gray-700 mb-1">Facebook</label>
+              <label htmlFor="facebook_url" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">Facebook</label>
               <input
                 type="url"
                 id="facebook_url"
@@ -598,11 +598,11 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 value={formData.facebook_url}
                 onChange={handleChange}
                 placeholder="https://facebook.com/votrepage"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
             <div>
-              <label htmlFor="instagram_url" className="block text-sm font-medium text-gray-700 mb-1">Instagram</label>
+              <label htmlFor="instagram_url" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">Instagram</label>
               <input
                 type="url"
                 id="instagram_url"
@@ -610,11 +610,11 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 value={formData.instagram_url}
                 onChange={handleChange}
                 placeholder="https://instagram.com/votrepage"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
             <div>
-              <label htmlFor="linkedin_url" className="block text-sm font-medium text-gray-700 mb-1">LinkedIn</label>
+              <label htmlFor="linkedin_url" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">LinkedIn</label>
               <input
                 type="url"
                 id="linkedin_url"
@@ -622,19 +622,19 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 value={formData.linkedin_url}
                 onChange={handleChange}
                 placeholder="https://linkedin.com/company/votrepage"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
 
           {/* Services */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-[var(--foreground)] pb-2 border-b border-white/10">
               Services
             </h2>
             <div>
-              <label htmlFor="services" className="block text-sm font-medium text-gray-700 mb-1">
-                Services offerts <span className="text-gray-400 text-xs">(un par ligne)</span>
+              <label htmlFor="services" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">
+                Services offerts <span className="text-[var(--foreground-muted)] text-xs">(un par ligne)</span>
               </label>
               <textarea
                 id="services"
@@ -643,14 +643,14 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 onChange={handleChange}
                 rows={5}
                 placeholder="Consultation&#10;Installation&#10;Réparation&#10;Entretien"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
               />
             </div>
           </div>
 
           {/* Photos */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-[var(--foreground)] pb-2 border-b border-white/10">
               Photos
             </h2>
             {photos.length > 0 && (
@@ -661,7 +661,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                     <button
                       type="button"
                       onClick={() => setPhotos(prev => prev.filter((_, idx) => idx !== i))}
-                      className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full text-xs flex items-center justify-center hover:bg-red-600"
+                      className="absolute top-1 right-1 w-6 h-6 bg-red-500/100 text-white rounded-full text-xs flex items-center justify-center hover:bg-red-600"
                     >
                       ×
                     </button>
@@ -669,7 +669,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 ))}
               </div>
             )}
-            <label className="block w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-colors text-center">
+            <label className="block w-full p-4 border-2 border-dashed border-white/10 rounded-lg cursor-pointer hover:border-blue-400 hover:bg-sky-500/10 transition-colors text-center">
               <input
                 type="file"
                 accept="image/*"
@@ -679,7 +679,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                   if (e.target.files) setNewPhotos(prev => [...prev, ...Array.from(e.target.files!)])
                 }}
               />
-              <span className="text-sm text-gray-700">+ Ajouter des photos</span>
+              <span className="text-sm text-[var(--foreground-muted)]">+ Ajouter des photos</span>
             </label>
             {newPhotos.length > 0 && (
               <p className="text-sm text-green-600">{newPhotos.length} nouvelle(s) photo(s) à envoyer</p>
@@ -688,7 +688,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
 
           {/* Opening Hours */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-[var(--foreground)] pb-2 border-b border-white/10">
               Heures d&apos;ouverture
             </h2>
             <label className="flex items-center gap-2 cursor-pointer">
@@ -696,23 +696,23 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 type="checkbox"
                 checked={showHours}
                 onChange={() => setShowHours(!showHours)}
-                className="w-4 h-4 rounded border-gray-300 text-blue-600"
+                className="w-4 h-4 rounded border-white/10 text-sky-400"
               />
-              <span className="text-sm text-gray-700">Afficher les heures d&apos;ouverture</span>
+              <span className="text-sm text-[var(--foreground-muted)]">Afficher les heures d&apos;ouverture</span>
             </label>
             {showHours && (
               <div className="space-y-2">
                 {Object.entries(hours).map(([day, val]) => (
                   <div key={day} className="flex items-center gap-3">
-                    <span className="w-24 text-sm font-medium text-gray-700">{dayLabels[day]}</span>
+                    <span className="w-24 text-sm font-medium text-[var(--foreground-muted)]">{dayLabels[day]}</span>
                     <label className="flex items-center gap-1">
                       <input
                         type="checkbox"
                         checked={val.closed}
                         onChange={() => setHours(prev => ({ ...prev, [day]: { ...prev[day], closed: !prev[day].closed } }))}
-                        className="w-4 h-4 rounded border-gray-300 text-red-600"
+                        className="w-4 h-4 rounded border-white/10 text-red-600"
                       />
-                      <span className="text-xs text-gray-500">Fermé</span>
+                      <span className="text-xs text-[var(--foreground-muted)]">Fermé</span>
                     </label>
                     {!val.closed && (
                       <>
@@ -720,14 +720,14 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                           type="time"
                           value={val.open}
                           onChange={(e) => setHours(prev => ({ ...prev, [day]: { ...prev[day], open: e.target.value } }))}
-                          className="px-2 py-1 border border-gray-300 rounded bg-white text-gray-900 text-sm"
+                          className="px-2 py-1 border border-white/10 rounded bg-[var(--background-secondary)] text-[var(--foreground)] text-sm"
                         />
-                        <span className="text-gray-400">à</span>
+                        <span className="text-[var(--foreground-muted)]">à</span>
                         <input
                           type="time"
                           value={val.close}
                           onChange={(e) => setHours(prev => ({ ...prev, [day]: { ...prev[day], close: e.target.value } }))}
-                          className="px-2 py-1 border border-gray-300 rounded bg-white text-gray-900 text-sm"
+                          className="px-2 py-1 border border-white/10 rounded bg-[var(--background-secondary)] text-[var(--foreground)] text-sm"
                         />
                       </>
                     )}
@@ -739,18 +739,18 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
 
           {/* Company Info */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 pb-2 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-[var(--foreground)] pb-2 border-b border-white/10">
               Informations supplémentaires
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="company_size" className="block text-sm font-medium text-gray-700 mb-1">Taille</label>
+                <label htmlFor="company_size" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">Taille</label>
                 <select
                   id="company_size"
                   name="company_size"
                   value={formData.company_size}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Non spécifié</option>
                   <option value="1-5">1-5 employés</option>
@@ -761,7 +761,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                 </select>
               </div>
               <div>
-                <label htmlFor="founded_year" className="block text-sm font-medium text-gray-700 mb-1">Année de fondation</label>
+                <label htmlFor="founded_year" className="block text-sm font-medium text-[var(--foreground-muted)] mb-1">Année de fondation</label>
                 <input
                   type="number"
                   id="founded_year"
@@ -771,7 +771,7 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
                   placeholder="2020"
                   min="1800"
                   max={new Date().getFullYear()}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 border border-white/10 rounded-lg bg-[var(--background-secondary)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
@@ -781,14 +781,14 @@ export default function EditBusinessPage({ params }: { params: Promise<{ id: str
           <div className="flex gap-4 pt-4">
             <Link
               href="/tableau-de-bord/entreprises"
-              className="flex-1 px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors text-center"
+              className="flex-1 px-6 py-3 border border-white/10 rounded-lg font-medium text-[var(--foreground-muted)] hover:bg-white/5 transition-colors text-center"
             >
               Annuler
             </Link>
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-6 py-3 bg-sky-500 hover:bg-sky-400 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? 'Enregistrement...' : 'Enregistrer les modifications'}
             </button>

@@ -114,8 +114,8 @@ export default function MyBusinessesPage() {
   if (loading && businesses.length === 0) {
     return (
       <div className="animate-pulse space-y-4">
-        <div className="h-8 bg-gray-200 rounded w-1/3" />
-        <div className="h-64 bg-gray-200 rounded-xl" />
+        <div className="h-8 bg-white/10 rounded w-1/3" />
+        <div className="h-64 bg-white/10 rounded-xl" />
       </div>
     )
   }
@@ -125,16 +125,16 @@ export default function MyBusinessesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
+          <h1 className="text-2xl lg:text-3xl font-bold text-[var(--foreground)]">
             {isAdmin ? 'Toutes les entreprises' : 'Mes entreprises'}
           </h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-[var(--foreground-muted)] mt-1">
             {totalCount.toLocaleString('fr-CA')} entreprise{totalCount !== 1 ? 's' : ''}
           </p>
         </div>
         <Link
           href="/entreprise/nouvelle"
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2"
+          className="px-6 py-3 bg-sky-500 text-white rounded-lg font-medium hover:bg-sky-400 transition-colors flex items-center gap-2"
         >
           <span>➕</span>
           Ajouter une entreprise
@@ -149,7 +149,7 @@ export default function MyBusinessesPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Rechercher par nom ou ville..."
-            className="w-full sm:w-96 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 bg-white"
+            className="w-full sm:w-96 px-4 py-3 border border-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-[var(--foreground)] bg-[var(--background-secondary)]"
           />
         </div>
       )}
@@ -157,16 +157,16 @@ export default function MyBusinessesPage() {
       {/* Businesses List */}
       {businesses.length > 0 ? (
         <>
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="bg-[var(--background-secondary)] rounded-xl  border border-white/5 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b border-gray-100">
+                <thead className="bg-white/5 border-b border-white/5">
                   <tr>
-                    <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Entreprise</th>
-                    <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700 hidden md:table-cell">Ville</th>
-                    <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700 hidden lg:table-cell">Note</th>
-                    <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700 hidden lg:table-cell">Contact</th>
-                    <th className="text-right px-6 py-4 text-sm font-semibold text-gray-700">Actions</th>
+                    <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--foreground-muted)]">Entreprise</th>
+                    <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--foreground-muted)] hidden md:table-cell">Ville</th>
+                    <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--foreground-muted)] hidden lg:table-cell">Note</th>
+                    <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--foreground-muted)] hidden lg:table-cell">Contact</th>
+                    <th className="text-right px-6 py-4 text-sm font-semibold text-[var(--foreground-muted)]">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
@@ -174,15 +174,15 @@ export default function MyBusinessesPage() {
                     const businessUrl = `/entreprise/${biz.slug}`
 
                     return (
-                      <tr key={biz.id} className="hover:bg-gray-50">
+                      <tr key={biz.id} className="hover:bg-white/5">
                         <td className="px-6 py-4">
                           <div>
-                            <p className="font-medium text-gray-900">{biz.name}</p>
-                            <p className="text-sm text-gray-500 md:hidden">📍 {biz.city}</p>
+                            <p className="font-medium text-[var(--foreground)]">{biz.name}</p>
+                            <p className="text-sm text-[var(--foreground-muted)] md:hidden">📍 {biz.city}</p>
                           </div>
                         </td>
                         <td className="px-6 py-4 hidden md:table-cell">
-                          <span className="text-gray-600">{biz.city}</span>
+                          <span className="text-[var(--foreground-muted)]">{biz.city}</span>
                         </td>
                         <td className="px-6 py-4 hidden lg:table-cell">
                           {biz.google_rating ? (
@@ -190,23 +190,23 @@ export default function MyBusinessesPage() {
                               <span className="text-yellow-500">⭐</span>
                               <span className="font-medium">{biz.google_rating}</span>
                               {biz.google_reviews_count && (
-                                <span className="text-gray-400 text-sm">({biz.google_reviews_count})</span>
+                                <span className="text-[var(--foreground-muted)] text-sm">({biz.google_reviews_count})</span>
                               )}
                             </div>
                           ) : (
-                            <span className="text-gray-400">-</span>
+                            <span className="text-[var(--foreground-muted)]">-</span>
                           )}
                         </td>
                         <td className="px-6 py-4 hidden lg:table-cell">
                           <div className="flex gap-2">
                             {biz.phone && (
-                              <span className="px-2 py-1 bg-green-50 text-green-700 text-xs rounded-full">📞</span>
+                              <span className="px-2 py-1 bg-emerald-500/10 text-emerald-400 text-xs rounded-full">📞</span>
                             )}
                             {biz.website && (
-                              <span className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">🌐</span>
+                              <span className="px-2 py-1 bg-sky-500/10 text-sky-400 text-xs rounded-full">🌐</span>
                             )}
                             {!biz.phone && !biz.website && (
-                              <span className="text-gray-400">-</span>
+                              <span className="text-[var(--foreground-muted)]">-</span>
                             )}
                           </div>
                         </td>
@@ -215,21 +215,21 @@ export default function MyBusinessesPage() {
                             <Link
                               href={businessUrl}
                               target="_blank"
-                              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                              className="p-2 text-[var(--foreground-muted)] hover:text-[var(--foreground-muted)] hover:bg-white/5 rounded-lg transition-colors"
                               title="Voir"
                             >
                               👁️
                             </Link>
                             <Link
                               href={`/tableau-de-bord/entreprises/${biz.id}`}
-                              className="p-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
+                              className="p-2 text-sky-400 hover:text-sky-400 hover:bg-sky-500/10 rounded-lg transition-colors"
                               title="Modifier"
                             >
                               ✏️
                             </Link>
                             <button
                               onClick={() => setDeleteId(biz.id)}
-                              className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                              className="p-2 text-red-600 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
                               title="Supprimer"
                             >
                               🗑️
@@ -250,17 +250,17 @@ export default function MyBusinessesPage() {
               <button
                 onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-[var(--background-secondary)] border border-white/10 rounded-lg hover:bg-white/5 font-medium text-[var(--foreground-muted)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Precedent
               </button>
-              <span className="text-gray-600 text-sm">
+              <span className="text-[var(--foreground-muted)] text-sm">
                 Page {currentPage} / {totalPages}
               </span>
               <button
                 onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-[var(--background-secondary)] border border-white/10 rounded-lg hover:bg-white/5 font-medium text-[var(--foreground-muted)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Suivant
               </button>
@@ -268,16 +268,16 @@ export default function MyBusinessesPage() {
           )}
         </>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
+        <div className="bg-[var(--background-secondary)] rounded-xl  border border-white/5 p-12 text-center">
           <div className="text-6xl mb-4">🏢</div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Aucune entreprise</h2>
-          <p className="text-gray-500 mb-6">
+          <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">Aucune entreprise</h2>
+          <p className="text-[var(--foreground-muted)] mb-6">
             {search ? 'Aucun resultat pour cette recherche' : 'Vous n\'avez pas encore ajoute d\'entreprise a votre compte'}
           </p>
           {!search && (
             <Link
               href="/entreprise/nouvelle"
-              className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              className="inline-block px-6 py-3 bg-sky-500 text-white rounded-lg font-medium hover:bg-sky-400 transition-colors"
             >
               Ajouter ma premiere entreprise
             </Link>
@@ -288,18 +288,18 @@ export default function MyBusinessesPage() {
       {/* Delete Confirmation Modal */}
       {deleteId && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
+          <div className="bg-[var(--background-secondary)] rounded-xl shadow-xl max-w-md w-full p-6">
             <div className="text-center">
               <div className="text-5xl mb-4">⚠️</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Supprimer cette entreprise?</h3>
-              <p className="text-gray-600 mb-6">
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">Supprimer cette entreprise?</h3>
+              <p className="text-[var(--foreground-muted)] mb-6">
                 Cette action est irreversible. Toutes les donnees de cette entreprise seront supprimees.
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={() => setDeleteId(null)}
                   disabled={deleting}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
+                  className="flex-1 px-4 py-3 border border-white/10 rounded-lg font-medium text-[var(--foreground-muted)] hover:bg-white/5 transition-colors disabled:opacity-50"
                 >
                   Annuler
                 </button>

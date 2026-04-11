@@ -78,10 +78,10 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="animate-pulse space-y-6">
-        <div className="h-8 bg-gray-200 rounded w-1/3" />
+        <div className="h-8 bg-white/10 rounded w-1/3" />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3].map(i => (
-            <div key={i} className="h-32 bg-gray-200 rounded-xl" />
+            <div key={i} className="h-32 bg-white/10 rounded-xl" />
           ))}
         </div>
       </div>
@@ -92,95 +92,95 @@ export default function DashboardPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
+        <h1 className="text-2xl lg:text-3xl font-bold text-[var(--foreground)]">
           Bonjour, {user?.user_metadata?.full_name || user?.email?.split('@')[0]}!
         </h1>
-        <p className="text-gray-600 mt-1">
+        <p className="text-[var(--foreground-muted)] mt-1">
           Bienvenue dans votre tableau de bord
         </p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <div className="bg-[var(--background-secondary)] rounded-xl  p-6 border border-white/5">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl">
+            <div className="w-12 h-12 bg-sky-500/10 rounded-xl flex items-center justify-center text-2xl">
               🏢
             </div>
             <div>
-              <p className="text-3xl font-bold text-gray-900">{stats.businessCount}</p>
-              <p className="text-gray-600">Entreprises</p>
+              <p className="text-3xl font-bold text-[var(--foreground)]">{stats.businessCount}</p>
+              <p className="text-[var(--foreground-muted)]">Entreprises</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <div className="bg-[var(--background-secondary)] rounded-xl  p-6 border border-white/5">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center text-2xl">
+            <div className="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-2xl">
               ⭐
             </div>
             <div>
-              <p className="text-3xl font-bold text-gray-900">{stats.reviewCount}</p>
-              <p className="text-gray-600">Avis publiés</p>
+              <p className="text-3xl font-bold text-[var(--foreground)]">{stats.reviewCount}</p>
+              <p className="text-[var(--foreground-muted)]">Avis publiés</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <div className="bg-[var(--background-secondary)] rounded-xl  p-6 border border-white/5">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl">
+            <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center text-2xl">
               👁️
             </div>
             <div>
-              <p className="text-3xl font-bold text-gray-900">{stats.totalViews}</p>
-              <p className="text-gray-600">Vues totales</p>
+              <p className="text-3xl font-bold text-[var(--foreground)]">{stats.totalViews}</p>
+              <p className="text-[var(--foreground-muted)]">Vues totales</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Actions rapides</h2>
+      <div className="bg-[var(--background-secondary)] rounded-xl  p-6 border border-white/5">
+        <h2 className="text-lg font-semibold text-[var(--foreground)] mb-4">Actions rapides</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Link
             href="/entreprise/nouvelle"
-            className="flex items-center gap-3 p-4 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors"
+            className="flex items-center gap-3 p-4 bg-sky-500/10 hover:bg-sky-500/10 rounded-xl transition-colors"
           >
             <span className="text-2xl">➕</span>
-            <span className="font-medium text-blue-700">Ajouter une entreprise</span>
+            <span className="font-medium text-sky-400">Ajouter une entreprise</span>
           </Link>
           <Link
             href="/tableau-de-bord/entreprises"
-            className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-colors"
+            className="flex items-center gap-3 p-4 bg-white/5 hover:bg-white/5 rounded-xl transition-colors"
           >
             <span className="text-2xl">📋</span>
-            <span className="font-medium text-gray-700">Gérer mes entreprises</span>
+            <span className="font-medium text-[var(--foreground-muted)]">Gérer mes entreprises</span>
           </Link>
           <Link
             href="/tableau-de-bord/profil"
-            className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-colors"
+            className="flex items-center gap-3 p-4 bg-white/5 hover:bg-white/5 rounded-xl transition-colors"
           >
             <span className="text-2xl">👤</span>
-            <span className="font-medium text-gray-700">Modifier mon profil</span>
+            <span className="font-medium text-[var(--foreground-muted)]">Modifier mon profil</span>
           </Link>
           <Link
             href="/recherche"
-            className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-colors"
+            className="flex items-center gap-3 p-4 bg-white/5 hover:bg-white/5 rounded-xl transition-colors"
           >
             <span className="text-2xl">🔍</span>
-            <span className="font-medium text-gray-700">Rechercher</span>
+            <span className="font-medium text-[var(--foreground-muted)]">Rechercher</span>
           </Link>
         </div>
       </div>
 
       {/* Recent Businesses */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-        <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-gray-900">Mes entreprises récentes</h2>
+      <div className="bg-[var(--background-secondary)] rounded-xl  border border-white/5">
+        <div className="p-6 border-b border-white/5 flex justify-between items-center">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">Mes entreprises récentes</h2>
           <Link
             href="/tableau-de-bord/entreprises"
-            className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+            className="text-sky-400 hover:text-sky-400 text-sm font-medium"
           >
             Voir tout →
           </Link>
@@ -189,11 +189,11 @@ export default function DashboardPage() {
         {recentBusinesses.length > 0 ? (
           <div className="divide-y divide-gray-100">
             {recentBusinesses.map((biz) => (
-              <div key={biz.id} className="p-4 hover:bg-gray-50 transition-colors">
+              <div key={biz.id} className="p-4 hover:bg-white/5 transition-colors">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-medium text-gray-900">{biz.name}</h3>
-                    <p className="text-sm text-gray-500">📍 {biz.city}</p>
+                    <h3 className="font-medium text-[var(--foreground)]">{biz.name}</h3>
+                    <p className="text-sm text-[var(--foreground-muted)]">📍 {biz.city}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     {biz.google_rating && (
@@ -203,7 +203,7 @@ export default function DashboardPage() {
                     )}
                     <Link
                       href={`/tableau-de-bord/entreprises/${biz.id}`}
-                      className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                      className="text-sky-400 hover:text-sky-400 text-sm font-medium"
                     >
                       Modifier
                     </Link>
@@ -215,13 +215,13 @@ export default function DashboardPage() {
         ) : (
           <div className="p-8 text-center">
             <div className="text-4xl mb-4">🏢</div>
-            <h3 className="font-medium text-gray-900 mb-2">Aucune entreprise</h3>
-            <p className="text-gray-500 mb-4">
+            <h3 className="font-medium text-[var(--foreground)] mb-2">Aucune entreprise</h3>
+            <p className="text-[var(--foreground-muted)] mb-4">
               Vous n&apos;avez pas encore ajouté d&apos;entreprise
             </p>
             <Link
               href="/entreprise/nouvelle"
-              className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              className="inline-block px-6 py-3 bg-sky-500 text-white rounded-lg font-medium hover:bg-sky-400 transition-colors"
             >
               Ajouter ma première entreprise
             </Link>
