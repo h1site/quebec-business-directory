@@ -46,6 +46,13 @@ textarea.bg-white::placeholder {
   -webkit-text-fill-color: rgb(156 163 175) !important;
 }
 
+/* Dark color-scheme for time/date inputs in dark theme */
+.dark input[type="time"],
+.dark input[type="date"],
+.dark input[type="datetime-local"] {
+  color-scheme: dark !important;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
