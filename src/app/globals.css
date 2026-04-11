@@ -28,33 +28,20 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
-/* Force dark text in ALL light-bg form inputs */
-input[style*="color"],
+/* Force dark text ONLY on inputs with white background (add-business form) */
+input.bg-white,
+textarea.bg-white,
+select.bg-white,
 input[class*="bg-white"],
 textarea[class*="bg-white"],
-select[class*="bg-white"],
-input[style*="background: white"],
-input[style*="background-color: white"] {
+select[class*="bg-white"] {
   color: rgb(17 24 39) !important;
   -webkit-text-fill-color: rgb(17 24 39) !important;
   color-scheme: light !important;
 }
 
-/* Global fix: any input/select/textarea with white background */
-.dark input[type="text"],
-.dark input[type="tel"],
-.dark input[type="email"],
-.dark input[type="url"],
-.dark input[type="number"],
-.dark input[type="password"],
-.dark textarea,
-.dark select {
-  color: rgb(17 24 39) !important;
-  -webkit-text-fill-color: rgb(17 24 39) !important;
-}
-
-.dark input::placeholder,
-.dark textarea::placeholder {
+input.bg-white::placeholder,
+textarea.bg-white::placeholder {
   color: rgb(156 163 175) !important;
   -webkit-text-fill-color: rgb(156 163 175) !important;
 }
