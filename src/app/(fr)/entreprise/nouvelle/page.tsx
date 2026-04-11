@@ -1258,7 +1258,7 @@ export default function AddBusinessPage() {
                 </div>
 
                 {/* Street Address */}
-                <div className="relative">
+                <div>
                   <label className="block text-sm font-medium text-gray-900 mb-1">
                     Adresse civique <span className="text-red-500">*</span>
                   </label>
@@ -1266,30 +1266,11 @@ export default function AddBusinessPage() {
                     type="text"
                     name="address"
                     value={formData.address}
-                    onChange={handleAddressChange}
-                    autoComplete="off"
+                    onChange={handleChange}
                     className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.address ? 'border-red-400' : 'border-gray-300'}`}
                     placeholder="123 Rue Principale"
                   />
-                  {isSearchingAddress && <div className="absolute right-3 top-10 text-gray-400 text-sm">Recherche...</div>}
-                  {showSuggestions && addressSuggestions.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 mt-1 max-h-60 overflow-y-auto">
-                      {addressSuggestions.map((suggestion, index) => (
-                        <div
-                          key={index}
-                          onClick={() => selectAddress(suggestion)}
-                          className="px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-0"
-                        >
-                          <div className="flex items-start gap-2">
-                            <span className="text-gray-400">📍</span>
-                            <span className="text-sm text-gray-700">{suggestion.display_name}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                   {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
-                  <p className="text-xs text-gray-500 mt-1">Commencez à taper pour la saisie automatique</p>
                 </div>
 
                 {/* Postal Code */}
@@ -1420,27 +1401,6 @@ export default function AddBusinessPage() {
                       {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
                     </div>
 
-                    {formData.main_category_id && (
-                      <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-1">
-                          Sous-catégorie <span className="text-gray-400 text-xs font-normal">(optionnel)</span>
-                        </label>
-                        {subcategories.length > 0 ? (
-                          <select
-                            value={formData.subcategory_id || ''}
-                            onChange={handleSubcategoryChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
-                          >
-                            <option value="">Sélectionnez une sous-catégorie</option>
-                            {subcategories.map(sub => (
-                              <option key={sub.id} value={sub.id}>{sub.label_fr}</option>
-                            ))}
-                          </select>
-                        ) : (
-                          <p className="text-sm text-gray-500 italic py-3">Aucune sous-catégorie disponible pour cette catégorie</p>
-                        )}
-                      </div>
-                    )}
                   </>
                 )}
               </div>
