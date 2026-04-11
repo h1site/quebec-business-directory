@@ -18,6 +18,8 @@ export async function GET() {
     { url: '/en/blog', priority: '0.8', changefreq: 'weekly' },
     { url: '/parcourir/categories', priority: '0.8', changefreq: 'weekly' },
     { url: '/en/browse/categories', priority: '0.8', changefreq: 'weekly' },
+    { url: '/plan-du-site', priority: '0.5', changefreq: 'weekly' },
+    { url: '/test-indexation.html', priority: '0.8', changefreq: 'monthly' },
     { url: '/mentions-legales', priority: '0.3', changefreq: 'yearly' },
     { url: '/politique-confidentialite', priority: '0.3', changefreq: 'yearly' },
     { url: '/en/legal-notice', priority: '0.3', changefreq: 'yearly' },
