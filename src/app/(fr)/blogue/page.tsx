@@ -7,7 +7,7 @@ import { createServiceClient } from '@/lib/supabase/server'
 export const revalidate = 3600 // 1 hour
 
 export const metadata: Metadata = {
-  title: 'Blogue — Guides et ressources pour entreprises',
+  title: 'Blogue — Guides pour entreprises',
   description: 'Conseils, guides et ressources pour les entreprises québécoises. Subventions, financement, marketing et plus.',
 }
 

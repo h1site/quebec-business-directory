@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `${business.name} - ${business.city}`
 
   // Truncate description properly (at word boundary, max 155 chars + "...")
-  const truncateDescription = (text: string, maxLen = 155): string => {
+  const truncateDescription = (text: string, maxLen = 150): string => {
     if (text.length <= maxLen) return text
     const truncated = text.slice(0, maxLen)
     const lastSpace = truncated.lastIndexOf(' ')

@@ -101,7 +101,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { total } = await getBusinessesByCategory(categorySlug, 1)
 
   return {
-    title: `${category.label_fr} - Entreprises au Québec`,
+    title: `${category.label_fr} au Québec`,
     description: `${total.toLocaleString('fr-CA')} entreprises de ${category.label_fr} au Québec. Comparez les avis, coordonnées et services.`,
     alternates: { canonical: `https://registreduquebec.com/categorie/${categorySlug}` },
   }

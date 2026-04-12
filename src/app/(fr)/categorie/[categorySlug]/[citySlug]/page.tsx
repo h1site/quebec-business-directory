@@ -163,8 +163,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!category) return { title: 'Page non trouvée' }
 
   const cityName = slugToCity(citySlug)
-  const title = `${category.label_fr} à ${cityName} - Registre du Québec`
-  const description = `Trouvez les meilleures entreprises de ${category.label_fr} à ${cityName}. Annuaire complet avec coordonnées, avis Google et informations détaillées.`
+  const title = `${category.label_fr} à ${cityName}`
+  const description = `Entreprises de ${category.label_fr} à ${cityName}. Coordonnées, avis Google et informations.`
   const canonical = `https://registreduquebec.com/categorie/${categorySlug}/${citySlug}`
 
   return {
