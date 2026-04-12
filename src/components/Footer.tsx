@@ -10,7 +10,7 @@ export default function Footer() {
       <div className="relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1600&q=80)' }}
+          style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1600&q=80)' }}
         />
         <div className="absolute inset-0 bg-white/55" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
