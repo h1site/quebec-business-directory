@@ -55,11 +55,6 @@ function BusinessCard({ business }: { business: Business }) {
               <h3 className="text-xl font-semibold group-hover:text-sky-500 transition-colors truncate" style={{ color: 'var(--foreground)' }}>
                 {business.name}
               </h3>
-              {business.ai_description && (
-                <span className="shrink-0 inline-flex items-center px-2 py-0.5 bg-gradient-to-r from-sky-500 to-cyan-500 text-white text-xs font-medium rounded-full">
-                  Enrichie
-                </span>
-              )}
             </div>
             {business.city && (
               <p className="mt-1 flex items-center gap-2" style={{ color: 'var(--foreground-muted)' }}>
