@@ -2,20 +2,70 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
-import { createBrowserClient } from '@supabase/ssr'
-import type { User } from '@supabase/supabase-js'
+import { useState, useEffect, useCallback } from 'react'
+
+// Inline SVG icons
+function MenuIcon({ className = 'w-6 h-6' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  )
+}
+
+function CloseIcon({ className = 'w-6 h-6' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  )
+}
+
+function SearchIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+    </svg>
+  )
+}
+
+function AddBusinessIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m7-7H5" />
+    </svg>
+  )
+}
+
+function HeartIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+    </svg>
+  )
+}
+
+function LogoutIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+    </svg>
+  )
+}
+
+function LoginIcon({ className = 'w-[18px] h-[18px]' }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h9a2 2 0 012 2v1" />
+    </svg>
+  )
+}
 
 export default function HeaderEN() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [user, setUser] = useState<User | null>(null)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [user, setUser] = useState<{ email?: string; avatar_url?: string; full_name?: string } | null>(null)
   const [loading, setLoading] = useState(true)
-
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,72 +75,107 @@ export default function HeaderEN() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Lazy-load Supabase only when needed (saves ~212KB from initial bundle)
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-      setLoading(false)
-    })
+    import('@supabase/ssr').then(({ createBrowserClient }) => {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session?.user) {
+          setUser({
+            email: session.user.email,
+            avatar_url: session.user.user_metadata?.avatar_url,
+            full_name: session.user.user_metadata?.full_name,
+          })
+        }
+        setLoading(false)
+      })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
+      supabase.auth.onAuthStateChange((_event, session) => {
+        if (session?.user) {
+          setUser({
+            email: session.user.email,
+            avatar_url: session.user.user_metadata?.avatar_url,
+            full_name: session.user.user_metadata?.full_name,
+          })
+        } else {
+          setUser(null)
+        }
+      })
     })
-
-    return () => subscription.unsubscribe()
   }, [])
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
+    const { createBrowserClient } = await import('@supabase/ssr')
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
     await supabase.auth.signOut()
     setUser(null)
-    window.location.href = '/en'
-  }
-
-  const closeMenu = () => setIsMenuOpen(false)
+    window.location.href = '/'
+  }, [])
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white shadow-md' : 'bg-white/90 backdrop-blur-sm'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4">
-        <nav className="flex items-center justify-between h-16">
+    <>
+      {/* AppBar */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-[var(--background)]/95 backdrop-blur-xl border-b border-[var(--foreground)]/10 shadow-md'
+            : 'bg-transparent border-b border-transparent'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 flex items-center h-16">
           {/* Logo */}
-          <Link href="/en" className="flex items-center gap-2">
+          <Link href="/en" prefetch={true} className="flex items-center gap-3 group no-underline">
             <Image
               src="/images/logos/logo.webp"
-              alt="Quebec Business Registry"
+              alt="Quebec Registry"
               width={36}
               height={36}
-              className="rounded-lg"
+              priority
+              className="rounded-xl drop-shadow-lg group-hover:scale-105 transition-transform brightness-0 invert"
             />
-            <span className="font-bold text-xs xl:text-sm hidden lg:block text-gray-900 whitespace-nowrap">
-              Quebec Business Registry
-            </span>
-            <span className="px-1.5 py-0.5 bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 text-[10px] font-bold rounded-full uppercase tracking-wide">
-              Beta
+            <span className="hidden sm:flex items-center gap-2">
+              <span className="font-bold text-sm text-[var(--foreground)]">
+                Quebec Registry
+              </span>
+              <span className="text-[0.6rem] leading-none px-1.5 py-0.5 border border-blue-500 text-blue-500 rounded-full font-medium">
+                Beta
+              </span>
             </span>
           </Link>
 
+          <div className="flex-grow" />
+
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-0.5">
+          <nav className="hidden lg:flex items-center gap-1">
             <Link
               href="/en"
-              className="px-3 py-2 rounded-lg font-medium text-sm transition-colors text-gray-700 hover:bg-gray-100"
+              className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 px-3 py-1.5 rounded-md transition-colors no-underline"
             >
               Home
             </Link>
             <Link
               href="/en/search"
-              className="px-3 py-2 rounded-lg font-medium text-sm transition-colors text-gray-700 hover:bg-gray-100"
+              className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 px-3 py-1.5 rounded-md transition-colors no-underline flex items-center gap-1.5"
             >
+              <SearchIcon />
               Search
             </Link>
             <Link
-              href={user ? '/en/add-business' : '/en/login?redirect=/en/add-business'}
-              className="px-3 py-2 rounded-lg font-medium text-sm transition-colors text-gray-700 hover:bg-gray-100 whitespace-nowrap"
+              href={user ? '/entreprise/nouvelle' : '/connexion?redirect=/entreprise/nouvelle'}
+              className="text-sm bg-sky-500 hover:bg-sky-400 text-white px-4 py-1.5 rounded-md transition-colors no-underline flex items-center gap-1.5 font-semibold"
             >
-              Add
+              <AddBusinessIcon />
+              Add my business
             </Link>
 
-            <div className="w-px h-5 mx-1 bg-gray-300" />
+            {/* Divider */}
+            <div className="w-px h-6 bg-[var(--foreground)]/10 mx-1" />
 
             {!loading && (
               <>
@@ -98,41 +183,38 @@ export default function HeaderEN() {
                   <div className="flex items-center gap-1">
                     <Link
                       href="/en/dashboard"
-                      className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg transition-colors bg-gray-100 hover:bg-gray-200"
+                      className="flex items-center gap-2 border border-[var(--foreground)]/10 text-[var(--foreground)] rounded-md px-3 py-1 text-sm no-underline hover:bg-[var(--foreground)]/5 transition-colors"
                     >
-                      {user.user_metadata?.avatar_url ? (
-                        <Image
-                          src={user.user_metadata.avatar_url}
+                      {user?.avatar_url ? (
+                        <img
+                          src={user?.avatar_url}
                           alt=""
-                          width={22}
-                          height={22}
-                          className="rounded-full"
+                          className="w-6 h-6 rounded-full"
                         />
                       ) : (
-                        <div className="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
-                          {user.email?.charAt(0).toUpperCase()}
-                        </div>
+                        <span className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-medium">
+                          {user?.email?.charAt(0).toUpperCase()}
+                        </span>
                       )}
-                      <span className="text-xs font-medium max-w-[80px] truncate text-gray-700 hidden xl:block">
-                        {user.user_metadata?.full_name || user.email?.split('@')[0]}
+                      <span className="hidden xl:inline">
+                        {user?.full_name || user?.email?.split('@')[0]}
                       </span>
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="px-2 py-1.5 rounded-lg font-medium text-xs transition-colors text-gray-600 hover:bg-gray-100"
+                      className="p-1.5 rounded-md text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 transition-colors"
                     >
-                      Logout
+                      <LogoutIcon />
                     </button>
                   </div>
                 ) : (
-                  <>
-                    <Link
-                      href="/en/login"
-                      className="px-3 py-1.5 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 transition-colors"
-                    >
-                      Login
-                    </Link>
-                  </>
+                  <Link
+                    href="/en/login"
+                    className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1.5 rounded-md transition-colors no-underline"
+                  >
+                    <LoginIcon />
+                    Login
+                  </Link>
                 )}
               </>
             )}
@@ -141,133 +223,150 @@ export default function HeaderEN() {
               href="https://www.paypal.com/donate/?hosted_button_id=GUPL4K5WR3ZG4"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-1 px-2 py-1.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-lg font-medium text-sm hover:from-pink-600 hover:to-rose-600 transition-all flex items-center gap-1"
+              className="ml-1 flex items-center gap-1.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white text-sm px-3 py-1.5 rounded-md transition-all no-underline"
             >
-              <span>❤️</span>
+              <HeartIcon />
               <span className="hidden xl:inline">Donate</span>
             </a>
 
-            {/* Language Toggle */}
             <Link
               href="/"
-              className="ml-1 px-2 py-1.5 rounded-lg font-medium text-sm transition-colors text-gray-600 hover:bg-gray-100"
+              className="ml-1 text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] font-semibold px-2 py-1.5 rounded-md transition-colors no-underline"
             >
               FR
             </Link>
-          </div>
+          </nav>
 
-          {/* Mobile: Language + Menu */}
-          <div className="flex lg:hidden items-center gap-2">
+          {/* Mobile */}
+          <div className="flex lg:hidden items-center gap-1">
             <Link
               href="/"
-              className="px-2 py-1 rounded text-sm font-medium text-gray-600"
+              className="text-sm text-[var(--foreground)]/60 font-semibold px-2 py-1.5 no-underline"
             >
               FR
             </Link>
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2"
-              aria-label="Menu"
+              onClick={() => setDrawerOpen(true)}
+              className="p-2 text-[var(--foreground)] rounded-md hover:bg-[var(--foreground)]/5 transition-colors"
             >
-              {isMenuOpen ? (
-                <Image src="/images/icons/close.svg" alt="Close" width={28} height={28} />
-              ) : (
-                <Image src="/images/icons/menu.svg" alt="Menu" width={28} height={28} />
-              )}
+              <MenuIcon />
             </button>
           </div>
-        </nav>
+        </div>
+      </header>
 
-        {/* Mobile menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden bg-white rounded-xl shadow-xl p-4 mb-4 border border-gray-100">
-            <div className="flex flex-col gap-1">
-              {user && (
-                <Link
-                  href="/en/dashboard"
-                  onClick={closeMenu}
-                  className="flex items-center gap-3 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg mb-2 transition-colors"
-                >
-                  {user.user_metadata?.avatar_url ? (
-                    <Image
-                      src={user.user_metadata.avatar_url}
-                      alt=""
-                      width={32}
-                      height={32}
-                      className="rounded-full"
-                    />
-                  ) : (
-                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
-                      {user.email?.charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                  <div>
-                    <span className="font-medium text-gray-900 block">
-                      {user.user_metadata?.full_name || user.email?.split('@')[0]}
-                    </span>
-                    <span className="text-xs text-gray-500">Dashboard</span>
-                  </div>
-                </Link>
-              )}
+      {/* Mobile Drawer Overlay */}
+      <div
+        className={`fixed inset-0 z-[60] bg-black/50 transition-opacity duration-300 ${
+          drawerOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setDrawerOpen(false)}
+      />
 
-              <Link
-                href="/en"
-                onClick={closeMenu}
-                className="text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                href="/en/search"
-                onClick={closeMenu}
-                className="text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Search
-              </Link>
-              <Link
-                href={user ? '/en/add-business' : '/en/login?redirect=/en/add-business'}
-                onClick={closeMenu}
-                className="text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Add a Business
-              </Link>
+      {/* Mobile Drawer */}
+      <div
+        className={`fixed top-0 right-0 z-[70] h-full w-[300px] bg-[var(--background)] p-4 shadow-2xl transition-transform duration-300 ease-in-out ${
+          drawerOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <span className="font-bold text-base text-[var(--foreground)]">Menu</span>
+          <button
+            onClick={() => setDrawerOpen(false)}
+            className="p-1.5 rounded-md text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 transition-colors"
+          >
+            <CloseIcon />
+          </button>
+        </div>
 
-              <hr className="my-2 border-gray-200" />
-
-              {user ? (
-                <button
-                  onClick={() => {
-                    handleLogout()
-                    closeMenu()
-                  }}
-                  className="text-red-600 font-medium py-3 px-4 rounded-lg hover:bg-red-50 transition-colors text-left"
-                >
-                  Logout
-                </button>
-              ) : (
-                <Link
-                  href="/en/login"
-                  onClick={closeMenu}
-                  className="bg-blue-600 text-white text-center py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                >
-                  Login with Google
-                </Link>
-              )}
-
-              <a
-                href="https://www.paypal.com/donate/?hosted_button_id=GUPL4K5WR3ZG4"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={closeMenu}
-                className="mt-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-center py-3 px-4 rounded-lg font-medium flex items-center justify-center gap-2"
-              >
-                <span>❤️</span>
-                Donate
-              </a>
+        {user && (
+          <Link
+            href="/en/dashboard"
+            onClick={() => setDrawerOpen(false)}
+            className="flex items-center gap-3 w-full text-left bg-[var(--foreground)]/5 rounded-xl px-3 py-3 mb-4 no-underline hover:bg-[var(--foreground)]/10 transition-colors"
+          >
+            {user?.avatar_url ? (
+              <img
+                src={user?.avatar_url}
+                alt=""
+                className="w-9 h-9 rounded-full"
+              />
+            ) : (
+              <span className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-medium">
+                {user?.email?.charAt(0).toUpperCase()}
+              </span>
+            )}
+            <div>
+              <div className="font-semibold text-[var(--foreground)] leading-tight text-sm">
+                {user?.full_name || user?.email?.split('@')[0]}
+              </div>
+              <div className="text-xs text-[var(--foreground)]/60">Dashboard</div>
             </div>
-          </div>
+          </Link>
         )}
+
+        <div className="flex flex-col gap-1">
+          <Link
+            href="/en"
+            onClick={() => setDrawerOpen(false)}
+            className="w-full text-left text-[var(--foreground)] py-3 px-3 rounded-md hover:bg-[var(--foreground)]/5 transition-colors no-underline text-sm"
+          >
+            Home
+          </Link>
+          <Link
+            href="/en/search"
+            onClick={() => setDrawerOpen(false)}
+            className="w-full text-left text-[var(--foreground)] py-3 px-3 rounded-md hover:bg-[var(--foreground)]/5 transition-colors no-underline flex items-center gap-2 text-sm"
+          >
+            <SearchIcon />
+            Search
+          </Link>
+          <Link
+            href={user ? '/entreprise/nouvelle' : '/connexion?redirect=/entreprise/nouvelle'}
+            onClick={() => setDrawerOpen(false)}
+            className="w-full text-center bg-sky-500 hover:bg-sky-400 text-white py-3 px-3 rounded-md transition-colors no-underline flex items-center justify-center gap-2 text-sm font-semibold"
+          >
+            <AddBusinessIcon />
+            Add my business
+          </Link>
+        </div>
+
+        {/* Divider */}
+        <div className="h-px bg-[var(--foreground)]/10 my-4" />
+
+        {user ? (
+          <button
+            onClick={() => {
+              handleLogout()
+              setDrawerOpen(false)
+            }}
+            className="w-full text-left text-red-500 py-3 px-3 rounded-md hover:bg-red-500/10 transition-colors flex items-center gap-2 text-sm"
+          >
+            <LogoutIcon />
+            Logout
+          </button>
+        ) : (
+          <Link
+            href="/en/login"
+            onClick={() => setDrawerOpen(false)}
+            className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 px-3 rounded-md transition-colors no-underline text-sm"
+          >
+            <LoginIcon />
+            Login
+          </Link>
+        )}
+
+        <a
+          href="https://www.paypal.com/donate/?hosted_button_id=GUPL4K5WR3ZG4"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setDrawerOpen(false)}
+          className="mt-4 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white py-3 px-3 rounded-md transition-all no-underline text-sm"
+        >
+          <HeartIcon />
+          Donateate
+        </a>
       </div>
-    </header>
+    </>
   )
 }
