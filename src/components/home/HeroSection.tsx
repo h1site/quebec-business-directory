@@ -128,6 +128,9 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
             Vous voyez une entreprise qui vous appartient et qui n&apos;a pas été réclamée ? Rendez-vous sur sa fiche et faites une demande pour en prendre possession. Pour toute question, écrivez-nous à{' '}
             <a href="mailto:info@h1site.com" className="text-sky-400 hover:text-sky-300 underline">info@h1site.com</a>
           </p>
+          <p className="text-slate-500 text-xs mt-3">
+            📖 <a href="/test-indexation.html" className="text-sky-400 hover:text-sky-300 underline">Guide : Immatriculer une entreprise au Québec en 2026</a>
+          </p>
 
           {/* TeckBlaze Banner */}
           <a

@@ -92,6 +92,20 @@ export default async function BlogPage() {
               </span>
               <span className="inline-block mt-3 text-sky-400 text-sm font-medium">Lire l&apos;article →</span>
             </Link>
+            <a
+              href="/test-indexation.html"
+              className="block rounded-xl p-6 hover:scale-[1.01] transition-transform no-underline mb-6"
+              style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}
+            >
+              <span className="text-xs font-medium text-sky-400 mb-2 block">Guide</span>
+              <span className="text-lg font-bold block mb-2" style={{ color: 'var(--foreground)' }}>
+                Immatriculer une entreprise au Québec en 2026
+              </span>
+              <span className="text-sm block" style={{ color: 'var(--foreground-muted)' }}>
+                Vrais coûts, délais réels et erreurs fréquentes. Guide concret basé sur des cas d&apos;entrepreneurs québécois.
+              </span>
+              <span className="inline-block mt-3 text-sky-400 text-sm font-medium">Lire le guide →</span>
+            </a>
           </div>
 
           <div className="mt-8 rounded-xl p-8 text-center" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>

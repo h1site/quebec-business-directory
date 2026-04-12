@@ -108,6 +108,11 @@ export default function Footer() {
                   Blogue
                 </Link>
               </li>
+              <li>
+                <a href="/test-indexation.html" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
+                  Guide immatriculation
+                </a>
+              </li>
             </ul>
           </div>
 
