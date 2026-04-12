@@ -49,8 +49,19 @@ const popularCities = [
 
 export default function CategoriesSection({ categories }: CategoriesSectionProps) {
   return (
-    <section className="py-[100px] bg-white">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="py-[100px] relative bg-white">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'url(/images/background/background-overlay-dark.png)',
+          backgroundAttachment: 'fixed',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          opacity: 0.02,
+        }}
+      />
+      <div className="relative z-10 max-w-7xl mx-auto px-4">
         {/* Categories */}
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold mb-3 text-gray-900">
