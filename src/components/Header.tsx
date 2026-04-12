@@ -143,9 +143,6 @@ export default function Header() {
               <span className="font-bold text-sm text-[var(--foreground)]">
                 Registre du Québec
               </span>
-              <span className="text-[0.6rem] leading-none px-1.5 py-0.5 border border-blue-500 text-blue-500 rounded-full font-medium">
-                Bêta
-              </span>
             </span>
           </Link>
 

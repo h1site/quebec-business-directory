@@ -78,6 +78,11 @@ export default async function HomePage() {
         <HeroSection totalBusinesses={TOTAL_BUSINESSES} />
         <CategoriesSection categories={CATEGORIES} />
 
+        {/* Ad - after categories + cities */}
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <AdSense slot="8544579045" format="auto" responsive={true} />
+        </div>
+
         {/* Featured Businesses - critical for Google crawling internal links */}
         {featuredBusinesses.length > 0 && (
           <section className="py-[100px]" style={{ background: 'var(--background-secondary)' }}>
@@ -89,15 +94,15 @@ export default async function HomePage() {
                   <Link
                     key={biz.slug}
                     href={`/entreprise/${biz.slug}`}
-                    className="glass rounded-xl p-4 hover:bg-white/10 transition-all no-underline"
+                    className="glass rounded-xl p-3 hover:bg-white/10 transition-all no-underline"
                   >
                     <div className="flex justify-between items-start">
                       <div className="min-w-0 flex-1">
-                        <h3 className="font-semibold text-white truncate">{biz.name}</h3>
-                        <p className="text-slate-400 text-sm">{biz.city}</p>
+                        <h3 className="font-bold text-white truncate uppercase text-xs tracking-wide">{biz.name}</h3>
+                        <p className="text-slate-400 text-xs">{biz.city}</p>
                       </div>
                       {biz.google_rating && (
-                        <span className="text-amber-400 text-sm font-bold shrink-0 ml-2">★ {biz.google_rating}</span>
+                        <span className="text-amber-400 text-xs font-bold shrink-0 ml-2">★ {biz.google_rating}</span>
                       )}
                     </div>
                   </Link>
@@ -106,6 +111,11 @@ export default async function HomePage() {
             </div>
           </section>
         )}
+
+        {/* Ad - after featured businesses */}
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <AdSense slot="8544579045" format="auto" responsive={true} />
+        </div>
 
       </main>
 

@@ -24,8 +24,10 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  word-spacing: 0.1em;
 }
 
 /* Force dark text ONLY on inputs with white background (add-business form) */

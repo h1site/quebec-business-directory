@@ -27,16 +27,9 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
 
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 py-16 text-center">
-        <div className="mb-8 animate-fade-in">
-          <span className="inline-block px-3 py-1 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-white text-sm font-medium">
-            Bêta — Version en développement
-          </span>
-        </div>
-
-        <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 animate-slide-up">
-          Trouvez les meilleures
-          <span className="block gradient-text">entreprises du Québec</span>
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 pt-24 pb-16 text-center">
+        <h1 className="text-3xl md:text-5xl text-white mb-6 animate-slide-up uppercase max-w-4xl mx-auto" style={{ fontFamily: 'var(--font-inter), Inter, sans-serif', fontWeight: 900 }}>
+          Trouvez les meilleures <span className="gradient-text">entreprises du Québec</span>
         </h1>
 
         <p className="text-xl text-slate-300 mb-10 animate-slide-up animation-delay-100">

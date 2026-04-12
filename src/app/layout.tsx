@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Bebas_Neue } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 
@@ -10,6 +10,13 @@ const googleVerification =
 
 const inter = Inter({
   variable: '--font-inter',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+const bebasNeue = Bebas_Neue({
+  variable: '--font-bebas',
+  weight: '400',
   subsets: ['latin'],
   display: 'swap',
 })
@@ -108,7 +115,7 @@ export default function RootLayout({
           data-overlays="bottom"
         />
       </head>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased`}>
           {children}
       </body>
     </html>

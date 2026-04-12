@@ -76,12 +76,68 @@ export async function searchBusinesses(
     queryBuilder = queryBuilder.ilike('city', `%${normalizeText(city)}%`)
   }
 
-  // Text search
+  // Text search — prioritize name, category, city over description
   if (cleanQuery) {
     const q = normalizeText(cleanQuery)
-    queryBuilder = queryBuilder.or(
-      `name.ilike.%${q}%,description.ilike.%${q}%,ai_description.ilike.%${q}%,main_category_slug.ilike.%${q}%,city.ilike.%${q}%`
-    )
+
+    // Map common search terms to category slugs
+    const categoryMap: Record<string, string> = {
+      'restaurant': 'restauration-et-alimentation',
+      'restaurants': 'restauration-et-alimentation',
+      'cafe': 'restauration-et-alimentation',
+      'traiteur': 'restauration-et-alimentation',
+      'boulangerie': 'restauration-et-alimentation',
+      'epicerie': 'restauration-et-alimentation',
+      'bar': 'restauration-et-alimentation',
+      'pizza': 'restauration-et-alimentation',
+      'sushi': 'restauration-et-alimentation',
+      'plombier': 'construction-et-renovation',
+      'plomberie': 'construction-et-renovation',
+      'electricien': 'construction-et-renovation',
+      'renovation': 'construction-et-renovation',
+      'construction': 'construction-et-renovation',
+      'toiture': 'construction-et-renovation',
+      'peintre': 'construction-et-renovation',
+      'dentiste': 'sante-et-bien-etre',
+      'medecin': 'sante-et-bien-etre',
+      'pharmacie': 'sante-et-bien-etre',
+      'coiffure': 'sante-et-bien-etre',
+      'coiffeur': 'sante-et-bien-etre',
+      'esthetique': 'sante-et-bien-etre',
+      'avocat': 'finance-assurance-et-juridique',
+      'comptable': 'finance-assurance-et-juridique',
+      'notaire': 'finance-assurance-et-juridique',
+      'assurance': 'finance-assurance-et-juridique',
+      'garage': 'automobile-et-transport',
+      'mecanique': 'automobile-et-transport',
+      'demenagement': 'automobile-et-transport',
+      'taxi': 'automobile-et-transport',
+      'hotel': 'tourisme-et-hebergement',
+      'motel': 'tourisme-et-hebergement',
+      'camping': 'tourisme-et-hebergement',
+      'garderie': 'education-et-formation',
+      'ecole': 'education-et-formation',
+      'veterinaire': 'sante-et-bien-etre',
+      'fleuriste': 'commerce-de-detail',
+      'quincaillerie': 'commerce-de-detail',
+      'meuble': 'commerce-de-detail',
+      'informatique': 'technologie-et-informatique',
+      'web': 'technologie-et-informatique',
+    }
+
+    const mappedCategory = categoryMap[q]
+
+    if (mappedCategory) {
+      // If query maps to a category, filter by category + name match
+      queryBuilder = queryBuilder.or(
+        `main_category_slug.eq.${mappedCategory},name.ilike.%${q}%`
+      )
+    } else {
+      // General search: name, category slug, city
+      queryBuilder = queryBuilder.or(
+        `name.ilike.%${q}%,main_category_slug.ilike.%${q}%,city.ilike.%${q}%,products_services.ilike.%${q}%`
+      )
+    }
   }
 
   const { data, count, error } = await queryBuilder

@@ -173,7 +173,7 @@ export default async function CityPage({ params, searchParams }: Props) {
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl" />
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
           </div>
-          <div className="relative z-10 max-w-6xl mx-auto px-4">
+          <div className="max-w-6xl mx-auto px-4">
             <nav className="text-sm mb-6 flex items-center gap-2 text-slate-400">
               <Link href="/" className="hover:text-sky-400 transition-colors">Accueil</Link>
               <span>›</span>
@@ -207,21 +207,22 @@ export default async function CityPage({ params, searchParams }: Props) {
           </div>
         </section>
 
-        {/* Popular Categories — now linking to combo pages */}
+        {/* Popular Categories */}
         {popularCategories.length > 0 && (
-          <section className="py-8 border-b border-slate-800">
+          <section className="py-8 bg-[#1e293b]">
             <div className="max-w-6xl mx-auto px-4">
               <h2 className="text-xl font-bold text-white mb-4">
                 Catégories populaires à {actualCityName}
               </h2>
-              <div className="flex flex-wrap gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {popularCategories.map((cat) => (
                   <Link
                     key={cat.slug}
                     href={`/categorie/${cat.slug}/${citySlug}`}
-                    className="px-4 py-2 bg-slate-800/50 hover:bg-slate-800 rounded-lg border border-slate-700/50 hover:border-sky-500/50 text-slate-300 hover:text-sky-400 text-sm font-medium transition-all"
+                    className="flex items-center justify-between p-3 rounded-xl border-2 border-[#020618] bg-white hover:shadow-lg hover:-translate-y-0.5 transition-all no-underline"
                   >
-                    {cat.label} ({cat.count})
+                    <span className="font-medium text-gray-900 text-xs capitalize truncate">{cat.label}</span>
+                    <span className="text-xs text-gray-400 shrink-0 ml-2">({cat.count})</span>
                   </Link>
                 ))}
               </div>
@@ -230,41 +231,41 @@ export default async function CityPage({ params, searchParams }: Props) {
         )}
 
         {/* Results */}
-        <section className="py-8">
+        <section className="py-8" style={{ backgroundColor: '#e0e3e8' }}>
           <div className="max-w-6xl mx-auto px-4">
             <div className="space-y-4">
               {businesses.map((business, index) => (
                 <div key={business.id}>
                 <Link
                   href={`/entreprise/${business.slug}`}
-                  className="block glass rounded-xl hover:bg-white/10 transition-all overflow-hidden group"
+                  className="block rounded-xl border-2 border-[#020618] bg-white hover:shadow-lg hover:-translate-y-0.5 transition-all overflow-hidden group no-underline"
                 >
                   <div className="p-6">
                     <div className="flex justify-between items-start gap-4">
                       <div className="flex-1 min-w-0">
-                        <h2 className="text-xl font-semibold text-white group-hover:text-sky-400 transition-colors">
+                        <h2 className="text-base font-bold text-gray-900 uppercase tracking-wide group-hover:text-sky-500 transition-colors">
                           {business.name}
                         </h2>
                         {business.region && (
-                          <p className="text-slate-400 mt-1 flex items-center gap-2">
+                          <p className="text-gray-500 mt-1 flex items-center gap-2 text-xs">
                             <span>📍</span>
                             {business.city}, {business.region}
                           </p>
                         )}
                         {business.ai_description && (
-                          <p className="text-slate-500 mt-2 text-sm line-clamp-2">
+                          <p className="text-gray-600 mt-2 text-xs line-clamp-2">
                             {business.ai_description}
                           </p>
                         )}
                       </div>
                       {business.google_rating && (
                         <div className="flex flex-col items-end shrink-0">
-                          <div className="flex items-center gap-1 bg-amber-500/20 px-3 py-1.5 rounded-lg">
-                            <span className="text-amber-400 text-lg">★</span>
-                            <span className="font-bold text-white">{business.google_rating}</span>
+                          <div className="flex items-center gap-1 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg">
+                            <span className="text-amber-500 text-sm">★</span>
+                            <span className="font-bold text-gray-900 text-sm">{business.google_rating}</span>
                           </div>
                           {business.google_reviews_count && (
-                            <span className="text-xs text-slate-500 mt-1">{business.google_reviews_count} avis</span>
+                            <span className="text-xs text-gray-600 mt-1">{business.google_reviews_count} avis</span>
                           )}
                         </div>
                       )}
@@ -335,11 +336,11 @@ export default async function CityPage({ params, searchParams }: Props) {
             )}
 
             {/* CTA */}
-            <div className="mt-12 glass rounded-2xl p-8 text-center">
+            <div className="mt-12 rounded-2xl p-8 text-center bg-[#020618] border-2 border-[#020618]">
               <h2 className="text-xl font-bold text-white mb-3">
                 Vous ne trouvez pas ce que vous cherchez?
               </h2>
-              <p className="text-slate-400 mb-6">
+              <p className="text-slate-300 mb-6">
                 Utilisez notre recherche avancée pour affiner vos résultats
               </p>
               <Link
