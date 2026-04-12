@@ -668,10 +668,9 @@ export default function AddBusinessPage() {
     switch (step) {
       case 1:
         if (!formData.name.trim() || formData.name.length < 3) newErrors.name = 'Le nom doit contenir au moins 3 caractères'
-        if (!formData.description.trim()) newErrors.description = 'La description est requise'
         break
       case 2:
-        if (!formData.logo_preview) newErrors.logo = 'Le logo est requis'
+        // Logo is optional
         break
       case 3:
         if (!formData.phone.trim()) newErrors.phone = 'Le téléphone est requis'
