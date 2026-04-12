@@ -33,14 +33,6 @@ export default function Footer() {
                 <span className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-sm font-bold">f</span>
                 Rejoindre le groupe
               </a>
-              <a
-                href="https://www.facebook.com/registreduquebec/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur text-white px-6 py-3.5 rounded-xl font-bold hover:bg-white/20 transition-all hover:-translate-y-0.5 border border-white/20 no-underline"
-              >
-                Suivre la page
-              </a>
             </div>
           </div>
         </div>
