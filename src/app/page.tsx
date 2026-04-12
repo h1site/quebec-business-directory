@@ -79,6 +79,52 @@ export default async function HomePage() {
 
       <main>
         <HeroSection totalBusinesses={TOTAL_BUSINESSES} />
+
+        {/* TeckBlaze Promo Banner */}
+        <section className="py-4" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)' }}>
+          <div className="max-w-6xl mx-auto px-4">
+            <a
+              href="https://teckblaze.com?utm_source=registreduquebec&utm_medium=banner&utm_campaign=homepage"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col md:flex-row items-center gap-6 rounded-2xl p-6 md:p-8 no-underline transition-all hover:scale-[1.01]"
+              style={{ background: 'linear-gradient(135deg, rgba(14,165,233,0.1) 0%, rgba(168,85,247,0.1) 100%)', border: '1px solid rgba(14,165,233,0.2)' }}
+            >
+              <img
+                src="/images/logos/logo-teckblaze.png"
+                alt="TeckBlaze - SEO Audit"
+                width={80}
+                height={80}
+                className="rounded-xl shrink-0"
+              />
+              <div className="flex-1 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-400">Partenaire</span>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+                  Audit SEO & GEO (IA) de votre site pour le prix d&apos;un café
+                </h3>
+                <p className="text-slate-400 text-sm mb-3">
+                  75+ vérifications en un scan : SEO technique, Core Web Vitals, accessibilité, optimisation pour ChatGPT et Google. Score global, recommandations et export PDF.
+                </p>
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                  <span className="text-xs px-2 py-1 rounded bg-white/5 text-slate-300">🔍 SEO technique</span>
+                  <span className="text-xs px-2 py-1 rounded bg-white/5 text-slate-300">🤖 GEO pour IA</span>
+                  <span className="text-xs px-2 py-1 rounded bg-white/5 text-slate-300">⚡ Core Web Vitals</span>
+                  <span className="text-xs px-2 py-1 rounded bg-white/5 text-slate-300">♿ Accessibilité</span>
+                </div>
+              </div>
+              <div className="shrink-0 text-center">
+                <span className="block text-3xl font-extrabold text-white">1,99$</span>
+                <span className="block text-xs text-slate-400 mb-3">par scan · sans abonnement</span>
+                <span className="inline-block px-6 py-2.5 bg-sky-500 hover:bg-sky-400 text-white font-semibold rounded-lg transition-colors text-sm">
+                  Scanner mon site →
+                </span>
+              </div>
+            </a>
+          </div>
+        </section>
+
         <CategoriesSection categories={CATEGORIES} />
 
         {/* Ad - after categories */}
