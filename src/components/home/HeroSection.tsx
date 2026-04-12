@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 
 interface HeroSectionProps {
@@ -14,7 +15,9 @@ const quickSearches = [
 ]
 
 export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
+  const [showVideo, setShowVideo] = useState(false)
   return (
+    <>
     <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-slate-950">
       {/* Video background — desktop only: play full then loop last 3s */}
       <video
@@ -124,6 +127,15 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
             </svg>
             Ajouter mon entreprise
           </Link>
+          <button
+            onClick={() => setShowVideo(true)}
+            className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-5 py-2.5 rounded-md hover:-translate-y-0.5 transition-all duration-200 mb-6 border border-white/20 ml-3"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            Voir comment ça marche
+          </button>
           <p className="text-slate-400 text-xs leading-relaxed">
             Vous voyez une entreprise qui vous appartient et qui n&apos;a pas été réclamée ? Rendez-vous sur sa fiche et faites une demande pour en prendre possession. Pour toute question, écrivez-nous à{' '}
             <a href="mailto:info@h1site.com" className="text-sky-400 hover:text-sky-300 underline">info@h1site.com</a>
@@ -155,5 +167,34 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
         </div>
       </div>
     </section>
+
+    {/* Video Popup */}
+    {showVideo && (
+      <div
+        className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4"
+        onClick={() => setShowVideo(false)}
+      >
+        <div
+          className="relative w-full max-w-3xl rounded-2xl overflow-hidden bg-black"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            onClick={() => setShowVideo(false)}
+            className="absolute top-3 right-3 z-10 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+          >
+            ✕
+          </button>
+          <video
+            autoPlay
+            controls
+            playsInline
+            className="w-full"
+          >
+            <source src="/video/registreduquebec-fr.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    )}
+    </>
   )
 }
