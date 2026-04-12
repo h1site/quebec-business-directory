@@ -129,6 +129,27 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
             Vous voyez une entreprise qui vous appartient et qui n&apos;a pas été réclamée ? Rendez-vous sur sa fiche et faites une demande pour en prendre possession. Pour toute question, écrivez-nous à{' '}
             <a href="mailto:info@h1site.com" className="text-sky-400 hover:text-sky-300 underline">info@h1site.com</a>
           </p>
+
+          {/* TeckBlaze Banner */}
+          <a
+            href="https://teckblaze.com?utm_source=registreduquebec&utm_medium=banner&utm_campaign=hero"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-xl p-4 mt-6 no-underline transition-all hover:scale-[1.01]"
+            style={{ background: 'linear-gradient(135deg, rgba(14,165,233,0.08) 0%, rgba(168,85,247,0.08) 100%)', border: '1px solid rgba(14,165,233,0.15)' }}
+          >
+            <div className="flex items-center gap-4">
+              <img src="/images/logos/logo-teckblaze.png" alt="TeckBlaze" width={48} height={48} className="rounded-lg shrink-0" />
+              <div className="flex-1 min-w-0">
+                <span className="text-xs font-medium px-1.5 py-0.5 rounded-full bg-sky-500/20 text-sky-400">Partenaire</span>
+                <p className="text-white font-semibold text-sm mt-1">Audit SEO &amp; GEO (IA) — 1,99$/scan</p>
+                <p className="text-slate-400 text-xs">75+ vérifications, Core Web Vitals, optimisation IA</p>
+              </div>
+              <span className="shrink-0 hidden sm:inline-block px-4 py-2 bg-sky-500 text-white text-xs font-semibold rounded-lg">
+                Scanner →
+              </span>
+            </div>
+          </a>
         </div>
       </div>
     </section>
