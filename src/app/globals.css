@@ -232,13 +232,16 @@ ins.adsbygoogle[data-anchor-status="displayed"] {
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-/* Override browser autofill */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+/* Override browser autofill — dark bg inputs get white text */
+.dark input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--background-secondary) inset !important;
   -webkit-text-fill-color: #f8fafc !important;
-  background-color: transparent !important;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+/* White bg inputs get black text on autofill */
+input.bg-white:-webkit-autofill,
+input[style*="color: rgb(17"]:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #111827 !important;
 }
