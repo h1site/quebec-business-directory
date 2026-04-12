@@ -24,7 +24,7 @@ const bebasNeue = Bebas_Neue({
 export const metadata: Metadata = {
   metadataBase: new URL('https://registreduquebec.com'),
   title: {
-    default: 'Registre des entreprises du Québec - Annuaire de plus de 7 000 entreprises vérifiées',
+    default: 'Registre du Québec — Annuaire d\'entreprises',
     template: '%s | Registre du Québec',
   },
   icons: {
@@ -35,11 +35,12 @@ export const metadata: Metadata = {
     apple: '/images/logos/logo-favicon.png',
   },
   description:
-    'Trouvez facilement parmi plus de 7 000 entreprises québécoises vérifiées. Annuaire complet avec coordonnées, avis Google et informations détaillées pour Montréal, Québec, Laval et toutes les régions du Québec.',
+    'Trouvez parmi 7 000+ entreprises québécoises vérifiées. Coordonnées, avis Google et informations pour toutes les régions du Québec.',
   authors: [{ name: 'Registre du Québec' }],
   creator: 'Registre du Québec',
   publisher: 'Registre du Québec',
   alternates: {
+    canonical: 'https://registreduquebec.com',
     languages: {
       'x-default': 'https://registreduquebec.com',
       'fr-CA': 'https://registreduquebec.com',
@@ -51,8 +52,8 @@ export const metadata: Metadata = {
     locale: 'fr_CA',
     alternateLocale: 'en_CA',
     siteName: 'Registre du Québec',
-    title: 'Registre des entreprises du Québec - Plus de 7 000 entreprises vérifiées',
-    description: 'L\'annuaire le plus complet des entreprises québécoises. Trouvez coordonnées, avis et informations pour toutes les régions.',
+    title: 'Registre du Québec — Annuaire d\'entreprises',
+    description: 'Trouvez parmi 7 000+ entreprises québécoises vérifiées.',
     // Image OG générée dynamiquement via opengraph-image.tsx (format PNG)
   },
   twitter: {
