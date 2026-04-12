@@ -6,32 +6,42 @@ export default function Footer() {
 
   return (
     <footer className="bg-slate-950">
-      {/* Facebook Community Banner */}
-      <div className="bg-white border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-sky-50 rounded-2xl flex items-center justify-center text-3xl">
-                👥
-              </div>
-              <div className="text-center md:text-left">
-                <strong className="block text-lg text-gray-900">Rejoignez notre communauté!</strong>
-                <span className="text-gray-600 text-sm">
-                  Partagez et découvrez les meilleures entreprises du Québec
-                </span>
-              </div>
+      {/* Community Banner */}
+      <div className="relative overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1600&q=80)' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 to-slate-900/80" />
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="text-center md:text-left max-w-lg">
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                Faites partie de la communauté
+              </h3>
+              <p className="text-slate-300 leading-relaxed">
+                Rejoignez des milliers d&apos;entrepreneurs québécois. Partagez vos expériences, découvrez de nouvelles entreprises et développez votre réseau.
+              </p>
             </div>
-            <a
-              href="https://www.facebook.com/groups/registreduquebec"
-              target="_blank"
-              rel="nofollow noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-white text-slate-900 px-6 py-3 rounded-xl font-bold hover:bg-slate-100 transition-all hover:-translate-y-0.5 shadow-lg"
-            >
-              <span className="w-6 h-6 bg-[#1877f2] text-white rounded-full flex items-center justify-center text-sm font-bold">
-                f
-              </span>
-              Rejoindre le groupe
-            </a>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href="https://www.facebook.com/groups/registreduquebec"
+                target="_blank"
+                rel="nofollow noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 bg-[#1877f2] text-white px-6 py-3.5 rounded-xl font-bold hover:bg-[#1565d8] transition-all hover:-translate-y-0.5 shadow-lg no-underline"
+              >
+                <span className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-sm font-bold">f</span>
+                Rejoindre le groupe
+              </a>
+              <a
+                href="https://www.facebook.com/registreduquebec/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur text-white px-6 py-3.5 rounded-xl font-bold hover:bg-white/20 transition-all hover:-translate-y-0.5 border border-white/20 no-underline"
+              >
+                Suivre la page
+              </a>
+            </div>
           </div>
         </div>
       </div>
