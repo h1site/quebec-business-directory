@@ -109,7 +109,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="/test-indexation.html" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
+                <a href="/immatriculer-entreprise-quebec.html" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Guide immatriculation
                 </a>
               </li>

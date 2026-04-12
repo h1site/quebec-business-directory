@@ -129,7 +129,7 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
             <a href="mailto:info@h1site.com" className="text-sky-400 hover:text-sky-300 underline">info@h1site.com</a>
           </p>
           <p className="text-slate-500 text-xs mt-3">
-            📖 <a href="/test-indexation.html" className="text-sky-400 hover:text-sky-300 underline">Guide : Immatriculer une entreprise au Québec en 2026</a>
+            📖 <a href="/immatriculer-entreprise-quebec.html" className="text-sky-400 hover:text-sky-300 underline">Guide : Immatriculer une entreprise au Québec en 2026</a>
           </p>
 
           {/* TeckBlaze Banner */}

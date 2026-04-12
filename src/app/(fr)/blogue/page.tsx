@@ -93,7 +93,7 @@ export default async function BlogPage() {
               <span className="inline-block mt-3 text-sky-400 text-sm font-medium">Lire l&apos;article →</span>
             </Link>
             <a
-              href="/test-indexation.html"
+              href="/immatriculer-entreprise-quebec.html"
               className="block rounded-xl p-6 hover:scale-[1.01] transition-transform no-underline mb-6"
               style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}
             >
