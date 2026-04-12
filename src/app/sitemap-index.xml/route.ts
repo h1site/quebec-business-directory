@@ -18,7 +18,7 @@ export async function GET() {
       .from('businesses')
       .select('id', { count: 'exact', head: true })
       .not('slug', 'is', null)
-      .eq('verification_confidence', 'high')
+      .or('verification_confidence.eq.high,is_claimed.eq.true')
 
     if (count) {
       totalPages = Math.ceil(count / PAGE_SIZE)
