@@ -349,17 +349,20 @@ export default function AddBusinessPage() {
     setMounted(true)
   }, [])
 
-  // Check auth
+  // Check auth — redirect if not logged in
   useEffect(() => {
     if (!mounted) return
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         setIsAuthenticated(true)
         setUserId(session.user.id)
+      } else {
+        router.push('/connexion?redirect=/entreprise/nouvelle')
+        return
       }
       setCheckingAuth(false)
     })
-  }, [mounted, supabase])
+  }, [mounted, supabase, router])
 
   // Fetch categories via API
   useEffect(() => {

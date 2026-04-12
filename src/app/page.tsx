@@ -5,9 +5,6 @@ import AdSense from '@/components/AdSense'
 import {
   HeroSection,
   CategoriesSection,
-  CitiesSection,
-  StatsSection,
-  AboutSection,
 } from '@/components/home'
 import { createServiceClient } from '@/lib/supabase/server'
 
@@ -81,22 +78,9 @@ export default async function HomePage() {
         <HeroSection totalBusinesses={TOTAL_BUSINESSES} />
         <CategoriesSection categories={CATEGORIES} />
 
-        {/* Ad - after categories */}
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="8544579045" format="auto" responsive={true} />
-        </div>
-
-        <CitiesSection />
-        <StatsSection />
-
-        {/* Ad - after stats */}
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="8544579045" format="auto" responsive={true} />
-        </div>
-
         {/* Featured Businesses - critical for Google crawling internal links */}
         {featuredBusinesses.length > 0 && (
-          <section className="py-12" style={{ background: 'var(--background-secondary)' }}>
+          <section className="py-[100px]" style={{ background: 'var(--background-secondary)' }}>
             <div className="max-w-6xl mx-auto px-4">
               <h2 className="text-2xl font-bold text-white mb-2 text-center">Entreprises populaires au Québec</h2>
               <p className="text-slate-400 text-center mb-8">Découvrez les entreprises les mieux notées par leurs clients</p>
@@ -123,12 +107,6 @@ export default async function HomePage() {
           </section>
         )}
 
-        {/* Ad - before about */}
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="8544579045" format="auto" responsive={true} />
-        </div>
-
-        <AboutSection />
       </main>
 
       <Footer />

@@ -7,16 +7,16 @@ export default function Footer() {
   return (
     <footer className="bg-slate-950">
       {/* Facebook Community Banner */}
-      <div className="bg-gradient-to-r from-sky-900/50 to-blue-900/50 border-t border-sky-500/20">
+      <div className="bg-white border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center text-3xl">
+              <div className="w-14 h-14 bg-sky-50 rounded-2xl flex items-center justify-center text-3xl">
                 👥
               </div>
               <div className="text-center md:text-left">
-                <strong className="block text-lg text-white">Rejoignez notre communauté!</strong>
-                <span className="text-slate-300 text-sm">
+                <strong className="block text-lg text-gray-900">Rejoignez notre communauté!</strong>
+                <span className="text-gray-600 text-sm">
                   Partagez et découvrez les meilleures entreprises du Québec
                 </span>
               </div>
