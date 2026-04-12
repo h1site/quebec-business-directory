@@ -91,17 +91,7 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
           </div>
         </form>
 
-        <div className="flex flex-wrap justify-center gap-3 animate-slide-up animation-delay-300">
-          {quickSearches.map((item) => (
-            <Link
-              key={item.query}
-              href={`/recherche?q=${encodeURIComponent(item.query)}`}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full border border-white/15 bg-white/5 text-white font-medium text-sm hover:bg-white/10 hover:border-sky-500/50 hover:-translate-y-0.5 transition-all duration-200"
-            >
-              <span>{item.icon}</span>
-              {item.label}
-            </Link>
-          ))}
+        <div className="animate-slide-up animation-delay-300">
         </div>
 
         <div className="mt-12 glass rounded-2xl p-8 max-w-2xl mx-auto animate-slide-up animation-delay-400">
