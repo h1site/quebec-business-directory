@@ -15,13 +15,29 @@ const quickSearches = [
 
 export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
   return (
-    <section
-      className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-slate-950 bg-cover bg-center"
-      style={{
-        backgroundImage: 'url(https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80)',
-      }}
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-sky-900/80" />
+    <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-slate-950">
+      {/* Video background — desktop only: play full then loop last 3s */}
+      <video
+        autoPlay
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover hidden md:block"
+        ref={(el) => {
+          if (!el) return
+          el.onended = () => {
+            el.currentTime = 11
+            el.play()
+          }
+        }}
+      >
+        <source src="/video/business.mp4" type="video/mp4" />
+      </video>
+      {/* Fallback image — mobile */}
+      <div
+        className="absolute inset-0 bg-cover bg-center md:hidden"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80)' }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950/90 via-slate-900/85 to-sky-900/75" />
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
