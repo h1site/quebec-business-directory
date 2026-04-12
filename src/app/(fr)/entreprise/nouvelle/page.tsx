@@ -965,7 +965,7 @@ export default function AddBusinessPage() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.name ? 'border-red-400' : 'border-gray-300'}`}
+                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.name ? 'border-red-400' : 'border-gray-300'}`} style={{ color: "#111827" }}
                     placeholder="Ex: Restaurant Le Gourmet"
                   />
                   {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
@@ -981,7 +981,7 @@ export default function AddBusinessPage() {
                     value={formData.description}
                     onChange={handleChange}
                     maxLength={50}
-                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.description ? 'border-red-400' : 'border-gray-300'}`}
+                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.description ? 'border-red-400' : 'border-gray-300'}`} style={{ color: "#111827" }}
                     placeholder="Ex: Plombier résidentiel et commercial"
                   />
                   <div className="flex justify-end mt-1">
@@ -999,7 +999,7 @@ export default function AddBusinessPage() {
                       name="company_size"
                       value={formData.company_size}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500" style={{ color: "#111827" }}
                     >
                       <option value="">Sélectionnez...</option>
                       {COMPANY_SIZES.map(size => (
@@ -1016,7 +1016,7 @@ export default function AddBusinessPage() {
                       onChange={handleChange}
                       min="1800"
                       max={new Date().getFullYear()}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500" style={{ color: "#111827" }}
                       placeholder="Ex: 2015"
                     />
                   </div>
@@ -1115,7 +1115,7 @@ export default function AddBusinessPage() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.phone ? 'border-red-400' : 'border-gray-300'}`}
+                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.phone ? 'border-red-400' : 'border-gray-300'}`} style={{ color: "#111827" }}
                     placeholder="(514) 555-1234"
                   />
                   {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
@@ -1140,7 +1140,7 @@ export default function AddBusinessPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.email ? 'border-red-400' : 'border-gray-300'}`}
+                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.email ? 'border-red-400' : 'border-gray-300'}`} style={{ color: "#111827" }}
                     placeholder="contact@entreprise.com"
                   />
                   {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
@@ -1163,7 +1163,7 @@ export default function AddBusinessPage() {
                     name="website"
                     value={formData.website}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500" style={{ color: "#111827" }}
                     placeholder="https://www.votresite.com"
                   />
                   {formData.website && (
@@ -1205,7 +1205,7 @@ export default function AddBusinessPage() {
                       <select
                         value={formData.region_slug}
                         onChange={handleRegionChange}
-                        className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.region ? 'border-red-400' : 'border-gray-300'}`}
+                        className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.region ? 'border-red-400' : 'border-gray-300'}`} style={{ color: "#111827" }}
                       >
                         <option value="">Sélectionnez une région</option>
                         {getAllRegions().map(region => (
@@ -1224,7 +1224,7 @@ export default function AddBusinessPage() {
                         <select
                           value={formData.mrc_slug}
                           onChange={handleMRCChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500" style={{ color: "#111827" }}
                         >
                           <option value="">Sélectionnez une MRC</option>
                           {availableMRCs.map(mrc => (
@@ -1243,7 +1243,7 @@ export default function AddBusinessPage() {
                         <select
                           value={formData.city}
                           onChange={handleCityChange}
-                          className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.city ? 'border-red-400' : 'border-gray-300'}`}
+                          className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.city ? 'border-red-400' : 'border-gray-300'}`} style={{ color: "#111827" }}
                         >
                           <option value="">Sélectionnez une ville</option>
                           {availableCities.map(city => (
@@ -1266,7 +1266,7 @@ export default function AddBusinessPage() {
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.address ? 'border-red-400' : 'border-gray-300'}`}
+                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.address ? 'border-red-400' : 'border-gray-300'}`} style={{ color: "#111827" }}
                     placeholder="123 Rue Principale"
                   />
                   {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
@@ -1282,7 +1282,7 @@ export default function AddBusinessPage() {
                     name="postal_code"
                     value={formData.postal_code}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.postal_code ? 'border-red-400' : 'border-gray-300'}`}
+                    className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.postal_code ? 'border-red-400' : 'border-gray-300'}`} style={{ color: "#111827" }}
                     placeholder="H2X 1Y7"
                     maxLength={7}
                   />
@@ -1350,14 +1350,14 @@ export default function AddBusinessPage() {
                               type="time"
                               value={hours.open}
                               onChange={(e) => handleHoursChange(day, 'open', e.target.value)}
-                              className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm"
+                              className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm" style={{ color: "#111827" }}
                             />
                             <span className="text-gray-500">à</span>
                             <input
                               type="time"
                               value={hours.close}
                               onChange={(e) => handleHoursChange(day, 'close', e.target.value)}
-                              className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm"
+                              className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm" style={{ color: "#111827" }}
                             />
                           </>
                         )}
@@ -1390,7 +1390,7 @@ export default function AddBusinessPage() {
                       <select
                         value={formData.main_category_id || ''}
                         onChange={handleCategoryChange}
-                        className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.category ? 'border-red-400' : 'border-gray-300'}`}
+                        className={`w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 ${errors.category ? 'border-red-400' : 'border-gray-300'}`} style={{ color: "#111827" }}
                       >
                         <option value="">Sélectionnez une catégorie</option>
                         {categories.map(cat => (
@@ -1438,7 +1438,7 @@ export default function AddBusinessPage() {
                         value={formData.services_input}
                         onChange={handleChange}
                         onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addService())}
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500"
+                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500" style={{ color: "#111827" }}
                         placeholder="Ex: Réparation de voiture"
                       />
                       <button
