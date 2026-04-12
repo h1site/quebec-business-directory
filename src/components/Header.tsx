@@ -352,7 +352,7 @@ export default function Header() {
             className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 px-3 rounded-md transition-colors no-underline text-sm"
           >
             <LoginIcon />
-            Connexion avec Google
+            Connexion
           </Link>
         )}
 
