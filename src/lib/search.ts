@@ -57,7 +57,7 @@ export async function searchBusinesses(
   const offset = (page - 1) * limit
   const cleanQuery = query?.trim() || ''
 
-  // Query only valid businesses: claimed OR (enriched AND has website)
+  // Query only valid businesses
   let queryBuilder = supabase
     .from('businesses')
     .select(
@@ -65,7 +65,7 @@ export async function searchBusinesses(
       { count: 'exact' }
     )
     .not('slug', 'is', null)
-    .or('verification_confidence.eq.high,is_claimed.eq.true,owner_id.not.is.null')
+    .not('ai_description', 'is', null)
 
   // Apply filters
   if (category) {
@@ -76,11 +76,11 @@ export async function searchBusinesses(
     queryBuilder = queryBuilder.ilike('city', `%${normalizeText(city)}%`)
   }
 
-  // Text search across name, description, ai_description, and category
+  // Text search
   if (cleanQuery) {
     const q = normalizeText(cleanQuery)
     queryBuilder = queryBuilder.or(
-      `name.ilike.%${q}%,description.ilike.%${q}%,ai_description.ilike.%${q}%,main_category_slug.ilike.%${q}%`
+      `name.ilike.%${q}%,description.ilike.%${q}%,ai_description.ilike.%${q}%,main_category_slug.ilike.%${q}%,city.ilike.%${q}%`
     )
   }
 
