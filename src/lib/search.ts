@@ -65,7 +65,7 @@ export async function searchBusinesses(
       { count: 'exact' }
     )
     .not('slug', 'is', null)
-    .not('ai_description', 'is', null)
+    .or('ai_description.not.is.null,is_claimed.eq.true')
 
   // Apply filters
   if (category) {
