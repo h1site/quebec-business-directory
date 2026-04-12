@@ -96,7 +96,8 @@ export default function SignupPage() {
     <>
       <Header />
 
-      <main className="min-h-screen bg-gray-50 pt-16 flex items-center justify-center py-12">
+      <div className="h-16 bg-[#0f172a]" />
+      <main className="min-h-screen bg-gray-50 pt-8 flex items-center justify-center py-12">
         <div className="max-w-md w-full mx-4">
           {/* Logo */}
           <div className="text-center mb-8">
