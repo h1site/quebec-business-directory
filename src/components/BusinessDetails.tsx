@@ -101,14 +101,14 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
           </div>
           <div className="relative z-10 max-w-6xl mx-auto px-4">
             {/* Breadcrumb */}
-            <nav className="text-sm mb-3 flex items-center gap-1 flex-wrap" style={{ color: 'var(--foreground-muted)' }}>
+            <nav className="text-sm mb-3 flex items-center gap-1 flex-wrap text-slate-400">
               <Link href="/" className="hover:text-sky-400 transition-colors" style={{ color: 'inherit' }}>Accueil</Link>
               <span>&rsaquo;</span>
               <Link href="/recherche" className="hover:text-sky-400 transition-colors" style={{ color: 'inherit' }}>Entreprises</Link>
               <span>&rsaquo;</span>
               <Link href={`/ville/${citySlug}`} className="hover:text-sky-400 transition-colors" style={{ color: 'inherit' }}>{business.city}</Link>
               <span>&rsaquo;</span>
-              <span style={{ color: 'var(--foreground)' }}>{business.name}</span>
+              <span className="text-white">{business.name}</span>
             </nav>
 
             <div className="flex flex-col md:flex-row gap-6 items-start">
@@ -126,27 +126,27 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
               </div>
 
               <div className="flex-1">
-                <h1 className="text-3xl md:text-4xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>
+                <h1 className="text-3xl md:text-4xl font-bold mb-1 text-white">
                   {business.name}
                   {business.main_category_slug && business.city && (
-                    <span className="block text-lg md:text-xl font-medium mt-1" style={{ color: 'var(--foreground-muted)' }}>
+                    <span className="block text-lg md:text-xl font-medium mt-1 text-slate-400">
                       {categoryLabels[business.main_category_slug] || business.main_category_slug} à {business.city}
                     </span>
                   )}
                   {business.main_category_slug && !business.city && (
-                    <span className="block text-lg md:text-xl font-medium mt-1" style={{ color: 'var(--foreground-muted)' }}>
+                    <span className="block text-lg md:text-xl font-medium mt-1 text-slate-400">
                       {categoryLabels[business.main_category_slug] || business.main_category_slug} au Québec
                     </span>
                   )}
                   {!business.main_category_slug && business.city && (
-                    <span className="block text-lg md:text-xl font-medium mt-1" style={{ color: 'var(--foreground-muted)' }}>
+                    <span className="block text-lg md:text-xl font-medium mt-1 text-slate-400">
                       Entreprise à {business.city}
                     </span>
                   )}
                 </h1>
 
                 <div className="flex flex-wrap items-center gap-3">
-                  <span className="inline-flex items-center gap-1.5 text-sm px-3 py-1 rounded-full border border-white/10" style={{ color: 'var(--foreground-muted)' }}>
+                  <span className="inline-flex items-center gap-1.5 text-sm px-3 py-1 rounded-full border border-white/10 text-slate-300">
                     📍
                     {business.city}, {business.region || 'Québec'}
                   </span>
@@ -154,9 +154,9 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                   {business.google_rating && (
                     <span className="inline-flex items-center gap-1.5 text-sm px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10">
                       <span className="text-amber-400">★</span>
-                      <span className="font-bold" style={{ color: 'var(--foreground)' }}>{business.google_rating}</span>
+                      <span className="font-bold text-white">{business.google_rating}</span>
                       {business.google_reviews_count > 0 && (
-                        <span className="text-xs" style={{ color: 'var(--foreground-muted)' }}>({business.google_reviews_count} avis)</span>
+                        <span className="text-xs text-slate-400">({business.google_reviews_count} avis)</span>
                       )}
                     </span>
                   )}
@@ -246,26 +246,26 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
               <div className="lg:col-span-2 space-y-6">
                 {/* Intro unique (SEO) */}
                 {seo?.intro && (
-                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                    <p className="leading-relaxed text-[15px]" style={{ color: 'var(--foreground-muted)' }}>
+                  <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                    <p className="leading-relaxed text-[15px]" style={{ color: '#4b5563' }}>
                       {seo.intro}
                     </p>
                   </div>
                 )}
 
                 {/* About */}
-                <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                  <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>À propos</h2>
+                <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                  <h2 className="text-xl font-bold mb-2" style={{ color: '#111827' }}>À propos</h2>
                   {business.ai_description ? (
-                    <p className="whitespace-pre-line leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                    <p className="whitespace-pre-line leading-relaxed" style={{ color: '#4b5563' }}>
                       {business.ai_description}
                     </p>
                   ) : business.description ? (
-                    <p className="whitespace-pre-line leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                    <p className="whitespace-pre-line leading-relaxed" style={{ color: '#4b5563' }}>
                       {business.description}
                     </p>
                   ) : (
-                    <p className="italic" style={{ color: 'var(--foreground-muted)' }}>
+                    <p className="italic" style={{ color: '#4b5563' }}>
                       Aucune description disponible pour cette entreprise.
                     </p>
                   )}
@@ -273,12 +273,12 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                   {business.ai_services && business.ai_services.length > 0 && (
                     <>
                       <hr className="my-6 border-white/10" />
-                      <h3 className="font-semibold mb-2" style={{ color: 'var(--foreground)' }}>Services</h3>
+                      <h3 className="font-semibold mb-2" style={{ color: '#111827' }}>Services</h3>
                       <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {business.ai_services.map((service, i) => (
                           <li key={i} className="flex items-center gap-2">
                             ✅
-                            <span style={{ color: 'var(--foreground-muted)' }}>{service}</span>
+                            <span style={{ color: '#4b5563' }}>{service}</span>
                           </li>
                         ))}
                       </ul>
@@ -288,10 +288,10 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                   {!business.ai_services && business.products_services && (
                     <>
                       <hr className="my-6 border-white/10" />
-                      <h3 className="font-semibold mb-2" style={{ color: 'var(--foreground)' }}>Produits et services</h3>
+                      <h3 className="font-semibold mb-2" style={{ color: '#111827' }}>Produits et services</h3>
                       <ul className="list-disc list-inside space-y-1">
                         {business.products_services.split('\n').filter(Boolean).map((service, i) => (
-                          <li key={i} style={{ color: 'var(--foreground-muted)' }}>{service.trim()}</li>
+                          <li key={i} style={{ color: '#4b5563' }}>{service.trim()}</li>
                         ))}
                       </ul>
                     </>
@@ -305,8 +305,8 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Gallery */}
                 {business.gallery_images && business.gallery_images.length > 0 && (
-                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                    <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>Photos</h2>
+                  <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                    <h2 className="text-xl font-bold mb-2" style={{ color: '#111827' }}>Photos</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       {business.gallery_images.map((img, i) => (
                         <div key={i} className="aspect-square rounded-lg overflow-hidden">
@@ -319,30 +319,30 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Google Reviews */}
                 {business.google_reviews && Array.isArray(business.google_reviews) && business.google_reviews.length > 0 && (
-                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
+                  <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
                     <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-xl font-bold" style={{ color: 'var(--foreground)' }}>Avis Google</h2>
+                      <h2 className="text-xl font-bold" style={{ color: '#111827' }}>Avis Google</h2>
                       {business.google_rating && (
                         <div className="flex items-center gap-2">
                           <StarRating value={business.google_rating} />
-                          <span className="font-bold" style={{ color: 'var(--foreground)' }}>{business.google_rating}</span>
-                          <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>({business.google_reviews_count} avis)</span>
+                          <span className="font-bold" style={{ color: '#111827' }}>{business.google_rating}</span>
+                          <span className="text-sm" style={{ color: '#4b5563' }}>({business.google_reviews_count} avis)</span>
                         </div>
                       )}
                     </div>
                     <div className="space-y-4">
                       {(business.google_reviews as Array<{text?: string; rating?: number; author_name?: string; relative_time_description?: string}>).filter(r => r.text).map((review, i) => (
-                        <div key={i} className="rounded-lg p-3" style={{ background: 'var(--background-secondary)' }}>
+                        <div key={i} className="rounded-lg p-3" style={{ background: '#f3f4f6' }}>
                           <div className="flex items-center justify-between mb-2">
-                            <span className="font-medium" style={{ color: 'var(--foreground)' }}>{review.author_name || 'Anonyme'}</span>
+                            <span className="font-medium" style={{ color: '#111827' }}>{review.author_name || 'Anonyme'}</span>
                             <div className="flex items-center gap-2">
                               <StarRating value={review.rating || 0} />
                               {review.relative_time_description && (
-                                <span className="text-xs" style={{ color: 'var(--foreground-muted)' }}>{review.relative_time_description}</span>
+                                <span className="text-xs" style={{ color: '#4b5563' }}>{review.relative_time_description}</span>
                               )}
                             </div>
                           </div>
-                          <p className="text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>{review.text}</p>
+                          <p className="text-sm leading-relaxed" style={{ color: '#4b5563' }}>{review.text}</p>
                         </div>
                       ))}
                     </div>
@@ -350,16 +350,16 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                 )}
 
                 {/* FAQ Section */}
-                <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                  <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>Questions fr&eacute;quentes</h2>
+                <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                  <h2 className="text-xl font-bold mb-2" style={{ color: '#111827' }}>Questions fr&eacute;quentes</h2>
                   <div className="space-y-2">
                     {/* FAQ 1 - default open */}
-                    <details className="group rounded-xl" style={{ background: 'var(--background-secondary)' }} open>
-                      <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: 'var(--foreground)' }}>
+                    <details className="group rounded-xl" style={{ background: '#f3f4f6' }} open>
+                      <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: '#111827' }}>
                         <span>Comment contacter {business.name} ?</span>
                         <span className="transition-transform group-open:rotate-180 inline-block">▼</span>
                       </summary>
-                      <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                      <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: '#4b5563' }}>
                         <p>
                           {business.name} est une entreprise{business.main_category_slug ? ` du secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : ''} situ&eacute;e &agrave; {displayAddress || business.city || 'Québec'}
                           {displayCity && displayAddress ? `, ${displayCity}` : ''}
@@ -376,12 +376,12 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     </details>
 
                     {business.main_category_slug && (
-                      <details className="group rounded-xl" style={{ background: 'var(--background-secondary)' }}>
-                        <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: 'var(--foreground)' }}>
+                      <details className="group rounded-xl" style={{ background: '#f3f4f6' }}>
+                        <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: '#111827' }}>
                           <span>Dans quel domaine {business.name} se sp&eacute;cialise ?</span>
                           <span className="transition-transform group-open:rotate-180 inline-block">▼</span>
                         </summary>
-                        <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                        <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: '#4b5563' }}>
                           <p>
                             {business.name} est une entreprise sp&eacute;cialis&eacute;e dans le domaine &laquo;{' '}
                             {categoryLabels[business.main_category_slug] || business.main_category_slug} &raquo;, offrant ses services
@@ -405,12 +405,12 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     )}
 
                     {business.google_rating && (
-                      <details className="group rounded-xl" style={{ background: 'var(--background-secondary)' }}>
-                        <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: 'var(--foreground)' }}>
+                      <details className="group rounded-xl" style={{ background: '#f3f4f6' }}>
+                        <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: '#111827' }}>
                           <span>Quelle est la r&eacute;putation de {business.name} ?</span>
                           <span className="transition-transform group-open:rotate-180 inline-block">▼</span>
                         </summary>
-                        <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                        <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: '#4b5563' }}>
                           <p>
                             {business.name} a obtenu une note de {business.google_rating} sur 5 sur Google
                             {business.google_reviews_count > 0 && `, basée sur ${business.google_reviews_count} avis vérifiés de clients`}.
@@ -426,12 +426,12 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     )}
 
                     {hasOpeningHours && (
-                      <details className="group rounded-xl" style={{ background: 'var(--background-secondary)' }}>
-                        <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: 'var(--foreground)' }}>
+                      <details className="group rounded-xl" style={{ background: '#f3f4f6' }}>
+                        <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: '#111827' }}>
                           <span>Quelles sont les heures d&apos;ouverture de {business.name} ?</span>
                           <span className="transition-transform group-open:rotate-180 inline-block">▼</span>
                         </summary>
-                        <div className="px-4 pb-4" style={{ color: 'var(--foreground-muted)' }}>
+                        <div className="px-4 pb-4" style={{ color: '#4b5563' }}>
                           Consultez les heures d&apos;ouverture dans la section &quot;Heures d&apos;ouverture&quot; sur cette page.
                         </div>
                       </details>
@@ -441,41 +441,41 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Analyse de l'entreprise */}
                 {business.main_category_slug && (
-                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                    <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Analyse de l&apos;entreprise</h2>
+                  <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                    <h2 className="text-xl font-bold mb-4" style={{ color: '#111827' }}>Analyse de l&apos;entreprise</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-                      <div className="rounded-lg p-4 text-center" style={{ background: 'var(--background-secondary)' }}>
+                      <div className="rounded-lg p-4 text-center" style={{ background: '#f3f4f6' }}>
                         <span className="text-2xl block mb-1">🏢</span>
-                        <span className="text-xs font-medium block" style={{ color: 'var(--foreground-muted)' }}>Type</span>
-                        <span className="text-sm font-semibold" style={{ color: 'var(--foreground)' }}>
+                        <span className="text-xs font-medium block" style={{ color: '#4b5563' }}>Type</span>
+                        <span className="text-sm font-semibold" style={{ color: '#111827' }}>
                           {categoryLabels[business.main_category_slug] || business.main_category_slug}
                         </span>
                       </div>
-                      <div className="rounded-lg p-4 text-center" style={{ background: 'var(--background-secondary)' }}>
+                      <div className="rounded-lg p-4 text-center" style={{ background: '#f3f4f6' }}>
                         <span className="text-2xl block mb-1">📍</span>
-                        <span className="text-xs font-medium block" style={{ color: 'var(--foreground-muted)' }}>Zone desservie</span>
-                        <span className="text-sm font-semibold" style={{ color: 'var(--foreground)' }}>
+                        <span className="text-xs font-medium block" style={{ color: '#4b5563' }}>Zone desservie</span>
+                        <span className="text-sm font-semibold" style={{ color: '#111827' }}>
                           {business.city}{business.region ? ` et ${business.region}` : ''}
                         </span>
                       </div>
-                      <div className="rounded-lg p-4 text-center" style={{ background: 'var(--background-secondary)' }}>
+                      <div className="rounded-lg p-4 text-center" style={{ background: '#f3f4f6' }}>
                         <span className="text-2xl block mb-1">{business.google_rating && business.google_rating >= 4 ? '⭐' : '🎯'}</span>
-                        <span className="text-xs font-medium block" style={{ color: 'var(--foreground-muted)' }}>
+                        <span className="text-xs font-medium block" style={{ color: '#4b5563' }}>
                           {business.google_rating ? 'Note Google' : 'Statut'}
                         </span>
-                        <span className="text-sm font-semibold" style={{ color: 'var(--foreground)' }}>
+                        <span className="text-sm font-semibold" style={{ color: '#111827' }}>
                           {business.google_rating ? `${business.google_rating}/5` : 'Entreprise vérifiée'}
                           {business.google_reviews_count > 0 ? ` (${business.google_reviews_count} avis)` : ''}
                         </span>
                       </div>
                     </div>
-                    <div className="text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                    <div className="text-sm leading-relaxed" style={{ color: '#4b5563' }}>
                       {seo?.analysis ? (
                         <p>{seo.analysis}</p>
                       ) : business.ai_services && business.ai_services.length > 0 ? (
                         <p>
                           {business.name} se positionne dans le secteur{' '}
-                          <strong style={{ color: 'var(--foreground)' }}>{categoryLabels[business.main_category_slug] || business.main_category_slug}</strong>
+                          <strong style={{ color: '#111827' }}>{categoryLabels[business.main_category_slug] || business.main_category_slug}</strong>
                           {business.city ? ` à ${business.city}` : ''}.
                           {business.google_rating && business.google_rating >= 4
                             ? ` Avec une note de ${business.google_rating}/5, cette entreprise figure parmi les mieux évaluées de sa catégorie dans la région.`
@@ -489,9 +489,9 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Pertinence locale */}
                 {business.city && (
-                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                    <h2 className="text-xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>Présence locale</h2>
-                    <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                  <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                    <h2 className="text-xl font-bold mb-3" style={{ color: '#111827' }}>Présence locale</h2>
+                    <div className="space-y-3 text-sm leading-relaxed" style={{ color: '#4b5563' }}>
                       {seo?.local_context ? (
                         <p>{seo.local_context}</p>
                       ) : (
@@ -516,20 +516,20 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Réputation (si SEO content) */}
                 {seo?.reputation_text && (
-                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                    <h2 className="text-xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>Avis et réputation</h2>
-                    <p className="text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                  <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                    <h2 className="text-xl font-bold mb-3" style={{ color: '#111827' }}>Avis et réputation</h2>
+                    <p className="text-sm leading-relaxed" style={{ color: '#4b5563' }}>
                       {seo.reputation_text}
                     </p>
                   </div>
                 )}
 
                 {/* Comment trouver */}
-                <div className="rounded-xl p-6" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <h2 className="text-lg font-bold mb-3" style={{ color: 'var(--foreground)' }}>
+                <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                  <h2 className="text-lg font-bold mb-3" style={{ color: '#111827' }}>
                     Comment trouver {business.name}
                   </h2>
-                  <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
+                  <div className="space-y-3 text-sm leading-relaxed" style={{ color: '#4b5563' }}>
                     <p>
                       Vous êtes à la recherche {business.main_category_slug ? `d'une entreprise de ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : 'd\'une entreprise'}
                       {business.city ? ` à ${business.city}` : ' au Québec'} ?
@@ -563,16 +563,16 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
               <div className="space-y-6">
                 {/* Contact Card */}
                 {hasContactInfo && (
-                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                    <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--foreground)' }}>Coordonn&eacute;es</h3>
+                  <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                    <h3 className="text-lg font-bold mb-2" style={{ color: '#111827' }}>Coordonn&eacute;es</h3>
                     <div className="space-y-4">
                       {displayAddress && (
                         <div className="flex items-start gap-3">
                           📍
                           <div>
-                            <span style={{ color: 'var(--foreground)' }}>{displayAddress}</span>
+                            <span style={{ color: '#111827' }}>{displayAddress}</span>
                             {displayCity && (
-                              <span className="block text-sm" style={{ color: 'var(--foreground-muted)' }}>
+                              <span className="block text-sm" style={{ color: '#4b5563' }}>
                                 {displayCity}{displayPostalCode && `, ${displayPostalCode}`}
                               </span>
                             )}
@@ -605,8 +605,8 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                           <div className="flex items-center gap-3">
                             <span className="text-xl">🏛️</span>
                             <div>
-                              <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>NEQ: </span>
-                              <span style={{ color: 'var(--foreground)' }}>{business.neq}</span>
+                              <span className="text-sm" style={{ color: '#4b5563' }}>NEQ: </span>
+                              <span style={{ color: '#111827' }}>{business.neq}</span>
                             </div>
                           </div>
                         </>
@@ -617,8 +617,8 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Map */}
                 {(business.latitude && business.longitude) && (
-                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                    <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--foreground)' }}>Localisation</h3>
+                  <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                    <h3 className="text-lg font-bold mb-2" style={{ color: '#111827' }}>Localisation</h3>
                     <div className="rounded-lg overflow-hidden">
                       <iframe
                         width="100%"
@@ -641,9 +641,9 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                 )}
 
                 {/* Official Source */}
-                <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                  <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--foreground)' }}>Source officielle</h3>
-                  <p className="text-sm mb-3" style={{ color: 'var(--foreground-muted)' }}>
+                <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                  <h3 className="text-lg font-bold mb-2" style={{ color: '#111827' }}>Source officielle</h3>
+                  <p className="text-sm mb-3" style={{ color: '#4b5563' }}>
                     Cette fiche est bas&eacute;e sur les informations du Registre des entreprises du Qu&eacute;bec.
                   </p>
                   <a
@@ -658,8 +658,8 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Opening Hours */}
                 {hasOpeningHours && (
-                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                    <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--foreground)' }}>Heures d&apos;ouverture</h3>
+                  <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                    <h3 className="text-lg font-bold mb-2" style={{ color: '#111827' }}>Heures d&apos;ouverture</h3>
                     <div>
                       {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map((day, idx) => {
                         const hours = business.opening_hours?.[day]
@@ -669,8 +669,8 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                             key={day}
                             className={`flex justify-between py-2 ${idx < 6 ? 'border-b border-white/10' : ''}`}
                           >
-                            <span className="font-medium" style={{ color: 'var(--foreground)' }}>{dayNames[day]}</span>
-                            <span style={{ color: 'var(--foreground-muted)' }}>
+                            <span className="font-medium" style={{ color: '#111827' }}>{dayNames[day]}</span>
+                            <span style={{ color: '#4b5563' }}>
                               {hours.closed ? 'Fermé' : `${hours.open} - ${hours.close}`}
                             </span>
                           </div>
@@ -682,8 +682,8 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Social Media */}
                 {hasSocialMedia && (
-                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                    <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--foreground)' }}>R&eacute;seaux sociaux</h3>
+                  <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                    <h3 className="text-lg font-bold mb-2" style={{ color: '#111827' }}>R&eacute;seaux sociaux</h3>
                     <div className="flex flex-wrap gap-2">
                       {business.facebook_url && (
                         <a
@@ -721,8 +721,8 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                 )}
 
                 {/* Share */}
-                <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                  <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--foreground)' }}>Partager</h3>
+                <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
+                  <h3 className="text-lg font-bold mb-2" style={{ color: '#111827' }}>Partager</h3>
                   <div className="flex gap-2">
                     <a
                       href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://registreduquebec.com/entreprise/${business.slug}`)}`}
@@ -761,28 +761,28 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
         {cityBusinesses.length > 0 && business.city && (
           <section className="py-8" style={{ background: 'var(--background)' }}>
             <div className="max-w-6xl mx-auto px-4">
-              <h2 className="text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>
+              <h2 className="text-2xl font-bold mb-1 text-white">
                 <Link href={`/ville/${citySlug}`} className="hover:text-sky-400 transition-colors" style={{ color: 'inherit', textDecoration: 'none' }}>
                   Entreprises &agrave; {business.city}
                 </Link>
               </h2>
-              <p className="mb-3" style={{ color: 'var(--foreground-muted)' }}>Autres entreprises dans cette ville</p>
+              <p className="mb-3 text-slate-400">Autres entreprises dans cette ville</p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {cityBusinesses.map((biz) => (
                   <Link
                     key={biz.id}
                     href={`/entreprise/${biz.slug}`}
-                    className="block rounded-xl p-4 transition-all hover:shadow-xl hover:-translate-y-0.5"
+                    className="block rounded-xl p-4 transition-all hover:shadow-xl hover:-translate-y-0.5 no-underline"
                     style={{ background: 'var(--background-secondary)' }}
                   >
-                    <span className="block font-bold mb-1 line-clamp-2" style={{ color: 'var(--foreground)' }}>{biz.name}</span>
+                    <span className="block font-bold mb-1 line-clamp-2 text-white">{biz.name}</span>
                     {biz.main_category_slug && (
-                      <span className="block text-sm" style={{ color: 'var(--foreground-muted)' }}>{categoryLabels[biz.main_category_slug] || biz.main_category_slug}</span>
+                      <span className="block text-sm text-slate-400">{categoryLabels[biz.main_category_slug] || biz.main_category_slug}</span>
                     )}
                     {biz.google_rating && (
                       <div className="flex items-center gap-1 mt-1">
                         <StarRating value={biz.google_rating} />
-                        <span className="font-medium text-sm" style={{ color: 'var(--foreground)' }}>{biz.google_rating}</span>
+                        <span className="font-medium text-sm text-white">{biz.google_rating}</span>
                       </div>
                     )}
                   </Link>
