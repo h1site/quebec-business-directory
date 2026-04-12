@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import AdSense from '@/components/AdSense'
 import {
   HeroSection,
   CategoriesSection,
@@ -79,8 +80,19 @@ export default async function HomePage() {
       <main>
         <HeroSection totalBusinesses={TOTAL_BUSINESSES} />
         <CategoriesSection categories={CATEGORIES} />
+
+        {/* Ad - after categories */}
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <AdSense slot="8544579045" format="auto" responsive={true} />
+        </div>
+
         <CitiesSection />
         <StatsSection />
+
+        {/* Ad - after stats */}
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <AdSense slot="8544579045" format="auto" responsive={true} />
+        </div>
 
         {/* Featured Businesses - critical for Google crawling internal links */}
         {featuredBusinesses.length > 0 && (
@@ -110,6 +122,11 @@ export default async function HomePage() {
             </div>
           </section>
         )}
+
+        {/* Ad - before about */}
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <AdSense slot="8544579045" format="auto" responsive={true} />
+        </div>
 
         <AboutSection />
       </main>

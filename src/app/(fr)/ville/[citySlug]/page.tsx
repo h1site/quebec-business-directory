@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import AdSense from '@/components/AdSense'
 import { createServiceClient } from '@/lib/supabase/server'
 import { categoryLabels } from '@/lib/category-labels'
 import { slugToCity } from '@/lib/cities'
@@ -232,9 +233,9 @@ export default async function CityPage({ params, searchParams }: Props) {
         <section className="py-8">
           <div className="max-w-6xl mx-auto px-4">
             <div className="space-y-4">
-              {businesses.map((business) => (
+              {businesses.map((business, index) => (
+                <div key={business.id}>
                 <Link
-                  key={business.id}
                   href={`/entreprise/${business.slug}`}
                   className="block glass rounded-xl hover:bg-white/10 transition-all overflow-hidden group"
                 >
@@ -270,6 +271,17 @@ export default async function CityPage({ params, searchParams }: Props) {
                     </div>
                   </div>
                 </Link>
+                {index === 3 && (
+                  <div className="my-4">
+                    <AdSense slot="8544579045" format="auto" responsive={true} />
+                  </div>
+                )}
+                {index === 9 && (
+                  <div className="my-4">
+                    <AdSense slot="8544579045" format="auto" responsive={true} />
+                  </div>
+                )}
+                </div>
               ))}
             </div>
 
