@@ -12,7 +12,7 @@ export default function Footer() {
           className="absolute inset-0 bg-cover"
           style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1600&q=80)', backgroundPosition: 'center 30%' }}
         />
-        <div className="absolute inset-0 bg-white/55" />
+        <div className="absolute inset-0 bg-white/40" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="text-center md:text-left max-w-lg">
