@@ -228,8 +228,19 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
         </section>
 
         {/* Main Content */}
-        <section className="py-8" style={{ background: 'var(--background-secondary)' }}>
-          <div className="max-w-6xl mx-auto px-4">
+        <section className="py-8 relative" style={{ background: '#ffffff' }}>
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: 'url(/images/background/background-overlay-dark.png)',
+              backgroundAttachment: 'fixed',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              opacity: 0.02,
+            }}
+          />
+          <div className="relative z-10 max-w-6xl mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Left Column */}
               <div className="lg:col-span-2 space-y-6">
@@ -475,28 +486,6 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                   </div>
                 )}
 
-                {/* Score (si SEO content disponible) */}
-                {seo?.score_popularity && (
-                  <div className="rounded-xl p-6 shadow-lg" style={{ background: 'var(--background)' }}>
-                    <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Score de l&apos;entreprise <span className="text-xs font-normal px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-400">beta</span></h2>
-                    <div className="grid grid-cols-3 gap-4">
-                      {[
-                        { label: 'Popularité', value: seo.score_popularity, icon: '📈' },
-                        { label: 'Services', value: seo.score_services || 0, icon: '🛍️' },
-                        { label: 'Accessibilité', value: seo.score_accessibility || 0, icon: '📍' },
-                      ].map((item) => (
-                        <div key={item.label} className="text-center">
-                          <span className="text-2xl block">{item.icon}</span>
-                          <div className="mt-2 h-2 rounded-full overflow-hidden" style={{ background: 'var(--background-secondary)' }}>
-                            <div className="h-full rounded-full bg-gradient-to-r from-sky-500 to-cyan-400" style={{ width: `${item.value * 10}%` }} />
-                          </div>
-                          <span className="text-lg font-bold block mt-1" style={{ color: 'var(--foreground)' }}>{item.value}/10</span>
-                          <span className="text-xs" style={{ color: 'var(--foreground-muted)' }}>{item.label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
 
                 {/* Pertinence locale */}
                 {business.city && (
