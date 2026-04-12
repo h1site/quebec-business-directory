@@ -17,7 +17,7 @@ const popularCities = [
 
 export default function CitiesSectionEN() {
   return (
-    <section className="py-20 bg-slate-950">
+    <section className="py-10 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-3xl font-bold text-white mb-3">

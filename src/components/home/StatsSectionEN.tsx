@@ -20,7 +20,7 @@ function StatItem({ value, label, icon }: StatItemProps) {
 
 export default function StatsSectionEN() {
   return (
-    <section className="py-20 bg-slate-900 overflow-hidden relative">
+    <section className="py-10 bg-slate-900 overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <StatItem icon="🏢" value="46,000+" label="Quality businesses" />

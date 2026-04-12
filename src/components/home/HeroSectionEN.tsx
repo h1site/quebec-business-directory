@@ -28,7 +28,7 @@ export default function HeroSectionEN({ totalBusinesses }: HeroSectionENProps) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 py-24 text-center">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 py-16 text-center">
         {/* Beta Badge */}
         <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full px-5 py-2 mb-8 animate-fade-in">
           <span className="px-3 py-1 bg-gradient-to-r from-sky-400 to-cyan-400 text-slate-900 text-xs font-bold rounded-full uppercase tracking-wide">

@@ -19,7 +19,7 @@ const popularCities = [
 
 export default function CitiesSection() {
   return (
-    <section className="py-20" style={{ background: 'var(--background)' }}>
+    <section className="py-10" style={{ background: 'var(--background)' }}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-3xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>

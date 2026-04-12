@@ -22,7 +22,7 @@ function StatItem({ value, label, icon }: StatItemProps) {
 
 export default function StatsSection() {
   return (
-    <section className="py-20 relative overflow-hidden bg-slate-800/80">
+    <section className="py-10 relative overflow-hidden bg-slate-800/80">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <StatItem

@@ -27,7 +27,7 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
 
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 py-24 text-center">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 py-16 text-center">
         <div className="mb-8 animate-fade-in">
           <span className="inline-block px-3 py-1 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-white text-sm font-medium">
             Bêta — Version en développement

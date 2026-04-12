@@ -2,7 +2,7 @@
 
 export default function AboutSection() {
   return (
-    <section className="py-20" style={{ background: 'var(--background)' }}>
+    <section className="py-10" style={{ background: 'var(--background)' }}>
       <div className="max-w-3xl mx-auto px-4 text-center">
         <div
           className="rounded-lg shadow-md p-6 md:p-10 animate-fade-in bg-slate-800/80"

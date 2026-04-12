@@ -13,7 +13,7 @@ interface CategoriesSectionENProps {
 
 export default function CategoriesSectionEN({ categories }: CategoriesSectionENProps) {
   return (
-    <section className="py-20 bg-slate-900">
+    <section className="py-10 bg-slate-900">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-3xl font-bold text-white mb-3">

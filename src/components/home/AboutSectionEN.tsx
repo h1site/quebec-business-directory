@@ -1,6 +1,6 @@
 export default function AboutSectionEN() {
   return (
-    <section className="py-20 bg-slate-950">
+    <section className="py-10 bg-slate-950">
       <div className="max-w-3xl mx-auto px-4 text-center">
         <div className="glass rounded-2xl p-10 animate-fade-in">
           <h2 className="text-3xl font-bold text-white mb-6">
