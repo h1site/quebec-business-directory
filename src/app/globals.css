@@ -186,11 +186,17 @@ textarea.bg-white::placeholder {
     );
 }
 
-/* Google AdSense anchor ads — bottom only (data-overlays="bottom" handles this) */
+/* Google AdSense anchor ads */
 body > ins.adsbygoogle,
 body > div[id^="google_ads"],
 body > div[style*="position: fixed"][style*="bottom"] {
   z-index: 9999 !important;
+}
+
+/* Remove gap AdSense injects for anchor ad */
+html body {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 /* Override browser autofill — dark bg inputs get white text */
