@@ -184,14 +184,15 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
           >
             ✕
           </button>
-          <video
-            autoPlay
-            controls
-            playsInline
-            className="w-full"
-          >
-            <source src="/video/registreduquebec-fr.mp4" type="video/mp4" />
-          </video>
+          <div className="aspect-video">
+            <iframe
+              src="https://www.youtube.com/embed/xO_s0Y3IbXo?autoplay=1"
+              title="Comment ajouter votre entreprise"
+              allow="autoplay; fullscreen"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
         </div>
       </div>
     )}
