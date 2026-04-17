@@ -26,10 +26,25 @@ export default function HistoirePMEPage() {
     '@type': 'Article',
     headline: 'Histoire des PME au Québec — Des origines à aujourd\'hui',
     description: 'L\'histoire fascinante des petites et moyennes entreprises au Québec, de la Nouvelle-France à l\'ère numérique.',
-    author: { '@type': 'Organization', name: 'Registre du Québec', url: 'https://registreduquebec.com' },
-    publisher: { '@type': 'Organization', name: 'Registre du Québec' },
+    image: 'https://registreduquebec.com/images/logos/logo.webp',
+    author: {
+      '@type': 'Person',
+      name: 'Sébastien Ross',
+      url: 'https://registreduquebec.com/a-propos',
+      jobTitle: 'Fondateur',
+      worksFor: { '@type': 'Organization', name: 'Registre du Québec' },
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Registre du Québec',
+      url: 'https://registreduquebec.com',
+      logo: { '@type': 'ImageObject', url: 'https://registreduquebec.com/images/logos/logo.webp' },
+    },
     datePublished: '2026-04-09',
-    mainEntityOfPage: 'https://registreduquebec.com/histoire-pme-quebec',
+    dateModified: '2026-04-17',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://registreduquebec.com/histoire-pme-quebec' },
+    articleSection: 'Entrepreneuriat québécois',
+    keywords: ['PME Québec', 'entrepreneuriat', 'histoire économique', 'Nouvelle-France', 'Révolution tranquille'],
   }
 
   return (
@@ -49,7 +64,11 @@ export default function HistoirePMEPage() {
 
           <header className="mb-10">
             <div className="flex items-center gap-3 mb-4">
-              <time className="text-sm" style={{ color: 'var(--foreground-muted)' }}>9 avril 2026</time>
+              <time dateTime="2026-04-09" className="text-sm" style={{ color: 'var(--foreground-muted)' }}>Publié le 9 avril 2026 · Mis à jour le 17 avril 2026</time>
+              <span style={{ color: 'var(--foreground-muted)' }}>·</span>
+              <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>
+                Par <a href="/a-propos" className="text-sky-400 hover:text-sky-300">Sébastien Ross</a>
+              </span>
               <span style={{ color: 'var(--foreground-muted)' }}>·</span>
               <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>12 min de lecture</span>
             </div>

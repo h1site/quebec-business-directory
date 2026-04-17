@@ -54,15 +54,67 @@ export default async function HomePage() {
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'Registre des entreprises du Québec',
-    url: 'https://registreduquebec.com',
-    description: 'Trouvez facilement parmi plus de 46 000 entreprises québécoises de qualité.',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: 'https://registreduquebec.com/recherche?q={search_term_string}',
-      'query-input': 'required name=search_term_string',
-    },
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://registreduquebec.com/#website',
+        url: 'https://registreduquebec.com',
+        name: 'Registre du Québec',
+        description: 'Annuaire de plus de 7 000 entreprises québécoises vérifiées.',
+        publisher: { '@id': 'https://registreduquebec.com/#organization' },
+        inLanguage: 'fr-CA',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: 'https://registreduquebec.com/recherche?q={search_term_string}',
+          },
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'https://registreduquebec.com/#organization',
+        name: 'Registre du Québec',
+        alternateName: 'Registre des entreprises du Québec',
+        url: 'https://registreduquebec.com',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://registreduquebec.com/images/logos/logo.webp',
+          width: 512,
+          height: 512,
+        },
+        foundingDate: '2025',
+        founder: {
+          '@type': 'Person',
+          name: 'Sébastien Ross',
+        },
+        sameAs: [
+          'https://www.facebook.com/registreduquebec/',
+          'https://www.linkedin.com/company/registre-du-quebec',
+          'https://www.facebook.com/groups/registreduquebec',
+        ],
+        contactPoint: {
+          '@type': 'ContactPoint',
+          email: 'info@h1site.com',
+          contactType: 'Customer Service',
+          availableLanguage: ['French', 'English'],
+          areaServed: 'CA',
+        },
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Vaudreuil-Dorion',
+          addressRegion: 'QC',
+          addressCountry: 'CA',
+        },
+        knowsAbout: [
+          'Entreprises du Québec',
+          'Annuaire professionnel',
+          'Immatriculation d\'entreprise',
+          'PME québécoises',
+        ],
+      },
+    ],
   }
 
   return (
