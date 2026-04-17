@@ -80,6 +80,7 @@ export interface Business {
   ai_services: string[] | null
   ai_services_en: string[] | null
   ai_faq: Array<{ q: string; a: string; q_en: string; a_en: string }> | null
+  ai_seo_content: Record<string, unknown> | null
   ai_enriched_at: string | null
   // Verified contact info (from website scraping)
   verified_address: string | null
