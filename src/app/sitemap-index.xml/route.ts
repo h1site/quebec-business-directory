@@ -52,6 +52,11 @@ export async function GET() {
     <lastmod>${today}</lastmod>
   </sitemap>`)
 
+  sitemaps.push(`  <sitemap>
+    <loc>${baseUrl}/sitemap-top.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>`)
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemaps.join('\n')}
