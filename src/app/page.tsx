@@ -140,59 +140,8 @@ export default async function HomePage() {
 
       <main>
         <HeroSection totalBusinesses={TOTAL_BUSINESSES} />
-        <CategoriesSection categories={CATEGORIES} />
 
-        {/* Ad - after categories + cities */}
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="8544579045" format="auto" responsive={true} />
-        </div>
-
-        {/* Featured Businesses - critical for Google crawling internal links */}
-        {featuredBusinesses.length > 0 && (
-          <section className="py-[100px] relative" style={{ background: 'var(--background-secondary)' }}>
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                backgroundImage: 'url(/images/background/background-overlay.png)',
-                backgroundAttachment: 'fixed',
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-                opacity: 0.05,
-              }}
-            />
-            <div className="relative z-10 max-w-6xl mx-auto px-4">
-              <h2 className="text-2xl font-bold text-white mb-2 text-center">Entreprises populaires au Québec</h2>
-              <p className="text-slate-400 text-center mb-8">Découvrez les entreprises les mieux notées par leurs clients</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {featuredBusinesses.map((biz) => (
-                  <Link
-                    key={biz.slug}
-                    href={`/entreprise/${biz.slug}`}
-                    className="glass rounded-xl p-3 hover:bg-white/10 transition-all no-underline"
-                  >
-                    <div className="flex justify-between items-start">
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-bold text-white truncate uppercase text-xs tracking-wide">{biz.name}</h3>
-                        <p className="text-slate-400 text-xs">{biz.city}</p>
-                      </div>
-                      {biz.google_rating && (
-                        <span className="text-amber-400 text-xs font-bold shrink-0 ml-2">★ {biz.google_rating}</span>
-                      )}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Ad - after featured businesses */}
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="8544579045" format="auto" responsive={true} />
-        </div>
-
-        {/* Blog articles grid */}
+        {/* Blog articles grid - right after hero */}
         {blogArticles.length > 0 && (
           <section className="py-[100px] px-4" style={{ background: 'var(--background)' }}>
             <div className="max-w-6xl mx-auto">
@@ -247,6 +196,58 @@ export default async function HomePage() {
             </div>
           </section>
         )}
+
+        <CategoriesSection categories={CATEGORIES} />
+
+        {/* Ad - after categories + cities */}
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <AdSense slot="8544579045" format="auto" responsive={true} />
+        </div>
+
+        {/* Featured Businesses - critical for Google crawling internal links */}
+        {featuredBusinesses.length > 0 && (
+          <section className="py-[100px] relative" style={{ background: 'var(--background-secondary)' }}>
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: 'url(/images/background/background-overlay.png)',
+                backgroundAttachment: 'fixed',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                opacity: 0.05,
+              }}
+            />
+            <div className="relative z-10 max-w-6xl mx-auto px-4">
+              <h2 className="text-2xl font-bold text-white mb-2 text-center">Entreprises populaires au Québec</h2>
+              <p className="text-slate-400 text-center mb-8">Découvrez les entreprises les mieux notées par leurs clients</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {featuredBusinesses.map((biz) => (
+                  <Link
+                    key={biz.slug}
+                    href={`/entreprise/${biz.slug}`}
+                    className="glass rounded-xl p-3 hover:bg-white/10 transition-all no-underline"
+                  >
+                    <div className="flex justify-between items-start">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-bold text-white truncate uppercase text-xs tracking-wide">{biz.name}</h3>
+                        <p className="text-slate-400 text-xs">{biz.city}</p>
+                      </div>
+                      {biz.google_rating && (
+                        <span className="text-amber-400 text-xs font-bold shrink-0 ml-2">★ {biz.google_rating}</span>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Ad - after featured businesses */}
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <AdSense slot="8544579045" format="auto" responsive={true} />
+        </div>
 
       </main>
 
