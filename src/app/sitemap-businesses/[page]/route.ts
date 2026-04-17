@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 
 export const revalidate = 86400 // 24 hours
 
-const PAGE_SIZE = 5000
+const PAGE_SIZE = 1000
 
 export async function GET(
   _request: NextRequest,

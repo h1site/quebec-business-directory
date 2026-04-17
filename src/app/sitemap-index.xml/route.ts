@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-const PAGE_SIZE = 5000
+const PAGE_SIZE = 1000
 
 export async function GET() {
   const baseUrl = 'https://registreduquebec.com'
