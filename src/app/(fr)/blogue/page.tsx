@@ -28,101 +28,75 @@ export default async function BlogPage() {
     <>
       <Header />
 
-      <main className="min-h-screen pt-24 pb-16" style={{ background: 'var(--background)' }}>
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Blogue</h1>
+      <main className="min-h-screen" style={{ background: 'var(--background)' }}>
+        {/* Hero */}
+        <section className="pt-32 pb-16 text-center px-4">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-5xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Blogue</h1>
             <p className="text-lg" style={{ color: 'var(--foreground-muted)' }}>
               Guides et ressources pour les entreprises québécoises
             </p>
           </div>
+        </section>
 
-          {articles.length > 0 ? (
-            <div className="space-y-6">
-              {articles.map((article) => (
-                <Link
-                  key={article.slug}
-                  href={`/blogue/${article.slug}`}
-                  className="block rounded-xl p-6 hover:scale-[1.01] transition-transform no-underline"
-                  style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}
-                >
-                  <time className="text-sm mb-2 block" style={{ color: 'var(--foreground-muted)' }}>
-                    {new Date(article.published_at).toLocaleDateString('fr-CA', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </time>
-                  <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>
-                    {article.title_fr}
-                  </h2>
-                  {article.excerpt_fr && (
-                    <p className="text-sm leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
-                      {article.excerpt_fr}
-                    </p>
-                  )}
-                  <span className="inline-block mt-3 text-sky-400 text-sm font-medium">
-                    Lire l&apos;article →
-                  </span>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16 rounded-xl" style={{ background: 'var(--background-secondary)' }}>
-              <p className="text-lg" style={{ color: 'var(--foreground-muted)' }}>
-                Aucun article pour le moment. Revenez bientôt!
+        {/* Grid of all articles */}
+        <section className="pb-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            {articles.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {articles.map((article) => (
+                  <Link
+                    key={article.slug}
+                    href={`/blogue/${article.slug}`}
+                    className="group flex flex-col rounded-xl overflow-hidden transition-transform hover:scale-[1.02] no-underline"
+                    style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}
+                  >
+                    {article.thumbnail_url && (
+                      <div className="relative w-full aspect-[16/10] overflow-hidden bg-slate-800">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={article.thumbnail_url}
+                          alt={article.title_fr}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <div className="flex flex-col flex-1 p-5">
+                      <h2 className="text-lg font-bold mb-3 leading-snug" style={{ color: 'var(--foreground)' }}>
+                        {article.title_fr}
+                      </h2>
+                      <span className="mt-auto inline-flex items-center gap-2 self-start px-4 py-2 rounded-lg bg-sky-500 text-white text-sm font-semibold group-hover:bg-sky-400 transition-colors">
+                        Lire l&apos;article →
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16 rounded-xl" style={{ background: 'var(--background-secondary)' }}>
+                <p className="text-lg" style={{ color: 'var(--foreground-muted)' }}>
+                  Aucun article pour le moment. Revenez bientôt!
+                </p>
+              </div>
+            )}
+
+            <div className="mt-12 rounded-xl p-8 text-center" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>
+              <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>
+                Vous avez des questions?
+              </h3>
+              <p className="mb-4" style={{ color: 'var(--foreground-muted)' }}>
+                Contactez-nous pour toute question sur les entreprises québécoises.
               </p>
+              <a
+                href="mailto:info@h1site.com"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-sky-500 text-white font-semibold rounded-lg hover:bg-sky-400 transition-colors"
+              >
+                ✉️ info@h1site.com
+              </a>
             </div>
-          )}
-
-          {/* Articles vedettes */}
-          <div className="mt-12">
-            <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Articles vedettes</h2>
-            <Link
-              href="/histoire-pme-quebec"
-              className="block rounded-xl p-6 hover:scale-[1.01] transition-transform no-underline mb-6"
-              style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}
-            >
-              <span className="text-xs font-medium text-sky-400 mb-2 block">Article</span>
-              <span className="text-lg font-bold block mb-2" style={{ color: 'var(--foreground)' }}>
-                Histoire des PME au Québec — Des origines à aujourd&apos;hui
-              </span>
-              <span className="text-sm block" style={{ color: 'var(--foreground-muted)' }}>
-                De la traite des fourrures en Nouvelle-France aux startups technologiques de Montréal. 400 ans d&apos;entrepreneuriat québécois.
-              </span>
-              <span className="inline-block mt-3 text-sky-400 text-sm font-medium">Lire l&apos;article →</span>
-            </Link>
-            <a
-              href="/immatriculer-entreprise-quebec.html"
-              className="block rounded-xl p-6 hover:scale-[1.01] transition-transform no-underline mb-6"
-              style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}
-            >
-              <span className="text-xs font-medium text-sky-400 mb-2 block">Guide</span>
-              <span className="text-lg font-bold block mb-2" style={{ color: 'var(--foreground)' }}>
-                Immatriculer une entreprise au Québec en 2026
-              </span>
-              <span className="text-sm block" style={{ color: 'var(--foreground-muted)' }}>
-                Vrais coûts, délais réels et erreurs fréquentes. Guide concret basé sur des cas d&apos;entrepreneurs québécois.
-              </span>
-              <span className="inline-block mt-3 text-sky-400 text-sm font-medium">Lire le guide →</span>
-            </a>
           </div>
-
-          <div className="mt-8 rounded-xl p-8 text-center" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>
-            <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>
-              Vous avez des questions?
-            </h3>
-            <p className="mb-4" style={{ color: 'var(--foreground-muted)' }}>
-              Contactez-nous pour toute question sur les entreprises québécoises.
-            </p>
-            <a
-              href="mailto:info@h1site.com"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-sky-500 text-white font-semibold rounded-lg hover:bg-sky-400 transition-colors"
-            >
-              ✉️ info@h1site.com
-            </a>
-          </div>
-        </div>
+        </section>
       </main>
 
       <Footer />
