@@ -87,6 +87,7 @@ export default function MyBusinessesPage() {
     setDeleting(true)
 
     let success = false
+    let errorMsg = ''
 
     if (isAdmin) {
       const { data: { session } } = await supabase.auth.getSession()
@@ -95,17 +96,26 @@ export default function MyBusinessesPage() {
         headers: { Authorization: `Bearer ${session?.access_token}` },
       })
       success = res.ok
+      if (!success) errorMsg = `Erreur serveur (${res.status})`
     } else {
-      const { error } = await supabase
+      const { error, count } = await supabase
         .from('businesses')
-        .delete()
+        .delete({ count: 'exact' })
         .eq('id', id)
-      success = !error
+      if (error) {
+        errorMsg = error.message
+      } else if (count === 0) {
+        errorMsg = "Suppression bloquée. Vous n'êtes peut-être pas le propriétaire de cette fiche, ou les permissions sont restreintes. Contactez info@h1site.com."
+      } else {
+        success = true
+      }
     }
 
     if (success) {
       setBusinesses(prev => prev.filter(b => b.id !== id))
       setTotalCount(prev => prev - 1)
+    } else {
+      alert(errorMsg || 'Suppression échouée')
     }
     setDeleteId(null)
     setDeleting(false)
