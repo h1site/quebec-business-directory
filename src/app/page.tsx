@@ -24,6 +24,17 @@ async function getFeaturedBusinesses() {
   return data || []
 }
 
+async function getBlogArticles() {
+  const supabase = createServiceClient()
+  const { data } = await supabase
+    .from('blog_articles')
+    .select('slug, title_fr, thumbnail_url')
+    .eq('is_published', true)
+    .order('published_at', { ascending: false })
+    .limit(16)
+  return data || []
+}
+
 const TOTAL_BUSINESSES = 7000
 
 // Static categories - update when categories change
@@ -51,6 +62,7 @@ const CATEGORIES = [
 
 export default async function HomePage() {
   const featuredBusinesses = await getFeaturedBusinesses()
+  const blogArticles = await getBlogArticles()
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -179,6 +191,62 @@ export default async function HomePage() {
         <div className="max-w-6xl mx-auto px-4 py-4">
           <AdSense slot="8544579045" format="auto" responsive={true} />
         </div>
+
+        {/* Blog articles grid */}
+        {blogArticles.length > 0 && (
+          <section className="py-[100px] px-4" style={{ background: 'var(--background)' }}>
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-10">
+                <h2 className="text-3xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>
+                  Guides et articles pour entrepreneurs
+                </h2>
+                <p style={{ color: 'var(--foreground-muted)' }}>
+                  Conseils, tendances et ressources pour les PME québécoises
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {blogArticles.map((article) => (
+                  <Link
+                    key={article.slug}
+                    href={`/blogue/${article.slug}`}
+                    className="group flex flex-col rounded-xl overflow-hidden transition-transform hover:scale-[1.02] no-underline"
+                    style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}
+                  >
+                    {article.thumbnail_url && (
+                      <div className="relative w-full aspect-[16/10] overflow-hidden bg-slate-800">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={article.thumbnail_url}
+                          alt={article.title_fr}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <div className="flex flex-col flex-1 p-4">
+                      <h3 className="text-sm font-bold mb-3 leading-snug line-clamp-3" style={{ color: 'var(--foreground)' }}>
+                        {article.title_fr}
+                      </h3>
+                      <span className="mt-auto inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-lg bg-sky-500 text-white text-xs font-semibold group-hover:bg-sky-400 transition-colors">
+                        Lire →
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="text-center mt-10">
+                <Link
+                  href="/blogue"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-sky-500 text-white font-semibold rounded-lg hover:bg-sky-400 transition-colors no-underline"
+                >
+                  Voir tous les articles →
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
 
       </main>
 
