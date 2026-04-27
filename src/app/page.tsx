@@ -64,9 +64,27 @@ export default async function HomePage() {
   const featuredBusinesses = await getFeaturedBusinesses()
   const blogArticles = await getBlogArticles()
 
+  const faqItems = [
+    { q: 'Comment trouver une entreprise sur Registre du Québec ?', a: 'Utilisez la barre de recherche en haut de la page d\'accueil. Vous pouvez chercher par nom d\'entreprise, par catégorie (restaurant, plombier, avocat, etc.) ou par ville (Montréal, Québec, Laval, Longueuil, Gatineau et plus). Les résultats incluent les coordonnées complètes, les avis Google et les informations vérifiées.' },
+    { q: 'Combien d\'entreprises sont répertoriées dans le Registre du Québec ?', a: 'Notre annuaire contient plus de 7 000 fiches d\'entreprises québécoises vérifiées avec un haut niveau de confiance, couvrant toutes les régions de la province et plus de 19 catégories d\'activités professionnelles.' },
+    { q: 'Comment ajouter ou réclamer ma fiche d\'entreprise ?', a: 'Si votre entreprise n\'est pas encore listée, cliquez sur "Ajouter mon entreprise" depuis la page d\'accueil pour créer votre fiche gratuitement. Si elle existe déjà mais n\'est pas réclamée, accédez à la fiche et utilisez le bouton "Réclamer cette fiche".' },
+    { q: 'L\'inscription au Registre du Québec est-elle payante ?', a: 'Non. L\'ajout et la réclamation de votre fiche sont entièrement gratuits. Aucuns frais cachés, aucun abonnement requis.' },
+    { q: 'Les informations sur les fiches sont-elles fiables ?', a: 'Oui. Chaque fiche affichée publiquement a un niveau de confiance élevé et combine des données de plusieurs sources : Google, registres officiels, sites web d\'entreprises et vérifications automatisées.' },
+    { q: 'Puis-je laisser un avis sur une entreprise ?', a: 'Nous affichons les avis Google authentiques des entreprises. Pour partager votre expérience, vous pouvez le faire directement sur Google Maps, et l\'avis sera reflété sur la fiche de l\'entreprise après mise à jour.' },
+  ]
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://registreduquebec.com/#faq',
+        mainEntity: faqItems.map(item => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+      },
       {
         '@type': 'WebSite',
         '@id': 'https://registreduquebec.com/#website',
@@ -248,6 +266,82 @@ export default async function HomePage() {
         <div className="max-w-6xl mx-auto px-4 py-4">
           <AdSense slot="8544579045" format="auto" responsive={true} />
         </div>
+
+        {/* About / value-prop content section - boosts text-to-HTML ratio */}
+        <section className="py-[100px] px-4" style={{ background: 'var(--background)' }}>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center" style={{ color: 'var(--foreground)' }}>
+              Le plus grand annuaire d&apos;entreprises québécoises vérifiées
+            </h2>
+
+            <div className="space-y-6 text-base md:text-lg leading-[1.8]" style={{ color: 'var(--foreground-muted)' }}>
+              <p>
+                <strong style={{ color: 'var(--foreground)' }}>Registre du Québec</strong> est l&apos;annuaire de référence pour découvrir les entreprises actives au Québec. Notre plateforme regroupe plus de 7 000 fiches vérifiées d&apos;entreprises, commerces, professionnels et services partout dans la province : Montréal, Québec, Laval, Longueuil, Gatineau, Sherbrooke, Trois-Rivières, Saguenay et toutes les régions du Québec.
+              </p>
+              <p>
+                Que vous cherchiez un <Link href="/categorie/restauration-et-alimentation" className="text-sky-400 hover:text-sky-300 underline">restaurant à Montréal</Link>, un <Link href="/categorie/construction-et-renovation" className="text-sky-400 hover:text-sky-300 underline">entrepreneur en construction</Link>, un <Link href="/categorie/sante-et-bien-etre" className="text-sky-400 hover:text-sky-300 underline">professionnel de la santé</Link>, ou un <Link href="/categorie/services-professionnels" className="text-sky-400 hover:text-sky-300 underline">service professionnel</Link>, notre annuaire vous aide à trouver rapidement des entreprises locales fiables. Chaque fiche affiche les coordonnées, les avis Google authentiques, les heures d&apos;ouverture, l&apos;adresse exacte et la catégorie d&apos;activité.
+              </p>
+              <p>
+                <strong style={{ color: 'var(--foreground)' }}>Pourquoi consulter notre registre ?</strong> Parce que nos données sont mises à jour régulièrement et croisées avec plusieurs sources fiables. Contrairement à d&apos;autres annuaires généralistes, nous nous concentrons exclusivement sur le Québec et privilégions la qualité des informations à la quantité brute. Les propriétaires d&apos;entreprises peuvent réclamer leur fiche gratuitement pour la maintenir à jour, répondre aux avis et augmenter leur visibilité auprès des consommateurs québécois.
+              </p>
+              <p>
+                <strong style={{ color: 'var(--foreground)' }}>Pour les entrepreneurs :</strong> ajoutez gratuitement votre entreprise et profitez d&apos;une visibilité organique sans frais cachés. Notre <Link href="/blogue" className="text-sky-400 hover:text-sky-300 underline">blogue</Link> publie également des guides pratiques sur l&apos;immatriculation, le financement, les subventions, le repreneuriat et les tendances entrepreneuriales au Québec en 2026.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ - boosts text content + structured data */}
+        <section className="py-[80px] px-4" style={{ background: 'var(--background-secondary)' }}>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold mb-10 text-center" style={{ color: 'var(--foreground)' }}>
+              Questions fréquentes
+            </h2>
+
+            <div className="space-y-4">
+              {[
+                {
+                  q: 'Comment trouver une entreprise sur Registre du Québec ?',
+                  a: 'Utilisez la barre de recherche en haut de la page d\'accueil. Vous pouvez chercher par nom d\'entreprise, par catégorie (restaurant, plombier, avocat, etc.) ou par ville (Montréal, Québec, Laval, Longueuil, Gatineau et plus). Les résultats incluent les coordonnées complètes, les avis Google et les informations vérifiées.',
+                },
+                {
+                  q: 'Combien d\'entreprises sont répertoriées dans le Registre du Québec ?',
+                  a: 'Notre annuaire contient plus de 7 000 fiches d\'entreprises québécoises vérifiées avec un haut niveau de confiance, couvrant toutes les régions de la province et plus de 19 catégories d\'activités professionnelles.',
+                },
+                {
+                  q: 'Comment ajouter ou réclamer ma fiche d\'entreprise ?',
+                  a: 'Si votre entreprise n\'est pas encore listée, cliquez sur "Ajouter mon entreprise" depuis la page d\'accueil pour créer votre fiche gratuitement. Si elle existe déjà mais n\'est pas réclamée, accédez à la fiche et utilisez le bouton "Réclamer cette fiche". Le processus prend quelques minutes.',
+                },
+                {
+                  q: 'L\'inscription au Registre du Québec est-elle payante ?',
+                  a: 'Non. L\'ajout et la réclamation de votre fiche sont entièrement gratuits. Aucuns frais cachés, aucun abonnement requis. Notre objectif est d\'offrir une visibilité maximale aux entreprises québécoises.',
+                },
+                {
+                  q: 'Les informations sur les fiches sont-elles fiables ?',
+                  a: 'Oui. Chaque fiche affichée publiquement a un niveau de confiance "élevé" et combine des données de plusieurs sources : Google, registres officiels, sites web d\'entreprises et vérifications automatisées. Les fiches réclamées par leurs propriétaires sont mises à jour en temps réel.',
+                },
+                {
+                  q: 'Puis-je laisser un avis sur une entreprise ?',
+                  a: 'Pour le moment, nous affichons les avis Google authentiques des entreprises. Pour partager votre expérience, vous pouvez le faire directement sur Google Maps, et l\'avis sera reflété sur la fiche de l\'entreprise après mise à jour.',
+                },
+              ].map((item, i) => (
+                <details
+                  key={i}
+                  className="group rounded-xl p-5 transition-colors"
+                  style={{ background: 'var(--background)', border: '1px solid rgba(255,255,255,0.05)' }}
+                >
+                  <summary className="flex items-center justify-between cursor-pointer font-semibold list-none" style={{ color: 'var(--foreground)' }}>
+                    <span>{item.q}</span>
+                    <span className="text-sky-400 text-xl shrink-0 ml-4 group-open:rotate-45 transition-transform">+</span>
+                  </summary>
+                  <p className="mt-4 leading-[1.8]" style={{ color: 'var(--foreground-muted)' }}>
+                    {item.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
 
       </main>
 
