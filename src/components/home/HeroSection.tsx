@@ -180,6 +180,7 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
         >
           <button
             onClick={() => setShowVideo(false)}
+            aria-label="Fermer la vidéo"
             className="absolute top-3 right-3 z-10 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
           >
             ✕

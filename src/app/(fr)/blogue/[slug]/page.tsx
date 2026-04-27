@@ -31,24 +31,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: 'Article non trouvé' }
   }
 
+  const description = article.excerpt_fr || article.title_fr
+
   return {
     title: article.title_fr,
-    description: article.excerpt_fr || article.title_fr,
+    description,
+    authors: [{ name: 'Sébastien Ross', url: 'https://registreduquebec.com/a-propos' }],
     openGraph: {
       title: article.title_fr,
-      description: article.excerpt_fr || article.title_fr,
+      description,
       type: 'article',
       locale: 'fr_CA',
+      siteName: 'Registre du Québec',
       url: `https://registreduquebec.com/blogue/${slug}`,
+      publishedTime: article.published_at,
+      modifiedTime: article.updated_at || article.published_at,
+      authors: ['https://registreduquebec.com/a-propos'],
       images: article.thumbnail_url
-        ? [{ url: article.thumbnail_url }]
-        : [{ url: 'https://registreduquebec.com/images/logos/logo.webp' }],
+        ? [{ url: article.thumbnail_url, width: 1200, height: 630, alt: article.title_fr }]
+        : [{ url: 'https://registreduquebec.com/images/logos/logo.webp', width: 512, height: 512, alt: 'Registre du Québec' }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title_fr,
+      description,
+      images: article.thumbnail_url ? [article.thumbnail_url] : ['https://registreduquebec.com/images/logos/logo.webp'],
     },
     alternates: {
       canonical: `https://registreduquebec.com/blogue/${slug}`,
       languages: {
         'x-default': `/blogue/${slug}`,
         'fr-CA': `/blogue/${slug}`,
+        'en-CA': `/en/blog/${slug}`,
       },
     },
   }

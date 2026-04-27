@@ -199,6 +199,7 @@ export default function Header() {
                     </Link>
                     <button
                       onClick={handleLogout}
+                      aria-label="Déconnexion"
                       className="p-1.5 rounded-md text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 transition-colors"
                     >
                       <LogoutIcon />
@@ -244,6 +245,7 @@ export default function Header() {
             </Link>
             <button
               onClick={() => setDrawerOpen(true)}
+              aria-label="Ouvrir le menu"
               className="p-2 text-[var(--foreground)] rounded-md hover:bg-[var(--foreground)]/5 transition-colors"
             >
               <MenuIcon />
@@ -270,6 +272,7 @@ export default function Header() {
           <span className="font-bold text-base text-[var(--foreground)]">Menu</span>
           <button
             onClick={() => setDrawerOpen(false)}
+            aria-label="Fermer le menu"
             className="p-1.5 rounded-md text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 transition-colors"
           >
             <CloseIcon />
