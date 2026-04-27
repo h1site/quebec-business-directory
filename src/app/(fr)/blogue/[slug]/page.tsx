@@ -69,17 +69,41 @@ export default async function BlogArticlePage({ params }: Props) {
     description: article.excerpt_fr,
     datePublished: article.published_at,
     dateModified: article.updated_at || article.published_at,
+    image: article.thumbnail_url
+      ? [article.thumbnail_url]
+      : ['https://registreduquebec.com/images/logos/logo.webp'],
     author: {
-      '@type': 'Organization',
-      name: 'Registre du Québec',
-      url: 'https://registreduquebec.com',
+      '@type': 'Person',
+      '@id': 'https://registreduquebec.com/a-propos#sebastien-ross',
+      name: 'Sébastien Ross',
+      url: 'https://registreduquebec.com/a-propos',
+      jobTitle: 'Fondateur, Registre du Québec',
+      worksFor: {
+        '@type': 'Organization',
+        name: 'Registre du Québec',
+        url: 'https://registreduquebec.com',
+      },
+      sameAs: [
+        'https://www.linkedin.com/in/sebastienross',
+        'https://www.linkedin.com/company/registre-du-quebec',
+      ],
     },
     publisher: {
       '@type': 'Organization',
+      '@id': 'https://registreduquebec.com/#organization',
       name: 'Registre du Québec',
       url: 'https://registreduquebec.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://registreduquebec.com/images/logos/logo.webp',
+        width: 512,
+        height: 512,
+      },
     },
-    mainEntityOfPage: `https://registreduquebec.com/blogue/${slug}`,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://registreduquebec.com/blogue/${slug}`,
+    },
   }
 
   return (
@@ -102,27 +126,33 @@ export default async function BlogArticlePage({ params }: Props) {
           </nav>
 
           <header className="mb-10">
-            <div className="flex items-center gap-3 mb-4">
-              <time className="text-sm" style={{ color: 'var(--foreground-muted)' }}>
+            <h1 className="text-3xl md:text-4xl font-extrabold leading-tight mb-4" style={{ color: 'var(--foreground)' }}>
+              {article.title_fr}
+            </h1>
+            {article.excerpt_fr && (
+              <p className="text-lg leading-relaxed border-l-4 border-sky-500 pl-4 py-1 mb-6" style={{ color: 'var(--foreground-muted)' }}>
+                {article.excerpt_fr}
+              </p>
+            )}
+            <div className="flex items-center gap-3 flex-wrap text-sm" style={{ color: 'var(--foreground-muted)' }}>
+              <span>Par <Link href="/a-propos" className="font-semibold hover:text-sky-400 transition-colors" style={{ color: 'var(--foreground)' }}>Sébastien Ross</Link>, fondateur</span>
+              <span>·</span>
+              <time>
                 {new Date(article.published_at).toLocaleDateString('fr-CA', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'
                 })}
               </time>
-              <span style={{ color: 'var(--foreground-muted)' }}>·</span>
-              <span className="text-sm" style={{ color: 'var(--foreground-muted)' }}>
-                {Math.ceil((article.content_fr?.length || 0) / 1500)} min de lecture
-              </span>
+              {article.updated_at && article.updated_at !== article.published_at && (
+                <>
+                  <span>·</span>
+                  <span>Mis à jour le {new Date(article.updated_at).toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                </>
+              )}
+              <span>·</span>
+              <span>{Math.ceil((article.content_fr?.length || 0) / 1500)} min de lecture</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-extrabold leading-tight mb-4" style={{ color: 'var(--foreground)' }}>
-              {article.title_fr}
-            </h1>
-            {article.excerpt_fr && (
-              <p className="text-lg leading-relaxed border-l-4 border-sky-500 pl-4 py-1" style={{ color: 'var(--foreground-muted)' }}>
-                {article.excerpt_fr}
-              </p>
-            )}
             <hr className="mt-8 border-white/10" />
           </header>
 
@@ -142,6 +172,26 @@ export default async function BlogArticlePage({ params }: Props) {
           />
 
           <footer className="mt-12 pt-8 border-t border-white/10">
+            {/* Author bio - E-E-A-T signal */}
+            <div className="rounded-xl p-6 mb-6" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold" style={{ background: 'rgba(14,165,233,0.15)', color: '#0ea5e9' }}>
+                  SR
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-widest mb-1" style={{ color: 'var(--foreground-muted)' }}>À propos de l&apos;auteur</p>
+                  <h3 className="font-bold mb-1" style={{ color: 'var(--foreground)' }}>Sébastien Ross</h3>
+                  <p className="text-sm leading-relaxed mb-2" style={{ color: 'var(--foreground-muted)' }}>
+                    Fondateur de Registre du Québec. Entrepreneur web depuis 2010, spécialisé dans la création de plateformes pour les PME québécoises.
+                  </p>
+                  <div className="flex gap-3 text-sm">
+                    <Link href="/a-propos" className="text-sky-400 hover:text-sky-300 font-medium">À propos</Link>
+                    <a href="https://www.linkedin.com/in/sebastienross" rel="nofollow noopener noreferrer" target="_blank" className="text-sky-400 hover:text-sky-300 font-medium">LinkedIn ↗</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="rounded-xl p-6" style={{ background: 'var(--background-secondary)' }}>
               <p className="font-semibold mb-2" style={{ color: 'var(--foreground)' }}>
                 Vous cherchez une entreprise au Québec?
