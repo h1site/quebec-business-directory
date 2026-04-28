@@ -26,7 +26,7 @@ async function getBusiness(slug: string): Promise<Business | null> {
     .from('businesses')
     .select('*')
     .eq('slug', slug)
-    .eq('verification_confidence', 'high')
+    .or('verification_confidence.eq.high,is_claimed.eq.true')
     .single()
 
   if (error || !data) return null
