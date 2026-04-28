@@ -104,8 +104,23 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/region" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
+                  Régions du Québec
+                </Link>
+              </li>
+              <li>
+                <Link href="/top" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
+                  Palmarès
+                </Link>
+              </li>
+              <li>
                 <Link href="/blogue" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
                   Blogue
+                </Link>
+              </li>
+              <li>
+                <Link href="/pourquoi-registre-du-quebec" className="text-slate-400 hover:text-sky-400 transition-colors text-sm">
+                  Pourquoi nous
                 </Link>
               </li>
               <li>

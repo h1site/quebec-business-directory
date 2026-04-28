@@ -23,17 +23,63 @@ export default function AboutPage() {
           </div>
 
           <div className="rounded-2xl p-8 md:p-12" style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}>
+            {/* Founder section - E-E-A-T */}
+            <section className="mb-12 pb-12 border-b border-white/5" id="sebastien-ross">
+              <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--foreground)' }}>Le fondateur</h2>
+              <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="shrink-0 w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold" style={{ background: 'rgba(14,165,233,0.15)', color: '#0ea5e9' }}>
+                  SR
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>Sébastien Ross</h3>
+                  <p className="text-sm mb-3" style={{ color: 'var(--foreground-muted)' }}>Fondateur · Entrepreneur web depuis 2010</p>
+                  <p className="leading-relaxed mb-3" style={{ color: 'var(--foreground-muted)' }}>
+                    Depuis plus de 15 ans, je crée des plateformes web pour les entrepreneurs québécois. J&apos;ai lancé Registre du Québec après avoir constaté un manque criant : aucun annuaire complet, gratuit et indépendant ne couvrait l&apos;ensemble des entreprises de la province sans pratiquer le « pay-to-play ».
+                  </p>
+                  <p className="leading-relaxed mb-3" style={{ color: 'var(--foreground-muted)' }}>
+                    Beaucoup de répertoires concurrents sont opérés par des agences de marketing ou de design, créant un conflit d&apos;intérêt évident : leurs propres clients ressortent en premier. Registre du Québec est volontairement <strong style={{ color: 'var(--foreground)' }}>indépendant de toute agence</strong> — aucune entreprise ne peut payer pour avoir un meilleur classement.
+                  </p>
+                  <div className="flex gap-3 text-sm">
+                    <a href="https://www.linkedin.com/in/sebastienross" rel="nofollow noopener noreferrer" target="_blank" className="text-sky-400 hover:text-sky-300 font-medium underline">LinkedIn ↗</a>
+                    <a href="mailto:info@h1site.com" className="text-sky-400 hover:text-sky-300 font-medium underline">info@h1site.com</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
             <section className="mb-12">
               <h2 className="text-2xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Notre mission</h2>
               <p className="leading-relaxed mb-4" style={{ color: 'var(--foreground-muted)' }}>
                 Le Registre d&apos;entreprises du Québec a pour mission de faciliter la découverte et la mise en relation
                 avec les entreprises québécoises. Nous croyons que chaque entreprise, qu&apos;elle soit petite ou grande,
-                mérite d&apos;être visible et accessible.
+                mérite d&apos;être visible et accessible — <strong style={{ color: 'var(--foreground)' }}>sans avoir à payer pour exister</strong>.
               </p>
               <p className="leading-relaxed" style={{ color: 'var(--foreground-muted)' }}>
                 Notre plateforme gratuite permet aux consommateurs de trouver facilement les entreprises dont ils ont besoin,
-                tout en offrant aux propriétaires d&apos;entreprises un outil pour gérer leur présence en ligne.
+                tout en offrant aux propriétaires d&apos;entreprises un outil pour gérer leur présence en ligne. Nous ne facturons aucun frais d&apos;inscription, aucun abonnement, aucune option premium.
               </p>
+            </section>
+
+            <section className="mb-12 rounded-xl p-6" style={{ background: 'rgba(14,165,233,0.05)', border: '1px solid rgba(14,165,233,0.15)' }}>
+              <h2 className="text-2xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Notre engagement d&apos;indépendance</h2>
+              <ul className="space-y-3" style={{ color: 'var(--foreground-muted)' }}>
+                <li className="flex gap-3">
+                  <span className="text-emerald-400 font-bold shrink-0">✓</span>
+                  <span><strong style={{ color: 'var(--foreground)' }}>Aucun frais payé par les entreprises</strong> — l&apos;inscription, la réclamation et la gestion sont 100% gratuites.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-emerald-400 font-bold shrink-0">✓</span>
+                  <span><strong style={{ color: 'var(--foreground)' }}>Aucun classement payant</strong> — le tri est basé sur les avis Google, l&apos;ancienneté et la pertinence, jamais sur l&apos;argent.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-emerald-400 font-bold shrink-0">✓</span>
+                  <span><strong style={{ color: 'var(--foreground)' }}>Aucun lien avec une agence</strong> — Registre du Québec est un projet indépendant, sans clients à favoriser.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-emerald-400 font-bold shrink-0">✓</span>
+                  <span><strong style={{ color: 'var(--foreground)' }}>Données vérifiées et croisées</strong> — chaque fiche publiée est validée par plusieurs sources (Google, registres officiels, IA).</span>
+                </li>
+              </ul>
             </section>
 
             <section className="mb-12">

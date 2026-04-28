@@ -51,13 +51,28 @@ export default function HeroSection({ totalBusinesses }: HeroSectionProps) {
           Trouvez les meilleures <span className="gradient-text">entreprises du Québec</span>
         </h1>
 
-        <p className="text-xl text-slate-300 mb-10 animate-slide-up animation-delay-100">
+        <p className="text-xl text-slate-300 mb-6 animate-slide-up animation-delay-100">
           Plus de{' '}
           <span className="font-bold text-sky-400">
             {totalBusinesses.toLocaleString('fr-CA')}
           </span>
           {' '}entreprises québécoises vérifiées
         </p>
+
+        <div className="flex flex-wrap justify-center gap-2 mb-10 animate-slide-up animation-delay-150">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/15 text-emerald-300 text-xs font-semibold border border-emerald-500/20">
+            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+            100% gratuit, à vie
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sky-500/15 text-sky-300 text-xs font-semibold border border-sky-500/20">
+            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+            Aucun favoritisme payant
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-purple-500/15 text-purple-300 text-xs font-semibold border border-purple-500/20">
+            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+            Données vérifiées
+          </span>
+        </div>
 
         <form
           action="/recherche"

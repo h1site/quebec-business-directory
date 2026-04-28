@@ -10,6 +10,7 @@ export async function GET() {
     { url: '/en/search', priority: '0.9', changefreq: 'daily' },
     { url: '/a-propos', priority: '0.6', changefreq: 'monthly' },
     { url: '/en/about', priority: '0.6', changefreq: 'monthly' },
+    { url: '/pourquoi-registre-du-quebec', priority: '0.7', changefreq: 'monthly' },
     { url: '/faq', priority: '0.6', changefreq: 'monthly' },
     { url: '/en/faq', priority: '0.6', changefreq: 'monthly' },
     { url: '/blogue', priority: '0.8', changefreq: 'weekly' },
