@@ -7,6 +7,12 @@ import { createServiceClient } from '@/lib/supabase/server'
 import { marked } from 'marked'
 
 export const revalidate = 86400
+export const dynamicParams = true
+
+// Required for ISR caching with Next.js 15 — opts into static-with-fallback
+export async function generateStaticParams() {
+  return []
+}
 
 interface Props {
   params: Promise<{ slug: string }>

@@ -19,6 +19,11 @@ interface Props {
 export const revalidate = 86400
 export const dynamicParams = true
 
+// Required for ISR caching: explicitly opt into static rendering with on-demand fallback
+export async function generateStaticParams() {
+  return []
+}
+
 async function getBusiness(slug: string): Promise<Business | null> {
   const supabase = createServiceClient()
   const { data, error } = await supabase
