@@ -18,13 +18,28 @@ export const metadata: Metadata = {
 async function getCounts(): Promise<Record<string, number>> {
   const supabase = createServiceClient()
   const counts: Record<string, number> = {}
-  for (const region of REGIONS) {
-    const { count } = await supabase
+  REGIONS.forEach(r => { counts[r.slug] = 0 })
+
+  // Single paginated scan over all high-conf rows (Supabase row limit = 1000)
+  let from = 0
+  const PAGE = 1000
+  while (true) {
+    const { data, error } = await supabase
       .from('businesses')
-      .select('id', { count: 'exact', head: true })
+      .select('region')
       .eq('verification_confidence', 'high')
-      .in('region', region.variants)
-    counts[region.slug] = count || 0
+      .not('region', 'is', null)
+      .range(from, from + PAGE - 1)
+    if (error || !data || data.length === 0) break
+
+    data.forEach(b => {
+      if (!b.region) return
+      const region = REGIONS.find(r => r.variants.includes(b.region as string))
+      if (region) counts[region.slug]++
+    })
+
+    if (data.length < PAGE) break
+    from += PAGE
   }
   return counts
 }
