@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation'
+import { permanentRedirect } from 'next/navigation'
 import { createServiceClient } from '@/lib/supabase/server'
 
 interface Props {
@@ -27,6 +27,5 @@ export default async function BusinessPageRedirect({ params }: Props) {
     notFound()
   }
 
-  // 301 redirect to new simplified URL
-  redirect(`/entreprise/${businessSlug}`)
+  permanentRedirect(`/entreprise/${businessSlug}`)
 }

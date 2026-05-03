@@ -87,8 +87,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const canonical = `https://registreduquebec.com/en/company/${slug}`
 
-  // Index all served pages
-  const shouldIndex = true
+  const hasUniqueContent = !!(business.ai_description_en || business.ai_description || business.ai_seo_content)
+  const isHighQuality = business.verification_confidence === 'high' || business.is_claimed
+  const shouldIndex = hasUniqueContent && isHighQuality
 
   return {
     title,
@@ -112,6 +113,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical,
       languages: {
+        'x-default': `/entreprise/${slug}`,
         'fr-CA': `/entreprise/${slug}`,
         'en-CA': `/en/company/${slug}`,
       },
@@ -127,8 +129,7 @@ export default async function CompanyPage({ params }: Props) {
     notFound()
   }
 
-  // 404 if no website AND not in traffic list
-  if (!business.website && !trafficSlugSet.has(slug)) {
+  if (!business.website && !business.ai_description_en && !business.ai_description && !business.ai_seo_content && !trafficSlugSet.has(slug)) {
     notFound()
   }
 

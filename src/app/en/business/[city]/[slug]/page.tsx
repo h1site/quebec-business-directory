@@ -1,4 +1,4 @@
-import { redirect, notFound } from 'next/navigation'
+import { permanentRedirect, notFound } from 'next/navigation'
 import { createServiceClient } from '@/lib/supabase/server'
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default async function LegacyBusinessPageEN({ params }: Props) {
-  const { city, slug } = await params
+  const { slug } = await params
 
   // Check if business exists
   const supabase = createServiceClient()
@@ -20,8 +20,7 @@ export default async function LegacyBusinessPageEN({ params }: Props) {
     .single()
 
   if (business) {
-    // Redirect to new URL format
-    redirect(`/en/company/${slug}`)
+    permanentRedirect(`/en/company/${slug}`)
   }
 
   notFound()
