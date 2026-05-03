@@ -59,7 +59,7 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                 Businesses
               </Link>
               <span>›</span>
-              <Link href={`/en/city/${citySlug}`} className="hover:text-white transition-colors">
+              <Link href={`/en/search?city=${encodeURIComponent(business.city || '')}`} className="hover:text-white transition-colors">
                 {business.city}
               </Link>
               <span>›</span>

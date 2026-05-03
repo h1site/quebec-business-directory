@@ -1,6 +1,12 @@
-import { notFound } from 'next/navigation'
+import { redirect } from 'next/navigation'
+import { slugToCity } from '@/lib/cities'
 
-// City pages are disabled - redirect to 404
-export default function CityPageEN() {
-  notFound()
+interface Props {
+  params: Promise<{ citySlug: string }>
+}
+
+export default async function CityPageEN({ params }: Props) {
+  const { citySlug } = await params
+  const cityName = slugToCity(citySlug)
+  redirect(`/en/search?city=${encodeURIComponent(cityName)}`)
 }

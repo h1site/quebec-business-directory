@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AdSense from '@/components/AdSense'
+import { AD_SLOTS, AD_LAYOUT_KEYS } from '@/config/adSlots'
 import { createServiceClient } from '@/lib/supabase/server'
 import { categoryLabels } from '@/lib/category-labels'
 import { slugToCity } from '@/lib/cities'
@@ -109,19 +110,26 @@ async function getPopularCategories(citySlug: string) {
     }))
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { citySlug } = await params
+  const { page: pageParam } = await searchParams
+  const page = Math.max(1, parseInt(pageParam || '1', 10))
   const cityName = slugToCity(citySlug)
   const stats = await getCityStats(citySlug)
 
-  const description = stats
+  const baseDescription = stats
     ? `Découvrez ${stats.total.toLocaleString('fr-CA')} entreprises à ${cityName}${stats.avgRating ? ` (note moyenne ${stats.avgRating}/5)` : ''}. Coordonnées, avis Google et informations détaillées.`
     : `Trouvez les meilleures entreprises à ${cityName}. Annuaire complet avec coordonnées, avis et informations détaillées.`
 
+  const baseUrl = `https://registreduquebec.com/ville/${citySlug}`
+  const canonical = page > 1 ? `${baseUrl}?page=${page}` : baseUrl
+  const title = page > 1 ? `Entreprises à ${cityName} — Page ${page}` : `Entreprises à ${cityName}`
+  const description = page > 1 ? `${baseDescription} Page ${page}.` : baseDescription
+
   return {
-    title: `Entreprises à ${cityName}`,
+    title,
     description,
-    alternates: { canonical: `https://registreduquebec.com/ville/${citySlug}` },
+    alternates: { canonical },
   }
 }
 
@@ -274,12 +282,12 @@ export default async function CityPage({ params, searchParams }: Props) {
                 </Link>
                 {index === 3 && (
                   <div className="my-4">
-                    <AdSense slot="8544579045" format="auto" responsive={true} />
+                    <AdSense slot={AD_SLOTS.inFeed} format="fluid" layout="in-feed" layoutKey={AD_LAYOUT_KEYS.inFeed} />
                   </div>
                 )}
                 {index === 9 && (
                   <div className="my-4">
-                    <AdSense slot="8544579045" format="auto" responsive={true} />
+                    <AdSense slot={AD_SLOTS.inFeed} format="fluid" layout="in-feed" layoutKey={AD_LAYOUT_KEYS.inFeed} />
                   </div>
                 )}
                 </div>

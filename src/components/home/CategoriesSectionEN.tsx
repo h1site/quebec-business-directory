@@ -30,7 +30,7 @@ export default function CategoriesSectionEN({ categories }: CategoriesSectionENP
             return (
               <Link
                 key={category.id}
-                href={`/en/category/${englishSlug}`}
+                href={`/en/search?category=${category.slug}`}
                 className="group flex items-center gap-4 bg-slate-800/50 hover:bg-slate-800 p-5 rounded-xl border border-slate-700/50 hover:border-sky-500/50 transition-all hover:-translate-y-1 animate-fade-in-up"
               >
                 <span className="text-3xl group-hover:scale-110 transition-transform">

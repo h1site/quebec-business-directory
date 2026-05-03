@@ -32,7 +32,7 @@ export default function CitiesSectionEN() {
           {popularCities.map((city) => (
             <Link
               key={city.slug}
-              href={`/en/city/${city.slug}`}
+              href={`/en/search?city=${encodeURIComponent(city.name)}`}
               className="group flex items-center justify-between bg-slate-800/50 hover:bg-slate-800 p-4 rounded-xl border border-slate-700/50 hover:border-sky-500/50 transition-all hover:-translate-y-0.5 animate-fade-in-up"
             >
               <div className="flex items-center gap-3">

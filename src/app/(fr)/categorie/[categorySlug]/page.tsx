@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AdSense from '@/components/AdSense'
+import { AD_SLOTS, AD_LAYOUT_KEYS } from '@/config/adSlots'
 import { createServiceClient } from '@/lib/supabase/server'
 import { generateSlug } from '@/lib/utils'
 import { slugToCity } from '@/lib/cities'
@@ -90,8 +91,10 @@ async function getPopularCitiesForCategory(categorySlug: string) {
     }))
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { categorySlug } = await params
+  const { page: pageParam } = await searchParams
+  const page = Math.max(1, parseInt(pageParam || '1', 10))
   const category = await getCategory(categorySlug)
 
   if (!category) {
@@ -99,11 +102,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const { total } = await getBusinessesByCategory(categorySlug, 1)
+  const baseUrl = `https://registreduquebec.com/categorie/${categorySlug}`
+  const canonical = page > 1 ? `${baseUrl}?page=${page}` : baseUrl
+  const title = page > 1 ? `${category.label_fr} au Québec — Page ${page}` : `${category.label_fr} au Québec`
+  const description = page > 1
+    ? `${total.toLocaleString('fr-CA')} entreprises de ${category.label_fr} au Québec. Page ${page}.`
+    : `${total.toLocaleString('fr-CA')} entreprises de ${category.label_fr} au Québec. Comparez les avis, coordonnées et services.`
 
   return {
-    title: `${category.label_fr} au Québec`,
-    description: `${total.toLocaleString('fr-CA')} entreprises de ${category.label_fr} au Québec. Comparez les avis, coordonnées et services.`,
-    alternates: { canonical: `https://registreduquebec.com/categorie/${categorySlug}` },
+    title,
+    description,
+    alternates: { canonical },
   }
 }
 
@@ -248,12 +257,12 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                     </div>
                     {index === 3 && (
                       <div className="my-4">
-                        <AdSense slot="8544579045" format="auto" responsive={true} style={{ minHeight: '90px' }} />
+                        <AdSense slot={AD_SLOTS.inFeed} format="fluid" layout="in-feed" layoutKey={AD_LAYOUT_KEYS.inFeed} />
                       </div>
                     )}
                     {index === 9 && (
                       <div className="my-4">
-                        <AdSense slot="8544579045" format="auto" responsive={true} />
+                        <AdSense slot={AD_SLOTS.inFeed} format="fluid" layout="in-feed" layoutKey={AD_LAYOUT_KEYS.inFeed} />
                       </div>
                     )}
                   </div>

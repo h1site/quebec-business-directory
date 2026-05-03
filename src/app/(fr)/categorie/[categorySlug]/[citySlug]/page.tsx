@@ -157,15 +157,22 @@ async function getOtherCitiesForCategory(categorySlug: string, currentCitySlug: 
     }))
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { categorySlug, citySlug } = await params
+  const { page: pageParam } = await searchParams
+  const page = Math.max(1, parseInt(pageParam || '1', 10))
   const category = await getCategory(categorySlug)
   if (!category) return { title: 'Page non trouvée' }
 
   const cityName = slugToCity(citySlug)
-  const title = `${category.label_fr} à ${cityName}`
-  const description = `Entreprises de ${category.label_fr} à ${cityName}. Coordonnées, avis Google et informations.`
-  const canonical = `https://registreduquebec.com/categorie/${categorySlug}/${citySlug}`
+  const baseUrl = `https://registreduquebec.com/categorie/${categorySlug}/${citySlug}`
+  const canonical = page > 1 ? `${baseUrl}?page=${page}` : baseUrl
+  const title = page > 1
+    ? `${category.label_fr} à ${cityName} — Page ${page}`
+    : `${category.label_fr} à ${cityName}`
+  const description = page > 1
+    ? `Entreprises de ${category.label_fr} à ${cityName}. Page ${page}.`
+    : `Entreprises de ${category.label_fr} à ${cityName}. Coordonnées, avis Google et informations.`
 
   return {
     title,
