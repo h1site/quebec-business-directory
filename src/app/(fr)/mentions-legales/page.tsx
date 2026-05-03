@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 export const metadata: Metadata = {
   title: 'Mentions légales',
   description: 'Mentions légales du Registre d\'entreprises du Québec - Informations sur l\'éditeur, l\'hébergement et les conditions d\'utilisation.',
+  alternates: { canonical: 'https://registreduquebec.com/mentions-legales' },
 }
 
 export default function MentionsLegalesPage() {

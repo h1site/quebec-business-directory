@@ -259,7 +259,7 @@ export function generateBreadcrumbSchema(
 
 // ============================================
 // Simplified URL schema functions
-// For /entreprise/[slug] and /company/[slug]
+// For /entreprise/[slug] and /en/company/[slug]
 // ============================================
 
 export function generateBusinessSchemaSimple(business: Business, isEnglish = false) {
@@ -270,7 +270,7 @@ export function generateBusinessSchemaSimple(business: Business, isEnglish = fal
 
   const baseUrl = 'https://registreduquebec.com'
   const businessUrl = isEnglish
-    ? `${baseUrl}/company/${business.slug}`
+    ? `${baseUrl}/en/company/${business.slug}`
     : `${baseUrl}/entreprise/${business.slug}`
 
   const schema: Record<string, unknown> = {
@@ -540,7 +540,7 @@ export function generateBreadcrumbSchemaSimple(business: Business, isEnglish = f
         position: 3,
         name: business.name,
         item: isEnglish
-          ? `${baseUrl}/company/${business.slug}`
+          ? `${baseUrl}/en/company/${business.slug}`
           : `${baseUrl}/entreprise/${business.slug}`,
       },
     ],

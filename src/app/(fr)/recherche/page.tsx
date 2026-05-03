@@ -8,6 +8,7 @@ import { searchBusinesses, type Business } from '@/lib/search'
 export const metadata: Metadata = {
   title: 'Rechercher une entreprise au Québec',
   description: 'Recherchez parmi plus de 46 000 entreprises québécoises de qualité. Trouvez des commerces, services et professionnels près de chez vous.',
+  alternates: { canonical: 'https://registreduquebec.com/recherche' },
 }
 
 const CATEGORIES = [

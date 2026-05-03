@@ -26,7 +26,6 @@ export async function GET() {
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="${baseUrl}/blogue/${a.slug}" />
-    <xhtml:link rel="alternate" hreflang="en-CA" href="${baseUrl}/en/blog/${a.slug}" />
   </url>`)
       })
     }

@@ -6,6 +6,7 @@ import FooterEN from '@/components/FooterEN'
 export const metadata: Metadata = {
   title: 'Blog | Quebec Registry',
   description: 'Discover our videos and tips for Quebec businesses. Tutorials, guides and resources.',
+  alternates: { canonical: 'https://registreduquebec.com/en/blog' },
 }
 
 const videos = [

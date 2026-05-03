@@ -6,6 +6,7 @@ import FooterEN from '@/components/FooterEN'
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Contact the Quebec Business Registry. Questions, suggestions, listing modification requests.',
+  alternates: { canonical: 'https://registreduquebec.com/en/contact' },
 }
 
 export default function ContactPage() {

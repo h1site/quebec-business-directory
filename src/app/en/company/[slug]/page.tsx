@@ -85,7 +85,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description = `${business.name} in ${business.city}, Quebec. Find contact information, reviews and complete details.`
   }
 
-  const canonical = `https://registreduquebec.com/company/${slug}`
+  const canonical = `https://registreduquebec.com/en/company/${slug}`
 
   // Index all served pages
   const shouldIndex = true
@@ -113,7 +113,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical,
       languages: {
         'fr-CA': `/entreprise/${slug}`,
-        'en-CA': `/company/${slug}`,
+        'en-CA': `/en/company/${slug}`,
       },
     },
   }

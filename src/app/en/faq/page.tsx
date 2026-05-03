@@ -5,6 +5,7 @@ import FooterEN from '@/components/FooterEN'
 export const metadata: Metadata = {
   title: 'FAQ - Frequently Asked Questions',
   description: 'Find answers to the most frequently asked questions about the Quebec Business Registry.',
+  alternates: { canonical: 'https://registreduquebec.com/en/faq' },
 }
 
 const faqs = [

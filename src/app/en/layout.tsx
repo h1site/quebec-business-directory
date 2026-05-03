@@ -19,13 +19,6 @@ export const metadata: Metadata = {
     'quebec professional services',
     'quebec stores',
   ],
-  alternates: {
-    canonical: 'https://registreduquebec.com/en',
-    languages: {
-      'en-CA': 'https://registreduquebec.com/en',
-      'fr-CA': 'https://registreduquebec.com',
-    },
-  },
   openGraph: {
     type: 'website',
     locale: 'en_CA',

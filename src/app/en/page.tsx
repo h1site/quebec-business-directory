@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import HeaderEN from '@/components/HeaderEN'
 import FooterEN from '@/components/FooterEN'
@@ -12,6 +13,16 @@ import AdSense from '@/components/AdSense'
 import { createServiceClient } from '@/lib/supabase/server'
 
 export const revalidate = 86400 // 24 hours
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: 'https://registreduquebec.com/en',
+    languages: {
+      'en-CA': 'https://registreduquebec.com/en',
+      'fr-CA': 'https://registreduquebec.com',
+    },
+  },
+}
 
 async function getFeaturedBusinesses() {
   const supabase = createServiceClient()

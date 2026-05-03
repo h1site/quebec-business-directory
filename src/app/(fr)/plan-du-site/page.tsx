@@ -7,6 +7,7 @@ import { createServiceClient } from '@/lib/supabase/server'
 export const metadata: Metadata = {
   title: 'Plan du site',
   description: 'Plan du site complet du Registre des entreprises du Québec. Accédez facilement à toutes les pages, catégories, villes et entreprises.',
+  alternates: { canonical: 'https://registreduquebec.com/plan-du-site' },
 }
 
 export const revalidate = 86400 // Revalidate every 24 hours
@@ -306,7 +307,7 @@ export default async function SitemapPage() {
                   </a>
                 </li>
                 <li>
-                  <a href="/sitemap-websites.xml" target="_blank" rel="noopener" className="text-slate-300 hover:text-sky-400 transition-colors">
+                  <a href="/sitemap-businesses/1" target="_blank" rel="noopener" className="text-slate-300 hover:text-sky-400 transition-colors">
                     Entreprises
                   </a>
                 </li>

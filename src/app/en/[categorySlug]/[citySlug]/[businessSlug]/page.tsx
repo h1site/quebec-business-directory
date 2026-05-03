@@ -28,5 +28,5 @@ export default async function BusinessPageRedirectEN({ params }: Props) {
   }
 
   // 301 redirect to new simplified URL
-  redirect(`/company/${businessSlug}`)
+  redirect(`/en/company/${businessSlug}`)
 }

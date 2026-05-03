@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -9,6 +10,17 @@ import {
 import { createServiceClient } from '@/lib/supabase/server'
 
 export const revalidate = 86400 // 24 hours
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: 'https://registreduquebec.com',
+    languages: {
+      'x-default': 'https://registreduquebec.com',
+      'fr-CA': 'https://registreduquebec.com',
+      'en-CA': 'https://registreduquebec.com/en',
+    },
+  },
+}
 
 async function getFeaturedBusinesses() {
   const supabase = createServiceClient()

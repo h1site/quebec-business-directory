@@ -39,14 +39,6 @@ export const metadata: Metadata = {
   authors: [{ name: 'Registre du Québec' }],
   creator: 'Registre du Québec',
   publisher: 'Registre du Québec',
-  alternates: {
-    canonical: 'https://registreduquebec.com',
-    languages: {
-      'x-default': 'https://registreduquebec.com',
-      'fr-CA': 'https://registreduquebec.com',
-      'en-CA': 'https://registreduquebec.com/en',
-    },
-  },
   openGraph: {
     type: 'website',
     locale: 'fr_CA',

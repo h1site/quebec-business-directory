@@ -6,6 +6,7 @@ import FooterEN from '@/components/FooterEN'
 export const metadata: Metadata = {
   title: 'About Us',
   description: 'Discover the Quebec Business Registry, the most comprehensive directory of Quebec businesses with over 46,000 listings.',
+  alternates: { canonical: 'https://registreduquebec.com/en/about' },
 }
 
 export default function AboutPageEN() {

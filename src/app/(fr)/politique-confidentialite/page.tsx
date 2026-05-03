@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 export const metadata: Metadata = {
   title: 'Politique de confidentialité',
   description: 'Politique de confidentialité du Registre d\'entreprises du Québec - Protection de vos données personnelles selon la Loi 25.',
+  alternates: { canonical: 'https://registreduquebec.com/politique-confidentialite' },
 }
 
 export default function PolitiqueConfidentialitePage() {

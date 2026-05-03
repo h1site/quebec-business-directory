@@ -9,6 +9,7 @@ export const revalidate = 604800 // 7 days
 export const metadata: Metadata = {
   title: 'Toutes les catégories',
   description: 'Parcourez toutes les catégories d\'entreprises au Québec. Trouvez des restaurants, services professionnels, commerces et plus.',
+  alternates: { canonical: 'https://registreduquebec.com/parcourir/categories' },
 }
 
 async function getCategories() {

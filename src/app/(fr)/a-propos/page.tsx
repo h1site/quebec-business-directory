@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 export const metadata: Metadata = {
   title: 'À propos',
   description: 'Découvrez le Registre d\'entreprises du Québec, l\'annuaire le plus complet des entreprises québécoises avec plus de 7 000 fiches vérifiées.',
+  alternates: { canonical: 'https://registreduquebec.com/a-propos' },
 }
 
 export default function AboutPage() {

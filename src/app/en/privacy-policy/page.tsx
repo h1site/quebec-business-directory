@@ -5,6 +5,7 @@ import FooterEN from '@/components/FooterEN'
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'Privacy Policy of the Quebec Business Registry - Protection of your personal data under Law 25.',
+  alternates: { canonical: 'https://registreduquebec.com/en/privacy-policy' },
 }
 
 export default function PrivacyPolicyPageEN() {

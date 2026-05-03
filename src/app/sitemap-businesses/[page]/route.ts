@@ -4,6 +4,11 @@ import { createClient } from '@supabase/supabase-js'
 export const revalidate = 86400 // 24 hours
 
 const PAGE_SIZE = 1000
+const INDEXABLE_BUSINESS_FILTER =
+  'and(verification_confidence.eq.high,ai_description.not.is.null),' +
+  'and(verification_confidence.eq.high,ai_seo_content.not.is.null),' +
+  'and(is_claimed.eq.true,ai_description.not.is.null),' +
+  'and(is_claimed.eq.true,ai_seo_content.not.is.null)'
 
 export async function GET(
   _request: NextRequest,
@@ -33,7 +38,7 @@ export async function GET(
     .from('businesses')
     .select('slug, updated_at, ai_enriched_at')
     .not('slug', 'is', null)
-    .or('verification_confidence.eq.high,is_claimed.eq.true')
+    .or(INDEXABLE_BUSINESS_FILTER)
     .order('slug')
     .range(offset, offset + PAGE_SIZE - 1)
 

@@ -10,6 +10,7 @@ export const revalidate = 604800 // 7 days
 export const metadata: Metadata = {
   title: 'All Categories',
   description: 'Browse all business categories in Quebec. Find restaurants, professional services, retail stores, and more.',
+  alternates: { canonical: 'https://registreduquebec.com/en/browse/categories' },
 }
 
 async function getCategories() {

@@ -5,6 +5,7 @@ import FooterEN from '@/components/FooterEN'
 export const metadata: Metadata = {
   title: 'Legal Notice',
   description: 'Legal Notice of the Quebec Business Registry - Information about the publisher, hosting, and terms of use.',
+  alternates: { canonical: 'https://registreduquebec.com/en/legal-notice' },
 }
 
 export default function LegalNoticePageEN() {

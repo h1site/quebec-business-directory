@@ -7,6 +7,7 @@ import { searchBusinesses, getCategories, type Business, type Category } from '@
 export const metadata: Metadata = {
   title: 'Search for a Business in Quebec',
   description: 'Search among over 46,000 quality Quebec businesses. Find shops, services and professionals near you.',
+  alternates: { canonical: 'https://registreduquebec.com/en/search' },
 }
 
 interface SearchParams {

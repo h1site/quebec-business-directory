@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
 const PAGE_SIZE = 1000
+const INDEXABLE_BUSINESS_FILTER =
+  'and(verification_confidence.eq.high,ai_description.not.is.null),' +
+  'and(verification_confidence.eq.high,ai_seo_content.not.is.null),' +
+  'and(is_claimed.eq.true,ai_description.not.is.null),' +
+  'and(is_claimed.eq.true,ai_seo_content.not.is.null)'
 
 export async function GET() {
   const baseUrl = 'https://registreduquebec.com'
@@ -18,7 +23,7 @@ export async function GET() {
       .from('businesses')
       .select('id', { count: 'exact', head: true })
       .not('slug', 'is', null)
-      .or('verification_confidence.eq.high,is_claimed.eq.true')
+      .or(INDEXABLE_BUSINESS_FILTER)
 
     if (count) {
       totalPages = Math.ceil(count / PAGE_SIZE)
