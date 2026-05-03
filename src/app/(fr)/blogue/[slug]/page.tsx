@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import AdSense from '@/components/AdSense'
+import { AD_SLOTS } from '@/config/adSlots'
 import { createServiceClient } from '@/lib/supabase/server'
 import { marked } from 'marked'
 
@@ -27,6 +29,18 @@ async function getArticle(slug: string) {
     .eq('is_published', true)
     .single()
   return data
+}
+
+async function getRelatedArticles(currentSlug: string, limit = 4) {
+  const supabase = createServiceClient()
+  const { data } = await supabase
+    .from('blog_articles')
+    .select('slug, title_fr, excerpt_fr, thumbnail_url, published_at')
+    .eq('is_published', true)
+    .neq('slug', currentSlug)
+    .order('published_at', { ascending: false })
+    .limit(limit)
+  return data || []
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -81,7 +95,9 @@ export default async function BlogArticlePage({ params }: Props) {
     notFound()
   }
 
-  const jsonLd = {
+  const relatedArticles = await getRelatedArticles(slug)
+
+  const articleJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: article.title_fr,
@@ -125,11 +141,21 @@ export default async function BlogArticlePage({ params }: Props) {
     },
   }
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://registreduquebec.com' },
+      { '@type': 'ListItem', position: 2, name: 'Blogue', item: 'https://registreduquebec.com/blogue' },
+      { '@type': 'ListItem', position: 3, name: article.title_fr, item: `https://registreduquebec.com/blogue/${slug}` },
+    ],
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [articleJsonLd, breadcrumbJsonLd] }) }}
       />
 
       <Header />
@@ -175,6 +201,11 @@ export default async function BlogArticlePage({ params }: Props) {
             <hr className="mt-8 border-white/10" />
           </header>
 
+          {/* Ad - In-article after intro (high RPM) */}
+          <div className="my-6">
+            <AdSense slot={AD_SLOTS.inArticle} format="fluid" layout="in-article" />
+          </div>
+
           <div
             className="prose prose-invert prose-sky max-w-none
               prose-headings:text-[var(--foreground)] prose-headings:font-bold
@@ -189,6 +220,48 @@ export default async function BlogArticlePage({ params }: Props) {
               prose-blockquote:border-sky-500 prose-blockquote:bg-sky-500/5 prose-blockquote:rounded-r-lg prose-blockquote:py-1"
             dangerouslySetInnerHTML={{ __html: marked.parse(article.content_fr) as string }}
           />
+
+          {/* Ad - End of article (in-article format) */}
+          <div className="my-8">
+            <AdSense slot={AD_SLOTS.inArticle} format="fluid" layout="in-article" />
+          </div>
+
+          {/* Related articles — internal linking for crawl + PageRank */}
+          {relatedArticles.length > 0 && (
+            <section className="mt-12 pt-8 border-t border-white/10">
+              <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--foreground)' }}>
+                Articles connexes
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {relatedArticles.map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={`/blogue/${related.slug}`}
+                    className="group flex gap-4 rounded-xl p-4 no-underline transition-colors hover:bg-white/5"
+                    style={{ background: 'var(--background-secondary)', border: '1px solid rgba(255,255,255,0.05)' }}
+                  >
+                    {related.thumbnail_url && (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={related.thumbnail_url}
+                        alt={related.title_fr}
+                        className="w-24 h-24 rounded-lg object-cover shrink-0"
+                        loading="lazy"
+                      />
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <time className="text-xs uppercase tracking-widest mb-1 block" style={{ color: 'var(--foreground-muted)' }}>
+                        {new Date(related.published_at).toLocaleDateString('fr-CA', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </time>
+                      <h3 className="font-bold text-base leading-tight group-hover:text-sky-400 transition-colors line-clamp-3" style={{ color: 'var(--foreground)' }}>
+                        {related.title_fr}
+                      </h3>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
 
           <footer className="mt-12 pt-8 border-t border-white/10">
             {/* Author bio - E-E-A-T signal */}
@@ -239,4 +312,3 @@ export default async function BlogArticlePage({ params }: Props) {
     </>
   )
 }
-

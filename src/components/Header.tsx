@@ -164,6 +164,12 @@ export default function Header() {
               Recherche
             </Link>
             <Link
+              href="/blogue"
+              className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)] hover:bg-[var(--foreground)]/5 px-3 py-1.5 rounded-md transition-colors no-underline"
+            >
+              Blogue
+            </Link>
+            <Link
               href={user ? '/entreprise/nouvelle' : '/connexion?redirect=/entreprise/nouvelle'}
               className="text-sm bg-sky-500 hover:bg-sky-400 text-white px-4 py-1.5 rounded-md transition-colors no-underline flex items-center gap-1.5 font-semibold"
             >
@@ -320,6 +326,13 @@ export default function Header() {
           >
             <SearchIcon />
             Recherche
+          </Link>
+          <Link
+            href="/blogue"
+            onClick={() => setDrawerOpen(false)}
+            className="w-full text-left text-[var(--foreground)] py-3 px-3 rounded-md hover:bg-[var(--foreground)]/5 transition-colors no-underline text-sm"
+          >
+            Blogue
           </Link>
           <Link
             href={user ? '/entreprise/nouvelle' : '/connexion?redirect=/entreprise/nouvelle'}
