@@ -3,12 +3,20 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AdSense from '@/components/AdSense'
+import { AD_SLOTS, AD_LAYOUT_KEYS } from '@/config/adSlots'
 import { searchBusinesses, type Business } from '@/lib/search'
 
-export const metadata: Metadata = {
-  title: 'Rechercher une entreprise au Québec',
-  description: 'Recherchez parmi plus de 46 000 entreprises québécoises de qualité. Trouvez des commerces, services et professionnels près de chez vous.',
-  alternates: { canonical: 'https://registreduquebec.com/recherche' },
+export async function generateMetadata({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<Metadata> {
+  const params = await searchParams
+  const hasFilters = Boolean(params.q || params.categorie || params.ville || params.page)
+
+  return {
+    title: 'Rechercher une entreprise au Québec',
+    description: 'Recherchez parmi plus de 46 000 entreprises québécoises de qualité. Trouvez des commerces, services et professionnels près de chez vous.',
+    alternates: { canonical: 'https://registreduquebec.com/recherche' },
+    // Filtered/paginated search variants are not unique destinations — point Google to the canonical /recherche
+    robots: hasFilters ? { index: false, follow: true } : undefined,
+  }
 }
 
 const CATEGORIES = [
@@ -346,12 +354,12 @@ export default async function SearchPage({
                     <BusinessCard business={biz} />
                     {index === 2 && (
                       <div className="my-4">
-                        <AdSense slot="8544579045" format="auto" responsive={true} style={{ minHeight: '90px' }} />
+                        <AdSense slot={AD_SLOTS.inFeed} format="fluid" layout="in-feed" layoutKey={AD_LAYOUT_KEYS.inFeed} />
                       </div>
                     )}
                     {index === 7 && (
                       <div className="my-4">
-                        <AdSense slot="8544579045" format="auto" responsive={true} />
+                        <AdSense slot={AD_SLOTS.inFeed} format="fluid" layout="in-feed" layoutKey={AD_LAYOUT_KEYS.inFeed} />
                       </div>
                     )}
                   </div>

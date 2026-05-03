@@ -24,6 +24,9 @@ export default function robots(): MetadataRoute.Robots {
           '/en/add-business',
           '/*/modifier',
           '/api/*',
+          // Block faceted search URL combinations (cause GSC crawl-budget waste)
+          '/recherche?*',
+          '/en/search?*',
         ],
       },
       {

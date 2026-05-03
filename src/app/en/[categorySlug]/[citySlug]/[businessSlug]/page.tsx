@@ -1,5 +1,6 @@
-import { permanentRedirect } from 'next/navigation'
+import { permanentRedirect, notFound } from 'next/navigation'
 import { createServiceClient } from '@/lib/supabase/server'
+import { generateSlug } from '@/lib/utils'
 
 interface Props {
   params: Promise<{
@@ -9,21 +10,22 @@ interface Props {
   }>
 }
 
-// Redirect old URLs to new simplified structure
+// Legacy URL redirect — only honor if cat/city actually match this business
+// to avoid generating millions of valid 308 redirect permutations
 export default async function BusinessPageRedirectEN({ params }: Props) {
-  const { businessSlug } = await params
+  const { categorySlug, citySlug, businessSlug } = await params
 
-  // Verify business exists before redirecting
   const supabase = createServiceClient()
   const { data } = await supabase
     .from('businesses')
-    .select('slug')
+    .select('slug, main_category_slug, city')
     .eq('slug', businessSlug)
     .single()
 
-  if (!data) {
-    // Business not found, let Next.js handle 404
-    const { notFound } = await import('next/navigation')
+  if (!data) notFound()
+
+  const businessCitySlug = data.city ? generateSlug(data.city) : null
+  if (data.main_category_slug !== categorySlug || businessCitySlug !== citySlug) {
     notFound()
   }
 

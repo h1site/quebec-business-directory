@@ -4,10 +4,16 @@ import HeaderEN from '@/components/HeaderEN'
 import FooterEN from '@/components/FooterEN'
 import { searchBusinesses, getCategories, type Business, type Category } from '@/lib/search'
 
-export const metadata: Metadata = {
-  title: 'Search for a Business in Quebec',
-  description: 'Search among over 46,000 quality Quebec businesses. Find shops, services and professionals near you.',
-  alternates: { canonical: 'https://registreduquebec.com/en/search' },
+export async function generateMetadata({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<Metadata> {
+  const params = await searchParams
+  const hasFilters = Boolean(params.q || params.category || params.city || params.page)
+
+  return {
+    title: 'Search for a Business in Quebec',
+    description: 'Search among over 46,000 quality Quebec businesses. Find shops, services and professionals near you.',
+    alternates: { canonical: 'https://registreduquebec.com/en/search' },
+    robots: hasFilters ? { index: false, follow: true } : undefined,
+  }
 }
 
 interface SearchParams {
