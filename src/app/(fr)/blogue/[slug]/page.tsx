@@ -96,6 +96,7 @@ export default async function BlogArticlePage({ params }: Props) {
   }
 
   const relatedArticles = await getRelatedArticles(slug)
+  const wordCount = (article.content_fr || '').trim().split(/\s+/).filter(Boolean).length
 
   const articleJsonLd = {
     '@context': 'https://schema.org',
@@ -104,6 +105,22 @@ export default async function BlogArticlePage({ params }: Props) {
     description: article.excerpt_fr,
     datePublished: article.published_at,
     dateModified: article.updated_at || article.published_at,
+    inLanguage: 'fr-CA',
+    isAccessibleForFree: true,
+    wordCount,
+    articleSection: 'Entrepreneuriat',
+    keywords: [
+      'Plan PME 2025-2028',
+      'PME Québec',
+      'subventions PME',
+      'financement entreprise Québec',
+      'accompagnement entrepreneurial',
+    ],
+    about: [
+      { '@type': 'Thing', name: 'PME au Québec' },
+      { '@type': 'Thing', name: 'Financement des entreprises' },
+      { '@type': 'Thing', name: 'Productivité et croissance' },
+    ],
     image: article.thumbnail_url
       ? [article.thumbnail_url]
       : ['https://registreduquebec.com/images/logos/logo.webp'],

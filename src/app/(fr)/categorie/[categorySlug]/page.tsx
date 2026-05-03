@@ -112,6 +112,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   return {
     title,
     description,
+    robots: page > 1 ? { index: false, follow: true } : undefined,
     alternates: { canonical },
   }
 }

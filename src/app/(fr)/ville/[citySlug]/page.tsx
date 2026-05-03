@@ -129,6 +129,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   return {
     title,
     description,
+    robots: { index: false, follow: true },
     alternates: { canonical },
   }
 }

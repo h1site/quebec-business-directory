@@ -89,10 +89,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const canonical = `https://registreduquebec.com/entreprise/${slug}`
 
-  // Only index if business has unique content (avoid thin content penalty)
-  const hasUniqueContent = !!(business.ai_description || business.ai_seo_content)
-  const isHighQuality = business.verification_confidence === 'high' || business.is_claimed
-  const shouldIndex = hasUniqueContent && isHighQuality
+  // Keep indexation focused on the strongest business pages until Google trusts the directory.
+  const shouldIndex = !!(
+    business.is_claimed ||
+    (
+      business.verification_confidence === 'high' &&
+      business.website &&
+      business.ai_description &&
+      (business.google_reviews_count || 0) >= 100
+    )
+  )
 
   return {
     title,

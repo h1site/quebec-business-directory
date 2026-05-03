@@ -5,10 +5,8 @@ export const revalidate = 86400 // 24 hours
 
 const PAGE_SIZE = 1000
 const INDEXABLE_BUSINESS_FILTER =
-  'and(verification_confidence.eq.high,ai_description.not.is.null),' +
-  'and(verification_confidence.eq.high,ai_seo_content.not.is.null),' +
-  'and(is_claimed.eq.true,ai_description.not.is.null),' +
-  'and(is_claimed.eq.true,ai_seo_content.not.is.null)'
+  'and(verification_confidence.eq.high,website.not.is.null,ai_description.not.is.null,google_reviews_count.gte.100),' +
+  'and(is_claimed.eq.true,ai_description.not.is.null)'
 
 export async function GET(
   _request: NextRequest,
@@ -36,9 +34,10 @@ export async function GET(
 
   const { data, error } = await supabase
     .from('businesses')
-    .select('slug, updated_at, ai_enriched_at, ai_description_en')
+    .select('slug, updated_at, ai_enriched_at')
     .not('slug', 'is', null)
     .or(INDEXABLE_BUSINESS_FILTER)
+    .order('google_reviews_count', { ascending: false, nullsFirst: false })
     .order('slug')
     .range(offset, offset + PAGE_SIZE - 1)
 
@@ -48,19 +47,12 @@ export async function GET(
 
   const urls = data.map((business) => {
     const lastmod = business.ai_enriched_at?.split('T')[0] || business.updated_at?.split('T')[0] || today
-    const priority = business.ai_enriched_at ? '0.9' : '0.7'
-    const alternates = business.ai_description_en
-      ? `
-    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}/entreprise/${business.slug}" />
-    <xhtml:link rel="alternate" hreflang="fr-CA" href="${baseUrl}/entreprise/${business.slug}" />
-    <xhtml:link rel="alternate" hreflang="en-CA" href="${baseUrl}/en/company/${business.slug}" />`
-      : ''
 
     return `  <url>
     <loc>${baseUrl}/entreprise/${business.slug}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>${priority}</priority>${alternates}
+    <priority>0.9</priority>
   </url>`
   })
 

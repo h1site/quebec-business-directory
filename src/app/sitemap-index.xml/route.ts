@@ -3,13 +3,8 @@ import { createClient } from '@supabase/supabase-js'
 
 const PAGE_SIZE = 1000
 const INDEXABLE_BUSINESS_FILTER =
-  'and(verification_confidence.eq.high,ai_description.not.is.null),' +
-  'and(verification_confidence.eq.high,ai_seo_content.not.is.null),' +
-  'and(is_claimed.eq.true,ai_description.not.is.null),' +
-  'and(is_claimed.eq.true,ai_seo_content.not.is.null)'
-const INDEXABLE_EN_BUSINESS_FILTER =
-  'and(verification_confidence.eq.high,ai_description_en.not.is.null),' +
-  'and(is_claimed.eq.true,ai_description_en.not.is.null)'
+  'and(verification_confidence.eq.high,website.not.is.null,ai_description.not.is.null,google_reviews_count.gte.100),' +
+  'and(is_claimed.eq.true,ai_description.not.is.null)'
 
 export async function GET() {
   const baseUrl = 'https://registreduquebec.com'
@@ -17,7 +12,6 @@ export async function GET() {
 
   // Get total business count to determine number of sitemap pages
   let totalPages = 1
-  let totalEnPages = 0
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
@@ -33,15 +27,6 @@ export async function GET() {
       totalPages = Math.ceil(count / PAGE_SIZE)
     }
 
-    const { count: enCount } = await supabase
-      .from('businesses')
-      .select('id', { count: 'exact', head: true })
-      .not('slug', 'is', null)
-      .or(INDEXABLE_EN_BUSINESS_FILTER)
-
-    if (enCount) {
-      totalEnPages = Math.ceil(enCount / PAGE_SIZE)
-    }
   }
 
   const sitemaps = [`  <sitemap>
@@ -56,25 +41,8 @@ export async function GET() {
   </sitemap>`)
   }
 
-  for (let i = 1; i <= totalEnPages; i++) {
-    sitemaps.push(`  <sitemap>
-    <loc>${baseUrl}/sitemap-businesses-en/${i}</loc>
-    <lastmod>${today}</lastmod>
-  </sitemap>`)
-  }
-
-  sitemaps.push(`  <sitemap>
-    <loc>${baseUrl}/sitemap-villes.xml</loc>
-    <lastmod>${today}</lastmod>
-  </sitemap>`)
-
   sitemaps.push(`  <sitemap>
     <loc>${baseUrl}/sitemap-categories.xml</loc>
-    <lastmod>${today}</lastmod>
-  </sitemap>`)
-
-  sitemaps.push(`  <sitemap>
-    <loc>${baseUrl}/sitemap-combo.xml</loc>
     <lastmod>${today}</lastmod>
   </sitemap>`)
 

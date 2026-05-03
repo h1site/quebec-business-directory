@@ -87,9 +87,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const canonical = `https://registreduquebec.com/en/company/${slug}`
 
-  const hasUniqueContent = !!(business.ai_description_en || business.ai_description || business.ai_seo_content)
-  const isHighQuality = business.verification_confidence === 'high' || business.is_claimed
-  const shouldIndex = hasUniqueContent && isHighQuality
+  const shouldIndex = !!(
+    business.is_claimed ||
+    (
+      business.verification_confidence === 'high' &&
+      business.website &&
+      business.ai_description_en &&
+      (business.google_reviews_count || 0) >= 100
+    )
+  )
 
   return {
     title,
