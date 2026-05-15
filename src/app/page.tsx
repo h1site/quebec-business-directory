@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AdSense from '@/components/AdSense'
+import { AD_SLOTS } from '@/config/adSlots'
 import {
   HeroSection,
   CategoriesSection,
@@ -231,7 +232,7 @@ export default async function HomePage() {
 
         {/* Ad - after categories + cities */}
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="8544579045" format="auto" responsive={true} />
+          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} />
         </div>
 
         {/* Featured Businesses - critical for Google crawling internal links */}
@@ -276,7 +277,7 @@ export default async function HomePage() {
 
         {/* Ad - after featured businesses */}
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="8544579045" format="auto" responsive={true} />
+          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} />
         </div>
 
         {/* About / value-prop content section - boosts text-to-HTML ratio */}
@@ -354,6 +355,11 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Ad - Multiplex (related-content style) at end of page */}
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          <AdSense slot={AD_SLOTS.multiplex} format="autorelaxed" responsive={true} style={{ minHeight: '300px' }} />
+        </div>
 
       </main>
 

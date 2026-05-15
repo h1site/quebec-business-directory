@@ -10,6 +10,7 @@ import {
   AboutSectionEN,
 } from '@/components/home'
 import AdSense from '@/components/AdSense'
+import { AD_SLOTS } from '@/config/adSlots'
 import { createServiceClient } from '@/lib/supabase/server'
 
 export const revalidate = 86400 // 24 hours
@@ -129,7 +130,7 @@ export default async function HomePageEN() {
 
         {/* Ad - after categories */}
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="8544579045" format="auto" responsive={true} />
+          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} />
         </div>
 
         <CitiesSectionEN />
@@ -137,7 +138,7 @@ export default async function HomePageEN() {
 
         {/* Ad - after stats */}
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="8544579045" format="auto" responsive={true} />
+          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} />
         </div>
 
         {/* Featured Businesses */}
@@ -171,10 +172,15 @@ export default async function HomePageEN() {
 
         {/* Ad - before about */}
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="8544579045" format="auto" responsive={true} />
+          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} />
         </div>
 
         <AboutSectionEN />
+
+        {/* Ad - Multiplex (related-content style) at end of page */}
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          <AdSense slot={AD_SLOTS.multiplex} format="autorelaxed" responsive={true} style={{ minHeight: '300px' }} />
+        </div>
       </main>
 
       <FooterEN />

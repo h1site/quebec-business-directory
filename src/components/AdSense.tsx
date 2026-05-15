@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface AdSenseProps {
   /**
@@ -11,10 +11,11 @@ interface AdSenseProps {
   /**
    * Ad format
    * - 'auto': Responsive (recommended)
-   * - 'fluid': Fills container
+   * - 'fluid': Fills container (use with `layout`)
    * - 'rectangle': Fixed rectangle
+   * - 'autorelaxed': Multiplex / matched-content style (related content)
    */
-  format?: 'auto' | 'fluid' | 'rectangle'
+  format?: 'auto' | 'fluid' | 'rectangle' | 'autorelaxed'
   /**
    * Ad layout type
    * - 'in-article': For within article content
@@ -38,16 +39,24 @@ interface AdSenseProps {
    * Custom inline styles
    */
   style?: React.CSSProperties
+  /**
+   * Disable lazy-loading (load immediately). Use for above-the-fold ads only.
+   */
+  eager?: boolean
 }
 
 /**
  * Google AdSense component
  *
+ * Lazy-loads ads via IntersectionObserver — the `<ins>` only enters the AdSense
+ * queue when within 200px of the viewport. This raises viewability and prevents
+ * unviewed impressions from dragging the eCPM down.
+ *
  * Usage:
  * ```tsx
  * <AdSense slot="1234567890" />
  * <AdSense slot="1234567890" layout="in-article" />
- * <AdSense slot="1234567890" layout="in-feed" layoutKey="-fb+5w+4e-db+86" />
+ * <AdSense slot="1234567890" eager /> // above-the-fold
  * ```
  */
 export default function AdSense({
@@ -58,17 +67,46 @@ export default function AdSense({
   responsive = true,
   className = '',
   style = {},
+  eager = false,
 }: AdSenseProps) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(eager)
+  const pushed = useRef(false)
+
   useEffect(() => {
+    if (eager || visible) return
+    const el = ref.current
+    if (!el) return
+    if (typeof IntersectionObserver === 'undefined') {
+      setVisible(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            setVisible(true)
+            io.disconnect()
+            break
+          }
+        }
+      },
+      { rootMargin: '200px 0px' }
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [eager, visible])
+
+  useEffect(() => {
+    if (!visible || pushed.current) return
+    pushed.current = true
     try {
-      // Push ad to AdSense queue
       ;((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({})
     } catch (err) {
       console.error('AdSense error:', err)
     }
-  }, [])
+  }, [visible])
 
-  // Base styles
   const baseStyle: React.CSSProperties = {
     display: 'block',
     textAlign: layout ? 'center' : undefined,
@@ -76,17 +114,19 @@ export default function AdSense({
   }
 
   return (
-    <div className={`adsense-container ${className}`}>
-      <ins
-        className="adsbygoogle"
-        style={baseStyle}
-        data-ad-client="ca-pub-8781698761921917"
-        data-ad-slot={slot}
-        data-ad-format={format}
-        data-ad-layout={layout}
-        data-ad-layout-key={layoutKey}
-        data-full-width-responsive={responsive ? 'true' : 'false'}
-      />
+    <div ref={ref} className={`adsense-container ${className}`}>
+      {visible && (
+        <ins
+          className="adsbygoogle"
+          style={baseStyle}
+          data-ad-client="ca-pub-8781698761921917"
+          data-ad-slot={slot}
+          data-ad-format={format}
+          data-ad-layout={layout}
+          data-ad-layout-key={layoutKey}
+          data-full-width-responsive={responsive ? 'true' : 'false'}
+        />
+      )}
     </div>
   )
 }
@@ -150,6 +190,64 @@ export function AdSenseSidebar({ slot, sticky = true, className }: { slot: strin
         format="auto"
         responsive={true}
         style={{ minHeight: '600px' }}
+      />
+    </div>
+  )
+}
+
+/**
+ * Sticky bottom anchor ad — mobile only.
+ *
+ * High-RPM placement: always visible while scrolling, dismissible by user.
+ * Hidden on screens >= 768px (sm:hidden equivalent via media query) because
+ * desktop has the sticky sidebar already.
+ */
+export function AdSenseAnchor({ slot }: { slot: string }) {
+  const [dismissed, setDismissed] = useState(false)
+  if (dismissed) return null
+
+  return (
+    <div
+      className="adsense-anchor md:hidden"
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        background: '#ffffff',
+        borderTop: '1px solid rgba(0,0,0,0.1)',
+        boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
+        padding: '4px 4px 6px',
+      }}
+    >
+      <button
+        onClick={() => setDismissed(true)}
+        aria-label="Fermer la publicité"
+        style={{
+          position: 'absolute',
+          top: -10,
+          right: 8,
+          width: 22,
+          height: 22,
+          borderRadius: '50%',
+          background: '#333',
+          color: '#fff',
+          border: 'none',
+          fontSize: 14,
+          lineHeight: '22px',
+          textAlign: 'center',
+          cursor: 'pointer',
+        }}
+      >
+        ×
+      </button>
+      <AdSense
+        slot={slot}
+        format="auto"
+        responsive={true}
+        eager
+        style={{ minHeight: '50px', maxHeight: '100px' }}
       />
     </div>
   )

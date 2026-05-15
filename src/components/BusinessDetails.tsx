@@ -7,7 +7,8 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { categoryLabels } from '@/lib/category-labels'
 import ClaimButton from '@/components/ClaimButton'
-import AdSense from '@/components/AdSense'
+import AdSense, { AdSenseAnchor } from '@/components/AdSense'
+import { AD_SLOTS } from '@/config/adSlots'
 
 interface Props {
   business: Business
@@ -300,7 +301,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Ad - In Article */}
                 <div className="my-4">
-                  <AdSense slot="8544579045" format="auto" responsive={true} />
+                  <AdSense slot={AD_SLOTS.inArticle} format="fluid" layout="in-article" />
                 </div>
 
                 {/* Gallery */}
@@ -745,7 +746,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
                 {/* Ad - Sidebar Sticky */}
                 <div className="sticky top-24">
-                  <AdSense slot="8544579045" format="auto" responsive={true} style={{ minHeight: '600px' }} />
+                  <AdSense slot={AD_SLOTS.sidebar} format="auto" responsive={true} style={{ minHeight: '600px' }} />
                 </div>
               </div>
             </div>
@@ -754,7 +755,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
         {/* Ad - Leaderboard before recommendations */}
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot="8544579045" format="auto" responsive={true} style={{ minHeight: '90px' }} />
+          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} style={{ minHeight: '90px' }} />
         </div>
 
         {/* City Businesses */}
@@ -798,9 +799,17 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
           </section>
         )}
 
+        {/* Ad - Multiplex (related-content style) at end of page */}
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          <AdSense slot={AD_SLOTS.multiplex} format="autorelaxed" responsive={true} style={{ minHeight: '300px' }} />
+        </div>
+
       </main>
 
       <Footer />
+
+      {/* Anchor ad - mobile sticky bottom */}
+      <AdSenseAnchor slot={AD_SLOTS.anchor} />
     </>
   )
 }

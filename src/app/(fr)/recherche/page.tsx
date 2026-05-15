@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AdSense from '@/components/AdSense'
-import { AD_SLOTS, AD_LAYOUT_KEYS } from '@/config/adSlots'
+import { AD_SLOTS } from '@/config/adSlots'
 import { searchBusinesses, type Business } from '@/lib/search'
 
 export async function generateMetadata({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<Metadata> {
@@ -354,12 +354,12 @@ export default async function SearchPage({
                     <BusinessCard business={biz} />
                     {index === 2 && (
                       <div className="my-4">
-                        <AdSense slot={AD_SLOTS.inFeed} format="fluid" layout="in-feed" layoutKey={AD_LAYOUT_KEYS.inFeed} />
+                        <AdSense slot={AD_SLOTS.inFeed} format="auto" responsive={true} />
                       </div>
                     )}
                     {index === 7 && (
                       <div className="my-4">
-                        <AdSense slot={AD_SLOTS.inFeed} format="fluid" layout="in-feed" layoutKey={AD_LAYOUT_KEYS.inFeed} />
+                        <AdSense slot={AD_SLOTS.inFeed} format="auto" responsive={true} />
                       </div>
                     )}
                   </div>
