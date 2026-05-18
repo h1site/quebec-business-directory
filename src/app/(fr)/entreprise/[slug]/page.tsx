@@ -5,6 +5,7 @@ import { generateBusinessSchemaSimple, generateFAQSchemaSimple, generateBreadcru
 import type { Business } from '@/types/business'
 import BusinessDetails from '@/components/BusinessDetails'
 import trafficSlugs from '@/data/traffic-slugs.json'
+import { formatBusinessName } from '@/lib/format-business-name'
 
 // Set of slugs that have traffic (keep even without website)
 const trafficSlugSet = new Set(trafficSlugs.slugs)
@@ -65,7 +66,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const title = `${business.name} - ${business.city}`
+  const displayName = formatBusinessName(business.name)
+  const title = `${displayName} - ${business.city}`
 
   // Truncate description properly (at word boundary, max 155 chars + "...")
   const truncateDescription = (text: string, maxLen = 150): string => {
@@ -80,11 +82,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (business.ai_description) {
     description = truncateDescription(business.ai_description)
   } else if (business.google_rating && business.google_reviews_count) {
-    description = `${business.name} à ${business.city}. Note: ${business.google_rating}/5 (${business.google_reviews_count} avis). Coordonnées, horaires et informations.`
+    description = `${displayName} à ${business.city}. Note: ${business.google_rating}/5 (${business.google_reviews_count} avis). Coordonnées, horaires et informations.`
   } else if (business.description) {
     description = truncateDescription(business.description)
   } else {
-    description = `${business.name} à ${business.city}, Québec. Trouvez les coordonnées, avis et informations complètes.`
+    description = `${displayName} à ${business.city}, Québec. Trouvez les coordonnées, avis et informations complètes.`
   }
 
   const canonical = `https://registreduquebec.com/entreprise/${slug}`
@@ -105,13 +107,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     robots: { index: shouldIndex, follow: true },
     openGraph: {
-      title: `${business.name} - ${business.city} | Registre du Québec`,
+      title: `${displayName} - ${business.city} | Registre du Québec`,
       description,
       type: 'website',
       locale: 'fr_CA',
       url: canonical,
       images: business.logo_url
-        ? [{ url: business.logo_url, width: 400, height: 400, alt: `Logo de ${business.name}` }]
+        ? [{ url: business.logo_url, width: 400, height: 400, alt: `Logo de ${displayName}` }]
         : [{ url: 'https://registreduquebec.com/images/logos/logo.webp', width: 512, height: 512, alt: 'Registre du Québec' }],
     },
     twitter: {

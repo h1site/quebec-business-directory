@@ -5,6 +5,7 @@ import { generateSlug } from '@/lib/utils'
 import HeaderEN from '@/components/HeaderEN'
 import FooterEN from '@/components/FooterEN'
 import ClaimButtonEN from '@/components/ClaimButtonEN'
+import { formatBusinessName } from '@/lib/format-business-name'
 
 interface Props {
   business: Business
@@ -23,6 +24,7 @@ const dayNames: Record<string, string> = {
 
 export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: Props) {
   const citySlug = generateSlug(business.city || '')
+  const displayName = formatBusinessName(business.name)
 
   // Use verified data if available, otherwise fall back to original (but only for phone in hero buttons)
   const displayAddress = business.verified_address || null // Only show verified address
@@ -63,7 +65,7 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                 {business.city}
               </Link>
               <span>›</span>
-              <span className="text-white">{business.name}</span>
+              <span className="text-white">{displayName}</span>
             </nav>
 
             <div className="flex flex-col md:flex-row gap-6 items-start">
@@ -72,15 +74,15 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                 <img
                   src={business.logo_url || '/images/logos/logo.webp'}
                   alt={business.logo_url
-                    ? `${business.name} logo`
-                    : `${business.name} - Business registered in Quebec Registry in ${business.city || 'Quebec'}`}
+                    ? `${displayName} logo`
+                    : `${displayName} - Business registered in Quebec Registry in ${business.city || 'Quebec'}`}
                   className="w-full h-full object-contain"
                 />
               </div>
 
               <div className="flex-1">
                 <h1 className="text-3xl md:text-4xl font-bold mb-2">
-                  {business.name}
+                  {displayName}
                 </h1>
 
                 <div className="flex flex-wrap items-center gap-3 text-blue-100">
@@ -199,7 +201,7 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                         <div key={i} className="aspect-square rounded-lg overflow-hidden">
                           <img
                             src={img}
-                            alt={`${business.name} - Photo ${i + 1}`}
+                            alt={`${displayName} - Photo ${i + 1}`}
                             className="w-full h-full object-cover"
                           />
                         </div>
@@ -214,43 +216,43 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                   <div className="space-y-3">
                     <details className="group bg-gray-50 rounded-lg">
                       <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-gray-900">
-                        Where is {business.name} located?
+                        Where is {displayName} located?
                         <span className="transform transition-transform group-open:rotate-180 text-gray-500">▼</span>
                       </summary>
                       <p className="px-4 pb-4 text-gray-600">
-                        {business.name} is located in {business.city || 'Quebec'}
+                        {displayName} is located in {business.city || 'Quebec'}
                         {business.region && `, in the ${business.region} region`}.
                       </p>
                     </details>
 
                     <details className="group bg-gray-50 rounded-lg">
                       <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-gray-900">
-                        Does {business.name} have a phone number?
+                        Does {displayName} have a phone number?
                         <span className="transform transition-transform group-open:rotate-180 text-gray-500">▼</span>
                       </summary>
                       <p className="px-4 pb-4 text-gray-600">
                         {displayPhone
-                          ? `Yes, you can contact ${business.name} at ${displayPhone}.`
-                          : `Phone information for ${business.name} is not available.`}
+                          ? `Yes, you can contact ${displayName} at ${displayPhone}.`
+                          : `Phone information for ${displayName} is not available.`}
                       </p>
                     </details>
 
                     <details className="group bg-gray-50 rounded-lg">
                       <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-gray-900">
-                        Does {business.name} have a website?
+                        Does {displayName} have a website?
                         <span className="transform transition-transform group-open:rotate-180 text-gray-500">▼</span>
                       </summary>
                       <p className="px-4 pb-4 text-gray-600">
                         {business.website
-                          ? `Yes, ${business.name} has a website at ${business.website}.`
-                          : `Website information for ${business.name} is not available.`}
+                          ? `Yes, ${displayName} has a website at ${business.website}.`
+                          : `Website information for ${displayName} is not available.`}
                       </p>
                     </details>
 
                     {hasOpeningHours && (
                       <details className="group bg-gray-50 rounded-lg">
                         <summary className="p-4 font-medium cursor-pointer flex items-center justify-between text-gray-900">
-                          What are the opening hours of {business.name}?
+                          What are the opening hours of {displayName}?
                           <span className="transform transition-transform group-open:rotate-180 text-gray-500">▼</span>
                         </summary>
                         <p className="px-4 pb-4 text-gray-600">
@@ -444,7 +446,7 @@ export default function BusinessDetailsEN({ business, relatedBusinesses = [] }: 
                       Facebook
                     </a>
                     <a
-                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://registreduquebec.com/en/company/${business.slug}`)}&text=${encodeURIComponent(`Discover ${business.name} in ${business.city}`)}`}
+                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://registreduquebec.com/en/company/${business.slug}`)}&text=${encodeURIComponent(`Discover ${displayName} in ${business.city}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 py-2 bg-black text-white rounded-lg text-center text-sm font-medium hover:opacity-90 transition-opacity"

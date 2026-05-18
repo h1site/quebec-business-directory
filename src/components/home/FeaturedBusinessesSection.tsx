@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { formatBusinessName } from '@/lib/format-business-name'
 
 interface Business {
   id: string
@@ -66,7 +67,7 @@ export default function FeaturedBusinessesSection({ businesses }: FeaturedBusine
               <div className="p-5">
                 <div className="flex items-start justify-between mb-2">
                   <span className="font-bold text-lg leading-tight line-clamp-2" style={{ color: 'var(--foreground)' }}>
-                    {business.name}
+                    {formatBusinessName(business.name)}
                   </span>
                   {business.google_rating && (
                     <span className="inline-flex items-center gap-1 ml-2 flex-shrink-0 px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-500 text-sm font-semibold">

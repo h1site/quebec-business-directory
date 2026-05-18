@@ -1,11 +1,13 @@
 import type { Business } from '@/types/business'
 import { generateSlug } from '@/lib/utils'
+import { formatBusinessName } from '@/lib/format-business-name'
 
 export function generateBusinessSchema(business: Business, isEnglish = false) {
+  const displayName = formatBusinessName(business.name)
   const description = isEnglish ? business.description_en : business.description
   const defaultDesc = isEnglish
-    ? `${business.name} in ${business.city}`
-    : `${business.name} à ${business.city}`
+    ? `${displayName} in ${business.city}`
+    : `${displayName} à ${business.city}`
 
   const baseUrl = 'https://registreduquebec.com'
   const langPrefix = isEnglish ? '/en' : ''
@@ -17,7 +19,7 @@ export function generateBusinessSchema(business: Business, isEnglish = false) {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     '@id': businessUrl,
-    name: business.name,
+    name: displayName,
     description: description || defaultDesc,
     address: {
       '@type': 'PostalAddress',
@@ -56,7 +58,7 @@ export function generateBusinessSchema(business: Business, isEnglish = false) {
       '@type': 'ImageObject',
       '@id': `${businessUrl}#logo`,
       url: business.logo_url,
-      caption: isEnglish ? `${business.name} logo` : `Logo de ${business.name}`,
+      caption: isEnglish ? `${displayName} logo` : `Logo de ${displayName}`,
     }
     schema.logo = { '@id': `${businessUrl}#logo` }
   }
@@ -146,6 +148,7 @@ export function generateBusinessSchema(business: Business, isEnglish = false) {
 }
 
 export function generateFAQSchema(business: Business, isEnglish = false) {
+  const displayName = formatBusinessName(business.name)
   const faqItems: Array<{ '@type': string; name: string; acceptedAnswer: { '@type': string; text: string } }> = []
 
   // Question: City
@@ -153,13 +156,13 @@ export function generateFAQSchema(business: Business, isEnglish = false) {
     faqItems.push({
       '@type': 'Question',
       name: isEnglish
-        ? `In which city is ${business.name} located?`
-        : `Dans quelle ville se situe ${business.name} ?`,
+        ? `In which city is ${displayName} located?`
+        : `Dans quelle ville se situe ${displayName} ?`,
       acceptedAnswer: {
         '@type': 'Answer',
         text: isEnglish
-          ? `${business.name} is located in ${business.city}${business.region ? `, ${business.region}` : ''}.`
-          : `${business.name} se situe à ${business.city}${business.region ? `, ${business.region}` : ''}.`,
+          ? `${displayName} is located in ${business.city}${business.region ? `, ${business.region}` : ''}.`
+          : `${displayName} se situe à ${business.city}${business.region ? `, ${business.region}` : ''}.`,
       },
     })
   }
@@ -170,8 +173,8 @@ export function generateFAQSchema(business: Business, isEnglish = false) {
     faqItems.push({
       '@type': 'Question',
       name: isEnglish
-        ? `What is the address of ${business.name}?`
-        : `À quelle adresse se situe ${business.name} ?`,
+        ? `What is the address of ${displayName}?`
+        : `À quelle adresse se situe ${displayName} ?`,
       acceptedAnswer: {
         '@type': 'Answer',
         text: fullAddress,
@@ -183,17 +186,17 @@ export function generateFAQSchema(business: Business, isEnglish = false) {
   faqItems.push({
     '@type': 'Question',
     name: isEnglish
-      ? `Does ${business.name} have a phone number?`
-      : `Est-ce que ${business.name} a un numéro de téléphone ?`,
+      ? `Does ${displayName} have a phone number?`
+      : `Est-ce que ${displayName} a un numéro de téléphone ?`,
     acceptedAnswer: {
       '@type': 'Answer',
       text: business.phone
         ? (isEnglish
-            ? `Yes, you can contact ${business.name} at ${business.phone}.`
-            : `Oui, vous pouvez contacter ${business.name} au ${business.phone}.`)
+            ? `Yes, you can contact ${displayName} at ${business.phone}.`
+            : `Oui, vous pouvez contacter ${displayName} au ${business.phone}.`)
         : (isEnglish
-            ? `Phone information for ${business.name} is not available.`
-            : `Les informations de téléphone pour ${business.name} ne sont pas disponibles.`),
+            ? `Phone information for ${displayName} is not available.`
+            : `Les informations de téléphone pour ${displayName} ne sont pas disponibles.`),
     },
   })
 
@@ -201,17 +204,17 @@ export function generateFAQSchema(business: Business, isEnglish = false) {
   faqItems.push({
     '@type': 'Question',
     name: isEnglish
-      ? `Does ${business.name} have a website?`
-      : `${business.name} a-t-il un site internet ?`,
+      ? `Does ${displayName} have a website?`
+      : `${displayName} a-t-il un site internet ?`,
     acceptedAnswer: {
       '@type': 'Answer',
       text: business.website
         ? (isEnglish
-            ? `Yes, ${business.name} has a website.`
-            : `Oui, ${business.name} a un site internet.`)
+            ? `Yes, ${displayName} has a website.`
+            : `Oui, ${displayName} a un site internet.`)
         : (isEnglish
-            ? `Website information for ${business.name} is not available.`
-            : `Les informations de site internet pour ${business.name} ne sont pas disponibles.`),
+            ? `Website information for ${displayName} is not available.`
+            : `Les informations de site internet pour ${displayName} ne sont pas disponibles.`),
     },
   })
 
@@ -228,6 +231,7 @@ export function generateBreadcrumbSchema(
   citySlug: string,
   isEnglish = false
 ) {
+  const displayName = formatBusinessName(business.name)
   const baseUrl = 'https://registreduquebec.com'
   const langPrefix = isEnglish ? '/en' : ''
 
@@ -250,7 +254,7 @@ export function generateBreadcrumbSchema(
       {
         '@type': 'ListItem',
         position: 3,
-        name: business.name,
+        name: displayName,
         item: `${baseUrl}${langPrefix}/${categorySlug}/${citySlug}/${business.slug}`,
       },
     ],
@@ -263,10 +267,11 @@ export function generateBreadcrumbSchema(
 // ============================================
 
 export function generateBusinessSchemaSimple(business: Business, isEnglish = false) {
+  const displayName = formatBusinessName(business.name)
   const description = isEnglish ? business.description_en : business.description
   const defaultDesc = isEnglish
-    ? `${business.name} in ${business.city}`
-    : `${business.name} à ${business.city}`
+    ? `${displayName} in ${business.city}`
+    : `${displayName} à ${business.city}`
 
   const baseUrl = 'https://registreduquebec.com'
   const businessUrl = isEnglish
@@ -277,7 +282,7 @@ export function generateBusinessSchemaSimple(business: Business, isEnglish = fal
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     '@id': businessUrl,
-    name: business.name,
+    name: displayName,
     description: description || defaultDesc,
     address: {
       '@type': 'PostalAddress',
@@ -314,7 +319,7 @@ export function generateBusinessSchemaSimple(business: Business, isEnglish = fal
       '@type': 'ImageObject',
       '@id': `${businessUrl}#logo`,
       url: business.logo_url,
-      caption: isEnglish ? `${business.name} logo` : `Logo de ${business.name}`,
+      caption: isEnglish ? `${displayName} logo` : `Logo de ${displayName}`,
     }
     schema.logo = { '@id': `${businessUrl}#logo` }
   }
@@ -399,6 +404,7 @@ export function generateBusinessSchemaSimple(business: Business, isEnglish = fal
 }
 
 export function generateFAQSchemaSimple(business: Business, isEnglish = false) {
+  const displayName = formatBusinessName(business.name)
   const faqItems: Array<{ '@type': string; name: string; acceptedAnswer: { '@type': string; text: string } }> = []
 
   // Contact info FAQ
@@ -413,12 +419,12 @@ export function generateFAQSchemaSimple(business: Business, isEnglish = false) {
   faqItems.push({
     '@type': 'Question',
     name: isEnglish
-      ? `How to contact ${business.name}?`
-      : `Comment contacter ${business.name} ?`,
+      ? `How to contact ${displayName}?`
+      : `Comment contacter ${displayName} ?`,
     acceptedAnswer: {
       '@type': 'Answer',
       text: isEnglish
-        ? `${business.name} is located in ${business.city || 'Quebec'}${business.region ? `, ${business.region}` : ''}.`
+        ? `${displayName} is located in ${business.city || 'Quebec'}${business.region ? `, ${business.region}` : ''}.`
         : contactParts.join('. ') + '.',
     },
   })
@@ -432,13 +438,13 @@ export function generateFAQSchemaSimple(business: Business, isEnglish = false) {
     faqItems.push({
       '@type': 'Question',
       name: isEnglish
-        ? `What does ${business.name} specialize in?`
-        : `Dans quel domaine ${business.name} se spécialise ?`,
+        ? `What does ${displayName} specialize in?`
+        : `Dans quel domaine ${displayName} se spécialise ?`,
       acceptedAnswer: {
         '@type': 'Answer',
         text: isEnglish
-          ? `${business.name} operates in ${business.main_category_slug.replace(/-/g, ' ')} in ${business.city || 'Quebec'}.${services.length > 0 ? ` Services include: ${services.join(', ')}.` : ''}`
-          : `${business.name} oeuvre dans le domaine ${business.main_category_slug.replace(/-/g, ' ')} à ${business.city || 'au Québec'}.${services.length > 0 ? ` Parmi ses services : ${services.join(', ')}.` : ''}`,
+          ? `${displayName} operates in ${business.main_category_slug.replace(/-/g, ' ')} in ${business.city || 'Quebec'}.${services.length > 0 ? ` Services include: ${services.join(', ')}.` : ''}`
+          : `${displayName} oeuvre dans le domaine ${business.main_category_slug.replace(/-/g, ' ')} à ${business.city || 'au Québec'}.${services.length > 0 ? ` Parmi ses services : ${services.join(', ')}.` : ''}`,
       },
     })
   }
@@ -448,13 +454,13 @@ export function generateFAQSchemaSimple(business: Business, isEnglish = false) {
     faqItems.push({
       '@type': 'Question',
       name: isEnglish
-        ? `What is the reputation of ${business.name}?`
-        : `Quelle est la réputation de ${business.name} ?`,
+        ? `What is the reputation of ${displayName}?`
+        : `Quelle est la réputation de ${displayName} ?`,
       acceptedAnswer: {
         '@type': 'Answer',
         text: isEnglish
-          ? `${business.name} has a rating of ${business.google_rating}/5 on Google${business.google_reviews_count > 0 ? `, based on ${business.google_reviews_count} customer reviews` : ''}.`
-          : `${business.name} a une note de ${business.google_rating}/5 sur Google${business.google_reviews_count > 0 ? `, basée sur ${business.google_reviews_count} avis de clients` : ''}.`,
+          ? `${displayName} has a rating of ${business.google_rating}/5 on Google${business.google_reviews_count > 0 ? `, based on ${business.google_reviews_count} customer reviews` : ''}.`
+          : `${displayName} a une note de ${business.google_rating}/5 sur Google${business.google_reviews_count > 0 ? `, basée sur ${business.google_reviews_count} avis de clients` : ''}.`,
       },
     })
   }
@@ -517,6 +523,7 @@ export function generateListingBreadcrumbSchema(
 }
 
 export function generateBreadcrumbSchemaSimple(business: Business, isEnglish = false) {
+  const displayName = formatBusinessName(business.name)
   const baseUrl = 'https://registreduquebec.com'
 
   return {
@@ -538,7 +545,7 @@ export function generateBreadcrumbSchemaSimple(business: Business, isEnglish = f
       {
         '@type': 'ListItem',
         position: 3,
-        name: business.name,
+        name: displayName,
         item: isEnglish
           ? `${baseUrl}/en/company/${business.slug}`
           : `${baseUrl}/entreprise/${business.slug}`,

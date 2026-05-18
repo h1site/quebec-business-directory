@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { formatBusinessName } from '@/lib/format-business-name'
 
 interface Business {
   id: string
@@ -39,7 +40,7 @@ export default function FeaturedBusinessesSectionEN({ businesses }: FeaturedBusi
             >
               <div className="flex items-start justify-between mb-3">
                 <h3 className="font-bold text-white group-hover:text-sky-400 transition-colors line-clamp-2 text-lg">
-                  {business.name}
+                  {formatBusinessName(business.name)}
                 </h3>
                 {business.google_rating && (
                   <span className="flex items-center gap-1 bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded-lg text-sm font-medium shrink-0 ml-2">

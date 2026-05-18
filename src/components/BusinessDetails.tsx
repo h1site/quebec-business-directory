@@ -9,6 +9,7 @@ import { categoryLabels } from '@/lib/category-labels'
 import ClaimButton from '@/components/ClaimButton'
 import AdSense, { AdSenseAnchor } from '@/components/AdSense'
 import { AD_SLOTS } from '@/config/adSlots'
+import { formatBusinessName } from '@/lib/format-business-name'
 
 interface Props {
   business: Business
@@ -77,6 +78,7 @@ function StarRating({ value }: { value: number }) {
 
 export default function BusinessDetails({ business, cityBusinesses = [] }: Props) {
   const citySlug = generateSlug(business.city || '')
+  const displayName = formatBusinessName(business.name)
 
   const displayAddress = business.verified_address || null
   const displayPhone = business.verified_phone || null
@@ -109,7 +111,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
               <span>&rsaquo;</span>
               <Link href={`/ville/${citySlug}`} className="hover:text-sky-400 transition-colors" style={{ color: 'inherit' }}>{business.city}</Link>
               <span>&rsaquo;</span>
-              <span className="text-white">{business.name}</span>
+              <span className="text-white">{displayName}</span>
             </nav>
 
             <div className="flex flex-col md:flex-row gap-6 items-start">
@@ -118,8 +120,8 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                 <img
                   src={business.logo_url || '/images/logos/logo.webp'}
                   alt={business.logo_url
-                    ? `Logo de ${business.name}`
-                    : `${business.name} - Entreprise enregistrée au Registre du Québec à ${business.city || 'Québec'}`}
+                    ? `Logo de ${displayName}`
+                    : `${displayName} - Entreprise enregistrée au Registre du Québec à ${business.city || 'Québec'}`}
                   width={128}
                   height={128}
                   className={`w-full h-full object-contain ${!business.logo_url ? 'brightness-0 invert dark:brightness-0 dark:invert' : ''}`}
@@ -128,20 +130,20 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
               <div className="flex-1">
                 <h1 className="text-3xl md:text-4xl font-bold mb-1 text-white">
-                  {business.name}
+                  {displayName}
                   {business.main_category_slug && business.city && (
                     <span className="block text-lg md:text-xl font-medium mt-1 text-slate-400">
-                      {categoryLabels[business.main_category_slug] || business.main_category_slug} à {business.city}
+                      {' '}{categoryLabels[business.main_category_slug] || business.main_category_slug} à {business.city}
                     </span>
                   )}
                   {business.main_category_slug && !business.city && (
                     <span className="block text-lg md:text-xl font-medium mt-1 text-slate-400">
-                      {categoryLabels[business.main_category_slug] || business.main_category_slug} au Québec
+                      {' '}{categoryLabels[business.main_category_slug] || business.main_category_slug} au Québec
                     </span>
                   )}
                   {!business.main_category_slug && business.city && (
                     <span className="block text-lg md:text-xl font-medium mt-1 text-slate-400">
-                      Entreprise à {business.city}
+                      {' '}Entreprise à {business.city}
                     </span>
                   )}
                 </h1>
@@ -311,7 +313,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       {business.gallery_images.map((img, i) => (
                         <div key={i} className="aspect-square rounded-lg overflow-hidden">
-                          <img src={img} alt={`${business.name} - Photo ${i + 1}`} className="w-full h-full object-cover" />
+                          <img src={img} alt={`${displayName} - Photo ${i + 1}`} className="w-full h-full object-cover" />
                         </div>
                       ))}
                     </div>
@@ -357,17 +359,17 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     {/* FAQ 1 - default open */}
                     <details className="group rounded-xl" style={{ background: '#f3f4f6' }} open>
                       <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: '#111827' }}>
-                        <span>Comment contacter {business.name} ?</span>
+                        <span>Comment contacter {displayName} ?</span>
                         <span className="transition-transform group-open:rotate-180 inline-block">▼</span>
                       </summary>
                       <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: '#4b5563' }}>
                         <p>
-                          {business.name} est une entreprise{business.main_category_slug ? ` du secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : ''} situ&eacute;e &agrave; {displayAddress || business.city || 'Québec'}
+                          {displayName} est une entreprise{business.main_category_slug ? ` du secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : ''} situ&eacute;e &agrave; {displayAddress || business.city || 'Québec'}
                           {displayCity && displayAddress ? `, ${displayCity}` : ''}
                           {business.region && `, dans la région administrative de ${business.region}`}
                           {business.mrc && ` (MRC ${business.mrc})`}
                           {displayPostalCode && `, ${displayPostalCode}`}.
-                          {' '}Vous pouvez contacter {business.name} de plusieurs façons :
+                          {' '}Vous pouvez contacter {displayName} de plusieurs façons :
                         </p>
                         {displayPhone && <p>Par t&eacute;l&eacute;phone au {displayPhone}. N&apos;h&eacute;sitez pas &agrave; appeler pour prendre rendez-vous ou obtenir plus d&apos;informations sur les services offerts.</p>}
                         {displayEmail && <p>Par courriel &agrave; l&apos;adresse {displayEmail}. Un membre de l&apos;&eacute;quipe se fera un plaisir de r&eacute;pondre &agrave; vos questions.</p>}
@@ -379,12 +381,12 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     {business.main_category_slug && (
                       <details className="group rounded-xl" style={{ background: '#f3f4f6' }}>
                         <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: '#111827' }}>
-                          <span>Dans quel domaine {business.name} se sp&eacute;cialise ?</span>
+                          <span>Dans quel domaine {displayName} se sp&eacute;cialise ?</span>
                           <span className="transition-transform group-open:rotate-180 inline-block">▼</span>
                         </summary>
                         <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: '#4b5563' }}>
                           <p>
-                            {business.name} est une entreprise sp&eacute;cialis&eacute;e dans le domaine &laquo;{' '}
+                            {displayName} est une entreprise sp&eacute;cialis&eacute;e dans le domaine &laquo;{' '}
                             {categoryLabels[business.main_category_slug] || business.main_category_slug} &raquo;, offrant ses services
                             {business.city ? ` à ${business.city}` : ' au Québec'}
                             {business.region ? ` et dans l'ensemble de la région de ${business.region}` : ''}.
@@ -392,7 +394,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                           </p>
                           {(business.ai_services && business.ai_services.length > 0) ? (
                             <>
-                              <p>Les principaux services offerts par {business.name} incluent :</p>
+                              <p>Les principaux services offerts par {displayName} incluent :</p>
                               <ul className="list-disc list-inside space-y-1 ml-2">
                                 {business.ai_services.map((s, i) => <li key={i}>{s}</li>)}
                               </ul>
@@ -408,19 +410,19 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     {business.google_rating && (
                       <details className="group rounded-xl" style={{ background: '#f3f4f6' }}>
                         <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: '#111827' }}>
-                          <span>Quelle est la r&eacute;putation de {business.name} ?</span>
+                          <span>Quelle est la r&eacute;putation de {displayName} ?</span>
                           <span className="transition-transform group-open:rotate-180 inline-block">▼</span>
                         </summary>
                         <div className="px-4 pb-4 space-y-2 text-sm leading-relaxed" style={{ color: '#4b5563' }}>
                           <p>
-                            {business.name} a obtenu une note de {business.google_rating} sur 5 sur Google
+                            {displayName} a obtenu une note de {business.google_rating} sur 5 sur Google
                             {business.google_reviews_count > 0 && `, basée sur ${business.google_reviews_count} avis vérifiés de clients`}.
-                            {business.google_rating >= 4.5 && ` Cette excellente note place ${business.name} parmi les entreprises les mieux évaluées de ${business.city || 'sa région'}. Les clients apprécient particulièrement la qualité du service, le professionnalisme de l'équipe et la fiabilité des prestations.`}
-                            {business.google_rating >= 4 && business.google_rating < 4.5 && ` Cette très bonne note témoigne de la satisfaction générale de la clientèle de ${business.name}. L'entreprise maintient un haut niveau de qualité dans ses services.`}
+                            {business.google_rating >= 4.5 && ` Cette excellente note place ${displayName} parmi les entreprises les mieux évaluées de ${business.city || 'sa région'}. Les clients apprécient particulièrement la qualité du service, le professionnalisme de l'équipe et la fiabilité des prestations.`}
+                            {business.google_rating >= 4 && business.google_rating < 4.5 && ` Cette très bonne note témoigne de la satisfaction générale de la clientèle de ${displayName}. L'entreprise maintient un haut niveau de qualité dans ses services.`}
                             {business.google_rating >= 3 && business.google_rating < 4 && ` Cette note reflète une satisfaction correcte de la part des clients.`}
                           </p>
                           <p>
-                            Les avis Google sont un indicateur important de la qualit&eacute; d&apos;une entreprise. Nous vous encourageons &agrave; consulter les avis d&eacute;taill&eacute;s ci-dessus et &agrave; partager votre propre exp&eacute;rience avec {business.name}.
+                            Les avis Google sont un indicateur important de la qualit&eacute; d&apos;une entreprise. Nous vous encourageons &agrave; consulter les avis d&eacute;taill&eacute;s ci-dessus et &agrave; partager votre propre exp&eacute;rience avec {displayName}.
                           </p>
                         </div>
                       </details>
@@ -429,7 +431,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     {hasOpeningHours && (
                       <details className="group rounded-xl" style={{ background: '#f3f4f6' }}>
                         <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-medium" style={{ color: '#111827' }}>
-                          <span>Quelles sont les heures d&apos;ouverture de {business.name} ?</span>
+                          <span>Quelles sont les heures d&apos;ouverture de {displayName} ?</span>
                           <span className="transition-transform group-open:rotate-180 inline-block">▼</span>
                         </summary>
                         <div className="px-4 pb-4" style={{ color: '#4b5563' }}>
@@ -475,7 +477,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                         <p>{seo.analysis}</p>
                       ) : business.ai_services && business.ai_services.length > 0 ? (
                         <p>
-                          {business.name} se positionne dans le secteur{' '}
+                          {displayName} se positionne dans le secteur{' '}
                           <strong style={{ color: '#111827' }}>{categoryLabels[business.main_category_slug] || business.main_category_slug}</strong>
                           {business.city ? ` à ${business.city}` : ''}.
                           {business.google_rating && business.google_rating >= 4
@@ -498,7 +500,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                       ) : (
                         <>
                           <p>
-                            {business.name} joue un rôle important dans l&apos;économie locale de {business.city}
+                            {displayName} joue un rôle important dans l&apos;économie locale de {business.city}
                             {business.region ? ` et de la région de ${business.region}` : ''}.
                             {business.main_category_slug
                               ? ` En tant qu'entreprise du secteur ${categoryLabels[business.main_category_slug] || business.main_category_slug}, elle contribue à offrir des services essentiels aux résidents et aux entreprises locales.`
@@ -528,13 +530,13 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                 {/* Comment trouver */}
                 <div className="rounded-xl p-6 border-2 border-[#020618] bg-transparent">
                   <h2 className="text-lg font-bold mb-3" style={{ color: '#111827' }}>
-                    Comment trouver {business.name}
+                    Comment trouver {displayName}
                   </h2>
                   <div className="space-y-3 text-sm leading-relaxed" style={{ color: '#4b5563' }}>
                     <p>
                       Vous êtes à la recherche {business.main_category_slug ? `d'une entreprise de ${categoryLabels[business.main_category_slug] || business.main_category_slug}` : 'd\'une entreprise'}
                       {business.city ? ` à ${business.city}` : ' au Québec'} ?
-                      La fiche complète de {business.name} ci-dessus contient toutes les informations dont vous avez besoin :
+                      La fiche complète de {displayName} ci-dessus contient toutes les informations dont vous avez besoin :
                       {displayPhone ? ` numéro de téléphone (${displayPhone}),` : ''}
                       {displayEmail ? ' adresse courriel,' : ''}
                       {displayAddress ? ' adresse civique,' : ''}
@@ -734,7 +736,7 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                       Facebook
                     </a>
                     <a
-                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://registreduquebec.com/entreprise/${business.slug}`)}&text=${encodeURIComponent(`Découvrez ${business.name} à ${business.city}`)}`}
+                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://registreduquebec.com/entreprise/${business.slug}`)}&text=${encodeURIComponent(`Découvrez ${displayName} à ${business.city}`)}`}
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                       className="flex-1 text-center px-4 py-2 rounded-lg text-sm font-medium text-white bg-black hover:bg-neutral-800 transition-colors"

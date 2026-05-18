@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { formatBusinessName } from '@/lib/format-business-name'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -262,7 +263,7 @@ export default async function SitemapPage() {
                       href={`/entreprise/${biz.slug}`}
                       className="text-slate-300 hover:text-sky-400 transition-colors text-sm"
                     >
-                      {biz.name}
+                      {formatBusinessName(biz.name)}
                       {biz.city && <span className="text-slate-500 text-xs ml-1">({biz.city})</span>}
                     </Link>
                   </li>
@@ -282,7 +283,7 @@ export default async function SitemapPage() {
                       href={`/entreprise/${biz.slug}`}
                       className="text-slate-300 hover:text-sky-400 transition-colors text-sm"
                     >
-                      {biz.name}
+                      {formatBusinessName(biz.name)}
                       {biz.city && <span className="text-slate-500 text-xs ml-1">({biz.city})</span>}
                     </Link>
                   </li>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { formatBusinessName } from '@/lib/format-business-name'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -261,7 +262,7 @@ export default async function HomePage() {
                   >
                     <div className="flex justify-between items-start">
                       <div className="min-w-0 flex-1">
-                        <h3 className="font-bold text-white truncate uppercase text-xs tracking-wide">{biz.name}</h3>
+                        <h3 className="font-bold text-white truncate uppercase text-xs tracking-wide">{formatBusinessName(biz.name)}</h3>
                         <p className="text-slate-400 text-xs">{biz.city}</p>
                       </div>
                       {biz.google_rating && (

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { formatBusinessName } from '@/lib/format-business-name'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Header from '@/components/Header'
@@ -230,7 +231,7 @@ export default async function TopPageRoute({ params }: Props) {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-3 mb-2">
                           <h3 className="text-lg font-bold uppercase tracking-wide" style={{ color: 'var(--foreground)' }}>
-                            {biz.name}
+                            {formatBusinessName(biz.name)}
                           </h3>
                           {biz.google_rating && (
                             <span className="text-amber-400 text-sm font-bold shrink-0">

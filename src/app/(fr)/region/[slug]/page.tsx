@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { formatBusinessName } from '@/lib/format-business-name'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Header from '@/components/Header'
@@ -102,7 +103,7 @@ export default async function RegionPage({ params }: Props) {
                       >
                         <div className="flex justify-between items-start gap-2">
                           <div className="min-w-0 flex-1">
-                            <h3 className="font-bold truncate uppercase text-xs tracking-wide" style={{ color: 'var(--foreground)' }}>{biz.name}</h3>
+                            <h3 className="font-bold truncate uppercase text-xs tracking-wide" style={{ color: 'var(--foreground)' }}>{formatBusinessName(biz.name)}</h3>
                             <p className="text-xs" style={{ color: 'var(--foreground-muted)' }}>{biz.city}</p>
                           </div>
                           {biz.google_rating && (

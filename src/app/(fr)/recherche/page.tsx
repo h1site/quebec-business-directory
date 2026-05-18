@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { formatBusinessName } from '@/lib/format-business-name'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -62,7 +63,7 @@ function BusinessCard({ business }: { business: Business }) {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
               <h3 className="text-xl font-semibold group-hover:text-sky-500 transition-colors truncate" style={{ color: 'var(--foreground)' }}>
-                {business.name}
+                {formatBusinessName(business.name)}
               </h3>
             </div>
             {business.city && (

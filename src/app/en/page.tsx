@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { formatBusinessName } from '@/lib/format-business-name'
 import Link from 'next/link'
 import HeaderEN from '@/components/HeaderEN'
 import FooterEN from '@/components/FooterEN'
@@ -156,7 +157,7 @@ export default async function HomePageEN() {
                   >
                     <div className="flex justify-between items-start">
                       <div className="min-w-0 flex-1">
-                        <h3 className="font-semibold text-white truncate">{biz.name}</h3>
+                        <h3 className="font-semibold text-white truncate">{formatBusinessName(biz.name)}</h3>
                         <p className="text-slate-400 text-sm">{biz.city}</p>
                       </div>
                       {biz.google_rating && (

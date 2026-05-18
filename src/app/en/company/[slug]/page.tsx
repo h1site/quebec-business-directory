@@ -5,6 +5,7 @@ import { generateBusinessSchemaSimple, generateFAQSchemaSimple, generateBreadcru
 import type { Business } from '@/types/business'
 import BusinessDetailsEN from '@/components/BusinessDetailsEN'
 import trafficSlugs from '@/data/traffic-slugs.json'
+import { formatBusinessName } from '@/lib/format-business-name'
 
 // Set of slugs that have traffic (keep even without website)
 const trafficSlugSet = new Set(trafficSlugs.slugs)
@@ -63,7 +64,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const title = `${business.name} - ${business.city}`
+  const displayName = formatBusinessName(business.name)
+  const title = `${displayName} - ${business.city}`
 
   // Truncate description properly (at word boundary, max 155 chars + "...")
   const truncateDescription = (text: string, maxLen = 155): string => {
@@ -78,11 +80,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (business.ai_description_en) {
     description = truncateDescription(business.ai_description_en)
   } else if (business.google_rating && business.google_reviews_count) {
-    description = `${business.name} in ${business.city}. Rating: ${business.google_rating}/5 (${business.google_reviews_count} reviews). Contact info, hours and details.`
+    description = `${displayName} in ${business.city}. Rating: ${business.google_rating}/5 (${business.google_reviews_count} reviews). Contact info, hours and details.`
   } else if (business.description) {
     description = truncateDescription(business.description)
   } else {
-    description = `${business.name} in ${business.city}, Quebec. Find contact information, reviews and complete details.`
+    description = `${displayName} in ${business.city}, Quebec. Find contact information, reviews and complete details.`
   }
 
   const canonical = `https://registreduquebec.com/en/company/${slug}`
@@ -102,13 +104,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     robots: { index: shouldIndex, follow: true },
     openGraph: {
-      title: `${business.name} - ${business.city} | Quebec Registry`,
+      title: `${displayName} - ${business.city} | Quebec Registry`,
       description,
       type: 'website',
       locale: 'en_CA',
       url: canonical,
       images: business.logo_url
-        ? [{ url: business.logo_url, alt: `${business.name} logo` }]
+        ? [{ url: business.logo_url, alt: `${displayName} logo` }]
         : undefined,
     },
     twitter: {

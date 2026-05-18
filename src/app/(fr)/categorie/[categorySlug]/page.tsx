@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { formatBusinessName } from '@/lib/format-business-name'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
@@ -221,7 +222,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                                 href={`/entreprise/${business.slug}`}
                                 className="text-white hover:text-sky-400 transition-colors"
                               >
-                                {business.name}
+                                {formatBusinessName(business.name)}
                               </Link>
                             </h2>
                             {business.city && (

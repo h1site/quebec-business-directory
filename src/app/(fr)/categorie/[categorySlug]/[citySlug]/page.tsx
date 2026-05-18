@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { formatBusinessName } from '@/lib/format-business-name'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
@@ -294,7 +295,7 @@ export default async function CategoryCityPage({ params, searchParams }: Props) 
                     <div className="flex justify-between items-start gap-4">
                       <div className="flex-1 min-w-0">
                         <h2 className="text-xl font-semibold text-white group-hover:text-sky-400 transition-colors">
-                          {business.name}
+                          {formatBusinessName(business.name)}
                         </h2>
                         {business.city && (
                           <p className="text-slate-400 mt-1 flex items-center gap-2">
