@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import AdSense from '@/components/AdSense'
+import AdSense, { AdSenseInFeedCard } from '@/components/AdSense'
 import { AD_SLOTS } from '@/config/adSlots'
 import { createServiceClient } from '@/lib/supabase/server'
 import { categoryLabels } from '@/lib/category-labels'
@@ -282,14 +282,9 @@ export default async function CityPage({ params, searchParams }: Props) {
                     </div>
                   </div>
                 </Link>
-                {index === 3 && (
+                {index === 4 && (
                   <div className="my-4">
-                    <AdSense slot={AD_SLOTS.inFeed} format="auto" responsive={true} />
-                  </div>
-                )}
-                {index === 9 && (
-                  <div className="my-4">
-                    <AdSense slot={AD_SLOTS.inFeed} format="auto" responsive={true} />
+                    <AdSenseInFeedCard slot={AD_SLOTS.inFeed} eager />
                   </div>
                 )}
                 </div>

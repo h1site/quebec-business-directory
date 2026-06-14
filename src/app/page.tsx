@@ -231,9 +231,9 @@ export default async function HomePage() {
 
         <CategoriesSection categories={CATEGORIES} />
 
-        {/* Ad - after categories + cities */}
+        {/* Ad - after categories + cities (eager: typically visible after first scroll) */}
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} />
+          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} eager />
         </div>
 
         {/* Featured Businesses - critical for Google crawling internal links */}
@@ -275,11 +275,6 @@ export default async function HomePage() {
             </div>
           </section>
         )}
-
-        {/* Ad - after featured businesses */}
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} />
-        </div>
 
         {/* About / value-prop content section - boosts text-to-HTML ratio */}
         <section className="py-[100px] px-4" style={{ background: 'var(--background)' }}>

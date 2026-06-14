@@ -129,18 +129,13 @@ export default async function HomePageEN() {
 
         <CategoriesSectionEN categories={categories} />
 
-        {/* Ad - after categories */}
+        {/* Ad - after categories (eager: typically visible after first scroll) */}
         <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} />
+          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} eager />
         </div>
 
         <CitiesSectionEN />
         <StatsSectionEN />
-
-        {/* Ad - after stats */}
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} />
-        </div>
 
         {/* Featured Businesses */}
         {featuredBusinesses.length > 0 && (
@@ -170,11 +165,6 @@ export default async function HomePageEN() {
             </div>
           </section>
         )}
-
-        {/* Ad - before about */}
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} />
-        </div>
 
         <AboutSectionEN />
 

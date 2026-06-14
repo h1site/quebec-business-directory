@@ -100,12 +100,23 @@ export default function RootLayout({
             gtag('config', 'G-NF84WEBS49');
           `}
         </Script>
-        {/* Google AdSense (manual placements only — Auto Ads disabled to avoid CPC dilution) */}
+        {/* Google AdSense — manual placements + Auto Ads (filled-gap mode).
+            Manual placements own the high-RPM zones; Auto Ads only fill blank
+            real estate Google's algo detects. Frequency tuned in AdSense
+            dashboard under Ad Settings → Ad Frequency. */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8781698761921917"
           strategy="afterInteractive"
           crossOrigin="anonymous"
         />
+        <Script id="adsense-auto-ads" strategy="afterInteractive">
+          {`
+            (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8781698761921917",
+              enable_page_level_ads: true
+            });
+          `}
+        </Script>
       </head>
       <body className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased`}>
           {children}

@@ -182,6 +182,29 @@ export function AdSenseInFeed({ slot, layoutKey, className }: { slot: string; la
   )
 }
 
+/**
+ * Native-style ad card that visually matches business listing cards.
+ *
+ * Drop it into the same grid as <Link>-based business cards on
+ * recherche / ville / catégorie / region. Has a small "Publicité" label
+ * (AdSense policy requires labelling) but otherwise blends in.
+ */
+export function AdSenseInFeedCard({ slot, eager = false }: { slot: string; eager?: boolean }) {
+  return (
+    <div
+      className="rounded-xl overflow-hidden border"
+      style={{ background: 'var(--background-secondary)', borderColor: 'rgba(128,128,128,0.15)' }}
+    >
+      <div className="px-3 pt-2 text-xs uppercase tracking-wider opacity-50" style={{ color: 'var(--foreground-muted)' }}>
+        Publicité
+      </div>
+      <div className="px-3 pb-3" style={{ minHeight: '200px' }}>
+        <AdSense slot={slot} format="auto" responsive={true} eager={eager} />
+      </div>
+    </div>
+  )
+}
+
 export function AdSenseSidebar({ slot, sticky = true, className }: { slot: string; sticky?: boolean; className?: string }) {
   return (
     <div className={`${sticky ? 'sticky top-24' : ''} ${className || ''}`}>

@@ -301,9 +301,9 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                   )}
                 </div>
 
-                {/* Ad - In Article */}
+                {/* Ad - In Article (eager: typically visible after first scroll on mobile) */}
                 <div className="my-4">
-                  <AdSense slot={AD_SLOTS.inArticle} format="fluid" layout="in-article" />
+                  <AdSense slot={AD_SLOTS.inArticle} format="fluid" layout="in-article" eager />
                 </div>
 
                 {/* Gallery */}
@@ -746,19 +746,14 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                   </div>
                 </div>
 
-                {/* Ad - Sidebar Sticky */}
+                {/* Ad - Sidebar Sticky (eager: above-the-fold on desktop) */}
                 <div className="sticky top-24">
-                  <AdSense slot={AD_SLOTS.sidebar} format="auto" responsive={true} style={{ minHeight: '600px' }} />
+                  <AdSense slot={AD_SLOTS.sidebar} format="auto" responsive={true} style={{ minHeight: '600px' }} eager />
                 </div>
               </div>
             </div>
           </div>
         </section>
-
-        {/* Ad - Leaderboard before recommendations */}
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <AdSense slot={AD_SLOTS.leaderboard} format="auto" responsive={true} style={{ minHeight: '90px' }} />
-        </div>
 
         {/* City Businesses */}
         {cityBusinesses.length > 0 && business.city && (

@@ -3,7 +3,7 @@ import { formatBusinessName } from '@/lib/format-business-name'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import AdSense from '@/components/AdSense'
+import AdSense, { AdSenseInFeedCard } from '@/components/AdSense'
 import { AD_SLOTS } from '@/config/adSlots'
 import { searchBusinesses, type Business } from '@/lib/search'
 
@@ -353,14 +353,9 @@ export default async function SearchPage({
                 {businesses.map((biz, index) => (
                   <div key={biz.id}>
                     <BusinessCard business={biz} />
-                    {index === 2 && (
+                    {index === 3 && (
                       <div className="my-4">
-                        <AdSense slot={AD_SLOTS.inFeed} format="auto" responsive={true} />
-                      </div>
-                    )}
-                    {index === 7 && (
-                      <div className="my-4">
-                        <AdSense slot={AD_SLOTS.inFeed} format="auto" responsive={true} />
+                        <AdSenseInFeedCard slot={AD_SLOTS.inFeed} eager />
                       </div>
                     )}
                   </div>
