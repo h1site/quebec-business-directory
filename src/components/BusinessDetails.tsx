@@ -7,7 +7,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { categoryLabels } from '@/lib/category-labels'
 import ClaimButton from '@/components/ClaimButton'
-import AdSense, { AdSenseAnchor } from '@/components/AdSense'
+import AdSense from '@/components/AdSense'
 import { AD_SLOTS } from '@/config/adSlots'
 import { formatBusinessName } from '@/lib/format-business-name'
 
@@ -806,8 +806,8 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
 
       <Footer />
 
-      {/* Anchor ad - mobile sticky bottom */}
-      <AdSenseAnchor slot={AD_SLOTS.anchor} />
+      {/* Anchor ad : géré par l'Anchor natif AdSense (dashboard). Composant manuel
+          retiré pour éviter deux ancres en conflit. */}
     </>
   )
 }

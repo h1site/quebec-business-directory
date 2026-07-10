@@ -226,73 +226,8 @@ export function AdSenseSidebar({ slot, sticky = true, className }: { slot: strin
 }
 
 /**
- * Sticky bottom anchor ad — mobile only.
- *
- * NOTE : si tu actives l'Anchor + la Vignette natifs dans le dashboard AdSense
- * (comme pecheurquebec), RETIRE ce composant pour éviter deux ancres en conflit.
- *
- * High-RPM placement: always visible while scrolling, dismissible by user.
- * Hidden on screens >= 768px because desktop has the sticky sidebar already.
+ * L'anchor (et la vignette) sont désormais gérés par les Auto Ads natifs
+ * d'AdSense (dashboard → Anchor + Vignette activés, in-page désactivé).
+ * L'ancien composant <AdSenseAnchor> manuel a été retiré pour éviter deux
+ * ancres en conflit. Voir anchor-gap-fix dans layout.tsx.
  */
-export function AdSenseAnchor({ slot }: { slot: string }) {
-  const [dismissed, setDismissed] = useState(false)
-  // Mobile uniquement : ne pas monter l'<ins> sur desktop (md:hidden le masquait
-  // en display:none, mais l'ad se poussait quand même → impression gaspillée + largeur 0).
-  const [isMobile, setIsMobile] = useState(false)
-  useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) return
-    const mq = window.matchMedia('(max-width: 767px)')
-    setIsMobile(mq.matches)
-    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches)
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [])
-
-  if (dismissed || !isMobile) return null
-
-  return (
-    <div
-      className="adsense-anchor md:hidden"
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        background: '#ffffff',
-        borderTop: '1px solid rgba(0,0,0,0.1)',
-        boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
-        padding: '4px 4px 6px',
-      }}
-    >
-      <button
-        onClick={() => setDismissed(true)}
-        aria-label="Fermer la publicité"
-        style={{
-          position: 'absolute',
-          top: -10,
-          right: 8,
-          width: 22,
-          height: 22,
-          borderRadius: '50%',
-          background: '#333',
-          color: '#fff',
-          border: 'none',
-          fontSize: 14,
-          lineHeight: '22px',
-          textAlign: 'center',
-          cursor: 'pointer',
-        }}
-      >
-        ×
-      </button>
-      <AdSense
-        slot={slot}
-        format="auto"
-        responsive={true}
-        bare
-        style={{ minHeight: '50px', maxHeight: '100px' }}
-      />
-    </div>
-  )
-}
