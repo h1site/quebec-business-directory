@@ -746,9 +746,10 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                   </div>
                 </div>
 
-                {/* Ad - Sidebar Sticky (eager: above-the-fold on desktop) */}
+                {/* Ad - Sidebar Sticky (eager desktop uniquement : above-the-fold sur
+                    desktop, mais en bas de page/jamais vue sur mobile → lazy là-bas) */}
                 <div className="sticky top-24">
-                  <AdSense slot={AD_SLOTS.sidebar} format="auto" responsive={true} style={{ minHeight: '600px' }} eager />
+                  <AdSense slot={AD_SLOTS.sidebar} format="auto" responsive={true} style={{ minHeight: '600px' }} eager="desktop" />
                 </div>
               </div>
             </div>

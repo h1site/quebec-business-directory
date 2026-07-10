@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+const CLIENT = 'ca-pub-8781698761921917'
+
 interface AdSenseProps {
   /**
    * Ad slot ID from Google AdSense
@@ -16,48 +18,37 @@ interface AdSenseProps {
    * - 'autorelaxed': Multiplex / matched-content style (related content)
    */
   format?: 'auto' | 'fluid' | 'rectangle' | 'autorelaxed'
-  /**
-   * Ad layout type
-   * - 'in-article': For within article content
-   * - 'in-feed': For between list items
-   */
+  /** 'in-article' (within content) | 'in-feed' (between list items) */
   layout?: 'in-article' | 'in-feed'
-  /**
-   * Layout key for in-feed ads
-   * Get from AdSense dashboard
-   */
+  /** Layout key for in-feed ads (from AdSense dashboard) */
   layoutKey?: string
-  /**
-   * Enable full-width responsive mode
-   */
+  /** Full-width responsive mode */
   responsive?: boolean
-  /**
-   * Custom CSS class
-   */
   className?: string
-  /**
-   * Custom inline styles
-   */
   style?: React.CSSProperties
   /**
-   * Disable lazy-loading (load immediately). Use for above-the-fold ads only.
+   * Conservé pour compatibilité mais IGNORÉ : on est viewability-first (tout en
+   * lazy 350px). Les emplacements above-the-fold intersectent de toute façon dès
+   * le chargement, donc ils se chargent immédiatement sans avoir besoin d'`eager`.
    */
-  eager?: boolean
+  eager?: boolean | 'desktop'
+  /** Sans carte blanche ni label — pour l'anchor / conteneurs à chrome propre. */
+  bare?: boolean
+  /** Afficher le label « Publicité » (défaut: true si pas `bare`). */
+  label?: boolean
 }
 
 /**
- * Google AdSense component
+ * Google AdSense — viewability-first (réplique de pecheurquebec, RPM ~6 $).
  *
- * Lazy-loads ads via IntersectionObserver — the `<ins>` only enters the AdSense
- * queue when within 200px of the viewport. This raises viewability and prevents
- * unviewed impressions from dragging the eCPM down.
+ * L'annonce n'entre dans la file AdSense (push) que lorsque son emplacement
+ * approche du viewport (rootMargin 350px). Les emplacements above-the-fold
+ * intersectent dès le chargement → ils se chargent immédiatement ; ceux du bas
+ * attendent le scroll. Résultat : la viewability (et donc l'eCPM) monte, sans
+ * perdre les impressions above-the-fold sur les bounces.
  *
- * Usage:
- * ```tsx
- * <AdSense slot="1234567890" />
- * <AdSense slot="1234567890" layout="in-article" />
- * <AdSense slot="1234567890" eager /> // above-the-fold
- * ```
+ * Par défaut, chaque annonce est enveloppée dans une carte blanche lisible sur
+ * n'importe quel fond (thème sombre inclus) avec un label « Publicité ».
  */
 export default function AdSense({
   slot,
@@ -67,14 +58,16 @@ export default function AdSense({
   responsive = true,
   className = '',
   style = {},
-  eager = false,
+  bare = false,
+  label,
 }: AdSenseProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(eager)
+  const [visible, setVisible] = useState(false)
   const pushed = useRef(false)
 
+  // Lazy-load pour la viewability : on n'observe qu'à 350px du viewport.
   useEffect(() => {
-    if (eager || visible) return
+    if (visible) return
     const el = ref.current
     if (!el) return
     if (typeof IntersectionObserver === 'undefined') {
@@ -91,14 +84,21 @@ export default function AdSense({
           }
         }
       },
-      { rootMargin: '200px 0px' }
+      { rootMargin: '350px 0px' }
     )
     io.observe(el)
     return () => io.disconnect()
-  }, [eager, visible])
+  }, [visible])
 
   useEffect(() => {
     if (!visible || pushed.current) return
+    // Évite le double-push (StrictMode / re-render) : ne pousse pas si l'unité
+    // a déjà été initialisée par AdSense.
+    const insEl = ref.current?.querySelector('ins.adsbygoogle')
+    if (insEl?.getAttribute('data-adsbygoogle-status')) {
+      pushed.current = true
+      return
+    }
     pushed.current = true
     try {
       ;((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({})
@@ -113,20 +113,41 @@ export default function AdSense({
     ...style,
   }
 
+  const ins = visible ? (
+    <ins
+      className="adsbygoogle"
+      style={baseStyle}
+      data-ad-client={CLIENT}
+      data-ad-slot={slot}
+      data-ad-format={format}
+      data-ad-layout={layout}
+      data-ad-layout-key={layoutKey}
+      data-full-width-responsive={responsive ? 'true' : 'false'}
+    />
+  ) : null
+
+  // Mode « nu » : pas de carte (l'appelant fournit son propre habillage).
+  if (bare) {
+    return (
+      <div ref={ref} className={`adsense-container ${className}`}>
+        {ins}
+      </div>
+    )
+  }
+
+  // Carte blanche : lisible sur N'IMPORTE QUEL fond (clair ET sombre), jamais
+  // d'`<ins>` transparent sur du noir.
+  const showLabel = label ?? true
   return (
-    <div ref={ref} className={`adsense-container ${className}`}>
-      {visible && (
-        <ins
-          className="adsbygoogle"
-          style={baseStyle}
-          data-ad-client="ca-pub-8781698761921917"
-          data-ad-slot={slot}
-          data-ad-format={format}
-          data-ad-layout={layout}
-          data-ad-layout-key={layoutKey}
-          data-full-width-responsive={responsive ? 'true' : 'false'}
-        />
+    <div
+      ref={ref}
+      className={`adsense-container my-6 mx-auto w-full max-w-3xl text-center overflow-hidden rounded-2xl bg-white ring-1 ring-black/5 shadow-sm px-3 py-4 ${className}`}
+      aria-label="Publicité"
+    >
+      {showLabel && (
+        <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1">Publicité</div>
       )}
+      {ins}
     </div>
   )
 }
@@ -183,26 +204,12 @@ export function AdSenseInFeed({ slot, layoutKey, className }: { slot: string; la
 }
 
 /**
- * Native-style ad card that visually matches business listing cards.
- *
- * Drop it into the same grid as <Link>-based business cards on
- * recherche / ville / catégorie / region. Has a small "Publicité" label
- * (AdSense policy requires labelling) but otherwise blends in.
+ * Native-style ad card dans une grille de résultats. La carte blanche + label
+ * « Publicité » est maintenant fournie par <AdSense> lui-même.
+ * (Le paramètre `eager` est conservé pour compat mais ignoré — viewability-first.)
  */
-export function AdSenseInFeedCard({ slot, eager = false }: { slot: string; eager?: boolean }) {
-  return (
-    <div
-      className="rounded-xl overflow-hidden border"
-      style={{ background: 'var(--background-secondary)', borderColor: 'rgba(128,128,128,0.15)' }}
-    >
-      <div className="px-3 pt-2 text-xs uppercase tracking-wider opacity-50" style={{ color: 'var(--foreground-muted)' }}>
-        Publicité
-      </div>
-      <div className="px-3 pb-3" style={{ minHeight: '200px' }}>
-        <AdSense slot={slot} format="auto" responsive={true} eager={eager} />
-      </div>
-    </div>
-  )
+export function AdSenseInFeedCard({ slot }: { slot: string; eager?: boolean }) {
+  return <AdSense slot={slot} format="auto" responsive={true} style={{ minHeight: '200px' }} />
 }
 
 export function AdSenseSidebar({ slot, sticky = true, className }: { slot: string; sticky?: boolean; className?: string }) {
@@ -221,13 +228,27 @@ export function AdSenseSidebar({ slot, sticky = true, className }: { slot: strin
 /**
  * Sticky bottom anchor ad — mobile only.
  *
+ * NOTE : si tu actives l'Anchor + la Vignette natifs dans le dashboard AdSense
+ * (comme pecheurquebec), RETIRE ce composant pour éviter deux ancres en conflit.
+ *
  * High-RPM placement: always visible while scrolling, dismissible by user.
- * Hidden on screens >= 768px (sm:hidden equivalent via media query) because
- * desktop has the sticky sidebar already.
+ * Hidden on screens >= 768px because desktop has the sticky sidebar already.
  */
 export function AdSenseAnchor({ slot }: { slot: string }) {
   const [dismissed, setDismissed] = useState(false)
-  if (dismissed) return null
+  // Mobile uniquement : ne pas monter l'<ins> sur desktop (md:hidden le masquait
+  // en display:none, mais l'ad se poussait quand même → impression gaspillée + largeur 0).
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return
+    const mq = window.matchMedia('(max-width: 767px)')
+    setIsMobile(mq.matches)
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+
+  if (dismissed || !isMobile) return null
 
   return (
     <div
@@ -269,7 +290,7 @@ export function AdSenseAnchor({ slot }: { slot: string }) {
         slot={slot}
         format="auto"
         responsive={true}
-        eager
+        bare
         style={{ minHeight: '50px', maxHeight: '100px' }}
       />
     </div>

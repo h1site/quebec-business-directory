@@ -218,9 +218,9 @@ export default async function BlogArticlePage({ params }: Props) {
             <hr className="mt-8 border-white/10" />
           </header>
 
-          {/* Ad - In-article after intro (high RPM) */}
+          {/* Ad - In-article after intro (high RPM, eager pour capter les bounces) */}
           <div className="my-6">
-            <AdSense slot={AD_SLOTS.inArticle} format="fluid" layout="in-article" />
+            <AdSense slot={AD_SLOTS.inArticle} format="fluid" layout="in-article" eager />
           </div>
 
           <div
@@ -238,9 +238,9 @@ export default async function BlogArticlePage({ params }: Props) {
             dangerouslySetInnerHTML={{ __html: marked.parse(article.content_fr) as string }}
           />
 
-          {/* Ad - End of article (in-article format) */}
+          {/* Ad - End of article (in-article format) — slot distinct pour éviter le doublon avec celui du haut */}
           <div className="my-8">
-            <AdSense slot={AD_SLOTS.inArticle} format="fluid" layout="in-article" />
+            <AdSense slot={AD_SLOTS.inArticle2} format="fluid" layout="in-article" />
           </div>
 
           {/* Related articles — internal linking for crawl + PageRank */}

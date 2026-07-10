@@ -23,10 +23,11 @@ const FALLBACK_SLOT = '8544579045'
 
 export const AD_SLOTS = {
   inArticle: '5312430216',    // In-article fluid
+  inArticle2: '8544579045',   // 2e in-article (blog) → slot distinct pour éviter le doublon sur la même page
   inFeed: '8550784332',       // In-feed refusé par AdSense → fallback sur display responsive auto
   multiplex: '4591358027',    // Multiplex / Related content (autorelaxed)
   leaderboard: '8550784332',  // Display responsive auto
   sidebar: '8550784332',      // Display responsive auto
-  anchor: '8550784332',       // Display responsive auto
+  anchor: '8544579045',       // Slot distinct de la sidebar → les 2 se remplissent sur mobile (avant: doublon 8550784332)
 } as const
 

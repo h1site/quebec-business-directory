@@ -87,6 +87,24 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Consent Mode v2 — défaut GRANTED (pas de bannière) → annonces
+            personnalisées = CPM plus élevé (réplique pecheurquebec, RPM ~6 $).
+            NOTE légale : la Loi 25 (CAI) impose en théorie l'opt-in explicite pour
+            les cookies non essentiels. Restaurer une bannière si la CAI audite. */}
+        <Script id="consent-default" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              ad_storage: 'granted',
+              ad_user_data: 'granted',
+              ad_personalization: 'granted',
+              analytics_storage: 'granted',
+              functionality_storage: 'granted',
+              security_storage: 'granted',
+            });
+          `}
+        </Script>
         {/* Google Tag (gtag.js) - lazyOnload to reduce blocking */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NF84WEBS49"
@@ -100,22 +118,35 @@ export default function RootLayout({
             gtag('config', 'G-NF84WEBS49');
           `}
         </Script>
-        {/* Google AdSense — manual placements + Auto Ads (filled-gap mode).
-            Manual placements own the high-RPM zones; Auto Ads only fill blank
-            real estate Google's algo detects. Frequency tuned in AdSense
-            dashboard under Ad Settings → Ad Frequency. */}
+        {/* Google AdSense — placements manuels uniquement.
+            Auto Ads (enable_page_level_ads) désactivées : au round 2 elles ont
+            fait chuter le remplissage ~4× (0,37 → 0,096 annonce/pageview) en
+            entrant en conflit avec les <ins> manuels. On garde le contrôle des
+            zones high-RPM en manuel. */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8781698761921917"
           strategy="afterInteractive"
           crossOrigin="anonymous"
         />
-        <Script id="adsense-auto-ads" strategy="afterInteractive">
-          {`
-            (adsbygoogle = window.adsbygoogle || []).push({
-              google_ad_client: "ca-pub-8781698761921917",
-              enable_page_level_ads: true
-            });
-          `}
+        {/* L'anchor AdSense natif réserve de la hauteur via une marge/padding bas
+            en inline !important sur <body>. Cet observer la remet à 0 → aucun trou
+            sous le footer (la pub ancrée flotte par-dessus). Active l'Anchor +
+            la Vignette dans le dashboard AdSense pour profiter de ce format. */}
+        <Script id="anchor-gap-fix" strategy="afterInteractive">
+          {`(function(){
+            function z(el){ if(!el) return;
+              if(el.style.marginBottom!=='0px') el.style.setProperty('margin-bottom','0','important');
+              if(el.style.paddingBottom!=='0px') el.style.setProperty('padding-bottom','0','important');
+            }
+            function reset(){ z(document.body); z(document.documentElement); }
+            reset();
+            try{
+              var mo=new MutationObserver(reset);
+              mo.observe(document.documentElement,{attributes:true,attributeFilter:['style']});
+              if(document.body) mo.observe(document.body,{attributes:true,attributeFilter:['style']});
+            }catch(e){}
+            window.addEventListener('load',reset);
+          })();`}
         </Script>
       </head>
       <body className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased`}>
