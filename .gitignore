@@ -39,19 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-public/video/Business.mov
-
-# GSC OAuth token + fetched data
-scripts/.gsc-token.json
-scripts/gsc-data-*.json
-scripts/gsc-indexation-*.json
-scripts/gsc-daily-history.json
-scripts/gsc-pages-*.json
-
-# Bing fetched data
-scripts/bing-pages-*.json
-scripts/bing-queries-*.json
-
-# Pages database (built from GSC + Bing)
-scripts/pages-database/
-scripts/pages-with-clicks-*.json

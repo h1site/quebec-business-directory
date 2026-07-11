@@ -1,216 +1,85 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
-
-:root {
-  --background: #0f172a;
-  --background-secondary: #1e293b;
-  --foreground: #f8fafc;
-  --foreground-muted: #94a3b8;
-  --accent: #0ea5e9;
-  --accent-hover: #0284c7;
-  --font-inter: 'Inter', sans-serif;
-}
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-geist-sans);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, Arial, sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  word-spacing: 0.1em;
+/* Contenu d'article rendu depuis le markdown */
+.article-content {
+  color: #27272a;
+  line-height: 1.8;
+  font-size: 1.0625rem;
 }
-
-/* Force dark text ONLY on inputs with white background (add-business form) */
-input.bg-white,
-textarea.bg-white,
-select.bg-white,
-input[class*="bg-white"],
-textarea[class*="bg-white"],
-select[class*="bg-white"] {
-  color: rgb(17 24 39) !important;
-  -webkit-text-fill-color: rgb(17 24 39) !important;
-  color-scheme: light !important;
+.article-content h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: #18181b;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 0.4rem;
 }
-
-input.bg-white::placeholder,
-textarea.bg-white::placeholder {
-  color: rgb(156 163 175) !important;
-  -webkit-text-fill-color: rgb(156 163 175) !important;
+.article-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  color: #18181b;
 }
-
-/* Dark color-scheme for time/date inputs in dark theme */
-.dark input[type="time"],
-.dark input[type="date"],
-.dark input[type="datetime-local"] {
-  color-scheme: dark !important;
+.article-content p {
+  margin: 1rem 0;
 }
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.article-content ul,
+.article-content ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
 }
-
-::-webkit-scrollbar-track {
-  background: var(--background-secondary);
+.article-content ul {
+  list-style: disc;
 }
-
-::-webkit-scrollbar-thumb {
-  background: #475569;
-  border-radius: 4px;
+.article-content ol {
+  list-style: decimal;
 }
-
-::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+.article-content li {
+  margin: 0.4rem 0;
 }
-
-/* CSS Animations */
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.article-content a {
+  color: #1d4ed8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
-
-@keyframes slide-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+.article-content a:hover {
+  color: #1e40af;
 }
-
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+.article-content strong {
+  font-weight: 600;
+  color: #18181b;
 }
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4); }
-  50% { box-shadow: 0 0 20px 10px rgba(14, 165, 233, 0); }
+.article-content blockquote {
+  border-left: 3px solid #1d4ed8;
+  padding-left: 1rem;
+  color: #52525b;
+  margin: 1.25rem 0;
 }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.animate-fade-in { animation: fade-in 0.6s ease-out forwards; }
-.animate-slide-up { animation: slide-up 0.6s ease-out forwards; }
-.animate-fade-in-up { animation: fade-in-up 0.5s ease-out forwards; }
-.animate-pulse-glow { animation: pulse-glow 2s infinite; }
-.animate-float { animation: float 3s ease-in-out infinite; }
-
-/* Animation delays */
-.animation-delay-100 { animation-delay: 0.1s; opacity: 0; }
-.animation-delay-200 { animation-delay: 0.2s; opacity: 0; }
-.animation-delay-300 { animation-delay: 0.3s; opacity: 0; }
-.animation-delay-400 { animation-delay: 0.4s; opacity: 0; }
-.animation-delay-500 { animation-delay: 0.5s; opacity: 0; }
-
-/* Glass effect */
-.glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glass-dark {
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Text shadow for hero sections */
-.text-shadow { text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); }
-.text-shadow-lg { text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); }
-
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #0ea5e9 0%, #22d3ee 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Card hover effects */
-.card-hover {
-  transition: all 0.3s ease;
-}
-
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-/* Button glow effect */
-.btn-glow {
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-glow::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
+.article-content table {
   width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  display: block;
+  overflow-x: auto;
 }
-
-.btn-glow:hover::before {
-  left: 100%;
+.article-content th,
+.article-content td {
+  border: 1px solid #e4e4e7;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
 }
-
-/* Wave pattern background */
-.bg-wave-pattern {
-  background-image:
-    repeating-linear-gradient(
-      -30deg,
-      transparent,
-      transparent 8px,
-      rgba(0, 0, 0, 0.15) 8px,
-      rgba(0, 0, 0, 0.15) 9px
-    ),
-    repeating-linear-gradient(
-      30deg,
-      transparent,
-      transparent 8px,
-      rgba(0, 0, 0, 0.15) 8px,
-      rgba(0, 0, 0, 0.15) 9px
-    );
-}
-
-/* Google AdSense anchor ads */
-body > ins.adsbygoogle,
-body > div[id^="google_ads"],
-body > div[style*="position: fixed"][style*="bottom"] {
-  z-index: 9999 !important;
-}
-
-/* Remove gap AdSense injects for anchor ad */
-html body {
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-
-/* Override browser autofill — dark bg inputs get white text */
-.dark input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px var(--background-secondary) inset !important;
-  -webkit-text-fill-color: #f8fafc !important;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-/* White bg inputs get black text on autofill */
-input.bg-white:-webkit-autofill,
-input[style*="color: rgb(17"]:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px white inset !important;
-  -webkit-text-fill-color: #111827 !important;
+.article-content th {
+  background: #fafafa;
+  font-weight: 600;
 }
