@@ -8,6 +8,7 @@ import Footer from '@/components/Footer'
 import { categoryLabels } from '@/lib/category-labels'
 import ClaimButton from '@/components/ClaimButton'
 import AdSense from '@/components/AdSense'
+import BlogInternalLinks from '@/components/BlogInternalLinks'
 import { AD_SLOTS } from '@/config/adSlots'
 import { formatBusinessName } from '@/lib/format-business-name'
 
@@ -560,6 +561,9 @@ export default function BusinessDetails({ business, cityBusinesses = [] }: Props
                     )}
                   </div>
                 </div>
+
+                {/* Maillage interne → blog (donne des « pages d'origine » aux articles) */}
+                <BlogInternalLinks />
               </div>
 
               {/* Right Column - Sidebar */}
