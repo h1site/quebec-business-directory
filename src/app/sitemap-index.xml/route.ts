@@ -1,65 +1,23 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
-
-const PAGE_SIZE = 1000
-const INDEXABLE_BUSINESS_FILTER =
-  'and(verification_confidence.eq.high,website.not.is.null,ai_description.not.is.null,google_reviews_count.gte.100),' +
-  'and(is_claimed.eq.true,ai_description.not.is.null)'
 
 export async function GET() {
   const baseUrl = 'https://registreduquebec.com'
   const today = new Date().toISOString().split('T')[0]
 
-  // Get total business count to determine number of sitemap pages
-  let totalPages = 1
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (supabaseUrl && supabaseKey) {
-    const supabase = createClient(supabaseUrl, supabaseKey)
-    const { count } = await supabase
-      .from('businesses')
-      .select('id', { count: 'exact', head: true })
-      .not('slug', 'is', null)
-      .or(INDEXABLE_BUSINESS_FILTER)
-
-    if (count) {
-      totalPages = Math.ceil(count / PAGE_SIZE)
-    }
-
-  }
-
-  const sitemaps = [`  <sitemap>
+  // « Redémarrage propre » : le sitemap n'expose plus que les pages piliers et le
+  // blog. Les fiches/listings (businesses, categories, top, regions) sont sorties
+  // de l'index (noindex via middleware) — inutile de les soumettre à Google.
+  // Réversible : réajouter les <sitemap> ci-dessous restaure leur soumission.
+  const sitemaps = [
+    `  <sitemap>
     <loc>${baseUrl}/sitemap-static.xml</loc>
     <lastmod>${today}</lastmod>
-  </sitemap>`]
-
-  for (let i = 1; i <= totalPages; i++) {
-    sitemaps.push(`  <sitemap>
-    <loc>${baseUrl}/sitemap-businesses/${i}</loc>
-    <lastmod>${today}</lastmod>
-  </sitemap>`)
-  }
-
-  sitemaps.push(`  <sitemap>
-    <loc>${baseUrl}/sitemap-categories.xml</loc>
-    <lastmod>${today}</lastmod>
-  </sitemap>`)
-
-  sitemaps.push(`  <sitemap>
-    <loc>${baseUrl}/sitemap-top.xml</loc>
-    <lastmod>${today}</lastmod>
-  </sitemap>`)
-
-  sitemaps.push(`  <sitemap>
+  </sitemap>`,
+    `  <sitemap>
     <loc>${baseUrl}/sitemap-blog.xml</loc>
     <lastmod>${today}</lastmod>
-  </sitemap>`)
-
-  sitemaps.push(`  <sitemap>
-    <loc>${baseUrl}/sitemap-regions.xml</loc>
-    <lastmod>${today}</lastmod>
-  </sitemap>`)
+  </sitemap>`,
+  ]
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

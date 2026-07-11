@@ -53,12 +53,12 @@ export const metadata: Metadata = {
     title: 'Registre des entreprises du Québec',
     description: 'Plus de 7 000 entreprises québécoises vérifiées à découvrir',
   },
+  // Pas de directive index/noindex forcée ici : l'indexation est pilotée par le
+  // middleware (X-Robots-Tag). Les pages hors liste blanche reçoivent noindex ;
+  // les pages piliers + blog restent indexables par défaut. On garde seulement
+  // les préférences d'affichage de snippet pour les pages indexables.
   robots: {
-    index: true,
-    follow: true,
     googleBot: {
-      index: true,
-      follow: true,
       'max-image-preview': 'large',
       'max-snippet': -1,
       'max-video-preview': -1,

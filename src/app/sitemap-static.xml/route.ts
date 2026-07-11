@@ -10,7 +10,6 @@ export async function GET() {
     { url: '/faq', priority: '0.6', changefreq: 'monthly' },
     { url: '/blogue', priority: '0.8', changefreq: 'weekly' },
     { url: '/histoire-pme-quebec', priority: '0.8', changefreq: 'monthly' },
-    { url: '/parcourir/categories', priority: '0.8', changefreq: 'weekly' },
     { url: '/plan-du-site', priority: '0.5', changefreq: 'weekly' },
     { url: '/immatriculer-entreprise-quebec.html', priority: '0.8', changefreq: 'monthly' },
     { url: '/mentions-legales', priority: '0.3', changefreq: 'yearly' },
