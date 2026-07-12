@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ARTICLES, getArticle } from '@/lib/articles'
+import AdUnit from '@/components/AdUnit'
 
 export const dynamicParams = false
 
@@ -69,6 +70,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         className="article-content mt-8"
         dangerouslySetInnerHTML={{ __html: article.html }}
       />
+      <AdUnit slot="5312430216" />
       <div className="mt-12 pt-8 border-t border-zinc-200">
         <Link href="/" className="text-blue-700 font-medium">
           ← Tous les guides
